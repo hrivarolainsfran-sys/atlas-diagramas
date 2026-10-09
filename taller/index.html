@@ -4,6 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="description" content="Taller de práctica interactivo de Economía IB: Unidades 1 a 4.">
+<meta name="author" content="Prof. Econ. Hugo Rivarola">
+<meta name="copyright" content="© 2026 Prof. Econ. Hugo Rivarola. Todos los derechos reservados.">
 <title>Taller de Economía IB</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -274,6 +276,30 @@ details.model summary{cursor:pointer;font-weight:700}
 .focus b{margin-right:4px}
 .focus span{background:var(--sheet);border:1px solid var(--gold);border-radius:99px;padding:2px 10px;font-weight:700;font-size:13.5px}
 @media (max-width:860px){.route{grid-template-columns:repeat(2,minmax(0,1fr))}.method{grid-template-columns:1fr}.cgrid{grid-template-columns:1fr}}
+.hints{display:grid;gap:6px;margin-top:8px}
+.hint1{margin:0;background:var(--gold-soft);border:1px solid var(--gold);border-radius:7px;padding:8px 12px;font-size:14.5px}
+.ladder{margin-top:8px}
+.opt.elim{opacity:.35;text-decoration:line-through}
+.note{margin-top:12px;background:var(--paper);border-left:4px solid var(--gold);border-radius:0 7px 7px 0;padding:9px 12px;font-size:14.5px}
+.modebar{margin:12px 0 0;max-width:900px;border-radius:7px;padding:9px 12px;font-size:14.5px;border:1px solid var(--rule);background:var(--sheet)}
+.modebar.mode-res,.tag.mode-res{border-color:var(--ok)}
+.modebar.mode-gui,.tag.mode-gui{border-color:var(--gold)}
+.tag.mode-res{color:var(--ok)}
+.rchain{margin:0;padding-left:22px;display:grid;gap:8px;font-size:15.5px}
+.okl{margin:6px 0 0;padding-left:20px;display:grid;gap:4px;font-size:14.5px}
+.okl li::marker{content:'✓  ';color:var(--ok)}
+.repform{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;max-width:780px}
+.lbl2{display:block;font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
+.inp{width:100%;border:1.5px solid var(--ink-2);background:var(--sheet);color:var(--ink);border-radius:7px;padding:9px 11px;font:inherit}
+pre.rep{white-space:pre-wrap;font-family:var(--f-body);max-width:780px;margin:0}
+blockquote.stud{margin:10px 0;padding:10px 14px;background:var(--paper);border-left:4px solid var(--k-s);border-radius:0 7px 7px 0;font-style:italic}
+.wroute{grid-template-columns:repeat(auto-fill,minmax(200px,1fr))}
+.drill-ess summary{cursor:pointer;font-size:16px}
+.drill-ess ul{margin-top:10px}
+.site-foot{max-width:1120px;margin:0 auto;padding-block:18px 34px;padding-inline:16px;border-top:1px solid var(--rule);color:var(--muted);font-size:13px;line-height:1.5}
+.site-foot p{margin:2px 0;max-width:90ch}
+.site-foot b{color:var(--ink-2)}
+@media (max-width:860px){.repform{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
@@ -290,6 +316,7 @@ details.model summary{cursor:pointer;font-weight:700}
   </nav>
 </header>
 <main id="app"></main>
+<footer class="site-foot"><p>© 2026 <b>Prof. Econ. Hugo Rivarola</b> · Economía IB · Taller de práctica. Todos los derechos reservados.</p><p>Material educativo elaborado por el autor para sus estudiantes. No se permite reproducirlo, distribuirlo ni modificarlo, total o parcialmente, sin autorización escrita del autor.</p></footer>
 
 <script>
 'use strict';
@@ -1214,7 +1241,12 @@ function render() {
   if (route === 'examen') { setNav('repasar'); return renderExam(); }
   if (route === 'tarjetas') { setNav('repasar'); return renderCards(); }
   if (route === 'repasar') { setNav('repasar'); return renderReview(); }
-  if (route === 'escribir') { setNav('escribir'); return renderWrite('exp'); }
+  if (route === 'escribir') { setNav('escribir'); return renderWriteHome(); }
+  if (route === 'escribir-explicar') { setNav('escribir'); return renderWrite('exp'); }
+  if (route === 'escribir-comandos') { setNav('escribir'); return renderDrill(DRILLS.cmd); }
+  if (route === 'escribir-conceptos') { setNav('escribir'); return renderDrill(DRILLS.kc); }
+  if (route === 'escribir-errores') { setNav('escribir'); return renderDrill(DRILLS.err); }
+  if (route === 'reporte') { setNav('repasar'); return renderReport(); }
   if (route === 'escribir-evaluar') { setNav('escribir'); return renderWrite('eva'); }
   if (route.startsWith('exp-') && EXP.some(x => x.id === route.slice(4))) { setNav('escribir'); return renderExplain(EXP.find(x => x.id === route.slice(4))); }
   if (route.startsWith('eva-') && EVA.some(x => x.id === route.slice(4))) { setNav('escribir'); return renderEval(EVA.find(x => x.id === route.slice(4))); }
@@ -1259,8 +1291,8 @@ function renderHome() {
   <section class="route" aria-label="Cómo usar el taller">
     <button class="rcard" type="button" data-scroll="temas"><span class="rn">1</span><b>Aprende</b><span class="d">Lo esencial y ejercicios con corrección inmediata en los ${TOPICS.length} subtemas.</span></button>
     <button class="rcard" type="button" data-go="labs"><span class="rn">2</span><b>Diagramas</b><span class="d">${Object.keys(LABS).length} laboratorios: mueve curvas y dibuja desplazamientos.</span></button>
-    <button class="rcard" type="button" data-go="escribir"><span class="rn">3</span><b>Escribe</b><span class="d">Arma respuestas de Explicar (${EXP.length}) y Evaluar (${EVA.length}) paso a paso.</span></button>
-    <button class="rcard" type="button" data-go="repasar"><span class="rn">4</span><b>Repasa</b><span class="d">${errCount() ? `${errCount()} errores pendientes` : 'Tus errores'}, examen rápido y tarjetas.</span></button>
+    <button class="rcard" type="button" data-go="escribir"><span class="rn">3</span><b>Escribe</b><span class="d">Comandos, conceptos clave, Explicar (${EXP.length}), Evaluar (${EVA.length}) y encontrar errores.</span></button>
+    <button class="rcard" type="button" data-go="repasar"><span class="rn">4</span><b>Repasa</b><span class="d">${errCount() ? `${errCount()} errores pendientes` : 'Tus errores'}, examen rápido, tarjetas y tu reporte.</span></button>
   </section>
   <div id="temas">${Object.keys(UNITS).map(unitBlock).join('')}</div>
   <p class="foot">Contenidos alineados al Nivel Medio: no incluye utilidad marginal, efectos ingreso y sustitución, multiplicador keynesiano, curva de Phillips ni la condición Marshall-Lerner. Los datos numéricos de los ejercicios son hipotéticos. El progreso se guarda solo en este navegador.</p>`;
@@ -1322,10 +1354,10 @@ function renderDeck(t, S) {
     b.className = 'cur ' + (S.res[i] === true ? 'ok' : S.res[i] === false ? 'no' : '');
     body.querySelector('.card-f .muted b').textContent = Object.values(S.res).filter(v => v === true).length;
   }
-  const inst = instFor(t, S, i);
-  if (inst.t === 'mc') mountMC(host, inst, S, i, done);
-  else if (inst.t === 'sort') mountSort(host, inst, S, i, done);
-  else mountGen(host, inst, done, () => { delete S.inst[i]; delete S.res[i]; renderDeck(t, S); });
+  const inst = instFor(t, S, i), hint = autoHint(t, inst);
+  if (inst.t === 'mc') mountMC(host, inst, S, i, done, { hint1: hint });
+  else if (inst.t === 'sort') mountSort(host, inst, S, i, done, { hint1: hint });
+  else mountGen(host, inst, done, () => { delete S.inst[i]; delete S.res[i]; renderDeck(t, S); }, { hint1: hint });
   if (it.t === 'genmc') {
     const again = document.createElement('div'); again.className = 'row'; again.style.marginTop = '10px';
     again.innerHTML = '<button class="btn sm" type="button">Otro ejercicio con datos nuevos</button>';
@@ -1337,48 +1369,81 @@ function deckSummary(t, S) {
   const n = t.items.length, ok = Object.values(S.res).filter(v => v === true).length;
   const wrong = t.items.map((_, k) => k).filter(k => S.res[k] !== true);
   $('#tbody').innerHTML = `<div class="card"><div class="card-b">
-    <div class="eyebrow">Resumen del subtema ${t.code || t.id}</div><h2 style="margin-top:4px">${ok} de ${n} correctas</h2>
-    <p class="lede">${ok === n ? 'Dominas este subtema. Prueba el examen rápido o pasa al siguiente.' : 'Vuelve a los ejercicios marcados en rojo o sin responder. Los de cálculo generan datos nuevos.'}</p>
+    <div class="eyebrow">Resumen · ${t.drill ? t.name : 'Subtema ' + (t.code || t.id)}</div><h2 style="margin-top:4px">${ok} de ${n} correctas</h2>
+    <p class="lede">${ok === n ? (t.drill ? 'Muy bien. Pasa a la siguiente sección.' : 'Dominas este subtema. Prueba el examen rápido o pasa al siguiente.') : 'Vuelve a los ejercicios marcados en rojo o sin responder. También quedaron guardados en Mis errores.'}</p>
     <div class="row" style="padding-bottom:12px">
       ${wrong.length ? `<button class="btn primary" type="button" id="redo">Repetir los ${wrong.length} pendientes</button>` : ''}
       <button class="btn" type="button" id="reset">Empezar de nuevo</button>
       ${nextTopicBtn(t)}
     </div></div></div>`;
   if (wrong.length) $('#redo').onclick = () => { wrong.forEach(k => { delete S.res[k]; delete S.inst[k]; }); S.i = wrong[0]; renderDeck(t, S); };
-  $('#reset').onclick = () => { SESS[t.id] = { tab: 'prac', i: 0, res: {}, inst: {} }; renderTopic(t); };
+  $('#reset').onclick = () => { SESS[t.id] = { tab: 'prac', i: 0, res: {}, inst: {} }; t.drill ? renderDrill(t) : renderTopic(t); };
 }
-function nextTopicBtn(t) { const k = TOPICS.indexOf(t); const nx = TOPICS[k + 1]; return nx ? `<button class="btn" type="button" data-go="${tid(nx.id)}">Siguiente: ${nx.code || nx.id} ${esc(nx.name)} →</button>` : ''; }
+function nextTopicBtn(t) { if (t.drill) return t.next ? `<button class="btn" type="button" data-go="${t.next[0]}">${t.next[1]}</button>` : ''; const k = TOPICS.indexOf(t); const nx = TOPICS[k + 1]; return nx ? `<button class="btn" type="button" data-go="${tid(nx.id)}">Siguiente: ${nx.code || nx.id} ${esc(nx.name)} →</button>` : ''; }
+
+/* ---------- ayuda graduada ---------- */
+const STOPW = new Set(['sobre', 'entre', 'cuando', 'porque', 'donde', 'desde', 'hasta', 'tiene', 'puede', 'pueden', 'cada', 'como', 'mismo', 'misma', 'otros', 'otras', 'tambien', 'pero', 'estos', 'estas', 'hacia', 'segun', 'debido', 'mientras', 'aunque', 'luego', 'antes', 'despues', 'todas', 'todos', 'menos', 'mayor', 'menor', 'unidades', 'ocurre', 'cuales', 'cual']);
+function autoHint(t, inst) {
+  if (!t || !inst) return null;
+  if (inst.h) return inst.h;
+  const strip = s => String(s || '').replace(/<[^>]+>/g, ' ');
+  const nt = s => strip(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+  const words = new Set((nt(inst.q) + ' ' + (inst.o ? nt(inst.o[inst.a]) : '')).match(/[a-zñ]{5,}/g) || []);
+  STOPW.forEach(w => words.delete(w));
+  let best = null, bs = 0;
+  (t.ess || []).forEach(b => { const bw = nt(b); let sc = 0; words.forEach(w => { if (bw.includes(w.slice(0, 6))) sc++; }); if (inst.t === 'gen' && b.includes('formula')) sc += 3; if (sc > bs) { bs = sc; best = b; } });
+  return best ? 'Repasa esta idea: ' + best : (t.trap ? 'Cuidado con este error frecuente: ' + t.trap : null);
+}
+function ladderHtml(btns, used) {
+  return `<div class="row ladder">${btns.map(([k, l, cls]) => `<button class="btn sm ${cls || ''}" type="button" data-h="${k}" ${used[k] ? 'disabled' : ''}>${l}</button>`).join('')}</div>`;
+}
+const showHint = (host, html) => { const hx = $('#hx', host); if (hx) hx.insertAdjacentHTML('beforeend', `<p class="hint1">${html}</p>`); };
 
 /* ---------- opción múltiple ---------- */
 function mountMC(host, it, S, i, done, opts = {}) {
-  const st = S && S.mc ? S.mc : null;
   const key = 'perm' + i;
   let perm;
   if (it.fixed) perm = it.o.map((_, k) => k);
   else if (S) { S.perm = S.perm || {}; perm = S.perm[key + '|' + it.q.length] = S.perm[key + '|' + it.q.length] || shuffle(it.o.map((_, k) => k)); }
   else perm = shuffle(it.o.map((_, k) => k));
-  host.innerHTML = `<p class="q">${it.q}</p><div class="opts">${perm.map((k, j) => `<button class="opt" type="button" data-k="${k}"><span class="l">${'ABCD'[j]}</span><span>${it.o[k]}</span></button>`).join('')}</div><div id="fbx"></div>`;
-  const prev = S && S.res && S.res[i];
-  host.querySelectorAll('.opt').forEach(b => b.onclick = () => {
+  host.innerHTML = `<p class="q">${it.q}</p><div class="opts">${perm.map((k, j) => `<button class="opt" type="button" data-k="${k}"><span class="l">${'ABCD'[j]}</span><span>${it.o[k]}</span></button>`).join('')}</div><div id="fbx"></div><div id="hx" class="hints"></div>`;
+  let misses = 0, over = false; const used = {};
+  const opt = () => [...host.querySelectorAll('.opt')];
+  const solve = byStudent => {
+    over = true;
+    opt().forEach(x => { x.disabled = true; if (+x.dataset.k === it.a) x.classList.add('right'); });
+    $('#fbx', host).innerHTML = `<div class="fb ${byStudent ? 'ok' : 'info'}"><b class="h">${byStudent ? (misses ? 'Correcto, con ayuda' : 'Correcto') : 'Solución'}</b>${it.e || ''}</div>`;
+  };
+  function ladder() {
+    const left = opt().filter(x => !x.disabled);
+    $('#fbx', host).innerHTML = `<div class="fb no"><b class="h">No es correcto</b>Elige otra opción o pide ayuda paso a paso.${ladderHtml([].concat(opts.hint1 ? [['1', 'Pista 1: la idea clave']] : []).concat(left.length > 2 ? [['2', 'Pista 2: descartar opciones']] : []).concat([['s', 'Ver solución']]), used)}</div>`;
+    host.querySelectorAll('[data-h]').forEach(h => h.onclick = () => {
+      const v = h.dataset.h; used[v] = true; h.disabled = true;
+      if (v === '1') showHint(host, `<b>Pista 1.</b> ${opts.hint1}`);
+      else if (v === '2') { const wr = opt().filter(x => !x.disabled && +x.dataset.k !== it.a); shuffle(wr).slice(0, Math.max(0, wr.length - 1)).forEach(x => { x.disabled = true; x.classList.add('elim'); }); showHint(host, '<b>Pista 2.</b> Descartamos opciones: quedan dos.'); }
+      else solve(false);
+    });
+  }
+  opt().forEach(b => b.onclick = () => {
     const k = +b.dataset.k;
-    if (opts.exam) { host.querySelectorAll('.opt').forEach(x => x.classList.remove('sel')); b.classList.add('sel'); return opts.exam(k); }
-    const right = k === it.a;
-    host.querySelectorAll('.opt').forEach(x => { x.disabled = true; if (+x.dataset.k === it.a) x.classList.add('right'); });
-    if (!right) b.classList.add('wrong');
-    $('#fbx', host).innerHTML = `<div class="fb ${right ? 'ok' : 'no'}"><b class="h">${right ? 'Correcto' : 'No es correcto'}</b>${it.e || ''}</div>${right ? '' : '<div class="row"><button class="btn sm" type="button" id="retry">Intentar de nuevo</button></div>'}`;
-    if (!right) $('#retry', host).onclick = () => mountMC(host, it, S, i, done, opts);
-    done(right);
+    if (opts.exam) { opt().forEach(x => x.classList.remove('sel')); b.classList.add('sel'); return opts.exam(k); }
+    if (over) return;
+    if (k === it.a) { solve(true); done(true); return; }
+    b.classList.add('wrong'); b.disabled = true; misses++;
+    if (misses === 1) done(false);
+    if (opt().filter(x => !x.disabled).length <= 1) { solve(false); return; }
+    ladder();
   });
 }
 
 /* ---------- clasificar ---------- */
-function mountSort(host, it, S, i, done) {
-  const place = {}; // índice de ítem -> bin
+function mountSort(host, it, S, i, done, opts = {}) {
+  const place = {};
   const order = shuffle(it.items.map((_, k) => k));
-  let sel = null, checked = false;
+  let sel = null, checked = false, tried = false; const used = {};
   host.innerHTML = `<p class="q">${it.q}</p><p class="hint">Toca una tarjeta y luego la caja donde va (en computadora también puedes arrastrar).</p>
     <div class="pool" id="pool"></div><div class="bins" id="bins">${it.bins.map((b, k) => `<div class="bin" data-b="${k}" role="button" tabindex="0" aria-label="Ubicar en ${esc(b)}"><h4>${b}</h4></div>`).join('')}</div>
-    <div class="row" style="margin-top:12px"><button class="btn primary sm" type="button" id="chk" disabled>Comprobar</button><button class="btn sm" type="button" id="rst">Reiniciar</button></div><div id="fbx"></div>`;
+    <div class="row" style="margin-top:12px"><button class="btn primary sm" type="button" id="chk" disabled>Comprobar</button><button class="btn sm" type="button" id="rst">Reiniciar</button></div><div id="fbx"></div><div id="hx" class="hints"></div>`;
   const pool = $('#pool', host), bins = [...host.querySelectorAll('.bin')];
   function chip(k) {
     const c = document.createElement('button'); c.type = 'button'; c.className = 'chipx'; c.draggable = true; c.dataset.k = k; c.textContent = it.items[k][0];
@@ -1400,14 +1465,21 @@ function mountSort(host, it, S, i, done) {
     b.ondrop = e => { e.preventDefault(); b.classList.remove('over'); sel = +e.dataTransfer.getData('text/plain'); drop(); };
   });
   pool.onclick = () => { if (sel !== null && place[sel] !== undefined && !checked) { delete place[sel]; sel = null; draw(); } };
-  $('#rst', host).onclick = () => mountSort(host, it, S, i, done);
+  $('#rst', host).onclick = () => mountSort(host, it, S, i, done, opts);
   $('#chk', host).onclick = () => {
     checked = true; sel = null; draw();
-    let bad = 0;
-    host.querySelectorAll('.bin .chipx').forEach(c => { const k = +c.dataset.k; const r = place[k] === it.items[k][1]; c.classList.add(r ? 'right' : 'wrong'); if (!r) { bad++; const f = document.createElement('span'); f.className = 'fix'; f.textContent = '→ ' + it.bins[it.items[k][1]]; c.appendChild(f); } });
+    const wrongK = [];
+    host.querySelectorAll('.bin .chipx').forEach(c => { const k = +c.dataset.k; const r = place[k] === it.items[k][1]; c.classList.add(r ? 'right' : 'wrong'); if (!r) wrongK.push(k); });
     $('#chk', host).disabled = true;
-    $('#fbx', host).innerHTML = `<div class="fb ${bad ? 'no' : 'ok'}"><b class="h">${bad ? `${it.items.length - bad} de ${it.items.length} bien ubicadas` : 'Todas correctas'}</b>${it.e || ''}</div>`;
-    done(bad === 0);
+    if (!wrongK.length) { $('#fbx', host).innerHTML = `<div class="fb ok"><b class="h">${tried ? 'Todas correctas, con ayuda' : 'Todas correctas'}</b>${it.e || ''}</div>`; done(true); return; }
+    if (!tried) { tried = true; done(false); }
+    $('#fbx', host).innerHTML = `<div class="fb no"><b class="h">${it.items.length - wrongK.length} de ${it.items.length} bien ubicadas</b>Las tarjetas en rojo están en una caja equivocada.${ladderHtml([].concat(opts.hint1 ? [['1', 'Pista: la idea clave']] : []).concat([['f', 'Corregir las rojas', 'primary'], ['s', 'Ver solución']]), used)}</div>`;
+    host.querySelectorAll('[data-h]').forEach(h => h.onclick = () => {
+      const v = h.dataset.h;
+      if (v === '1') { used[v] = true; h.disabled = true; showHint(host, `<b>Pista.</b> ${opts.hint1}`); }
+      else if (v === 'f') { wrongK.forEach(k => delete place[k]); checked = false; draw(); $('#fbx', host).innerHTML = '<div class="fb info">Las tarjetas que estaban mal volvieron arriba. Ubícalas de nuevo y comprueba.</div>'; }
+      else { host.querySelectorAll('.bin .chipx.wrong').forEach(c => { if (c.querySelector('.fix')) return; const f = document.createElement('span'); f.className = 'fix'; f.textContent = '→ ' + it.bins[it.items[+c.dataset.k][1]]; c.appendChild(f); }); $('#fbx', host).innerHTML = `<div class="fb info"><b class="h">Solución</b>Debajo de cada tarjeta roja aparece su caja correcta. ${it.e || ''}</div>`; }
+    });
   };
   draw();
 }
@@ -1417,24 +1489,28 @@ function mountGen(host, it, done, again, opts = {}) {
   host.innerHTML = `<p class="q">${it.q}</p>
     <form class="calc" id="cf"><input id="ans" inputmode="decimal" autocomplete="off" placeholder="Tu respuesta" aria-label="Tu respuesta"><span class="muted">${it.unit || ''}</span>
     ${opts.exam ? '' : '<button class="btn primary sm" type="submit">Comprobar</button>'}</form>
-    <div id="fbx"></div>
+    <div id="fbx"></div><div id="hx" class="hints"></div>
     ${opts.exam ? '' : '<div class="row" style="margin-top:10px"><button class="btn sm" type="button" id="again">Otro ejercicio con datos nuevos</button></div>'}`;
   const inp = $('#ans', host);
   if (opts.exam) { inp.oninput = () => opts.exam(inp.value); $('#cf', host).onsubmit = e => e.preventDefault(); return; }
-  let tries = 0;
+  let tries = 0; const used = {};
   $('#again', host).onclick = again;
+  const showSol = () => { $('#fbx', host).innerHTML = `<div class="fb info"><b class="h">Respuesta: ${fmt(it.ans, Number.isInteger(it.ans) ? 0 : 2)}</b><div class="sol">${it.sol}</div></div>`; };
   $('#cf', host).onsubmit = e => {
     e.preventDefault();
     const v = parseNum(inp.value);
     if (isNaN(v)) { $('#fbx', host).innerHTML = '<div class="fb info">Escribe un número. Para decimales puedes usar coma o punto (por ejemplo 1,25).</div>'; return; }
     tries++;
     const right = Math.abs(v - it.ans) <= (it.tol || 0) + 1e-9;
-    if (right) { $('#fbx', host).innerHTML = `<div class="fb ok"><b class="h">Correcto: ${fmt(it.ans, Number.isInteger(it.ans) ? 0 : 2)}</b><div class="sol">${it.sol}</div></div>`; done(true); }
-    else {
-      $('#fbx', host).innerHTML = `<div class="fb no"><b class="h">No es correcto</b>${tries < 2 ? 'Revisa el procedimiento e inténtalo otra vez, o mira la solución.' : ''}<div class="row" style="margin-top:8px"><button class="btn sm" type="button" id="show">Ver la solución</button></div></div>`;
-      $('#show', host).onclick = () => { $('#fbx', host).innerHTML = `<div class="fb info"><b class="h">Respuesta: ${fmt(it.ans, Number.isInteger(it.ans) ? 0 : 2)}</b><div class="sol">${it.sol}</div></div>`; };
-      done(false);
-    }
+    if (right) { $('#fbx', host).innerHTML = `<div class="fb ok"><b class="h">${tries > 1 ? 'Correcto, con ayuda' : 'Correcto'}: ${fmt(it.ans, Number.isInteger(it.ans) ? 0 : 2)}</b><div class="sol">${it.sol}</div></div>`; done(true); return; }
+    if (tries === 1) done(false);
+    $('#fbx', host).innerHTML = `<div class="fb no"><b class="h">No es correcto</b>Revisa el procedimiento e inténtalo otra vez, o pide ayuda paso a paso.${ladderHtml([].concat(opts.hint1 ? [['1', 'Pista 1: la idea o fórmula']] : []).concat([['2', 'Pista 2: el primer paso'], ['s', 'Ver solución']]), used)}</div>`;
+    $('#fbx', host).querySelectorAll('[data-h]').forEach(h => h.onclick = () => {
+      const k = h.dataset.h; used[k] = true; h.disabled = true;
+      if (k === '1') showHint(host, `<b>Pista 1.</b> ${opts.hint1}`);
+      else if (k === '2') showHint(host, `<b>Pista 2.</b> ${String(it.sol).split('<br>')[0]}`);
+      else showSol();
+    });
   };
 }
 
@@ -2392,44 +2468,6 @@ function logResult(topicId, idx, ok) {
   else if (e) { e.s++; if (e.s >= 2) { delete ERR[k]; PROG.mastered = (PROG.mastered || 0) + 1; saveProg(); } }
   store.set('errs', ERR); updateBadge();
 }
-const errCount = () => Object.keys(ERR).filter(k => { const [id, i] = k.split('#'); const t = TOPICS.find(x => x.id === id); return t && t.items[+i]; }).length;
-function updateBadge() { const b = document.getElementById('errBadge'); if (!b) return; const n = errCount(); b.textContent = n; b.hidden = n === 0; }
-function repTabs(cur) {
-  const n = errCount();
-  return `<div class="seg" role="group" aria-label="Repasar" style="margin-bottom:18px">${[['repasar', `Mis errores${n ? ' (' + n + ')' : ''}`], ['examen', 'Examen rápido'], ['tarjetas', 'Tarjetas']].map(([r, l]) => `<button type="button" data-go="${r}" aria-pressed="${r === cur}">${l}</button>`).join('')}</div>`;
-}
-const RV = { list: null, i: 0, res: [] };
-function renderReview() {
-  if (RV.list && RV.i < RV.list.length) return reviewQ();
-  const keys = Object.keys(ERR).filter(k => { const [id, i] = k.split('#'); const t = TOPICS.find(x => x.id === id); return t && t.items[+i]; });
-  const by = {}; keys.forEach(k => { const id = k.split('#')[0]; by[id] = (by[id] || 0) + 1; });
-  const ended = RV.list ? `<div class="fb ${RV.res.filter(Boolean).length === RV.res.length ? 'ok' : 'info'}" style="max-width:820px"><b class="h">Repaso terminado: ${RV.res.filter(Boolean).length} de ${RV.res.length} correctas</b>Los ejercicios acertados dos veces seguidas salen de la lista.</div>` : '';
-  RV.list = null;
-  app.innerHTML = `<div class="eyebrow">Repasar</div><h1>Mis errores</h1>${repTabs('repasar')}
-    <p class="lede">Cada ejercicio que fallas en los temas o en el examen rápido se guarda aquí. Sale de la lista cuando lo aciertas <b>dos veces seguidas</b>. Es la versión digital de la bitácora de errores del cuaderno.</p>
-    ${ended}
-    ${keys.length ? `<div class="row" style="margin:14px 0 18px"><button class="btn primary" type="button" id="rvgo">Repasar ahora (${Math.min(10, keys.length)} ejercicios)</button><span class="muted small">${keys.length} pendientes · ${PROG.mastered || 0} superados</span></div>
-    <div class="review">${Object.keys(by).sort((a, b) => TOPICS.findIndex(t => t.id === a) - TOPICS.findIndex(t => t.id === b)).map(id => { const t = TOPICS.find(x => x.id === id); return `<div class="it no" style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center"><span><b>${t.code || t.id}</b> ${esc(t.name)} · <span class="muted">${by[id]} pendiente${by[id] > 1 ? 's' : ''}</span></span><button class="btn sm" type="button" data-go="${tid(id)}">Volver a lo esencial</button></div>`; }).join('')}</div>`
-      : `<div class="essentials"><p style="margin:0"><b>No tienes errores pendientes.</b> Cuando falles un ejercicio en los temas o en el examen rápido, aparecerá aquí para que lo repases.${PROG.mastered ? ` Ya superaste ${PROG.mastered}.` : ''}</p></div>`}`;
-  if (keys.length) $('#rvgo').onclick = () => {
-    RV.list = keys.sort((a, b) => (ERR[b].m - ERR[a].m) || (ERR[a].t - ERR[b].t)).slice(0, 10); RV.i = 0; RV.res = []; reviewQ();
-  };
-}
-function reviewQ() {
-  const k = RV.list[RV.i], [id, si] = k.split('#'), idx = +si, t = TOPICS.find(x => x.id === id), it = t.items[idx];
-  app.innerHTML = `<div class="eyebrow">Repasar · Subtema ${t.code || t.id}</div><h2 style="margin-top:4px">Ejercicio ${RV.i + 1} de ${RV.list.length}</h2>
-    <div class="bar" style="max-width:820px;margin:8px 0 16px"><i style="width:${RV.i / RV.list.length * 100}%"></i></div>
-    <div class="card"><div class="card-b"><div id="rb"></div></div><div class="card-f"><button class="btn sm" type="button" id="rq">Terminar</button><button class="btn primary" type="button" id="rn">${RV.i === RV.list.length - 1 ? 'Ver resultado' : 'Siguiente →'}</button></div></div>`;
-  const host = $('#rb');
-  const done = ok => { RV.res[RV.i] = ok; logResult(id, idx, ok); };
-  if (it.t === 'mc') mountMC(host, it, null, idx, done);
-  else if (it.t === 'genmc') mountMC(host, GEN[it.g](), null, idx, done);
-  else if (it.t === 'sort') mountSort(host, it, null, idx, done);
-  else { const mk = () => mountGen(host, Object.assign({ t: 'gen' }, GEN[it.g](it.arg)), done, mk); mk(); }
-  $('#rq').onclick = () => { RV.list = RV.list.slice(0, RV.i + (RV.res[RV.i] !== undefined ? 1 : 0)); RV.i = RV.list.length; renderReview(); };
-  $('#rn').onclick = () => { if (RV.res[RV.i] === undefined) RV.res[RV.i] = false; RV.i++; window.scrollTo(0, 0); renderReview(); };
-}
-
 /* =============== 4 · Dibujar el desplazamiento =============== */
 const MKT = {
   micro: {
@@ -2567,84 +2605,6 @@ function labDraw(svg, pan, leg) {
 const wget = (k, d) => store.get('w.' + k, d), wset = (k, v) => store.set('w.' + k, v);
 const expState = p => wget(p.id, { step: 0, defs: '', cause: null, dia: null, ord: false, chain: '', ck: [], done: false });
 const evaState = c => wget(c.id, { step: 0, s1: null, s2: null, s3: null, s4: null, txt: '', ck: [], done: false });
-function statusChip(st) { const started = st.step > 0 || st.defs || st.txt; return st.done ? '<span class="tag ok">Completa</span>' : started ? '<span class="tag prog">En progreso</span>' : '<span class="tag">Sin empezar</span>'; }
-function writeTabs(cur) {
-  return `<div class="seg" role="group" aria-label="Tipo de respuesta" style="margin-bottom:18px">${[['escribir', 'Explicar · 10 puntos'], ['escribir-evaluar', 'Evaluar · 15 puntos']].map(([r, l]) => `<button type="button" data-go="${r}" aria-pressed="${r === cur}">${l}</button>`).join('')}</div>`;
-}
-function renderWrite(tab) {
-  const isE = tab === 'eva';
-  const list = isE ? EVA : EXP, href = isE ? 'eva-' : 'exp-', st = isE ? evaState : expState;
-  const units = [...new Set(list.map(x => x.u))];
-  app.innerHTML = `<div class="eyebrow">Escribir como en el examen</div><h1>${isE ? 'Evaluar una política' : 'Explicar con un diagrama'}</h1>${writeTabs(isE ? 'escribir-evaluar' : 'escribir')}
-    ${isE ? `<div class="method"><div><b>Qué pide «evaluar»</b><p>Valorar puntos fuertes y débiles y cerrar con un juicio justificado. Es la parte b de la Prueba 1 (15 puntos).</p></div>
-      <div><b>CLASPP: tu foco</b><p>Enfoca tu respuesta en <b>pros y contras</b>, <b>corto y largo plazo</b> y <b>partes interesadas</b>. Contexto, supuestos y prioridades sirven de apoyo.</p></div>
-      <div><b>Párrafo F-E-I-J</b><p>Factor → Explicación → Implicación → Juicio. Cada párrafo de evaluación sigue esa secuencia.</p></div></div>`
-      : `<div class="method"><div><b>Qué pide «explicar»</b><p>Decir <b>por qué</b> ocurre algo con una cadena causal. Es la parte a de la Prueba 1 (10 puntos).</p></div>
-      <div><b>Los 4 pasos</b><p>Definir → Causa inicial → Diagrama → Cadena causal. Al final revisas tu respuesta con la lista de cotejo y la copias.</p></div>
-      <div><b>La regla práctica</b><p>Si tu respuesta se puede leer sin la palabra «porque» o un equivalente, todavía no está explicando.</p></div></div>`}
-    ${units.map(u => `<div class="unit-h"><h2>${uLabel(u)}</h2><span>${list.filter(x => x.u === u).length} preguntas</span></div>
-      <div class="tiles">${list.filter(x => x.u === u).map(x => `<button class="tile wtile" type="button" data-go="${href}${x.id}"><span class="code">${tcode(x.st)}</span><span class="nm">${esc(x.short)}</span><span class="ds">${esc(x.q)}</span><span class="ft">${statusChip(st(x))}</span></button>`).join('')}</div>`).join('')}`;
-}
-
-/* ---- Explicar ---- */
-const EXP_STEPS = ['Definir', 'Causa inicial', 'Diagrama', 'Cadena causal', 'Revisar y copiar'];
-function renderExplain(p) {
-  const W = expState(p), save = () => wset(p.id, W);
-  const kind = p.u <= 2 ? 'micro' : 'macro';
-  if (W.step > EXP_STEPS.length - 1) W.step = EXP_STEPS.length - 1;
-  const doneFlags = [!!W.defs.trim(), W.cause === 0, W.dia !== null, W.ord && !!W.chain.trim(), W.done];
-  app.innerHTML = `<button class="crumb" type="button" data-go="escribir">← Preguntas de «Explicar»</button>
-    <div class="eyebrow" style="margin-top:12px">${uLabel(p.u)} · Subtema ${tcode(p.st)} · 10 puntos</div>
-    <h2 class="qtitle">${esc(p.q)}</h2>
-    ${stepper(EXP_STEPS, W.step, doneFlags, true)}
-    <div class="card wcard"><div class="card-b" id="wb"></div>
-    <div class="card-f"><button class="btn sm" type="button" id="wp" ${W.step === 0 ? 'disabled' : ''}>← Anterior</button><button class="btn primary" type="button" id="wn">${W.step === EXP_STEPS.length - 1 ? 'Volver a las preguntas' : 'Siguiente paso →'}</button></div></div>`;
-  app.querySelectorAll('[data-step]').forEach(b => b.onclick = () => { W.step = +b.dataset.step; save(); renderExplain(p); });
-  $('#wp').onclick = () => { W.step--; save(); renderExplain(p); window.scrollTo(0, 0); };
-  $('#wn').onclick = () => { if (W.step === EXP_STEPS.length - 1) return go('escribir'); W.step++; save(); renderExplain(p); window.scrollTo(0, 0); };
-  const b = $('#wb');
-  if (W.step === 0) {
-    b.innerHTML = `<p class="q">Escribe una definición breve (una o dos líneas) de: ${p.defs.map(d => `<b>${d[0]}</b>`).join(' y ')}.</p>
-      <textarea id="ta" rows="6" placeholder="Escribe aquí tus definiciones…">${esc(W.defs)}</textarea>
-      <div class="row" style="margin-top:10px"><button class="btn sm" type="button" id="cmp">Comparar con el modelo</button></div><div id="fbx"></div>`;
-    const ta = $('#ta'); ta.oninput = () => { W.defs = ta.value; save(); };
-    $('#cmp').onclick = () => {
-      const t = normTxt(W.defs);
-      $('#fbx').innerHTML = `<div class="fb info">${p.defs.map(([term, def, kw]) => { const ks = kw.split(',').map(s => s.trim()); const hits = ks.map(k => k.split('|').some(alt => t.includes(normTxt(alt)))); return `<p style="margin:0 0 8px"><b>${term}:</b> ${def}<br><span class="small">Ideas clave en tu texto: ${ks.map((k, i) => `<span class="kw ${hits[i] ? 'y' : 'n'}">${k.split('|')[0]}</span>`).join(' ')}</span></p>`; }).join('')}<span class="small muted">La detección de ideas clave es una ayuda aproximada: lo importante es que tu definición sea precisa.</span></div>`;
-    };
-  } else if (W.step === 1) {
-    const perm = shuffle(p.cause.map((_, i) => i));
-    b.innerHTML = `<p class="q">¿Cuál es la <b>causa inicial</b>, el primer eslabón de la cadena?</p><div class="opts">${perm.map((k, j) => `<button class="opt" type="button" data-k="${k}"><span class="l">${'ABC'[j]}</span><span>${esc(p.cause[k])}</span></button>`).join('')}</div><div id="fbx"></div>`;
-    const show = k => { b.querySelectorAll('.opt').forEach(x => { x.disabled = true; if (+x.dataset.k === 0) x.classList.add('right'); else if (+x.dataset.k === k) x.classList.add('wrong'); }); $('#fbx').innerHTML = `<div class="fb ${k === 0 ? 'ok' : 'no'}"><b class="h">${k === 0 ? 'Correcto' : 'No es la causa inicial'}</b>${k === 0 ? 'Empieza tu explicación con esta idea.' : 'Esa opción describe otro cambio. La causa inicial es lo que dispara el mecanismo de la pregunta.'}${k === 0 ? '' : '<div class="row" style="margin-top:8px"><button class="btn sm" type="button" id="re">Intentar de nuevo</button></div>'}</div>`; const re = $('#re'); if (re) re.onclick = () => renderExplain(p); };
-    b.querySelectorAll('.opt').forEach(x => x.onclick = () => { const k = +x.dataset.k; W.cause = k; save(); show(k); });
-    if (W.cause === 0) show(0);
-  } else if (W.step === 2) {
-    b.innerHTML = `<p class="q">Dibuja el desplazamiento que corresponde a esta pregunta y marca el nuevo equilibrio.</p><div class="figure"><svg id="wfig" role="img" aria-label="Diagrama para dibujar"></svg></div><div id="dh" style="margin-top:10px"></div>`;
-    drawShift($('#wfig'), $('#dh'), p.dia.m, { key: p.dia.key, dir: p.dia.dir, why: '' }, ok => { W.dia = ok; save(); });
-  } else if (W.step === 3) {
-    b.innerHTML = `<p class="q"><b>Primero</b>, ordena los eslabones de la cadena causal. <b>Después</b>, escríbela con tus palabras usando conectores.</p><div id="ordh"></div>
-      <div id="wr" ${W.ord ? '' : 'hidden'}><h3 style="margin-top:16px">Tu cadena causal</h3><div class="conns">${CONN_CAUSA.slice(0, 9).map(c => `<button type="button" class="chipx sm" data-c="${c}">${c}</button>`).join('')}</div>
-      <textarea id="ta" rows="7" placeholder="En primer lugar… Por consiguiente… Como resultado… Finalmente…">${esc(W.chain)}</textarea><p class="small" id="cc"></p></div>`;
-    orderExercise($('#ordh'), p.chain, W.ord, ok => { if (ok) { W.ord = true; save(); $('#wr').hidden = false; } });
-    const ta = $('#ta'), cc = () => { const f = foundConn(ta.value, CONN_CAUSA); $('#cc').innerHTML = `Conectores causales usados: <b>${f.length}</b>${f.length ? ' (' + f.join(', ') + ')' : ''}. ${f.length >= 3 ? 'Bien.' : 'Usa al menos tres, uno por eslabón.'}`; };
-    ta.oninput = () => { W.chain = ta.value; save(); cc(); };
-    b.querySelectorAll('[data-c]').forEach(x => x.onclick = () => insertAtCursor(ta, x.dataset.c.charAt(0).toUpperCase() + x.dataset.c.slice(1)));
-    cc();
-  } else {
-    const ds = diagramSentence(p.dia.m, p.dia.key, p.dia.dir);
-    const mine = [W.defs.trim(), p.cause[0], '[Diagrama] ' + ds, W.chain.trim()].filter(Boolean).join('\n\n');
-    const model = [p.defs.map(d => `${d[0]}: ${d[1]}`).join(' '), p.cause[0], ds, p.chain.join(' ')].join('\n\n');
-    const items = CK_EXP[kind];
-    b.innerHTML = `<p class="q">Esta es tu respuesta armada con los 4 pasos. Cópiala para entregarla y revísala con la lista.</p>
-      <div class="answer" id="ans">${esc(mine).replace(/\n/g, '<br>')}</div>
-      <div class="row" style="margin:10px 0 16px"><button class="btn primary sm" type="button" id="cp">Copiar mi respuesta</button></div>
-      <h3>Lista de cotejo</h3>${checklistHtml(items, W.ck, 'ckx')}
-      <details class="model"><summary>Ver respuesta modelo completa</summary><div class="answer">${esc(model).replace(/\n/g, '<br>')}</div></details>`;
-    bindChecklist(b, 'ckx', items, W.ck, () => { W.done = items.every((_, i) => W.ck[i]) || W.done; save(); });
-    $('#cp').onclick = e => copyText(mine, e.currentTarget);
-    if (!W.done && W.defs && W.chain) { W.done = true; save(); }
-  }
-}
 function orderExercise(host, steps, solved, onDone) {
   const S = steps.map((s, i) => ({ i, s }));
   let pool = solved ? [] : shuffle(S), pick = solved ? S.slice() : [], checked = !!solved;
@@ -2714,6 +2674,326 @@ function renderEval(c) {
     $('#cp').onclick = e => copyText(ta.value, e.currentTarget);
     bindChecklist(b, 'ckx', items, W.ck, save);
     cc();
+  }
+}
+
+/* =============== Escribir: ejercicios de base (comandos, conceptos clave, encuentra el error) =============== */
+const DRILLS = {
+  cmd: {
+    id: 'cmd', drill: true, code: 'Comandos', route: 'escribir-comandos', name: 'Comandos evaluativos', next: ['escribir-conceptos', 'Siguiente: Conceptos clave →'],
+    ess: [
+      'El <b>comando</b> (término de instrucción) indica la profundidad de la respuesta. Identificarlo es siempre el primer paso.',
+      '<b>OE1</b> (conocimiento): definir, describir, enumerar, indicar.',
+      '<b>OE2</b> (aplicación y análisis): explicar, analizar, aplicar, distinguir.',
+      '<b>OE3</b> (síntesis y evaluación): discutir, evaluar, examinar, justificar, ¿en qué medida…?, recomendar.',
+      '<b>OE4</b> (habilidades): calcular (mostrando el procedimiento) y dibujar o elaborar un diagrama rotulado.',
+      'Prueba 1: parte (a) <b>10 puntos</b> (explicar) y parte (b) <b>15 puntos</b> (evaluar).'
+    ],
+    trap: '<b>Discutir</b> pide perspectivas; <b>evaluar</b> pide balance de pros y contras; <b>¿en qué medida…?</b> exige además tomar posición con un juicio claro.',
+    items: [
+      { t: 'sort', q: 'Ubica cada comando en su objetivo de evaluación.', bins: ['OE1 · Conocimiento', 'OE2 · Aplicación y análisis', 'OE3 · Síntesis y evaluación', 'OE4 · Habilidades'], items: [['Definir', 0], ['Describir', 0], ['Indicar', 0], ['Explicar', 1], ['Analizar', 1], ['Aplicar', 1], ['Distinguir', 1], ['Discutir', 2], ['Evaluar', 2], ['¿En qué medida…?', 2], ['Recomendar', 2], ['Calcular', 3], ['Dibujar', 3]], e: 'Cuanto más alto el OE, más exige la respuesta: de reproducir información (OE1) a explicar mecanismos (OE2) y emitir juicios fundamentados (OE3).' },
+      { t: 'mc', q: '«Defina el término <i>bien inferior</i>». ¿Qué se espera?', o: ['El significado exacto del término en una o dos líneas, sin desarrollar causas ni ejemplos largos', 'Un diagrama con el desplazamiento de la demanda', 'Una cadena causal completa con ejemplo paraguayo', 'Ventajas y desventajas de los bienes inferiores'], a: 0, e: 'Definir es OE1: precisión y brevedad. Escribir de más no suma puntos y consume tiempo.' },
+      { t: 'mc', q: '«Explique, utilizando un diagrama, cómo un subsidio afecta al mercado de la leche». [10] ¿Qué estructura corresponde?', o: ['Definiciones, causa inicial, diagrama rotulado y cadena causal que diga por qué; sin juicio final', 'Pros y contras del subsidio y una conclusión', 'Solo el diagrama, sin texto', 'Una opinión sobre si el subsidio es justo'], a: 0, e: 'Explicar es OE2: mostrar el mecanismo. Evaluar el subsidio sería contestar otra pregunta.' },
+      { t: 'mc', q: '«Evalúe la eficacia de un impuesto a las bebidas azucaradas». [15] ¿Qué debe tener la respuesta?', o: ['Teoría y diagrama, pros y contras, corto y largo plazo, partes interesadas y una conclusión justificada', 'Solo la definición de impuesto indirecto', 'Una lista de ventajas', 'Un cálculo de la EPD'], a: 0, e: 'Evaluar es OE3: balance de puntos fuertes y débiles y un juicio apoyado en lo discutido.' },
+      { t: 'mc', q: 'Una pregunta empieza con «¿En qué medida…?». Además de pesar argumentos, debes…', o: ['Tomar posición: concluir con un juicio claro sobre el grado en que algo es válido', 'Solo describir el problema', 'Presentar argumentos sin concluir', 'Dar una definición'], a: 0, e: 'Sin una posición clara («en gran medida», «solo en parte», «en menor medida»… y por qué), la respuesta queda incompleta.' },
+      { t: 'mc', q: '«Discuta…». ¿Cómo se cierra bien una respuesta con este comando?', o: ['Mostrando al menos dos posturas antes de inclinarse por una', 'Con una definición', 'Con un cálculo', 'Sin conclusión'], a: 0, e: 'Discutir pide una crítica equilibrada: varias perspectivas presentadas con argumentos.' },
+      { t: 'mc', q: '¿Cuál de estos comandos <b>no</b> pide un juicio final?', o: ['Explicar', 'Evaluar', 'Discutir', '¿En qué medida…?'], a: 0, e: 'Explicar termina cuando la cadena causal llega al resultado. Los otros tres son OE3 y piden juicio.' },
+      { t: 'mc', q: '«Calcule la EPD a partir de los datos». Para obtener todos los puntos debes…', o: ['Mostrar el procedimiento (fórmula y cálculo), no solo el resultado', 'Escribir solo el número final', 'Explicar qué es la elasticidad', 'Dibujar la curva de demanda'], a: 0, e: 'En calcular, el procedimiento da puntos aunque haya un error menor en el resultado.' },
+      { t: 'mc', q: '«Exponer detalladamente las razones o causas de algo». ¿Qué comando es?', o: ['Explicar', 'Describir', 'Definir', 'Evaluar'], a: 0, e: 'Es la definición del IB para explicar: responder «¿por qué?».' },
+      { t: 'mc', q: '«Indique dos determinantes de la oferta». ¿Qué se espera?', o: ['Nombrarlos brevemente, sin explicación', 'Explicar cada uno con un diagrama', 'Evaluar cuál es más importante', 'Definir oferta y ley de la oferta'], a: 0, e: 'Indicar es OE1: una respuesta corta.' },
+      { t: 'mc', q: 'A una pregunta «Explique…», un alumno responde con datos de lo que pasó, sin usar «porque» ni un equivalente. ¿Qué nivel alcanza?', o: ['OE1: describió, no explicó', 'OE2: explicó', 'OE3: evaluó', 'OE4: calculó'], a: 0, e: 'Regla práctica: si la respuesta se lee sin «porque», está describiendo.' },
+      { t: 'mc', q: '«Dibuje un diagrama…». ¿Qué se espera?', o: ['Ejes rotulados, curvas identificadas, equilibrio inicial y final y el desplazamiento con flecha', 'Un dibujo aproximado sin rótulos', 'Solo las curvas', 'Una tabla de datos'], a: 0, e: 'Un diagrama sin rótulos no demuestra el mecanismo y pierde puntos.' }
+    ]
+  },
+  kc: {
+    id: 'kc', drill: true, code: 'Conceptos', route: 'escribir-conceptos', name: 'Conceptos clave', next: ['escribir-explicar', 'Siguiente: Explicar →'],
+    ess: [
+      'Los <b>nueve conceptos clave</b>: escasez, elección, eficiencia, equidad, bienestar económico, sostenibilidad, cambio, interdependencia e intervención.',
+      'En la <b>Evaluación Interna</b>, cada comentario se analiza desde un concepto clave: nómbralo, explica qué significa y conéctalo con el artículo a lo largo del comentario.',
+      'Elige el concepto que <b>mejor ilumina</b> el caso: varios pueden aparecer, pero uno suele ser el central.',
+      'Fórmula útil: «Este artículo ilustra el concepto de ___ porque ___».'
+    ],
+    trap: 'Mencionar el concepto solo en el título no alcanza: tiene que guiar el análisis y la evaluación del comentario.',
+    items: [
+      { t: 'sort', q: 'Une cada concepto con su significado (parte 1).', bins: ['Escasez', 'Elección', 'Eficiencia', 'Equidad', 'Sostenibilidad'], items: [['Recursos limitados frente a deseos ilimitados', 0], ['Decidir entre alternativas y asumir un costo de oportunidad', 1], ['Obtener el mayor provecho de los recursos, sin desperdicio', 2], ['Justicia en la distribución del ingreso y las oportunidades', 3], ['Satisfacer necesidades actuales sin comprometer las futuras', 4]], e: 'Equidad es un concepto normativo: depende de lo que se considera justo.' },
+      { t: 'sort', q: 'Une cada concepto con su significado (parte 2).', bins: ['Bienestar económico', 'Cambio', 'Interdependencia', 'Intervención'], items: [['Nivel de prosperidad y calidad de vida de las personas', 0], ['El paso de una situación económica a otra', 1], ['Personas, empresas y países dependen unos de otros', 2], ['Participación del Estado en los mercados', 3]], e: 'Estos cuatro conceptos completan los nueve del curso.' },
+      { t: 'mc', q: 'Noticia: «El BCP subió la tasa de política monetaria para frenar la inflación». ¿Qué concepto clave ilumina mejor el caso?', o: ['Intervención', 'Escasez', 'Sostenibilidad', 'Interdependencia'], a: 0, e: 'Una autoridad pública actúa sobre la economía para cambiar un resultado. Para la EI: «Este artículo ilustra el concepto de intervención porque el BCP modifica la tasa para influir en el gasto y en los precios».' },
+      { t: 'mc', q: 'Noticia: «Paraguay vende electricidad de Itaipú a Brasil e importa todo el combustible que consume». ¿Qué concepto?', o: ['Interdependencia', 'Equidad', 'Eficiencia', 'Elección'], a: 0, e: 'Ningún país es autosuficiente: lo que pasa en el exterior afecta a Paraguay y viceversa.' },
+      { t: 'mc', q: 'Noticia: «Un aumento del IVA a los alimentos pesa más en el presupuesto de los hogares de bajos ingresos». ¿Qué concepto?', o: ['Equidad', 'Eficiencia', 'Cambio', 'Interdependencia'], a: 0, e: 'El tema central es quién soporta la carga y si es justo: equidad.' },
+      { t: 'mc', q: 'Noticia: «Se desmontan miles de hectáreas de bosque en el Chaco para ampliar la ganadería». ¿Qué concepto?', o: ['Sostenibilidad', 'Intervención', 'Equidad', 'Elección'], a: 0, e: 'El uso actual de los recursos puede reducir los disponibles para las generaciones futuras.' },
+      { t: 'mc', q: 'Noticia: «El gobierno debe decidir si destina el presupuesto a nuevas rutas o a hospitales». ¿Qué concepto ilumina mejor el caso?', o: ['Elección', 'Sostenibilidad', 'Interdependencia', 'Bienestar económico'], a: 0, e: 'La escasez está detrás, pero el foco del caso es la decisión y su costo de oportunidad: elección.' },
+      { t: 'mc', q: 'Noticia: «En varias comunidades del Chaco el agua potable no alcanza para cubrir las necesidades». ¿Qué concepto?', o: ['Escasez', 'Cambio', 'Intervención', 'Eficiencia'], a: 0, e: 'El recurso es limitado frente a las necesidades: escasez.' },
+      { t: 'mc', q: 'Noticia: «Una fábrica incorpora maquinaria nueva y produce lo mismo con menos energía y menos desperdicio». ¿Qué concepto?', o: ['Eficiencia', 'Equidad', 'Interdependencia', 'Escasez'], a: 0, e: 'Más producción por unidad de recurso: eficiencia.' },
+      { t: 'mc', q: 'Noticia: «Las aplicaciones de transporte cambian la forma en que la gente se mueve en Asunción y reducen la demanda de taxis». ¿Qué concepto?', o: ['Cambio', 'Escasez', 'Equidad', 'Sostenibilidad'], a: 0, e: 'El análisis se centra en el paso de una situación del mercado a otra: cambio.' },
+      { t: 'mc', q: 'Noticia: «Además de crecer el ingreso, mejoró el acceso a salud, educación y vivienda». ¿Qué concepto?', o: ['Bienestar económico', 'Eficiencia', 'Intervención', 'Escasez'], a: 0, e: 'El foco es la calidad de vida, no solo el ingreso: bienestar económico.' }
+    ]
+  },
+  err: {
+    id: 'err', drill: true, code: 'Errores', route: 'escribir-errores', name: 'Encuentra el error', next: ['repasar', 'Ir a Repasar →'],
+    ess: [
+      'Lee como un examinador: ¿responde al <b>comando</b>? ¿la <b>teoría</b> es correcta? ¿se mueve la <b>curva correcta</b> y en la <b>dirección correcta</b>?',
+      '¿La <b>cadena causal</b> está completa, sin saltos? ¿El <b>diagrama</b> se usa en el texto?',
+      'En evaluar: ¿hay <b>pros y contras</b>, <b>corto y largo plazo</b> y <b>partes interesadas</b>? ¿La conclusión se apoya en lo discutido?'
+    ],
+    trap: 'El error más castigado: confundir un desplazamiento de la curva con un movimiento a lo largo de ella.',
+    items: [
+      { t: 'mc', q: 'Pregunta: «Explique cómo una suba del precio de la carne vacuna afecta su mercado».<blockquote class="stud">Cuando sube el precio de la carne, la demanda de carne se desplaza a la izquierda.</blockquote>¿Cuál es el error?', o: ['Confunde movimiento con desplazamiento: el propio precio produce un movimiento a lo largo de la curva (baja la cantidad demandada)', 'La demanda debería desplazarse a la derecha', 'Debió usar la curva de oferta', 'No hay error'], a: 0, h: 'Pregúntate: ¿el cambio es del propio precio del bien o de otro determinante?', e: '<b>Versión corregida:</b> «Al subir el precio, disminuye la cantidad demandada: hay un movimiento a lo largo de la curva de demanda, no un desplazamiento».' },
+      { t: 'mc', q: '<blockquote class="stud">Una sequía reduce la oferta de tomates, por eso la curva de oferta se desplaza a la derecha y sube el precio.</blockquote>¿Cuál es el error?', o: ['La dirección: una reducción de la oferta desplaza la curva a la izquierda', 'Debió desplazar la demanda', 'El precio debería bajar', 'No hay error'], a: 0, h: 'Menos oferta significa menos cantidad a cada precio. ¿Hacia qué lado queda la curva?', e: '<b>Versión corregida:</b> «La sequía reduce la oferta: la curva se desplaza a la izquierda, de O₀ a O₁, y el precio sube».' },
+      { t: 'mc', q: '<blockquote class="stud">Con un impuesto específico, la curva de demanda se desplaza hacia abajo en el monto del impuesto.</blockquote>¿Cuál es el error?', o: ['El impuesto desplaza la oferta hacia arriba (izquierda), porque es un costo para el vendedor', 'La demanda debería desplazarse hacia arriba', 'El impuesto no desplaza ninguna curva', 'No hay error'], a: 0, h: '¿Quién entrega el impuesto al Estado?', e: '<b>Versión corregida:</b> «El impuesto específico aumenta el costo por unidad del vendedor: la oferta se desplaza verticalmente hacia arriba en el monto del impuesto».' },
+      { t: 'mc', q: 'Datos: el precio sube 10% y la cantidad demandada baja 20%.<blockquote class="stud">EPD = %ΔP ÷ %ΔQd = 10 ÷ 20 = 0,5, así que la demanda es inelástica.</blockquote>¿Cuál es el error?', o: ['La fórmula está invertida: EPD = %ΔQd ÷ %ΔP = 20 ÷ 10 = 2, demanda elástica', 'Debió usar valores en guaraníes', 'El resultado debía ser negativo y por eso es inelástica', 'No hay error'], a: 0, h: 'En la elasticidad, ¿qué va arriba: la respuesta (cantidad) o el estímulo (precio)?', e: '<b>Versión corregida:</b> «EPD = %ΔQd ÷ %ΔP = 20% ÷ 10% = 2: la demanda es elástica».' },
+      { t: 'mc', q: '<blockquote class="stud">Fumar en una parada de colectivo es una externalidad negativa de consumo, por eso el costo marginal social (CMS) está por encima del costo marginal privado.</blockquote>¿Cuál es el error?', o: ['En una externalidad de consumo se mueve la curva de beneficio: el BMS queda por debajo del BMP', 'Es una externalidad positiva', 'Es una externalidad de producción', 'No hay error'], a: 0, h: 'El daño nace al consumir. ¿Qué curva representa el lado del consumo?', e: '<b>Versión corregida:</b> «Como el costo externo nace del consumo, el beneficio marginal social es menor que el privado: el BMS está por debajo del BMP».' },
+      { t: 'mc', q: 'Pregunta: «Explique por qué subió el precio del combustible en 2022».<blockquote class="stud">El precio del combustible subió mucho en 2022 y afectó a muchas familias paraguayas.</blockquote>¿Cuál es el error?', o: ['Describe, no explica: no dice por qué subió ni muestra la cadena causal', 'Debió incluir un cálculo', 'Debió evaluar la política del gobierno', 'No hay error'], a: 0, h: '¿Aparece algún «porque» o «debido a»?', e: '<b>Versión corregida:</b> «El precio subió porque aumentó el precio internacional del petróleo; como Paraguay importa todo su combustible, su costo en guaraníes aumentó…».' },
+      { t: 'mc', q: '<blockquote class="stud">El BCP bajó la tasa de interés y por eso aumentó el PIB real.</blockquote>¿Cuál es el error?', o: ['Salta eslabones: falta que el crédito se abarate, que suban el consumo y la inversión y que la DA se desplace a la derecha', 'La tasa debía subir', 'El PIB real debería bajar', 'No hay error'], a: 0, h: '¿Qué pasa entre la decisión del BCP y el PIB?', e: '<b>Versión corregida:</b> «El BCP baja la tasa; por consiguiente, el crédito se abarata y aumentan C e I; como resultado, la DA se desplaza a la derecha y sube el PIB real».' },
+      { t: 'mc', q: '<blockquote class="stud">(Dibuja un diagrama correcto de oferta y demanda.) El precio sube porque hay menos oferta.</blockquote>¿Cuál es el error principal?', o: ['El diagrama no se usa en el texto: falta decir qué curva se desplaza, de O₀ a O₁, y el nuevo equilibrio', 'El diagrama sobra', 'Debió dibujar la DA y la OA', 'No hay error'], a: 0, h: 'Un diagrama suelto no suma puntos. ¿El texto lo menciona?', e: '<b>Versión corregida:</b> «Como se observa en el diagrama, la oferta se desplaza de O₀ a O₁; al precio inicial hay escasez y el precio sube de P₀ a P₁».' },
+      { t: 'mc', q: 'Final de una evaluación sobre un impuesto a los cigarrillos:<blockquote class="stud">En conclusión, el impuesto es eficaz y además Paraguay debería prohibir el vapeo.</blockquote>¿Cuál es el error?', o: ['Introduce información nueva y no pesa lo discutido: la conclusión debe apoyarse en los argumentos anteriores', 'La conclusión es demasiado larga', 'Debió incluir un diagrama en la conclusión', 'No hay error'], a: 0, h: '¿La conclusión retoma algo que se argumentó antes?', e: '<b>Versión corregida:</b> «En definitiva, el impuesto reduce el consumo sobre todo a largo plazo; en el corto plazo su efecto es limitado por la demanda inelástica y el contrabando».' },
+      { t: 'mc', q: 'Pregunta: «Evalúe el aumento del salario mínimo».<blockquote class="stud">Creo que es injusto que se gane tan poco, así que el salario mínimo es bueno.</blockquote>¿Cuál es el error?', o: ['Es una opinión: faltan pros y contras, corto y largo plazo y partes interesadas', 'Debió definir inflación', 'Debió ser más corta', 'No hay error'], a: 0, h: 'Evaluar no es opinar. ¿Qué dimensiones pide la evaluación?', e: '<b>Versión mejorada:</b> «Por una parte, los trabajadores formales ganan poder adquisitivo; sin embargo, los jóvenes pueden quedar desempleados o pasar a la informalidad…».' },
+      { t: 'mc', q: '<blockquote class="stud">La inflación bajó de 6% a 3%, por lo tanto hubo deflación.</blockquote>¿Cuál es el error?', o: ['Es desinflación: los precios siguen subiendo, solo que más despacio', 'Es hiperinflación', 'Es una recesión', 'No hay error'], a: 0, h: '¿La inflación pasó a ser negativa?', e: '<b>Versión corregida:</b> «Hubo desinflación: la tasa de inflación bajó, pero sigue siendo positiva».' },
+      { t: 'mc', q: '<blockquote class="stud">El PIB nominal creció 8%, así que la producción del país creció 8%.</blockquote>¿Cuál es el error?', o: ['El PIB nominal incluye la suba de precios: para medir la producción se usa el PIB real', 'Debió usar el PIB per cápita', 'El PIB no mide producción', 'No hay error'], a: 0, h: '¿Qué variable descuenta la inflación?', e: '<b>Versión corregida:</b> «Para saber cuánto creció la producción hay que usar el PIB real, que descuenta la inflación».' },
+      { t: 'mc', q: '<blockquote class="stud">El dólar pasó de Gs. 7.000 a Gs. 7.500, entonces el guaraní se apreció.</blockquote>¿Cuál es el error?', o: ['El guaraní se depreció: hacen falta más guaraníes para comprar un dólar', 'Se apreció el dólar y también el guaraní', 'No cambió el valor del guaraní', 'No hay error'], a: 0, h: '¿Ahora un dólar cuesta más o menos guaraníes?', e: '<b>Versión corregida:</b> «El guaraní se depreció frente al dólar».' },
+      { t: 'mc', q: '<blockquote class="stud">A largo plazo, una mejora de la educación técnica desplaza la DA a la derecha.</blockquote>¿Cuál es el error?', o: ['A largo plazo, la mejora del capital humano desplaza la OALP (capacidad productiva), no la DA', 'Debería desplazar la DA a la izquierda', 'No afecta a ninguna curva', 'No hay error'], a: 0, h: 'La educación cambia la calidad del factor trabajo. ¿Qué curva representa la capacidad productiva?', e: '<b>Versión corregida:</b> «La mejora de la educación aumenta la productividad y desplaza la OALP a la derecha; el gasto en educación también puede aumentar la DA en el corto plazo».' },
+      { t: 'mc', q: 'Pregunta: «Evalúe una política monetaria contractiva».<blockquote class="stud">La política monetaria contractiva es eficaz porque baja la inflación.</blockquote>¿Qué le falta?', o: ['Equilibrio: contras como menos crecimiento y empleo, rezagos, y quiénes ganan y pierden', 'Una definición de PIB nominal', 'Un cálculo de elasticidad', 'Nada, está completa'], a: 0, h: 'Una evaluación de un solo lado no es una evaluación.', e: '<b>Versión mejorada:</b> «En el corto plazo puede reducir la inflación; sin embargo, frena el crecimiento y el empleo, tarda meses en actuar y encarece las deudas de hogares y empresas…».' }
+    ]
+  }
+};
+const DRILL_LIST = Object.values(DRILLS);
+
+/* preguntas adicionales de Explicar para la Unidad 4 */
+EXP.push(
+  {
+    id: 'tasa-guarani', u: 4, st: '4.5', short: 'Tasa del BCP y valor del guaraní',
+    q: 'Explique, utilizando un diagrama del mercado de divisas, cómo un aumento de la tasa de interés del BCP afecta al valor del guaraní.',
+    defs: [['Tipo de cambio', 'Precio de una moneda expresado en términos de otra moneda.', 'precio, moneda, otra'], ['Tasa de interés', 'Rendimiento que se obtiene por ahorrar o invertir dinero, o costo de pedirlo prestado.', 'rendimiento|ganancia, ahorr|invert, prest']],
+    cause: ['Invertir en guaraníes rinde más que en otras monedas: los inversores compran guaraníes.', 'Los paraguayos viajan más al exterior.', 'Baja el precio internacional de la soja.'],
+    dia: { m: 'fx', key: 'D', dir: 1 },
+    chain: ['El aumento de la tasa del BCP hace que los depósitos y bonos en guaraníes rindan más que en otras monedas.', 'Por consiguiente, inversores locales y extranjeros compran guaraníes para aprovechar ese rendimiento.', 'Como resultado, aumenta la demanda de guaraníes: la curva se desplaza a la derecha, de D₀ a D₁.', 'Esto provoca que el guaraní se aprecie (TC₁ > TC₀): se necesitan menos guaraníes para comprar un dólar.']
+  },
+  {
+    id: 'importaciones-guarani', u: 4, st: '4.5', short: 'Importaciones y valor del guaraní',
+    q: 'Explique, utilizando un diagrama, cómo un aumento de las importaciones de vehículos afecta al valor del guaraní.',
+    defs: [['Depreciación', 'Disminución del valor de una moneda frente a otra en un régimen de tipo de cambio flotante.', 'disminu|baja|cae, valor, moneda'], ['Oferta de guaraníes', 'Cantidad de guaraníes que se ofrecen en el mercado cambiario para comprar otras monedas.', 'cantidad, ofrec|vend, otras monedas|dolar']],
+    cause: ['Los importadores venden guaraníes para comprar los dólares con que pagan los vehículos.', 'Aumentan las exportaciones de carne.', 'Llegan más remesas desde España.'],
+    dia: { m: 'fx', key: 'O', dir: 1 },
+    chain: ['Para pagar los vehículos importados, los importadores necesitan dólares.', 'Por consiguiente, venden guaraníes a cambio de dólares en el mercado cambiario.', 'Como resultado, aumenta la oferta de guaraníes: la curva se desplaza a la derecha, de O₀ a O₁.', 'Esto provoca que el guaraní se deprecie (TC₁ < TC₀): se necesitan más guaraníes para comprar un dólar.']
+  }
+);
+
+const findTopic = id => TOPICS.find(x => x.id === id) || DRILL_LIST.find(x => x.id === id);
+const errKeys = () => Object.keys(ERR).filter(k => { const [id, i] = k.split('#'); const t = findTopic(id); return t && t.items[+i]; });
+const errCount = () => errKeys().length;
+function updateBadge() { const b = document.getElementById('errBadge'); if (!b) return; const n = errCount(); b.textContent = n; b.hidden = n === 0; }
+function repTabs(cur) {
+  const n = errCount();
+  return `<div class="seg" role="group" aria-label="Repasar" style="margin-bottom:18px">${[['repasar', `Mis errores${n ? ' (' + n + ')' : ''}`], ['examen', 'Examen rápido'], ['tarjetas', 'Tarjetas'], ['reporte', 'Mi reporte']].map(([r, l]) => `<button type="button" data-go="${r}" aria-pressed="${r === cur}">${l}</button>`).join('')}</div>`;
+}
+const RV = { list: null, i: 0, res: [] };
+const tLabel = t => t.drill ? t.name : 'Subtema ' + (t.code || t.id);
+function renderReview() {
+  if (RV.list && RV.i < RV.list.length) return reviewQ();
+  const keys = errKeys();
+  const by = {}; keys.forEach(k => { const id = k.split('#')[0]; by[id] = (by[id] || 0) + 1; });
+  const ended = RV.list ? `<div class="fb ${RV.res.filter(Boolean).length === RV.res.length ? 'ok' : 'info'}" style="max-width:820px"><b class="h">Repaso terminado: ${RV.res.filter(Boolean).length} de ${RV.res.length} correctas</b>Los ejercicios acertados dos veces seguidas salen de la lista.</div>` : '';
+  RV.list = null;
+  const ordered = Object.keys(by).sort((a, b) => { const ia = TOPICS.findIndex(t => t.id === a), ib = TOPICS.findIndex(t => t.id === b); return (ia < 0 ? 99 : ia) - (ib < 0 ? 99 : ib); });
+  app.innerHTML = `<div class="eyebrow">Repasar</div><h1>Mis errores</h1>${repTabs('repasar')}
+    <p class="lede">Cada ejercicio que fallas en los temas, en Escribir o en el examen rápido se guarda aquí. Sale de la lista cuando lo aciertas <b>dos veces seguidas</b>. Es la versión digital de la bitácora de errores del cuaderno.</p>
+    ${ended}
+    ${keys.length ? `<div class="row" style="margin:14px 0 18px"><button class="btn primary" type="button" id="rvgo">Repasar ahora (${Math.min(10, keys.length)} ejercicios)</button><span class="muted small">${keys.length} pendientes · ${PROG.mastered || 0} superados</span></div>
+    <div class="review">${ordered.map(id => { const t = findTopic(id); return `<div class="it no" style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center"><span>${t.drill ? `<b>${esc(t.name)}</b>` : `<b>${t.code || t.id}</b> ${esc(t.name)}`} · <span class="muted">${by[id]} pendiente${by[id] > 1 ? 's' : ''}</span></span><button class="btn sm" type="button" data-go="${t.route || tid(id)}">Volver a lo esencial</button></div>`; }).join('')}</div>`
+      : `<div class="essentials"><p style="margin:0"><b>No tienes errores pendientes.</b> Cuando falles un ejercicio, aparecerá aquí para que lo repases.${PROG.mastered ? ` Ya superaste ${PROG.mastered}.` : ''}</p></div>`}`;
+  if (keys.length) $('#rvgo').onclick = () => {
+    RV.list = keys.sort((a, b) => (ERR[b].m - ERR[a].m) || (ERR[a].t - ERR[b].t)).slice(0, 10); RV.i = 0; RV.res = []; reviewQ();
+  };
+}
+function reviewQ() {
+  const k = RV.list[RV.i], [id, si] = k.split('#'), idx = +si, t = findTopic(id), it = t.items[idx];
+  app.innerHTML = `<div class="eyebrow">Repasar · ${tLabel(t)}</div><h2 style="margin-top:4px">Ejercicio ${RV.i + 1} de ${RV.list.length}</h2>
+    <div class="bar" style="max-width:820px;margin:8px 0 16px"><i style="width:${RV.i / RV.list.length * 100}%"></i></div>
+    <div class="card"><div class="card-b"><div id="rb"></div></div><div class="card-f"><button class="btn sm" type="button" id="rq">Terminar</button><button class="btn primary" type="button" id="rn">${RV.i === RV.list.length - 1 ? 'Ver resultado' : 'Siguiente →'}</button></div></div>`;
+  const host = $('#rb');
+  const done = ok => { if (RV.res[RV.i] === undefined) RV.res[RV.i] = ok; logResult(id, idx, ok); };
+  const inst = it.t === 'genmc' ? GEN[it.g]() : it;
+  const hint = autoHint(t, inst);
+  if (inst.t === 'mc') mountMC(host, inst, null, idx, done, { hint1: hint });
+  else if (inst.t === 'sort') mountSort(host, inst, null, idx, done, { hint1: hint });
+  else { const mk = () => { const g = Object.assign({ t: 'gen' }, GEN[it.g](it.arg)); mountGen(host, g, done, mk, { hint1: autoHint(t, g) }); }; mk(); }
+  $('#rq').onclick = () => { RV.list = RV.list.slice(0, RV.i + (RV.res[RV.i] !== undefined ? 1 : 0)); RV.i = RV.list.length; renderReview(); };
+  $('#rn').onclick = () => { if (RV.res[RV.i] === undefined) RV.res[RV.i] = false; RV.i++; window.scrollTo(0, 0); renderReview(); };
+}
+
+/* ---- Mi reporte ---- */
+function reportText() {
+  const name = store.get('alumno', ''), curso = store.get('curso', '');
+  let fecha; try { fecha = new Date().toLocaleDateString('es-PY'); } catch (e) { fecha = new Date().toISOString().slice(0, 10); }
+  const L = ['REPORTE DE PRÁCTICA · Taller de Economía IB', `Alumno/a: ${name || '(escribe tu nombre)'}`, `Curso: ${curso || '—'}`, `Fecha: ${fecha}`, '', 'Ejercicios resueltos por unidad:'];
+  Object.keys(UNITS).forEach(u => { const ts = TOPICS.filter(t => t.u === +u); const d = ts.reduce((s, t) => s + topicDone(t.id), 0), n = ts.reduce((s, t) => s + t.items.length, 0); L.push(`- Unidad ${u} · ${UNITS[u]}: ${d}/${n} (${Math.round(d / n * 100)}%)`); });
+  const by = {}; errKeys().forEach(k => { const id = k.split('#')[0]; by[id] = (by[id] || 0) + 1; });
+  const weak = Object.entries(by).sort((a, b) => b[1] - a[1]).slice(0, 3).map(([id, n]) => { const t = findTopic(id); return `${t.drill ? t.name : (t.code || t.id) + ' ' + t.name} (${n})`; });
+  L.push('', `Temas a reforzar (errores pendientes): ${weak.length ? weak.join('; ') : 'ninguno'}`);
+  L.push(`Errores pendientes: ${errCount()} · superados: ${PROG.mastered || 0}`);
+  L.push(`Examen rápido (mejor resultado): ${PROG.exam ? PROG.exam.best + '/' + PROG.exam.of : 'sin rendir'}`);
+  L.push('', 'Escribir:');
+  L.push(`- Comandos evaluativos: ${topicDone('cmd')}/${DRILLS.cmd.items.length}`);
+  L.push(`- Conceptos clave: ${topicDone('kc')}/${DRILLS.kc.items.length}`);
+  L.push(`- Explicar: ${EXP.filter(p => expState(p).done).length}/${EXP.length} preguntas completas`);
+  L.push(`- Evaluar: ${EVA.filter(c => evaState(c).done).length}/${EVA.length} casos completos`);
+  L.push(`- Encuentra el error: ${topicDone('err')}/${DRILLS.err.items.length}`);
+  const labs = Object.entries(PROG.labs || {}).filter(([k, v]) => LABS[k] && v.n);
+  L.push('', `Laboratorios (aciertos): ${labs.length ? labs.map(([k, v]) => `${LABS[k].name} ${v.ok}/${v.n}`).join('; ') : 'sin registros'}`);
+  L.push('', 'Taller de Economía IB · © Prof. Econ. Hugo Rivarola');
+  return L.join('\n');
+}
+function renderReport() {
+  app.innerHTML = `<div class="eyebrow">Repasar</div><h1>Mi reporte</h1>${repTabs('reporte')}
+    <p class="lede">Genera un resumen de tu práctica para entregarlo a tu profesor. Completa tus datos, copia el texto y pégalo en Classroom o envíalo como te indique.</p>
+    <div class="essentials repform"><div><label class="lbl2" for="rname">Nombre y apellido</label><input id="rname" class="inp" autocomplete="name" value="${esc(store.get('alumno', ''))}"></div>
+      <div><label class="lbl2" for="rcurso">Curso o sección</label><input id="rcurso" class="inp" value="${esc(store.get('curso', ''))}"></div></div>
+    <h3 style="margin-top:18px">Vista previa</h3><pre class="answer rep" id="rtxt"></pre>
+    <div class="row" style="margin-top:10px"><button class="btn primary" type="button" id="rcp">Copiar reporte</button><span class="small muted">El reporte se arma con lo que hiciste en este dispositivo.</span></div>`;
+  const upd = () => { $('#rtxt').textContent = reportText(); };
+  $('#rname').oninput = e => { store.set('alumno', e.target.value); upd(); };
+  $('#rcurso').oninput = e => { store.set('curso', e.target.value); upd(); };
+  $('#rcp').onclick = e => copyText(reportText(), e.currentTarget);
+  upd();
+}
+
+/* ---- Escribir: portada, pestañas y ejercicios de base ---- */
+const WTABS = [['escribir-comandos', 'Comandos'], ['escribir-conceptos', 'Conceptos clave'], ['escribir-explicar', 'Explicar · 10 p'], ['escribir-evaluar', 'Evaluar · 15 p'], ['escribir-errores', 'Encuentra el error']];
+function writeTabs(cur) {
+  return `<div class="seg wtabs" role="group" aria-label="Secciones de Escribir" style="margin-bottom:18px">${WTABS.map(([r, l], i) => `<button type="button" data-go="${r}" aria-pressed="${r === cur}">${i + 1}. ${l}</button>`).join('')}</div>`;
+}
+function renderWriteHome() {
+  const pc = t => `${topicDone(t.id)}/${t.items.length} ejercicios`;
+  const cards = [
+    ['escribir-comandos', 'Comandos evaluativos', 'Qué pide cada pregunta, cuánto vale y cómo se cierra.', pc(DRILLS.cmd)],
+    ['escribir-conceptos', 'Conceptos clave', 'Los nueve conceptos del curso aplicados a casos, como en la Evaluación Interna.', pc(DRILLS.kc)],
+    ['escribir-explicar', 'Explicar · 10 puntos', 'Respuestas en 4 pasos: primero un ejemplo resuelto, después guiado y luego por tu cuenta.', `${EXP.filter(p => expState(p).done).length}/${EXP.length} completas`],
+    ['escribir-evaluar', 'Evaluar · 15 puntos', 'Pros y contras, corto y largo plazo y partes interesadas.', `${EVA.filter(c => evaState(c).done).length}/${EVA.length} completos`],
+    ['escribir-errores', 'Encuentra el error', 'Lee respuestas con errores típicos y corrígelas como un examinador.', pc(DRILLS.err)]
+  ];
+  app.innerHTML = `<div class="eyebrow">Escribir como en el examen</div><h1>Escribir</h1>
+    <p class="lede">Sigue este orden: primero entiende qué pide la pregunta y qué concepto aplica; después escribe; al final, revisa errores como lo haría un examinador.</p>
+    <div class="route wroute">${cards.map(([r, n, d, p], i) => `<button class="rcard" type="button" data-go="${r}"><span class="rn">${i + 1}</span><b>${n}</b><span class="d">${d}</span><span class="tag" style="justify-self:start;margin-top:6px">${p}</span></button>`).join('')}</div>`;
+}
+function renderDrill(t) {
+  const S = SESS[t.id] = SESS[t.id] || { tab: 'prac', i: 0, res: {}, inst: {} };
+  app.innerHTML = `<div class="eyebrow">Escribir como en el examen</div><h1>${t.name}</h1>${writeTabs(t.route)}
+    <details class="essentials drill-ess" ${S.i === 0 && !Object.keys(S.res).length ? 'open' : ''}><summary><b>Lo esencial</b></summary><ul>${t.ess.map(x => `<li>${x}</li>`).join('')}</ul>${t.trap ? `<div class="trap"><b>Clave:</b> ${t.trap}</div>` : ''}</details>
+    <div id="tbody" style="margin-top:16px"></div>`;
+  renderDeck(t, S);
+}
+
+/* ---- Explicar: ejemplo resuelto → guiado → por tu cuenta ---- */
+const expMode = p => { const l = EXP.filter(x => x.u === p.u); const i = l.indexOf(p); return i === 0 ? 'res' : i === 1 ? 'gui' : 'solo'; };
+const MODE_TXT = { res: ['Ejemplo resuelto', 'Lee cada paso resuelto y sus comentarios. No tienes que escribir nada.'], gui: ['Guiado', 'Los pasos 1 y 2 ya están resueltos. Tú haces el diagrama y la cadena causal.'], solo: ['Por tu cuenta', 'Haces los 4 pasos tú solo.'] };
+function statusChip(st, mode) {
+  const started = st.step > 0 || st.defs || st.txt;
+  return (mode ? `<span class="tag mode-${mode}">${MODE_TXT[mode][0]}</span> ` : '') + (st.done ? '<span class="tag ok">Completa</span>' : started ? '<span class="tag prog">En progreso</span>' : '<span class="tag">Sin empezar</span>');
+}
+function renderWrite(tab) {
+  const isE = tab === 'eva';
+  const list = isE ? EVA : EXP, href = isE ? 'eva-' : 'exp-', st = isE ? evaState : expState;
+  const units = [...new Set(list.map(x => x.u))];
+  app.innerHTML = `<div class="eyebrow">Escribir como en el examen</div><h1>${isE ? 'Evaluar una política' : 'Explicar con un diagrama'}</h1>${writeTabs(isE ? 'escribir-evaluar' : 'escribir-explicar')}
+    ${isE ? `<div class="method"><div><b>Qué pide «evaluar»</b><p>Valorar puntos fuertes y débiles y cerrar con un juicio justificado. Es la parte b de la Prueba 1 (15 puntos).</p></div>
+      <div><b>CLASPP: tu foco</b><p>Enfoca tu respuesta en <b>pros y contras</b>, <b>corto y largo plazo</b> y <b>partes interesadas</b>. Contexto, supuestos y prioridades sirven de apoyo.</p></div>
+      <div><b>Párrafo F-E-I-J</b><p>Factor → Explicación → Implicación → Juicio. Cada párrafo de evaluación sigue esa secuencia.</p></div></div>`
+      : `<div class="method"><div><b>Qué pide «explicar»</b><p>Decir <b>por qué</b> ocurre algo con una cadena causal. Es la parte a de la Prueba 1 (10 puntos).</p></div>
+      <div><b>Los 4 pasos</b><p>Definir → Causa inicial → Diagrama → Cadena causal. Al final revisas tu respuesta con la lista de cotejo y la copias.</p></div>
+      <div><b>En cada unidad</b><p>La primera pregunta es un <b>ejemplo resuelto</b>, la segunda es <b>guiada</b> y las demás las haces <b>por tu cuenta</b>. Síguelas en orden.</p></div></div>`}
+    ${units.map(u => `<div class="unit-h"><h2>${uLabel(u)}</h2><span>${list.filter(x => x.u === u).length} preguntas</span></div>
+      <div class="tiles">${list.filter(x => x.u === u).map(x => `<button class="tile wtile" type="button" data-go="${href}${x.id}"><span class="code">${tcode(x.st)}</span><span class="nm">${esc(x.short)}</span><span class="ds">${esc(x.q)}</span><span class="ft">${statusChip(st(x), isE ? null : expMode(x))}</span></button>`).join('')}</div>`).join('')}`;
+}
+function boldConn(txt) {
+  let h = esc(txt);
+  [...CONN_CAUSA].sort((a, b) => b.length - a.length).forEach(c => { h = h.replace(new RegExp('(^|[^\\wáéíóúñ])(' + c.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi'), '$1<b>$2</b>'); });
+  return h;
+}
+const EXP_STEPS = ['Definir', 'Causa inicial', 'Diagrama', 'Cadena causal', 'Revisar y copiar'];
+function renderExplain(p) {
+  const W = expState(p), save = () => wset(p.id, W);
+  const kind = p.u <= 2 ? 'micro' : 'macro', mode = expMode(p);
+  if (W.step > EXP_STEPS.length - 1) W.step = EXP_STEPS.length - 1;
+  const given = mode !== 'solo';
+  const doneFlags = mode === 'res' ? [true, true, true, true, W.done] : [given || !!W.defs.trim(), given || W.cause === 0, W.dia !== null, W.ord && !!W.chain.trim(), W.done];
+  const sameU = EXP.filter(x => x.u === p.u), nextP = sameU[sameU.indexOf(p) + 1];
+  app.innerHTML = `<button class="crumb" type="button" data-go="escribir-explicar">← Preguntas de «Explicar»</button>
+    <div class="eyebrow" style="margin-top:12px">${uLabel(p.u)} · Subtema ${tcode(p.st)} · 10 puntos</div>
+    <h2 class="qtitle">${esc(p.q)}</h2>
+    <div class="modebar mode-${mode}"><b>${MODE_TXT[mode][0]}.</b> ${MODE_TXT[mode][1]}</div>
+    ${stepper(EXP_STEPS, W.step, doneFlags, true)}
+    <div class="card wcard"><div class="card-b" id="wb"></div>
+    <div class="card-f"><button class="btn sm" type="button" id="wp" ${W.step === 0 ? 'disabled' : ''}>← Anterior</button><button class="btn primary" type="button" id="wn">${W.step === EXP_STEPS.length - 1 ? (nextP ? 'Siguiente pregunta →' : 'Volver a las preguntas') : 'Siguiente paso →'}</button></div></div>`;
+  app.querySelectorAll('[data-step]').forEach(b => b.onclick = () => { W.step = +b.dataset.step; save(); renderExplain(p); });
+  $('#wp').onclick = () => { W.step--; save(); renderExplain(p); window.scrollTo(0, 0); };
+  $('#wn').onclick = () => { if (W.step === EXP_STEPS.length - 1) return go(nextP ? 'exp-' + nextP.id : 'escribir-explicar'); W.step++; save(); renderExplain(p); window.scrollTo(0, 0); };
+  const b = $('#wb');
+  const note = t => `<div class="note"><b>Fíjate:</b> ${t}</div>`;
+  const solvedTag = mode === 'gui' ? '<span class="tag ok">Resuelto para ti</span> ' : '';
+  const ds = diagramSentence(p.dia.m, p.dia.key, p.dia.dir);
+  if (W.step === 0) {
+    if (given) {
+      b.innerHTML = `<p class="q">${solvedTag}Definiciones de ${p.defs.map(d => `<b>${d[0]}</b>`).join(' y ')}.</p>
+        ${p.defs.map(([term, def, kw]) => `<div class="answer" style="margin-bottom:8px"><b>${term}:</b> ${esc(def)}<br><span class="small">Ideas clave: ${kw.split(',').map(k => `<span class="kw y">${k.trim().split('|')[0]}</span>`).join(' ')}</span></div>`).join('')}
+        ${note('cada definición ocupa una o dos líneas y contiene sus ideas clave (en verde). No explica causas ni da ejemplos: eso viene en los pasos siguientes.')}`;
+    } else {
+      b.innerHTML = `<p class="q">Escribe una definición breve (una o dos líneas) de: ${p.defs.map(d => `<b>${d[0]}</b>`).join(' y ')}.</p>
+        <textarea id="ta" rows="6" placeholder="Escribe aquí tus definiciones…">${esc(W.defs)}</textarea>
+        <div class="row" style="margin-top:10px"><button class="btn sm" type="button" id="cmp">Comparar con el modelo</button></div><div id="fbx"></div>`;
+      const ta = $('#ta'); ta.oninput = () => { W.defs = ta.value; save(); };
+      $('#cmp').onclick = () => {
+        const t = normTxt(W.defs);
+        $('#fbx').innerHTML = `<div class="fb info">${p.defs.map(([term, def, kw]) => { const ks = kw.split(',').map(s => s.trim()); const hits = ks.map(k => k.split('|').some(alt => t.includes(normTxt(alt)))); return `<p style="margin:0 0 8px"><b>${term}:</b> ${def}<br><span class="small">Ideas clave en tu texto: ${ks.map((k, i) => `<span class="kw ${hits[i] ? 'y' : 'n'}">${k.split('|')[0]}</span>`).join(' ')}</span></p>`; }).join('')}<span class="small muted">La detección de ideas clave es una ayuda aproximada: lo importante es que tu definición sea precisa.</span></div>`;
+      };
+    }
+  } else if (W.step === 1) {
+    if (given) {
+      b.innerHTML = `<p class="q">${solvedTag}¿Cuál es la <b>causa inicial</b>?</p><div class="opts">${p.cause.map((c, k) => `<div class="opt ${k === 0 ? 'right' : 'elim'}"><span class="l">${k === 0 ? '✓' : '✗'}</span><span>${esc(c)}</span></div>`).join('')}</div>
+        ${note('la causa inicial es el disparador del mecanismo que pide la pregunta. Las otras opciones describen cambios distintos, que moverían otra curva o no corresponden a la pregunta.')}`;
+    } else {
+      const perm = shuffle(p.cause.map((_, i) => i));
+      b.innerHTML = `<p class="q">¿Cuál es la <b>causa inicial</b>, el primer eslabón de la cadena?</p><div class="opts">${perm.map((k, j) => `<button class="opt" type="button" data-k="${k}"><span class="l">${'ABC'[j]}</span><span>${esc(p.cause[k])}</span></button>`).join('')}</div><div id="fbx"></div>`;
+      const show = k => { b.querySelectorAll('.opt').forEach(x => { x.disabled = true; if (+x.dataset.k === 0) x.classList.add('right'); else if (+x.dataset.k === k) x.classList.add('wrong'); }); $('#fbx').innerHTML = `<div class="fb ${k === 0 ? 'ok' : 'no'}"><b class="h">${k === 0 ? 'Correcto' : 'No es la causa inicial'}</b>${k === 0 ? 'Empieza tu explicación con esta idea.' : 'Esa opción describe otro cambio. La causa inicial es lo que dispara el mecanismo de la pregunta.'}${k === 0 ? '' : '<div class="row" style="margin-top:8px"><button class="btn sm" type="button" id="re">Intentar de nuevo</button></div>'}</div>`; const re = $('#re'); if (re) re.onclick = () => renderExplain(p); };
+      b.querySelectorAll('.opt').forEach(x => x.onclick = () => { const k = +x.dataset.k; W.cause = k; save(); show(k); });
+      if (W.cause === 0) show(0);
+    }
+  } else if (W.step === 2) {
+    b.innerHTML = `<p class="q">${mode === 'res' ? 'Así queda el diagrama de esta pregunta.' : 'Dibuja el desplazamiento que corresponde a esta pregunta y marca el nuevo equilibrio.'}</p><div class="figure"><svg id="wfig" role="img" aria-label="Diagrama"></svg></div><div id="dh" style="margin-top:10px"></div>${mode === 'res' ? note('se desplaza una sola curva, en la dirección que indica la causa inicial; se marcan el equilibrio inicial E₀ y el nuevo E₁, con sus valores en los ejes. En el texto se menciona: «' + esc(ds) + '»') : ''}`;
+    drawShift($('#wfig'), $('#dh'), p.dia.m, { key: p.dia.key, dir: p.dia.dir, why: '' }, ok => { if (mode !== 'res') { W.dia = ok; save(); } });
+    if (mode === 'res') { const s = $('#dsol', $('#dh')); if (s) s.click(); }
+  } else if (W.step === 3) {
+    if (mode === 'res') {
+      b.innerHTML = `<p class="q">La cadena causal, eslabón por eslabón:</p><ol class="rchain">${p.chain.map(s => `<li>${boldConn(s)}</li>`).join('')}</ol>
+        ${note('cada eslabón se une al siguiente con un conector causal (en negrita) y ninguno se salta: causa → mecanismo → desplazamiento → nuevo equilibrio.')}`;
+    } else {
+      b.innerHTML = `<p class="q"><b>Primero</b>, ordena los eslabones de la cadena causal. <b>Después</b>, escríbela con tus palabras usando conectores.</p><div id="ordh"></div>
+        <div id="wr" ${W.ord ? '' : 'hidden'}><h3 style="margin-top:16px">Tu cadena causal</h3><div class="conns">${CONN_CAUSA.slice(0, 9).map(c => `<button type="button" class="chipx sm" data-c="${c}">${c}</button>`).join('')}</div>
+        <textarea id="ta" rows="7" placeholder="En primer lugar… Por consiguiente… Como resultado… Finalmente…">${esc(W.chain)}</textarea><p class="small" id="cc"></p></div>`;
+      orderExercise($('#ordh'), p.chain, W.ord, ok => { if (ok) { W.ord = true; save(); $('#wr').hidden = false; } });
+      const ta = $('#ta'), cc = () => { const f = foundConn(ta.value, CONN_CAUSA); $('#cc').innerHTML = `Conectores causales usados: <b>${f.length}</b>${f.length ? ' (' + f.join(', ') + ')' : ''}. ${f.length >= 3 ? 'Bien.' : 'Usa al menos tres, uno por eslabón.'}`; };
+      ta.oninput = () => { W.chain = ta.value; save(); cc(); };
+      b.querySelectorAll('[data-c]').forEach(x => x.onclick = () => insertAtCursor(ta, x.dataset.c.charAt(0).toUpperCase() + x.dataset.c.slice(1)));
+      cc();
+    }
+  } else {
+    const modelDefs = p.defs.map(d => `${d[0]}: ${d[1]}`).join(' ');
+    const model = [modelDefs, p.cause[0], ds, p.chain.join(' ')].join('\n\n');
+    const items = CK_EXP[kind];
+    if (mode === 'res') {
+      b.innerHTML = `<p class="q">Respuesta modelo completa, armada con los 4 pasos:</p><div class="answer">${esc(model).replace(/\n/g, '<br>')}</div>
+        <h3 style="margin-top:16px">Por qué cumple la lista de cotejo</h3><ul class="okl">${items.map(c => `<li>${c}</li>`).join('')}</ul>
+        ${nextP ? note(`ahora intenta la siguiente pregunta de la unidad, «${esc(nextP.short)}», que viene guiada.`) : ''}`;
+      if (!W.done) { W.done = true; save(); }
+    } else {
+      const mine = [mode === 'gui' ? modelDefs : W.defs.trim(), p.cause[0], '[Diagrama] ' + ds, W.chain.trim()].filter(Boolean).join('\n\n');
+      b.innerHTML = `<p class="q">Esta es tu respuesta armada con los 4 pasos. Cópiala para entregarla y revísala con la lista.</p>
+        <div class="answer" id="ans">${esc(mine).replace(/\n/g, '<br>')}</div>
+        <div class="row" style="margin:10px 0 16px"><button class="btn primary sm" type="button" id="cp">Copiar mi respuesta</button></div>
+        <h3>Lista de cotejo</h3>${checklistHtml(items, W.ck, 'ckx')}
+        <details class="model"><summary>Ver respuesta modelo completa</summary><div class="answer">${esc(model).replace(/\n/g, '<br>')}</div></details>`;
+      bindChecklist(b, 'ckx', items, W.ck, () => { W.done = items.every((_, i) => W.ck[i]) || W.done; save(); });
+      $('#cp').onclick = e => copyText(mine, e.currentTarget);
+      if (!W.done && (mode === 'gui' || W.defs) && W.chain) { W.done = true; save(); }
+    }
   }
 }
 

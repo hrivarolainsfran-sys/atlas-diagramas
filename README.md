@@ -9,3 +9,7 @@ Sitio para alumnos: https://hrivarolainsfran-sys.github.io/atlas-diagramas/
 Práctica interactiva de las Unidades 1 a 4, organizada en cuatro pasos: Aprende (ejercicios por subtema), Diagramas (laboratorios, incluido dibujar desplazamientos), Escribe (respuestas guiadas de Explicar y Evaluar) y Repasa (bitácora de errores, examen rápido y tarjetas).
 
 Sitio para alumnos: https://hrivarolainsfran-sys.github.io/atlas-diagramas/taller/
+
+---
+
+© 2026 Prof. Econ. Hugo Rivarola. Todos los derechos reservados. Ver LICENSE.
