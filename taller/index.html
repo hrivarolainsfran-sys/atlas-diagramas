@@ -219,6 +219,58 @@ svg text{font-family:var(--f-math)}
   .nav{width:100%;flex-wrap:wrap;gap:2px}
   .nav button,.nav a{font-size:15px;padding:5px 8px;white-space:nowrap}
 }
+
+/* ---------- ruta de estudio, escribir, repasar, dibujar ---------- */
+.route{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:0 0 10px}
+.rcard{text-align:left;background:var(--sheet);border:1px solid var(--rule);border-radius:var(--r);padding:14px;display:grid;gap:4px;align-content:start;color:var(--ink)}
+.rcard:hover{border-color:var(--gold)}
+.rcard .rn{font-family:var(--f-display);font-weight:700;font-size:28px;color:var(--gold);line-height:1}
+.rcard b{font-family:var(--f-display);font-size:21px;letter-spacing:.01em}
+.rcard .d{font-size:14px;color:var(--muted);line-height:1.35}
+.badge{display:inline-grid;place-items:center;min-width:20px;height:20px;border-radius:99px;background:var(--gold);color:#14213D;font-family:var(--f-body);font-size:12px;font-weight:700;margin-left:6px;padding:0 5px;vertical-align:1px}
+.stepper{list-style:none;padding:0;margin:14px 0;display:flex;flex-wrap:wrap;gap:6px}
+.stepper button{display:flex;align-items:center;gap:7px;border:1.5px solid var(--rule);background:var(--sheet);border-radius:99px;padding:4px 12px 4px 4px;font-size:14px;font-weight:700;color:var(--ink-2)}
+.stepper .n{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:var(--paper);border:1px solid var(--rule);font-family:var(--f-display);font-size:15px}
+.stepper button.cur{border-color:var(--navy-2);color:var(--ink)}
+.stepper button.cur .n{background:var(--navy-2);color:#fff;border-color:var(--navy-2)}
+.stepper button.ok .n{background:var(--ok);color:var(--sheet);border-color:var(--ok)}
+.qtitle{font-family:var(--f-body);font-size:19px;font-weight:700;line-height:1.4;max-width:70ch;margin:6px 0 0;text-wrap:pretty}
+textarea{width:100%;border:1.5px solid var(--ink-2);background:var(--sheet);color:var(--ink);border-radius:7px;padding:10px 12px;font:inherit;font-size:15.5px;line-height:1.55;resize:vertical}
+.conns{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 8px}
+.chipx.sm{padding:4px 9px;font-size:13px}
+.kw{display:inline-block;border-radius:99px;padding:0 8px;margin:2px 2px 0 0;font-size:12.5px;border:1px solid var(--rule)}
+.kw.y{background:var(--ok-bg);border-color:var(--ok)}
+.kw.n{background:var(--bad-bg);border-color:var(--bad)}
+.cklist{display:grid;gap:6px}
+.cklist label{display:flex;gap:9px;align-items:flex-start;font-size:15px;cursor:pointer}
+.cklist input{margin-top:4px;accent-color:var(--ok)}
+details.model{margin-top:14px;border:1px solid var(--rule);border-radius:7px;padding:10px 12px;background:var(--paper)}
+details.model summary{cursor:pointer;font-weight:700}
+.answer{background:var(--paper);border:1px solid var(--rule);border-radius:7px;padding:12px 14px;font-size:15px;line-height:1.6;max-height:440px;overflow:auto}
+.method{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:6px}
+.method>div{background:var(--sheet);border:1px solid var(--rule);border-radius:var(--r);padding:12px 14px}
+.method p{margin:4px 0 0;font-size:14.5px;color:var(--ink-2)}
+.tag.ok{border-color:var(--ok);color:var(--ok)}
+.tag.prog{border-color:var(--gold);color:var(--ink)}
+.wtile .ds{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.wcard{max-width:900px}
+.wcard .figure{max-width:560px}
+.cgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.ph{font-family:var(--f-display);font-weight:600;font-size:15px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+.clist{display:grid;gap:6px;margin:0;padding:0;list-style:none}
+.cord{counter-reset:o}
+.cord li{display:grid;grid-template-columns:22px minmax(0,1fr);gap:6px;align-items:start;counter-increment:o}
+.cord li::before{content:counter(o);font-family:var(--f-display);font-weight:700;color:var(--gold);padding-top:6px}
+.cord li.nob{display:block}.cord li.nob::before{content:none}
+.cstep{text-align:left;border:1.5px solid var(--rule);background:var(--paper);border-radius:6px;padding:7px 10px;font-size:14.5px;line-height:1.4;color:var(--ink);width:100%}
+.cstep:hover{border-color:var(--gold)}
+.cstep.right{border-color:var(--ok);background:var(--ok-bg)}
+.cstep.wrong{border-color:var(--bad);background:var(--bad-bg)}
+.hdl{cursor:grab}
+.hdl circle{fill:var(--gold-soft);stroke:var(--gold);stroke-width:1.8}
+.hdl text{font-family:var(--f-body)!important;font-size:12px;font-weight:700;fill:var(--ink)}
+.dsteps{margin:0 0 8px;font-size:15px}
+@media (max-width:860px){.route{grid-template-columns:repeat(2,minmax(0,1fr))}.method{grid-template-columns:1fr}.cgrid{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
@@ -229,8 +281,8 @@ svg text{font-family:var(--f-math)}
   <nav class="nav" aria-label="Secciones">
     <button type="button" data-go="inicio">Temas</button>
     <button type="button" data-go="labs">Laboratorios</button>
-    <button type="button" data-go="examen">Examen rápido</button>
-    <button type="button" data-go="tarjetas">Tarjetas</button>
+    <button type="button" data-go="escribir">Escribir</button>
+    <button type="button" data-go="repasar">Repasar<span class="badge" id="errBadge" hidden>0</span></button>
     <a href="https://hrivarolainsfran-sys.github.io/atlas-diagramas/">Atlas de diagramas</a>
   </nav>
 </header>
@@ -676,7 +728,8 @@ const LABS = {
   adas: { name: 'Demanda y oferta agregadas', short: 'DA/OA', topic: '3.2', ds: 'Políticas y shocks: predice qué curva se mueve y qué pasa con precios y PIB real.' },
   lorenz: { name: 'Curva de Lorenz y Gini', short: 'Gini', topic: '3.4', ds: 'Cambia la distribución del ingreso y observa el coeficiente de Gini.' },
   tariff: { name: 'Arancel', short: 'ARAN', topic: '4.2', ds: 'Precio interno, importaciones, recaudación y pérdida de bienestar.' },
-  fx: { name: 'Mercado del guaraní', short: 'TC', topic: '4.5', ds: 'Exportaciones, tasas, remesas e inversión: ¿se aprecia o se deprecia?' }
+  fx: { name: 'Mercado del guaraní', short: 'TC', topic: '4.5', ds: 'Exportaciones, tasas, remesas e inversión: ¿se aprecia o se deprecia?' },
+  draw: { name: 'Dibuja el desplazamiento', short: 'DIB', topic: '2.3', ds: 'Arrastra la curva que se mueve y marca el nuevo equilibrio: D y O, DA y OA, guaraní.' }
 };
 
 const CARDS = [
@@ -1144,18 +1197,24 @@ const app = $('#app');
 let route = 'inicio';
 function go(r) { if (location.hash.slice(1) !== r) location.hash = r; else render(); }
 window.addEventListener('hashchange', render);
-document.addEventListener('click', e => { const b = e.target.closest('[data-go]'); if (b) { e.preventDefault(); go(b.dataset.go); } });
+document.addEventListener('click', e => { const b = e.target.closest('[data-go]'); if (b) { e.preventDefault(); go(b.dataset.go); return; } const sc = e.target.closest('[data-scroll]'); if (sc) { const t = document.getElementById(sc.dataset.scroll); if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' }); } });
 function setNav(sec) { document.querySelectorAll('.nav button').forEach(b => b.setAttribute('aria-current', b.dataset.go === sec ? 'page' : 'false')); }
 const tid = id => 't' + id.replace('.', '-');
 const tcode = id => { const t = TOPICS.find(x => x.id === id); return t && t.code ? t.code : id; };
 function render() {
   route = location.hash.slice(1) || 'inicio';
   window.scrollTo(0, 0);
+  updateBadge();
   if (route.startsWith('t') && TOPICS.some(t => tid(t.id) === route)) { setNav('inicio'); return renderTopic(TOPICS.find(t => tid(t.id) === route)); }
   if (route.startsWith('lab-') && LABS[route.slice(4)]) { setNav('labs'); return renderLabPage(route.slice(4)); }
   if (route === 'labs') { setNav('labs'); return renderLabs(); }
-  if (route === 'examen') { setNav('examen'); return renderExam(); }
-  if (route === 'tarjetas') { setNav('tarjetas'); return renderCards(); }
+  if (route === 'examen') { setNav('repasar'); return renderExam(); }
+  if (route === 'tarjetas') { setNav('repasar'); return renderCards(); }
+  if (route === 'repasar') { setNav('repasar'); return renderReview(); }
+  if (route === 'escribir') { setNav('escribir'); return renderWrite('exp'); }
+  if (route === 'escribir-evaluar') { setNav('escribir'); return renderWrite('eva'); }
+  if (route.startsWith('exp-') && EXP.some(x => x.id === route.slice(4))) { setNav('escribir'); return renderExplain(EXP.find(x => x.id === route.slice(4))); }
+  if (route.startsWith('eva-') && EVA.some(x => x.id === route.slice(4))) { setNav('escribir'); return renderEval(EVA.find(x => x.id === route.slice(4))); }
   setNav('inicio'); renderHome();
 }
 
@@ -1183,11 +1242,9 @@ function renderHome() {
     <div>
       <div class="eyebrow">Economía IB</div>
       <h1>Practica las cuatro unidades del curso</h1>
-      <p class="lede">Elige un subtema para repasar lo esencial y resolver ejercicios con corrección inmediata. Los cálculos generan números nuevos cada vez que pides otro ejercicio. Los laboratorios (tarjetas doradas) te dejan mover curvas y ver qué pasa.</p>
+      <p class="lede">Sigue la ruta en orden: aprende cada subtema, practica sus diagramas, escribe respuestas como en el examen y repasa tus errores.</p>
       <div class="row">
         ${lastT ? `<button class="btn primary" type="button" data-go="${tid(lastT.id)}">Seguir con ${tcode(lastT.id)} ${esc(lastT.name)}</button>` : `<button class="btn primary" type="button" data-go="t1-1">Empezar por 1.1</button>`}
-        <button class="btn" type="button" data-go="examen">Examen rápido</button>
-        <button class="btn" type="button" data-go="tarjetas">Tarjetas de conceptos</button>
       </div>
     </div>
     <div class="meter">
@@ -1196,7 +1253,13 @@ function renderHome() {
       <div class="small muted">${done} de ${TOTAL_ITEMS} ejercicios resueltos${PROG.exam ? ` · Mejor examen: ${PROG.exam.best}/${PROG.exam.of}` : ''}</div>
     </div>
   </section>
-  ${Object.keys(UNITS).map(unitBlock).join('')}
+  <section class="route" aria-label="Cómo usar el taller">
+    <button class="rcard" type="button" data-scroll="temas"><span class="rn">1</span><b>Aprende</b><span class="d">Lo esencial y ejercicios con corrección inmediata en los ${TOPICS.length} subtemas.</span></button>
+    <button class="rcard" type="button" data-go="labs"><span class="rn">2</span><b>Diagramas</b><span class="d">${Object.keys(LABS).length} laboratorios: mueve curvas y dibuja desplazamientos.</span></button>
+    <button class="rcard" type="button" data-go="escribir"><span class="rn">3</span><b>Escribe</b><span class="d">Arma respuestas de Explicar (${EXP.length}) y Evaluar (${EVA.length}) paso a paso.</span></button>
+    <button class="rcard" type="button" data-go="repasar"><span class="rn">4</span><b>Repasa</b><span class="d">${errCount() ? `${errCount()} errores pendientes` : 'Tus errores'}, examen rápido y tarjetas.</span></button>
+  </section>
+  <div id="temas">${Object.keys(UNITS).map(unitBlock).join('')}</div>
   <p class="foot">Contenidos alineados al Nivel Medio: no incluye utilidad marginal, efectos ingreso y sustitución, multiplicador keynesiano, curva de Phillips ni la condición Marshall-Lerner. Los datos numéricos de los ejercicios son hipotéticos. El progreso se guarda solo en este navegador.</p>`;
 }
 
@@ -1205,7 +1268,7 @@ const SESS = {}; // estado de sesión por tema
 function renderTopic(t) {
   store.set('last', t.id);
   const S = SESS[t.id] = SESS[t.id] || { tab: 'prac', i: 0, res: {}, inst: {} };
-  const labBtns = t.labs.map(k => `<button class="btn sm" type="button" data-go="lab-${k}">Laboratorio: ${LABS[k].name}</button>`).join('');
+  const labBtns = t.labs.map(k => `<button class="btn sm" type="button" data-go="lab-${k}">Laboratorio: ${LABS[k].name}</button>`).join('') + EXP.filter(x => x.st === t.id).map(x => `<button class="btn sm" type="button" data-go="exp-${x.id}">Explicar: ${esc(x.short)}</button>`).join('') + EVA.filter(x => x.st === t.id).map(x => `<button class="btn sm" type="button" data-go="eva-${x.id}">Evaluar: ${esc(x.short)}</button>`).join('');
   app.innerHTML = `
     <button class="crumb" type="button" data-go="inicio">← Todos los temas</button>
     <div class="eyebrow" style="margin-top:12px">Unidad ${t.u} · ${UNITS[t.u]} · Subtema ${t.code || t.id}</div>
@@ -1250,7 +1313,7 @@ function renderDeck(t, S) {
   $('#prev').onclick = () => { S.i--; renderDeck(t, S); };
   $('#next').onclick = () => { if (i === n - 1) return deckSummary(t, S); S.i++; renderDeck(t, S); };
   const host = $('#ib');
-  const done = correct => { S.res[i] = correct; if (correct) markDone(t.id, i); updateDots(); };
+  const done = correct => { S.res[i] = correct; if (correct) markDone(t.id, i); logResult(t.id, i, correct); updateDots(); };
   function updateDots() {
     const b = body.querySelector(`.dots button[data-k="${i}"]`);
     b.className = 'cur ' + (S.res[i] === true ? 'ok' : S.res[i] === false ? 'no' : '');
@@ -1457,7 +1520,7 @@ function renderLabPage(k) {
     <div class="eyebrow" style="margin-top:12px">Laboratorio · Subtema ${tcode(L.topic)}</div><h1>${L.name}</h1>
     <div class="row" style="margin-bottom:16px"><button class="btn sm" type="button" data-go="${tid(L.topic)}">Ir a la práctica de ${tcode(L.topic)}</button>${(ATLAS_OF[k] || []).map(([id, n]) => `<a class="btn sm" href="${ATLAS}#${id}" style="text-decoration:none">Atlas: ${n}</a>`).join('')}</div>
     <div class="lab"><div class="figure"><svg id="fig" role="img" aria-label="Diagrama del laboratorio"></svg><div class="legend" id="leg"></div></div><div class="panel" id="pan"></div></div>`;
-  ({ cpp: labCPP, shifts: labShifts, ped: labPED, tax: labTax, ceil: labCeil, ext: labExt, adas: labADAS, lorenz: labLorenz, tariff: labTariff, fx: labFX })[k]($('#fig'), $('#pan'), $('#leg'));
+  ({ cpp: labCPP, shifts: labShifts, ped: labPED, tax: labTax, ceil: labCeil, ext: labExt, adas: labADAS, lorenz: labLorenz, tariff: labTariff, fx: labFX, draw: labDraw })[k]($('#fig'), $('#pan'), $('#leg'));
 }
 
 /* ---- CPP ---- */
@@ -1968,7 +2031,7 @@ const EX = { sel: TOPICS.map(t => t.id), qs: null, i: 0, ans: [], n: 10 };
 function renderExam() {
   if (EX.qs && EX.i < EX.qs.length) return examQ();
   if (EX.qs && EX.i >= EX.qs.length) return examResult();
-  app.innerHTML = `<div class="eyebrow">Autoevaluación</div><h1>Examen rápido</h1>
+  app.innerHTML = `<div class="eyebrow">Repasar</div><h1>Examen rápido</h1>${repTabs('examen')}
     <p class="lede">Preguntas al azar de los subtemas que elijas. No verás la corrección hasta el final, como en una prueba. Los cálculos tienen datos nuevos en cada intento.</p>
     <div class="essentials" style="display:grid;gap:14px">
       <div><span class="lbl muted small" style="font-weight:700;letter-spacing:.06em;text-transform:uppercase">Unidades</span><div class="choice-chips" id="uc" style="margin-top:6px">${Object.keys(UNITS).map(u => { const ids = TOPICS.filter(t => t.u === +u).map(t => t.id); const on = ids.every(i => EX.sel.includes(i)); return `<button type="button" data-u="${u}" aria-pressed="${on}">Unidad ${u} · ${UNITS[u]}</button>`; }).join('')}</div></div>
@@ -1982,10 +2045,10 @@ function renderExam() {
   bindSeg(app, 'nq', v => EX.n = +v);
   $('#go').onclick = () => {
     const pool = [];
-    TOPICS.filter(t => EX.sel.includes(t.id)).forEach(t => t.items.forEach(it => { if (it.t !== 'sort') pool.push([t.id, it]); }));
-    EX.qs = shuffle(pool).slice(0, EX.n).map(([id, it]) => {
+    TOPICS.filter(t => EX.sel.includes(t.id)).forEach(t => t.items.forEach((it, idx) => { if (it.t !== 'sort') pool.push([t.id, it, idx]); }));
+    EX.qs = shuffle(pool).slice(0, EX.n).map(([id, it, idx]) => {
       let q = it.t === 'gen' ? Object.assign({ t: 'gen' }, GEN[it.g](it.arg)) : it.t === 'genmc' ? GEN[it.g]() : it;
-      return { id, q };
+      return { id, q, idx };
     });
     EX.i = 0; EX.ans = []; examQ();
   };
@@ -2004,12 +2067,13 @@ function examQ() {
 }
 function examResult() {
   let ok = 0;
-  const rev = EX.qs.map(({ id, q }, k) => {
+  const rev = EX.qs.map(({ id, q, idx }, k) => {
     const a = EX.ans[k];
     let right, yours, corr;
     if (q.t === 'mc') { right = a === q.a; yours = a == null ? '—' : q.o[a]; corr = q.o[q.a]; }
     else { const v = parseNum(a); right = !isNaN(v) && Math.abs(v - q.ans) <= (q.tol || 0) + 1e-9; yours = a || '—'; corr = fmt(q.ans, Number.isInteger(q.ans) ? 0 : 2) + ' ' + (q.unit || ''); }
     if (right) ok++;
+    logResult(id, idx, right);
     return `<div class="it ${right ? '' : 'no'}"><div class="muted small">${tcode(id)} · ${right ? 'Correcta' : 'Incorrecta'}</div><div style="margin:4px 0">${q.q}</div>${right ? '' : `<div>Tu respuesta: ${esc(yours)}</div>`}<div><b>Respuesta correcta:</b> ${corr}</div><div class="small muted" style="margin-top:4px">${q.t === 'mc' ? (q.e || '') : q.sol}</div></div>`;
   });
   const n = EX.qs.length;
@@ -2028,7 +2092,7 @@ function renderCards() {
   if (!FC.order || FC.order.some(k => !list.includes(k)) || FC.order.length !== list.length) { FC.order = list; FC.i = 0; }
   const k = FC.order[FC.i], c = CARDS[k];
   const known = PROG.known.filter(x => list.includes(x)).length;
-  app.innerHTML = `<div class="eyebrow">Repaso de conceptos</div><h1>Tarjetas</h1>
+  app.innerHTML = `<div class="eyebrow">Repasar</div><h1>Tarjetas</h1>${repTabs('tarjetas')}
     <p class="lede">Lee el concepto, intenta definirlo en voz alta y luego da vuelta la tarjeta.</p>
     <div class="row" style="margin-bottom:14px">${segBtns('ff', [['0', 'Todas'], ['1', 'Unidad 1'], ['2', 'Unidad 2'], ['3', 'Unidad 3'], ['4', 'Unidad 4']], String(FC.f))}<button class="btn sm" type="button" id="mix">Mezclar</button><span class="muted small">Ya las sé: ${known} de ${list.length}</span></div>
     <button class="flash" type="button" id="card" aria-live="polite">
@@ -2046,6 +2110,624 @@ function renderCards() {
   $('#pv').onclick = () => { FC.i = (FC.i - 1 + FC.order.length) % FC.order.length; FC.flip = false; renderCards(); };
   $('#rv').onclick = () => { PROG.known = PROG.known.filter(x => x !== k); saveProg(); nxt(); };
   $('#kn').onclick = () => { if (!PROG.known.includes(k)) PROG.known.push(k); saveProg(); nxt(); };
+}
+
+/* =============== Escribir: banco de preguntas «Explique» (Prueba 1, parte a) =============== */
+const EXP = [
+  {
+    id: 'tomate', u: 2, st: '2.3', short: 'Sequía y precio del tomate',
+    q: 'Explique, utilizando un diagrama, cómo una sequía prolongada afecta al precio y a la cantidad de equilibrio del tomate en el mercado paraguayo.',
+    defs: [['Oferta', 'Cantidad de un bien que los productores están dispuestos y pueden vender a cada precio, en un período determinado, ceteris paribus.', 'dispuest|quier, pued|capac, precio, period'], ['Precio de equilibrio', 'Precio al que la cantidad demandada es igual a la cantidad ofrecida.', 'demandad, ofrecid|oferta, igual']],
+    cause: ['La sequía reduce el rendimiento de las huertas: con la misma tierra y el mismo trabajo se cosechan menos tomates.', 'Los consumidores deciden comprar menos tomates porque su precio sube.', 'El gobierno fija un precio máximo para el tomate.'],
+    dia: { m: 'micro', key: 'O', dir: -1 },
+    chain: ['La sequía reduce el rendimiento de las huertas y encarece producir cada kilo de tomate.', 'Por consiguiente, a cada precio los productores ofrecen menos: la curva de oferta se desplaza a la izquierda, de O₀ a O₁.', 'Como resultado, al precio inicial P₀ hay un exceso de demanda: más compradores que tomates disponibles.', 'Esto provoca que el precio suba hasta el nuevo equilibrio, con un precio mayor (P₁ > P₀) y una cantidad menor (Q₁ < Q₀).'],
+    ex: 'Tal como ocurre en Paraguay después de sequías o heladas, el precio del tomate y de otras hortalizas suele subir en el Mercado de Abasto de Asunción. Esto se explica por el desplazamiento de la oferta a la izquierda: hay menos producción nacional disponible y los consumidores compiten por una cantidad menor.'
+  },
+  {
+    id: 'pasaje', u: 2, st: '2.7', short: 'Subsidio al transporte público',
+    q: 'Explique, utilizando un diagrama, cómo un subsidio a las empresas de transporte público afecta al precio del pasaje y a la cantidad de viajes.',
+    defs: [['Subsidio', 'Pago del gobierno a los productores por cada unidad producida, que reduce su costo de producción.', 'gobierno|estado, productor|empresa, costo|unidad'], ['Oferta', 'Cantidad que los productores están dispuestos y pueden vender a cada precio, en un período, ceteris paribus.', 'dispuest|quier, pued|capac, precio']],
+    cause: ['El gobierno paga a las empresas una suma por cada pasajero transportado, lo que reduce su costo por viaje.', 'Los pasajeros reciben más ingresos y viajan más.', 'Sube el precio del combustible.'],
+    dia: { m: 'micro', key: 'O', dir: 1 },
+    chain: ['El subsidio reduce el costo de cada viaje para las empresas de transporte.', 'Por consiguiente, a cada precio las empresas están dispuestas a ofrecer más viajes: la oferta se desplaza a la derecha (hacia abajo), de O₀ a O₁.', 'Como resultado, al pasaje inicial P₀ hay un exceso de oferta de viajes.', 'Esto provoca que el pasaje baje hasta el nuevo equilibrio, con un precio menor (P₁ < P₀) y más viajes (Q₁ > Q₀).'],
+    ex: 'Un caso ilustrativo es el subsidio que el Estado paraguayo paga a las empresas de colectivos del área metropolitana de Asunción para mantener un pasaje más bajo. Esto se explica por el desplazamiento de la oferta a la derecha: el subsidio cubre parte del costo, el pasaje queda por debajo del que habría sin él y más personas pueden viajar.'
+  },
+  {
+    id: 'cigarrillos', u: 2, st: '2.7', short: 'Impuesto selectivo a los cigarrillos',
+    q: 'Explique, utilizando un diagrama, cómo un aumento del impuesto selectivo al consumo sobre los cigarrillos afecta al precio y a la cantidad de equilibrio.',
+    defs: [['Impuesto indirecto', 'Impuesto que se aplica al gasto en bienes y servicios; lo cobra el vendedor y lo entrega al Estado.', 'gasto|bien|consumo, vendedor|productor|empresa, estado|gobierno'], ['Precio de equilibrio', 'Precio al que la cantidad demandada es igual a la cantidad ofrecida.', 'demandad, ofrecid|oferta, igual']],
+    cause: ['El impuesto agrega un costo por cada cajetilla vendida, que el vendedor debe pagar al Estado.', 'Los fumadores deciden dejar de fumar por una campaña de salud.', 'Bajan los ingresos de los consumidores.'],
+    dia: { m: 'micro', key: 'O', dir: -1 },
+    chain: ['El impuesto aumenta el costo de vender cada cajetilla, porque una parte del precio va al Estado.', 'Por consiguiente, la curva de oferta se desplaza hacia arriba (a la izquierda), de O₀ a O₁, en el monto del impuesto.', 'Como resultado, al precio inicial hay un exceso de demanda y el precio sube.', 'En el nuevo equilibrio el precio es mayor (P₁ > P₀) y la cantidad menor (Q₁ < Q₀); como la demanda es inelástica, la cantidad cae poco.'],
+    ex: 'Tal como ocurre en Paraguay, los cigarrillos pagan el Impuesto Selectivo al Consumo, con tasas que están entre las más bajas de la región. Esto se explica con el mismo mecanismo: si la tasa sube, la oferta se desplaza hacia arriba y el precio aumenta; pero como la demanda de cigarrillos es inelástica, la cantidad consumida baja poco y la recaudación aumenta.'
+  },
+  {
+    id: 'autos', u: 2, st: '2.1', short: 'Ingreso y demanda de autos',
+    q: 'Explique, utilizando un diagrama, cómo un aumento del ingreso de los hogares afecta al mercado de autos usados importados.',
+    defs: [['Demanda', 'Cantidad de un bien que los consumidores están dispuestos y pueden comprar a cada precio, en un período, ceteris paribus.', 'dispuest|quier, pued|capac, precio, period'], ['Bien normal', 'Bien cuya demanda aumenta cuando aumenta el ingreso de los consumidores.', 'ingreso, aument|sube']],
+    cause: ['Los hogares tienen más ingreso disponible y pueden comprar más bienes durables, como autos.', 'Baja el precio de los autos usados.', 'Aumenta el número de importadores de autos.'],
+    dia: { m: 'micro', key: 'D', dir: 1 },
+    chain: ['El aumento del ingreso permite a más hogares comprar un auto, porque el auto es un bien normal.', 'Por consiguiente, a cada precio se demandan más autos: la curva de demanda se desplaza a la derecha, de D₀ a D₁.', 'Como resultado, al precio inicial P₀ hay un exceso de demanda.', 'Esto provoca que el precio suba hasta el nuevo equilibrio, con un precio mayor (P₁ > P₀) y una cantidad mayor (Q₁ > Q₀).'],
+    ex: 'Un caso ilustrativo es Paraguay, donde gran parte del parque automotor está formado por autos usados importados. En los años de crecimiento del ingreso, la venta de vehículos tiende a aumentar. Esto se explica por el desplazamiento de la demanda a la derecha: con más ingreso, más hogares pueden financiar la compra de un auto.'
+  },
+  {
+    id: 'pollo', u: 2, st: '2.2', short: 'Tecnología y mercado del pollo',
+    q: 'Explique, utilizando un diagrama, cómo una mejora tecnológica en la cría de pollos afecta al equilibrio del mercado de la carne de pollo.',
+    defs: [['Oferta', 'Cantidad de un bien que los productores están dispuestos y pueden vender a cada precio, en un período, ceteris paribus.', 'dispuest|quier, pued|capac, precio'], ['Tecnología', 'Conocimientos y métodos que permiten producir más con los mismos recursos.', 'producir|produc, mismos|menos, recurso|costo']],
+    cause: ['Nuevas técnicas de alimentación y galpones climatizados permiten producir más kilos de pollo con los mismos recursos.', 'Los consumidores prefieren comer más pollo por salud.', 'Sube el precio de la carne vacuna.'],
+    dia: { m: 'micro', key: 'O', dir: 1 },
+    chain: ['La mejora tecnológica reduce el costo de producir cada kilo de pollo.', 'Por consiguiente, a cada precio los productores ofrecen más: la oferta se desplaza a la derecha, de O₀ a O₁.', 'Como resultado, al precio inicial hay un exceso de oferta.', 'Esto provoca que el precio baje hasta el nuevo equilibrio, con un precio menor (P₁ < P₀) y una cantidad mayor (Q₁ > Q₀).'],
+    ex: 'Tal como ocurre en la avicultura paraguaya, la incorporación de galpones climatizados y mejor genética permite criar más pollos en menos tiempo. Esto se explica por el desplazamiento de la oferta a la derecha: baja el costo por kilo, aumenta la producción y el pollo se vuelve una proteína relativamente accesible.'
+  },
+  {
+    id: 'tpm2020', u: 3, st: '3.5', short: 'El BCP baja la tasa de interés',
+    q: 'Explique, utilizando un diagrama DA/OA, cómo una reducción de la tasa de política monetaria del BCP afecta al PIB real y al nivel general de precios.',
+    defs: [['Demanda agregada', 'Gasto total planeado en bienes y servicios finales de una economía a cada nivel general de precios: C + I + G + (X − M).', 'gasto, nivel|precios, c + i|consumo'], ['Tasa de política monetaria', 'Tasa de interés de referencia que fija el banco central para orientar las tasas del sistema financiero.', 'banco central|bcp, referencia|orient, tasa']],
+    cause: ['El BCP reduce la tasa de política monetaria y los bancos bajan las tasas de sus préstamos.', 'El gobierno aumenta el gasto en obras públicas.', 'Sube el precio internacional del petróleo.'],
+    dia: { m: 'adas', key: 'DA', dir: 1 },
+    chain: ['La reducción de la tasa del BCP abarata el financiamiento de los bancos, que bajan las tasas de sus préstamos.', 'Por consiguiente, los hogares compran más bienes a crédito y las empresas invierten más: aumentan C e I.', 'Como resultado, la demanda agregada se desplaza a la derecha, de DA₀ a DA₁.', 'En el nuevo equilibrio el PIB real es mayor (Y₁ > Y₀) y el nivel general de precios también (P₁ > P₀).'],
+    ex: 'Tal como ocurrió en Paraguay en 2020, cuando el BCP redujo la tasa de política monetaria en varias reuniones hasta 0,75%, su mínimo histórico, para enfrentar el impacto de la pandemia. Esto se explica por el mismo mecanismo: el crédito más barato buscó sostener el consumo y la inversión cuando la economía se contraía.'
+  },
+  {
+    id: 'obras', u: 3, st: '3.6', short: 'Gasto público en infraestructura',
+    q: 'Explique, utilizando un diagrama DA/OA, cómo un aumento del gasto público en infraestructura afecta al PIB real y al empleo en el corto plazo.',
+    defs: [['Política fiscal expansiva', 'Aumento del gasto público o reducción de impuestos para estimular la demanda agregada.', 'gasto|impuesto, aument|reduc, demanda agregada|da'], ['PIB real', 'Valor de la producción de bienes y servicios finales de un país, descontada la inflación.', 'produc, final, inflaci|precios constantes']],
+    cause: ['El gobierno decide aumentar el gasto en rutas y puentes: crece directamente el componente G de la DA.', 'El BCP sube la tasa de interés.', 'Mejora la productividad de los trabajadores.'],
+    dia: { m: 'adas', key: 'DA', dir: 1 },
+    chain: ['El aumento del gasto en infraestructura eleva directamente el componente G de la demanda agregada.', 'Por consiguiente, las constructoras contratan trabajadores y compran materiales, y esos ingresos se gastan en otros bienes: también sube el consumo.', 'Como resultado, la DA se desplaza a la derecha, de DA₀ a DA₁.', 'En el nuevo equilibrio el PIB real es mayor (Y₁ > Y₀), aumenta el empleo y sube el nivel de precios (P₁ > P₀).'],
+    ex: 'Un caso ilustrativo es la construcción del Corredor Bioceánico en el Chaco paraguayo, una obra pública que contrató empresas constructoras y trabajadores de la región. Esto se explica por el mecanismo descrito: el gasto público aumenta la DA y genera empleo e ingresos en la construcción y en los comercios cercanos.'
+  },
+  {
+    id: 'petroleo', u: 3, st: '3.3', short: 'Petróleo e inflación de costos',
+    q: 'Explique, utilizando un diagrama DA/OA, cómo un aumento del precio internacional del petróleo afecta al nivel general de precios y al PIB real de Paraguay.',
+    defs: [['Oferta agregada de corto plazo (OACP)', 'Producción total que las empresas ofrecen a cada nivel general de precios, con los costos de los factores dados.', 'producci|produc, nivel|precios, costo'], ['Inflación de costos', 'Aumento sostenido del nivel general de precios causado por el aumento de los costos de producción.', 'aument|sube, nivel|precios, costo']],
+    cause: ['Paraguay importa todo su combustible: sube el costo del transporte y de la producción en toda la economía.', 'Aumenta la confianza de los consumidores.', 'El BCP baja la tasa de interés.'],
+    dia: { m: 'adas', key: 'OACP', dir: -1 },
+    chain: ['La suba del petróleo encarece el combustible que Paraguay importa.', 'Por consiguiente, aumentan los costos de transporte y producción de casi todas las empresas.', 'Como resultado, la OACP se desplaza a la izquierda, de OACP₀ a OACP₁.', 'En el nuevo equilibrio el nivel de precios sube (P₁ > P₀) y el PIB real cae (Y₁ < Y₀): inflación de costos con menor producción.'],
+    ex: 'Tal como ocurrió en 2022, tras la invasión rusa a Ucrania subió el precio internacional del petróleo y en Paraguay aumentaron varias veces los precios de la nafta y el gasoil. Esto se explica por el desplazamiento de la OACP a la izquierda: el combustible más caro elevó los costos de transporte y alimentos, y empujó la inflación.'
+  },
+  {
+    id: 'educacion', u: 3, st: '3.7', short: 'Educación técnica y OALP',
+    q: 'Explique, utilizando un diagrama DA/OA, cómo una mayor inversión en educación técnica afecta al PIB potencial de la economía.',
+    defs: [['Oferta agregada de largo plazo (OALP)', 'Capacidad productiva potencial de la economía, que depende de la cantidad y calidad de los factores y de la tecnología.', 'capacidad|potencial, factor, calidad|tecnolog'], ['Política de oferta', 'Medida que busca aumentar la capacidad productiva de la economía.', 'aument, capacidad|productiv']],
+    cause: ['Más trabajadores aprenden habilidades técnicas y aumenta su productividad.', 'Las familias gastan más en consumo.', 'Sube el salario mínimo.'],
+    dia: { m: 'adas', key: 'OALP', dir: 1 },
+    chain: ['La inversión en educación técnica mejora las habilidades de los trabajadores.', 'Por consiguiente, aumenta la productividad: con el mismo número de personas se produce más.', 'Como resultado, la OALP se desplaza a la derecha, de OALP₀ a OALP₁.', 'En el nuevo equilibrio aumenta el PIB real potencial (Y₁ > Y₀) con menos presión sobre el nivel de precios.'],
+    ex: 'Un caso ilustrativo son los cursos de formación técnica del SNPP en Paraguay, que capacitan a trabajadores en electricidad, mecánica o informática. Esto se explica por el desplazamiento de la OALP a la derecha: trabajadores más capacitados elevan la capacidad productiva del país a largo plazo.'
+  },
+  {
+    id: 'brasil', u: 3, st: '3.2', short: 'Recesión en Brasil',
+    q: 'Explique, utilizando un diagrama DA/OA, cómo una recesión en Brasil puede afectar al PIB real de Paraguay.',
+    defs: [['Recesión', 'Dos trimestres seguidos de crecimiento negativo del PIB real.', 'dos trimestres|trimestre, negativ|cae, pib'], ['Exportaciones netas', 'Diferencia entre el valor de las exportaciones y el de las importaciones (X − M).', 'exportac, importac, diferencia|menos|x − m|x-m']],
+    cause: ['Con menos ingreso, los brasileños compran menos productos paraguayos: caen las exportaciones.', 'Paraguay sube sus impuestos.', 'Mejora la tecnología en Paraguay.'],
+    dia: { m: 'adas', key: 'DA', dir: -1 },
+    chain: ['La recesión reduce el ingreso de los hogares y empresas de Brasil, principal socio comercial de Paraguay.', 'Por consiguiente, compran menos productos paraguayos y caen las exportaciones (X).', 'Como resultado, bajan las exportaciones netas y la DA se desplaza a la izquierda, de DA₀ a DA₁.', 'En el nuevo equilibrio el PIB real es menor (Y₁ < Y₀) y baja el nivel de precios (P₁ < P₀); puede aumentar el desempleo cíclico.'],
+    ex: 'Tal como ocurrió durante la recesión brasileña de 2015 y 2016, que redujo la demanda de productos paraguayos y afectó al comercio en las ciudades fronterizas. Esto se explica por la caída de las exportaciones netas, que desplazó la DA de Paraguay a la izquierda.'
+  },
+  {
+    id: 'guarani', u: 4, st: '4.5', short: 'Exportaciones y valor del guaraní',
+    q: 'Explique, utilizando un diagrama, cómo un aumento de las exportaciones de soja y carne afecta al valor del guaraní.',
+    defs: [['Tipo de cambio', 'Precio de una moneda expresado en términos de otra moneda.', 'precio, moneda, otra'], ['Apreciación', 'Aumento del valor de una moneda frente a otra en un régimen de tipo de cambio flotante.', 'aument|sube, valor, moneda']],
+    cause: ['Los compradores extranjeros necesitan guaraníes para pagar más exportaciones paraguayas.', 'Los paraguayos importan más autos.', 'El BCP baja la tasa de interés.'],
+    dia: { m: 'fx', key: 'D', dir: 1 },
+    chain: ['Al aumentar las exportaciones, entran más dólares que los exportadores cambian por guaraníes.', 'Por consiguiente, aumenta la demanda de guaraníes: la curva se desplaza a la derecha, de D₀ a D₁.', 'Como resultado, al tipo de cambio inicial hay un exceso de demanda de guaraníes.', 'Esto provoca que el guaraní se aprecie (TC₁ > TC₀): se necesitan menos guaraníes para comprar un dólar.'],
+    ex: 'Un caso ilustrativo es la época de cosecha y venta de soja en Paraguay, cuando ingresan muchos dólares por exportaciones. Esto se explica por el aumento de la demanda de guaraníes, que presiona hacia la apreciación; el BCP puede intervenir vendiendo o comprando dólares para suavizar el movimiento, ya que el régimen es de flotación administrada.'
+  }
+];
+
+/* =============== Escribir: casos «Evalúe» (15 puntos) =============== */
+const DIMS = { L: 'Corto vs. largo plazo (L)', A: 'Supuestos (A)', S: 'Partes interesadas (S)', P: 'Prioridades del gobierno (P)', C: 'Contexto del país (C)' };
+const EVA = [
+  {
+    id: 'ev-cigarrillos', u: 2, st: '2.7', short: 'Impuesto a los cigarrillos',
+    q: 'Evalúe la eficacia de un aumento del impuesto selectivo al consumo sobre los cigarrillos para reducir su consumo en Paraguay.',
+    args: [
+      ['El modelo supone que los fumadores reaccionan al precio; por la adicción, la demanda es inelástica y el consumo cae poco.', 'con', 'A'],
+      ['En el corto plazo el consumo baja poco, pero a largo plazo menos jóvenes empiezan a fumar.', 'pro', 'L'],
+      ['Los fumadores de bajos ingresos pagan proporcionalmente más: el impuesto es regresivo.', 'con', 'S'],
+      ['La recaudación puede financiar salud pública y prevención, una prioridad del gobierno.', 'pro', 'P'],
+      ['Con fronteras extensas y comercio informal, parte del consumo puede pasar al contrabando.', 'con', 'C'],
+      ['El Estado recauda más y los no fumadores sufren menos humo de tabaco.', 'pro', 'S']
+    ],
+    feij: ['La demanda de cigarrillos es inelástica al precio.', 'Por la adicción, cuando el impuesto sube el precio, los fumadores siguen comprando casi la misma cantidad.', 'Esto implica que el impuesto recauda bastante, pero reduce poco el consumo en el corto plazo.', 'Por lo tanto, es más eficaz como fuente de recaudación que para cambiar hábitos rápido, salvo que se acompañe con campañas y control del contrabando.'],
+    concl: [
+      ['En definitiva, el impuesto puede reducir el consumo sobre todo a largo plazo, entre los jóvenes; en el corto plazo su efecto es limitado por la demanda inelástica y el contrabando, por lo que conviene acompañarlo con control aduanero y campañas.', 1, 'Es equilibrada, distingue corto y largo plazo y se apoya en los argumentos desarrollados.'],
+      ['Fumar es malo para la salud, así que el gobierno debe subir el impuesto todo lo posible.', 0, 'Es una opinión normativa: no usa los argumentos ni reconoce limitaciones.'],
+      ['El impuesto es totalmente eficaz porque sube el precio y la gente deja de fumar.', 0, 'Es unilateral: ignora la demanda inelástica y el contrabando.'],
+      ['En conclusión, lo mejor sería prohibir la venta de cigarrillos, como hicieron otros países.', 0, 'Introduce información nueva y no evalúa la política que pide la pregunta.']
+    ]
+  },
+  {
+    id: 'ev-salario', u: 2, st: '2.7', short: 'Aumento del salario mínimo',
+    q: 'Evalúe el impacto de un aumento del salario mínimo sobre el mercado laboral paraguayo.',
+    args: [
+      ['Los trabajadores formales de bajos ingresos ganan poder adquisitivo.', 'pro', 'S'],
+      ['Los jóvenes con poca experiencia son los primeros en quedar sin empleo o pasar a la informalidad.', 'con', 'S'],
+      ['El modelo supone un mercado laboral competitivo; si pocas empresas fijan los salarios, el efecto sobre el empleo puede ser menor.', 'pro', 'A'],
+      ['Con alta informalidad, el salario mínimo no alcanza a muchos trabajadores en Paraguay.', 'con', 'C'],
+      ['A largo plazo, si el costo laboral sube mucho, las empresas pueden reemplazar trabajo por máquinas.', 'con', 'L'],
+      ['Se alinea con el objetivo de equidad y de reducción de la pobreza.', 'pro', 'P']
+    ],
+    feij: ['En Paraguay una gran parte del empleo es informal.', 'El salario mínimo solo se cumple en los empleos registrados.', 'Esto implica que un aumento mejora a una parte de los trabajadores y puede empujar a otros hacia la informalidad.', 'Por lo tanto, su eficacia para reducir la pobreza es limitada si no se acompaña con políticas de formalización.'],
+    concl: [
+      ['Considerando lo anterior, un aumento del salario mínimo mejora el ingreso de los trabajadores formales, pero con alta informalidad y riesgo de desempleo juvenil su efecto es limitado; resulta más eficaz si es moderado y se combina con formalización y capacitación.', 1, 'Pesa ganadores y perdedores, considera el contexto paraguayo y concluye con condiciones.'],
+      ['El salario mínimo siempre causa desempleo, así que no debería existir.', 0, 'Es unilateral y absoluta: ignora a los trabajadores que ganan y los supuestos del modelo.'],
+      ['Es justo que todos ganen más, por eso hay que duplicarlo.', 0, 'Es una opinión normativa sin fundamento económico.'],
+      ['En conclusión, el problema principal de Paraguay es la corrupción.', 0, 'Cambia de tema e introduce información que no se discutió.']
+    ]
+  },
+  {
+    id: 'ev-preciomax', u: 2, st: '2.7', short: 'Precio máximo a alimentos básicos',
+    q: 'Evalúe el uso de un precio máximo para alimentos de la canasta básica.',
+    args: [
+      ['Los hogares que consiguen comprar pagan menos por los alimentos.', 'pro', 'S'],
+      ['Los productores reciben menos y algunos dejan de vender o se van a otros mercados.', 'con', 'S'],
+      ['A largo plazo cae la inversión en producción y la escasez puede empeorar.', 'con', 'L'],
+      ['Supone que el gobierno puede controlar a miles de comercios; en la práctica es difícil y costoso.', 'con', 'A'],
+      ['Se alinea con la prioridad de equidad: proteger a los hogares de bajos ingresos.', 'pro', 'P'],
+      ['Con frontera abierta y mucho comercio informal, parte de la producción puede venderse en los países vecinos.', 'con', 'C']
+    ],
+    feij: ['Un precio máximo por debajo del equilibrio reduce la cantidad ofrecida.', 'A ese precio producir es menos rentable y algunos productores ofrecen menos o dejan el mercado.', 'Esto implica escasez: más personas quieren comprar que producto disponible, y aparecen filas o mercados paralelos.', 'Por lo tanto, el tope ayuda a quien consigue comprar, pero perjudica a quien se queda sin el producto; un subsidio focalizado podría ser más eficaz.'],
+    concl: [
+      ['En definitiva, un precio máximo puede aliviar a los hogares que logran comprar en el corto plazo, pero genera escasez y desalienta la producción a largo plazo; es preferible una ayuda focalizada, como transferencias a los hogares pobres.', 1, 'Balancea beneficios y costos, distingue plazos y propone una alternativa basada en lo discutido.'],
+      ['Los precios máximos son siempre buenos porque bajan los precios.', 0, 'Es unilateral: ignora la escasez y los efectos sobre la oferta.'],
+      ['Los comerciantes abusan con los precios y hay que castigarlos.', 0, 'Es una opinión sin análisis económico.'],
+      ['En conclusión, Paraguay debería producir más tecnología.', 0, 'No responde a la pregunta e introduce un tema nuevo.']
+    ]
+  },
+  {
+    id: 'ev-tpm', u: 3, st: '3.5', short: 'Subir la tasa para bajar la inflación',
+    q: 'Evalúe el uso de una política monetaria contractiva del BCP para reducir la inflación.',
+    args: [
+      ['Los efectos de subir la tasa tardan varios meses en sentirse.', 'con', 'L'],
+      ['A largo plazo, una inflación baja y estable da previsibilidad para ahorrar e invertir.', 'pro', 'L'],
+      ['Supone que la inflación es de demanda; si viene de costos importados, como el combustible, subir la tasa no ataca la causa.', 'con', 'A'],
+      ['Hogares y empresas con créditos pagan más intereses.', 'con', 'S'],
+      ['Con muchos créditos y depósitos en dólares, la tasa en guaraníes alcanza a una parte menor de la economía.', 'con', 'C'],
+      ['Se alinea con la meta de inflación del BCP y ayuda a anclar las expectativas.', 'pro', 'P']
+    ],
+    feij: ['Si la inflación proviene de costos importados, como el combustible, la causa está fuera del país.', 'Subir la tasa reduce el consumo y la inversión, pero no baja el precio internacional del petróleo.', 'Esto implica que la inflación cae lentamente y a costa de menos crecimiento y empleo.', 'Por lo tanto, la política contractiva es más eficaz contra la inflación de demanda que contra la de costos.'],
+    concl: [
+      ['En definitiva, subir la tasa ayuda a contener la inflación y a anclar expectativas, sobre todo si es de demanda; sin embargo, sus efectos tardan, frenan el crecimiento en el corto plazo y llegan menos a una economía con créditos en dólares.', 1, 'Considera el tipo de inflación, los plazos y el contexto paraguayo.'],
+      ['El BCP debe subir la tasa siempre que haya inflación, sin importar nada más.', 0, 'Es absoluta: no reconoce costos ni el tipo de inflación.'],
+      ['Las tasas altas son injustas para quienes tienen deudas.', 0, 'Es una opinión normativa sin evaluación.'],
+      ['En conclusión, Paraguay debería adoptar el dólar como moneda.', 0, 'Introduce una propuesta nueva que no se discutió.']
+    ]
+  },
+  {
+    id: 'ev-fiscal', u: 3, st: '3.6', short: 'Más gasto público contra el desempleo',
+    q: 'Evalúe el uso de una política fiscal expansiva, basada en inversión en infraestructura, para reducir el desempleo en Paraguay.',
+    args: [
+      ['En el corto plazo aumenta la DA y el empleo en la construcción.', 'pro', 'L'],
+      ['A largo plazo, si se financia con deuda, crecen los intereses que paga el Estado.', 'con', 'L'],
+      ['Supone que el desempleo es cíclico; si es estructural, más gasto ayuda poco.', 'con', 'A'],
+      ['Las constructoras y los comercios cercanos a las obras venden más.', 'pro', 'S'],
+      ['Parte del gasto se va en importaciones, y la Ley de Responsabilidad Fiscal limita el déficit.', 'con', 'C'],
+      ['Las rutas y puentes también aumentan la capacidad productiva, en línea con el objetivo de crecimiento.', 'pro', 'P']
+    ],
+    feij: ['Una parte del desempleo en Paraguay es estructural.', 'Muchas personas no tienen las habilidades que piden las empresas o viven lejos de donde está el empleo.', 'Esto implica que más gasto en obras crea empleo temporal, pero no resuelve ese desajuste.', 'Por lo tanto, la política fiscal expansiva reduce el desempleo cíclico, pero debe complementarse con capacitación.'],
+    concl: [
+      ['Por todo lo expuesto, la inversión en infraestructura puede reducir el desempleo en el corto plazo y ampliar la capacidad productiva; sin embargo, su efecto sobre el desempleo estructural es limitado y su financiamiento está acotado por la deuda y la regla fiscal, por lo que conviene combinarla con capacitación.', 1, 'Usa corto y largo plazo, supuestos y contexto, y concluye con una recomendación fundamentada.'],
+      ['El gobierno debe gastar todo lo necesario hasta que no haya desempleo.', 0, 'Ignora los costos (deuda, límites legales) y el tipo de desempleo.'],
+      ['El gasto público siempre es malo porque genera deuda.', 0, 'Es unilateral: ignora los beneficios en empleo y capacidad productiva.'],
+      ['En conclusión, el desempleo se resuelve bajando la tasa de interés.', 0, 'Cambia de política y no evalúa la que pide la pregunta.']
+    ]
+  },
+  {
+    id: 'ev-arancel', u: 4, st: '4.2', short: 'Arancel para proteger la industria',
+    q: 'Evalúe el uso de un arancel para proteger a una industria nacional de la competencia importada.',
+    args: [
+      ['Los productores nacionales venden más y pueden contratar más trabajadores.', 'pro', 'S'],
+      ['Los consumidores pagan precios más altos y tienen menos variedad.', 'con', 'S'],
+      ['Si es una industria naciente, la protección temporal puede permitirle crecer y bajar costos.', 'pro', 'L'],
+      ['A largo plazo, las industrias protegidas pueden volverse ineficientes.', 'con', 'L'],
+      ['Supone que los otros países no responden; pueden aplicar represalias contra las exportaciones paraguayas.', 'con', 'A'],
+      ['Como miembro del MERCOSUR, Paraguay no puede fijar libremente aranceles a terceros (arancel externo común).', 'con', 'C']
+    ],
+    feij: ['Las industrias protegidas pierden la presión de la competencia.', 'Sin competidores importados, tienen menos incentivos para bajar costos e innovar.', 'Esto implica que los consumidores siguen pagando precios altos por más tiempo.', 'Por lo tanto, un arancel solo se justifica si es temporal y está ligado a metas de productividad.'],
+    concl: [
+      ['En definitiva, un arancel puede proteger empleo en una industria naciente en el corto plazo, pero encarece los productos, invita a represalias y puede perpetuar la ineficiencia; solo se justifica si es temporal y compatible con las reglas del MERCOSUR.', 1, 'Pesa ganadores y perdedores, plazos y contexto institucional.'],
+      ['Hay que comprar siempre lo nacional, así que el arancel es lo correcto.', 0, 'Es una opinión sin análisis de costos.'],
+      ['El arancel es siempre malo porque sube los precios.', 0, 'Es unilateral: ignora el argumento de la industria naciente.'],
+      ['En conclusión, Paraguay debería salir del MERCOSUR.', 0, 'Propone algo nuevo que no se evaluó.']
+    ]
+  },
+  {
+    id: 'ev-deprec', u: 4, st: '4.5', short: 'Depreciación del guaraní',
+    q: 'Evalúe el impacto de una depreciación del guaraní sobre la economía paraguaya.',
+    args: [
+      ['Los exportadores de soja y carne reciben más guaraníes por cada dólar vendido.', 'pro', 'S'],
+      ['Los consumidores pagan más por los combustibles y los productos importados.', 'con', 'S'],
+      ['Paraguay importa todo su combustible, así que la depreciación sube costos en toda la economía.', 'con', 'C'],
+      ['Supone que las exportaciones responden al precio, pero la soja se vende al precio internacional y su volumen depende más de la cosecha.', 'con', 'A'],
+      ['Si se mantiene, puede volver más competitivas a otras exportaciones, como las manufacturas de maquila.', 'pro', 'L'],
+      ['Puede chocar con la meta de inflación del BCP.', 'con', 'P']
+    ],
+    feij: ['Paraguay importa todo el combustible que consume.', 'Cuando el guaraní se deprecia, el combustible cuesta más guaraníes.', 'Esto implica que suben los costos de transporte y producción, y la OACP se desplaza a la izquierda.', 'Por lo tanto, la depreciación ayuda a los exportadores, pero su beneficio neto se reduce por la inflación de costos.'],
+    concl: [
+      ['Considerando lo anterior, la depreciación beneficia a los exportadores y puede mejorar la competitividad a largo plazo, pero en una economía que importa todo su combustible genera inflación de costos y perjudica a los consumidores; su efecto neto depende de cuánto dure y de cómo responda el BCP.', 1, 'Equilibra ganadores y perdedores, contexto y plazos, con una conclusión condicionada.'],
+      ['La depreciación es buena porque los exportadores ganan más.', 0, 'Es unilateral: ignora la inflación y a los consumidores.'],
+      ['El guaraní debería valer lo mismo que el dólar.', 0, 'Es una opinión sin fundamento económico.'],
+      ['En conclusión, hay que prohibir las importaciones de combustible.', 0, 'Propone algo nuevo e inviable que no se evaluó.']
+    ]
+  }
+];
+
+const CK_EXP = {
+  micro: ['Definí con precisión los conceptos económicos centrales.', 'Identifiqué claramente la causa inicial.', 'Construí la cadena causal eslabón por eslabón, sin saltos.', 'Usé conectores causales (porque, por consiguiente, como resultado).', 'Incluí un diagrama con ambos ejes rotulados, curvas y equilibrios.', 'Mostré claramente el desplazamiento (por ejemplo, de O₀ a O₁).', 'Hice referencia al diagrama dentro del texto.', 'Cerré con un ejemplo paraguayo concreto que ilustra el mecanismo.', 'La respuesta dice por qué ocurre, no solo qué ocurre.', 'Se puede leer en voz alta como una secuencia lógica.'],
+  macro: ['Definí con precisión los conceptos macroeconómicos centrales (DA, OA, PIB real, nivel de precios, tasa de interés…).', 'Identifiqué claramente la causa inicial (BCP, MEF, shock externo…).', 'Construí la cadena causal eslabón por eslabón, sin saltos.', 'Usé conectores causales en cada eslabón.', 'Incluí un diagrama DA/OA u otro pertinente, con ejes, curvas y equilibrios rotulados.', 'Mostré claramente el desplazamiento de la curva.', 'Hice referencia al diagrama dentro del texto.', 'Cerré con un ejemplo paraguayo concreto (BCP, MEF, soja, Itaipú…).', 'La respuesta dice por qué ocurre, no solo qué ocurre.', 'Se puede leer en voz alta como una secuencia lógica.', 'No confundí desplazamiento de la curva con movimiento a lo largo de ella.', 'Indiqué el efecto sobre el PIB real y sobre el nivel de precios (o sobre el tipo de cambio).']
+};
+const CK_EVA = {
+  micro: ['Definí con precisión los conceptos clave.', 'Incluí un diagrama rotulado y lo mencioné en el texto.', 'Expliqué la teoría con conectores causales.', 'Apliqué la teoría a Paraguay con al menos un dato, ley o institución real.', 'Desarrollé al menos dos dimensiones de CLASPP en párrafos distintos.', 'Usé conectores de contraste (sin embargo, no obstante, si bien…).', 'Cerré con una conclusión equilibrada y justificada.', 'La conclusión se apoya en lo discutido, sin información nueva.'],
+  macro: ['Definí con precisión los conceptos macroeconómicos clave.', 'Incluí un diagrama DA/OA u otro adecuado, bien rotulado.', 'Expliqué la teoría con conectores causales.', 'Apliqué la teoría a Paraguay con al menos un dato, ley o institución real (BCP, MEF, INE).', 'Desarrollé al menos dos dimensiones de CLASPP en párrafos distintos.', 'Distinguí el efecto en el corto y en el largo plazo.', 'Consideré efectos secundarios (inflación, deuda, déficit, balanza externa).', 'Usé conectores de contraste.', 'Cerré con una conclusión equilibrada y justificada.', 'La conclusión se apoya en lo discutido, sin información nueva.']
+};
+const CONN_CAUSA = ['porque', 'debido a', 'dado que', 'puesto que', 'por consiguiente', 'en consecuencia', 'como resultado', 'esto provoca', 'lo cual', 'por lo tanto', 'por eso', 'de ello se sigue'];
+const CONN_EVAL = ['sin embargo', 'no obstante', 'por otra parte', 'por el contrario', 'si bien', 'a pesar de', 'en el corto plazo', 'a largo plazo', 'en definitiva', 'por lo tanto', 'considerando lo anterior', 'por todo lo expuesto', 'siempre que', 'en la medida en que'];
+
+
+/* =============== utilidades comunes de las secciones nuevas =============== */
+const normTxt = s => String(s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+const uLabel = u => 'Unidad ' + u + ' · ' + UNITS[u];
+function copyText(txt, btn) {
+  const done = () => { const o = btn.textContent; btn.textContent = 'Copiado'; setTimeout(() => btn.textContent = o, 1500); };
+  try { navigator.clipboard.writeText(txt).then(done, () => fallback()); } catch (e) { fallback(); }
+  function fallback() { const ta = document.createElement('textarea'); ta.value = txt; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); done(); } catch (e) { } ta.remove(); }
+}
+function stepper(names, cur, done) {
+  return `<ol class="stepper">${names.map((n, i) => `<li><button type="button" data-step="${i}" class="${i === cur ? 'cur' : ''} ${done[i] ? 'ok' : ''}"><span class="n">${i + 1}</span><span class="t">${n}</span></button></li>`).join('')}</ol>`;
+}
+function insertAtCursor(ta, txt) {
+  const s = ta.selectionStart ?? ta.value.length, e = ta.selectionEnd ?? ta.value.length;
+  const pre = ta.value.slice(0, s), pad = pre && !/\s$/.test(pre) ? ' ' : '';
+  ta.value = pre + pad + txt + ' ' + ta.value.slice(e); ta.focus();
+  const p = (pre + pad + txt + ' ').length; ta.setSelectionRange(p, p); ta.dispatchEvent(new Event('input'));
+}
+const foundConn = (txt, list) => { const t = normTxt(txt); return list.filter(c => t.includes(normTxt(c))); };
+function checklistHtml(items, state, id) {
+  return `<div class="cklist" id="${id}">${items.map((c, i) => `<label><input type="checkbox" data-ck="${i}" ${state[i] ? 'checked' : ''}><span>${c}</span></label>`).join('')}</div><p class="small muted" id="${id}-s"></p>`;
+}
+function bindChecklist(root, id, items, state, save) {
+  const upd = () => { const n = items.filter((_, i) => state[i]).length; const miss = items.filter((_, i) => !state[i]); $('#' + id + '-s', root).innerHTML = `<b>${n} de ${items.length}</b> criterios cumplidos.${miss.length && miss.length < items.length ? ` Para mejorar: ${miss.slice(0, 3).map(m => m.replace(/\.$/, '').toLowerCase()).join('; ')}${miss.length > 3 ? '…' : '.'}` : ''}`; };
+  root.querySelectorAll(`#${id} input`).forEach(cb => cb.onchange = () => { state[+cb.dataset.ck] = cb.checked; save(); upd(); });
+  upd();
+}
+
+/* =============== 3 · Bitácora de errores =============== */
+const ERR = store.get('errs', {});
+function logResult(topicId, idx, ok) {
+  const k = topicId + '#' + idx, e = ERR[k];
+  if (!ok) ERR[k] = { s: 0, m: (e ? e.m : 0) + 1, t: Date.now() };
+  else if (e) { e.s++; if (e.s >= 2) { delete ERR[k]; PROG.mastered = (PROG.mastered || 0) + 1; saveProg(); } }
+  store.set('errs', ERR); updateBadge();
+}
+const errCount = () => Object.keys(ERR).filter(k => { const [id, i] = k.split('#'); const t = TOPICS.find(x => x.id === id); return t && t.items[+i]; }).length;
+function updateBadge() { const b = document.getElementById('errBadge'); if (!b) return; const n = errCount(); b.textContent = n; b.hidden = n === 0; }
+function repTabs(cur) {
+  const n = errCount();
+  return `<div class="seg" role="group" aria-label="Repasar" style="margin-bottom:18px">${[['repasar', `Mis errores${n ? ' (' + n + ')' : ''}`], ['examen', 'Examen rápido'], ['tarjetas', 'Tarjetas']].map(([r, l]) => `<button type="button" data-go="${r}" aria-pressed="${r === cur}">${l}</button>`).join('')}</div>`;
+}
+const RV = { list: null, i: 0, res: [] };
+function renderReview() {
+  if (RV.list && RV.i < RV.list.length) return reviewQ();
+  const keys = Object.keys(ERR).filter(k => { const [id, i] = k.split('#'); const t = TOPICS.find(x => x.id === id); return t && t.items[+i]; });
+  const by = {}; keys.forEach(k => { const id = k.split('#')[0]; by[id] = (by[id] || 0) + 1; });
+  const ended = RV.list ? `<div class="fb ${RV.res.filter(Boolean).length === RV.res.length ? 'ok' : 'info'}" style="max-width:820px"><b class="h">Repaso terminado: ${RV.res.filter(Boolean).length} de ${RV.res.length} correctas</b>Los ejercicios acertados dos veces seguidas salen de la lista.</div>` : '';
+  RV.list = null;
+  app.innerHTML = `<div class="eyebrow">Repasar</div><h1>Mis errores</h1>${repTabs('repasar')}
+    <p class="lede">Cada ejercicio que fallas en los temas o en el examen rápido se guarda aquí. Sale de la lista cuando lo aciertas <b>dos veces seguidas</b>. Es la versión digital de la bitácora de errores del cuaderno.</p>
+    ${ended}
+    ${keys.length ? `<div class="row" style="margin:14px 0 18px"><button class="btn primary" type="button" id="rvgo">Repasar ahora (${Math.min(10, keys.length)} ejercicios)</button><span class="muted small">${keys.length} pendientes · ${PROG.mastered || 0} superados</span></div>
+    <div class="review">${Object.keys(by).sort((a, b) => TOPICS.findIndex(t => t.id === a) - TOPICS.findIndex(t => t.id === b)).map(id => { const t = TOPICS.find(x => x.id === id); return `<div class="it no" style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center"><span><b>${t.code || t.id}</b> ${esc(t.name)} · <span class="muted">${by[id]} pendiente${by[id] > 1 ? 's' : ''}</span></span><button class="btn sm" type="button" data-go="${tid(id)}">Volver a lo esencial</button></div>`; }).join('')}</div>`
+      : `<div class="essentials"><p style="margin:0"><b>No tienes errores pendientes.</b> Cuando falles un ejercicio en los temas o en el examen rápido, aparecerá aquí para que lo repases.${PROG.mastered ? ` Ya superaste ${PROG.mastered}.` : ''}</p></div>`}`;
+  if (keys.length) $('#rvgo').onclick = () => {
+    RV.list = keys.sort((a, b) => (ERR[b].m - ERR[a].m) || (ERR[a].t - ERR[b].t)).slice(0, 10); RV.i = 0; RV.res = []; reviewQ();
+  };
+}
+function reviewQ() {
+  const k = RV.list[RV.i], [id, si] = k.split('#'), idx = +si, t = TOPICS.find(x => x.id === id), it = t.items[idx];
+  app.innerHTML = `<div class="eyebrow">Repasar · Subtema ${t.code || t.id}</div><h2 style="margin-top:4px">Ejercicio ${RV.i + 1} de ${RV.list.length}</h2>
+    <div class="bar" style="max-width:820px;margin:8px 0 16px"><i style="width:${RV.i / RV.list.length * 100}%"></i></div>
+    <div class="card"><div class="card-b"><div id="rb"></div></div><div class="card-f"><button class="btn sm" type="button" id="rq">Terminar</button><button class="btn primary" type="button" id="rn">${RV.i === RV.list.length - 1 ? 'Ver resultado' : 'Siguiente →'}</button></div></div>`;
+  const host = $('#rb');
+  const done = ok => { RV.res[RV.i] = ok; logResult(id, idx, ok); };
+  if (it.t === 'mc') mountMC(host, it, null, idx, done);
+  else if (it.t === 'genmc') mountMC(host, GEN[it.g](), null, idx, done);
+  else if (it.t === 'sort') mountSort(host, it, null, idx, done);
+  else { const mk = () => mountGen(host, Object.assign({ t: 'gen' }, GEN[it.g](it.arg)), done, mk); mk(); }
+  $('#rq').onclick = () => { RV.list = RV.list.slice(0, RV.i + (RV.res[RV.i] !== undefined ? 1 : 0)); RV.i = RV.list.length; renderReview(); };
+  $('#rn').onclick = () => { if (RV.res[RV.i] === undefined) RV.res[RV.i] = false; RV.i++; window.scrollTo(0, 0); renderReview(); };
+}
+
+/* =============== 4 · Dibujar el desplazamiento =============== */
+const MKT = {
+  micro: {
+    axes: {}, pl: 'P', ql: 'Q', hp: { D: 70, O: 74 },
+    curves: [{ k: 'D', cls: 'c-d', lab: 'D', name: 'la demanda' }, { k: 'O', cls: 'c-s', lab: 'O', name: 'la oferta' }],
+    base: () => ({ D: { a: 85, b: -0.7 }, O: { a: 15, b: 0.7 } }),
+    eq: (c) => cross(c.D, c.O),
+    sol: (key, dir) => ({ [key]: 22 * dir }),
+    out: (e0, e1) => `El precio ${e1[1] > e0[1] ? 'sube' : 'baja'} de P₀ a P₁ y la cantidad ${e1[0] > e0[0] ? 'sube' : 'baja'} de Q₀ a Q₁.`
+  },
+  adas: {
+    axes: { yl: 'Nivel general de precios', xl: 'PIB real (Y)' }, pl: 'P', ql: 'Y', hp: { DA: 70, OACP: 74 },
+    curves: [{ k: 'DA', cls: 'c-d', lab: 'DA', name: 'la DA' }, { k: 'OACP', cls: 'c-s', lab: 'OACP', name: 'la OACP' }, { k: 'OALP', cls: 'c-ink', lab: 'OALP', name: 'la OALP' }],
+    base: () => ({ DA: { a: 85, b: -0.7 }, OACP: { a: 15, b: 0.7 }, OALP: { v: 50 } }),
+    eq: (c, off) => (off && off.OALP && !off.OACP) ? [c.OALP.v, lineAt(c.DA, c.OALP.v)] : cross(c.DA, c.OACP),
+    sol: (key, dir) => key === 'OALP' ? { OALP: 12 * dir, OACP: 24 * dir } : { [key]: 20 * dir },
+    out: (e0, e1) => `El nivel general de precios ${e1[1] > e0[1] ? 'sube' : 'baja'} de P₀ a P₁ y el PIB real ${e1[0] > e0[0] ? 'aumenta' : 'disminuye'} de Y₀ a Y₁.`
+  },
+  fx: {
+    axes: { yl: 'Valor del guaraní (US$ por Gs.)', xl: 'Cantidad de guaraníes' }, pl: 'TC', ql: 'Q', hp: { D: 70, O: 74 },
+    curves: [{ k: 'D', cls: 'c-d', lab: 'D Gs.', name: 'la demanda de guaraníes' }, { k: 'O', cls: 'c-s', lab: 'O Gs.', name: 'la oferta de guaraníes' }],
+    base: () => ({ D: { a: 85, b: -0.7 }, O: { a: 15, b: 0.7 } }),
+    eq: (c) => cross(c.D, c.O),
+    sol: (key, dir) => ({ [key]: 22 * dir }),
+    out: (e0, e1) => `El guaraní se ${e1[1] > e0[1] ? 'aprecia' : 'deprecia'} (de TC₀ a TC₁) y la cantidad de guaraníes intercambiada ${e1[0] > e0[0] ? 'aumenta' : 'disminuye'}.`
+  }
+};
+function diagramSentence(m, key, dir) {
+  const M = MKT[m], b = M.base(), off = {}; M.curves.forEach(c => off[c.k] = 0); Object.assign(off, M.sol(key, dir));
+  const c = {}; M.curves.forEach(x => { const bb = b[x.k]; c[x.k] = bb.v !== undefined ? { v: bb.v + off[x.k] } : shiftLine(bb, off[x.k]); });
+  const cv = M.curves.find(x => x.k === key), e0 = M.eq(b), e1 = M.eq(c, off);
+  return `Como se observa en el diagrama, ${cv.name} se desplaza a la ${dir > 0 ? 'derecha' : 'izquierda'}, de ${cv.lab}₀ a ${cv.lab}₁. ${M.out(e0, e1)}`;
+}
+function drawShift(svg, host, m, sc, onDone) {
+  const M = MKT[m], base = M.base(), off = {};
+  let phase = 'drag', drag = null, mark = null, P = null, tries = 0;
+  M.curves.forEach(c => off[c.k] = 0);
+  svg.style.touchAction = 'none';
+  host.innerHTML = `<p class="dsteps" id="dsi"></p><div class="row"><button class="btn primary sm" type="button" id="dchk" disabled>Comprobar</button><button class="btn sm" type="button" id="drst">Reiniciar</button><button class="btn sm" type="button" id="dsol">Ver solución</button></div><div id="dfb"></div>`;
+  const cur = () => { const c = {}; M.curves.forEach(x => { const b = base[x.k]; c[x.k] = b.v !== undefined ? { v: b.v + off[x.k] } : shiftLine(b, off[x.k]); }); return c; };
+  const name = k => M.curves.find(x => x.k === k).name;
+  function instr() { $('#dsi', host).innerHTML = phase === 'drag' ? '<b>Paso 1.</b> Arrastra hacia la izquierda o la derecha la curva que se desplaza (tócala o toca su círculo ⇆).' : phase === 'point' ? '<b>Paso 2.</b> Toca en el diagrama el <b>nuevo punto de equilibrio</b>.' : '<b>Listo.</b> Revisa el nuevo equilibrio y la explicación.'; }
+  function render() {
+    P = Plot(svg, M.axes);
+    const c = cur(), e0 = M.eq(base);
+    M.curves.forEach(x => {
+      const moved = Math.abs(off[x.k]) >= 1;
+      if (moved) { drawCurve(P, base[x.k], x.cls + ' old', x.lab + '₀'); drawCurve(P, c[x.k], 'c-new', x.lab + '₁'); }
+      else drawCurve(P, base[x.k], x.cls, x.lab);
+      if (phase === 'drag') {
+        let hq, hpv;
+        if (c[x.k].v !== undefined) { hq = c[x.k].v; hpv = 88; } else { hpv = M.hp[x.k]; hq = qAt(c[x.k], hpv); if (hq < 6 || hq > 94) { hq = 80; hpv = lineAt(c[x.k], 80); } }
+        const g = el('g', { class: 'hdl' }, P.gT);
+        el('circle', { cx: P.X(hq), cy: P.Y(hpv), r: 10 }, g);
+        const tx = el('text', { x: P.X(hq), y: P.Y(hpv) + 4, 'text-anchor': 'middle' }, g); tx.textContent = '⇆';
+      }
+    });
+    P.guide(e0[0], e0[1], M.ql + '₀', M.pl + '₀'); P.dot(e0[0], e0[1], 'E₀', -24, -8);
+    if (mark) el('circle', { cx: P.X(mark[0]), cy: P.Y(mark[1]), r: 6, class: mark[2] ? 'mark-on' : 'mark-in', stroke: 'var(--sheet)', 'stroke-width': 2 }, P.gT);
+    if (phase === 'done') { const e1 = M.eq(c, off); const r = e1[0] > e0[0]; P.guide(e1[0], e1[1], M.ql + '₁', M.pl + '₁', { qdx: r ? 7 : -7, pdy: e1[1] > e0[1] ? -4 : 6 }); P.dot(e1[0], e1[1], 'E₁', 8, -6); }
+    instr();
+  }
+  const toData = e => { const pt = svg.createSVGPoint(); pt.x = e.clientX; pt.y = e.clientY; const p = pt.matrixTransform(svg.getScreenCTM().inverse()); return [(p.x - P.L) / P.W * 100, (P.T + P.H - p.y) / P.H * 100, p.x, p.y]; };
+  function nearest(px, py) {
+    const c = cur(); let best = null, bd = 18;
+    M.curves.forEach(x => {
+      let d;
+      if (c[x.k].v !== undefined) d = Math.abs(px - P.X(c[x.k].v));
+      else { const x1 = P.X(0), y1 = P.Y(lineAt(c[x.k], 0)), x2 = P.X(100), y2 = P.Y(lineAt(c[x.k], 100)); d = Math.abs((y2 - y1) * px - (x2 - x1) * py + x2 * y1 - y2 * x1) / Math.hypot(y2 - y1, x2 - x1); }
+      if (d < bd) { bd = d; best = x.k; }
+    });
+    return best;
+  }
+  svg.onpointerdown = e => {
+    const [q, p, px, py] = toData(e);
+    if (phase === 'drag') { const k = nearest(px, py); if (!k) return; drag = { k, q0: q, o0: off[k] }; try { svg.setPointerCapture(e.pointerId); } catch (er) { } e.preventDefault(); }
+    else if (phase === 'point') {
+      const e1 = M.eq(cur(), off), d = Math.hypot((q - e1[0]) * P.W / 100, (p - e1[1]) * P.H / 100), ok = d <= 16;
+      mark = [q, p, ok];
+      if (ok) finish(true); else { render(); $('#dfb', host).innerHTML = `<div class="fb no">Ese punto no es el cruce de las curvas después del cambio. Busca dónde se cortan ${M.curves.filter(x => x.k !== 'OALP' || off.OALP).map(x => x.lab + (Math.abs(off[x.k]) >= 1 ? '₁' : '')).join(' y ')}.</div>`; }
+    }
+  };
+  svg.onpointermove = e => { if (!drag) return; const [q] = toData(e); off[drag.k] = Math.max(-30, Math.min(30, Math.round((drag.o0 + q - drag.q0) / 2) * 2)); $('#dchk', host).disabled = false; render(); };
+  svg.onpointerup = svg.onpointercancel = () => { drag = null; };
+  function finish(ok) {
+    phase = 'done'; render();
+    const e0 = M.eq(base), e1 = M.eq(cur(), off);
+    $('#dfb', host).innerHTML = `<div class="fb ${ok ? 'ok' : 'info'}"><b class="h">${ok ? 'Diagrama correcto' : 'Solución'}</b>${sc.why ? sc.why + ' ' : ''}${M.out(e0, e1)}</div>`;
+    $('#dchk', host).disabled = true;
+    if (onDone) onDone(ok);
+  }
+  $('#dchk', host).onclick = () => {
+    const moved = M.curves.filter(x => Math.abs(off[x.k]) >= 6).map(x => x.k);
+    if (!moved.length) { $('#dfb', host).innerHTML = '<div class="fb info">Todavía no moviste ninguna curva lo suficiente.</div>'; return; }
+    const allowed = sc.key === 'OALP' ? ['OALP', 'OACP'] : [sc.key];
+    const rightCurve = moved.includes(sc.key) && moved.every(k => allowed.includes(k) && Math.sign(off[k]) === sc.dir);
+    tries++;
+    if (rightCurve) { phase = 'point'; render(); $('#dfb', host).innerHTML = `<div class="fb ok"><b class="h">Bien</b>Se desplaza ${name(sc.key)} hacia la ${sc.dir > 0 ? 'derecha' : 'izquierda'}.</div>`; $('#dchk', host).disabled = true; return; }
+    const msg = !moved.includes(sc.key) ? `Moviste ${moved.map(name).join(' y ')}. En esta situación cambia otro determinante: piensa qué curva representa a quienes se ven afectados primero.` : Math.sign(off[sc.key]) !== sc.dir ? `La curva es la correcta, pero la dirección no. ¿El cambio aumenta o reduce lo que se quiere comprar o vender a cada precio?` : 'Solo debe desplazarse una curva. Devuelve la otra a su lugar con “Reiniciar”.';
+    $('#dfb', host).innerHTML = `<div class="fb no"><b class="h">Revisa</b>${msg}${tries >= 2 && sc.why ? '<br><b>Pista:</b> ' + sc.why : ''}</div>`;
+  };
+  $('#drst', host).onclick = () => { M.curves.forEach(c => off[c.k] = 0); phase = 'drag'; mark = null; $('#dfb', host).innerHTML = ''; $('#dchk', host).disabled = true; render(); };
+  $('#dsol', host).onclick = () => { M.curves.forEach(c => off[c.k] = 0); Object.assign(off, M.sol(sc.key, sc.dir)); mark = null; finish(false); };
+  render();
+}
+const DRAW_SCEN = () => ({
+  micro: SCEN.map(s => ({ ctx: 'Mercado de ' + s[0], text: s[1], key: s[2], dir: s[3], why: s[4] })),
+  adas: SCEN_ADAS.map(s => ({ ctx: s[0], text: s[1], key: s[2], dir: s[3], why: s[4] })),
+  fx: SCEN_FX.map(s => ({ ctx: 'Mercado del guaraní', text: s[0], key: s[1], dir: s[2], why: s[3] }))
+});
+function labDraw(svg, pan, leg) {
+  const st = PROG.labs.draw = PROG.labs.draw || { ok: 0, n: 0 };
+  const S = { m: 'micro', order: null, pos: 0 };
+  pan.innerHTML = `
+    <div class="ctl"><span class="lbl">Diagrama</span>${segBtns('dm', [['micro', 'Oferta y demanda'], ['adas', 'DA y OA'], ['fx', 'Mercado del guaraní']], 'micro')}</div>
+    <div class="scen"><div class="mk" id="mk"></div><p id="sc"></p></div>
+    <div id="dhost"></div>
+    <div class="row"><button class="btn" type="button" id="nx">Otra situación</button><span class="score" id="sco"></span></div>`;
+  leg.innerHTML = `<span><span class="sw" style="background:var(--k-d)"></span>Demanda / DA</span><span><span class="sw" style="background:var(--k-s)"></span>Oferta / OACP</span><span><span class="sw" style="background:var(--k-new)"></span>Curva desplazada</span><span><span class="sw" style="background:var(--gold)"></span>⇆ arrastrable</span>`;
+  const score = () => { $('#sco', pan).textContent = `Aciertos: ${st.ok}/${st.n}`; };
+  function load() {
+    const list = DRAW_SCEN()[S.m];
+    if (!S.order) { S.order = shuffle(list.map((_, k) => k)); S.pos = 0; }
+    const sc = list[S.order[S.pos]];
+    $('#mk', pan).textContent = sc.ctx; $('#sc', pan).textContent = sc.text;
+    drawShift(svg, $('#dhost', pan), S.m, sc, ok => { st.n++; if (ok) st.ok++; saveProg(); score(); });
+    score();
+  }
+  bindSeg(pan, 'dm', v => { S.m = v; S.order = null; load(); });
+  $('#nx', pan).onclick = () => { S.pos = (S.pos + 1) % S.order.length; load(); };
+  load();
+}
+
+/* =============== 1 y 2 · Escribir =============== */
+const wget = (k, d) => store.get('w.' + k, d), wset = (k, v) => store.set('w.' + k, v);
+const expState = p => wget(p.id, { step: 0, defs: '', cause: null, dia: null, ord: false, chain: '', ex: '', cadi: [], ck: [], done: false });
+const evaState = c => wget(c.id, { step: 0, s1: null, s2: null, s3: null, s4: null, txt: '', ck: [], done: false });
+function statusChip(st) { const started = st.step > 0 || st.defs || st.txt; return st.done ? '<span class="tag ok">Completa</span>' : started ? '<span class="tag prog">En progreso</span>' : '<span class="tag">Sin empezar</span>'; }
+function writeTabs(cur) {
+  return `<div class="seg" role="group" aria-label="Tipo de respuesta" style="margin-bottom:18px">${[['escribir', 'Explicar · 10 puntos'], ['escribir-evaluar', 'Evaluar · 15 puntos']].map(([r, l]) => `<button type="button" data-go="${r}" aria-pressed="${r === cur}">${l}</button>`).join('')}</div>`;
+}
+function renderWrite(tab) {
+  const isE = tab === 'eva';
+  const list = isE ? EVA : EXP, href = isE ? 'eva-' : 'exp-', st = isE ? evaState : expState;
+  const units = [...new Set(list.map(x => x.u))];
+  app.innerHTML = `<div class="eyebrow">Escribir como en el examen</div><h1>${isE ? 'Evaluar una política' : 'Explicar con un diagrama'}</h1>${writeTabs(isE ? 'escribir-evaluar' : 'escribir')}
+    ${isE ? `<div class="method"><div><b>Qué pide «evaluar»</b><p>Valorar puntos fuertes y débiles y cerrar con un juicio justificado. Es la parte b de la Prueba 1 (15 puntos).</p></div>
+      <div><b>CLASPP</b><p>Contexto · Largo vs. corto plazo · Supuestos · Partes interesadas · Prioridades · Pros y contras. Elige dos o tres; en macro, el plazo casi siempre.</p></div>
+      <div><b>Párrafo F-E-I-J</b><p>Factor → Explicación → Implicación → Juicio. Cada párrafo de evaluación sigue esa secuencia.</p></div></div>`
+      : `<div class="method"><div><b>Qué pide «explicar»</b><p>Decir <b>por qué</b> ocurre algo con una cadena causal. Es la parte a de la Prueba 1 (10 puntos).</p></div>
+      <div><b>Los 5 pasos</b><p>Definir → Causa inicial → Diagrama → Cadena causal → Ejemplo paraguayo.</p></div>
+      <div><b>La regla práctica</b><p>Si tu respuesta se puede leer sin la palabra «porque» o un equivalente, todavía no está explicando.</p></div></div>`}
+    ${units.map(u => `<div class="unit-h"><h2>${uLabel(u)}</h2><span>${list.filter(x => x.u === u).length} preguntas</span></div>
+      <div class="tiles">${list.filter(x => x.u === u).map(x => `<button class="tile wtile" type="button" data-go="${href}${x.id}"><span class="code">${tcode(x.st)}</span><span class="nm">${esc(x.short)}</span><span class="ds">${esc(x.q)}</span><span class="ft">${statusChip(st(x))}</span></button>`).join('')}</div>`).join('')}`;
+}
+
+/* ---- Explicar ---- */
+const EXP_STEPS = ['Definir', 'Causa inicial', 'Diagrama', 'Cadena causal', 'Ejemplo paraguayo', 'Revisar y copiar'];
+function renderExplain(p) {
+  const W = expState(p), save = () => wset(p.id, W);
+  const kind = p.u <= 2 ? 'micro' : 'macro';
+  const doneFlags = [!!W.defs.trim(), W.cause === 0, W.dia !== null, W.ord && !!W.chain.trim(), !!W.ex.trim(), W.done];
+  app.innerHTML = `<button class="crumb" type="button" data-go="escribir">← Preguntas de «Explicar»</button>
+    <div class="eyebrow" style="margin-top:12px">${uLabel(p.u)} · Subtema ${tcode(p.st)} · 10 puntos</div>
+    <h2 class="qtitle">${esc(p.q)}</h2>
+    ${stepper(EXP_STEPS, W.step, doneFlags)}
+    <div class="card wcard"><div class="card-b" id="wb"></div>
+    <div class="card-f"><button class="btn sm" type="button" id="wp" ${W.step === 0 ? 'disabled' : ''}>← Anterior</button><button class="btn primary" type="button" id="wn">${W.step === EXP_STEPS.length - 1 ? 'Volver a las preguntas' : 'Siguiente paso →'}</button></div></div>`;
+  app.querySelectorAll('[data-step]').forEach(b => b.onclick = () => { W.step = +b.dataset.step; save(); renderExplain(p); });
+  $('#wp').onclick = () => { W.step--; save(); renderExplain(p); window.scrollTo(0, 0); };
+  $('#wn').onclick = () => { if (W.step === EXP_STEPS.length - 1) return go('escribir'); W.step++; save(); renderExplain(p); window.scrollTo(0, 0); };
+  const b = $('#wb');
+  if (W.step === 0) {
+    b.innerHTML = `<p class="q">Escribe una definición breve (una o dos líneas) de: ${p.defs.map(d => `<b>${d[0]}</b>`).join(' y ')}.</p>
+      <textarea id="ta" rows="6" placeholder="Escribe aquí tus definiciones…">${esc(W.defs)}</textarea>
+      <div class="row" style="margin-top:10px"><button class="btn sm" type="button" id="cmp">Comparar con el modelo</button></div><div id="fbx"></div>`;
+    const ta = $('#ta'); ta.oninput = () => { W.defs = ta.value; save(); };
+    $('#cmp').onclick = () => {
+      const t = normTxt(W.defs);
+      $('#fbx').innerHTML = `<div class="fb info">${p.defs.map(([term, def, kw]) => { const ks = kw.split(',').map(s => s.trim()); const hits = ks.map(k => k.split('|').some(alt => t.includes(normTxt(alt)))); return `<p style="margin:0 0 8px"><b>${term}:</b> ${def}<br><span class="small">Ideas clave en tu texto: ${ks.map((k, i) => `<span class="kw ${hits[i] ? 'y' : 'n'}">${k.split('|')[0]}</span>`).join(' ')}</span></p>`; }).join('')}<span class="small muted">La detección de ideas clave es una ayuda aproximada: lo importante es que tu definición sea precisa.</span></div>`;
+    };
+  } else if (W.step === 1) {
+    const perm = shuffle(p.cause.map((_, i) => i));
+    b.innerHTML = `<p class="q">¿Cuál es la <b>causa inicial</b>, el primer eslabón de la cadena?</p><div class="opts">${perm.map((k, j) => `<button class="opt" type="button" data-k="${k}"><span class="l">${'ABC'[j]}</span><span>${esc(p.cause[k])}</span></button>`).join('')}</div><div id="fbx"></div>`;
+    const show = k => { b.querySelectorAll('.opt').forEach(x => { x.disabled = true; if (+x.dataset.k === 0) x.classList.add('right'); else if (+x.dataset.k === k) x.classList.add('wrong'); }); $('#fbx').innerHTML = `<div class="fb ${k === 0 ? 'ok' : 'no'}"><b class="h">${k === 0 ? 'Correcto' : 'No es la causa inicial'}</b>${k === 0 ? 'Empieza tu explicación con esta idea.' : 'Esa opción describe otro cambio. La causa inicial es lo que dispara el mecanismo de la pregunta.'}${k === 0 ? '' : '<div class="row" style="margin-top:8px"><button class="btn sm" type="button" id="re">Intentar de nuevo</button></div>'}</div>`; const re = $('#re'); if (re) re.onclick = () => renderExplain(p); };
+    b.querySelectorAll('.opt').forEach(x => x.onclick = () => { const k = +x.dataset.k; W.cause = k; save(); show(k); });
+    if (W.cause === 0) show(0);
+  } else if (W.step === 2) {
+    b.innerHTML = `<p class="q">Dibuja el desplazamiento que corresponde a esta pregunta y marca el nuevo equilibrio.</p><div class="figure"><svg id="wfig" role="img" aria-label="Diagrama para dibujar"></svg></div><div id="dh" style="margin-top:10px"></div>`;
+    drawShift($('#wfig'), $('#dh'), p.dia.m, { key: p.dia.key, dir: p.dia.dir, why: '' }, ok => { W.dia = ok; save(); });
+  } else if (W.step === 3) {
+    b.innerHTML = `<p class="q"><b>Primero</b>, ordena los eslabones de la cadena causal. <b>Después</b>, escríbela con tus palabras usando conectores.</p><div id="ordh"></div>
+      <div id="wr" ${W.ord ? '' : 'hidden'}><h3 style="margin-top:16px">Tu cadena causal</h3><div class="conns">${CONN_CAUSA.slice(0, 9).map(c => `<button type="button" class="chipx sm" data-c="${c}">${c}</button>`).join('')}</div>
+      <textarea id="ta" rows="7" placeholder="En primer lugar… Por consiguiente… Como resultado… Finalmente…">${esc(W.chain)}</textarea><p class="small" id="cc"></p></div>`;
+    orderExercise($('#ordh'), p.chain, W.ord, ok => { if (ok) { W.ord = true; save(); $('#wr').hidden = false; } });
+    const ta = $('#ta'), cc = () => { const f = foundConn(ta.value, CONN_CAUSA); $('#cc').innerHTML = `Conectores causales usados: <b>${f.length}</b>${f.length ? ' (' + f.join(', ') + ')' : ''}. ${f.length >= 3 ? 'Bien.' : 'Usa al menos tres, uno por eslabón.'}`; };
+    ta.oninput = () => { W.chain = ta.value; save(); cc(); };
+    b.querySelectorAll('[data-c]').forEach(x => x.onclick = () => insertAtCursor(ta, x.dataset.c.charAt(0).toUpperCase() + x.dataset.c.slice(1)));
+    cc();
+  } else if (W.step === 4) {
+    const cadi = [['C', 'Contexto: dónde y quiénes (mercado, institución, región)'], ['A', 'Año o fecha del hecho'], ['D', 'Dato exacto con su fuente (BCP, INE, MAG, prensa)'], ['I', 'Impacto económico explicado con la teoría']];
+    b.innerHTML = `<p class="q">Cierra con un <b>ejemplo real de Paraguay</b> que ilustre el mecanismo. Usa C-A-D-I.</p>
+      <textarea id="ta" rows="6" placeholder="Tal como ocurrió en Paraguay…">${esc(W.ex)}</textarea>
+      <div class="cklist" style="margin-top:10px">${cadi.map(([l, t], i) => `<label><input type="checkbox" data-cd="${i}" ${W.cadi[i] ? 'checked' : ''}><span><b>${l}</b> · ${t}</span></label>`).join('')}</div>
+      <details class="model"><summary>Ver ejemplo modelo</summary><p>${esc(p.ex)}</p><p class="small muted">En tu respuesta agrega un dato exacto con su fuente: es lo que pide la D de C-A-D-I.</p></details>`;
+    const ta = $('#ta'); ta.oninput = () => { W.ex = ta.value; save(); };
+    b.querySelectorAll('[data-cd]').forEach(x => x.onchange = () => { W.cadi[+x.dataset.cd] = x.checked; save(); });
+  } else {
+    const ds = diagramSentence(p.dia.m, p.dia.key, p.dia.dir);
+    const mine = [W.defs.trim(), p.cause[0], '[Diagrama] ' + ds, W.chain.trim(), W.ex.trim()].filter(Boolean).join('\n\n');
+    const model = [p.defs.map(d => `${d[0]}: ${d[1]}`).join(' '), p.cause[0], ds, p.chain.join(' '), p.ex].join('\n\n');
+    const items = CK_EXP[kind];
+    b.innerHTML = `<p class="q">Esta es tu respuesta armada con los pasos anteriores. Cópiala para entregarla y revísala con la lista.</p>
+      <div class="answer" id="ans">${esc(mine).replace(/\n/g, '<br>')}</div>
+      <div class="row" style="margin:10px 0 16px"><button class="btn primary sm" type="button" id="cp">Copiar mi respuesta</button></div>
+      <h3>Lista de cotejo</h3>${checklistHtml(items, W.ck, 'ckx')}
+      <details class="model"><summary>Ver respuesta modelo completa</summary><div class="answer">${esc(model).replace(/\n/g, '<br>')}</div></details>`;
+    bindChecklist(b, 'ckx', items, W.ck, () => { W.done = items.every((_, i) => W.ck[i]) || W.done; save(); });
+    $('#cp').onclick = e => copyText(mine, e.currentTarget);
+    if (!W.done && W.defs && W.chain && W.ex) { W.done = true; save(); }
+  }
+}
+function orderExercise(host, steps, solved, onDone) {
+  const S = steps.map((s, i) => ({ i, s }));
+  let pool = solved ? [] : shuffle(S), pick = solved ? S.slice() : [], checked = !!solved;
+  while (!solved && pool.length > 1 && pool.every((s, k) => s.i === k)) pool = shuffle(S);
+  function draw() {
+    host.innerHTML = `<div class="cgrid"><div><h3 class="ph">Eslabones disponibles</h3><div class="clist">${pool.map(s => `<button type="button" class="cstep" data-cs="${s.i}">${esc(s.s)}</button>`).join('') || '<p class="small muted">Todos ordenados.</p>'}</div></div>
+      <div><h3 class="ph">Tu orden</h3><ol class="clist cord">${pick.map((s, k) => `<li><button type="button" class="cstep ${checked ? (s.i === k ? 'right' : 'wrong') : ''}" data-cp="${k}">${esc(s.s)}</button></li>`).join('') || '<li class="small muted nob">Toca los eslabones en orden.</li>'}</ol></div></div>
+      <div class="row" style="margin-top:8px">${checked && pick.every((s, k) => s.i === k) ? '<span class="tag ok">Orden correcto</span>' : `<button type="button" class="btn sm primary" id="ock" ${pool.length || checked ? 'disabled' : ''}>Comprobar orden</button><button type="button" class="btn sm" id="ors">Reiniciar</button>`}</div><div id="ofb"></div>`;
+    host.querySelectorAll('[data-cs]').forEach(x => x.onclick = () => { if (checked) return; const s = pool.find(y => y.i === +x.dataset.cs); pool = pool.filter(y => y !== s); pick.push(s); draw(); });
+    host.querySelectorAll('[data-cp]').forEach(x => x.onclick = () => { if (checked) return; const s = pick[+x.dataset.cp]; pick = pick.filter(y => y !== s); pool.push(s); draw(); });
+    const ck = $('#ock', host), rs = $('#ors', host);
+    if (rs) rs.onclick = () => { pool = shuffle(S); pick = []; checked = false; draw(); };
+    if (ck) ck.onclick = () => { checked = true; const ok = pick.every((s, k) => s.i === k); draw(); if (!ok) { $('#ofb', host).innerHTML = '<div class="fb no">Hay eslabones fuera de lugar (en rojo). Recuerda: causa → mecanismo → desplazamiento → nuevo equilibrio.</div>'; const r2 = $('#ors', host); if (r2) r2.onclick = () => { pool = shuffle(S); pick = []; checked = false; draw(); }; } onDone(ok); };
+  }
+  draw();
+}
+
+/* ---- Evaluar ---- */
+const EVA_STEPS = ['A favor y en contra', 'Dimensiones CLASPP', 'Párrafo F-E-I-J', 'Elegir la conclusión', 'Escribir y revisar'];
+function renderEval(c) {
+  const W = evaState(c), save = () => wset(c.id, W);
+  const kind = c.u <= 2 ? 'micro' : 'macro';
+  const doneFlags = [W.s1 === true, W.s2 === true, W.s3 === true, W.s4 === true, W.done];
+  app.innerHTML = `<button class="crumb" type="button" data-go="escribir-evaluar">← Preguntas de «Evaluar»</button>
+    <div class="eyebrow" style="margin-top:12px">${uLabel(c.u)} · Subtema ${tcode(c.st)} · 15 puntos</div>
+    <h2 class="qtitle">${esc(c.q)}</h2>
+    ${stepper(EVA_STEPS, W.step, doneFlags)}
+    <div class="card wcard"><div class="card-b" id="wb"></div>
+    <div class="card-f"><button class="btn sm" type="button" id="wp" ${W.step === 0 ? 'disabled' : ''}>← Anterior</button><button class="btn primary" type="button" id="wn">${W.step === EVA_STEPS.length - 1 ? 'Volver a las preguntas' : 'Siguiente paso →'}</button></div></div>`;
+  app.querySelectorAll('[data-step]').forEach(b => b.onclick = () => { W.step = +b.dataset.step; save(); renderEval(c); });
+  $('#wp').onclick = () => { W.step--; save(); renderEval(c); window.scrollTo(0, 0); };
+  $('#wn').onclick = () => { if (W.step === EVA_STEPS.length - 1) return go('escribir-evaluar'); W.step++; save(); renderEval(c); window.scrollTo(0, 0); };
+  const b = $('#wb');
+  const after = (key, ok) => { W[key] = ok; save(); };
+  if (W.step === 0) {
+    mountSort(b, { q: 'Clasifica cada argumento: ¿apoya la eficacia de la política o la limita?', bins: ['A favor', 'En contra'], items: c.args.map(a => [a[0], a[1] === 'pro' ? 0 : 1]), e: 'Una evaluación equilibrada necesita argumentos de los dos lados antes del juicio final.' }, null, 0, ok => after('s1', ok));
+  } else if (W.step === 1) {
+    const ds = ['L', 'A', 'S', 'P', 'C'].filter(d => c.args.some(a => a[2] === d));
+    mountSort(b, { q: '¿Qué dimensión de CLASPP usa cada argumento?', bins: ds.map(d => DIMS[d]), items: c.args.map(a => [a[0], ds.indexOf(a[2])]), e: 'Identificar la dimensión te ayuda a escribir cada argumento en su propio párrafo. En macro, la distinción entre corto y largo plazo casi nunca puede faltar.' }, null, 0, ok => after('s2', ok));
+  } else if (W.step === 2) {
+    mountSort(b, { q: 'Arma un párrafo de evaluación: ubica cada oración en su parte de F-E-I-J.', bins: ['Factor', 'Explicación', 'Implicación', 'Juicio'], items: c.feij.map((s, i) => [s, i]), e: `<br><b>Párrafo completo:</b> <i>Sin embargo, ${c.feij[0].charAt(0).toLowerCase() + c.feij[0].slice(1)} ${c.feij.slice(1).join(' ')}</i>` }, null, 0, ok => after('s3', ok));
+  } else if (W.step === 3) {
+    const perm = shuffle(c.concl.map((_, i) => i));
+    b.innerHTML = `<p class="q">¿Cuál es la <b>mejor conclusión</b> para esta evaluación?</p><div class="opts">${perm.map((k, j) => `<button class="opt" type="button" data-k="${k}"><span class="l">${'ABCD'[j]}</span><span>${esc(c.concl[k][0])}</span></button>`).join('')}</div><div id="fbx"></div>`;
+    b.querySelectorAll('.opt').forEach(x => x.onclick = () => {
+      const k = +x.dataset.k, ok = !!c.concl[k][1];
+      b.querySelectorAll('.opt').forEach(y => { y.disabled = true; if (c.concl[+y.dataset.k][1]) y.classList.add('right'); });
+      if (!ok) x.classList.add('wrong');
+      $('#fbx').innerHTML = `<div class="fb ${ok ? 'ok' : 'no'}"><b class="h">${ok ? 'Correcto' : 'No es la mejor'}</b>${c.concl[k][2]}${ok ? '' : '<div class="row" style="margin-top:8px"><button class="btn sm" type="button" id="re">Intentar de nuevo</button></div>'}</div>`;
+      const re = $('#re'); if (re) re.onclick = () => renderEval(c);
+      after('s4', ok);
+    });
+  } else {
+    const items = CK_EVA[kind], best = c.concl.find(x => x[1])[0];
+    b.innerHTML = `<p class="q">Escribe <b>un párrafo F-E-I-J</b> con un argumento distinto al del paso 3 y cierra con <b>tu conclusión</b>. Usa conectores de contraste.</p>
+      <div class="conns">${CONN_EVAL.slice(0, 10).map(x => `<button type="button" class="chipx sm" data-c="${x}">${x}</button>`).join('')}</div>
+      <textarea id="ta" rows="9" placeholder="Factor… Esto ocurre porque… Esto implica que… Por lo tanto… En definitiva…">${esc(W.txt)}</textarea>
+      <p class="small" id="cc"></p>
+      <div class="row" style="margin:6px 0 16px"><button class="btn primary sm" type="button" id="cp">Copiar mi texto</button></div>
+      <h3>Lista de cotejo</h3>${checklistHtml(items, W.ck, 'ckx')}
+      <details class="model"><summary>Ver conclusión modelo</summary><p>${esc(best)}</p></details>`;
+    const ta = $('#ta'), cc = () => { const f = foundConn(ta.value, CONN_EVAL); $('#cc').innerHTML = `Conectores de evaluación usados: <b>${f.length}</b>${f.length ? ' (' + f.join(', ') + ')' : ''}. ${f.some(x => ['sin embargo', 'no obstante', 'si bien', 'por el contrario', 'a pesar de', 'por otra parte'].includes(x)) ? 'Hay contraste.' : 'Falta un conector de contraste (sin embargo, no obstante, si bien…).'}`; };
+    ta.oninput = () => { W.txt = ta.value; if (W.txt.trim().length > 200) W.done = true; save(); cc(); };
+    b.querySelectorAll('[data-c]').forEach(x => x.onclick = () => insertAtCursor(ta, x.dataset.c.charAt(0).toUpperCase() + x.dataset.c.slice(1)));
+    $('#cp').onclick = e => copyText(ta.value, e.currentTarget);
+    bindChecklist(b, 'ckx', items, W.ck, save);
+    cc();
+  }
 }
 
 render();

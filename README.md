@@ -6,6 +6,6 @@ Sitio para alumnos: https://hrivarolainsfran-sys.github.io/atlas-diagramas/
 
 ## Taller de Economía IB
 
-Práctica interactiva de las Unidades 1 a 4: ejercicios con corrección inmediata, laboratorios de diagramas, examen rápido y tarjetas.
+Práctica interactiva de las Unidades 1 a 4, organizada en cuatro pasos: Aprende (ejercicios por subtema), Diagramas (laboratorios, incluido dibujar desplazamientos), Escribe (respuestas guiadas de Explicar y Evaluar) y Repasa (bitácora de errores, examen rápido y tarjetas).
 
 Sitio para alumnos: https://hrivarolainsfran-sys.github.io/atlas-diagramas/taller/
