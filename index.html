@@ -192,6 +192,51 @@ table.mx td a,.lnk{color:var(--k-d);cursor:pointer;text-decoration:underline;bac
   .pan.wide svg{min-width:600px}
 }
 @media (prefers-reduced-motion:no-preference){.item,.units button,.nav button{transition:background .15s,border-color .15s}}
+
+/* ---------- práctica por ficha ---------- */
+.prac .pseg{display:flex;flex-wrap:wrap;gap:4px;background:var(--paper);border:1px solid var(--rule);border-radius:8px;padding:3px;margin-bottom:12px}
+.prac .pseg button{border:0;background:transparent;padding:7px 12px;border-radius:6px;font-weight:700;font-size:14px;color:var(--ink-2);cursor:pointer}
+.prac .pseg button[aria-pressed="true"]{background:var(--navy);color:var(--navy-ink)}
+.pq{margin:0 0 10px;font-size:15.5px}
+.pfig{margin-bottom:12px}
+.practice .pfig .lb,.practice .pfig .al,.practice .pfig .tk,.practice .pfig .pl,.practice .pfig .nt,.practice .pfig .edgel{visibility:visible}
+.blank{cursor:pointer}
+.blank circle{fill:var(--gold-soft);stroke:var(--gold);stroke-width:1.6}
+.blank text{font-family:var(--f-body)!important;font-size:11.5px;font-weight:700;fill:var(--ink)}
+.blank.on circle{fill:var(--gold);stroke:var(--ink);stroke-width:2}
+.pfig text.lb,.pfig text.tk,.pfig text.pl,.pfig text.al{cursor:pointer}
+.bank{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 12px}
+.chipb{border:1.5px solid var(--rule);background:var(--paper);border-radius:6px;padding:5px 11px;font-family:var(--f-math);font-style:italic;font-size:15px;cursor:pointer;color:var(--ink)}
+.chipb:hover{border-color:var(--gold)}
+.prow{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:6px 0}
+.pbtn{display:inline-block;border:1px solid var(--rule);background:var(--sheet);border-radius:6px;padding:8px 13px;font-weight:700;font-size:14px;color:var(--ink);text-decoration:none;cursor:pointer;line-height:1.3}
+.pbtn:hover{border-color:var(--gold)}
+.pbtn.primary{background:var(--navy);border-color:var(--navy);color:var(--navy-ink)}
+.pbtn:disabled{opacity:.45;cursor:not-allowed}
+.plinks{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;padding-top:12px;border-top:1px solid var(--rule)}
+.pfb{border-radius:6px;padding:10px 12px;margin-top:8px;font-size:14.5px}
+.pfb.ok{background:var(--f-ep);border:1px solid var(--k-exp)}
+.pfb.no{background:var(--f-red);border:1px solid var(--k-con)}
+.pfb.info{background:var(--paper);border:1px solid var(--rule)}
+.pnote{color:var(--muted);font-size:13.5px;margin:4px 0}
+.cgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.ph{font-family:var(--f-display);font-weight:600;font-size:15px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+.clist{display:grid;gap:6px;margin:0;padding:0;list-style:none}
+.cord{counter-reset:o}
+.cord li{display:grid;grid-template-columns:22px minmax(0,1fr);gap:6px;align-items:start;counter-increment:o}
+.cord li::before{content:counter(o);font-family:var(--f-display);font-weight:700;color:var(--gold);padding-top:6px}
+.cord li.pnote{display:block}.cord li.pnote::before{content:none}
+.cstep{text-align:left;border:1.5px solid var(--rule);background:var(--paper);border-radius:6px;padding:7px 10px;font-size:14px;line-height:1.35;cursor:pointer;color:var(--ink);width:100%}
+.cstep:hover{border-color:var(--gold)}
+.cstep.right,.popt.right{border-color:var(--k-exp);background:var(--f-ep)}
+.cstep.wrong,.popt.wrong{border-color:var(--k-con);background:var(--f-red)}
+.prac .opts{display:grid;gap:7px}
+.popt{display:grid;grid-template-columns:26px minmax(0,1fr);gap:8px;text-align:left;border:1.5px solid var(--rule);background:var(--paper);border-radius:6px;padding:8px 10px;font-size:14.5px;cursor:pointer;color:var(--ink)}
+.popt .l{font-family:var(--f-display);font-weight:700;font-size:16px}
+.popt:disabled{cursor:default}
+.tlink{text-decoration:none;color:var(--navy-ink);font-weight:700}
+.chip.go{cursor:pointer;background:var(--gold-soft);border-color:var(--gold);color:var(--ink);font-weight:700}
+@media (max-width:860px){.cgrid{grid-template-columns:1fr}}
 </style>
 <style>
 .sw-f-ec{background:var(--f-ec)} .sw-f-ep{background:var(--f-ep)} .sw-f-dwl{background:var(--f-dwl)}
@@ -200,11 +245,12 @@ table.mx td a,.lnk{color:var(--k-d);cursor:pointer;text-decoration:underline;bac
 </head>
 <body>
 <header class="top">
-  <div class="brand"><b>Atlas de Diagramas</b><span>Economía IB · Nivel Medio · 3.er año</span></div>
+  <div class="brand"><b>Atlas de Diagramas</b><span>Economía IB</span></div>
   <div class="units" id="units" role="group" aria-label="Unidad del programa"></div>
   <div class="tools">
     <input class="search" id="q" type="search" placeholder="Buscar diagrama…" aria-label="Buscar diagrama" autocomplete="off">
     <label class="tog" for="prac"><input type="checkbox" id="prac"> Modo práctica</label>
+    <a class="tog tlink" href="https://hrivarolainsfran-sys.github.io/atlas-diagramas/taller/">Taller de práctica →</a>
     <button class="menu-btn" id="menu" type="button">Índice</button>
   </div>
 </header>
@@ -1698,6 +1744,159 @@ const CHECK = [
   'El nuevo equilibrio está claramente señalado.'
 ];
 
+/* ================= Práctica por ficha (generada desde los datos de cada diagrama) ================= */
+const TALLER = 'https://hrivarolainsfran-sys.github.io/atlas-diagramas/taller/';
+const LAB_OF = {
+  cpp: 'cpp', 'cpp-costo': 'cpp', 'cpp-crecimiento': 'cpp',
+  demanda: 'shifts', 'demanda-mov': 'shifts', oferta: 'shifts', 'oferta-mov': 'shifts', equilibrio: 'shifts', 'equilibrio-cambio': 'shifts',
+  'epd-rel': 'ped', 'epd-it': 'ped',
+  'precio-max': 'ceil', 'precio-min': 'ceil', 'salario-minimo': 'ceil',
+  'impuesto-especifico': 'tax', 'impuesto-advalorem': 'tax', subvencion: 'tax', incidencia: 'tax',
+  'ext-neg-prod': 'ext', 'ext-neg-cons': 'ext', 'ext-pos-prod': 'ext', 'ext-pos-cons': 'ext', 'impuesto-pigou': 'ext', 'subvencion-ext': 'ext',
+  da: 'adas', 'da-desplaz': 'adas', oacp: 'adas', 'oacp-desplaz': 'adas', 'oalp-desplaz': 'adas', 'equilibrio-macro': 'adas', 'da-aumento-y': 'adas', 'oalp-aumento': 'adas', 'inflacion-demanda': 'adas', 'inflacion-costos': 'adas', 'politica-monetaria': 'adas', 'politica-fiscal': 'adas', 'politicas-oferta': 'adas',
+  lorenz: 'lorenz', importaciones: 'tariff', arancel: 'tariff', 'tc-flotante': 'fx'
+};
+const LAB_NAME = { cpp: 'Curva de posibilidades de producción', shifts: '¿Qué curva se mueve?', ped: 'EPD e ingreso total', tax: 'Impuestos y subsidios', ceil: 'Precios máximos y mínimos', ext: 'Externalidades', adas: 'Demanda y oferta agregadas', lorenz: 'Curva de Lorenz y Gini', tariff: 'Arancel', fx: 'Mercado del guaraní' };
+const TALLER_ST = ['1.1', '1.2', '2.1', '2.2', '2.3', '2.5', '2.6', '2.7', '2.8', '2.9', '3.1', '3.2', '3.3', '3.4', '3.5', '3.6', '3.7', '4.1', '4.2', '4.4', '4.5', '4.6', '4.7', '4.8', '4.9', '4.10'];
+const shuf = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const plain = s => String(s).replace(/\*\*([^*]+)\*\*/g, '$1').replace(/`([^`]+)`/g, '$1');
+const areaDesc = n => { let s = plain(n).replace(/^\s*[A-Za-z0-9áéíóú₀-₉ ,+y]{1,14}:\s*/, ''); return s.charAt(0).toUpperCase() + s.slice(1); };
+function fichaAreas(f) {
+  if (!f.fig || f.fig.flow || !f.fig.panels) return [];
+  const seen = new Set(), out = [];
+  f.fig.panels.forEach(p => (p.areas || []).forEach(a => { if (!a.t || !a.n) return; const d = areaDesc(a.n); const k = a.t + '|' + d; if (!seen.has(k)) { seen.add(k); out.push({ t: a.t, d }); } }));
+  return out;
+}
+let AREA_POOL = null;
+const areaPool = () => AREA_POOL || (AREA_POOL = [...new Set(ALL.flatMap(f => fichaAreas(f).map(a => a.d)))]);
+const PR = { mode: 'rot' };
+
+function practiceBlock(f) {
+  if (f.type === 'page' || !f.fig) return '';
+  const lab = LAB_OF[f.id], hasA = fichaAreas(f).length > 0, hasC = (f.cad || []).length > 2;
+  const st = TALLER_ST.includes(f.st) ? f.st : null;
+  const modes = [['rot', 'Rotular el diagrama']].concat(hasC ? [['cad', 'Ordenar la cadena causal']] : []).concat(hasA ? [['are', '¿Qué representa cada área?']] : []);
+  if (!modes.some(m => m[0] === PR.mode)) PR.mode = 'rot';
+  return `<section class="blk full prac" id="practicar"><h2>Practica este diagrama</h2>
+    <div class="pseg" role="group" aria-label="Tipo de práctica">${modes.map(([k, l]) => `<button type="button" data-pm="${k}" aria-pressed="${k === PR.mode}">${l}</button>`).join('')}</div>
+    <div id="pbody"></div>
+    <div class="plinks">${lab ? `<a class="pbtn primary" href="${TALLER}#lab-${lab}">Laboratorio interactivo: ${LAB_NAME[lab]}</a>` : ''}${st ? `<a class="pbtn" href="${TALLER}#t${st.replace('.', '-')}">Ejercicios del subtema ${st} en el Taller</a>` : ''}</div>
+  </section>`;
+}
+
+function mountPractice(f) {
+  const body = document.getElementById('pbody'); if (!body) return;
+  document.querySelectorAll('[data-pm]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.pm === PR.mode)));
+  ({ rot: pracRot, cad: pracCad, are: pracAre })[PR.mode](f, body);
+}
+
+/* ---- Rotular ---- */
+function pracRot(f, body) {
+  body.innerHTML = `<p class="pq">Toca un número del diagrama y luego el rótulo que va en ese lugar. Los ejes ya están nombrados.</p>
+    <div class="figure pfig"><div class="panels">${renderFig(f.fig).html}</div></div>
+    <div class="bank" id="bank"></div>
+    <div class="prow"><button type="button" class="pbtn primary" id="pchk">Comprobar</button><button type="button" class="pbtn" id="pshow">Ver respuestas</button><button type="button" class="pbtn" id="prst">Reiniciar</button></div><div id="pfb"></div>`;
+  const fig = body.querySelector('.pfig');
+  let els = [...fig.querySelectorAll('text.lb, text.tk, text.pl, text.al, text.nodet[font-weight="700"]')].filter(t => t.textContent.trim() && t.textContent.trim() !== '0');
+  const toHtml = t => t.innerHTML.replace(/<tspan[^>]*>/g, '<sub>').replace(/<\/tspan>/g, '</sub>');
+  const items = els.map((t, i) => ({ el: t, key: t.textContent.trim(), html: toHtml(t), orig: t.innerHTML, ans: null }));
+  const bank = []; const seenK = new Set();
+  items.forEach(it => { if (!seenK.has(it.key)) { seenK.add(it.key); bank.push({ key: it.key, html: it.html, svg: it.orig }); } });
+  let sel = null, checked = false;
+  items.forEach((it, i) => {
+    let bb; try { bb = it.el.getBBox(); } catch (e) { bb = null; }
+    const cx = bb && bb.width ? bb.x + bb.width / 2 : +it.el.getAttribute('x'), cy = bb && bb.height ? bb.y + bb.height / 2 : +it.el.getAttribute('y') - 4;
+    it.el.style.visibility = 'hidden';
+    const svg = it.el.ownerSVGElement;
+    const g = document.createElementNS('http://www.w3.org/2000/svg', 'g'); g.setAttribute('class', 'blank'); g.setAttribute('tabindex', '0'); g.setAttribute('role', 'button');
+    g.innerHTML = `<circle cx="${cx}" cy="${cy}" r="10"></circle><text x="${cx}" y="${cy + 4}" text-anchor="middle">${i + 1}</text>`;
+    svg.appendChild(g); it.g = g;
+    const pickBlank = () => { if (checked) return; sel = i; draw(); };
+    g.addEventListener('click', pickBlank); g.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pickBlank(); } });
+    it.el.addEventListener('click', pickBlank);
+  });
+  const bankEl = body.querySelector('#bank');
+  bankEl.innerHTML = shuf(bank).map((b, k) => `<button type="button" class="chipb" data-bk="${esc(b.key)}">${b.html}</button>`).join('');
+  bankEl.querySelectorAll('.chipb').forEach(c => c.addEventListener('click', () => {
+    if (checked || sel === null) return;
+    const b = bank.find(x => x.key === c.dataset.bk); items[sel].ans = b;
+    const nx = items.findIndex((it, k) => k > sel && !it.ans); sel = nx >= 0 ? nx : items.findIndex(it => !it.ans); if (sel < 0) sel = null; draw();
+  }));
+  function draw() {
+    items.forEach((it, i) => {
+      it.g.classList.toggle('on', sel === i);
+      if (it.ans) { it.el.innerHTML = it.ans.svg; it.el.style.visibility = 'visible'; it.el.style.fill = checked ? (it.ans.key === it.key ? 'var(--k-exp)' : 'var(--k-con)') : 'var(--gold)'; it.g.style.display = sel === i ? '' : 'none'; }
+      else { it.el.style.visibility = 'hidden'; it.g.style.display = ''; }
+    });
+    const done = items.filter(it => it.ans).length;
+    body.querySelector('#pchk').disabled = checked || done === 0;
+    if (!checked) body.querySelector('#pfb').innerHTML = `<p class="pnote">${done} de ${items.length} rótulos ubicados${sel !== null ? ` · elegido el número ${sel + 1}` : ''}.</p>`;
+  }
+  body.querySelector('#pchk').onclick = () => {
+    checked = true; sel = null; draw();
+    const ok = items.filter(it => it.ans && it.ans.key === it.key).length;
+    body.querySelector('#pfb').innerHTML = `<div class="pfb ${ok === items.length ? 'ok' : 'no'}"><b>${ok} de ${items.length} rótulos correctos.</b> ${ok === items.length ? 'El diagrama está completo y bien rotulado.' : 'En rojo están los que no corresponden. Usa “Ver respuestas” o “Reiniciar”.'}</div>`;
+  };
+  body.querySelector('#pshow').onclick = () => { checked = true; sel = null; items.forEach(it => { it.el.innerHTML = it.orig; it.el.style.visibility = 'visible'; it.el.style.fill = (it.ans && it.ans.key === it.key) ? 'var(--k-exp)' : ''; it.g.style.display = 'none'; }); body.querySelector('#pchk').disabled = true; body.querySelector('#pfb').innerHTML = '<div class="pfb info">Respuestas a la vista. En verde, los que ya habías ubicado bien.</div>'; };
+  body.querySelector('#prst').onclick = () => pracRot(f, body);
+  sel = 0; draw();
+}
+
+/* ---- Cadena causal ---- */
+function pracCad(f, body) {
+  const steps = f.cad.map((s, i) => ({ i, s }));
+  let pool = shuf(steps), pick = [], checked = false;
+  while (pool.length > 1 && pool.every((s, k) => s.i === k)) pool = shuf(steps);
+  function draw() {
+    body.innerHTML = `<p class="pq">Toca los pasos en el orden correcto de la explicación. Toca un paso de tu orden para devolverlo.</p>
+      <div class="cgrid"><div><h3 class="ph">Pasos disponibles</h3><div class="clist" id="cpool">${pool.map(s => `<button type="button" class="cstep" data-cs="${s.i}">${ht(s.s)}</button>`).join('') || '<p class="pnote">Todos los pasos están ordenados.</p>'}</div></div>
+      <div><h3 class="ph">Tu orden</h3><ol class="clist cord" id="cord">${pick.map((s, k) => `<li><button type="button" class="cstep ${checked ? (s.i === k ? 'right' : 'wrong') : ''}" data-cp="${k}">${ht(s.s)}</button></li>`).join('') || '<li class="pnote">Todavía vacío.</li>'}</ol></div></div>
+      <div class="prow"><button type="button" class="pbtn primary" id="cchk" ${pool.length || checked ? 'disabled' : ''}>Comprobar</button><button type="button" class="pbtn" id="crst">Reiniciar</button></div><div id="cfb"></div>`;
+    body.querySelectorAll('[data-cs]').forEach(b => b.onclick = () => { if (checked) return; const s = pool.find(x => x.i === +b.dataset.cs); pool = pool.filter(x => x !== s); pick.push(s); draw(); });
+    body.querySelectorAll('[data-cp]').forEach(b => b.onclick = () => { if (checked) return; const s = pick[+b.dataset.cp]; pick = pick.filter(x => x !== s); pool.push(s); draw(); });
+    body.querySelector('#crst').onclick = () => pracCad(f, body);
+    body.querySelector('#cchk').onclick = () => {
+      checked = true; draw();
+      const ok = pick.filter((s, k) => s.i === k).length;
+      body.querySelector('#cfb').innerHTML = `<div class="pfb ${ok === steps.length ? 'ok' : 'no'}"><b>${ok} de ${steps.length} pasos en su lugar.</b>${ok === steps.length ? ' La cadena causal está completa.' : `<ol class="chain" style="margin-top:8px">${steps.map(s => `<li><span>${ht(s.s)}</span></li>`).join('')}</ol>`}</div>`;
+    };
+  }
+  draw();
+}
+
+/* ---- Áreas ---- */
+function pracAre(f, body) {
+  const areas = shuf(fichaAreas(f));
+  let i = 0, ok = 0;
+  function q() {
+    if (i >= areas.length) {
+      body.innerHTML = `<div class="pfb ${ok === areas.length ? 'ok' : 'info'}"><b>${ok} de ${areas.length} áreas identificadas.</b> ${ok === areas.length ? 'Muy bien.' : 'Repasa el bloque “Áreas y sombreados” de esta ficha.'}</div><div class="prow"><button type="button" class="pbtn primary" id="aagain">Repetir</button></div>`;
+      body.querySelector('#aagain').onclick = () => pracAre(f, body); return;
+    }
+    const a = areas[i];
+    const own = fichaAreas(f).map(x => x.d).filter(d => d !== a.d);
+    const others = shuf(areaPool().filter(d => d !== a.d && !own.includes(d)));
+    const final = shuf([a.d].concat(shuf([...new Set(own)]).slice(0, 2), others).filter((d, k, arr) => arr.indexOf(d) === k).slice(0, 4));
+    body.innerHTML = `<p class="pq">Pregunta ${i + 1} de ${areas.length}. ¿Qué representa el área <b>${ht(a.t)}</b>?</p>
+      <div class="figure pfig"><div class="panels">${renderFig(f.fig).html}</div></div>
+      <div class="opts">${final.map((d, k) => `<button type="button" class="popt" data-ok="${d === a.d ? 1 : 0}"><span class="l">${'ABCD'[k]}</span><span>${esc(d)}</span></button>`).join('')}</div><div id="afb"></div>`;
+    body.querySelectorAll('.popt').forEach(b => b.onclick = () => {
+      const r = b.dataset.ok === '1'; if (r) ok++;
+      body.querySelectorAll('.popt').forEach(x => { x.disabled = true; if (x.dataset.ok === '1') x.classList.add('right'); }); if (!r) b.classList.add('wrong');
+      body.querySelector('#afb').innerHTML = `<div class="pfb ${r ? 'ok' : 'no'}"><b>${r ? 'Correcto.' : 'No es correcto.'}</b> El área ${ht(a.t)} es: ${esc(a.d)}.</div><div class="prow"><button type="button" class="pbtn primary" id="anext">${i === areas.length - 1 ? 'Ver resultado' : 'Siguiente'}</button></div>`;
+      body.querySelector('#anext').onclick = () => { i++; q(); };
+    });
+  }
+  q();
+}
+
+document.addEventListener('click', e => {
+  const m = e.target.closest('[data-pm]');
+  if (m) { PR.mode = m.dataset.pm; const f = BY[S.id]; if (f) mountPractice(f); return; }
+  const sc = e.target.closest('[data-scroll]');
+  if (sc) { const t = document.getElementById(sc.dataset.scroll); if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+});
+
 function renderFicha(f) {
   const u = UNITS[f.u];
   let h = `<div class="sheet"><div class="eyebrow">${u ? u.n : 'Referencia'} · ${esc(f.st)} ${esc(f.stn)}</div><h1>${ht(f.t)}</h1>`;
@@ -1705,7 +1904,7 @@ function renderFicha(f) {
     h += (f.render ? f.render() : f.html) + navHtml(f) + '</div>';
     $('#main').innerHTML = h; return;
   }
-  h += `<div class="meta"><span class="chip">Ficha ${esc(f.code)}</span>${f.pr ? `<span class="chip ex">Aparece en: ${esc(f.pr)}</span>` : ''}</div>`;
+  h += `<div class="meta"><span class="chip">Ficha ${esc(f.code)}</span>${f.pr ? `<span class="chip ex">Aparece en: ${esc(f.pr)}</span>` : ''}<button type="button" class="chip go" data-scroll="practicar">Practicar este diagrama ↓</button></div>`;
   const fig = renderFig(f.fig);
   h += `<div class="figure"><div class="practice-note">Modo práctica: rótulos ocultos. Nombrá ejes, curvas, puntos y áreas antes de volver a mostrarlos.</div><div class="panels">${fig.html}</div>${fig.lg ? `<div class="legend">${fig.lg}</div>` : ''}${f.cap ? `<p class="cap">${ht(f.cap)}</p>` : ''}</div>`;
   const ejes = f.ejes ? `<table class="ax-t"><tbody>${f.ejes.map(r => `<tr><th>${ht(r[0])}</th><td>${ht(r[1])}</td></tr>`).join('')}</tbody></table>` : '';
@@ -1720,9 +1919,11 @@ function renderFicha(f) {
     ${block('Cálculos asociados', calc || '<p>No hay cálculos evaluables en NM asociados a este diagrama.</p>')}
     ${block('Cadena causal para la explicación', f.cad && f.cad.length ? `<ol class="chain">${f.cad.map(x => `<li><span>${ht(x)}</span></li>`).join('')}</ol>` : '')}
     ${block('⚠ Errores típicos de examen', ul(f.err), 'warn full')}
+    ${practiceBlock(f)}
     ${block('Autocontrol · Anexo 1 (ítems 1–6)', chk, 'full')}
   </div>${navHtml(f)}</div>`;
   $('#main').innerHTML = h;
+  mountPractice(f);
 }
 
 function navHtml(f) {
