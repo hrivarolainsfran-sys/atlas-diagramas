@@ -218,8 +218,10 @@ svg text{font-family:var(--f-math)}
   .hero{grid-template-columns:1fr}
   .lab{grid-template-columns:1fr}
   .top{gap:6px}
-  .nav{width:100%;flex-wrap:wrap;gap:2px}
-  .nav button,.nav a{font-size:15px;padding:5px 8px;white-space:nowrap}
+  .nav{width:100%;flex-wrap:nowrap;gap:2px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;
+    -webkit-mask-image:linear-gradient(90deg,#000 88%,transparent);mask-image:linear-gradient(90deg,#000 88%,transparent);padding-right:24px}
+  .nav::-webkit-scrollbar{display:none}
+  .nav button,.nav a{font-size:15px;padding:5px 8px;white-space:nowrap;flex:none}
 }
 
 /* ---------- ruta de estudio, escribir, repasar, dibujar ---------- */
@@ -300,6 +302,91 @@ blockquote.stud{margin:10px 0;padding:10px 14px;background:var(--paper);border-l
 .site-foot p{margin:2px 0;max-width:90ch}
 .site-foot b{color:var(--ink-2)}
 @media (max-width:860px){.repform{grid-template-columns:1fr}}
+/* v4: PPT, Podcast y Juegos */
+.extras{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:2px 0 6px}
+.xcard{display:flex;gap:10px;align-items:baseline;text-align:left;background:var(--sheet);border:1px dashed var(--rule);border-radius:var(--r);padding:10px 14px;color:var(--ink)}
+.xcard:hover{border-color:var(--gold);border-style:solid}
+.xcard b{font-family:var(--f-display);font-size:19px;color:var(--navy-2)}
+.xcard span{font-size:13.5px;color:var(--muted);line-height:1.3}
+.mlist{display:grid;gap:6px;max-width:900px}
+.mrow{display:grid;grid-template-columns:62px minmax(0,1fr) auto;gap:4px 12px;align-items:center;background:var(--sheet);border:1px solid var(--rule);border-radius:var(--r);padding:10px 14px}
+.mrow.off{background:transparent}
+.mrow .code{font-family:var(--f-display);font-weight:700;font-size:22px;color:var(--navy-2);font-variant-numeric:tabular-nums}
+.mrow.off .code,.mrow.off .nm{color:var(--muted)}
+.mrow .nm{font-weight:700;display:grid;gap:2px;min-width:0}
+.mrow .nm .ds{font-weight:400;font-size:13.5px;color:var(--muted)}
+.mrow .act{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end;align-items:center}
+.viewer{position:relative;width:100%;max-width:1000px;background:var(--ink);border-radius:var(--r);overflow:hidden;border:1.5px solid var(--ink)}
+.viewer iframe,.dk-f iframe{display:block;width:100%;height:100%;border:0}
+.r-slides{aspect-ratio:16/9.6}.r-video{aspect-ratio:16/9}
+.dock{position:fixed;left:0;right:0;bottom:0;z-index:40;background:var(--sheet);border-top:2px solid var(--navy-2);box-shadow:0 -6px 20px rgba(20,33,61,.18);padding:10px 16px calc(10px + env(safe-area-inset-bottom,0px))}
+body.docked{padding-bottom:190px}
+.dk-h{display:flex;justify-content:space-between;align-items:center;gap:8px 12px;max-width:1100px;margin:0 auto 8px}
+.dk-b{display:flex;gap:6px;flex:none}.dk-x{font-size:20px;line-height:1;padding:4px 11px}
+.dk-t{display:grid;min-width:0}.dk-t b,.dk-t span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.dk-t b{font-family:var(--f-display);font-size:19px;line-height:1.1}.dk-t span{font-size:13px;color:var(--muted)}
+.dk-p{display:flex;gap:10px;align-items:center;flex-wrap:wrap;max-width:1100px;margin:0 auto}
+.dk-p audio{flex:1;min-width:240px;height:40px}
+.seg.sp button{padding:5px 9px;font-size:13.5px}
+.dk-f{max-width:1100px;margin:0 auto;height:152px}.dk-f.r-spotify-show{height:152px}.dk-f.r-video{height:150px;aspect-ratio:auto}.dk-f.r-sc{height:120px}.dk-f.r-slides{height:120px;aspect-ratio:auto}
+.tiles.games{grid-template-columns:repeat(auto-fill,minmax(260px,1fr))}
+.tile.game .code{color:var(--gold)}
+.tile.game .ft{flex-wrap:wrap}
+.gset{display:grid;gap:14px}
+.gset p{margin:0}
+.gcard{margin-top:12px}
+.rl-top{display:flex;align-items:center;gap:14px;margin-top:14px;max-width:820px}
+.rl-time{font-family:var(--f-display);font-weight:700;font-size:44px;line-height:1;min-width:58px;font-variant-numeric:tabular-nums;color:var(--navy-2)}
+.rl-time.low{color:var(--bad)}
+.rl-bar{flex:1;height:12px}.rl-bar i{transition:width .1s linear}
+.rl-sc{font-size:15px;white-space:nowrap}.rl-sc b{font-family:var(--f-display);font-size:28px;margin-left:4px}
+.gmiss{display:grid;gap:10px;max-width:820px}.gmiss .fb{margin:0}.gmiss .q{font-size:15.5px;margin-bottom:6px}.gmiss p{margin:0 0 4px}
+.mm-top{margin:8px 0 12px;font-size:15px}.mm-top b{font-family:var(--f-display);font-size:22px}
+.mm-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;max-width:900px}
+.mm-card{position:relative;min-height:128px;border-radius:var(--r);border:1.5px solid var(--navy-2);background:var(--navy-2);color:#fff;padding:0;overflow:hidden}
+.mm-back{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--f-display);font-weight:700;font-size:40px;color:rgba(255,255,255,.55);background-image:repeating-linear-gradient(45deg,rgba(255,255,255,.06) 0 8px,transparent 8px 16px)}
+.mm-face{display:none;padding:10px;text-align:left;font-size:13.5px;line-height:1.35;color:var(--ink)}
+.mm-face small{display:block;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.mm-card.up{background:var(--sheet);border-color:var(--rule)}
+.mm-card.up .mm-back{display:none}.mm-card.up .mm-face{display:block}
+.mm-card.up.t .mm-face{font-family:var(--f-display);font-weight:700;font-size:20px;line-height:1.1}
+.mm-card.up.t .mm-face small{font-family:var(--f-body);font-weight:400}
+.mm-card.ok{background:var(--ok-bg);border-color:var(--ok);cursor:default}
+.mm-card.no{background:var(--bad-bg);border-color:var(--bad)}
+.ml-wrap{display:grid;grid-template-columns:minmax(0,1fr) 210px;gap:18px;align-items:start;margin-top:10px}
+.ml-top{margin-bottom:4px}.ml-now{font-size:15px}.ml-now b{font-family:var(--f-display);font-size:21px}
+.ml-ladder{list-style:none;margin:0;padding:8px;background:var(--navy);color:var(--navy-ink);border-radius:var(--r);display:grid;gap:2px;font-variant-numeric:tabular-nums}
+.ml-ladder li{display:flex;justify-content:space-between;padding:3px 10px;border-radius:5px;font-size:14px;opacity:.75}
+.ml-ladder li span{opacity:.7}
+.ml-ladder li.safe{opacity:1;color:#F6D58E}
+.ml-ladder li.past{opacity:.45}
+.ml-ladder li.cur{background:var(--gold);color:#14213D;opacity:1}
+.jp-head{justify-content:space-between;align-items:baseline}
+.jp-scores{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 14px}
+.jp-team{background:var(--navy);color:#fff;border-radius:var(--r);padding:8px 16px;display:grid;min-width:130px}
+.jp-team span{font-size:14px;opacity:.85}.jp-team b{font-family:var(--f-display);font-size:32px;line-height:1.05;font-variant-numeric:tabular-nums}
+.jp-board{display:grid;grid-template-columns:repeat(var(--cols),minmax(0,1fr));gap:8px;max-width:1100px}
+.jp-cat{background:var(--navy);color:#fff;border-radius:var(--r);padding:10px;text-align:center;font-family:var(--f-display);font-weight:700;font-size:24px;line-height:1.05;display:grid;align-content:center;gap:4px;min-height:96px}
+.jp-cat span{font-family:var(--f-body);font-weight:400;font-size:13px;line-height:1.25;opacity:.9}
+.jp-cell{min-height:82px;border:0;border-radius:var(--r);background:var(--navy-2);color:#F6D58E;font-family:var(--f-display);font-weight:700;font-size:38px;font-variant-numeric:tabular-nums}
+.jp-cell:hover:not(:disabled){filter:brightness(1.18)}
+.jp-cell:disabled{background:var(--grid);cursor:default}
+.jp-q{max-width:1000px}.jp-q .q{font-size:22px;max-width:none}.jp-q .opt{font-size:18px;cursor:default}
+.jp-award{display:grid;gap:6px}.jp-award .nm{min-width:110px;font-weight:700}
+.jp-names{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px}
+.jp-end{max-width:600px;font-size:18px}
+@media (max-width:860px){
+  .extras{grid-template-columns:1fr}
+  .mrow{grid-template-columns:44px minmax(0,1fr) auto;padding:9px 12px}.mrow .code{font-size:19px}
+  .mrow .act .tag{font-size:10.5px;padding:2px 7px}
+  .dock{padding:8px 12px calc(8px + env(safe-area-inset-bottom,0px))}.dk-prac{display:none}.dk-t b{font-size:17px}
+  .dk-p{gap:6px}.dk-p audio{min-width:0;flex:1 1 100%}
+  .mm-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .ml-wrap{grid-template-columns:1fr}.ml-ladder{display:none}
+  .jp-cat{font-size:18px;min-height:80px;padding:6px}.jp-cat span{display:none}.jp-cell{font-size:26px;min-height:62px}
+  .jp-team{min-width:0;flex:1}
+  body.docked{padding-bottom:200px}
+}
+@media (max-width:520px){.mm-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.jp-board{gap:4px}.jp-cell{font-size:20px}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
@@ -309,14 +396,18 @@ blockquote.stud{margin:10px 0;padding:10px 14px;background:var(--paper);border-l
   <button class="brand" type="button" data-go="inicio"><b>Economía IB</b><span>Taller de práctica</span></button>
   <nav class="nav" aria-label="Secciones">
     <button type="button" data-go="inicio">Temas</button>
+    <button type="button" data-go="ppt">PPT</button>
+    <button type="button" data-go="podcast">Podcast</button>
     <button type="button" data-go="labs">Laboratorios</button>
     <button type="button" data-go="escribir">Escribir</button>
+    <button type="button" data-go="juegos">Juegos</button>
     <button type="button" data-go="repasar">Repasar<span class="badge" id="errBadge" hidden>0</span></button>
     <a href="https://hrivarolainsfran-sys.github.io/atlas-diagramas/">Atlas de diagramas</a>
   </nav>
 </header>
 <main id="app"></main>
 <footer class="site-foot"><p>© 2026 <b>Prof. Econ. Hugo Rivarola</b> · Economía IB · Taller de práctica. Todos los derechos reservados.</p><p>Material educativo elaborado por el autor para sus estudiantes. No se permite reproducirlo, distribuirlo ni modificarlo, total o parcialmente, sin autorización escrita del autor.</p></footer>
+<div id="dock" class="dock" hidden aria-label="Reproductor de podcast"></div>
 
 <script>
 'use strict';
@@ -1228,12 +1319,13 @@ let route = 'inicio';
 function go(r) { if (location.hash.slice(1) !== r) location.hash = r; else render(); }
 window.addEventListener('hashchange', render);
 document.addEventListener('click', e => { const b = e.target.closest('[data-go]'); if (b) { e.preventDefault(); go(b.dataset.go); return; } const sc = e.target.closest('[data-scroll]'); if (sc) { const t = document.getElementById(sc.dataset.scroll); if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' }); } });
-function setNav(sec) { document.querySelectorAll('.nav button').forEach(b => b.setAttribute('aria-current', b.dataset.go === sec ? 'page' : 'false')); }
+function setNav(sec) { document.querySelectorAll('.nav button').forEach(b => { const on = b.dataset.go === sec; b.setAttribute('aria-current', on ? 'page' : 'false'); if (on) { const n = b.parentNode; if (n.scrollWidth > n.clientWidth) n.scrollLeft = Math.max(0, b.offsetLeft - n.clientWidth / 2 + b.offsetWidth / 2); } }); }
 const tid = id => 't' + id.replace('.', '-');
 const tcode = id => { const t = TOPICS.find(x => x.id === id); return t && t.code ? t.code : id; };
 function render() {
   route = location.hash.slice(1) || 'inicio';
   window.scrollTo(0, 0);
+  stopGameTimers();
   updateBadge();
   if (route.startsWith('t') && TOPICS.some(t => tid(t.id) === route)) { setNav('inicio'); return renderTopic(TOPICS.find(t => tid(t.id) === route)); }
   if (route.startsWith('lab-') && LABS[route.slice(4)]) { setNav('labs'); return renderLabPage(route.slice(4)); }
@@ -1247,6 +1339,14 @@ function render() {
   if (route === 'escribir-conceptos') { setNav('escribir'); return renderDrill(DRILLS.kc); }
   if (route === 'escribir-errores') { setNav('escribir'); return renderDrill(DRILLS.err); }
   if (route === 'reporte') { setNav('repasar'); return renderReport(); }
+  if (route === 'ppt') { setNav('ppt'); return renderPPTHome(); }
+  if (route.startsWith('ppt-') && keyFromTok(route.slice(4))) { setNav('ppt'); return renderPPT(keyFromTok(route.slice(4))); }
+  if (route === 'podcast') { setNav('podcast'); return renderPodHome(); }
+  if (route === 'juegos') { setNav('juegos'); return renderGamesHome(); }
+  if (route === 'juego-reloj') { setNav('juegos'); return renderReloj(); }
+  if (route === 'juego-memoria') { setNav('juegos'); return renderMemoria(); }
+  if (route === 'juego-millonario') { setNav('juegos'); return renderMill(); }
+  if (route === 'juego-jeopardy') { setNav('juegos'); return renderJeopardy(); }
   if (route === 'escribir-evaluar') { setNav('escribir'); return renderWrite('eva'); }
   if (route.startsWith('exp-') && EXP.some(x => x.id === route.slice(4))) { setNav('escribir'); return renderExplain(EXP.find(x => x.id === route.slice(4))); }
   if (route.startsWith('eva-') && EVA.some(x => x.id === route.slice(4))) { setNav('escribir'); return renderEval(EVA.find(x => x.id === route.slice(4))); }
@@ -1294,6 +1394,11 @@ function renderHome() {
     <button class="rcard" type="button" data-go="escribir"><span class="rn">3</span><b>Escribe</b><span class="d">Comandos, conceptos clave, Explicar (${EXP.length}), Evaluar (${EVA.length}) y encontrar errores.</span></button>
     <button class="rcard" type="button" data-go="repasar"><span class="rn">4</span><b>Repasa</b><span class="d">${errCount() ? `${errCount()} errores pendientes` : 'Tus errores'}, examen rápido, tarjetas y tu reporte.</span></button>
   </section>
+  <section class="extras" aria-label="Más recursos">
+    <button class="xcard" type="button" data-go="ppt"><b>PPT</b><span>Las presentaciones de clase por subtema.</span></button>
+    <button class="xcard" type="button" data-go="podcast"><b>Podcast</b><span>Episodios para escuchar mientras practicas.</span></button>
+    <button class="xcard" type="button" data-go="juegos"><b>Juegos</b><span>Contrarreloj, memoria, ¿Quién quiere ser economista? y Jeopardy.</span></button>
+  </section>
   <div id="temas">${Object.keys(UNITS).map(unitBlock).join('')}</div>
   <p class="foot">Contenidos alineados al Nivel Medio: no incluye utilidad marginal, efectos ingreso y sustitución, multiplicador keynesiano, curva de Phillips ni la condición Marshall-Lerner. Los datos numéricos de los ejercicios son hipotéticos. El progreso se guarda solo en este navegador.</p>`;
 }
@@ -1303,7 +1408,7 @@ const SESS = {}; // estado de sesión por tema
 function renderTopic(t) {
   store.set('last', t.id);
   const S = SESS[t.id] = SESS[t.id] || { tab: 'prac', i: 0, res: {}, inst: {} };
-  const labBtns = t.labs.map(k => `<button class="btn sm" type="button" data-go="lab-${k}">Laboratorio: ${LABS[k].name}</button>`).join('') + EXP.filter(x => x.st === t.id).map(x => `<button class="btn sm" type="button" data-go="exp-${x.id}">Explicar: ${esc(x.short)}</button>`).join('') + EVA.filter(x => x.st === t.id).map(x => `<button class="btn sm" type="button" data-go="eva-${x.id}">Evaluar: ${esc(x.short)}</button>`).join('');
+  const labBtns = t.labs.map(k => `<button class="btn sm" type="button" data-go="lab-${k}">Laboratorio: ${LABS[k].name}</button>`).join('') + EXP.filter(x => x.st === t.id).map(x => `<button class="btn sm" type="button" data-go="exp-${x.id}">Explicar: ${esc(x.short)}</button>`).join('') + EVA.filter(x => x.st === t.id).map(x => `<button class="btn sm" type="button" data-go="eva-${x.id}">Evaluar: ${esc(x.short)}</button>`).join('') + mediaBtns(t);
   app.innerHTML = `
     <button class="crumb" type="button" data-go="inicio">← Todos los temas</button>
     <div class="eyebrow" style="margin-top:12px">Unidad ${t.u} · ${UNITS[t.u]} · Subtema ${t.code || t.id}</div>
@@ -2839,6 +2944,12 @@ function reportText() {
   L.push(`- Encuentra el error: ${topicDone('err')}/${DRILLS.err.items.length}`);
   const labs = Object.entries(PROG.labs || {}).filter(([k, v]) => LABS[k] && v.n);
   L.push('', `Laboratorios (aciertos): ${labs.length ? labs.map(([k, v]) => `${LABS[k].name} ${v.ok}/${v.n}`).join('; ') : 'sin registros'}`);
+  const gr = [];
+  const rl = Object.entries(GAMES.reloj || {}); if (rl.length) gr.push('Contrarreloj ' + Math.max(...rl.map(x => x[1])) + ' aciertos');
+  const ml = Object.values(GAMES.mill || {}); if (ml.length) gr.push('¿Quién quiere ser economista? ' + fmt(Math.max(...ml)) + ' puntos');
+  const mm = Object.values(GAMES.memoria || {}); if (mm.length) gr.push('Memoria ' + Math.min(...mm.map(x => x.mv)) + ' jugadas');
+  L.push('', `Juegos (mejores marcas): ${gr.length ? gr.join('; ') : 'sin registros'}`);
+  const heard = Object.keys(POD_HEARD).length; if (heard) L.push(`Podcast: ${heard} ${heard > 1 ? 'episodios escuchados' : 'episodio escuchado'}`);
   L.push('', 'Taller de Economía IB · © Prof. Econ. Hugo Rivarola');
   return L.join('\n');
 }
@@ -2995,6 +3106,455 @@ function renderExplain(p) {
       if (!W.done && (mode === 'gui' || W.defs) && W.chain) { W.done = true; save(); }
     }
   }
+}
+
+
+/* =============== 6 · PPT y Podcast (enlaces del profesor) =============== */
+/* CÓMO AGREGAR UN ENLACE
+   Clave: el subtema ('2.5', '4.2', …) o la unidad completa ('u1' … 'u4'). Se aceptan varios por clave.
+   PPT: Google Slides o archivo en Google Drive (compartido como «Cualquier persona con el enlace»), Canva u OneDrive.
+   Podcast: MP3/M4A subido al sitio (p. ej. 'audio/2-5.mp3'), Google Drive, Spotify, YouTube o SoundCloud.
+   Ejemplo:  '2.5': [{ t: 'Elasticidad precio de la demanda', url: 'https://docs.google.com/presentation/d/XXXX/edit' }],
+             '3.5': [{ t: 'La tasa del BCP en 5 minutos', url: 'audio/3-5.mp3', dur: '6 min', d: 'Qué hace el BCP cuando sube la inflación.' }], */
+const PPT = {
+};
+const POD = {
+};
+
+function mediaKind(url) {
+  const u = String(url || '').trim();
+  let m;
+  if (/\.(mp3|m4a|aac|wav|ogg|oga|opus)(\?|#|$)/i.test(u)) return { k: 'audio', src: u };
+  if ((m = u.match(/docs\.google\.com\/presentation\/d\/e\/([\w-]+)/))) return { k: 'frame', src: `https://docs.google.com/presentation/d/e/${m[1]}/embed?start=false&loop=false`, ratio: 'slides' };
+  if ((m = u.match(/docs\.google\.com\/presentation\/d\/([\w-]+)/))) return { k: 'frame', src: `https://docs.google.com/presentation/d/${m[1]}/embed?start=false&loop=false`, ratio: 'slides' };
+  if ((m = u.match(/drive\.google\.com\/file\/d\/([\w-]+)/) || u.match(/drive\.google\.com\/open\?id=([\w-]+)/))) return { k: 'frame', src: `https://drive.google.com/file/d/${m[1]}/preview`, ratio: 'slides', drive: true };
+  if ((m = u.match(/canva\.com\/design\/([\w-]+)\/([\w-]+)/))) return { k: 'frame', src: `https://www.canva.com/design/${m[1]}/${m[2]}/view?embed`, ratio: 'slides' };
+  if ((m = u.match(/open\.spotify\.com\/(?:intl-\w+\/)?(episode|show)\/(\w+)/))) return { k: 'frame', src: `https://open.spotify.com/embed/${m[1]}/${m[2]}`, ratio: m[1] === 'show' ? 'spotify-show' : 'spotify' };
+  if ((m = u.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([\w-]{6,})/))) return { k: 'frame', src: `https://www.youtube-nocookie.com/embed/${m[1]}`, ratio: 'video' };
+  if (/soundcloud\.com\//.test(u)) return { k: 'frame', src: 'https://w.soundcloud.com/player/?url=' + encodeURIComponent(u) + '&visual=false', ratio: 'sc' };
+  if (/onedrive\.live\.com\/embed|sharepoint\.com\/.*embed/.test(u)) return { k: 'frame', src: u, ratio: 'slides' };
+  return { k: 'link', src: u };
+}
+const mediaList = (OBJ, key) => (OBJ[key] || []).filter(x => x && x.url);
+const mediaCount = OBJ => Object.values(OBJ).reduce((s, a) => s + (a || []).filter(x => x && x.url).length, 0);
+const keyTok = k => k.replace('.', '-');
+const keyFromTok = tok => { const all = [...TOPICS.map(t => t.id), 'u1', 'u2', 'u3', 'u4']; return all.find(k => keyTok(k) === tok); };
+const keyLabel = k => k[0] === 'u' ? `Unidad ${k[1]} completa` : `${tcode(k)} ${TOPICS.find(t => t.id === k).name}`;
+function mediaBtns(t) {
+  const p = mediaList(PPT, t.id).length, a = mediaList(POD, t.id).length;
+  return (p ? `<button class="btn sm" type="button" data-go="ppt-${keyTok(t.id)}">Ver la presentación</button>` : '') +
+    (a ? `<button class="btn sm" type="button" data-go="podcast">Escuchar el podcast</button>` : '');
+}
+function resourceList(OBJ, kind) {
+  return Object.keys(UNITS).map(u => {
+    const keys = ['u' + u, ...TOPICS.filter(t => t.u === +u).map(t => t.id)];
+    const n = keys.reduce((s, k) => s + mediaList(OBJ, k).length, 0);
+    const rows = keys.filter(k => k[0] !== 'u' || mediaList(OBJ, k).length).map(k => {
+      const list = mediaList(OBJ, k);
+      const code = k[0] === 'u' ? 'U' + k[1] : tcode(k);
+      const nm = k[0] === 'u' ? 'Unidad completa' : TOPICS.find(t => t.id === k).name;
+      const act = !list.length ? `<span class="tag">Próximamente</span>` : kind === 'ppt'
+        ? `<button class="btn sm primary" type="button" data-go="ppt-${keyTok(k)}">Ver${list.length > 1 ? ` (${list.length})` : ''}</button>`
+        : list.map((x, i) => podBtn(k, i, x)).join('');
+      const sub = kind === 'pod' && list.length ? list.map(x => `<span class="ds">${esc(x.t || 'Episodio')}${x.dur ? ' · ' + esc(x.dur) : ''}${x.d ? ' — ' + esc(x.d) : ''}</span>`).join('') : '';
+      return `<div class="mrow${list.length ? '' : ' off'}"><span class="code">${code}</span><span class="nm">${nm}${sub}</span><span class="act">${act}</span></div>`;
+    }).join('');
+    return `<div class="unit-h"><h2>Unidad ${u} · ${UNITS[u]}</h2><span>${n ? n + (n > 1 ? (kind === 'ppt' ? ' presentaciones' : ' episodios') : (kind === 'ppt' ? ' presentación' : ' episodio')) : 'sin publicar todavía'}</span></div><div class="mlist">${rows}</div>`;
+  }).join('');
+}
+function renderPPTHome() {
+  const n = mediaCount(PPT);
+  app.innerHTML = `<div class="eyebrow">Presentaciones de clase</div><h1>PPT</h1>
+    <p class="lede">Las presentaciones que vemos en clase, ordenadas por subtema. Ábrelas para repasar antes de practicar.${n ? '' : ' Todavía no hay presentaciones publicadas: tu profesor las irá agregando.'}</p>
+    ${resourceList(PPT, 'ppt')}`;
+}
+function renderPPT(key) {
+  const list = mediaList(PPT, key);
+  const S = SESS['ppt' + key] = SESS['ppt' + key] || { i: 0 };
+  if (S.i >= list.length) S.i = 0;
+  const x = list[S.i];
+  const t = key[0] === 'u' ? null : TOPICS.find(z => z.id === key);
+  const mk = x ? mediaKind(x.url) : null;
+  app.innerHTML = `<button class="crumb" type="button" data-go="ppt">← Todas las presentaciones</button>
+    <div class="eyebrow" style="margin-top:12px">${t ? `Unidad ${t.u} · Subtema ${tcode(t.id)}` : 'Unidad ' + key[1]}</div>
+    <h1>${t ? esc(t.name) : 'Unidad ' + key[1] + ' · ' + UNITS[key[1]]}</h1>
+    ${list.length > 1 ? `<div class="seg" role="group" aria-label="Presentación" style="margin-bottom:12px">${list.map((y, i) => `<button type="button" data-pi="${i}" aria-pressed="${i === S.i}">${esc(y.t || 'Parte ' + (i + 1))}</button>`).join('')}</div>` : ''}
+    ${!x ? `<div class="fb info">Esta presentación todavía no está publicada.</div>` : mk.k === 'frame'
+      ? `<div class="viewer r-${mk.ratio}" id="vw"><iframe src="${esc(mk.src)}" title="${esc(x.t || 'Presentación')}" allowfullscreen loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe></div>`
+      : `<div class="fb info">Esta presentación se abre en otra pestaña.</div>`}
+    <div class="row" style="margin-top:12px">
+      ${x ? `<a class="btn" href="${esc(x.url)}" target="_blank" rel="noopener">Abrir en pestaña nueva</a>` : ''}
+      ${x && mk.k === 'frame' ? `<button class="btn" type="button" id="fs">Pantalla completa</button>` : ''}
+      ${t ? `<button class="btn primary" type="button" data-go="${tid(t.id)}">Practicar ${tcode(t.id)} →</button>` : ''}
+      ${t && mediaList(POD, t.id).length ? `<button class="btn" type="button" data-go="podcast">Escuchar el podcast</button>` : ''}
+    </div>
+    ${x && mk.drive ? `<p class="small muted" style="margin-top:10px">Si no se ve, ábrela en pestaña nueva: el archivo de Drive debe estar compartido como «Cualquier persona con el enlace».</p>` : ''}`;
+  app.querySelectorAll('[data-pi]').forEach(b => b.onclick = () => { S.i = +b.dataset.pi; renderPPT(key); });
+  const fs = $('#fs'); if (fs) fs.onclick = () => { const v = $('#vw'); (v.requestFullscreen || v.webkitRequestFullscreen || (() => { })).call(v); };
+}
+
+/* reproductor fijo: el audio sigue sonando mientras el alumno navega por el taller */
+const POD_HEARD = store.get('podHeard', {});
+let NOW_POD = null;
+const podId = (k, i) => k + '#' + i;
+function podBtn(k, i, x) {
+  const id = podId(k, i), playing = NOW_POD === id;
+  return `<button class="btn sm ${playing ? '' : 'primary'}" type="button" data-pod="${id}">${playing ? 'Sonando' : 'Escuchar'}${mediaList(POD, k).length > 1 ? ' ' + (i + 1) : ''}</button>${POD_HEARD[id] ? '<span class="tag ok">Escuchado</span>' : ''}`;
+}
+function renderPodHome() {
+  const n = mediaCount(POD);
+  app.innerHTML = `<div class="eyebrow">Para escuchar</div><h1>Podcast</h1>
+    <p class="lede">Episodios cortos por subtema. El audio sigue sonando aunque cambies de página, así que puedes escuchar mientras practicas.${n ? '' : ' Todavía no hay episodios publicados: tu profesor los irá agregando.'}</p>
+    ${resourceList(POD, 'pod')}`;
+  bindPodBtns(app);
+}
+function bindPodBtns(root) { root.querySelectorAll('[data-pod]').forEach(b => b.onclick = () => playPod(b.dataset.pod)); }
+function playPod(id) {
+  const [k, i] = id.split('#'), x = mediaList(POD, k)[+i]; if (!x) return;
+  const mk = mediaKind(x.url), dock = $('#dock');
+  NOW_POD = id;
+  const t = k[0] === 'u' ? null : TOPICS.find(z => z.id === k);
+  dock.innerHTML = `<div class="dk-h"><div class="dk-t"><b>${esc(x.t || 'Episodio')}</b><span>${esc(keyLabel(k))}</span></div>
+      <div class="dk-b">${t ? `<button class="btn sm dk-prac" type="button" data-go="${tid(t.id)}">Practicar ${tcode(t.id)}</button>` : ''}
+      <button class="btn sm" type="button" id="dkHeard">${POD_HEARD[id] ? 'Escuchado ✓' : 'Ya lo escuché'}</button>
+      <button class="btn sm dk-x" type="button" id="dkX" aria-label="Cerrar el reproductor" title="Cerrar">×</button></div></div>
+    ${mk.k === 'audio' ? `<div class="dk-p"><audio id="dkA" controls preload="metadata" src="${esc(mk.src)}"></audio>
+        <div class="seg sp" role="group" aria-label="Velocidad">${[0.75, 1, 1.25, 1.5].map(v => `<button type="button" data-sp="${v}" aria-pressed="${v === 1}">${String(v).replace('.', ',')}×</button>`).join('')}</div></div>`
+      : mk.k === 'frame' ? `<div class="dk-f r-${mk.ratio}"><iframe src="${esc(mk.src)}" title="${esc(x.t || 'Podcast')}" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe></div>`
+        : `<p class="small"><a href="${esc(x.url)}" target="_blank" rel="noopener">Abrir el episodio en otra pestaña</a></p>`}`;
+  dock.hidden = false; document.body.classList.add('docked');
+  const A = $('#dkA');
+  if (A) {
+    A.play().catch(() => { });
+    A.addEventListener('ended', () => markHeard(id));
+    dock.querySelectorAll('[data-sp]').forEach(b => b.onclick = () => { A.playbackRate = +b.dataset.sp; dock.querySelectorAll('[data-sp]').forEach(z => z.setAttribute('aria-pressed', z === b)); });
+  }
+  $('#dkHeard').onclick = () => markHeard(id);
+  $('#dkX').onclick = () => { dock.innerHTML = ''; dock.hidden = true; document.body.classList.remove('docked'); NOW_POD = null; if (route === 'podcast') renderPodHome(); };
+  if (route === 'podcast') renderPodHome();
+}
+function markHeard(id) {
+  POD_HEARD[id] = Date.now(); store.set('podHeard', POD_HEARD);
+  const b = $('#dkHeard'); if (b) b.textContent = 'Escuchado ✓';
+  if (route === 'podcast') renderPodHome();
+}
+
+/* =============== 7 · Juegos =============== */
+const GAMES = store.get('games', { reloj: {}, memoria: {}, mill: {} });
+const saveGames = () => store.set('games', GAMES);
+let GAME_TIMER = null;
+function stopGameTimers() { if (GAME_TIMER) { clearInterval(GAME_TIMER); GAME_TIMER = null; } document.onkeydown = null; }
+const UNIT_OPTS = { all: 'Todas', 1: 'Unidad 1', 2: 'Unidad 2', 3: 'Unidad 3', 4: 'Unidad 4' };
+const plain = s => String(s || '').replace(/<[^>]+>/g, '');
+function mcPool(u, fn) {
+  const out = [];
+  TOPICS.forEach(t => {
+    if (u !== 'all' && t.u !== +u) return;
+    t.items.forEach((it, idx) => { if (it.t === 'mc' && it.o && it.o.length >= 3 && (!fn || fn(it, idx, t))) out.push({ q: it.q, o: it.o, a: it.a, e: it.e, h: it.h, tid: t.id, idx, t, nIt: t.items.length }); });
+  });
+  return out;
+}
+function drillPool() {
+  const out = [];
+  [DRILLS.cmd, DRILLS.err].forEach(d => d.items.forEach((it, idx) => { if (it.t === 'mc') out.push({ q: it.q, o: it.o, a: it.a, e: it.e, h: it.h, tid: d.id, idx, t: d }); }));
+  return out;
+}
+function cardQs(u, n) {
+  const pool = CARDS.filter(c => u === 'all' || c[0] === +u);
+  return shuffle(pool).slice(0, n).map(c => {
+    const same = pool.filter(x => x !== c && x[0] === c[0]);
+    const dist = shuffle(same.length >= 3 ? same : CARDS.filter(x => x !== c)).slice(0, 3).map(x => x[1]);
+    return { q: `¿Qué término corresponde a esta definición?<br><i>«${esc(c[2])}»</i>`, o: [c[1], ...dist], a: 0, e: `<b>${esc(c[1])}</b>: ${esc(c[2])}`, card: c };
+  });
+}
+const shufQ = q => { const ord = shuffle(q.o.map((_, i) => i)); return Object.assign({}, q, { o: ord.map(i => q.o[i]), a: ord.indexOf(q.a) }); };
+const LET = 'ABCD';
+function unitSeg(cur, id, opts = UNIT_OPTS) {
+  return `<div class="seg" role="group" aria-label="Contenido" id="${id}">${Object.entries(opts).map(([k, v]) => `<button type="button" data-u="${k}" aria-pressed="${String(cur) === k}">${v}</button>`).join('')}</div>`;
+}
+function bindUnitSeg(id, cb) { document.querySelectorAll(`#${id} [data-u]`).forEach(b => b.onclick = () => cb(b.dataset.u)); }
+const gameCrumb = `<button class="crumb" type="button" data-go="juegos">← Todos los juegos</button>`;
+
+const GAME_LIST = [
+  { k: 'reloj', name: 'Contrarreloj', who: 'Individual', ds: '60 segundos para acertar la mayor cantidad posible. Cada error descuenta 3 segundos.', rec: () => { const v = Object.values(GAMES.reloj); return v.length ? 'Récord: ' + Math.max(...v) + ' aciertos' : ''; } },
+  { k: 'memoria', name: 'Memoria', who: 'Individual', ds: 'Voltea las cartas y une cada término con su definición en la menor cantidad de jugadas.', rec: () => { const v = Object.values(GAMES.memoria).map(x => x.mv); return v.length ? 'Mejor: ' + Math.min(...v) + ' jugadas' : ''; } },
+  { k: 'millonario', name: '¿Quién quiere ser economista?', who: 'Individual', ds: '15 preguntas de dificultad creciente, con tres comodines y dos niveles seguros.', rec: () => { const v = Object.values(GAMES.mill); return v.length ? 'Mejor: ' + fmt(Math.max(...v)) + ' puntos' : ''; } },
+  { k: 'jeopardy', name: 'Jeopardy de la clase', who: 'Por equipos', ds: 'Tablero de 5 categorías para jugar con el proyector. El profesor asigna los puntos.', rec: () => JP && JP.cats ? 'Hay un tablero en curso' : '' }
+];
+function renderGamesHome() {
+  app.innerHTML = `<div class="eyebrow">Aprender jugando</div><h1>Juegos</h1>
+    <p class="lede">Repasa los conceptos del curso con cuatro juegos. Los errores en preguntas de los subtemas se guardan en <b>Repasar → Mis errores</b>.</p>
+    <div class="tiles games">${GAME_LIST.map((g, i) => `<button class="tile game" type="button" data-go="juego-${g.k}"><span class="code">${i + 1}</span><span class="nm">${g.name}</span><span class="ds">${g.ds}</span><span class="ft"><span class="tag">${g.who}</span>${g.rec() ? `<span>${g.rec()}</span>` : ''}</span></button>`).join('')}</div>`;
+}
+
+/* ---------- 1 · Contrarreloj ---------- */
+const RL = { u: store.get('gU', 'all'), st: 'setup' };
+function renderReloj() {
+  stopGameTimers();
+  if (RL.st === 'play') return relojPlay();
+  if (RL.st === 'end') return relojEnd();
+  const rec = GAMES.reloj[RL.u];
+  app.innerHTML = `${gameCrumb}<div class="eyebrow" style="margin-top:12px">Juego 1 · Individual</div><h1>Contrarreloj</h1>
+    <div class="essentials gset">
+      <p>Tienes <b>60 segundos</b>. Cada acierto suma 1 punto y cada error descuenta <b>3 segundos</b>. En computadora puedes responder con las teclas 1 a 4.</p>
+      <div><span class="lbl2">Contenido</span>${unitSeg(RL.u, 'rlU')}</div>
+      <p class="small muted">${rec !== undefined ? `Tu récord en ${UNIT_OPTS[RL.u].toLowerCase()}: <b>${rec}</b> aciertos.` : 'Todavía no tienes récord en este contenido.'}</p>
+      <div class="row"><button class="btn primary" type="button" id="rlGo">Empezar</button></div>
+    </div>`;
+  bindUnitSeg('rlU', u => { RL.u = u; store.set('gU', u); renderReloj(); });
+  $('#rlGo').onclick = () => {
+    const mc = mcPool(RL.u, it => plain(it.q).length < 230 && !/<table/.test(it.q));
+    RL.deck = shuffle([...mc, ...cardQs(RL.u, 18)]).map(shufQ);
+    Object.assign(RL, { st: 'play', i: 0, score: 0, miss: [], n: 0, end: Date.now() + 60000, lock: false });
+    renderReloj();
+  };
+}
+function relojPlay() {
+  app.innerHTML = `${gameCrumb}<div class="rl-top"><span class="rl-time" id="rlT">60</span><div class="bar rl-bar"><i id="rlB" style="width:100%"></i></div><span class="rl-sc">Aciertos <b id="rlS">${RL.score}</b></span></div>
+    <div class="card gcard"><div class="card-b"><p class="q" id="rlQ"></p><div class="opts" id="rlO"></div></div></div>`;
+  const tick = () => {
+    const left = Math.max(0, RL.end - Date.now()), T = $('#rlT');
+    if (!T) return stopGameTimers();
+    T.textContent = Math.ceil(left / 1000); $('#rlB').style.width = (left / 600) + '%';
+    T.classList.toggle('low', left < 10000);
+    if (left <= 0) { stopGameTimers(); RL.st = 'end'; relojEnd(); }
+  };
+  const show = () => {
+    if (RL.i >= RL.deck.length) { RL.deck = shuffle(RL.deck); RL.i = 0; }
+    const q = RL.deck[RL.i];
+    $('#rlQ').innerHTML = q.q;
+    $('#rlO').innerHTML = q.o.map((o, k) => `<button class="opt" type="button" data-k="${k}"><span class="l">${LET[k]}</span><span>${o}</span></button>`).join('');
+    $('#rlO').querySelectorAll('.opt').forEach(b => b.onclick = () => answer(+b.dataset.k));
+  };
+  const answer = k => {
+    if (RL.lock || RL.st !== 'play') return;
+    const q = RL.deck[RL.i], ok = k === q.a; RL.lock = true; RL.n++;
+    const bs = $('#rlO').querySelectorAll('.opt');
+    bs.forEach(b => b.disabled = true);
+    bs[q.a].classList.add('right'); if (!ok) bs[k].classList.add('wrong');
+    if (ok) { RL.score++; $('#rlS').textContent = RL.score; } else { RL.end -= 3000; RL.miss.push(q); }
+    if (q.tid) logResult(q.tid, q.idx, ok);
+    setTimeout(() => { RL.lock = false; RL.i++; if (RL.st === 'play' && $('#rlQ')) show(); }, ok ? 450 : 1100);
+  };
+  document.onkeydown = e => { const k = +e.key - 1; if (k >= 0 && k < 4 && RL.st === 'play') answer(k); };
+  show(); tick(); GAME_TIMER = setInterval(tick, 100);
+}
+function relojEnd() {
+  const prev = GAMES.reloj[RL.u], isRec = prev === undefined || RL.score > prev;
+  if (isRec && !RL.saved) { GAMES.reloj[RL.u] = RL.score; saveGames(); }
+  RL.saved = true;
+  const seen = new Set(), miss = RL.miss.filter(q => { const k = plain(q.q); if (seen.has(k)) return false; seen.add(k); return true; });
+  app.innerHTML = `${gameCrumb}<div class="eyebrow" style="margin-top:12px">Contrarreloj · ${UNIT_OPTS[RL.u]}</div>
+    <h1>${RL.score} ${RL.score === 1 ? 'acierto' : 'aciertos'}${isRec ? ' · ¡nuevo récord!' : ''}</h1>
+    <p class="lede">Respondiste ${RL.n} preguntas${RL.n ? ` con ${Math.round(RL.score / RL.n * 100)}% de precisión` : ''}.${isRec ? '' : ` Tu récord sigue en ${prev}.`}</p>
+    <div class="row"><button class="btn primary" type="button" id="rlAgain">Jugar otra vez</button><button class="btn" type="button" id="rlSet">Cambiar contenido</button></div>
+    ${miss.length ? `<h2 style="margin-top:24px">Revisa tus errores</h2><div class="gmiss">${miss.map(q => `<div class="fb info"><p class="q">${q.q}</p><p><b>Respuesta:</b> ${q.o[q.a]}</p>${q.e ? `<p class="small">${q.e}</p>` : ''}</div>`).join('')}</div>` : ''}`;
+  $('#rlAgain').onclick = () => { RL.st = 'setup'; RL.saved = false; renderReloj(); $('#rlGo').click(); };
+  $('#rlSet').onclick = () => { RL.st = 'setup'; RL.saved = false; renderReloj(); };
+}
+
+/* ---------- 2 · Memoria ---------- */
+const MM = { u: store.get('gU', 'all'), st: 'setup' };
+function renderMemoria() {
+  stopGameTimers();
+  if (MM.st === 'play') return memoriaPlay();
+  const best = GAMES.memoria[MM.u];
+  app.innerHTML = `${gameCrumb}<div class="eyebrow" style="margin-top:12px">Juego 2 · Individual</div><h1>Memoria</h1>
+    <div class="essentials gset">
+      <p>Hay <b>6 parejas</b>: un término y su definición. Voltea dos cartas por jugada. Si forman pareja, quedan descubiertas.</p>
+      <div><span class="lbl2">Contenido</span>${unitSeg(MM.u, 'mmU')}</div>
+      <p class="small muted">${best ? `Tu mejor partida en ${UNIT_OPTS[MM.u].toLowerCase()}: <b>${best.mv} jugadas</b> en ${best.s} s.` : 'Todavía no tienes partidas en este contenido.'}</p>
+      <div class="row"><button class="btn primary" type="button" id="mmGo">Repartir cartas</button></div>
+    </div>`;
+  bindUnitSeg('mmU', u => { MM.u = u; store.set('gU', u); renderMemoria(); });
+  $('#mmGo').onclick = () => {
+    const pairs = shuffle(CARDS.filter(c => MM.u === 'all' || c[0] === +MM.u)).slice(0, 6);
+    MM.cards = shuffle(pairs.flatMap((c, p) => [{ p, k: 'T', txt: c[1] }, { p, k: 'D', txt: c[2] }]));
+    Object.assign(MM, { st: 'play', open: [], done: new Set(), mv: 0, t0: Date.now(), lock: false, fin: false });
+    renderMemoria();
+  };
+}
+function memoriaPlay() {
+  app.innerHTML = `${gameCrumb}<div class="eyebrow" style="margin-top:12px">Memoria · ${UNIT_OPTS[MM.u]}</div>
+    <div class="row mm-top"><span>Jugadas <b id="mmMv">${MM.mv}</b></span><span>Parejas <b id="mmP">${MM.done.size}</b>/6</span><span>Tiempo <b id="mmS">0</b> s</span><button class="btn sm" type="button" id="mmNew">Nueva partida</button></div>
+    <div class="mm-grid" id="mmG">${MM.cards.map((c, i) => `<button class="mm-card" type="button" data-i="${i}" aria-label="Carta ${i + 1}"><span class="mm-back">?</span><span class="mm-face"><small>${c.k === 'T' ? 'Término' : 'Definición'}</small>${esc(c.txt)}</span></button>`).join('')}</div>
+    <div id="mmEnd"></div>`;
+  const G = $('#mmG');
+  const paint = () => G.querySelectorAll('.mm-card').forEach(b => { const i = +b.dataset.i, c = MM.cards[i]; b.classList.toggle('up', MM.open.includes(i) || MM.done.has(c.p)); b.classList.toggle('ok', MM.done.has(c.p)); b.classList.toggle('t', c.k === 'T'); b.disabled = MM.done.has(c.p); });
+  paint();
+  GAME_TIMER = setInterval(() => { const s = $('#mmS'); if (!s) return stopGameTimers(); s.textContent = Math.round((Date.now() - MM.t0) / 1000); }, 500);
+  $('#mmNew').onclick = () => { MM.st = 'setup'; renderMemoria(); $('#mmGo').click(); };
+  G.querySelectorAll('.mm-card').forEach(b => b.onclick = () => {
+    const i = +b.dataset.i;
+    if (MM.lock || MM.open.includes(i) || MM.done.has(MM.cards[i].p)) return;
+    MM.open.push(i); paint();
+    if (MM.open.length < 2) return;
+    MM.mv++; $('#mmMv').textContent = MM.mv;
+    const [x, y] = MM.open.map(j => MM.cards[j]);
+    if (x.p === y.p) { MM.done.add(x.p); MM.open = []; paint(); $('#mmP').textContent = MM.done.size; if (MM.done.size === 6) memoriaEnd(); }
+    else { MM.lock = true; G.querySelectorAll('.mm-card').forEach(z => { if (MM.open.includes(+z.dataset.i)) z.classList.add('no'); }); setTimeout(() => { MM.open = []; MM.lock = false; G.querySelectorAll('.no').forEach(z => z.classList.remove('no')); paint(); }, 1700); }
+  });
+}
+function memoriaEnd() {
+  stopGameTimers();
+  const s = Math.round((Date.now() - MM.t0) / 1000), best = GAMES.memoria[MM.u];
+  const isRec = !best || MM.mv < best.mv || (MM.mv === best.mv && s < best.s);
+  if (isRec) { GAMES.memoria[MM.u] = { mv: MM.mv, s }; saveGames(); }
+  $('#mmEnd').innerHTML = `<div class="fb ok" style="margin-top:16px"><b class="h">¡Completaste las 6 parejas!</b>${MM.mv} jugadas en ${s} segundos.${isRec ? ' Es tu mejor partida en este contenido.' : ` Tu mejor marca: ${best.mv} jugadas.`} El mínimo posible es 6 jugadas.</div>
+    <div class="row" style="margin-top:10px"><button class="btn primary" type="button" id="mmAgain">Jugar otra vez</button></div>`;
+  $('#mmAgain').onclick = () => { MM.st = 'setup'; renderMemoria(); $('#mmGo').click(); };
+}
+
+/* ---------- 3 · ¿Quién quiere ser economista? ---------- */
+const MILL_PTS = [100, 200, 300, 500, 1000, 2000, 4000, 8000, 16000, 32000, 64000, 125000, 250000, 500000, 1000000];
+const MILL_SAFE = [4, 9];
+const ML = { u: store.get('gU', 'all'), st: 'setup' };
+function millBuild(u) {
+  const easy = cardQs(u, 8);
+  const early = shuffle(mcPool(u, (it, idx, t) => idx < t.items.length / 2 && plain(it.q).length < 320));
+  const late = shuffle(mcPool(u, (it, idx, t) => idx >= t.items.length / 2));
+  const dr = shuffle(drillPool());
+  const tiers = [easy.slice(0, 5), early.slice(0, 5), shuffle([...late.slice(0, 3), ...dr.slice(0, 2)])];
+  ML.res = [easy.slice(5), early.slice(5, 9), [...late.slice(3, 6), ...dr.slice(2, 4)]];
+  ML.qs = tiers.flat().map(shufQ);
+}
+function renderMill() {
+  stopGameTimers();
+  if (ML.st === 'play') return millPlay();
+  const best = GAMES.mill[ML.u];
+  app.innerHTML = `${gameCrumb}<div class="eyebrow" style="margin-top:12px">Juego 3 · Individual</div><h1>¿Quién quiere ser economista?</h1>
+    <div class="essentials gset">
+      <p><b>15 preguntas</b> de dificultad creciente: conceptos, luego aplicación y al final preguntas de examen. Los niveles <b>1.000</b> y <b>32.000</b> son seguros: si fallas, conservas el último nivel seguro que alcanzaste. Puedes retirarte en cualquier momento.</p>
+      <p>Comodines (uno de cada uno): <b>50:50</b>, <b>Pista</b> y <b>Cambiar pregunta</b>.</p>
+      <div><span class="lbl2">Contenido</span>${unitSeg(ML.u, 'mlU')}</div>
+      <p class="small muted">${best !== undefined ? `Tu mejor resultado en ${UNIT_OPTS[ML.u].toLowerCase()}: <b>${fmt(best)} puntos</b>.` : 'Todavía no jugaste con este contenido.'}</p>
+      <div class="row"><button class="btn primary" type="button" id="mlGo">Empezar</button></div>
+    </div>`;
+  bindUnitSeg('mlU', u => { ML.u = u; store.set('gU', u); renderMill(); });
+  $('#mlGo').onclick = () => { millBuild(ML.u); Object.assign(ML, { st: 'play', i: 0, sel: null, life: { f: 1, h: 1, c: 1 }, hid: [], hint: null, phase: 'ask', over: null }); renderMill(); };
+}
+function millSafe(i) { let s = 0; MILL_SAFE.forEach(k => { if (i > k) s = MILL_PTS[k]; }); return s; }
+function millHint(q) {
+  if (q.card) { const w = q.card[1]; return `El término empieza con «${w[0]}» y tiene ${w.replace(/\s/g, '').length} letras${/\s/.test(w) ? ` (${w.split(/\s+/).length} palabras)` : ''}.`; }
+  return autoHint(q.t, q) || 'Descarta primero las opciones que confunden causa con efecto.';
+}
+function millPlay() {
+  const q = ML.qs[ML.i], tier = ML.i < 5 ? 0 : ML.i < 10 ? 1 : 2;
+  const ladder = MILL_PTS.map((p, k) => `<li class="${k === ML.i ? 'cur' : ''} ${k < ML.i ? 'past' : ''} ${MILL_SAFE.includes(k) ? 'safe' : ''}"><span>${k + 1}</span><b>${fmt(p)}</b></li>`).reverse().join('');
+  const over = ML.over;
+  app.innerHTML = `${gameCrumb}
+    <div class="ml-wrap">
+      <div>
+        <div class="row ml-top"><span class="tag">${['Conceptos', 'Aplicación', 'Examen'][tier]}</span><span class="ml-now">Pregunta ${ML.i + 1} de 15 · por <b>${fmt(MILL_PTS[ML.i])}</b> puntos</span></div>
+        <div class="card gcard"><div class="card-b">
+          <p class="q">${q.q}</p>
+          <div class="opts" id="mlO">${q.o.map((o, k) => `<button class="opt ${ML.sel === k ? 'sel' : ''} ${ML.hid.includes(k) ? 'elim' : ''}" type="button" data-k="${k}" ${ML.hid.includes(k) || ML.phase !== 'ask' ? 'disabled' : ''}><span class="l">${LET[k]}</span><span>${o}</span></button>`).join('')}</div>
+          <div class="hints">${ML.hint ? `<p class="hint1">${ML.hint}</p>` : ''}</div>
+          <div id="mlF"></div>
+        </div>
+        <div class="card-f">
+          <div class="row">${ML.phase === 'ask' ? `<button class="btn sm" type="button" data-l="f" ${ML.life.f ? '' : 'disabled'}>50:50</button><button class="btn sm" type="button" data-l="h" ${ML.life.h ? '' : 'disabled'}>Pista</button><button class="btn sm" type="button" data-l="c" ${ML.life.c ? '' : 'disabled'}>Cambiar pregunta</button>` : ''}</div>
+          <div class="row">${ML.phase === 'ask' ? `<button class="btn" type="button" id="mlQuit">Retirarme con ${fmt(ML.i ? MILL_PTS[ML.i - 1] : 0)}</button><button class="btn primary" type="button" id="mlOk" ${ML.sel === null ? 'disabled' : ''}>Respuesta final</button>` : over ? `<button class="btn primary" type="button" id="mlAgain">Jugar otra vez</button>` : `<button class="btn primary" type="button" id="mlNext">Siguiente pregunta →</button>`}</div>
+        </div></div>
+      </div>
+      <ol class="ml-ladder" aria-label="Escalera de puntos">${ladder}</ol>
+    </div>`;
+  const F = $('#mlF');
+  if (ML.phase !== 'ask') {
+    const bs = $('#mlO').querySelectorAll('.opt');
+    bs[q.a].classList.add('right'); if (ML.sel !== q.a && ML.sel !== null) bs[ML.sel].classList.add('wrong');
+    F.innerHTML = over
+      ? `<div class="fb ${over.win ? 'ok' : over.quit ? 'info' : 'no'}"><b class="h">${over.win ? '¡Ganaste el millón de puntos!' : over.quit ? 'Te retiraste' : 'Respuesta incorrecta'}</b>${over.quit ? '' : (q.e || '')}<p style="margin:8px 0 0"><b>Resultado: ${fmt(over.pts)} puntos.</b>${over.rec ? ' Es tu mejor resultado en este contenido.' : ''}</p></div>`
+      : `<div class="fb ok"><b class="h">¡Correcto!</b>${q.e || ''}</div>`;
+  }
+  $('#mlO').querySelectorAll('.opt').forEach(b => b.onclick = () => { ML.sel = +b.dataset.k; millPlay(); });
+  app.querySelectorAll('[data-l]').forEach(b => b.onclick = () => {
+    const l = b.dataset.l; if (!ML.life[l]) return; ML.life[l] = 0;
+    if (l === 'f') { ML.hid = shuffle(q.o.map((_, k) => k).filter(k => k !== q.a)).slice(0, 2); if (ML.hid.includes(ML.sel)) ML.sel = null; }
+    if (l === 'h') ML.hint = millHint(q);
+    if (l === 'c') { const r = ML.res[tier].shift(); if (r) { ML.qs[ML.i] = shufQ(r); ML.sel = null; ML.hid = []; ML.hint = null; } }
+    millPlay();
+  });
+  const finish = (pts, extra) => { const prev = GAMES.mill[ML.u], rec = prev === undefined || pts > prev; if (rec) { GAMES.mill[ML.u] = pts; saveGames(); } ML.over = Object.assign({ pts, rec }, extra); ML.phase = 'done'; millPlay(); };
+  const ok = $('#mlOk');
+  if (ok) ok.onclick = () => {
+    const right = ML.sel === q.a;
+    if (q.tid) logResult(q.tid, q.idx, right);
+    if (!right) return finish(millSafe(ML.i), {});
+    if (ML.i === 14) return finish(MILL_PTS[14], { win: true });
+    ML.phase = 'right'; millPlay();
+  };
+  const quit = $('#mlQuit'); if (quit) quit.onclick = () => finish(ML.i ? MILL_PTS[ML.i - 1] : 0, { quit: true });
+  const nx = $('#mlNext'); if (nx) nx.onclick = () => { ML.i++; Object.assign(ML, { sel: null, hid: [], hint: null, phase: 'ask' }); millPlay(); };
+  const ag = $('#mlAgain'); if (ag) ag.onclick = () => { ML.st = 'setup'; renderMill(); };
+}
+
+/* ---------- 4 · Jeopardy de la clase ---------- */
+let JP = store.get('jp', null);
+const saveJP = () => store.set('jp', JP);
+const JP_POOLS = { u12: 'Unidades 1 y 2', 3: 'Unidad 3', 4: 'Unidad 4', all: 'Todo el curso' };
+function jpBuild(pool, names) {
+  const ok = t => (pool === 'all' || (pool === 'u12' ? t.u <= 2 : t.u === +pool)) && t.items.filter(i => i.t === 'mc').length >= 4;
+  const cats = shuffle(TOPICS.filter(ok)).slice(0, 5).sort((a, b) => TOPICS.indexOf(a) - TOPICS.indexOf(b)).map(t => {
+    const mcs = t.items.map((it, idx) => ({ it, idx })).filter(x => x.it.t === 'mc');
+    const pickIdx = [0, 1, 2, 3].map(k => mcs[Math.round(k * (mcs.length - 1) / 3)].idx);
+    return { tid: t.id, qs: pickIdx.map(idx => { const ord = shuffle([0, 1, 2, 3].slice(0, t.items[idx].o.length)); return { idx, ord, used: false }; }) };
+  });
+  JP = { pool, teams: names.map(n => ({ n, s: 0 })), cats, open: null };
+  saveJP();
+}
+function renderJeopardy() {
+  stopGameTimers();
+  if (!JP || !JP.cats) return jpSetup();
+  if (JP.open) return jpQuestion();
+  const left = JP.cats.reduce((s, c) => s + c.qs.filter(q => !q.used).length, 0);
+  app.innerHTML = `${gameCrumb}<div class="row jp-head"><h1 style="margin:8px 0">Jeopardy · ${JP_POOLS[JP.pool]}</h1><span class="muted small">${left} preguntas por jugar</span></div>
+    ${jpScores()}
+    ${left ? `<div class="jp-board" style="--cols:${JP.cats.length}">${JP.cats.map(c => `<div class="jp-cat">${tcode(c.tid)}<span>${TOPICS.find(t => t.id === c.tid).name}</span></div>`).join('')}
+      ${[0, 1, 2, 3].map(r => JP.cats.map((c, ci) => { const q = c.qs[r]; return `<button class="jp-cell" type="button" data-c="${ci}" data-r="${r}" ${q.used ? 'disabled' : ''}>${q.used ? '' : (r + 1) * 100}</button>`; }).join('')).join('')}</div>`
+      : jpPodium()}
+    <div class="row" style="margin-top:16px"><button class="btn" type="button" id="jpNew">Nuevo tablero</button><button class="btn" type="button" id="jpFs">Pantalla completa</button></div>`;
+  app.querySelectorAll('.jp-cell').forEach(b => b.onclick = () => { JP.open = { c: +b.dataset.c, r: +b.dataset.r, rev: false }; saveJP(); renderJeopardy(); });
+  $('#jpNew').onclick = () => { JP = null; saveJP(); renderJeopardy(); };
+  $('#jpFs').onclick = () => { const d = document.documentElement; (d.requestFullscreen || d.webkitRequestFullscreen || (() => { })).call(d); };
+}
+function jpScores() { return `<div class="jp-scores">${JP.teams.map(t => `<div class="jp-team"><span>${esc(t.n)}</span><b>${fmt(t.s)}</b></div>`).join('')}</div>`; }
+function jpPodium() {
+  const r = JP.teams.slice().sort((a, b) => b.s - a.s);
+  const tie = r.length > 1 && r[0].s === r[1].s;
+  return `<div class="fb ok jp-end"><b class="h">${tie ? '¡Empate en el primer puesto!' : `¡Ganó ${esc(r[0].n)}!`}</b>${r.map((t, i) => `${i + 1}.º ${esc(t.n)}: ${fmt(t.s)} puntos`).join('<br>')}</div>`;
+}
+function jpSetup() {
+  const S = SESS.jpSet = SESS.jpSet || { pool: 'u12', n: 3, names: ['Equipo 1', 'Equipo 2', 'Equipo 3', 'Equipo 4'] };
+  app.innerHTML = `${gameCrumb}<div class="eyebrow" style="margin-top:12px">Juego 4 · Por equipos</div><h1>Jeopardy de la clase</h1>
+    <div class="essentials gset">
+      <p>Proyecta esta página. Cada equipo elige una categoría y un valor; el profesor muestra la pregunta, revela la respuesta y suma o resta los puntos. Las preguntas de 100 son las más simples del subtema y las de 400, las más exigentes.</p>
+      <div><span class="lbl2">Contenido</span>${unitSeg(S.pool, 'jpU', JP_POOLS)}</div>
+      <div><span class="lbl2">Cantidad de equipos</span><div class="seg" role="group" id="jpN">${[2, 3, 4].map(n => `<button type="button" data-n="${n}" aria-pressed="${S.n === n}">${n}</button>`).join('')}</div></div>
+      <div class="jp-names">${S.names.slice(0, S.n).map((n, i) => `<label><span class="lbl2">Equipo ${i + 1}</span><input class="inp" data-tn="${i}" value="${esc(n)}" maxlength="24"></label>`).join('')}</div>
+      <div class="row"><button class="btn primary" type="button" id="jpGo">Armar el tablero</button></div>
+    </div>`;
+  bindUnitSeg('jpU', u => { S.pool = u; jpSetup(); });
+  app.querySelectorAll('[data-n]').forEach(b => b.onclick = () => { S.n = +b.dataset.n; jpSetup(); });
+  app.querySelectorAll('[data-tn]').forEach(i => i.oninput = () => { S.names[+i.dataset.tn] = i.value; });
+  $('#jpGo').onclick = () => { jpBuild(S.pool, S.names.slice(0, S.n).map((n, i) => n.trim() || 'Equipo ' + (i + 1))); renderJeopardy(); };
+}
+function jpQuestion() {
+  const { c, r, rev } = JP.open, cat = JP.cats[c], cell = cat.qs[r], t = TOPICS.find(x => x.id === cat.tid), it = t.items[cell.idx], val = (r + 1) * 100;
+  const a = cell.ord.indexOf(it.a);
+  app.innerHTML = `<div class="row jp-head"><span class="eyebrow">${tcode(t.id)} · ${t.name} · ${val} puntos</span></div>
+    ${jpScores()}
+    <div class="card gcard jp-q"><div class="card-b">
+      <p class="q">${it.q}</p>
+      <div class="opts">${cell.ord.map((o, k) => `<div class="opt ${rev && k === a ? 'right' : ''}"><span class="l">${LET[k]}</span><span>${it.o[o]}</span></div>`).join('')}</div>
+      ${rev ? `<div class="fb ok"><b class="h">Respuesta: ${LET[a]}</b>${it.e || ''}</div>` : ''}
+    </div>
+    <div class="card-f">${rev ? `<div class="jp-award">${JP.teams.map((tm, i) => `<div class="row"><span class="nm">${esc(tm.n)}</span><button class="btn sm" type="button" data-pt="${i}" data-v="${val}">+${val}</button><button class="btn sm" type="button" data-pt="${i}" data-v="${-val}">−${val}</button></div>`).join('')}</div>
+      <button class="btn primary" type="button" id="jpBack">Volver al tablero</button>`
+      : `<button class="btn" type="button" id="jpBack">Volver sin jugar</button><button class="btn primary" type="button" id="jpRev">Mostrar respuesta</button>`}</div></div>`;
+  const rv = $('#jpRev'); if (rv) rv.onclick = () => { JP.open.rev = true; cell.used = true; saveJP(); jpQuestion(); };
+  app.querySelectorAll('[data-pt]').forEach(b => b.onclick = () => { JP.teams[+b.dataset.pt].s += +b.dataset.v; saveJP(); jpQuestion(); });
+  $('#jpBack').onclick = () => { JP.open = null; saveJP(); renderJeopardy(); };
 }
 
 render();
