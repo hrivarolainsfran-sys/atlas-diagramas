@@ -331,6 +331,7 @@ body.docked{padding-bottom:190px}
 .tiles.games{grid-template-columns:repeat(auto-fill,minmax(260px,1fr))}
 .tile.game .code{color:var(--gold)}
 .tile.game .ft{flex-wrap:wrap}
+.tile.game.off{background:transparent;cursor:default}.tile.game.off:hover{border-color:var(--rule)}.tile.game.off .code,.tile.game.off .nm{color:var(--muted)}
 .gset{display:grid;gap:14px}
 .gset p{margin:0}
 .gcard{margin-top:12px}
@@ -1343,10 +1344,10 @@ function render() {
   if (route.startsWith('ppt-') && keyFromTok(route.slice(4))) { setNav('ppt'); return renderPPT(keyFromTok(route.slice(4))); }
   if (route === 'podcast') { setNav('podcast'); return renderPodHome(); }
   if (route === 'juegos') { setNav('juegos'); return renderGamesHome(); }
-  if (route === 'juego-reloj') { setNav('juegos'); return renderReloj(); }
-  if (route === 'juego-memoria') { setNav('juegos'); return renderMemoria(); }
-  if (route === 'juego-millonario') { setNav('juegos'); return renderMill(); }
-  if (route === 'juego-jeopardy') { setNav('juegos'); return renderJeopardy(); }
+  if (route === 'juego-reloj') { setNav('juegos'); return JUEGOS_ACTIVOS.reloj ? renderReloj() : renderGamesHome(); }
+  if (route === 'juego-memoria') { setNav('juegos'); return JUEGOS_ACTIVOS.memoria ? renderMemoria() : renderGamesHome(); }
+  if (route === 'juego-millonario') { setNav('juegos'); return JUEGOS_ACTIVOS.millonario ? renderMill() : renderGamesHome(); }
+  if (route === 'juego-jeopardy') { setNav('juegos'); return JUEGOS_ACTIVOS.jeopardy ? renderJeopardy() : renderGamesHome(); }
   if (route === 'escribir-evaluar') { setNav('escribir'); return renderWrite('eva'); }
   if (route.startsWith('exp-') && EXP.some(x => x.id === route.slice(4))) { setNav('escribir'); return renderExplain(EXP.find(x => x.id === route.slice(4))); }
   if (route.startsWith('eva-') && EVA.some(x => x.id === route.slice(4))) { setNav('escribir'); return renderEval(EVA.find(x => x.id === route.slice(4))); }
@@ -1397,7 +1398,7 @@ function renderHome() {
   <section class="extras" aria-label="Más recursos">
     <button class="xcard" type="button" data-go="ppt"><b>PPT</b><span>Las presentaciones de clase por subtema.</span></button>
     <button class="xcard" type="button" data-go="podcast"><b>Podcast</b><span>Episodios para escuchar mientras practicas.</span></button>
-    <button class="xcard" type="button" data-go="juegos"><b>Juegos</b><span>Contrarreloj, memoria, ¿Quién quiere ser economista? y Jeopardy.</span></button>
+    <button class="xcard" type="button" data-go="juegos"><b>Juegos</b><span>${Object.values(JUEGOS_ACTIVOS).some(Boolean) ? 'Contrarreloj, memoria, ¿Quién quiere ser economista? y Jeopardy.' : 'Próximamente: juegos para repasar el curso.'}</span></button>
   </section>
   <div id="temas">${Object.keys(UNITS).map(unitBlock).join('')}</div>
   <p class="foot">Contenidos alineados al Nivel Medio: no incluye utilidad marginal, efectos ingreso y sustitución, multiplicador keynesiano, curva de Phillips ni la condición Marshall-Lerner. Los datos numéricos de los ejercicios son hipotéticos. El progreso se guarda solo en este navegador.</p>`;
@@ -3240,6 +3241,8 @@ function markHeard(id) {
 }
 
 /* =============== 7 · Juegos =============== */
+/* Para habilitar un juego, cambie su valor a true. */
+const JUEGOS_ACTIVOS = { reloj: false, memoria: false, millonario: false, jeopardy: false };
 const GAMES = store.get('games', { reloj: {}, memoria: {}, mill: {} });
 const saveGames = () => store.set('games', GAMES);
 let GAME_TIMER = null;
@@ -3282,9 +3285,12 @@ const GAME_LIST = [
   { k: 'jeopardy', name: 'Jeopardy de la clase', who: 'Por equipos', ds: 'Tablero de 5 categorías para jugar con el proyector. El profesor asigna los puntos.', rec: () => JP && JP.cats ? 'Hay un tablero en curso' : '' }
 ];
 function renderGamesHome() {
+  const any = GAME_LIST.some(g => JUEGOS_ACTIVOS[g.k]);
   app.innerHTML = `<div class="eyebrow">Aprender jugando</div><h1>Juegos</h1>
-    <p class="lede">Repasa los conceptos del curso con cuatro juegos. Los errores en preguntas de los subtemas se guardan en <b>Repasar → Mis errores</b>.</p>
-    <div class="tiles games">${GAME_LIST.map((g, i) => `<button class="tile game" type="button" data-go="juego-${g.k}"><span class="code">${i + 1}</span><span class="nm">${g.name}</span><span class="ds">${g.ds}</span><span class="ft"><span class="tag">${g.who}</span>${g.rec() ? `<span>${g.rec()}</span>` : ''}</span></button>`).join('')}</div>`;
+    <p class="lede">${any ? 'Repasa los conceptos del curso jugando. Los errores en preguntas de los subtemas se guardan en <b>Repasar → Mis errores</b>.' : 'Muy pronto podrás repasar los conceptos del curso con estos juegos. Tu profesor los irá habilitando.'}</p>
+    <div class="tiles games">${GAME_LIST.map((g, i) => JUEGOS_ACTIVOS[g.k]
+      ? `<button class="tile game" type="button" data-go="juego-${g.k}"><span class="code">${i + 1}</span><span class="nm">${g.name}</span><span class="ds">${g.ds}</span><span class="ft"><span class="tag">${g.who}</span>${g.rec() ? `<span>${g.rec()}</span>` : ''}</span></button>`
+      : `<div class="tile game off" aria-disabled="true"><span class="code">${i + 1}</span><span class="nm">${g.name}</span><span class="ds">${g.ds}</span><span class="ft"><span class="tag">${g.who}</span><span class="tag">Próximamente</span></span></div>`).join('')}</div>`;
 }
 
 /* ---------- 1 · Contrarreloj ---------- */
