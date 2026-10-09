@@ -270,6 +270,9 @@ details.model summary{cursor:pointer;font-weight:700}
 .hdl circle{fill:var(--gold-soft);stroke:var(--gold);stroke-width:1.8}
 .hdl text{font-family:var(--f-body)!important;font-size:12px;font-weight:700;fill:var(--ink)}
 .dsteps{margin:0 0 8px;font-size:15px}
+.focus{display:flex;flex-wrap:wrap;gap:6px 8px;align-items:center;margin:12px 0 0;max-width:900px;background:var(--gold-soft);border:1px solid var(--gold);border-radius:7px;padding:9px 12px;font-size:14.5px}
+.focus b{margin-right:4px}
+.focus span{background:var(--sheet);border:1px solid var(--gold);border-radius:99px;padding:2px 10px;font-weight:700;font-size:13.5px}
 @media (max-width:860px){.route{grid-template-columns:repeat(2,minmax(0,1fr))}.method{grid-template-columns:1fr}.cgrid{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
@@ -2120,8 +2123,7 @@ const EXP = [
     defs: [['Oferta', 'Cantidad de un bien que los productores están dispuestos y pueden vender a cada precio, en un período determinado, ceteris paribus.', 'dispuest|quier, pued|capac, precio, period'], ['Precio de equilibrio', 'Precio al que la cantidad demandada es igual a la cantidad ofrecida.', 'demandad, ofrecid|oferta, igual']],
     cause: ['La sequía reduce el rendimiento de las huertas: con la misma tierra y el mismo trabajo se cosechan menos tomates.', 'Los consumidores deciden comprar menos tomates porque su precio sube.', 'El gobierno fija un precio máximo para el tomate.'],
     dia: { m: 'micro', key: 'O', dir: -1 },
-    chain: ['La sequía reduce el rendimiento de las huertas y encarece producir cada kilo de tomate.', 'Por consiguiente, a cada precio los productores ofrecen menos: la curva de oferta se desplaza a la izquierda, de O₀ a O₁.', 'Como resultado, al precio inicial P₀ hay un exceso de demanda: más compradores que tomates disponibles.', 'Esto provoca que el precio suba hasta el nuevo equilibrio, con un precio mayor (P₁ > P₀) y una cantidad menor (Q₁ < Q₀).'],
-    ex: 'Tal como ocurre en Paraguay después de sequías o heladas, el precio del tomate y de otras hortalizas suele subir en el Mercado de Abasto de Asunción. Esto se explica por el desplazamiento de la oferta a la izquierda: hay menos producción nacional disponible y los consumidores compiten por una cantidad menor.'
+    chain: ['La sequía reduce el rendimiento de las huertas y encarece producir cada kilo de tomate.', 'Por consiguiente, a cada precio los productores ofrecen menos: la curva de oferta se desplaza a la izquierda, de O₀ a O₁.', 'Como resultado, al precio inicial P₀ hay un exceso de demanda: más compradores que tomates disponibles.', 'Esto provoca que el precio suba hasta el nuevo equilibrio, con un precio mayor (P₁ > P₀) y una cantidad menor (Q₁ < Q₀).']
   },
   {
     id: 'pasaje', u: 2, st: '2.7', short: 'Subsidio al transporte público',
@@ -2129,8 +2131,7 @@ const EXP = [
     defs: [['Subsidio', 'Pago del gobierno a los productores por cada unidad producida, que reduce su costo de producción.', 'gobierno|estado, productor|empresa, costo|unidad'], ['Oferta', 'Cantidad que los productores están dispuestos y pueden vender a cada precio, en un período, ceteris paribus.', 'dispuest|quier, pued|capac, precio']],
     cause: ['El gobierno paga a las empresas una suma por cada pasajero transportado, lo que reduce su costo por viaje.', 'Los pasajeros reciben más ingresos y viajan más.', 'Sube el precio del combustible.'],
     dia: { m: 'micro', key: 'O', dir: 1 },
-    chain: ['El subsidio reduce el costo de cada viaje para las empresas de transporte.', 'Por consiguiente, a cada precio las empresas están dispuestas a ofrecer más viajes: la oferta se desplaza a la derecha (hacia abajo), de O₀ a O₁.', 'Como resultado, al pasaje inicial P₀ hay un exceso de oferta de viajes.', 'Esto provoca que el pasaje baje hasta el nuevo equilibrio, con un precio menor (P₁ < P₀) y más viajes (Q₁ > Q₀).'],
-    ex: 'Un caso ilustrativo es el subsidio que el Estado paraguayo paga a las empresas de colectivos del área metropolitana de Asunción para mantener un pasaje más bajo. Esto se explica por el desplazamiento de la oferta a la derecha: el subsidio cubre parte del costo, el pasaje queda por debajo del que habría sin él y más personas pueden viajar.'
+    chain: ['El subsidio reduce el costo de cada viaje para las empresas de transporte.', 'Por consiguiente, a cada precio las empresas están dispuestas a ofrecer más viajes: la oferta se desplaza a la derecha (hacia abajo), de O₀ a O₁.', 'Como resultado, al pasaje inicial P₀ hay un exceso de oferta de viajes.', 'Esto provoca que el pasaje baje hasta el nuevo equilibrio, con un precio menor (P₁ < P₀) y más viajes (Q₁ > Q₀).']
   },
   {
     id: 'cigarrillos', u: 2, st: '2.7', short: 'Impuesto selectivo a los cigarrillos',
@@ -2138,8 +2139,7 @@ const EXP = [
     defs: [['Impuesto indirecto', 'Impuesto que se aplica al gasto en bienes y servicios; lo cobra el vendedor y lo entrega al Estado.', 'gasto|bien|consumo, vendedor|productor|empresa, estado|gobierno'], ['Precio de equilibrio', 'Precio al que la cantidad demandada es igual a la cantidad ofrecida.', 'demandad, ofrecid|oferta, igual']],
     cause: ['El impuesto agrega un costo por cada cajetilla vendida, que el vendedor debe pagar al Estado.', 'Los fumadores deciden dejar de fumar por una campaña de salud.', 'Bajan los ingresos de los consumidores.'],
     dia: { m: 'micro', key: 'O', dir: -1 },
-    chain: ['El impuesto aumenta el costo de vender cada cajetilla, porque una parte del precio va al Estado.', 'Por consiguiente, la curva de oferta se desplaza hacia arriba (a la izquierda), de O₀ a O₁, en el monto del impuesto.', 'Como resultado, al precio inicial hay un exceso de demanda y el precio sube.', 'En el nuevo equilibrio el precio es mayor (P₁ > P₀) y la cantidad menor (Q₁ < Q₀); como la demanda es inelástica, la cantidad cae poco.'],
-    ex: 'Tal como ocurre en Paraguay, los cigarrillos pagan el Impuesto Selectivo al Consumo, con tasas que están entre las más bajas de la región. Esto se explica con el mismo mecanismo: si la tasa sube, la oferta se desplaza hacia arriba y el precio aumenta; pero como la demanda de cigarrillos es inelástica, la cantidad consumida baja poco y la recaudación aumenta.'
+    chain: ['El impuesto aumenta el costo de vender cada cajetilla, porque una parte del precio va al Estado.', 'Por consiguiente, la curva de oferta se desplaza hacia arriba (a la izquierda), de O₀ a O₁, en el monto del impuesto.', 'Como resultado, al precio inicial hay un exceso de demanda y el precio sube.', 'En el nuevo equilibrio el precio es mayor (P₁ > P₀) y la cantidad menor (Q₁ < Q₀); como la demanda es inelástica, la cantidad cae poco.']
   },
   {
     id: 'autos', u: 2, st: '2.1', short: 'Ingreso y demanda de autos',
@@ -2147,8 +2147,7 @@ const EXP = [
     defs: [['Demanda', 'Cantidad de un bien que los consumidores están dispuestos y pueden comprar a cada precio, en un período, ceteris paribus.', 'dispuest|quier, pued|capac, precio, period'], ['Bien normal', 'Bien cuya demanda aumenta cuando aumenta el ingreso de los consumidores.', 'ingreso, aument|sube']],
     cause: ['Los hogares tienen más ingreso disponible y pueden comprar más bienes durables, como autos.', 'Baja el precio de los autos usados.', 'Aumenta el número de importadores de autos.'],
     dia: { m: 'micro', key: 'D', dir: 1 },
-    chain: ['El aumento del ingreso permite a más hogares comprar un auto, porque el auto es un bien normal.', 'Por consiguiente, a cada precio se demandan más autos: la curva de demanda se desplaza a la derecha, de D₀ a D₁.', 'Como resultado, al precio inicial P₀ hay un exceso de demanda.', 'Esto provoca que el precio suba hasta el nuevo equilibrio, con un precio mayor (P₁ > P₀) y una cantidad mayor (Q₁ > Q₀).'],
-    ex: 'Un caso ilustrativo es Paraguay, donde gran parte del parque automotor está formado por autos usados importados. En los años de crecimiento del ingreso, la venta de vehículos tiende a aumentar. Esto se explica por el desplazamiento de la demanda a la derecha: con más ingreso, más hogares pueden financiar la compra de un auto.'
+    chain: ['El aumento del ingreso permite a más hogares comprar un auto, porque el auto es un bien normal.', 'Por consiguiente, a cada precio se demandan más autos: la curva de demanda se desplaza a la derecha, de D₀ a D₁.', 'Como resultado, al precio inicial P₀ hay un exceso de demanda.', 'Esto provoca que el precio suba hasta el nuevo equilibrio, con un precio mayor (P₁ > P₀) y una cantidad mayor (Q₁ > Q₀).']
   },
   {
     id: 'pollo', u: 2, st: '2.2', short: 'Tecnología y mercado del pollo',
@@ -2156,8 +2155,7 @@ const EXP = [
     defs: [['Oferta', 'Cantidad de un bien que los productores están dispuestos y pueden vender a cada precio, en un período, ceteris paribus.', 'dispuest|quier, pued|capac, precio'], ['Tecnología', 'Conocimientos y métodos que permiten producir más con los mismos recursos.', 'producir|produc, mismos|menos, recurso|costo']],
     cause: ['Nuevas técnicas de alimentación y galpones climatizados permiten producir más kilos de pollo con los mismos recursos.', 'Los consumidores prefieren comer más pollo por salud.', 'Sube el precio de la carne vacuna.'],
     dia: { m: 'micro', key: 'O', dir: 1 },
-    chain: ['La mejora tecnológica reduce el costo de producir cada kilo de pollo.', 'Por consiguiente, a cada precio los productores ofrecen más: la oferta se desplaza a la derecha, de O₀ a O₁.', 'Como resultado, al precio inicial hay un exceso de oferta.', 'Esto provoca que el precio baje hasta el nuevo equilibrio, con un precio menor (P₁ < P₀) y una cantidad mayor (Q₁ > Q₀).'],
-    ex: 'Tal como ocurre en la avicultura paraguaya, la incorporación de galpones climatizados y mejor genética permite criar más pollos en menos tiempo. Esto se explica por el desplazamiento de la oferta a la derecha: baja el costo por kilo, aumenta la producción y el pollo se vuelve una proteína relativamente accesible.'
+    chain: ['La mejora tecnológica reduce el costo de producir cada kilo de pollo.', 'Por consiguiente, a cada precio los productores ofrecen más: la oferta se desplaza a la derecha, de O₀ a O₁.', 'Como resultado, al precio inicial hay un exceso de oferta.', 'Esto provoca que el precio baje hasta el nuevo equilibrio, con un precio menor (P₁ < P₀) y una cantidad mayor (Q₁ > Q₀).']
   },
   {
     id: 'tpm2020', u: 3, st: '3.5', short: 'El BCP baja la tasa de interés',
@@ -2165,8 +2163,7 @@ const EXP = [
     defs: [['Demanda agregada', 'Gasto total planeado en bienes y servicios finales de una economía a cada nivel general de precios: C + I + G + (X − M).', 'gasto, nivel|precios, c + i|consumo'], ['Tasa de política monetaria', 'Tasa de interés de referencia que fija el banco central para orientar las tasas del sistema financiero.', 'banco central|bcp, referencia|orient, tasa']],
     cause: ['El BCP reduce la tasa de política monetaria y los bancos bajan las tasas de sus préstamos.', 'El gobierno aumenta el gasto en obras públicas.', 'Sube el precio internacional del petróleo.'],
     dia: { m: 'adas', key: 'DA', dir: 1 },
-    chain: ['La reducción de la tasa del BCP abarata el financiamiento de los bancos, que bajan las tasas de sus préstamos.', 'Por consiguiente, los hogares compran más bienes a crédito y las empresas invierten más: aumentan C e I.', 'Como resultado, la demanda agregada se desplaza a la derecha, de DA₀ a DA₁.', 'En el nuevo equilibrio el PIB real es mayor (Y₁ > Y₀) y el nivel general de precios también (P₁ > P₀).'],
-    ex: 'Tal como ocurrió en Paraguay en 2020, cuando el BCP redujo la tasa de política monetaria en varias reuniones hasta 0,75%, su mínimo histórico, para enfrentar el impacto de la pandemia. Esto se explica por el mismo mecanismo: el crédito más barato buscó sostener el consumo y la inversión cuando la economía se contraía.'
+    chain: ['La reducción de la tasa del BCP abarata el financiamiento de los bancos, que bajan las tasas de sus préstamos.', 'Por consiguiente, los hogares compran más bienes a crédito y las empresas invierten más: aumentan C e I.', 'Como resultado, la demanda agregada se desplaza a la derecha, de DA₀ a DA₁.', 'En el nuevo equilibrio el PIB real es mayor (Y₁ > Y₀) y el nivel general de precios también (P₁ > P₀).']
   },
   {
     id: 'obras', u: 3, st: '3.6', short: 'Gasto público en infraestructura',
@@ -2174,8 +2171,7 @@ const EXP = [
     defs: [['Política fiscal expansiva', 'Aumento del gasto público o reducción de impuestos para estimular la demanda agregada.', 'gasto|impuesto, aument|reduc, demanda agregada|da'], ['PIB real', 'Valor de la producción de bienes y servicios finales de un país, descontada la inflación.', 'produc, final, inflaci|precios constantes']],
     cause: ['El gobierno decide aumentar el gasto en rutas y puentes: crece directamente el componente G de la DA.', 'El BCP sube la tasa de interés.', 'Mejora la productividad de los trabajadores.'],
     dia: { m: 'adas', key: 'DA', dir: 1 },
-    chain: ['El aumento del gasto en infraestructura eleva directamente el componente G de la demanda agregada.', 'Por consiguiente, las constructoras contratan trabajadores y compran materiales, y esos ingresos se gastan en otros bienes: también sube el consumo.', 'Como resultado, la DA se desplaza a la derecha, de DA₀ a DA₁.', 'En el nuevo equilibrio el PIB real es mayor (Y₁ > Y₀), aumenta el empleo y sube el nivel de precios (P₁ > P₀).'],
-    ex: 'Un caso ilustrativo es la construcción del Corredor Bioceánico en el Chaco paraguayo, una obra pública que contrató empresas constructoras y trabajadores de la región. Esto se explica por el mecanismo descrito: el gasto público aumenta la DA y genera empleo e ingresos en la construcción y en los comercios cercanos.'
+    chain: ['El aumento del gasto en infraestructura eleva directamente el componente G de la demanda agregada.', 'Por consiguiente, las constructoras contratan trabajadores y compran materiales, y esos ingresos se gastan en otros bienes: también sube el consumo.', 'Como resultado, la DA se desplaza a la derecha, de DA₀ a DA₁.', 'En el nuevo equilibrio el PIB real es mayor (Y₁ > Y₀), aumenta el empleo y sube el nivel de precios (P₁ > P₀).']
   },
   {
     id: 'petroleo', u: 3, st: '3.3', short: 'Petróleo e inflación de costos',
@@ -2183,8 +2179,7 @@ const EXP = [
     defs: [['Oferta agregada de corto plazo (OACP)', 'Producción total que las empresas ofrecen a cada nivel general de precios, con los costos de los factores dados.', 'producci|produc, nivel|precios, costo'], ['Inflación de costos', 'Aumento sostenido del nivel general de precios causado por el aumento de los costos de producción.', 'aument|sube, nivel|precios, costo']],
     cause: ['Paraguay importa todo su combustible: sube el costo del transporte y de la producción en toda la economía.', 'Aumenta la confianza de los consumidores.', 'El BCP baja la tasa de interés.'],
     dia: { m: 'adas', key: 'OACP', dir: -1 },
-    chain: ['La suba del petróleo encarece el combustible que Paraguay importa.', 'Por consiguiente, aumentan los costos de transporte y producción de casi todas las empresas.', 'Como resultado, la OACP se desplaza a la izquierda, de OACP₀ a OACP₁.', 'En el nuevo equilibrio el nivel de precios sube (P₁ > P₀) y el PIB real cae (Y₁ < Y₀): inflación de costos con menor producción.'],
-    ex: 'Tal como ocurrió en 2022, tras la invasión rusa a Ucrania subió el precio internacional del petróleo y en Paraguay aumentaron varias veces los precios de la nafta y el gasoil. Esto se explica por el desplazamiento de la OACP a la izquierda: el combustible más caro elevó los costos de transporte y alimentos, y empujó la inflación.'
+    chain: ['La suba del petróleo encarece el combustible que Paraguay importa.', 'Por consiguiente, aumentan los costos de transporte y producción de casi todas las empresas.', 'Como resultado, la OACP se desplaza a la izquierda, de OACP₀ a OACP₁.', 'En el nuevo equilibrio el nivel de precios sube (P₁ > P₀) y el PIB real cae (Y₁ < Y₀): inflación de costos con menor producción.']
   },
   {
     id: 'educacion', u: 3, st: '3.7', short: 'Educación técnica y OALP',
@@ -2192,8 +2187,7 @@ const EXP = [
     defs: [['Oferta agregada de largo plazo (OALP)', 'Capacidad productiva potencial de la economía, que depende de la cantidad y calidad de los factores y de la tecnología.', 'capacidad|potencial, factor, calidad|tecnolog'], ['Política de oferta', 'Medida que busca aumentar la capacidad productiva de la economía.', 'aument, capacidad|productiv']],
     cause: ['Más trabajadores aprenden habilidades técnicas y aumenta su productividad.', 'Las familias gastan más en consumo.', 'Sube el salario mínimo.'],
     dia: { m: 'adas', key: 'OALP', dir: 1 },
-    chain: ['La inversión en educación técnica mejora las habilidades de los trabajadores.', 'Por consiguiente, aumenta la productividad: con el mismo número de personas se produce más.', 'Como resultado, la OALP se desplaza a la derecha, de OALP₀ a OALP₁.', 'En el nuevo equilibrio aumenta el PIB real potencial (Y₁ > Y₀) con menos presión sobre el nivel de precios.'],
-    ex: 'Un caso ilustrativo son los cursos de formación técnica del SNPP en Paraguay, que capacitan a trabajadores en electricidad, mecánica o informática. Esto se explica por el desplazamiento de la OALP a la derecha: trabajadores más capacitados elevan la capacidad productiva del país a largo plazo.'
+    chain: ['La inversión en educación técnica mejora las habilidades de los trabajadores.', 'Por consiguiente, aumenta la productividad: con el mismo número de personas se produce más.', 'Como resultado, la OALP se desplaza a la derecha, de OALP₀ a OALP₁.', 'En el nuevo equilibrio aumenta el PIB real potencial (Y₁ > Y₀) con menos presión sobre el nivel de precios.']
   },
   {
     id: 'brasil', u: 3, st: '3.2', short: 'Recesión en Brasil',
@@ -2201,8 +2195,7 @@ const EXP = [
     defs: [['Recesión', 'Dos trimestres seguidos de crecimiento negativo del PIB real.', 'dos trimestres|trimestre, negativ|cae, pib'], ['Exportaciones netas', 'Diferencia entre el valor de las exportaciones y el de las importaciones (X − M).', 'exportac, importac, diferencia|menos|x − m|x-m']],
     cause: ['Con menos ingreso, los brasileños compran menos productos paraguayos: caen las exportaciones.', 'Paraguay sube sus impuestos.', 'Mejora la tecnología en Paraguay.'],
     dia: { m: 'adas', key: 'DA', dir: -1 },
-    chain: ['La recesión reduce el ingreso de los hogares y empresas de Brasil, principal socio comercial de Paraguay.', 'Por consiguiente, compran menos productos paraguayos y caen las exportaciones (X).', 'Como resultado, bajan las exportaciones netas y la DA se desplaza a la izquierda, de DA₀ a DA₁.', 'En el nuevo equilibrio el PIB real es menor (Y₁ < Y₀) y baja el nivel de precios (P₁ < P₀); puede aumentar el desempleo cíclico.'],
-    ex: 'Tal como ocurrió durante la recesión brasileña de 2015 y 2016, que redujo la demanda de productos paraguayos y afectó al comercio en las ciudades fronterizas. Esto se explica por la caída de las exportaciones netas, que desplazó la DA de Paraguay a la izquierda.'
+    chain: ['La recesión reduce el ingreso de los hogares y empresas de Brasil, principal socio comercial de Paraguay.', 'Por consiguiente, compran menos productos paraguayos y caen las exportaciones (X).', 'Como resultado, bajan las exportaciones netas y la DA se desplaza a la izquierda, de DA₀ a DA₁.', 'En el nuevo equilibrio el PIB real es menor (Y₁ < Y₀) y baja el nivel de precios (P₁ < P₀); puede aumentar el desempleo cíclico.']
   },
   {
     id: 'guarani', u: 4, st: '4.5', short: 'Exportaciones y valor del guaraní',
@@ -2210,8 +2203,7 @@ const EXP = [
     defs: [['Tipo de cambio', 'Precio de una moneda expresado en términos de otra moneda.', 'precio, moneda, otra'], ['Apreciación', 'Aumento del valor de una moneda frente a otra en un régimen de tipo de cambio flotante.', 'aument|sube, valor, moneda']],
     cause: ['Los compradores extranjeros necesitan guaraníes para pagar más exportaciones paraguayas.', 'Los paraguayos importan más autos.', 'El BCP baja la tasa de interés.'],
     dia: { m: 'fx', key: 'D', dir: 1 },
-    chain: ['Al aumentar las exportaciones, entran más dólares que los exportadores cambian por guaraníes.', 'Por consiguiente, aumenta la demanda de guaraníes: la curva se desplaza a la derecha, de D₀ a D₁.', 'Como resultado, al tipo de cambio inicial hay un exceso de demanda de guaraníes.', 'Esto provoca que el guaraní se aprecie (TC₁ > TC₀): se necesitan menos guaraníes para comprar un dólar.'],
-    ex: 'Un caso ilustrativo es la época de cosecha y venta de soja en Paraguay, cuando ingresan muchos dólares por exportaciones. Esto se explica por el aumento de la demanda de guaraníes, que presiona hacia la apreciación; el BCP puede intervenir vendiendo o comprando dólares para suavizar el movimiento, ya que el régimen es de flotación administrada.'
+    chain: ['Al aumentar las exportaciones, entran más dólares que los exportadores cambian por guaraníes.', 'Por consiguiente, aumenta la demanda de guaraníes: la curva se desplaza a la derecha, de D₀ a D₁.', 'Como resultado, al tipo de cambio inicial hay un exceso de demanda de guaraníes.', 'Esto provoca que el guaraní se aprecie (TC₁ > TC₀): se necesitan menos guaraníes para comprar un dólar.']
   }
 ];
 
@@ -2354,12 +2346,12 @@ const EVA = [
 ];
 
 const CK_EXP = {
-  micro: ['Definí con precisión los conceptos económicos centrales.', 'Identifiqué claramente la causa inicial.', 'Construí la cadena causal eslabón por eslabón, sin saltos.', 'Usé conectores causales (porque, por consiguiente, como resultado).', 'Incluí un diagrama con ambos ejes rotulados, curvas y equilibrios.', 'Mostré claramente el desplazamiento (por ejemplo, de O₀ a O₁).', 'Hice referencia al diagrama dentro del texto.', 'Cerré con un ejemplo paraguayo concreto que ilustra el mecanismo.', 'La respuesta dice por qué ocurre, no solo qué ocurre.', 'Se puede leer en voz alta como una secuencia lógica.'],
-  macro: ['Definí con precisión los conceptos macroeconómicos centrales (DA, OA, PIB real, nivel de precios, tasa de interés…).', 'Identifiqué claramente la causa inicial (BCP, MEF, shock externo…).', 'Construí la cadena causal eslabón por eslabón, sin saltos.', 'Usé conectores causales en cada eslabón.', 'Incluí un diagrama DA/OA u otro pertinente, con ejes, curvas y equilibrios rotulados.', 'Mostré claramente el desplazamiento de la curva.', 'Hice referencia al diagrama dentro del texto.', 'Cerré con un ejemplo paraguayo concreto (BCP, MEF, soja, Itaipú…).', 'La respuesta dice por qué ocurre, no solo qué ocurre.', 'Se puede leer en voz alta como una secuencia lógica.', 'No confundí desplazamiento de la curva con movimiento a lo largo de ella.', 'Indiqué el efecto sobre el PIB real y sobre el nivel de precios (o sobre el tipo de cambio).']
+  micro: ['Definí con precisión los conceptos económicos centrales.', 'Identifiqué claramente la causa inicial.', 'Construí la cadena causal eslabón por eslabón, sin saltos.', 'Usé conectores causales (porque, por consiguiente, como resultado).', 'Incluí un diagrama con ambos ejes rotulados, curvas y equilibrios.', 'Mostré claramente el desplazamiento (por ejemplo, de O₀ a O₁).', 'Hice referencia al diagrama dentro del texto.', 'La respuesta dice por qué ocurre, no solo qué ocurre.', 'Se puede leer en voz alta como una secuencia lógica.'],
+  macro: ['Definí con precisión los conceptos macroeconómicos centrales (DA, OA, PIB real, nivel de precios, tasa de interés…).', 'Identifiqué claramente la causa inicial (BCP, MEF, shock externo…).', 'Construí la cadena causal eslabón por eslabón, sin saltos.', 'Usé conectores causales en cada eslabón.', 'Incluí un diagrama DA/OA u otro pertinente, con ejes, curvas y equilibrios rotulados.', 'Mostré claramente el desplazamiento de la curva.', 'Hice referencia al diagrama dentro del texto.', 'La respuesta dice por qué ocurre, no solo qué ocurre.', 'Se puede leer en voz alta como una secuencia lógica.', 'No confundí desplazamiento de la curva con movimiento a lo largo de ella.', 'Indiqué el efecto sobre el PIB real y sobre el nivel de precios (o sobre el tipo de cambio).']
 };
 const CK_EVA = {
-  micro: ['Definí con precisión los conceptos clave.', 'Incluí un diagrama rotulado y lo mencioné en el texto.', 'Expliqué la teoría con conectores causales.', 'Apliqué la teoría a Paraguay con al menos un dato, ley o institución real.', 'Desarrollé al menos dos dimensiones de CLASPP en párrafos distintos.', 'Usé conectores de contraste (sin embargo, no obstante, si bien…).', 'Cerré con una conclusión equilibrada y justificada.', 'La conclusión se apoya en lo discutido, sin información nueva.'],
-  macro: ['Definí con precisión los conceptos macroeconómicos clave.', 'Incluí un diagrama DA/OA u otro adecuado, bien rotulado.', 'Expliqué la teoría con conectores causales.', 'Apliqué la teoría a Paraguay con al menos un dato, ley o institución real (BCP, MEF, INE).', 'Desarrollé al menos dos dimensiones de CLASPP en párrafos distintos.', 'Distinguí el efecto en el corto y en el largo plazo.', 'Consideré efectos secundarios (inflación, deuda, déficit, balanza externa).', 'Usé conectores de contraste.', 'Cerré con una conclusión equilibrada y justificada.', 'La conclusión se apoya en lo discutido, sin información nueva.']
+  micro: ['Definí con precisión los conceptos clave.', 'Incluí un diagrama rotulado y lo mencioné en el texto.', 'Expliqué la teoría con conectores causales.', 'Apliqué la teoría a Paraguay con al menos un dato, ley o institución real.', 'Desarrollé pros y contras, corto y largo plazo y partes interesadas en párrafos distintos.', 'Usé conectores de contraste (sin embargo, no obstante, si bien…).', 'Cerré con una conclusión equilibrada y justificada.', 'La conclusión se apoya en lo discutido, sin información nueva.'],
+  macro: ['Definí con precisión los conceptos macroeconómicos clave.', 'Incluí un diagrama DA/OA u otro adecuado, bien rotulado.', 'Expliqué la teoría con conectores causales.', 'Apliqué la teoría a Paraguay con al menos un dato, ley o institución real (BCP, MEF, INE).', 'Desarrollé pros y contras, corto y largo plazo y partes interesadas en párrafos distintos.', 'Distinguí el efecto en el corto y en el largo plazo.', 'Consideré efectos secundarios (inflación, deuda, déficit, balanza externa).', 'Usé conectores de contraste.', 'Cerré con una conclusión equilibrada y justificada.', 'La conclusión se apoya en lo discutido, sin información nueva.']
 };
 const CONN_CAUSA = ['porque', 'debido a', 'dado que', 'puesto que', 'por consiguiente', 'en consecuencia', 'como resultado', 'esto provoca', 'lo cual', 'por lo tanto', 'por eso', 'de ello se sigue'];
 const CONN_EVAL = ['sin embargo', 'no obstante', 'por otra parte', 'por el contrario', 'si bien', 'a pesar de', 'en el corto plazo', 'a largo plazo', 'en definitiva', 'por lo tanto', 'considerando lo anterior', 'por todo lo expuesto', 'siempre que', 'en la medida en que'];
@@ -2373,8 +2365,8 @@ function copyText(txt, btn) {
   try { navigator.clipboard.writeText(txt).then(done, () => fallback()); } catch (e) { fallback(); }
   function fallback() { const ta = document.createElement('textarea'); ta.value = txt; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); done(); } catch (e) { } ta.remove(); }
 }
-function stepper(names, cur, done) {
-  return `<ol class="stepper">${names.map((n, i) => `<li><button type="button" data-step="${i}" class="${i === cur ? 'cur' : ''} ${done[i] ? 'ok' : ''}"><span class="n">${i + 1}</span><span class="t">${n}</span></button></li>`).join('')}</ol>`;
+function stepper(names, cur, done, finalUnnumbered) {
+  return `<ol class="stepper">${names.map((n, i) => `<li><button type="button" data-step="${i}" class="${i === cur ? 'cur' : ''} ${done[i] ? 'ok' : ''}"><span class="n">${finalUnnumbered && i === names.length - 1 ? '✓' : i + 1}</span><span class="t">${n}</span></button></li>`).join('')}</ol>`;
 }
 function insertAtCursor(ta, txt) {
   const s = ta.selectionStart ?? ta.value.length, e = ta.selectionEnd ?? ta.value.length;
@@ -2573,7 +2565,7 @@ function labDraw(svg, pan, leg) {
 
 /* =============== 1 y 2 · Escribir =============== */
 const wget = (k, d) => store.get('w.' + k, d), wset = (k, v) => store.set('w.' + k, v);
-const expState = p => wget(p.id, { step: 0, defs: '', cause: null, dia: null, ord: false, chain: '', ex: '', cadi: [], ck: [], done: false });
+const expState = p => wget(p.id, { step: 0, defs: '', cause: null, dia: null, ord: false, chain: '', ck: [], done: false });
 const evaState = c => wget(c.id, { step: 0, s1: null, s2: null, s3: null, s4: null, txt: '', ck: [], done: false });
 function statusChip(st) { const started = st.step > 0 || st.defs || st.txt; return st.done ? '<span class="tag ok">Completa</span>' : started ? '<span class="tag prog">En progreso</span>' : '<span class="tag">Sin empezar</span>'; }
 function writeTabs(cur) {
@@ -2585,25 +2577,26 @@ function renderWrite(tab) {
   const units = [...new Set(list.map(x => x.u))];
   app.innerHTML = `<div class="eyebrow">Escribir como en el examen</div><h1>${isE ? 'Evaluar una política' : 'Explicar con un diagrama'}</h1>${writeTabs(isE ? 'escribir-evaluar' : 'escribir')}
     ${isE ? `<div class="method"><div><b>Qué pide «evaluar»</b><p>Valorar puntos fuertes y débiles y cerrar con un juicio justificado. Es la parte b de la Prueba 1 (15 puntos).</p></div>
-      <div><b>CLASPP</b><p>Contexto · Largo vs. corto plazo · Supuestos · Partes interesadas · Prioridades · Pros y contras. Elige dos o tres; en macro, el plazo casi siempre.</p></div>
+      <div><b>CLASPP: tu foco</b><p>Enfoca tu respuesta en <b>pros y contras</b>, <b>corto y largo plazo</b> y <b>partes interesadas</b>. Contexto, supuestos y prioridades sirven de apoyo.</p></div>
       <div><b>Párrafo F-E-I-J</b><p>Factor → Explicación → Implicación → Juicio. Cada párrafo de evaluación sigue esa secuencia.</p></div></div>`
       : `<div class="method"><div><b>Qué pide «explicar»</b><p>Decir <b>por qué</b> ocurre algo con una cadena causal. Es la parte a de la Prueba 1 (10 puntos).</p></div>
-      <div><b>Los 5 pasos</b><p>Definir → Causa inicial → Diagrama → Cadena causal → Ejemplo paraguayo.</p></div>
+      <div><b>Los 4 pasos</b><p>Definir → Causa inicial → Diagrama → Cadena causal. Al final revisas tu respuesta con la lista de cotejo y la copias.</p></div>
       <div><b>La regla práctica</b><p>Si tu respuesta se puede leer sin la palabra «porque» o un equivalente, todavía no está explicando.</p></div></div>`}
     ${units.map(u => `<div class="unit-h"><h2>${uLabel(u)}</h2><span>${list.filter(x => x.u === u).length} preguntas</span></div>
       <div class="tiles">${list.filter(x => x.u === u).map(x => `<button class="tile wtile" type="button" data-go="${href}${x.id}"><span class="code">${tcode(x.st)}</span><span class="nm">${esc(x.short)}</span><span class="ds">${esc(x.q)}</span><span class="ft">${statusChip(st(x))}</span></button>`).join('')}</div>`).join('')}`;
 }
 
 /* ---- Explicar ---- */
-const EXP_STEPS = ['Definir', 'Causa inicial', 'Diagrama', 'Cadena causal', 'Ejemplo paraguayo', 'Revisar y copiar'];
+const EXP_STEPS = ['Definir', 'Causa inicial', 'Diagrama', 'Cadena causal', 'Revisar y copiar'];
 function renderExplain(p) {
   const W = expState(p), save = () => wset(p.id, W);
   const kind = p.u <= 2 ? 'micro' : 'macro';
-  const doneFlags = [!!W.defs.trim(), W.cause === 0, W.dia !== null, W.ord && !!W.chain.trim(), !!W.ex.trim(), W.done];
+  if (W.step > EXP_STEPS.length - 1) W.step = EXP_STEPS.length - 1;
+  const doneFlags = [!!W.defs.trim(), W.cause === 0, W.dia !== null, W.ord && !!W.chain.trim(), W.done];
   app.innerHTML = `<button class="crumb" type="button" data-go="escribir">← Preguntas de «Explicar»</button>
     <div class="eyebrow" style="margin-top:12px">${uLabel(p.u)} · Subtema ${tcode(p.st)} · 10 puntos</div>
     <h2 class="qtitle">${esc(p.q)}</h2>
-    ${stepper(EXP_STEPS, W.step, doneFlags)}
+    ${stepper(EXP_STEPS, W.step, doneFlags, true)}
     <div class="card wcard"><div class="card-b" id="wb"></div>
     <div class="card-f"><button class="btn sm" type="button" id="wp" ${W.step === 0 ? 'disabled' : ''}>← Anterior</button><button class="btn primary" type="button" id="wn">${W.step === EXP_STEPS.length - 1 ? 'Volver a las preguntas' : 'Siguiente paso →'}</button></div></div>`;
   app.querySelectorAll('[data-step]').forEach(b => b.onclick = () => { W.step = +b.dataset.step; save(); renderExplain(p); });
@@ -2637,27 +2630,19 @@ function renderExplain(p) {
     ta.oninput = () => { W.chain = ta.value; save(); cc(); };
     b.querySelectorAll('[data-c]').forEach(x => x.onclick = () => insertAtCursor(ta, x.dataset.c.charAt(0).toUpperCase() + x.dataset.c.slice(1)));
     cc();
-  } else if (W.step === 4) {
-    const cadi = [['C', 'Contexto: dónde y quiénes (mercado, institución, región)'], ['A', 'Año o fecha del hecho'], ['D', 'Dato exacto con su fuente (BCP, INE, MAG, prensa)'], ['I', 'Impacto económico explicado con la teoría']];
-    b.innerHTML = `<p class="q">Cierra con un <b>ejemplo real de Paraguay</b> que ilustre el mecanismo. Usa C-A-D-I.</p>
-      <textarea id="ta" rows="6" placeholder="Tal como ocurrió en Paraguay…">${esc(W.ex)}</textarea>
-      <div class="cklist" style="margin-top:10px">${cadi.map(([l, t], i) => `<label><input type="checkbox" data-cd="${i}" ${W.cadi[i] ? 'checked' : ''}><span><b>${l}</b> · ${t}</span></label>`).join('')}</div>
-      <details class="model"><summary>Ver ejemplo modelo</summary><p>${esc(p.ex)}</p><p class="small muted">En tu respuesta agrega un dato exacto con su fuente: es lo que pide la D de C-A-D-I.</p></details>`;
-    const ta = $('#ta'); ta.oninput = () => { W.ex = ta.value; save(); };
-    b.querySelectorAll('[data-cd]').forEach(x => x.onchange = () => { W.cadi[+x.dataset.cd] = x.checked; save(); });
   } else {
     const ds = diagramSentence(p.dia.m, p.dia.key, p.dia.dir);
-    const mine = [W.defs.trim(), p.cause[0], '[Diagrama] ' + ds, W.chain.trim(), W.ex.trim()].filter(Boolean).join('\n\n');
-    const model = [p.defs.map(d => `${d[0]}: ${d[1]}`).join(' '), p.cause[0], ds, p.chain.join(' '), p.ex].join('\n\n');
+    const mine = [W.defs.trim(), p.cause[0], '[Diagrama] ' + ds, W.chain.trim()].filter(Boolean).join('\n\n');
+    const model = [p.defs.map(d => `${d[0]}: ${d[1]}`).join(' '), p.cause[0], ds, p.chain.join(' ')].join('\n\n');
     const items = CK_EXP[kind];
-    b.innerHTML = `<p class="q">Esta es tu respuesta armada con los pasos anteriores. Cópiala para entregarla y revísala con la lista.</p>
+    b.innerHTML = `<p class="q">Esta es tu respuesta armada con los 4 pasos. Cópiala para entregarla y revísala con la lista.</p>
       <div class="answer" id="ans">${esc(mine).replace(/\n/g, '<br>')}</div>
       <div class="row" style="margin:10px 0 16px"><button class="btn primary sm" type="button" id="cp">Copiar mi respuesta</button></div>
       <h3>Lista de cotejo</h3>${checklistHtml(items, W.ck, 'ckx')}
       <details class="model"><summary>Ver respuesta modelo completa</summary><div class="answer">${esc(model).replace(/\n/g, '<br>')}</div></details>`;
     bindChecklist(b, 'ckx', items, W.ck, () => { W.done = items.every((_, i) => W.ck[i]) || W.done; save(); });
     $('#cp').onclick = e => copyText(mine, e.currentTarget);
-    if (!W.done && W.defs && W.chain && W.ex) { W.done = true; save(); }
+    if (!W.done && W.defs && W.chain) { W.done = true; save(); }
   }
 }
 function orderExercise(host, steps, solved, onDone) {
@@ -2678,7 +2663,8 @@ function orderExercise(host, steps, solved, onDone) {
 }
 
 /* ---- Evaluar ---- */
-const EVA_STEPS = ['A favor y en contra', 'Dimensiones CLASPP', 'Párrafo F-E-I-J', 'Elegir la conclusión', 'Escribir y revisar'];
+const EVA_STEPS = ['Pros y contras', 'Plazo y partes interesadas', 'Párrafo F-E-I-J', 'Elegir la conclusión', 'Escribir y revisar'];
+const FOCUS = '<div class="focus"><b>Enfoca tu evaluación en tres dimensiones de CLASPP:</b> <span>Pros y contras</span><span>Corto y largo plazo</span><span>Partes interesadas</span></div>';
 function renderEval(c) {
   const W = evaState(c), save = () => wset(c.id, W);
   const kind = c.u <= 2 ? 'micro' : 'macro';
@@ -2686,6 +2672,7 @@ function renderEval(c) {
   app.innerHTML = `<button class="crumb" type="button" data-go="escribir-evaluar">← Preguntas de «Evaluar»</button>
     <div class="eyebrow" style="margin-top:12px">${uLabel(c.u)} · Subtema ${tcode(c.st)} · 15 puntos</div>
     <h2 class="qtitle">${esc(c.q)}</h2>
+    ${FOCUS}
     ${stepper(EVA_STEPS, W.step, doneFlags)}
     <div class="card wcard"><div class="card-b" id="wb"></div>
     <div class="card-f"><button class="btn sm" type="button" id="wp" ${W.step === 0 ? 'disabled' : ''}>← Anterior</button><button class="btn primary" type="button" id="wn">${W.step === EVA_STEPS.length - 1 ? 'Volver a las preguntas' : 'Siguiente paso →'}</button></div></div>`;
@@ -2695,10 +2682,10 @@ function renderEval(c) {
   const b = $('#wb');
   const after = (key, ok) => { W[key] = ok; save(); };
   if (W.step === 0) {
-    mountSort(b, { q: 'Clasifica cada argumento: ¿apoya la eficacia de la política o la limita?', bins: ['A favor', 'En contra'], items: c.args.map(a => [a[0], a[1] === 'pro' ? 0 : 1]), e: 'Una evaluación equilibrada necesita argumentos de los dos lados antes del juicio final.' }, null, 0, ok => after('s1', ok));
+    mountSort(b, { q: '<b>Pros y contras.</b> Clasifica cada argumento: ¿apoya la eficacia de la política (pro) o la limita (contra)?', bins: ['Pros', 'Contras'], items: c.args.map(a => [a[0], a[1] === 'pro' ? 0 : 1]), e: 'Una evaluación equilibrada necesita pros y contras antes del juicio final.' }, null, 0, ok => after('s1', ok));
   } else if (W.step === 1) {
-    const ds = ['L', 'A', 'S', 'P', 'C'].filter(d => c.args.some(a => a[2] === d));
-    mountSort(b, { q: '¿Qué dimensión de CLASPP usa cada argumento?', bins: ds.map(d => DIMS[d]), items: c.args.map(a => [a[0], ds.indexOf(a[2])]), e: 'Identificar la dimensión te ayuda a escribir cada argumento en su propio párrafo. En macro, la distinción entre corto y largo plazo casi nunca puede faltar.' }, null, 0, ok => after('s2', ok));
+    const bins = ['Corto y largo plazo', 'Partes interesadas', 'Otra dimensión'];
+    mountSort(b, { q: '<b>Corto y largo plazo · Partes interesadas.</b> ¿Qué mira cada argumento: el plazo, quién gana o pierde, u otra dimensión (supuestos, prioridades, contexto)?', bins, items: c.args.map(a => [a[0], a[2] === 'L' ? 0 : a[2] === 'S' ? 1 : 2]), e: 'En tu respuesta, desarrolla en párrafos propios los pros y contras, el corto y el largo plazo, y las partes interesadas. Las otras dimensiones sirven como apoyo dentro de esos párrafos.' }, null, 0, ok => after('s2', ok));
   } else if (W.step === 2) {
     mountSort(b, { q: 'Arma un párrafo de evaluación: ubica cada oración en su parte de F-E-I-J.', bins: ['Factor', 'Explicación', 'Implicación', 'Juicio'], items: c.feij.map((s, i) => [s, i]), e: `<br><b>Párrafo completo:</b> <i>Sin embargo, ${c.feij[0].charAt(0).toLowerCase() + c.feij[0].slice(1)} ${c.feij.slice(1).join(' ')}</i>` }, null, 0, ok => after('s3', ok));
   } else if (W.step === 3) {
@@ -2714,7 +2701,7 @@ function renderEval(c) {
     });
   } else {
     const items = CK_EVA[kind], best = c.concl.find(x => x[1])[0];
-    b.innerHTML = `<p class="q">Escribe <b>un párrafo F-E-I-J</b> con un argumento distinto al del paso 3 y cierra con <b>tu conclusión</b>. Usa conectores de contraste.</p>
+    b.innerHTML = `<p class="q">Escribe <b>un párrafo F-E-I-J</b> sobre el <b>corto y largo plazo</b> o sobre las <b>partes interesadas</b>, con un argumento distinto al del paso 3, y cierra con <b>tu conclusión</b> pesando pros y contras. Usa conectores de contraste.</p>
       <div class="conns">${CONN_EVAL.slice(0, 10).map(x => `<button type="button" class="chipx sm" data-c="${x}">${x}</button>`).join('')}</div>
       <textarea id="ta" rows="9" placeholder="Factor… Esto ocurre porque… Esto implica que… Por lo tanto… En definitiva…">${esc(W.txt)}</textarea>
       <p class="small" id="cc"></p>
