@@ -1,0 +1,1770 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>[hidden]{display:none!important}img{max-width:100%}body{margin:0}</style>
+<title>Atlas de Diagramas IB</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Barlow+Condensed:wght@500;600;700&family=STIX+Two+Text:ital,wght@0,500;1,500&display=swap">
+<style>
+/* Layout: índice fijo a la izquierda (se pliega en móvil) + lámina de dibujo técnico sobre papel milimetrado a la derecha */
+:root{
+  --paper:#F6F8FB; --sheet:#FFFFFF; --grid:#DFE7F1; --grid-strong:#C9D6E6;
+  --ink:#14213D; --ink-2:#3C4A66; --muted:#6B7891; --rule:#D5DDE8;
+  --navy:#1B2F5B; --navy-ink:#FFFFFF; --gold:#B8862B; --gold-soft:#F6EBD3;
+  --warn-bg:#FFF4E5; --warn-bd:#E2A13B; --warn-ink:#6A3F00;
+  --ns-bg:#EEF1F5; --ns-bd:#9AA6B8;
+  --k-d:#1F4E9E; --k-s:#C0392B; --k-da:#12305F; --k-oalp:#B3261E; --k-oacp:#C96A0A;
+  --k-exp:#1E8E3E; --k-con:#C62828; --k-n:#14213D; --k-v:#6B3FA0;
+  --f-ec:rgba(240,186,30,.50); --f-ep:rgba(39,174,96,.36); --f-dwl:rgba(47,128,237,.40);
+  --f-gov:rgba(142,68,173,.30); --f-gray:rgba(110,124,150,.22); --f-red:rgba(198,40,40,.22);
+  --f-display:"Barlow Condensed","Arial Narrow",Arial,sans-serif;
+  --f-body:"Atkinson Hyperlegible","Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --f-math:"STIX Two Text","Cambria","Times New Roman",serif;
+  --r:6px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#0E1524; --sheet:#141D30; --grid:#1D2A42; --grid-strong:#263652;
+  --ink:#E7EDF7; --ink-2:#B9C4D8; --muted:#8B98B0; --rule:#2A3853;
+  --navy:#2B4A86; --navy-ink:#FFFFFF; --gold:#E0B25A; --gold-soft:#3A2F17;
+  --warn-bg:#33240C; --warn-bd:#C98A2A; --warn-ink:#FFDDA6;
+  --ns-bg:#1B2436; --ns-bd:#56637C;
+  --k-d:#7EA9F2; --k-s:#F28B7F; --k-da:#9CC0FF; --k-oalp:#FF8A80; --k-oacp:#F5B04C;
+  --k-exp:#5FD38A; --k-con:#FF7B7B; --k-n:#E7EDF7; --k-v:#C39BF0;
+  --f-ec:rgba(240,186,30,.38); --f-ep:rgba(60,200,120,.30); --f-dwl:rgba(90,160,255,.38);
+  --f-gov:rgba(180,120,230,.30); --f-gray:rgba(160,175,200,.20); --f-red:rgba(255,110,110,.22);
+  color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --paper:#0E1524; --sheet:#141D30; --grid:#1D2A42; --grid-strong:#263652;
+  --ink:#E7EDF7; --ink-2:#B9C4D8; --muted:#8B98B0; --rule:#2A3853;
+  --navy:#2B4A86; --navy-ink:#FFFFFF; --gold:#E0B25A; --gold-soft:#3A2F17;
+  --warn-bg:#33240C; --warn-bd:#C98A2A; --warn-ink:#FFDDA6;
+  --ns-bg:#1B2436; --ns-bd:#56637C;
+  --k-d:#7EA9F2; --k-s:#F28B7F; --k-da:#9CC0FF; --k-oalp:#FF8A80; --k-oacp:#F5B04C;
+  --k-exp:#5FD38A; --k-con:#FF7B7B; --k-n:#E7EDF7; --k-v:#C39BF0;
+  --f-ec:rgba(240,186,30,.38); --f-ep:rgba(60,200,120,.30); --f-dwl:rgba(90,160,255,.38);
+  --f-gov:rgba(180,120,230,.30); --f-gray:rgba(160,175,200,.20); --f-red:rgba(255,110,110,.22);
+  color-scheme:dark;
+}
+html,body{height:100%}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:15.5px;line-height:1.55}
+*{box-sizing:border-box}
+button,input{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+
+/* ---------- barra superior ---------- */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--navy);color:var(--navy-ink);
+  display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px;padding:10px 16px}
+.brand{display:flex;flex-direction:column;line-height:1.05;margin-right:auto;min-width:0}
+.brand b{font-family:var(--f-display);font-weight:700;font-size:24px;letter-spacing:.02em}
+.brand span{font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;opacity:.8}
+.units{display:flex;gap:4px;background:rgba(255,255,255,.10);padding:3px;border-radius:8px;flex-wrap:wrap}
+.units button{border:0;background:transparent;color:var(--navy-ink);padding:6px 12px;border-radius:6px;cursor:pointer;
+  font-family:var(--f-display);font-weight:600;font-size:17px;letter-spacing:.02em;white-space:nowrap}
+.units button .n{font-family:var(--f-body);font-size:11px;opacity:.75;margin-left:5px;font-variant-numeric:tabular-nums}
+.units button[aria-pressed="true"]{background:var(--sheet);color:var(--ink)}
+.tools{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.search{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);color:var(--navy-ink);
+  border-radius:6px;padding:6px 10px;width:190px;max-width:100%}
+.search::placeholder{color:rgba(255,255,255,.65)}
+.tog{display:inline-flex;align-items:center;gap:7px;cursor:pointer;font-size:13.5px;user-select:none;
+  border:1px solid rgba(255,255,255,.25);border-radius:6px;padding:5px 10px}
+.tog input{accent-color:var(--gold)}
+.menu-btn{display:none;border:1px solid rgba(255,255,255,.3);background:transparent;color:var(--navy-ink);border-radius:6px;padding:5px 10px;cursor:pointer}
+
+/* ---------- estructura ---------- */
+.wrap{display:grid;grid-template-columns:290px minmax(0,1fr);min-height:calc(100% - 60px)}
+aside{border-right:1px solid var(--rule);background:var(--sheet);padding-block:14px 30px;padding-inline:12px;
+  position:sticky;top:60px;align-self:start;max-height:calc(100vh - 60px);overflow:auto}
+.grp{margin-bottom:12px}
+.grp h3{font-family:var(--f-display);font-weight:600;font-size:15px;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--muted);margin:10px 6px 4px;display:flex;gap:8px}
+.grp h3 .c{color:var(--gold);font-variant-numeric:tabular-nums}
+.item{display:flex;gap:8px;width:100%;text-align:left;border:0;background:transparent;padding:6px 8px;border-radius:5px;cursor:pointer;
+  font-size:14px;line-height:1.3;color:var(--ink-2)}
+.item:hover{background:var(--paper)}
+.item[aria-current="true"]{background:var(--gold-soft);color:var(--ink);font-weight:700}
+.item .code{font-family:var(--f-display);font-weight:600;color:var(--muted);min-width:38px;font-variant-numeric:tabular-nums}
+.side-foot{border-top:1px solid var(--rule);margin-top:14px;padding-top:10px}
+.empty{color:var(--muted);padding:8px;font-size:14px}
+
+main{padding-block:22px 60px;padding-inline:clamp(16px,3.5vw,44px);min-width:0}
+.sheet{max-width:1060px;margin:0 auto}
+.eyebrow{font-family:var(--f-display);font-weight:600;font-size:15px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold)}
+h1{font-family:var(--f-display);font-weight:700;font-size:clamp(28px,4vw,40px);line-height:1.05;margin:4px 0 8px;text-wrap:balance;letter-spacing:.005em}
+.meta{display:flex;flex-wrap:wrap;gap:6px 8px;margin-bottom:16px}
+.chip{font-size:12.5px;border:1px solid var(--rule);background:var(--sheet);border-radius:999px;padding:3px 10px;color:var(--ink-2)}
+.chip.ex{border-color:var(--gold);color:var(--ink)}
+
+/* ---------- lámina del diagrama ---------- */
+.figure{background:var(--sheet);border:1px solid var(--grid-strong);border-radius:var(--r);padding:12px;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:16px 16px;background-position:-1px -1px}
+.panels{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.pan{flex:1 1 300px;max-width:470px;min-width:0;background:var(--sheet);border-radius:4px}
+.pan.wide{max-width:none;flex-basis:100%}
+.pan svg{display:block;width:100%;height:auto}
+.pan .pt{font-family:var(--f-display);font-weight:600;font-size:15px;letter-spacing:.04em;text-align:center;color:var(--ink-2);padding-top:6px}
+.cap{font-size:13.5px;color:var(--ink-2);margin:10px 4px 0;line-height:1.45}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;margin:8px 4px 0;font-size:12.5px;color:var(--ink-2)}
+.legend i{display:inline-block;width:14px;height:10px;border-radius:2px;margin-right:5px;vertical-align:-1px;border:1px solid var(--rule)}
+
+/* svg */
+svg text{font-family:var(--f-math)}
+.ax{stroke:var(--ink);stroke-width:1.6;fill:none}
+.gd{stroke:var(--muted);stroke-width:1;stroke-dasharray:4 4;fill:none}
+.cv{fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.cv.dash{stroke-dasharray:7 5}
+.cv.thin{stroke-width:1.5}
+.k-d{stroke:var(--k-d)} .k-s{stroke:var(--k-s)} .k-da{stroke:var(--k-da)} .k-oalp{stroke:var(--k-oalp)}
+.k-oacp{stroke:var(--k-oacp)} .k-exp{stroke:var(--k-exp)} .k-con{stroke:var(--k-con)} .k-n{stroke:var(--k-n)} .k-v{stroke:var(--k-v)}
+.t-d{fill:var(--k-d)} .t-s{fill:var(--k-s)} .t-da{fill:var(--k-da)} .t-oalp{fill:var(--k-oalp)} .t-oacp{fill:var(--k-oacp)}
+.t-exp{fill:var(--k-exp)} .t-con{fill:var(--k-con)} .t-n{fill:var(--k-n)} .t-v{fill:var(--k-v)}
+.f-ec{fill:var(--f-ec)} .f-ep{fill:var(--f-ep)} .f-dwl{fill:var(--f-dwl)} .f-gov{fill:var(--f-gov)} .f-gray{fill:var(--f-gray)} .f-red{fill:var(--f-red)}
+.ar{fill:none;stroke-width:1.8} .ah{stroke:none}
+.ar.k-n{stroke:var(--ink-2)} .ah.t-n{fill:var(--ink-2)}
+.lb{font-size:16px;font-style:italic;font-weight:500}
+.al{font-size:13px;font-weight:500;fill:var(--ink)}
+.tk{font-size:13px;fill:var(--ink);font-style:italic}
+.axl{font-size:13px;fill:var(--ink-2);font-family:var(--f-body)!important}
+.nt{font-size:12.5px;fill:var(--ink-2);font-family:var(--f-body)!important}
+.dot{fill:var(--ink)} .pl{font-size:14px;font-weight:500;fill:var(--ink)}
+.node{fill:var(--sheet);stroke:var(--ink-2);stroke-width:1.4}
+.node.hl{fill:var(--gold-soft);stroke:var(--gold)}
+.node.alt{fill:var(--paper);stroke:var(--muted);stroke-dasharray:5 4}
+.nodet{font-family:var(--f-body)!important;font-size:13px;fill:var(--ink)}
+.edgel{font-family:var(--f-body)!important;font-size:11.5px;fill:var(--ink-2)}
+.lb,.al,.tk,.pl,.nt,.edgel{paint-order:stroke;stroke:var(--sheet);stroke-width:4px;stroke-linejoin:round}
+.practice .lb,.practice .al,.practice .tk,.practice .pl,.practice .nt,.practice .edgel{visibility:hidden}
+.practice-note{display:none;font-size:13px;color:var(--warn-ink);background:var(--warn-bg);border:1px solid var(--warn-bd);border-radius:5px;padding:6px 10px;margin:0 4px 10px}
+.practice .practice-note{display:block}
+
+/* ---------- bloques de análisis ---------- */
+.blocks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:18px}
+.blk{background:var(--sheet);border:1px solid var(--rule);border-radius:var(--r);padding:14px 16px;min-width:0}
+.blk.full{grid-column:1/-1}
+.blk h2{font-family:var(--f-display);font-weight:600;font-size:18px;letter-spacing:.04em;text-transform:uppercase;margin:0 0 8px;color:var(--navy)}
+:root[data-theme="dark"] .blk h2{color:var(--ink)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .blk h2{color:var(--ink)}}
+.blk ul,.blk ol{margin:0;padding-left:20px;display:grid;gap:5px}
+.blk p{margin:0 0 6px}
+table.ax-t{width:100%;border-collapse:collapse;font-size:14.5px}
+table.ax-t th,table.ax-t td{border:1px solid var(--rule);padding:6px 9px;text-align:left;vertical-align:top}
+table.ax-t th{background:var(--paper);font-weight:700;width:30%}
+.warn{background:var(--warn-bg);border:1px solid var(--warn-bd);color:var(--warn-ink)}
+.warn h2{color:var(--warn-ink)!important}
+.ns{background:var(--ns-bg);border:1px dashed var(--ns-bd);border-radius:5px;padding:10px 12px;margin-top:10px;font-size:14px}
+.ns b.tag{display:block;font-family:var(--f-display);letter-spacing:.06em;text-transform:uppercase;font-size:14px;color:var(--muted);margin-bottom:4px}
+.formula{font-family:var(--f-math);font-size:16px;background:var(--paper);border-radius:4px;padding:3px 8px;display:inline-block;margin:2px 0}
+ol.chain{counter-reset:c;list-style:none;padding-left:0}
+ol.chain li{counter-increment:c;display:grid;grid-template-columns:28px 1fr;gap:8px;align-items:start}
+ol.chain li::before{content:counter(c);font-family:var(--f-display);font-weight:700;color:var(--navy-ink);background:var(--navy);
+  border-radius:50%;width:24px;height:24px;display:grid;place-items:center;font-size:14px}
+.check label{display:flex;gap:9px;align-items:flex-start;cursor:pointer;padding:3px 0}
+.check input{margin-top:4px;accent-color:var(--k-exp)}
+.check .score{font-size:13px;color:var(--muted);margin-top:6px;font-variant-numeric:tabular-nums}
+sub{font-size:72%}
+.nav{display:flex;justify-content:space-between;gap:10px;margin-top:22px;flex-wrap:wrap}
+.nav button{border:1px solid var(--rule);background:var(--sheet);border-radius:6px;padding:9px 14px;cursor:pointer;max-width:48%;text-align:left;font-size:14px}
+.nav button:hover{border-color:var(--gold)}
+.nav button small{display:block;color:var(--muted);font-size:12px}
+.tbl-wrap{overflow-x:auto}
+table.mx{border-collapse:collapse;width:100%;font-size:14.5px;min-width:560px}
+table.mx th,table.mx td{border:1px solid var(--rule);padding:7px 10px;text-align:left;vertical-align:top}
+table.mx th{background:var(--navy);color:var(--navy-ink);font-weight:700}
+table.mx td a,.lnk{color:var(--k-d);cursor:pointer;text-decoration:underline;background:none;border:0;padding:0}
+.intro{max-width:70ch}
+
+@media (max-width:860px){
+  .menu-btn{display:inline-block}
+  .wrap{grid-template-columns:1fr}
+  aside{position:static;max-height:none;border-right:0;border-bottom:1px solid var(--rule)}
+  aside.closed{display:none}
+  .blocks{grid-template-columns:1fr}
+  .search{width:150px}
+  .top{position:static;gap:8px 10px}
+  .units{width:100%;flex-wrap:nowrap;overflow-x:auto}
+  .units button{font-size:15px;padding:5px 9px}
+  .pan.wide{overflow-x:auto}
+  .pan.wide svg{min-width:600px}
+}
+@media (prefers-reduced-motion:no-preference){.item,.units button,.nav button{transition:background .15s,border-color .15s}}
+</style>
+<style>
+.sw-f-ec{background:var(--f-ec)} .sw-f-ep{background:var(--f-ep)} .sw-f-dwl{background:var(--f-dwl)}
+.sw-f-gov{background:var(--f-gov)} .sw-f-gray{background:var(--f-gray)} .sw-f-red{background:var(--f-red)}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="brand"><b>Atlas de Diagramas</b><span>Economía IB · Nivel Medio · 3.er año</span></div>
+  <div class="units" id="units" role="group" aria-label="Unidad del programa"></div>
+  <div class="tools">
+    <input class="search" id="q" type="search" placeholder="Buscar diagrama…" aria-label="Buscar diagrama" autocomplete="off">
+    <label class="tog" for="prac"><input type="checkbox" id="prac"> Modo práctica</label>
+    <button class="menu-btn" id="menu" type="button">Índice</button>
+  </div>
+</header>
+<div class="wrap"><aside id="idx"></aside><main id="main"></main></div>
+<script>
+/* ================= Motor geométrico y de dibujo ================= */
+const G = {
+  L: (a, b) => ({ a, b }),
+  at(l, x) { const [x1, y1] = l.a, [x2, y2] = l.b; return y1 + (y2 - y1) * (x - x1) / (x2 - x1); },
+  atY(l, y) { const [x1, y1] = l.a, [x2, y2] = l.b; return x1 + (x2 - x1) * (y - y1) / (y2 - y1); },
+  I(l1, l2) {
+    const [x1, y1] = l1.a, [x2, y2] = l1.b, [x3, y3] = l2.a, [x4, y4] = l2.b;
+    const d = (x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4);
+    const t = ((x1 - x3) * (y3 - y4) - (y1 - y3) * (x3 - x4)) / d;
+    return [x1 + t * (x2 - x1), y1 + t * (y2 - y1)];
+  },
+  sh(l, dx, dy = 0) { return { a: [l.a[0] + dx, l.a[1] + dy], b: [l.b[0] + dx, l.b[1] + dy] }; },
+  arc(r, n = 60) { const o = []; for (let i = 0; i <= n; i++) { const a = Math.PI / 2 * (1 - i / n); o.push([r * Math.cos(a), r * Math.sin(a)]); } return o; },
+  samp(f, x0, x1, n = 60) { const o = []; for (let i = 0; i <= n; i++) { const x = x0 + (x1 - x0) * i / n; o.push([x, f(x)]); } return o; },
+  sampY(g, y0, y1, n = 60) { const o = []; for (let i = 0; i <= n; i++) { const y = y0 + (y1 - y0) * i / n; o.push([g(y), y]); } return o; }
+};
+
+const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+function svgT(s) {
+  return esc(s).replace(/_\{([^}]*)\}|_([A-Za-z0-9áéíóúñ]+)/g, (m, a, b) => `<tspan baseline-shift="sub" font-size="72%">${a || b}</tspan>`);
+}
+function ht(s) {
+  return String(s)
+    .replace(/\*\*([^*]+)\*\*/g, '<b>$1</b>')
+    .replace(/`([^`]+)`/g, '<span class="formula">$1</span>')
+    .replace(/_\{([^}]*)\}|_([A-Za-z0-9áéíóúñ]+)/g, (m, a, b) => `<sub>${a || b}</sub>`);
+}
+const r1 = v => Math.round(v * 10) / 10;
+
+function head(x1, y1, x2, y2, cls) {
+  const dx = x2 - x1, dy = y2 - y1, L = Math.hypot(dx, dy) || 1, ux = dx / L, uy = dy / L, s = 10, w = 4.6;
+  const bx = x2 - ux * s, by = y2 - uy * s;
+  return `<polygon class="ah ${cls}" points="${r1(x2)},${r1(y2)} ${r1(bx - uy * w)},${r1(by + ux * w)} ${r1(bx + uy * w)},${r1(by - ux * w)}"/>`;
+}
+function crPath(P) {
+  let d = `M${r1(P[0][0])},${r1(P[0][1])}`;
+  for (let i = 0; i < P.length - 1; i++) {
+    const p0 = P[i - 1] || P[i], p1 = P[i], p2 = P[i + 1], p3 = P[i + 2] || p2;
+    const c1 = [p1[0] + (p2[0] - p0[0]) / 6, p1[1] + (p2[1] - p0[1]) / 6];
+    const c2 = [p2[0] - (p3[0] - p1[0]) / 6, p2[1] - (p3[1] - p1[1]) / 6];
+    d += ` C${r1(c1[0])},${r1(c1[1])} ${r1(c2[0])},${r1(c2[1])} ${r1(p2[0])},${r1(p2[1])}`;
+  }
+  return d;
+}
+const tcls = k => 't-' + (k || 'k-n').replace('k-', '');
+
+/* ---- Panel cartesiano ----
+ sp: { y, x, xmax, ymax, W, areas[{pts,c,t,n,at}], guides[{p,xl,yl,noX,noY}], lines[{l,k,dash,t,tp,at}],
+       paths[{pts,smooth,k,dash,t,tp}], arrows[{a,b,k}], spans[{a,b,t,below}], pts[{p,t,dx,dy}], notes[{p,t,a,k}] } */
+function panel(sp) {
+  const PX = 64, PY = 284, W = sp.W || 300, H = 250, vbH = 334;
+  const xm = sp.xmax || 10, ym = sp.ymax || 10;
+  const X = x => PX + x * W / xm, Y = y => PY - y * H / ym;
+  const tw = t => String(t).replace(/[_{}]/g, '').length * 8.4;
+  let vbW = PX + W + (sp.rm || 52);
+  (sp.lines || []).forEach(l => { if (l.t && !l.tp) { const q = l.at === 'a' ? l.l.a : l.l.b; vbW = Math.max(vbW, X(q[0]) + 10 + tw(l.t)); } });
+  (sp.paths || []).forEach(p => { if (p.t && !p.tp) { const q = p.pts[p.pts.length - 1]; vbW = Math.max(vbW, X(q[0]) + 10 + tw(p.t)); } });
+  vbW = Math.ceil(vbW);
+  const o = [];
+  (sp.areas || []).forEach(a => o.push(`<polygon class="${a.c || 'f-gray'}" points="${a.pts.map(p => r1(X(p[0])) + ',' + r1(Y(p[1]))).join(' ')}"/>`));
+  (sp.guides || []).forEach(g => {
+    const [x, y] = g.p, x0 = g.x0 != null ? g.x0 : 0, y0 = g.y0 != null ? g.y0 : 0;
+    if (!g.noY) o.push(`<line class="gd" x1="${r1(X(x0))}" y1="${r1(Y(y))}" x2="${r1(X(x))}" y2="${r1(Y(y))}"/>`);
+    if (!g.noX) o.push(`<line class="gd" x1="${r1(X(x))}" y1="${r1(Y(y0))}" x2="${r1(X(x))}" y2="${r1(Y(y))}"/>`);
+    if (g.yl) o.push(`<text class="tk" x="${PX - 6}" y="${r1(Y(y) + 4.5 + (g.ty || 0))}" text-anchor="end">${svgT(g.yl)}</text>`);
+    if (g.xl) o.push(`<text class="tk" x="${r1(X(x))}" y="${PY + 18}" text-anchor="middle">${svgT(g.xl)}</text>`);
+  });
+  if (!sp.noAxes) {
+    o.push(`<path class="ax" d="M${PX},${PY - H - 6} L${PX},${PY} L${PX + W + 6},${PY}"/>`);
+    o.push(`<text class="tk" x="${PX - 7}" y="${PY + 15}" text-anchor="end">0</text>`);
+  }
+  if (sp.y) o.push(`<text class="axl" x="${PX - 4}" y="${PY - H - 14}" text-anchor="start">${svgT(sp.y)}</text>`);
+  if (sp.x) o.push(`<text class="axl" x="${PX + W + 8}" y="${PY + 38}" text-anchor="end">${svgT(sp.x)}</text>`);
+  (sp.paths || []).forEach(p => {
+    const P = p.pts.map(q => [X(q[0]), Y(q[1])]);
+    const d = p.smooth ? crPath(P) : 'M' + P.map(q => r1(q[0]) + ',' + r1(q[1])).join(' L');
+    o.push(`<path class="cv ${p.k || 'k-n'}${p.dash ? ' dash' : ''}${p.thin ? ' thin' : ''}" d="${d}"/>`);
+    if (p.t) { const q = p.tp || p.pts[p.pts.length - 1]; o.push(`<text class="lb ${tcls(p.k)}" x="${r1(X(q[0]) + (p.tp ? 0 : 6))}" y="${r1(Y(q[1]) + (p.tp ? 0 : 5))}" text-anchor="${p.ta || 'start'}">${svgT(p.t)}</text>`); }
+  });
+  (sp.lines || []).forEach(l => {
+    const s = l.l;
+    o.push(`<line class="cv ${l.k || 'k-n'}${l.dash ? ' dash' : ''}${l.thin ? ' thin' : ''}" x1="${r1(X(s.a[0]))}" y1="${r1(Y(s.a[1]))}" x2="${r1(X(s.b[0]))}" y2="${r1(Y(s.b[1]))}"/>`);
+    if (l.t) {
+      let x, y, ta = l.ta || 'start';
+      if (l.tp) { x = X(l.tp[0]); y = Y(l.tp[1]); }
+      else { const q = l.at === 'a' ? s.a : s.b; x = X(q[0]) + 6; y = Y(q[1]) + (l.at === 'a' ? -4 : 5); }
+      o.push(`<text class="lb ${tcls(l.k)}" x="${r1(x)}" y="${r1(y)}" text-anchor="${ta}">${svgT(l.t)}</text>`);
+    }
+  });
+  (sp.spans || []).forEach(s => {
+    const x1 = X(s.a[0]), y1 = Y(s.a[1]), x2 = X(s.b[0]), y2 = Y(s.b[1]);
+    o.push(`<line class="ar k-n" x1="${r1(x1)}" y1="${r1(y1)}" x2="${r1(x2)}" y2="${r1(y2)}"/>`);
+    o.push(head(x2, y2, x1, y1, 't-n').replace('ah t-n', 'ah t-n')); o.push(head(x1, y1, x2, y2, 't-n'));
+    const vert = Math.abs(x2 - x1) < 2;
+    const mx = (x1 + x2) / 2 + (vert ? (s.left ? -8 : 8) : 0), my = (y1 + y2) / 2 + (vert ? 4 : (s.below ? 17 : -8));
+    if (s.t) o.push(`<text class="nt" x="${r1(mx)}" y="${r1(my)}" text-anchor="${vert ? (s.left ? 'end' : 'start') : 'middle'}">${svgT(s.t)}</text>`);
+  });
+  (sp.arrows || []).forEach(a => {
+    const x1 = X(a.a[0]), y1 = Y(a.a[1]), x2 = X(a.b[0]), y2 = Y(a.b[1]);
+    const L = Math.hypot(x2 - x1, y2 - y1), ex = x2 - (x2 - x1) / L * 8, ey = y2 - (y2 - y1) / L * 8;
+    o.push(`<line class="ar ${a.k || 'k-n'}" x1="${r1(x1)}" y1="${r1(y1)}" x2="${r1(ex)}" y2="${r1(ey)}"/>`);
+    o.push(head(x1, y1, x2, y2, tcls(a.k)));
+  });
+  (sp.areas || []).forEach(a => {
+    if (!a.t) return;
+    const c = a.at || [a.pts.reduce((s, p) => s + p[0], 0) / a.pts.length, a.pts.reduce((s, p) => s + p[1], 0) / a.pts.length];
+    o.push(`<text class="al" x="${r1(X(c[0]))}" y="${r1(Y(c[1]) + 4)}" text-anchor="middle">${svgT(a.t)}</text>`);
+  });
+  (sp.pts || []).forEach(p => {
+    o.push(`<circle class="dot" cx="${r1(X(p.p[0]))}" cy="${r1(Y(p.p[1]))}" r="3.4"/>`);
+    if (p.t) o.push(`<text class="pl" x="${r1(X(p.p[0]) + (p.dx != null ? p.dx : 6))}" y="${r1(Y(p.p[1]) + (p.dy != null ? p.dy : -7))}" text-anchor="${p.a || 'start'}">${svgT(p.t)}</text>`);
+  });
+  (sp.notes || []).forEach(n => o.push(`<text class="${n.k ? 'lb ' + tcls(n.k) : 'nt'}" x="${r1(X(n.p[0]))}" y="${r1(Y(n.p[1]))}" text-anchor="${n.a || 'middle'}">${svgT(n.t)}</text>`));
+  return `<svg viewBox="0 0 ${vbW} ${vbH}" role="img" aria-label="${esc(sp.aria || sp.t || 'Diagrama')}">${o.join('')}</svg>`;
+}
+
+/* ---- Diagrama de flujo (flujo circular, ciclo de la pobreza) ---- */
+function flow(F) {
+  const N = {}; F.nodes.forEach(n => N[n.id] = n);
+  const bd = (n, tx, ty) => {
+    const cx = n.x, cy = n.y, dx = tx - cx, dy = ty - cy;
+    const t = Math.min((n.w / 2 + 3) / Math.abs(dx || 1e-6), (n.h / 2 + 3) / Math.abs(dy || 1e-6));
+    return [cx + dx * t, cy + dy * t];
+  };
+  const o = [];
+  (F.edges || []).forEach(e => {
+    const A = N[e.f], B = N[e.t];
+    const c = e.via;
+    const s = bd(A, c ? c[0] : B.x, c ? c[1] : B.y), t = bd(B, c ? c[0] : A.x, c ? c[1] : A.y);
+    const cls = e.k || 'k-n';
+    if (c) {
+      const L = Math.hypot(t[0] - c[0], t[1] - c[1]), ex = t[0] - (t[0] - c[0]) / L * 8, ey = t[1] - (t[1] - c[1]) / L * 8;
+      o.push(`<path class="ar ${cls}" d="M${r1(s[0])},${r1(s[1])} Q${c[0]},${c[1]} ${r1(ex)},${r1(ey)}"/>`);
+      o.push(head(c[0], c[1], t[0], t[1], tcls(cls)));
+    } else {
+      const L = Math.hypot(t[0] - s[0], t[1] - s[1]), ex = t[0] - (t[0] - s[0]) / L * 8, ey = t[1] - (t[1] - s[1]) / L * 8;
+      o.push(`<line class="ar ${cls}" x1="${r1(s[0])}" y1="${r1(s[1])}" x2="${r1(ex)}" y2="${r1(ey)}"/>`);
+      o.push(head(s[0], s[1], t[0], t[1], tcls(cls)));
+    }
+    if (e.l) {
+      const m = e.lp || (c ? [0.25 * s[0] + 0.5 * c[0] + 0.25 * t[0], 0.25 * s[1] + 0.5 * c[1] + 0.25 * t[1]] : [(s[0] + t[0]) / 2, (s[1] + t[1]) / 2]);
+      e.l.split('\n').forEach((ln, i) => o.push(`<text class="edgel" x="${r1(m[0])}" y="${r1(m[1] + i * 13)}" text-anchor="${e.la || 'middle'}">${svgT(ln)}</text>`));
+    }
+  });
+  F.nodes.forEach(n => {
+    o.push(`<rect class="node ${n.c || ''}" x="${n.x - n.w / 2}" y="${n.y - n.h / 2}" width="${n.w}" height="${n.h}" rx="${n.rx != null ? n.rx : 6}"/>`);
+    const L = n.t.split('\n'), y0 = n.y - (L.length - 1) * 7.5 + 4.5;
+    L.forEach((ln, i) => o.push(`<text class="nodet" x="${n.x}" y="${r1(y0 + i * 15)}" text-anchor="middle"${i === 0 && n.bold !== false ? ' font-weight="700"' : ''}>${svgT(ln)}</text>`));
+  });
+  (F.notes || []).forEach(n => o.push(`<text class="nt" x="${n.p[0]}" y="${n.p[1]}" text-anchor="${n.a || 'middle'}">${svgT(n.t)}</text>`));
+  return `<svg viewBox="0 0 ${F.w} ${F.h}" role="img" aria-label="${esc(F.aria || 'Diagrama de flujo')}">${o.join('')}</svg>`;
+}
+
+const LEG_NAMES = { 'f-ec': 'Amarillo', 'f-ep': 'Verde', 'f-dwl': 'Azul', 'f-gov': 'Violeta', 'f-gray': 'Gris', 'f-red': 'Rojo' };
+function renderFig(fig) {
+  const panels = fig.flow ? [{ flow: fig.flow, wide: true }] : fig.panels;
+  const leg = new Map();
+  const html = panels.map(p => {
+    if (p.flow) return `<div class="pan wide">${p.t ? `<div class="pt">${esc(p.t)}</div>` : ''}${flow(p.flow)}</div>`;
+    (p.areas || []).forEach(a => { if (a.n) leg.set(a.c + '|' + a.n, a); });
+    return `<div class="pan${p.wide ? ' wide' : ''}">${p.t ? `<div class="pt">${ht(p.t)}</div>` : ''}${panel(p)}</div>`;
+  }).join('');
+  const lg = [...leg.values()].map(a => `<span><i class="sw-${a.c}"></i>${ht(a.n)}</span>`).join('');
+  return { html, lg };
+}
+/* ================= MICROECONOMÍA (Unidades 1 y 2) ================= */
+const AXP = { y: 'Precio (Gs./unidad)', x: 'Cantidad (unidades/período)' };
+const EJP = [['Eje vertical (Y)', 'Precio (P), en guaraníes por unidad'], ['Eje horizontal (X)', 'Cantidad (Q), en unidades por período (semana, mes, año)']];
+const AXW = { y: 'Costos y beneficios (Gs.)', x: 'Cantidad (unidades/período)' };
+const EJW = [['Eje vertical (Y)', 'Costos y beneficios / precio, en guaraníes por unidad'], ['Eje horizontal (X)', 'Cantidad (Q) del bien, en unidades por período']];
+const D0 = G.L([0, 9], [10, 1]);   // P = 9 − 0,8Q
+const S0 = G.L([0, 1], [10, 9]);   // P = 1 + 0,8Q
+const cppA = G.arc(8), cppB = G.arc(9.6);
+const cpp1 = x => 8 * Math.sqrt(Math.max(0, 1 - (x / 8) ** 2));
+const cpp2 = x => 9.6 * Math.sqrt(Math.max(0, 1 - (x / 9.6) ** 2));
+
+const MICRO = [
+/* ---------- 1.1 ---------- */
+{ id: 'cpp', u: 'micro', st: '1.1', stn: '¿Qué es la economía?', t: 'Curva de posibilidades de producción (CPP)',
+  pr: 'P1 parte a · P2 partes c–f',
+  fig: { panels: [
+    { t: 'Escasez, elección y costo de oportunidad', y: 'Bienes de capital (unid./año)', x: 'Bienes de consumo (unid./año)',
+      paths: [{ pts: cppA, t: 'CPP', tp: [6.9, 4.6] }],
+      guides: [{ p: [3, cpp1(3)], yl: 'K_1', xl: 'C_1' }, { p: [6, cpp1(6)], yl: 'K_2', xl: 'C_2' }],
+      arrows: [{ a: [3.25, 7.25], b: [5.8, 5.55] }],
+      pts: [{ p: [3, cpp1(3)], t: 'A' }, { p: [6, cpp1(6)], t: 'B' }, { p: [3, 3], t: 'C' }, { p: [7.6, 7.2], t: 'D' }],
+      notes: [{ p: [3, 2.2], t: 'Recursos ociosos' }, { p: [7.6, 8.1], t: 'Inalcanzable' }] },
+    { t: 'Crecimiento real y aumento de las posibilidades', y: 'Bienes de capital (unid./año)', x: 'Bienes de consumo (unid./año)',
+      paths: [{ pts: cppA, t: 'CPP_1', tp: [8.15, 0.5] }, { pts: cppB, k: 'k-exp', t: 'CPP_2', tp: [8.1, 5.6] }],
+      arrows: [{ a: [3, 3], b: [4.6, 6.2] }, { a: [5.75, 5.75], b: [6.6, 6.6], k: 'k-exp' }],
+      pts: [{ p: [3, 3], t: 'C', dx: -16, dy: 4 }, { p: [4.8, cpp1(4.8)], t: 'E', dx: -16 }] }
+  ] },
+  cap: 'Panel izquierdo: elección sobre la frontera (A, B), ineficiencia (C) e inalcanzabilidad (D). Panel derecho: el paso de C a E es crecimiento real con recursos ya existentes; el paso de CPP₁ a CPP₂ es aumento de la capacidad productiva.',
+  ejes: [['Eje vertical (Y)', 'Bien de capital (p. ej., maquinaria agrícola), en unidades por año'], ['Eje horizontal (X)', 'Bien de consumo (p. ej., alimentos), en unidades por año']],
+  curvas: ['**CPP** (CPP₁): combinaciones máximas de dos bienes con recursos y tecnología dados. Es **cóncava al origen** porque los recursos no son igualmente aptos para ambos bienes.',
+    '**Movimiento a lo largo** de la CPP (A → B): reasignación de recursos; se gana consumo y se sacrifica capital.',
+    '**Desplazamiento hacia afuera** (CPP₁ → CPP₂, flecha verde): más cantidad o calidad de factores (inversión, educación, inmigración) o mejor tecnología.',
+    'Una CPP puede contraerse hacia adentro (desastres naturales, guerra, emigración de mano de obra calificada).'],
+  eq: ['A (C₁, K₁) y B (C₂, K₂): puntos eficientes en la producción; toda la economía usa sus recursos.',
+    'C: combinación factible pero ineficiente (desempleo o capacidad ociosa).',
+    'D: combinación inalcanzable con los recursos actuales; ilustra la **escasez**.',
+    'Costo de oportunidad de pasar de A a B: (K₁ − K₂) unidades de capital para obtener (C₂ − C₁) unidades de consumo.'],
+  areas: [],
+  calc: [],
+  cad: ['Los recursos son escasos frente a necesidades ilimitadas, por eso hay que elegir.', 'Producir más de un bien obliga a retirar recursos del otro: ese sacrificio es el costo de oportunidad.', 'Si hay recursos ociosos (C), se puede crecer sin sacrificio moviéndose hacia la frontera.', 'Solo más o mejores factores, o mejor tecnología, desplazan la CPP hacia afuera.'],
+  err: ['Llamar «ineficiente» a un punto fuera de la CPP: es **inalcanzable**, no ineficiente.', 'Confundir crecimiento real (C → E) con aumento de la producción potencial (CPP₁ → CPP₂).', 'Rotular los ejes como «Bien X» y «Bien Y» sin unidades ni ejemplo concreto.', 'Dibujar la CPP recta sin justificar costo de oportunidad constante.', 'Desplazar la CPP sin flecha ni nombre CPP₂.'] },
+
+{ id: 'cpp-costo', u: 'micro', st: '1.1', stn: '¿Qué es la economía?', t: 'CPP con costo de oportunidad creciente vs. constante',
+  pr: 'P1 parte a',
+  fig: { panels: [
+    { t: 'Costo de oportunidad creciente (CPP cóncava)', y: 'Bienes de capital (unid./año)', x: 'Bienes de consumo (unid./año)',
+      paths: [{ pts: cppA, t: 'CPP', tp: [7.3, 3.4] },
+        { pts: [[0, 8], [2, 8], [2, cpp1(2)]], k: 'k-v', thin: true }, { pts: [[2, cpp1(2)], [4, cpp1(2)], [4, cpp1(4)]], k: 'k-v', thin: true }, { pts: [[4, cpp1(4)], [6, cpp1(4)], [6, cpp1(6)]], k: 'k-v', thin: true }],
+      pts: [{ p: [2, cpp1(2)], t: 'A' }, { p: [4, cpp1(4)], t: 'B' }, { p: [6, cpp1(6)], t: 'C' }],
+      guides: [{ p: [2, 0], xl: '2', noY: true }, { p: [4, 0], xl: '4', noY: true }, { p: [6, 0], xl: '6', noY: true }],
+      notes: [{ p: [2.2, 8.5], t: 'ΔK pequeño', a: 'start' }, { p: [6.3, 6.2], t: 'ΔK grande', a: 'start' }] },
+    { t: 'Costo de oportunidad constante (CPP lineal)', y: 'Bienes de capital (unid./año)', x: 'Bienes de consumo (unid./año)',
+      lines: [{ l: G.L([0, 8], [8, 0]), t: 'CPP', tp: [7.0, 1.6] }],
+      paths: [{ pts: [[0, 8], [2, 8], [2, 6]], k: 'k-v', thin: true }, { pts: [[2, 6], [4, 6], [4, 4]], k: 'k-v', thin: true }, { pts: [[4, 4], [6, 4], [6, 2]], k: 'k-v', thin: true }],
+      pts: [{ p: [2, 6], t: 'A' }, { p: [4, 4], t: 'B' }, { p: [6, 2], t: 'C' }],
+      guides: [{ p: [2, 0], xl: '2', noY: true }, { p: [4, 0], xl: '4', noY: true }, { p: [6, 0], xl: '6', noY: true }],
+      notes: [{ p: [4.3, 7.2], t: 'ΔK igual en cada tramo', a: 'start' }] }
+  ] },
+  cap: 'Con incrementos iguales del bien de consumo (+2 unidades por tramo), la CPP cóncava exige sacrificios de capital cada vez mayores; la CPP lineal exige siempre el mismo sacrificio.',
+  ejes: [['Eje vertical (Y)', 'Bien de capital, en unidades por año'], ['Eje horizontal (X)', 'Bien de consumo, en unidades por año']],
+  curvas: ['**CPP cóncava**: la pendiente aumenta en valor absoluto al moverse hacia la derecha; cada unidad adicional de consumo cuesta más capital.', 'Causa: los factores son **especializados** (no igualmente productivos en ambos usos); primero se transfieren los menos aptos para capital.', '**CPP lineal**: pendiente constante; los factores son perfectamente sustituibles entre usos.'],
+  eq: ['Tramos de 0→2, 2→4 y 4→6 unidades de consumo: en la cóncava el sacrificio de capital crece (≈ 0,25; 0,8; 1,6 unidades en el dibujo).', 'En la lineal cada tramo cuesta exactamente 2 unidades de capital.', 'El costo de oportunidad es la **pendiente** de la CPP en cada tramo.'],
+  areas: [],
+  calc: ['Costo de oportunidad de una unidad de consumo = `ΔK ÷ ΔC` entre dos puntos de la CPP (lectura del diagrama; no es un cálculo exigido en NM).'],
+  cad: ['Se decide producir más bienes de consumo.', 'Hay que transferir factores desde la producción de capital.', 'Como los factores son especializados, cada transferencia rinde menos.', 'El sacrificio por unidad adicional crece: la CPP se curva hacia afuera (cóncava).'],
+  err: ['Dibujar la curva convexa al origen (eso mostraría costo de oportunidad decreciente).', 'No marcar incrementos iguales en el eje X, con lo que no se ve el costo creciente.', 'Explicar la forma con «los recursos se agotan» en lugar de «los recursos son especializados».', 'Olvidar que el costo de oportunidad se expresa en unidades del otro bien, no en dinero.'] },
+
+/* ---------- 2.1 ---------- */
+{ id: 'demanda', u: 'micro', st: '2.1', stn: 'La demanda', t: 'Curva de demanda con pendiente negativa',
+  pr: 'P2 partes b–d',
+  fig: { panels: [{ ...AXP, lines: [{ l: G.L([1, 9], [9, 1]), k: 'k-d', t: 'D' }],
+    guides: [{ p: [3, 7], yl: 'P_1', xl: 'Q_1' }, { p: [7, 3], yl: 'P_2', xl: 'Q_2' }],
+    pts: [{ p: [3, 7], t: 'A' }, { p: [7, 3], t: 'B' }] }] },
+  cap: 'Ley de la demanda: ceteris paribus, al bajar el precio de P₁ a P₂ la cantidad demandada aumenta de Q₁ a Q₂.',
+  ejes: EJP,
+  curvas: ['**D**: relación inversa entre precio y cantidad demandada, ceteris paribus.', 'Puede dibujarse como recta o curva; en el examen una recta es aceptable.', 'Cada punto indica la cantidad que los consumidores están **dispuestos y en condiciones** de comprar a ese precio.'],
+  eq: ['A (Q₁, P₁) y B (Q₂, P₂) sobre la misma curva.', 'P₂ < P₁ implica Q₂ > Q₁.'],
+  areas: [],
+  calc: ['La demanda del mercado es la **suma horizontal** de las demandas individuales: a cada precio se suman las cantidades.'],
+  ns: ['Explicación de la pendiente con utilidad marginal decreciente y efectos ingreso y sustitución.'],
+  cad: ['Baja el precio del bien.', 'El bien se vuelve relativamente más barato que sus sustitutos y el poder de compra aumenta.', 'Los consumidores compran más unidades.', 'La cantidad demandada aumenta: movimiento a lo largo de D.'],
+  err: ['Rotular el eje Y como «Demanda» en lugar de «Precio».', 'Confundir «demanda» (toda la curva) con «cantidad demandada» (un punto).', 'Dibujar la curva tocando ambos ejes con flechas o etiquetas ilegibles.', 'Omitir «ceteris paribus» al enunciar la ley.'] },
+
+{ id: 'demanda-mov', u: 'micro', st: '2.1', stn: 'La demanda', t: 'Movimiento a lo largo de D vs. desplazamiento de D',
+  pr: 'P2 partes c–f · P1 parte a',
+  fig: { panels: [
+    { t: 'Movimiento a lo largo (cambia el precio)', ...AXP, lines: [{ l: G.L([1, 9], [9, 1]), k: 'k-d', t: 'D' }],
+      guides: [{ p: [3, 7], yl: 'P_1', xl: 'Q_1' }, { p: [7, 3], yl: 'P_2', xl: 'Q_2' }],
+      arrows: [{ a: [3.5, 7.2], b: [6.9, 3.8] }], pts: [{ p: [3, 7], t: 'A' }, { p: [7, 3], t: 'B' }] },
+    { t: 'Desplazamiento (cambia un determinante)', ...AXP,
+      lines: [{ l: G.L([1, 8], [7, 2]), k: 'k-d', t: 'D_1' }, { l: G.L([3.5, 8], [9.5, 2]), k: 'k-d', t: 'D_2' }],
+      guides: [{ p: [4, 5], yl: 'P_1', xl: 'Q_1' }, { p: [6.5, 5], xl: 'Q_2', noY: true }],
+      arrows: [{ a: [3.3, 6], b: [5.3, 6], k: 'k-exp' }], pts: [{ p: [4, 5] }, { p: [6.5, 5] }] }
+  ] },
+  cap: 'Izquierda: solo cambia el precio del propio bien. Derecha: con el mismo precio P₁ se demanda más (Q₁ → Q₂) porque cambió un determinante distinto del precio.',
+  ejes: EJP,
+  curvas: ['**Movimiento a lo largo de D** (A → B): causado **solo** por un cambio del precio del propio bien. Se llama expansión o contracción de la cantidad demandada.',
+    '**Desplazamiento de D₁ a D₂** (flecha verde a la derecha): aumento de la demanda por un determinante no precio.',
+    'Determinantes: ingreso (bien normal o inferior), precio de sustitutos y complementarios, gustos y preferencias, expectativas, número de consumidores.',
+    'Una disminución de la demanda desplaza la curva a la izquierda (D₁ → D₃).'],
+  eq: ['Al precio P₁: cantidad Q₁ sobre D₁ y Q₂ sobre D₂ (Q₂ > Q₁).', 'A (Q₁, P₁) → B (Q₂, P₂) en el panel izquierdo.'],
+  areas: [],
+  calc: [],
+  cad: ['Cambia un determinante (p. ej., sube el ingreso y el bien es normal).', 'A cada precio los consumidores desean comprar más.', 'Toda la curva se desplaza a la derecha: D₁ → D₂.', 'Con la oferta dada, sube el precio de equilibrio y la cantidad.'],
+  err: ['Decir «aumenta la demanda» cuando solo baja el precio del bien (es aumento de la **cantidad demandada**).', 'Desplazar la curva sin flecha o sin rotular D₁ y D₂.', 'Mover la curva hacia arriba en lugar de hacia la derecha y luego leer mal la cantidad.', 'Afirmar que un bien inferior desplaza D a la derecha cuando sube el ingreso (la desplaza a la izquierda).'] },
+
+/* ---------- 2.2 ---------- */
+{ id: 'oferta', u: 'micro', st: '2.2', stn: 'La oferta', t: 'Curva de oferta con pendiente positiva',
+  pr: 'P2 partes b–d',
+  fig: { panels: [{ ...AXP, lines: [{ l: G.L([1, 1], [9, 9]), k: 'k-s', t: 'O' }],
+    guides: [{ p: [3, 3], yl: 'P_1', xl: 'Q_1' }, { p: [7, 7], yl: 'P_2', xl: 'Q_2' }],
+    pts: [{ p: [3, 3], t: 'A', dx: 8, dy: 4 }, { p: [7, 7], t: 'B', dx: 8, dy: 4 }] }] },
+  cap: 'Ley de la oferta: ceteris paribus, al subir el precio de P₁ a P₂ la cantidad ofrecida aumenta de Q₁ a Q₂.',
+  ejes: EJP,
+  curvas: ['**O**: relación directa entre precio y cantidad ofrecida, ceteris paribus.', 'Razón: un precio mayor hace rentable producir más y cubre costos marginales crecientes.', 'La oferta del mercado es la **suma horizontal** de las ofertas de cada empresa.'],
+  eq: ['A (Q₁, P₁) y B (Q₂, P₂) sobre la misma curva.', 'P₂ > P₁ implica Q₂ > Q₁.'],
+  areas: [],
+  calc: [],
+  ns: ['Justificación de la pendiente con la ley de rendimientos decrecientes y el costo marginal creciente.'],
+  cad: ['Sube el precio del bien.', 'Producir más unidades se vuelve rentable aunque cada una cueste más.', 'Las empresas aumentan la producción y entran nuevas.', 'Aumenta la cantidad ofrecida: movimiento a lo largo de O.'],
+  err: ['Rotular la curva «S» y luego escribir «oferta» en el texto sin coherencia; elegir una notación y mantenerla.', 'Confundir «oferta» con «cantidad ofrecida».', 'Explicar la pendiente con «a las empresas les gusta ganar más» sin mencionar costos.', 'Olvidar rótulos de ejes.'] },
+
+{ id: 'oferta-mov', u: 'micro', st: '2.2', stn: 'La oferta', t: 'Movimiento a lo largo de O vs. desplazamiento de O',
+  pr: 'P2 partes c–f · P1 parte a',
+  fig: { panels: [
+    { t: 'Movimiento a lo largo (cambia el precio)', ...AXP, lines: [{ l: G.L([1, 1], [9, 9]), k: 'k-s', t: 'O' }],
+      guides: [{ p: [3, 3], yl: 'P_1', xl: 'Q_1' }, { p: [7, 7], yl: 'P_2', xl: 'Q_2' }],
+      arrows: [{ a: [3.6, 3.1], b: [7.0, 6.5] }], pts: [{ p: [3, 3], t: 'A', dx: -14 }, { p: [7, 7], t: 'B', dx: -14 }] },
+    { t: 'Desplazamiento (cambia un determinante)', ...AXP,
+      lines: [{ l: G.L([1, 2], [7, 8]), k: 'k-s', t: 'O_1' }, { l: G.L([3.5, 2], [9.5, 8]), k: 'k-s', t: 'O_2' }],
+      guides: [{ p: [4, 5], yl: 'P_1', xl: 'Q_1' }, { p: [6.5, 5], xl: 'Q_2', noY: true }],
+      arrows: [{ a: [3.3, 4], b: [5.3, 4], k: 'k-exp' }], pts: [{ p: [4, 5] }, { p: [6.5, 5] }] }
+  ] },
+  cap: 'Derecha: al mismo precio P₁ se ofrece más (Q₁ → Q₂) porque bajaron los costos o mejoró la tecnología.',
+  ejes: EJP,
+  curvas: ['**Movimiento a lo largo de O** (A → B): solo por cambio del precio del propio bien.', '**Desplazamiento O₁ → O₂** (a la derecha): aumento de la oferta.', 'Determinantes: costos de los factores, tecnología, precios de bienes relacionados en la producción (conjuntos o competitivos), expectativas, impuestos indirectos y subvenciones, número de empresas, shocks (clima, plagas).', 'Una disminución de la oferta desplaza la curva a la izquierda (hacia arriba).'],
+  eq: ['Al precio P₁: Q₁ sobre O₁ y Q₂ sobre O₂.', 'A (Q₁, P₁) → B (Q₂, P₂) en el panel izquierdo.'],
+  areas: [],
+  calc: [],
+  cad: ['Baja el costo de un insumo (p. ej., fertilizantes para la soja).', 'Producir cada unidad cuesta menos.', 'A cada precio las empresas ofrecen más: O₁ → O₂.', 'Con la demanda dada, baja el precio y aumenta la cantidad de equilibrio.'],
+  err: ['Desplazar O hacia arriba para mostrar un **aumento** de la oferta (es al revés: aumento = derecha/abajo).', 'Decir que una sequía «aumenta el precio y por eso baja la oferta» (la causa es la oferta, no el precio).', 'Olvidar la flecha entre O₁ y O₂.', 'Mezclar determinantes de la demanda (ingreso) como si movieran la oferta.'] },
+
+/* ---------- 2.3 ---------- */
+{ id: 'equilibrio', u: 'micro', st: '2.3', stn: 'Equilibrio de mercado competitivo', t: 'Equilibrio de mercado y desequilibrios',
+  pr: 'P2 partes b–f',
+  fig: { panels: [{ ...AXP,
+    lines: [{ l: G.L([1, 9], [9, 1]), k: 'k-d', t: 'D' }, { l: G.L([1, 1], [9, 9]), k: 'k-s', t: 'O' }],
+    guides: [{ p: [5, 5], yl: 'P_e', xl: 'Q_e' }, { p: [3, 7], yl: 'P_1', noX: true }, { p: [3, 3], yl: 'P_2', noX: true }],
+    spans: [{ a: [3, 7], b: [7, 7], t: 'Excedente (exceso de oferta)' }, { a: [3, 3], b: [7, 3], t: 'Escasez (exceso de demanda)', below: true }],
+    arrows: [{ a: [0.6, 6.7], b: [0.6, 5.4] }, { a: [0.6, 3.3], b: [0.6, 4.6] }],
+    pts: [{ p: [5, 5], t: 'E', dx: 9, dy: 4 }] }] },
+  cap: 'A P₁ la cantidad ofrecida supera a la demandada y el precio baja; a P₂ la cantidad demandada supera a la ofrecida y el precio sube, hasta E.',
+  ejes: EJP,
+  curvas: ['**D** con pendiente negativa y **O** con pendiente positiva.', 'No hay desplazamientos: los desequilibrios se corrigen con **movimientos a lo largo** de ambas curvas.'],
+  eq: ['E (Q_e, P_e): única combinación donde Qd = Qo; el mercado se vacía.', 'A P₁ > P_e: Qd < Qo → excedente.', 'A P₂ < P_e: Qd > Qo → escasez.'],
+  areas: [],
+  calc: ['Excedente = `Qo − Qd` al precio P₁.', 'Escasez = `Qd − Qo` al precio P₂.', 'Con funciones lineales: igualar Qd = Qo para obtener P_e y Q_e (la formulación algebraica de funciones es contenido NS).'],
+  cad: ['A P₁ hay excedente: las empresas acumulan existencias.', 'Bajan el precio para vender.', 'Al bajar P aumenta Qd y disminuye Qo.', 'El ajuste sigue hasta P_e, donde Qd = Qo.'],
+  err: ['Llamar «excedente» a una escasez o al revés.', 'Medir la escasez en el eje de precios (se mide en **cantidades**, horizontalmente).', 'No rotular P_e y Q_e con líneas punteadas hacia los ejes.', 'Decir que en el excedente «se desplaza la oferta»; no se desplaza ninguna curva.'] },
+
+{ id: 'equilibrio-cambio', u: 'micro', st: '2.3', stn: 'Equilibrio de mercado competitivo', t: 'Cambio del equilibrio y funciones del mecanismo de precios',
+  pr: 'P1 parte a · P2 partes c–f',
+  fig: { panels: [{ ...AXP,
+    lines: [{ l: G.L([1, 9], [8, 2]), k: 'k-d', t: 'D_1' }, { l: G.L([4, 9], [10, 3]), k: 'k-d', t: 'D_2' }, { l: G.L([1, 1], [8.8, 8.8]), k: 'k-s', t: 'O' }],
+    guides: [{ p: [5, 5], yl: 'P_1', xl: 'Q_1' }, { p: [6.5, 6.5], yl: 'P_2', xl: 'Q_2' }],
+    spans: [{ a: [5, 5], b: [8, 5], t: 'Escasez a P₁', below: true }],
+    arrows: [{ a: [2.4, 8], b: [4.6, 8], k: 'k-exp' }],
+    pts: [{ p: [5, 5], t: 'E_1', dx: -26, dy: 4 }, { p: [6.5, 6.5], t: 'E_2', dx: -26, dy: 0 }] }] },
+  cap: 'Aumenta la demanda (D₁ → D₂). Al precio P₁ aparece escasez; el precio sube y actúa como señal e incentivo hasta el nuevo equilibrio E₂.',
+  ejes: EJP,
+  curvas: ['**D₁ → D₂** (derecha): aumento de la demanda por un determinante no precio.', '**O** no se desplaza: hay un movimiento a lo largo de O de E₁ a E₂ (aumenta la cantidad ofrecida).', 'El mismo análisis vale para cambios de la oferta o para cambios simultáneos.'],
+  eq: ['E₁ (Q₁, P₁) inicial; E₂ (Q₂, P₂) final, con P₂ > P₁ y Q₂ > Q₁.', 'Escasez transitoria a P₁: distancia horizontal entre Q₁ y la cantidad demandada sobre D₂.'],
+  areas: [],
+  calc: [],
+  cad: ['Aumenta la demanda: a P₁ hay escasez.', '**Señal**: el alza de precio informa que el bien es más deseado.', '**Incentivo**: el mayor precio motiva a producir más (movimiento a lo largo de O).', '**Racionamiento**: el mayor precio reparte la cantidad entre quienes más valoran el bien; se llega a E₂.'],
+  err: ['Desplazar también la oferta «porque las empresas producen más» (es movimiento a lo largo de O).', 'No nombrar las tres funciones del precio: señal, incentivo y racionamiento.', 'Rotular los equilibrios sin subíndices (E y E).', 'Olvidar la flecha del desplazamiento de D.'] },
+
+{ id: 'excedentes', u: 'micro', st: '2.3', stn: 'Equilibrio de mercado competitivo', t: 'Excedente del consumidor y del productor',
+  pr: 'P2 partes c–f · P1 parte a',
+  fig: { panels: [{ ...AXP,
+    areas: [{ pts: [[0, 9], [0, 5], [5, 5]], c: 'f-ec', t: 'EC', n: 'Excedente del consumidor' }, { pts: [[0, 1], [0, 5], [5, 5]], c: 'f-ep', t: 'EP', n: 'Excedente del productor' }],
+    lines: [{ l: D0, k: 'k-d', t: 'D = BM' }, { l: S0, k: 'k-s', t: 'O = CM' }],
+    guides: [{ p: [5, 5], yl: 'P_e', xl: 'Q_e' }], pts: [{ p: [5, 5], t: 'E', dx: 8, dy: 4 }] }] },
+  cap: 'En el equilibrio competitivo la suma EC + EP (excedente social) es máxima: no existe pérdida de bienestar.',
+  ejes: EJP,
+  curvas: ['**D = BM**: la demanda refleja el beneficio marginal (disposición a pagar) de cada unidad.', '**O = CM**: la oferta refleja el costo marginal de producir cada unidad.'],
+  eq: ['E (Q_e, P_e): BM = CM, por eso hay eficiencia en la asignación.', 'Intercepto de D en el eje Y: máxima disposición a pagar; intercepto de O: precio mínimo de oferta.'],
+  areas: ['**EC** (amarillo): triángulo entre D, la recta P = P_e y el eje Y. Es la diferencia entre lo que los consumidores están dispuestos a pagar y lo que pagan.', '**EP** (verde): triángulo entre la recta P = P_e, O y el eje Y. Es la diferencia entre lo que reciben los productores y su precio mínimo de oferta.', '**Excedente social = EC + EP**, máximo en Q_e.'],
+  calc: [],
+  ns: ['EC = ½ × Q_e × (intercepto de D − P_e). En el dibujo: ½ × 5 × 4 = 10.', 'EP = ½ × Q_e × (P_e − intercepto de O). En el dibujo: ½ × 5 × 4 = 10.'],
+  cad: ['Cada consumidor compra si su beneficio marginal es al menos el precio.', 'Cada productor vende si el precio cubre su costo marginal.', 'En Q_e la última unidad tiene BM = CM.', 'Producir más o menos reduciría el excedente social: Q_e es eficiente.'],
+  err: ['Sombrear el EC por debajo del precio o el EP por encima.', 'Extender las áreas más allá de Q_e.', 'Confundir excedente del consumidor con «ahorro» del consumidor.', 'No indicar que el excedente social se maximiza **solo** en el equilibrio competitivo sin fallas de mercado.'] },
+
+/* ---------- 2.5 ---------- */
+{ id: 'epd-rel', u: 'micro', st: '2.5', stn: 'Elasticidades de la demanda', t: 'Demanda relativamente elástica vs. relativamente inelástica',
+  pr: 'P2 partes c–e',
+  fig: { panels: [
+    { t: 'Relativamente elástica (|EPD| > 1)', ...AXP, lines: [{ l: G.L([0, 7.5], [10, 3.5]), k: 'k-d', t: 'D' }],
+      guides: [{ p: [8.75, 4], yl: 'P_1', xl: 'Q_1' }, { p: [3.75, 6], yl: 'P_2', xl: 'Q_2' }], pts: [{ p: [8.75, 4] }, { p: [3.75, 6] }] },
+    { t: 'Relativamente inelástica (|EPD| < 1)', ...AXP, lines: [{ l: G.L([2.66, 9.6], [6.26, 0.6]), k: 'k-d', t: 'D' }],
+      guides: [{ p: [4.9, 4], yl: 'P_1', xl: 'Q_1' }, { p: [4.1, 6], yl: 'P_2', xl: 'Q_2' }], pts: [{ p: [4.9, 4] }, { p: [4.1, 6] }] }
+  ] },
+  cap: 'El mismo aumento de precio (P₁ → P₂, +50 %) reduce mucho la cantidad cuando la demanda es elástica (−57 %) y poco cuando es inelástica (−16 %).',
+  ejes: EJP,
+  curvas: ['**Elástica**: curva relativamente plana; la cantidad responde más que proporcionalmente al precio.', '**Inelástica**: curva relativamente empinada; la cantidad responde menos que proporcionalmente.', 'Comparar pendientes solo es válido con **ejes en la misma escala**.', 'Determinantes: número y cercanía de sustitutos, grado de necesidad, proporción del ingreso gastado, tiempo.'],
+  eq: ['Panel elástico: P₁ = 4 → P₂ = 6; Q₁ = 8,75 → Q₂ = 3,75.', 'Panel inelástico: P₁ = 4 → P₂ = 6; Q₁ = 4,9 → Q₂ = 4,1.'],
+  areas: [],
+  calc: ['`EPD = %ΔQd ÷ %ΔP` (se informa en valor absoluto).', 'Ejemplo elástico: −57,1 % ÷ 50 % = −1,14 → elástica.', 'Ejemplo inelástico: −16,3 % ÷ 50 % = −0,33 → inelástica.', '`%Δ = (valor nuevo − valor inicial) ÷ valor inicial × 100`.'],
+  cad: ['Sube el precio del bien.', 'Si hay sustitutos cercanos, los consumidores cambian de bien: Qd cae mucho (elástica).', 'Si el bien es una necesidad sin sustitutos (p. ej., combustible a corto plazo), Qd cae poco (inelástica).', 'La respuesta determina el efecto sobre el ingreso total y la incidencia de impuestos.'],
+  err: ['Afirmar que la pendiente **es** la elasticidad (la EPD cambia a lo largo de una recta).', 'Invertir la fórmula (%ΔP ÷ %ΔQ).', 'Dar la EPD con signo negativo sin aclarar que se interpreta en valor absoluto.', 'Usar escalas distintas en los dos diagramas y concluir sobre «planitud».'] },
+
+{ id: 'epd-const', u: 'micro', st: '2.5', stn: 'Elasticidades de la demanda', t: 'EPD constante: perfectamente inelástica, perfectamente elástica y unitaria',
+  pr: 'P2 partes b–d',
+  fig: { panels: [
+    { t: 'Perfectamente inelástica (EPD = 0)', ...AXP, lines: [{ l: G.L([5, 1], [5, 9.2]), k: 'k-d', t: 'D' }],
+      guides: [{ p: [5, 7], yl: 'P_2', noX: true }, { p: [5, 4], yl: 'P_1', xl: 'Q_1' }] },
+    { t: 'Perfectamente elástica (EPD = ∞)', ...AXP, lines: [{ l: G.L([0.4, 5], [9.4, 5]), k: 'k-d', t: 'D' }],
+      guides: [{ p: [3, 5], xl: 'Q_1', noY: true }, { p: [7, 5], xl: 'Q_2', noY: true }], notes: [{ p: [0.3, 5.3], t: 'P_1', a: 'start', k: 'k-d' }] },
+    { t: 'Unitaria (EPD = 1 en toda la curva)', ...AXP,
+      areas: [{ pts: [[0, 0], [0, 8], [2, 8], [2, 0]], c: 'f-ec', t: 'IT_1', at: [1, 4], n: 'Ingreso total al precio P₁' }, { pts: [[0, 0], [0, 2], [8, 2], [8, 0]], c: 'f-ep', t: 'IT_2', at: [5, 1], n: 'Ingreso total al precio P₂' }],
+      paths: [{ pts: G.samp(x => 16 / x, 1.75, 9.6), k: 'k-d', t: 'D', tp: [9.2, 2.3] }],
+      guides: [{ p: [2, 8], yl: 'P_1', xl: 'Q_1' }, { p: [8, 2], yl: 'P_2', xl: 'Q_2' }] }
+  ] },
+  cap: 'Tres casos límite. En la hipérbola equilátera (P × Q = constante) el ingreso total no cambia con el precio: IT₁ = IT₂.',
+  ejes: EJP,
+  curvas: ['**Vertical**: la cantidad no responde al precio (EPD = 0).', '**Horizontal**: a cualquier precio superior la cantidad cae a cero (EPD = ∞); caso de la empresa en competencia perfecta.', '**Hipérbola equilátera**: EPD = 1 en cada punto; un cambio porcentual del precio genera el mismo cambio porcentual de la cantidad.'],
+  eq: ['Vertical: Q₁ constante a P₁ y P₂.', 'Horizontal: cualquier cantidad (Q₁, Q₂) al único precio P₁.', 'Unitaria: (2; 8) y (8; 2) dan IT = 16 en ambos puntos.'],
+  areas: ['Panel unitario: rectángulo amarillo = IT₁ = P₁ × Q₁; rectángulo verde = IT₂ = P₂ × Q₂. Tienen la misma área.'],
+  calc: ['`IT = P × Q`.', 'Unitaria: 8 × 2 = 2 × 8 = 16.'],
+  ns: ['La EPD a lo largo de una demanda lineal (elástica arriba del punto medio, unitaria en el medio, inelástica abajo) es contenido NS.'],
+  cad: ['La forma de la curva resume la sensibilidad de los consumidores al precio.', 'En los casos límite la EPD es la misma en todos los puntos de la curva.', 'Una recta con pendiente negativa **no** tiene EPD constante.'],
+  err: ['Dibujar una recta de pendiente −1 y decir que es «unitaria» (no lo es).', 'Confundir vertical con perfectamente elástica.', 'Rotular la curva horizontal como «oferta» al hablar de la empresa competitiva.', 'Olvidar que son casos teóricos, poco frecuentes en la realidad.'] },
+
+{ id: 'epd-it', u: 'micro', st: '2.5', stn: 'Elasticidades de la demanda', t: 'EPD e ingreso total',
+  pr: 'P2 partes c–f · P1 parte a',
+  fig: { panels: [
+    { t: 'Demanda elástica: baja P, sube el IT', ...AXP,
+      areas: [{ pts: [[0, 4], [0, 6], [10 / 3, 6], [10 / 3, 4]], c: 'f-red', t: '−', n: 'Ingreso que se pierde por el menor precio' }, { pts: [[10 / 3, 0], [10 / 3, 4], [20 / 3, 4], [20 / 3, 0]], c: 'f-ep', t: '+', n: 'Ingreso que se gana por la mayor cantidad' }],
+      lines: [{ l: G.L([0, 8], [10, 2]), k: 'k-d', t: 'D' }],
+      guides: [{ p: [10 / 3, 6], yl: 'P_1', xl: 'Q_1' }, { p: [20 / 3, 4], yl: 'P_2', xl: 'Q_2' }] },
+    { t: 'Demanda inelástica: baja P, cae el IT', ...AXP,
+      areas: [{ pts: [[0, 4], [0, 6], [4.1, 6], [4.1, 4]], c: 'f-red', t: '−', n: 'Ingreso que se pierde por el menor precio' }, { pts: [[4.1, 0], [4.1, 4], [4.9, 4], [4.9, 0]], c: 'f-ep', t: '+', at: [4.5, 2], n: 'Ingreso que se gana por la mayor cantidad' }],
+      lines: [{ l: G.L([2.66, 9.6], [6.26, 0.6]), k: 'k-d', t: 'D' }],
+      guides: [{ p: [4.1, 6], yl: 'P_1', xl: 'Q_1' }, { p: [4.9, 4], yl: 'P_2', xl: 'Q_2' }] }
+  ] },
+  cap: 'Si la demanda es elástica, bajar el precio aumenta el ingreso total (verde > rojo). Si es inelástica, lo reduce (rojo > verde).',
+  ejes: EJP,
+  curvas: ['D elástica (plana) y D inelástica (empinada); no hay desplazamientos.', 'El cambio de precio provoca un **movimiento a lo largo** de D.'],
+  eq: ['Elástica: P 6 → 4; Q 3,33 → 6,67; IT 20 → 26,7.', 'Inelástica: P 6 → 4; Q 4,1 → 4,9; IT 24,6 → 19,6.'],
+  areas: ['**Rojo**: ingreso que se pierde porque las Q₁ unidades se venden más baratas = (P₁ − P₂) × Q₁.', '**Verde**: ingreso que se gana por las unidades adicionales = P₂ × (Q₂ − Q₁).', 'IT sube si verde > rojo (elástica); baja si rojo > verde (inelástica).'],
+  calc: ['`IT = P × Q`; `ΔIT = IT₂ − IT₁`.', 'Regla: EPD > 1 → P y IT se mueven en sentido opuesto; EPD < 1 → en el mismo sentido; EPD = 1 → IT constante.'],
+  cad: ['La empresa baja el precio.', 'La cantidad demandada aumenta según la EPD.', 'Si |EPD| > 1 el aumento porcentual de Q supera la caída porcentual de P.', 'El ingreso total sube; con |EPD| < 1 ocurre lo contrario.'],
+  err: ['Decir que bajar el precio **siempre** aumenta las ventas en guaraníes.', 'Confundir ingreso total con beneficio (ganancia).', 'No mostrar las dos áreas que se comparan.', 'Aplicar la regla al revés para la demanda inelástica.'] },
+
+{ id: 'engel', u: 'micro', st: '2.5', stn: 'Elasticidades de la demanda', t: 'Curva de Engel: bienes elásticos, inelásticos e inferiores al ingreso',
+  pr: 'P2 partes c–e',
+  fig: { panels: [{ y: 'Ingreso (Gs./mes)', x: 'Cantidad demandada (unid./mes)', rm: 150,
+    paths: [{ pts: [[0.6, 0.6], [2.5, 1.3], [4.5, 2.1], [6.2, 3.3], [7.2, 4.8], [7.6, 6.4], [7.3, 7.9], [6.2, 9.2]], smooth: true, k: 'k-d', t: 'Curva de Engel', tp: [5.2, 9.6] }],
+    notes: [{ p: [5.0, 1.3], t: 'EID > 1 (elástico)', a: 'start' }, { p: [7.9, 4.4], t: '0 < EID < 1 (inelástico)', a: 'start' }, { p: [7.6, 8.5], t: 'EID < 0 (inferior)', a: 'start' }],
+    guides: [{ p: [4.5, 2.1], yl: 'Y_1', noX: true }, { p: [7.2, 4.8], yl: 'Y_2', noX: true }, { p: [7.3, 7.9], yl: 'Y_3', noX: true }] }] },
+  cap: 'Al crecer el ingreso, el mismo bien puede pasar de ser elástico al ingreso, a inelástico al ingreso y, finalmente, a inferior.',
+  ejes: [['Eje vertical (Y)', 'Ingreso del consumidor (Y), en guaraníes por mes'], ['Eje horizontal (X)', 'Cantidad demandada del bien, en unidades por mes']],
+  curvas: ['Tramo bajo, relativamente plano: Q crece más que proporcionalmente al ingreso → **EID > 1** (bien de lujo o elástico al ingreso).', 'Tramo medio, empinado: Q crece menos que proporcionalmente → **0 < EID < 1** (bien necesario).', 'Tramo superior, que se dobla hacia atrás: Q cae al subir el ingreso → **EID < 0** (bien inferior).'],
+  eq: ['Y₁, Y₂ e Y₃ marcan los niveles de ingreso donde cambia el tipo de bien.', 'La curva no tiene «equilibrio»: muestra la respuesta de Q ante el ingreso.'],
+  areas: [],
+  calc: ['`EID = %ΔQd ÷ %ΔY`.', 'Ejemplo: el ingreso sube 10 % y Qd sube 25 % → EID = 2,5 (elástico al ingreso).', 'Ejemplo: el ingreso sube 10 % y Qd cae 4 % → EID = −0,4 (inferior).'],
+  ns: ['Importancia de la EID para el cambio sectorial (primario → secundario → terciario) se trata con mayor profundidad en NS.'],
+  cad: ['Aumenta el ingreso de los hogares.', 'La reacción de Qd depende de la EID del bien.', 'Los bienes con EID alta ganan participación en el gasto; los inferiores la pierden.', 'Por eso los productores de bienes primarios (EID baja) crecen más despacio que los de servicios.'],
+  err: ['Poner el ingreso en el eje X y la cantidad en el eje Y sin aclararlo (la convención IB es ingreso en Y).', 'Decir que todo bien con EID < 1 es inferior (solo si EID < 0).', 'Confundir la curva de Engel con una curva de demanda.', 'Omitir el signo al interpretar la EID: aquí el signo **sí** importa.'] },
+
+/* ---------- 2.6 ---------- */
+{ id: 'epo-rel', u: 'micro', st: '2.6', stn: 'Elasticidad de la oferta', t: 'Oferta relativamente elástica vs. relativamente inelástica',
+  pr: 'P2 partes c–e',
+  fig: { panels: [
+    { t: 'Relativamente elástica (EPO > 1)', ...AXP, lines: [{ l: G.L([0, 3], [10, 7]), k: 'k-s', t: 'O' }],
+      guides: [{ p: [2.5, 4], yl: 'P_1', xl: 'Q_1' }, { p: [7.5, 6], yl: 'P_2', xl: 'Q_2' }], pts: [{ p: [2.5, 4] }, { p: [7.5, 6] }] },
+    { t: 'Relativamente inelástica (EPO < 1)', ...AXP, lines: [{ l: G.L([3.5, 0], [7.5, 10]), k: 'k-s', t: 'O' }],
+      guides: [{ p: [5.1, 4], yl: 'P_1', xl: 'Q_1' }, { p: [5.9, 6], yl: 'P_2', xl: 'Q_2' }], pts: [{ p: [5.1, 4] }, { p: [5.9, 6] }] }
+  ] },
+  cap: 'Ante el mismo aumento de precio (+50 %), la oferta elástica responde con +200 % y la inelástica con +16 %.',
+  ejes: EJP,
+  curvas: ['**Elástica**: curva relativamente plana; los productores aumentan mucho la cantidad.', '**Inelástica**: curva relativamente empinada; la cantidad apenas reacciona.', 'Determinantes: tiempo, movilidad de los factores, capacidad ociosa, posibilidad de almacenar existencias, velocidad de producción.', 'Los bienes primarios (soja, carne) suelen tener EPO baja a corto plazo; los manufacturados, mayor.'],
+  eq: ['Elástica: P 4 → 6; Q 2,5 → 7,5.', 'Inelástica: P 4 → 6; Q 5,1 → 5,9.'],
+  areas: [],
+  calc: ['`EPO = %ΔQo ÷ %ΔP`.', 'Elástica: +200 % ÷ +50 % = 4,0.', 'Inelástica: +15,7 % ÷ +50 % = 0,31.'],
+  cad: ['Sube el precio del bien.', 'Las empresas quieren producir más.', 'Si tienen capacidad ociosa y factores móviles, lo logran rápido (elástica).', 'Si la producción tarda (una zafra agrícola), la cantidad casi no cambia a corto plazo (inelástica).'],
+  err: ['Usar la fórmula de la EPD (con la cantidad demandada).', 'Explicar la EPO con los gustos del consumidor (es un concepto de productores).', 'Confundir corto plazo con largo plazo: la EPO crece con el tiempo.', 'No igualar escalas al comparar pendientes.'] },
+
+{ id: 'epo-const', u: 'micro', st: '2.6', stn: 'Elasticidad de la oferta', t: 'EPO constante: perfectamente inelástica, perfectamente elástica y unitaria',
+  pr: 'P2 partes b–d',
+  fig: { panels: [
+    { t: 'Perfectamente inelástica (EPO = 0)', ...AXP, lines: [{ l: G.L([5, 0.6], [5, 9.2]), k: 'k-s', t: 'O' }], guides: [{ p: [5, 7], yl: 'P_2', noX: true }, { p: [5, 4], yl: 'P_1', xl: 'Q_1' }] },
+    { t: 'Perfectamente elástica (EPO = ∞)', ...AXP, lines: [{ l: G.L([0.4, 5], [9.4, 5]), k: 'k-s', t: 'O' }], guides: [{ p: [3, 5], xl: 'Q_1', noY: true }, { p: [7, 5], xl: 'Q_2', noY: true }], notes: [{ p: [0.3, 5.3], t: 'P_1', a: 'start', k: 'k-s' }] },
+    { t: 'Unitaria (EPO = 1)', ...AXP, lines: [{ l: G.L([0, 0], [7.6, 9.5]), k: 'k-s', t: 'O_1' }, { l: G.L([0, 0], [9.5, 4.5]), k: 'k-s', t: 'O_2' }], notes: [{ p: [6.2, 2.3], t: 'Cualquier recta que', a: 'start' }, { p: [6.2, 1.5], t: 'parte del origen', a: 'start' }] }
+  ] },
+  cap: 'Toda oferta lineal que pasa por el origen tiene EPO = 1, sin importar su pendiente.',
+  ejes: EJP,
+  curvas: ['**Vertical** (EPO = 0): cantidad fija, p. ej., entradas para un estadio o terrenos en el centro de Asunción.', '**Horizontal** (EPO = ∞): se ofrece cualquier cantidad al precio P₁.', '**Recta desde el origen** (EPO = 1): la cantidad cambia en la misma proporción que el precio.'],
+  eq: ['Vertical: Q₁ a cualquier precio.', 'Horizontal: Q₁, Q₂… al precio P₁.'],
+  areas: [],
+  calc: ['`EPO = %ΔQo ÷ %ΔP`.'],
+  cad: ['La forma de la oferta resume la capacidad de los productores de ajustar la producción.', 'Una oferta fija no responde al precio; una infinitamente elástica sí, sin límite.', 'Las rectas desde el origen siempre dan EPO = 1.'],
+  err: ['Dibujar la oferta unitaria con intercepto positivo en el eje Y (tendría EPO > 1).', 'Confundir la oferta vertical con la demanda perfectamente inelástica en la explicación.', 'No relacionar la oferta vertical con el corto plazo.'] },
+
+/* ---------- 2.7 ---------- */
+{ id: 'precio-max', u: 'micro', st: '2.7', stn: 'Función del gobierno en la microeconomía', t: 'Precio máximo',
+  pr: 'P1 partes a–b · P2 partes c–f',
+  fig: { panels: [{ ...AXP,
+    areas: [{ pts: [[0, 9], [0, 5], [3, 5], [3, 6.6]], c: 'f-ec', t: 'a', n: 'Excedente del consumidor con el precio máximo (a + c)' },
+      { pts: [[0, 5], [0, 3.4], [3, 3.4], [3, 5]], c: 'f-ec', t: 'c', n: 'Excedente del consumidor con el precio máximo (a + c)' },
+      { pts: [[3, 6.6], [3, 5], [5, 5]], c: 'f-dwl', t: 'b', at: [3.6, 5.5], n: 'Pérdida de bienestar (b + d)' },
+      { pts: [[3, 5], [3, 3.4], [5, 5]], c: 'f-dwl', t: 'd', at: [3.6, 4.5], n: 'Pérdida de bienestar (b + d)' },
+      { pts: [[0, 1], [0, 3.4], [3, 3.4]], c: 'f-ep', t: 'e', at: [0.9, 2.7], n: 'Excedente del productor con el precio máximo (e)' }],
+    lines: [{ l: D0, k: 'k-d', t: 'D' }, { l: S0, k: 'k-s', t: 'O' }, { l: G.L([0, 3.4], [9.2, 3.4]), k: 'k-v', dash: true }],
+    guides: [{ p: [5, 5], yl: 'P_e', xl: 'Q_e' }, { p: [3, 6.6], yl: 'P_1', xl: 'Q_o' }, { p: [7, 3.4], xl: 'Q_d', noY: true }, { p: [0, 3.4], yl: 'P_{máx}', noX: true, noY: true }],
+    spans: [{ a: [3, 2.8], b: [7, 2.8], t: 'Escasez', below: true }],
+    pts: [{ p: [5, 5], t: 'E', dx: 7, dy: 4 }] }] },
+  cap: 'El precio máximo P_máx se fija por debajo de P_e. Se producen solo Q_o unidades, se demandan Q_d y aparece una escasez Q_d − Q_o. Las letras identifican cada área.',
+  ejes: EJP,
+  curvas: ['**D** y **O** no se desplazan: el control de precios no cambia sus determinantes.', '**P_máx**: recta horizontal **por debajo** de P_e (si estuviera por encima no tendría efecto).', 'A P_máx: movimiento a lo largo de O hasta Q_o y a lo largo de D hasta Q_d.'],
+  eq: ['E (Q_e, P_e) sin intervención: en el dibujo (5; 5).', 'P_máx = 3,4: Q_o = 3 y Q_d = 7.', 'Escasez = Q_d − Q_o = 4 unidades.', 'P₁ = 6,6: precio que algunos estarían dispuestos a pagar por Q_o (riesgo de mercado negro).'],
+  areas: ['**Antes**: EC = a + b; EP = c + d + e.', '**Después**: EC = a + c (los consumidores que consiguen el bien ganan c); EP = e.', '**c** = transferencia de productores a consumidores.', '**Pérdida irrecuperable de bienestar = b + d** (triángulo con vértices (Q_o; P₁), (Q_o; P_máx) y E).'],
+  calc: ['Escasez = `Q_d − Q_o`.', 'Gasto de los consumidores: antes P_e × Q_e = 25; después P_máx × Q_o = 10,2.'],
+  ns: ['Pérdida de bienestar = ½ × (Q_e − Q_o) × (P₁ − P_máx) = ½ × 2 × 3,2 = 3,2.', 'Cálculo de EC y EP antes y después a partir del diagrama.'],
+  cad: ['El gobierno fija P_máx < P_e para proteger a consumidores de bajos ingresos (p. ej., alquileres, alimentos básicos).', 'Los productores reducen la cantidad (Q_o) y los consumidores piden más (Q_d).', 'La escasez genera filas, racionamiento y mercados negros.', 'Hay subasignación de recursos: se pierde b + d de bienestar.'],
+  err: ['Dibujar el precio máximo **por encima** del equilibrio.', 'Desplazar la oferta o la demanda (las curvas no se mueven).', 'Afirmar que todos los consumidores ganan: los que no consiguen el bien pierden.', 'No sombrear la pérdida de bienestar o sombrearla a la derecha de Q_e.', 'Medir la escasez desde Q_e en lugar de desde Q_o.'] },
+
+{ id: 'precio-min', u: 'micro', st: '2.7', stn: 'Función del gobierno en la microeconomía', t: 'Precio mínimo',
+  pr: 'P1 partes a–b · P2 partes c–f',
+  fig: { panels: [
+    { t: 'Efectos sobre el bienestar', ...AXP,
+      areas: [{ pts: [[0, 9], [0, 6.6], [3, 6.6]], c: 'f-ec', t: 'a', at: [0.9, 7.4], n: 'Excedente del consumidor con el precio mínimo (a)' },
+        { pts: [[0, 6.6], [0, 5], [3, 5], [3, 6.6]], c: 'f-ep', t: 'b', n: 'Excedente del productor con el precio mínimo (b + e)' },
+        { pts: [[3, 6.6], [3, 5], [5, 5]], c: 'f-dwl', t: 'c', at: [3.6, 5.5], n: 'Pérdida de bienestar (c + d)' },
+        { pts: [[3, 5], [3, 3.4], [5, 5]], c: 'f-dwl', t: 'd', at: [3.6, 4.5], n: 'Pérdida de bienestar (c + d)' },
+        { pts: [[0, 1], [0, 5], [3, 5], [3, 3.4]], c: 'f-ep', t: 'e', n: 'Excedente del productor con el precio mínimo (b + e)' }],
+      lines: [{ l: D0, k: 'k-d', t: 'D' }, { l: S0, k: 'k-s', t: 'O' }, { l: G.L([0, 6.6], [9.2, 6.6]), k: 'k-v', dash: true }],
+      guides: [{ p: [5, 5], yl: 'P_e', xl: 'Q_e' }, { p: [3, 6.6], xl: 'Q_d', noY: true }, { p: [7, 6.6], xl: 'Q_o', noY: true }, { p: [0, 6.6], yl: 'P_{mín}', noX: true, noY: true }],
+      spans: [{ a: [3, 7.3], b: [7, 7.3], t: 'Excedente' }], pts: [{ p: [5, 5], t: 'E', dx: 7, dy: 4 }] },
+    { t: 'Compra estatal del excedente', ...AXP,
+      areas: [{ pts: [[3, 0], [3, 6.6], [7, 6.6], [7, 0]], c: 'f-gov', t: 'Gasto público', at: [5, 2.2], n: 'Gasto del gobierno en comprar el excedente' }],
+      lines: [{ l: D0, k: 'k-d', t: 'D' }, { l: S0, k: 'k-s', t: 'O' }, { l: G.L([0, 6.6], [9.2, 6.6]), k: 'k-v', dash: true }],
+      guides: [{ p: [5, 5], yl: 'P_e', xl: 'Q_e' }, { p: [3, 6.6], xl: 'Q_d', noY: true }, { p: [7, 6.6], xl: 'Q_o', noY: true }, { p: [0, 6.6], yl: 'P_{mín}', noX: true, noY: true }] }
+  ] },
+  cap: 'P_mín se fija por encima de P_e: los productores ofrecen Q_o y los consumidores compran Q_d. Si el gobierno compra el excedente, gasta P_mín × (Q_o − Q_d).',
+  ejes: EJP,
+  curvas: ['**D** y **O** no se desplazan.', '**P_mín**: recta horizontal **por encima** de P_e.', 'Se aplica en mercados agrícolas (precio sostén) y en el mercado laboral (salario mínimo, ver ficha 3.3).'],
+  eq: ['E (5; 5) sin intervención.', 'P_mín = 6,6: Q_d = 3 y Q_o = 7.', 'Excedente = Q_o − Q_d = 4 unidades.'],
+  areas: ['**Antes**: EC = a + b + c; EP = d + e.', '**Después** (sin compra estatal): EC = a; EP = b + e. **b** = transferencia de consumidores a productores.', '**Pérdida de bienestar = c + d**.', 'Con compra estatal: el rectángulo violeta (Q_d a Q_o, de 0 a P_mín) es el **gasto público**, con costo de oportunidad para otros usos.'],
+  calc: ['Excedente = `Q_o − Q_d`.', 'Gasto público = `P_mín × (Q_o − Q_d)` = 6,6 × 4 = 26,4.', 'Ingreso de los productores con compra estatal = P_mín × Q_o.'],
+  ns: ['Pérdida de bienestar = ½ × (Q_e − Q_d) × (P_mín − 3,4) = ½ × 2 × 3,2 = 3,2 (sin compra estatal).'],
+  cad: ['El gobierno fija P_mín > P_e para sostener el ingreso de los productores.', 'Q_o aumenta y Q_d cae: aparece un excedente.', 'El Estado debe comprar, almacenar o exportar el excedente, con alto costo fiscal.', 'Hay sobreasignación de recursos hacia ese bien y pérdida de bienestar.'],
+  err: ['Dibujar el precio mínimo **por debajo** de P_e.', 'Confundir excedente (cantidad sobrante) con excedente del productor (área).', 'Olvidar el costo de oportunidad del gasto público en la evaluación.', 'Sombrear el gasto público solo entre P_e y P_mín (es todo el rectángulo hasta el eje X).'] },
+
+{ id: 'impuesto-especifico', u: 'micro', st: '2.7', stn: 'Función del gobierno en la microeconomía', t: 'Impuesto indirecto específico (por unidad)',
+  pr: 'P1 partes a–b · P2 partes c–f',
+  fig: { panels: [{ ...AXP,
+    areas: [{ pts: [[0, 5], [0, 6], [3.75, 6], [3.75, 5]], c: 'f-ec', t: 'IC', n: 'Incidencia en el consumidor' }, { pts: [[0, 4], [0, 5], [3.75, 5], [3.75, 4]], c: 'f-ep', t: 'IP', n: 'Incidencia en el productor' }, { pts: [[3.75, 6], [3.75, 4], [5, 5]], c: 'f-dwl', n: 'Pérdida de bienestar' }],
+    lines: [{ l: D0, k: 'k-d', t: 'D' }, { l: S0, k: 'k-s', t: 'O_1' }, { l: G.L([0, 3], [7.5, 9]), k: 'k-s', t: 'O_2' }],
+    guides: [{ p: [5, 5], yl: 'P_e', xl: 'Q_e' }, { p: [3.75, 6], yl: 'P_c', xl: 'Q_t' }, { p: [3.75, 4], yl: 'P_p', noX: true }],
+    spans: [{ a: [7.2, 6.76], b: [7.2, 8.76], t: 't' }],
+    arrows: [{ a: [5.6, 5.7], b: [5.6, 7.3], k: 'k-con' }],
+    pts: [{ p: [5, 5], t: 'E_1', dx: 8, dy: 6 }, { p: [3.75, 6], t: 'E_2', dx: -26, dy: -6 }] }] },
+  cap: 'El impuesto t desplaza la oferta hacia arriba en forma paralela. El consumidor paga P_c, el productor recibe P_p y la diferencia es el impuesto por unidad.',
+  ejes: EJP,
+  curvas: ['**O₁ → O₂**: desplazamiento vertical **paralelo** igual al impuesto t por unidad (aumenta el costo de cada unidad).', '**D** no se mueve; hay movimiento a lo largo de D de E₁ a E₂.'],
+  eq: ['E₁ (Q_e = 5; P_e = 5) inicial.', 'E₂ (Q_t = 3,75; P_c = 6) final.', 'P_p = P_c − t = 4.', 't = P_c − P_p = 2.'],
+  areas: ['**Recaudación** = rectángulo IC + IP = t × Q_t.', '**IC** (amarillo, de P_e a P_c): parte del impuesto que paga el consumidor.', '**IP** (verde, de P_p a P_e): parte que paga el productor.', '**Pérdida de bienestar**: triángulo azul con vértices (Q_t; P_c), (Q_t; P_p) y E₁.'],
+  calc: ['Precio pagado por el consumidor = P_c; precio recibido por el productor = `P_p = P_c − t`.', 'Variación del gasto de los consumidores: P_c × Q_t frente a P_e × Q_e.'],
+  ns: ['Recaudación = t × Q_t = 2 × 3,75 = 7,5.', 'Carga del consumidor = (P_c − P_e) × Q_t = 3,75; carga del productor = (P_e − P_p) × Q_t = 3,75.', 'Pérdida de bienestar = ½ × t × (Q_e − Q_t) = ½ × 2 × 1,25 = 1,25.'],
+  cad: ['El gobierno grava cada unidad vendida (p. ej., ISC sobre cigarrillos).', 'Aumenta el costo de producir: la oferta se desplaza hacia arriba en t.', 'Sube el precio al consumidor, baja el precio neto al productor y cae la cantidad.', 'El Estado recauda, pero se pierde bienestar por la menor cantidad intercambiada.'],
+  err: ['Desplazar la **demanda** en lugar de la oferta.', 'Dibujar O₂ no paralela para un impuesto específico.', 'Marcar P_p sobre O₂ en lugar de sobre O₁.', 'Sombrear como recaudación solo la parte del consumidor.', 'No indicar la distancia vertical t entre las curvas.'] },
+
+{ id: 'impuesto-advalorem', u: 'micro', st: '2.7', stn: 'Función del gobierno en la microeconomía', t: 'Impuesto indirecto ad valorem (porcentual)',
+  pr: 'P1 parte a · P2 partes c–f',
+  fig: { panels: [(() => { const S2 = G.L([0, 1.4], [6.9, 1.4 + 1.12 * 6.9]); const E2 = G.I(D0, S2); const Pp = 1 + 0.8 * E2[0];
+    return { ...AXP,
+      areas: [{ pts: [[0, 5], [0, E2[1]], [E2[0], E2[1]], [E2[0], 5]], c: 'f-ec', t: 'IC', n: 'Incidencia en el consumidor' }, { pts: [[0, Pp], [0, 5], [E2[0], 5], [E2[0], Pp]], c: 'f-ep', t: 'IP', n: 'Incidencia en el productor' }, { pts: [E2, [E2[0], Pp], [5, 5]], c: 'f-dwl', n: 'Pérdida de bienestar' }],
+      lines: [{ l: D0, k: 'k-d', t: 'D' }, { l: S0, k: 'k-s', t: 'O_1' }, { l: S2, k: 'k-s', t: 'O_2' }],
+      guides: [{ p: [5, 5], yl: 'P_e', xl: 'Q_e' }, { p: E2, yl: 'P_c', xl: 'Q_t' }, { p: [E2[0], Pp], yl: 'P_p', noX: true }],
+      spans: [{ a: [1.5, 2.2], b: [1.5, 3.08], t: 'menor' }, { a: [6.5, 6.2], b: [6.5, 8.68], t: 'mayor' }],
+      pts: [{ p: [5, 5], t: 'E_1', dx: 8, dy: 6 }, { p: E2, t: 'E_2', dx: -26, dy: -6 }] }; })()] },
+  cap: 'Con un impuesto porcentual la distancia vertical entre O₁ y O₂ crece con el precio: las curvas divergen.',
+  ejes: EJP,
+  curvas: ['**O₁ → O₂**: desplazamiento **no paralelo**; O₂ = O₁ × (1 + tasa). La brecha aumenta a mayor precio.', 'Ejemplo: IVA del 10 % en Paraguay (impuesto porcentual sobre el precio).', '**D** no se mueve.'],
+  eq: ['E₁ (5; 5).', 'E₂: Q_t ≈ 3,96; P_c ≈ 5,83.', 'P_p ≈ 4,17 = P_c ÷ 1,4.'],
+  areas: ['Recaudación = rectángulo IC + IP = (P_c − P_p) × Q_t.', 'IC = (P_c − P_e) × Q_t; IP = (P_e − P_p) × Q_t.', 'Pérdida de bienestar: triángulo azul entre E₂, (Q_t; P_p) y E₁.'],
+  calc: ['Impuesto por unidad = `P_c − P_p` = tasa × P_p.'],
+  ns: ['Recaudación ≈ 1,67 × 3,96 ≈ 6,6. Cálculos de incidencia y pérdida de bienestar: contenido NS.'],
+  cad: ['Se aplica un porcentaje sobre el precio.', 'El impuesto en guaraníes es mayor cuanto mayor es el precio.', 'La oferta se desplaza hacia arriba y se abre.', 'Sube P_c, baja P_p y cae Q, con pérdida de bienestar.'],
+  err: ['Dibujar O₂ paralela (eso corresponde a un impuesto específico).', 'Hacer que O₂ y O₁ se crucen o que O₂ esté por debajo.', 'No explicar por qué las curvas divergen.', 'Igual que en el específico: no desplazar la demanda.'] },
+
+{ id: 'subvencion', u: 'micro', st: '2.7', stn: 'Función del gobierno en la microeconomía', t: 'Subvención (subsidio) a la producción',
+  pr: 'P1 partes a–b · P2 partes c–f',
+  fig: { panels: [{ ...AXP,
+    areas: [{ pts: [[0, 4], [0, 6], [6.25, 6], [6.25, 4]], c: 'f-gov', t: 'Costo', at: [2.2, 5.5], n: 'Gasto del gobierno en la subvención' }, { pts: [[5, 5], [6.25, 6], [6.25, 4]], c: 'f-dwl', n: 'Pérdida de bienestar' }],
+    lines: [{ l: D0, k: 'k-d', t: 'D' }, { l: S0, k: 'k-s', t: 'O_1' }, { l: G.L([1.25, 0], [10, 7]), k: 'k-s', t: 'O_2' }],
+    guides: [{ p: [5, 5], yl: 'P_e', xl: 'Q_e' }, { p: [6.25, 6], yl: 'P_p', noX: true }, { p: [6.25, 4], yl: 'P_c', xl: 'Q_s' }],
+    arrows: [{ a: [8.3, 7.4], b: [8.3, 5.7], k: 'k-exp' }],
+    pts: [{ p: [5, 5], t: 'E_1', dx: -24, dy: -6 }, { p: [6.25, 4], t: 'E_2', dx: 4, dy: 16 }] }] },
+  cap: 'La subvención s por unidad desplaza la oferta hacia abajo. El consumidor paga P_c, el productor recibe P_p y el Estado paga la diferencia.',
+  ejes: EJP,
+  curvas: ['**O₁ → O₂**: desplazamiento vertical hacia abajo igual a s (reduce el costo por unidad).', '**D** no se mueve: movimiento a lo largo de D hasta E₂.'],
+  eq: ['E₁ (5; 5).', 'E₂ (Q_s = 6,25; P_c = 4).', 'P_p = P_c + s = 6 (leído sobre O₁).'],
+  areas: ['**Costo de la subvención** (violeta) = s × Q_s = rectángulo de P_c a P_p hasta Q_s.', 'Ganancia de los consumidores: entre P_e y P_c; ganancia de los productores: entre P_e y P_p.', '**Pérdida de bienestar** (azul): triángulo E₁, (Q_s; P_p), (Q_s; P_c), por sobreasignación de recursos.'],
+  calc: ['Costo para el gobierno = `s × Q_s`.', 'P_p = P_c + s.'],
+  ns: ['Costo = 2 × 6,25 = 12,5. Pérdida de bienestar = ½ × 2 × 1,25 = 1,25.'],
+  cad: ['El gobierno paga s por unidad producida (p. ej., apoyo a productores agrícolas).', 'Baja el costo de producción: O se desplaza hacia abajo.', 'Baja el precio al consumidor, sube el ingreso del productor y aumenta Q.', 'El costo fiscal tiene costo de oportunidad y, si no hay externalidad, se produce de más.'],
+  err: ['Desplazar la oferta hacia arriba o la demanda hacia la derecha.', 'Sombrear como costo solo la parte entre P_e y P_c.', 'Leer P_p sobre O₂ (se lee sobre O₁ a la cantidad Q_s).', 'Olvidar la pérdida de bienestar cuando no hay externalidad positiva.'] },
+
+{ id: 'incidencia', u: 'micro', st: '2.7', stn: 'Función del gobierno en la microeconomía', t: 'Incidencia del impuesto según la EPD (complementaria)',
+  pr: 'P1 parte b · P2 parte g',
+  fig: { panels: [(() => { const Di = G.L([3.12, 9.6], [5.82, 0.6]); const S2 = G.L([0, 4], [6.75, 9.4]); const E1 = G.I(Di, S0), E2 = G.I(Di, S2), Pp = 1 + 0.8 * E2[0];
+      return { t: 'Demanda inelástica: paga más el consumidor', ...AXP,
+        areas: [{ pts: [[0, E1[1]], [0, E2[1]], [E2[0], E2[1]], [E2[0], E1[1]]], c: 'f-ec', t: 'IC', n: 'Incidencia en el consumidor' }, { pts: [[0, Pp], [0, E1[1]], [E2[0], E1[1]], [E2[0], Pp]], c: 'f-ep', t: 'IP', n: 'Incidencia en el productor' }],
+        lines: [{ l: Di, k: 'k-d', t: 'D', tp: [5.3, 1.6] }, { l: S0, k: 'k-s', t: 'O_1' }, { l: S2, k: 'k-s', t: 'O_2' }],
+        guides: [{ p: E1, yl: 'P_e', ty: -4 }, { p: E2, yl: 'P_c' }, { p: [E2[0], Pp], yl: 'P_p', noX: true, ty: 6 }] }; })(),
+    (() => { const De = G.L([0, 7], [10, 3]); const S2 = G.L([0, 4], [6.75, 9.4]); const E1 = G.I(De, S0), E2 = G.I(De, S2), Pp = 1 + 0.8 * E2[0];
+      return { t: 'Demanda elástica: paga más el productor', ...AXP,
+        areas: [{ pts: [[0, E1[1]], [0, E2[1]], [E2[0], E2[1]], [E2[0], E1[1]]], c: 'f-ec', t: 'IC', n: 'Incidencia en el consumidor' }, { pts: [[0, Pp], [0, E1[1]], [E2[0], E1[1]], [E2[0], Pp]], c: 'f-ep', t: 'IP', n: 'Incidencia en el productor' }],
+        lines: [{ l: De, k: 'k-d', t: 'D' }, { l: S0, k: 'k-s', t: 'O_1' }, { l: S2, k: 'k-s', t: 'O_2' }],
+        guides: [{ p: E1, yl: 'P_e' }, { p: E2, yl: 'P_c' }, { p: [E2[0], Pp], yl: 'P_p', noX: true }] }; })()
+  ] },
+  cap: 'Con el mismo impuesto t = 3, la carga recae sobre el lado del mercado menos sensible al precio.',
+  ejes: EJP,
+  curvas: ['Mismo desplazamiento O₁ → O₂ en ambos paneles.', 'Solo cambia la pendiente (elasticidad) de D.', 'La misma lógica aplica a la EPO: la oferta más inelástica soporta más carga.'],
+  eq: ['Inelástica: P_e ≈ 4,68 → P_c ≈ 7,10; P_p ≈ 4,10. El consumidor paga ≈ 2,42 de los 3.', 'Elástica: P_e = 5 → P_c = 6; P_p = 3. El consumidor paga 1 de los 3.'],
+  areas: ['IC (amarillo) más alto que IP (verde) con demanda inelástica.', 'IP mayor que IC con demanda elástica.'],
+  calc: ['Carga por unidad del consumidor = `P_c − P_e`; del productor = `P_e − P_p`.'],
+  ns: ['Cálculo de la recaudación total y de la carga de cada grupo en guaraníes a partir del diagrama.'],
+  cad: ['El impuesto sube el costo de producir.', 'Si los consumidores no tienen sustitutos (demanda inelástica), aceptan un precio mucho mayor.', 'Por eso los gobiernos gravan bienes como tabaco, alcohol y combustibles: recaudan mucho y la cantidad cae poco.', 'Pero la carga es regresiva para hogares de bajos ingresos.'],
+  err: ['Decir que «el productor traslada todo el impuesto» sin mirar la elasticidad.', 'Concluir que un impuesto sobre un bien inelástico reduce mucho el consumo (reduce poco).', 'No conectar la incidencia con la equidad en la evaluación.'] },
+
+/* ---------- 2.8 ---------- */
+{ id: 'eficiencia', u: 'micro', st: '2.8', stn: 'Fallas de mercado: externalidades y recursos comunes', t: 'Eficiencia en la asignación de recursos (BMS = CMS)',
+  pr: 'P1 parte a · P2 partes c–f',
+  fig: { panels: [{ ...AXW,
+    areas: [{ pts: [[0, 9], [0, 5], [5, 5]], c: 'f-ec', t: 'EC', n: 'Excedente del consumidor' }, { pts: [[0, 1], [0, 5], [5, 5]], c: 'f-ep', t: 'EP', n: 'Excedente del productor' }],
+    lines: [{ l: D0, k: 'k-d', t: 'D = BMP = BMS' }, { l: S0, k: 'k-s', t: 'O = CMP = CMS', tp: [7.4, 8.9] }],
+    guides: [{ p: [5, 5], yl: 'P*', xl: 'Q*' }], pts: [{ p: [5, 5], t: 'E', dx: 8, dy: 4 }] }] },
+  cap: 'Sin externalidades, beneficios y costos privados coinciden con los sociales. El mercado produce Q*, donde BMS = CMS y el excedente social es máximo.',
+  ejes: EJW,
+  curvas: ['**BMP** (beneficio marginal privado) = D. **BMS** (beneficio marginal social) = BMP + beneficio marginal externo.', '**CMP** (costo marginal privado) = O. **CMS** (costo marginal social) = CMP + costo marginal externo.', 'Aquí no hay externalidades: BMP = BMS y CMP = CMS.'],
+  eq: ['E (Q*, P*): **BMS = CMS**, condición de eficiencia en la asignación.'],
+  areas: ['EC (amarillo) + EP (verde) = excedente social máximo.', 'No hay pérdida de bienestar.'],
+  calc: [],
+  cad: ['Cada unidad hasta Q* aporta más beneficio social que costo social.', 'Más allá de Q* el costo social de una unidad supera su beneficio.', 'Por eso Q* maximiza el bienestar: no se puede mejorar reasignando recursos.'],
+  err: ['Escribir la condición como «D = O» sin rotular BMS y CMS.', 'Confundir eficiencia en la asignación con equidad.', 'Olvidar que esta ficha es la referencia para medir las fallas de mercado.'] },
+
+{ id: 'ext-neg-prod', u: 'micro', st: '2.8', stn: 'Fallas de mercado: externalidades y recursos comunes', t: 'Externalidad negativa de la producción',
+  pr: 'P1 partes a–b · P2 partes c–f',
+  fig: { panels: [{ ...AXW,
+    areas: [{ pts: [[3.75, 6], [5, 7], [5, 5]], c: 'f-dwl', n: 'Pérdida de bienestar' }],
+    lines: [{ l: D0, k: 'k-d', t: 'D = BMP = BMS' }, { l: S0, k: 'k-s', t: 'O = CMP' }, { l: G.L([0, 3], [7.5, 9]), k: 'k-s', dash: true, t: 'CMS' }],
+    guides: [{ p: [5, 5], yl: 'P_m', xl: 'Q_m' }, { p: [3.75, 6], yl: 'P_{opt}', xl: 'Q_{opt}' }],
+    spans: [{ a: [7, 6.6], b: [7, 8.6], t: 'costo externo' }],
+    pts: [{ p: [5, 5], t: 'E_m', dx: 6, dy: 14 }, { p: [3.75, 6], t: 'E_{opt}', dx: -32, dy: -6 }] }] },
+  cap: 'El productor no paga el daño que causa (p. ej., humo de una cementera o de quemas). El mercado produce Q_m > Q_opt: hay sobreasignación de recursos.',
+  ejes: EJW,
+  curvas: ['**CMS** por encima de **CMP**: la distancia vertical es el costo marginal externo (daño a terceros).', 'BMP = BMS: no hay efectos externos en el consumo.', 'No es un desplazamiento: CMS es una curva distinta que existe al mismo tiempo que CMP.'],
+  eq: ['Mercado: E_m donde CMP = BMP → (Q_m = 5; P_m = 5).', 'Óptimo social: E_opt donde CMS = BMS → (Q_opt = 3,75; P_opt = 6).', 'Q_m − Q_opt = sobreproducción.'],
+  areas: ['**Pérdida de bienestar**: triángulo azul con vértices E_opt, (Q_m; CMS en Q_m) y E_m. Señala hacia Q_m, entre CMS y BMS, desde Q_opt hasta Q_m.'],
+  calc: ['Costo externo por unidad = `CMS − CMP` (distancia vertical).'],
+  ns: ['Pérdida de bienestar = ½ × (Q_m − Q_opt) × costo externo en Q_m = ½ × 1,25 × 2 = 1,25.'],
+  cad: ['La empresa decide según su CMP e ignora el daño ambiental.', 'El CMS es mayor que el CMP.', 'El mercado produce Q_m, donde CMS > BMS para las unidades entre Q_opt y Q_m.', 'Hay sobreasignación de recursos y pérdida de bienestar: falla de mercado.'],
+  err: ['Sombrear la pérdida de bienestar con el vértice apuntando a Q_opt (debe apuntar hacia Q_m).', 'Dibujar CMS por debajo de CMP.', 'Usar flechas como si la oferta se «desplazara» a CMS.', 'No rotular Q_m y Q_opt.', 'Confundir externalidad de la producción con externalidad del consumo.'] },
+
+{ id: 'ext-neg-cons', u: 'micro', st: '2.8', stn: 'Fallas de mercado: externalidades y recursos comunes', t: 'Externalidad negativa del consumo',
+  pr: 'P1 partes a–b · P2 partes c–f',
+  fig: { panels: [{ ...AXW,
+    areas: [{ pts: [[3.75, 4], [5, 5], [5, 3]], c: 'f-dwl', n: 'Pérdida de bienestar' }],
+    lines: [{ l: D0, k: 'k-d', t: 'D = BMP' }, { l: G.L([0, 7], [8, 0.6]), k: 'k-d', dash: true, t: 'BMS', tp: [5.9, 0.9], ta: 'end' }, { l: S0, k: 'k-s', t: 'O = CMP = CMS', tp: [7.4, 8.9] }],
+    guides: [{ p: [5, 5], yl: 'P_m', xl: 'Q_m' }, { p: [3.75, 4], yl: 'P_{opt}', xl: 'Q_{opt}' }],
+    spans: [{ a: [1.5, 5.8], b: [1.5, 7.8], t: 'costo externo' }],
+    pts: [{ p: [5, 5], t: 'E_m', dx: 6, dy: -8 }, { p: [3.75, 4], t: 'E_{opt}', dx: -36, dy: 4 }] }] },
+  cap: 'El consumo genera daño a terceros (p. ej., humo de tabaco, ruido, congestión vehicular). BMS < BMP y el mercado consume Q_m > Q_opt.',
+  ejes: EJW,
+  curvas: ['**BMS** por debajo de **BMP**: la distancia vertical es el costo externo del consumo.', 'CMP = CMS: no hay efectos externos en la producción.', 'Bienes perjudiciales (demerit goods) se analizan con este diagrama, a veces con información imperfecta.'],
+  eq: ['Mercado: E_m (Q_m = 5; P_m = 5), donde BMP = CMP.', 'Óptimo: E_opt (Q_opt = 3,75; 4), donde BMS = CMS.'],
+  areas: ['**Pérdida de bienestar**: triángulo azul E_opt, E_m, (Q_m; BMS en Q_m), entre CMS y BMS de Q_opt a Q_m.'],
+  calc: ['Costo externo por unidad = `BMP − BMS`.'],
+  ns: ['Pérdida de bienestar = ½ × 1,25 × 2 = 1,25.'],
+  cad: ['El consumidor decide según su BMP e ignora el daño a otros.', 'BMS < BMP.', 'Se consume Q_m, mayor que el óptimo Q_opt.', 'Sobreconsumo y pérdida de bienestar: justifican impuestos, regulación o educación.'],
+  err: ['Poner la externalidad en la curva de oferta.', 'Dibujar la pérdida de bienestar entre BMP y CMP.', 'No indicar que la distancia vertical es el costo externo.', 'Confundir el precio de mercado P_m con un precio «socialmente óptimo».'] },
+
+{ id: 'ext-pos-prod', u: 'micro', st: '2.8', stn: 'Fallas de mercado: externalidades y recursos comunes', t: 'Externalidad positiva de la producción',
+  pr: 'P1 partes a–b · P2 partes c–f',
+  fig: { panels: [{ ...AXW,
+    areas: [{ pts: [[5, 5], [5, 3], [6.25, 4]], c: 'f-dwl', n: 'Pérdida de bienestar' }],
+    lines: [{ l: D0, k: 'k-d', t: 'D = BMP = BMS' }, { l: S0, k: 'k-s', t: 'O = CMP' }, { l: G.L([1.25, 0], [10, 7]), k: 'k-s', dash: true, t: 'CMS', tp: [7.4, 4.0] }],
+    guides: [{ p: [5, 5], yl: 'P_m', xl: 'Q_m' }, { p: [6.25, 4], yl: 'P_{opt}', xl: 'Q_{opt}' }],
+    spans: [{ a: [9, 6.2], b: [9, 8.2], t: 'beneficio externo' }],
+    pts: [{ p: [5, 5], t: 'E_m', dx: -28, dy: -6 }, { p: [6.25, 4], t: 'E_{opt}', dx: 6, dy: 16 }] }] },
+  cap: 'La producción beneficia a terceros (p. ej., capacitación de trabajadores que luego cambian de empresa, apicultura que poliniza cultivos vecinos). Se produce Q_m < Q_opt.',
+  ejes: EJW,
+  curvas: ['**CMS** por debajo de **CMP**: la distancia vertical es el beneficio externo de la producción.', 'BMP = BMS.'],
+  eq: ['Mercado: E_m (5; 5).', 'Óptimo: E_opt (Q_opt = 6,25; P_opt = 4), donde CMS = BMS.'],
+  areas: ['**Pérdida de bienestar** (subasignación): triángulo azul E_m, (Q_m; CMS en Q_m), E_opt. Apunta hacia Q_opt.'],
+  calc: [],
+  ns: ['Pérdida de bienestar = ½ × (6,25 − 5) × 2 = 1,25.'],
+  cad: ['La empresa no recibe pago por el beneficio que genera a otros.', 'Su CMP es mayor que el CMS.', 'Produce Q_m, menos que Q_opt.', 'Hay subasignación de recursos y pérdida de bienestar.'],
+  err: ['Poner el beneficio externo en la curva de demanda.', 'Dibujar el triángulo de pérdida a la izquierda de Q_m.', 'Decir que hay «sobreproducción».', 'No rotular cuál curva es privada y cuál social.'] },
+
+{ id: 'ext-pos-cons', u: 'micro', st: '2.8', stn: 'Fallas de mercado: externalidades y recursos comunes', t: 'Externalidad positiva del consumo',
+  pr: 'P1 partes a–b · P2 partes c–f',
+  fig: { panels: [{ ...AXW,
+    areas: [{ pts: [[5, 7], [5, 5], [6.25, 6]], c: 'f-dwl', n: 'Pérdida de bienestar' }],
+    lines: [{ l: D0, k: 'k-d', t: 'D = BMP' }, { l: G.L([2.5, 9], [10, 3]), k: 'k-d', dash: true, t: 'BMS' }, { l: S0, k: 'k-s', t: 'O = CMP = CMS', tp: [7.2, 9.4] }],
+    guides: [{ p: [5, 5], yl: 'P_m', xl: 'Q_m' }, { p: [6.25, 6], yl: 'P_{opt}', xl: 'Q_{opt}' }],
+    spans: [{ a: [2.6, 6.92], b: [2.6, 8.92], t: 'beneficio externo', left: true }],
+    pts: [{ p: [5, 5], t: 'E_m', dx: 6, dy: 14 }, { p: [6.25, 6], t: 'E_{opt}', dx: -12, dy: -10 }] }] },
+  cap: 'El consumo beneficia a terceros (p. ej., vacunación, educación). BMS > BMP y el mercado consume Q_m < Q_opt. Es el caso típico de los bienes meritorios.',
+  ejes: EJW,
+  curvas: ['**BMS** por encima de **BMP**: la distancia vertical es el beneficio externo del consumo.', 'CMP = CMS.'],
+  eq: ['Mercado: E_m (5; 5).', 'Óptimo: E_opt (Q_opt = 6,25; P_opt = 6), donde BMS = CMS.'],
+  areas: ['**Pérdida de bienestar**: triángulo azul (Q_m; BMS en Q_m), E_m, E_opt, entre BMS y CMS de Q_m a Q_opt.'],
+  calc: [],
+  ns: ['Pérdida de bienestar = ½ × 1,25 × 2 = 1,25.'],
+  cad: ['El consumidor decide según su beneficio privado.', 'Ignora el beneficio a otros (p. ej., menor contagio al vacunarse).', 'Se consume Q_m < Q_opt.', 'Subconsumo: justifica subvenciones, provisión estatal o campañas.'],
+  err: ['Rotular BMS por debajo de BMP.', 'Poner la pérdida de bienestar a la izquierda de Q_m.', 'Confundir bien meritorio con bien público.', 'No dar un ejemplo concreto del beneficio externo.'] },
+
+{ id: 'impuesto-pigou', u: 'micro', st: '2.8', stn: 'Fallas de mercado: externalidades y recursos comunes', t: 'Impuesto pigouviano sobre una externalidad negativa',
+  pr: 'P1 parte b · P2 partes f–g',
+  fig: { panels: [{ ...AXW,
+    areas: [{ pts: [[0, 4], [0, 6], [3.75, 6], [3.75, 4]], c: 'f-gov', t: 'Recaudación', n: 'Recaudación del impuesto' }],
+    lines: [{ l: D0, k: 'k-d', t: 'D = BMP = BMS' }, { l: S0, k: 'k-s', t: 'O_1 = CMP' }, { l: G.L([0, 3], [7.5, 9]), k: 'k-s', dash: true, t: 'O_2 = CMP + t = CMS', tp: [3.2, 9.4] }],
+    guides: [{ p: [5, 5], yl: 'P_1', xl: 'Q_m' }, { p: [3.75, 6], yl: 'P_2', xl: 'Q_{opt}' }, { p: [3.75, 4], yl: 'P_p', noX: true }],
+    arrows: [{ a: [7, 6.8], b: [7, 8.4], k: 'k-con' }],
+    pts: [{ p: [5, 5], t: 'E_1', dx: 6, dy: 14 }, { p: [3.75, 6], t: 'E_2', dx: -24, dy: -6 }] }] },
+  cap: 'Un impuesto igual al costo marginal externo internaliza la externalidad: la nueva oferta coincide con CMS y el mercado produce Q_opt.',
+  ejes: EJW,
+  curvas: ['**O₁ = CMP → O₂ = CMP + t**: el impuesto por unidad es igual al costo externo, por lo que O₂ coincide con **CMS**.', 'D = BMP = BMS no se mueve.'],
+  eq: ['E₁ (Q_m = 5; P₁ = 5) antes del impuesto.', 'E₂ (Q_opt = 3,75; P₂ = 6) después: BMS = CMS.', 'Precio neto del productor P_p = 4.'],
+  areas: ['**Recaudación** (violeta): t × Q_opt, de P_p a P₂.', 'La pérdida de bienestar inicial desaparece si t = costo externo exacto.'],
+  calc: ['Recaudación = `t × Q_opt`.'],
+  ns: ['Recaudación = 2 × 3,75 = 7,5.'],
+  cad: ['El gobierno grava cada unidad con un monto igual al daño externo.', 'El costo privado sube hasta igualar el costo social.', 'La producción cae a Q_opt y se elimina la sobreasignación.', 'El Estado recauda fondos que puede usar para reparar el daño.'],
+  err: ['Hacer que O₂ quede por encima o por debajo de CMS sin explicar (si t ≠ costo externo, la corrección es parcial).', 'Omitir la dificultad de medir el costo externo en la evaluación.', 'Olvidar que la demanda inelástica limita la reducción de Q.', 'No mencionar efectos regresivos sobre hogares de menores ingresos.'] },
+
+{ id: 'impuesto-carbono', u: 'micro', st: '2.8', stn: 'Fallas de mercado: externalidades y recursos comunes', t: 'Impuesto al carbono en una industria muy contaminante',
+  pr: 'P1 parte b · P2 parte g',
+  fig: { panels: [{ ...AXW,
+    areas: [{ pts: [[3.125, 6.5], [4.0625, 7.25], [4.0625, 5.75]], c: 'f-dwl', n: 'Pérdida de bienestar remanente' }],
+    lines: [{ l: D0, k: 'k-d', t: 'D = BMS' }, { l: S0, k: 'k-s', t: 'O_1 = CMP' }, { l: G.L([0, 2.5], [8.6, 9.38]), k: 'k-s', t: 'O_2 = CMP + impuesto', tp: [4.9, 9.6] }, { l: G.L([0, 4], [6.75, 9.4]), k: 'k-s', dash: true, t: 'CMS', tp: [1.2, 6.2] }],
+    guides: [{ p: [5, 5], yl: 'P_1', xl: 'Q_1' }, { p: [4.0625, 5.75], yl: 'P_2', xl: 'Q_2' }, { p: [3.125, 6.5], xl: 'Q_{opt}', noY: true }],
+    arrows: [{ a: [7.6, 7.3], b: [7.6, 8.4], k: 'k-con' }],
+    pts: [{ p: [5, 5], t: 'E_1', dx: 6, dy: 14 }, { p: [4.0625, 5.75], t: 'E_2', dx: 6, dy: 14 }] }] },
+  cap: 'Mercado de una industria intensiva en carbono (p. ej., cemento o generación térmica). El impuesto por tonelada de CO₂ desplaza la oferta hacia arriba; si es menor que el costo externo, la corrección es parcial.',
+  ejes: [['Eje vertical (Y)', 'Precio / costos y beneficios del producto (p. ej., Gs. por tonelada de cemento)'], ['Eje horizontal (X)', 'Cantidad producida (toneladas por año)']],
+  curvas: ['**O₁ = CMP → O₂**: el impuesto se cobra según las emisiones, que crecen con la producción.', 'CMS (punteada): costo social real. Si el impuesto < costo externo, O₂ queda entre CMP y CMS.', 'A largo plazo el impuesto incentiva tecnologías limpias, lo que reduce las emisiones por unidad.'],
+  eq: ['E₁ (Q₁ = 5; P₁ = 5) sin impuesto.', 'E₂ (Q₂ ≈ 4,06; P₂ = 5,75) con un impuesto de 1,5 por unidad, la mitad del costo externo (3).', 'Q_opt ≈ 3,13 sigue siendo menor que Q₂.'],
+  areas: ['**Pérdida de bienestar remanente** (azul): triángulo entre CMS y BMS de Q_opt a Q₂.', 'La parte de la pérdida entre Q₂ y Q₁ se elimina gracias al impuesto.'],
+  calc: ['Recaudación = impuesto por unidad × Q₂.'],
+  cad: ['Se grava cada tonelada de CO₂ emitida.', 'Aumenta el costo de producir bienes intensivos en carbono.', 'Baja la cantidad producida y se incentiva el cambio tecnológico.', 'La eficacia depende del nivel del impuesto, de la EPD y de la cooperación internacional (riesgo de fuga de carbono).'],
+  err: ['Confundir el impuesto al carbono con un permiso de emisiones negociable.', 'Asumir que siempre se alcanza Q_opt.', 'Olvidar en la evaluación la competitividad internacional y la fuga de carbono.', 'No conectar con la cooperación internacional que pide la guía.'] },
+
+{ id: 'subvencion-ext', u: 'micro', st: '2.8', stn: 'Fallas de mercado: externalidades y recursos comunes', t: 'Subvención para corregir una externalidad positiva',
+  pr: 'P1 parte b · P2 partes f–g',
+  fig: { panels: [{ ...AXW,
+    areas: [{ pts: [[0, 4], [0, 6], [6.25, 6], [6.25, 4]], c: 'f-gov', t: 'Costo', at: [2.2, 5.5], n: 'Gasto del gobierno en la subvención' }],
+    lines: [{ l: D0, k: 'k-d', t: 'D = BMP' }, { l: G.L([2.5, 9], [10, 3]), k: 'k-d', dash: true, t: 'BMS' }, { l: S0, k: 'k-s', t: 'O_1 = CMP', tp: [7.4, 9.4] }, { l: G.L([1.25, 0], [10, 7]), k: 'k-s', t: 'O_2 = CMP − s' }],
+    guides: [{ p: [5, 5], yl: 'P_1', xl: 'Q_m' }, { p: [6.25, 4], yl: 'P_2', xl: 'Q_{opt}' }, { p: [6.25, 6], yl: 'P_p', noX: true }],
+    arrows: [{ a: [8.6, 7.6], b: [8.6, 6.0], k: 'k-exp' }],
+    pts: [{ p: [5, 5], t: 'E_1', dx: -26, dy: -6 }, { p: [6.25, 4], t: 'E_2', dx: 6, dy: 16 }] }] },
+  cap: 'Una subvención igual al beneficio externo baja el precio al consumidor hasta que la cantidad llega a Q_opt (p. ej., vacunas o transporte público subsidiado).',
+  ejes: EJW,
+  curvas: ['**O₁ → O₂**: hacia abajo en s = beneficio externo por unidad.', 'BMS (punteada) por encima de BMP: externalidad positiva del consumo.'],
+  eq: ['E₁ (Q_m = 5; P₁ = 5).', 'E₂ (Q_opt = 6,25; P₂ = 4): el consumidor paga 4, el productor recibe P_p = 6.', 'En Q_opt: BMS = CMS (BMS = 6 = CMP).'],
+  areas: ['**Costo de la subvención** (violeta) = s × Q_opt.', 'Se elimina la pérdida de bienestar por subconsumo.'],
+  calc: ['Costo = `s × Q_opt`.'],
+  ns: ['Costo = 2 × 6,25 = 12,5.'],
+  cad: ['El gobierno paga una subvención por unidad a los productores.', 'Baja el costo y la oferta se desplaza hacia abajo.', 'Baja el precio, aumenta el consumo hasta Q_opt.', 'Costo de oportunidad: esos fondos no se usan en otros servicios.'],
+  err: ['Desplazar la demanda (la subvención al productor mueve la oferta).', 'No dibujar BMS para justificar el nuevo nivel.', 'Olvidar el costo fiscal y su costo de oportunidad en la evaluación.', 'Confundir con la subvención sin externalidad (ahí sí genera pérdida de bienestar).'] },
+
+{ id: 'regulacion', u: 'micro', st: '2.8', stn: 'Fallas de mercado: externalidades y recursos comunes', t: 'Legislación y reglamentación frente a una externalidad negativa',
+  pr: 'P1 parte b · P2 parte g',
+  fig: { panels: [{ ...AXW,
+    lines: [{ l: D0, k: 'k-d', t: 'D = BMP = BMS' }, { l: S0, k: 'k-s', t: 'O = CMP' }, { l: G.L([0, 3], [7.5, 9]), k: 'k-s', dash: true, t: 'CMS' }, { l: G.L([3.75, 0], [3.75, 9.6]), k: 'k-v', dash: true, t: 'Límite legal', tp: [3.85, 9.6] }],
+    guides: [{ p: [5, 5], yl: 'P_m', xl: 'Q_m' }, { p: [3.75, 6], yl: 'P_{reg}', noX: true }, { p: [3.75, 0], xl: 'Q_{opt}', noY: true }],
+    arrows: [{ a: [4.9, 1.2], b: [3.95, 1.2], k: 'k-con' }],
+    pts: [{ p: [5, 5], t: 'E_m', dx: 6, dy: 14 }, { p: [3.75, 6], t: 'E_{reg}', dx: -40, dy: -6 }] }] },
+  cap: 'Un límite legal de producción o de emisiones fija la cantidad en Q_opt. El precio sube a P_reg sobre la demanda.',
+  ejes: EJW,
+  curvas: ['**Límite legal**: recta vertical en Q_opt (tope de producción o de emisiones).', 'Alternativa: una norma técnica que obliga a usar equipos más limpios sube el CMP hacia el CMS.', 'D y CMP no se desplazan con un tope de cantidad.'],
+  eq: ['Sin regulación: E_m (5; 5).', 'Con regulación: Q_opt = 3,75 y P_reg = 6 sobre la demanda.'],
+  areas: ['Si el límite coincide con Q_opt, se elimina la pérdida de bienestar del mercado sin intervención.'],
+  calc: [],
+  cad: ['El Estado prohíbe producir o emitir por encima de un límite.', 'Las empresas reducen la producción a Q_opt.', 'El precio sube y se corrige la sobreasignación.', 'Requiere control y sanciones creíbles; no genera recaudación.'],
+  err: ['Dibujar el límite como recta horizontal (es una cantidad, vertical).', 'Ignorar los costos de supervisión y el riesgo de incumplimiento.', 'Suponer que el regulador conoce Q_opt con exactitud.', 'No comparar con el impuesto (que sí recauda e incentiva innovar).'] },
+
+{ id: 'educacion', u: 'micro', st: '2.8', stn: 'Fallas de mercado: externalidades y recursos comunes', t: 'Educación y sensibilización (desplazamiento de la demanda)',
+  pr: 'P1 parte b · P2 parte g',
+  fig: { panels: [
+    { t: 'Externalidad negativa del consumo', ...AXW,
+      lines: [{ l: D0, k: 'k-d', t: 'D_1 = BMP' }, { l: G.L([0, 7], [8, 0.6]), k: 'k-d', t: 'D_2 = BMS', tp: [5.9, 0.9], ta: 'end' }, { l: S0, k: 'k-s', t: 'O = CMS', tp: [7.6, 9.2] }],
+      guides: [{ p: [5, 5], yl: 'P_1', xl: 'Q_1' }, { p: [3.75, 4], yl: 'P_2', xl: 'Q_2' }],
+      arrows: [{ a: [2.6, 6.6], b: [1.4, 6.6], k: 'k-con' }], pts: [{ p: [5, 5] }, { p: [3.75, 4] }] },
+    { t: 'Externalidad positiva del consumo', ...AXW,
+      lines: [{ l: D0, k: 'k-d', t: 'D_1 = BMP' }, { l: G.L([2.5, 9], [10, 3]), k: 'k-d', t: 'D_2 = BMS' }, { l: S0, k: 'k-s', t: 'O = CMS', tp: [7.4, 9.4] }],
+      guides: [{ p: [5, 5], yl: 'P_1', xl: 'Q_1' }, { p: [6.25, 6], yl: 'P_2', xl: 'Q_2' }],
+      arrows: [{ a: [2.4, 7.4], b: [4.0, 7.4], k: 'k-exp' }], pts: [{ p: [5, 5] }, { p: [6.25, 6] }] }
+  ] },
+  cap: 'Las campañas informativas cambian las preferencias: la demanda privada se acerca a la social. Izquierda: menos consumo de un bien perjudicial. Derecha: más consumo de un bien meritorio.',
+  ejes: EJW,
+  curvas: ['Izquierda: **D₁ → D₂** (a la izquierda) cuando los consumidores conocen el daño (p. ej., campañas antitabaco).', 'Derecha: **D₁ → D₂** (a la derecha) cuando conocen el beneficio (p. ej., campañas de vacunación).', 'La oferta no se mueve.'],
+  eq: ['Izquierda: (5; 5) → (3,75; 4).', 'Derecha: (5; 5) → (6,25; 6).'],
+  areas: ['Si la demanda llega a BMS, desaparece la pérdida de bienestar.'],
+  calc: [],
+  cad: ['El gobierno informa sobre los efectos del consumo.', 'Los consumidores corrigen su información imperfecta.', 'La demanda privada se desplaza hacia la social.', 'La cantidad se acerca al óptimo; el efecto es lento e incierto.'],
+  err: ['Desplazar la oferta en lugar de la demanda.', 'Afirmar que la educación tiene efecto inmediato.', 'No mencionar el costo de las campañas.', 'Olvidar que la información imperfecta es la causa que se corrige.'] }
+];
+/* ================= MACROECONOMÍA (Unidad 3) ================= */
+const AXM = { y: 'Nivel general de precios', x: 'PIB real (Y)' };
+const EJM = [['Eje vertical (Y)', 'Nivel general de precios (NGP), medido con un índice (IPC o deflactor del PIB)'], ['Eje horizontal (X)', 'Producción real o PIB real (Y), en guaraníes constantes por año']];
+function clipL(m, b, x0 = 0.2, x1 = 9.7, y0 = 0.6, y1 = 9.4) {
+  let xa = x0, xb = x1;
+  if (m !== 0) { const p = (y0 - b) / m, q = (y1 - b) / m; xa = Math.max(xa, Math.min(p, q)); xb = Math.min(xb, Math.max(p, q)); }
+  return G.L([xa, m * xa + b], [xb, m * xb + b]);
+}
+const DA = c => clipL(-1, c);          // NGP = c − Y
+const OACP = c => clipL(1, c);         // NGP = Y + c
+const OALP = x => G.L([x, 0.4], [x, 9.4]);
+const kY = P => 8 - 4 * Math.exp(-(P - 3) / 1.3);   // OA keynesiana: Y en función del NGP
+const KAS = (s = 0) => [[0.4, 3], [4 + s, 3]].concat(G.sampY(P => kY(P) + s, 3, 9.4, 50).slice(1));
+function kInt(c, s = 0) {
+  if (c - 3 <= 4 + s) return [c - 3, 3];
+  let lo = 3, hi = 9.4;
+  for (let i = 0; i < 60; i++) { const m = (lo + hi) / 2; if (kY(m) + s - (c - m) > 0) hi = m; else lo = m; }
+  return [c - lo, lo];
+}
+const EJL = [['Eje vertical (Y)', 'Salario real (W), en guaraníes por hora o por mes, ajustado por inflación'], ['Eje horizontal (X)', 'Cantidad de trabajo (L), en trabajadores u horas por período']];
+const AXL = { y: 'Salario real (W)', x: 'Cantidad de trabajo (L)' };
+
+const MACRO = [
+/* ---------- 3.1 ---------- */
+{ id: 'flujo-circular', u: 'macro', st: '3.1', stn: 'Medición de la actividad económica', t: 'Flujo circular del ingreso con fugas e inyecciones',
+  pr: 'P1 parte a · P2 partes b–d',
+  fig: { flow: { w: 780, h: 480, aria: 'Flujo circular del ingreso',
+    nodes: [{ id: 'h', x: 105, y: 260, w: 170, h: 74, t: 'Hogares\n(propietarios de\nlos factores)', c: 'hl' }, { id: 'e', x: 675, y: 260, w: 170, h: 74, t: 'Empresas\n(producen bienes\ny servicios)', c: 'hl' },
+      { id: 'f', x: 390, y: 175, w: 200, h: 44, t: 'Sector financiero' }, { id: 'g', x: 390, y: 260, w: 200, h: 44, t: 'Gobierno' }, { id: 'x', x: 390, y: 345, w: 200, h: 44, t: 'Sector externo' }],
+    edges: [{ f: 'h', t: 'e', via: [390, -10], l: 'Gasto de consumo (C)', lp: [390, 110] },
+      { f: 'e', t: 'h', via: [390, 530], l: 'Ingreso de los factores (Y):\nsalarios, rentas, intereses y ganancias', lp: [390, 418] },
+      { f: 'h', t: 'f', l: 'Ahorro (S)', k: 'k-con', lp: [236, 202], la: 'end' }, { f: 'f', t: 'e', l: 'Inversión (I)', k: 'k-exp', lp: [544, 202], la: 'start' },
+      { f: 'h', t: 'g', l: 'Impuestos (T)', k: 'k-con', lp: [240, 252] }, { f: 'g', t: 'e', l: 'Gasto público (G)', k: 'k-exp', lp: [540, 252] },
+      { f: 'h', t: 'x', l: 'Importaciones (M)', k: 'k-con', lp: [232, 336], la: 'end' }, { f: 'x', t: 'e', l: 'Exportaciones (X)', k: 'k-exp', lp: [548, 336], la: 'start' }],
+    notes: [{ p: [20, 470], t: 'Fugas (rojo): S + T + M', a: 'start' }, { p: [760, 470], t: 'Inyecciones (verde): I + G + X', a: 'end' }] } },
+  cap: 'Economía abierta con gobierno. Las fugas salen del flujo de ingreso; las inyecciones vuelven a entrar como gasto en las empresas. El ingreso es estable cuando fugas = inyecciones.',
+  ejes: [['Diagrama sin ejes', 'Flujo de dinero entre agentes. Rotulá cada flecha con el flujo y su sigla (C, Y, S, I, T, G, M, X).']],
+  curvas: ['Flujo interno: hogares gastan (C) en empresas; empresas pagan ingresos (Y) a los hogares por los factores.', '**Fugas** (rojo): ahorro (S), impuestos (T), importaciones (M).', '**Inyecciones** (verde): inversión (I), gasto público (G), exportaciones (X).', 'Si inyecciones > fugas, el ingreso nacional crece; si inyecciones < fugas, se contrae.'],
+  eq: ['Equilibrio del ingreso nacional: **S + T + M = I + G + X**.', 'Producción = ingreso = gasto: tres métodos para medir el PIB.'],
+  areas: [],
+  calc: ['PIB por el método del gasto: `PIB = C + I + G + (X − M)`.', 'INB = PIB + ingresos netos del exterior.', 'PIB real = PIB nominal ÷ deflactor × 100; PIB real per cápita = PIB real ÷ población.'],
+  cad: ['Aumenta una inyección (p. ej., exportaciones de soja).', 'Las empresas venden más y pagan más ingresos a los hogares.', 'Los hogares gastan una parte y el resto se va en fugas.', 'El ingreso nacional sube hasta que fugas e inyecciones vuelven a igualarse.'],
+  err: ['Poner las flechas en sentido inverso (el gasto va de hogares a empresas).', 'Confundir fugas con inyecciones (el ahorro es fuga, la inversión es inyección).', 'Omitir los rótulos de los flujos.', 'Decir que las importaciones son inyección.'] },
+
+{ id: 'ciclo-economico', u: 'macro', st: '3.1', stn: 'Medición de la actividad económica', t: 'Ciclo económico y tendencia de crecimiento a largo plazo',
+  pr: 'P1 parte a · P2 partes c–e',
+  fig: { panels: [(() => { const tr = x => 2.5 + 0.5 * x, cy = x => tr(x) + 1.3 * Math.sin(2 * Math.PI * (x - 0.5) / 5.5);
+    return { wide: true, W: 520, xmax: 12, y: 'PIB real (Y)', x: 'Tiempo (años)',
+      lines: [{ l: G.L([0, 2.5], [12, 8.5]), k: 'k-oalp', dash: true, t: 'Tendencia (producción potencial)', tp: [0.3, 1.2] }],
+      paths: [{ pts: G.samp(cy, 0, 12, 120), k: 'k-da', t: 'PIB real efectivo', tp: [10.3, 4.9] }],
+      spans: [{ a: [7.375, tr(7.375)], b: [7.375, cy(7.375)] }, { a: [4.625, tr(4.625)], b: [4.625, cy(4.625)] }],
+      pts: [{ p: [1.875, cy(1.875)], t: 'Pico', a: 'middle', dx: 0, dy: -12 }, { p: [4.625, cy(4.625)], t: 'Valle (brecha recesiva)', a: 'middle', dx: 0, dy: 20 }, { p: [7.375, cy(7.375)], t: 'Pico (brecha inflacionaria)', a: 'middle', dx: 0, dy: -12 }, { p: [10.125, cy(10.125)], t: 'Valle', a: 'middle', dx: 0, dy: 20 }],
+      notes: [{ p: [3.25, 5.6], t: 'Recesión' }, { p: [5.9, 6.6], t: 'Recuperación y auge', a: 'end' }] }; })()] },
+  cap: 'El PIB real efectivo fluctúa en torno a su tendencia de largo plazo. La pendiente de la tendencia es el crecimiento de la producción potencial.',
+  ejes: [['Eje vertical (Y)', 'PIB real (Y), en guaraníes constantes por año'], ['Eje horizontal (X)', 'Tiempo, en años']],
+  curvas: ['**Tendencia** (recta discontinua): crecimiento de la producción potencial a largo plazo.', '**PIB real efectivo** (curva): fluctuaciones de corto plazo.', 'Fases: auge (expansión), pico, recesión (dos trimestres seguidos de crecimiento negativo), valle, recuperación.'],
+  eq: ['En el pico: PIB efectivo > potencial → **brecha inflacionaria**.', 'En el valle: PIB efectivo < potencial → **brecha recesiva** (deflacionaria).', 'Donde la curva cruza la tendencia: brecha cero.'],
+  areas: [],
+  calc: ['Tasa de crecimiento económico = `(PIB real₂ − PIB real₁) ÷ PIB real₁ × 100`.', 'Una recesión implica variación negativa del PIB **real**, no solo menor crecimiento.'],
+  cad: ['La demanda agregada fluctúa (confianza, crédito, exportaciones).', 'La producción efectiva se aleja de la potencial.', 'En recesión aumenta el desempleo cíclico; en auge sube la inflación.', 'Las políticas de demanda buscan suavizar el ciclo.'],
+  err: ['Rotular el eje Y como «PIB nominal».', 'Confundir una caída de la tasa de crecimiento con una recesión.', 'Dibujar la tendencia horizontal (sin crecimiento de largo plazo).', 'No señalar las brechas respecto de la producción potencial.'] },
+
+/* ---------- 3.2 ---------- */
+{ id: 'da', u: 'macro', st: '3.2', stn: 'Demanda agregada y oferta agregada', t: 'Curva de demanda agregada (DA)',
+  pr: 'P2 partes b–d',
+  fig: { panels: [{ ...AXM, lines: [{ l: DA(10), k: 'k-da', t: 'DA' }],
+    guides: [{ p: [3, 7], yl: 'NGP_1', xl: 'Y_1' }, { p: [7, 3], yl: 'NGP_2', xl: 'Y_2' }], pts: [{ p: [3, 7], t: 'A' }, { p: [7, 3], t: 'B' }] }] },
+  cap: 'Al bajar el nivel general de precios, aumenta la cantidad demandada de producción real: movimiento a lo largo de la DA.',
+  ejes: EJM,
+  curvas: ['**DA = C + I + G + (X − M)**: gasto total planeado en bienes y servicios finales a cada nivel de precios.', 'Pendiente negativa por: efecto riqueza (el dinero compra más), efecto tasa de interés (menos demanda de dinero, tasas más bajas) y efecto comercio internacional (bienes nacionales más competitivos).', 'Un cambio del NGP provoca un **movimiento a lo largo** de la DA.'],
+  eq: ['A (Y₁, NGP₁) → B (Y₂, NGP₂).'],
+  areas: [],
+  calc: ['Contribución de cada componente: participación = componente ÷ PIB × 100.'],
+  cad: ['Baja el nivel general de precios.', 'Aumenta el poder de compra, bajan las tasas de interés y mejoran las exportaciones netas.', 'Aumenta el gasto real en la economía.', 'Se demanda más producción real: movimiento de A a B.'],
+  err: ['Rotular el eje Y como «Precio» (en macro es nivel general de precios).', 'Explicar la pendiente con la sustitución entre bienes (eso es micro).', 'Rotular el eje X como «Cantidad» en lugar de PIB real.', 'Confundir DA con demanda de un mercado.'] },
+
+{ id: 'da-desplaz', u: 'macro', st: '3.2', stn: 'Demanda agregada y oferta agregada', t: 'Desplazamientos de la demanda agregada',
+  pr: 'P1 parte a · P2 partes c–f',
+  fig: { panels: [{ ...AXM, lines: [{ l: DA(10), k: 'k-da', t: 'DA_1' }, { l: DA(12), k: 'k-da', t: 'DA_2' }, { l: DA(8), k: 'k-da', t: 'DA_3' }],
+    arrows: [{ a: [2.3, 8], b: [3.7, 8], k: 'k-exp' }, { a: [3.7, 6], b: [2.3, 6], k: 'k-con' }] }] },
+  cap: 'Un aumento de cualquier componente de la DA por una causa distinta del NGP desplaza la curva a la derecha (verde); una disminución, a la izquierda (rojo).',
+  ejes: EJM,
+  curvas: ['**DA₁ → DA₂** (derecha): aumento de C, I, G o (X − M).', '**DA₁ → DA₃** (izquierda): disminución de algún componente.', 'Determinantes de C: confianza, riqueza, ingreso, tasas de interés, endeudamiento, impuestos.', 'Determinantes de I: tasas de interés, confianza empresarial, tecnología, impuestos a las empresas, endeudamiento.', 'G: prioridades políticas y económicas. (X − M): ingreso de los socios comerciales, tipo de cambio, proteccionismo.'],
+  eq: ['El diagrama muestra solo la DA; con la OA se determina el nuevo equilibrio.'],
+  areas: [],
+  calc: [],
+  cad: ['Baja la tasa de interés del BCP.', 'Se abarata el crédito: aumentan el consumo de bienes durables y la inversión.', 'Aumentan C e I.', 'La DA se desplaza a la derecha.'],
+  err: ['Desplazar la DA porque cambió el nivel de precios (eso es movimiento a lo largo).', 'Afirmar que la depreciación desplaza la DA a la izquierda (la desplaza a la derecha si sube X − M).', 'Olvidar la flecha y los subíndices.', 'Mezclar causas de oferta (costos) como si movieran la DA.'] },
+
+{ id: 'oacp', u: 'macro', st: '3.2', stn: 'Demanda agregada y oferta agregada', t: 'Curva de oferta agregada a corto plazo (OACP)',
+  pr: 'P2 partes b–d',
+  fig: { panels: [{ ...AXM, lines: [{ l: OACP(0), k: 'k-oacp', t: 'OACP' }],
+    guides: [{ p: [3, 3], yl: 'NGP_1', xl: 'Y_1' }, { p: [7, 7], yl: 'NGP_2', xl: 'Y_2' }], pts: [{ p: [3, 3], t: 'A', dx: 8, dy: 4 }, { p: [7, 7], t: 'B', dx: 8, dy: 4 }] }] },
+  cap: 'A corto plazo los costos de los factores (sobre todo salarios) están fijos: un NGP mayor hace rentable producir más.',
+  ejes: EJM,
+  curvas: ['**OACP** con pendiente positiva: salarios y otros costos rígidos a corto plazo por contratos.', 'Al subir el NGP con costos fijos, aumenta el margen y las empresas producen más.', 'Un cambio del NGP es un **movimiento a lo largo** de la OACP.'],
+  eq: ['A (Y₁, NGP₁) → B (Y₂, NGP₂).'],
+  areas: [],
+  calc: [],
+  cad: ['Sube el nivel general de precios.', 'Los salarios nominales no cambian de inmediato.', 'Aumenta la rentabilidad de producir.', 'Las empresas ofrecen más producción real.'],
+  err: ['Explicar la pendiente con la ley de la oferta de un mercado.', 'Rotular OA sin especificar corto plazo.', 'Dibujar la OACP vertical (esa es la OALP).'] },
+
+{ id: 'oacp-desplaz', u: 'macro', st: '3.2', stn: 'Demanda agregada y oferta agregada', t: 'Desplazamientos de la oferta agregada a corto plazo',
+  pr: 'P1 parte a · P2 partes c–f',
+  fig: { panels: [{ ...AXM, lines: [{ l: OACP(0), k: 'k-oacp', t: 'OACP_1' }, { l: OACP(-2), k: 'k-oacp', t: 'OACP_2' }, { l: OACP(2), k: 'k-oacp', t: 'OACP_3' }],
+    arrows: [{ a: [6.3, 6], b: [7.7, 6], k: 'k-exp' }, { a: [3.7, 4], b: [2.3, 4], k: 'k-con' }] }] },
+  cap: 'Menores costos de producción desplazan la OACP a la derecha (verde); mayores costos, a la izquierda (rojo).',
+  ejes: EJM,
+  curvas: ['**OACP₁ → OACP₂** (derecha): baja el costo de los factores o de insumos importados, subvenciones a las empresas.', '**OACP₁ → OACP₃** (izquierda): suben salarios, precios de la energía o del petróleo, impuestos indirectos; shocks de oferta (sequía, inundación).', 'Ejemplo: una sequía que reduce la generación hidroeléctrica y la cosecha de soja desplaza la OACP a la izquierda.'],
+  eq: ['Con una DA dada: desplazamiento a la derecha → NGP baja y Y sube; a la izquierda → NGP sube y Y baja.'],
+  areas: [],
+  calc: [],
+  cad: ['Sube el precio internacional del petróleo.', 'Aumentan los costos de transporte y producción.', 'A cada NGP las empresas producen menos.', 'La OACP se desplaza a la izquierda.'],
+  err: ['Desplazar la OACP por un aumento de la demanda.', 'Confundir el desplazamiento de la OACP con el de la OALP (capacidad productiva).', 'No usar flechas ni subíndices.'] },
+
+{ id: 'oa-perspectivas', u: 'macro', st: '3.2', stn: 'Demanda agregada y oferta agregada', t: 'Perspectivas alternativas de la oferta agregada',
+  pr: 'P1 partes a–b · P2 parte g',
+  fig: { panels: [
+    { t: 'Monetarista / neoclásica', ...AXM, lines: [{ l: OACP(0), k: 'k-oacp', t: 'OACP' }, { l: OALP(5), k: 'k-oalp', t: 'OALP', tp: [5.15, 9.5] }], guides: [{ p: [5, 0], xl: 'Y_f', noY: true }] },
+    { t: 'Keynesiana', ...AXM, paths: [{ pts: KAS(0), k: 'k-oalp', t: 'OA keynesiana', tp: [5.2, 9.6] }], guides: [{ p: [8, 0], xl: 'Y_f', noY: true }, { p: [0, 3], yl: 'NGP_1', noX: true, noY: true }],
+      lines: [{ l: G.L([8, 0], [8, 9.4]), k: 'k-n', dash: true, thin: true }],
+      notes: [{ p: [2.2, 3.5], t: 'I' }, { p: [6.3, 4.9], t: 'II' }, { p: [8.5, 8.0], t: 'III' }] }
+  ] },
+  cap: 'Monetaristas: a largo plazo la economía vuelve a Y_f (OALP vertical). Keynesianos: puede haber equilibrio con desempleo prolongado (tramo I horizontal).',
+  ejes: EJM,
+  curvas: ['**Monetarista/neoclásica**: OACP con pendiente positiva y **OALP vertical** en el nivel de pleno empleo Y_f. La OALP depende de la cantidad y calidad de los factores, no del NGP.', '**Keynesiana**: tramo I horizontal (mucha capacidad ociosa: más producción sin subir precios), tramo II creciente (cuellos de botella), tramo III vertical en Y_f (pleno empleo).', 'En la keynesiana los precios y salarios son rígidos a la baja.'],
+  eq: ['Monetarista: equilibrio de largo plazo siempre en Y_f.', 'Keynesiana: el equilibrio puede quedar en el tramo I, lejos de Y_f, por tiempo indefinido.'],
+  areas: [],
+  calc: [],
+  cad: ['Los monetaristas confían en la flexibilidad de salarios y precios.', 'Una brecha recesiva se corrige sola cuando bajan los salarios.', 'Los keynesianos sostienen que los salarios no bajan con facilidad.', 'Por eso recomiendan políticas de demanda activas en recesión.'],
+  err: ['Dibujar la OA keynesiana sin tramo horizontal o sin tramo vertical.', 'Rotular la OALP sin Y_f en el eje X.', 'Atribuir la OALP vertical a los keynesianos.', 'No aclarar que el tramo I implica capacidad ociosa y desempleo.'] },
+
+{ id: 'oalp-desplaz', u: 'macro', st: '3.2', stn: 'Demanda agregada y oferta agregada', t: 'Desplazamientos de la OALP y de la OA keynesiana',
+  pr: 'P1 parte a · P2 partes c–f',
+  fig: { panels: [
+    { t: 'Monetarista: OALP', ...AXM, lines: [{ l: OALP(5), k: 'k-oalp', t: 'OALP_1', tp: [5.15, 9.5] }, { l: OALP(7), k: 'k-oalp', t: 'OALP_2', tp: [7.15, 9.5] }],
+      guides: [{ p: [5, 0], xl: 'Y_{f1}', noY: true }, { p: [7, 0], xl: 'Y_{f2}', noY: true }], arrows: [{ a: [5.2, 6], b: [6.8, 6], k: 'k-exp' }] },
+    { t: 'Keynesiana', ...AXM, paths: [{ pts: KAS(0), k: 'k-oalp', t: 'OA_1', tp: [6.6, 9.6] }, { pts: KAS(1.5), k: 'k-oalp', t: 'OA_2', tp: [9.6, 8.6] }],
+      guides: [{ p: [8, 0], xl: 'Y_{f1}', noY: true }, { p: [9.5, 0], xl: 'Y_{f2}', noY: true }], arrows: [{ a: [7.0, 5.6], b: [8.6, 5.6], k: 'k-exp' }] }
+  ] },
+  cap: 'Un aumento de la cantidad o calidad de los factores, o una mejora tecnológica, aumenta la producción potencial: Y_f se desplaza a la derecha.',
+  ejes: EJM,
+  curvas: ['**OALP₁ → OALP₂**: aumento de la capacidad productiva de la economía.', '**OA₁ → OA₂** keynesiana: todo el tramo vertical se mueve a la derecha (nuevo Y_f).', 'Causas: más y mejor capital (infraestructura, maquinaria), educación y capacitación, inmigración, tecnología, eficiencia institucional, políticas del lado de la oferta.'],
+  eq: ['Y_f₁ → Y_f₂: aumento del PIB potencial.'],
+  areas: [],
+  calc: [],
+  cad: ['Se invierte en infraestructura (rutas, energía) y en educación técnica.', 'Aumenta la productividad de los factores.', 'La economía puede producir más a pleno empleo.', 'La OALP se desplaza a la derecha: crecimiento a largo plazo.'],
+  err: ['Desplazar la OALP por un cambio de la DA.', 'Confundir una mejora de costos de corto plazo (OACP) con un aumento de capacidad (OALP).', 'No rotular Y_f₁ y Y_f₂.'] },
+
+{ id: 'equilibrio-macro', u: 'macro', st: '3.2', stn: 'Demanda agregada y oferta agregada', t: 'Equilibrio macroeconómico de corto y largo plazo',
+  pr: 'P1 partes a–b · P2 partes c–f',
+  fig: { panels: [
+    { t: 'Largo plazo (monetarista)', ...AXM, lines: [{ l: DA(10), k: 'k-da', t: 'DA' }, { l: OACP(0), k: 'k-oacp', t: 'OACP' }, { l: OALP(5), k: 'k-oalp', t: 'OALP', tp: [5.15, 9.5] }],
+      guides: [{ p: [5, 5], yl: 'NGP_e', xl: 'Y_f' }], pts: [{ p: [5, 5], t: 'E', dx: 9, dy: 4 }] },
+    { t: 'Brecha recesiva y ajuste', ...AXM, lines: [{ l: DA(8), k: 'k-da', t: 'DA' }, { l: OACP(0), k: 'k-oacp', t: 'OACP_1' }, { l: OACP(-2), k: 'k-oacp', dash: true, t: 'OACP_2' }, { l: OALP(5), k: 'k-oalp', t: 'OALP', tp: [5.15, 9.5] }],
+      guides: [{ p: [4, 4], yl: 'NGP_1', xl: 'Y_1' }, { p: [5, 3], yl: 'NGP_2', xl: 'Y_f' }], spans: [{ a: [4, 1.6], b: [5, 1.6], t: 'Brecha', below: true }],
+      arrows: [{ a: [6.2, 6.6], b: [7.8, 6.6], k: 'k-exp' }], pts: [{ p: [4, 4], t: 'E_1', dx: -26 }, { p: [5, 3], t: 'E_2', dx: 8, dy: 14 }] },
+    { t: 'Brecha inflacionaria y ajuste', ...AXM, lines: [{ l: DA(12), k: 'k-da', t: 'DA' }, { l: OACP(0), k: 'k-oacp', t: 'OACP_1' }, { l: OACP(2), k: 'k-oacp', dash: true, t: 'OACP_2' }, { l: OALP(5), k: 'k-oalp', t: 'OALP', tp: [5.15, 9.5] }],
+      guides: [{ p: [6, 6], yl: 'NGP_1', xl: 'Y_1' }, { p: [5, 7], yl: 'NGP_2', xl: 'Y_f' }], spans: [{ a: [5, 1.6], b: [6, 1.6], t: 'Brecha', below: true }],
+      arrows: [{ a: [7.8, 8.3], b: [6.4, 8.3], k: 'k-con' }], pts: [{ p: [6, 6], t: 'E_1', dx: 8, dy: 12 }, { p: [5, 7], t: 'E_2', dx: -26 }] },
+    (() => { const E = kInt(9); return { t: 'Keynesiano: equilibrio con desempleo', ...AXM, paths: [{ pts: KAS(0), k: 'k-oalp', t: 'OA keynesiana', tp: [5.2, 9.6] }], lines: [{ l: DA(9), k: 'k-da', t: 'DA' }],
+      guides: [{ p: E, yl: 'NGP_e', xl: 'Y_e' }, { p: [8, 0], xl: 'Y_f', noY: true }], spans: [{ a: [E[0], 1.6], b: [8, 1.6], t: 'Brecha', below: true }], pts: [{ p: E, t: 'E', dx: -16, dy: -8 }] }; })()
+  ] },
+  cap: 'Monetaristas: las brechas se cierran solas a largo plazo porque los salarios se ajustan (OACP₁ → OACP₂). Keynesianos: la brecha recesiva puede persistir sin intervención.',
+  ejes: EJM,
+  curvas: ['Corto plazo: equilibrio donde **DA = OACP**.', 'Largo plazo (monetarista): **DA = OACP = OALP** en Y_f.', 'Brecha recesiva: el desempleo presiona los salarios a la baja → OACP a la derecha (verde) → vuelta a Y_f con NGP menor.', 'Brecha inflacionaria: la escasez de mano de obra sube los salarios → OACP a la izquierda (rojo) → vuelta a Y_f con NGP mayor.'],
+  eq: ['Largo plazo: E (Y_f = 5; NGP = 5).', 'Recesiva: E₁ (4; 4) → E₂ (5; 3).', 'Inflacionaria: E₁ (6; 6) → E₂ (5; 7).', 'Keynesiano: E con Y_e < Y_f = 8.'],
+  areas: [],
+  calc: ['Brecha de producción = `Y efectivo − Y_f` (negativa: recesiva; positiva: inflacionaria).', 'Brecha en % = (Y − Y_f) ÷ Y_f × 100.'],
+  cad: ['Cae la DA y la economía queda en E₁, por debajo de Y_f.', 'Aumenta el desempleo cíclico.', 'Monetaristas: los salarios bajan, la OACP se desplaza a la derecha y se vuelve a Y_f.', 'Keynesianos: los salarios son rígidos; sin política activa la brecha persiste.'],
+  err: ['Mostrar la brecha en el eje de precios (se mide en el eje del PIB real).', 'Olvidar la OALP al hablar de largo plazo.', 'Llamar «deflacionaria» a una brecha inflacionaria o al revés.', 'Mezclar los dos modelos en un mismo diagrama sin aclararlo.'] },
+
+/* ---------- 3.3 ---------- */
+{ id: 'cpp-crecimiento', u: 'macro', st: '3.3', stn: 'Objetivos macroeconómicos', t: 'CPP: crecimiento real y aumento de las posibilidades de producción',
+  pr: 'P1 parte a',
+  fig: { panels: [{ y: 'Bienes de capital (unid./año)', x: 'Bienes de consumo (unid./año)',
+    paths: [{ pts: cppA, t: 'CPP_1', tp: [8.15, 0.5] }, { pts: cppB, k: 'k-exp', t: 'CPP_2', tp: [8.1, 5.6] }],
+    arrows: [{ a: [3, 3], b: [4.6, 6.2] }, { a: [4.95, 6.55], b: [5.75, cpp2(5.9) - 0.15], k: 'k-exp' }],
+    pts: [{ p: [3, 3], t: 'A', dx: -16, dy: 4 }, { p: [4.8, cpp1(4.8)], t: 'B', dx: -16 }, { p: [5.9, cpp2(5.9)], t: 'C', dx: 6, dy: -6 }] }] },
+  cap: 'A → B: crecimiento real usando recursos ociosos (corto plazo). CPP₁ → CPP₂: aumento de la capacidad productiva (largo plazo), que permite llegar a C.',
+  ejes: [['Eje vertical (Y)', 'Bien de capital, en unidades por año'], ['Eje horizontal (X)', 'Bien de consumo, en unidades por año']],
+  curvas: ['A → B: movimiento hacia la frontera; se usan factores desempleados.', 'CPP₁ → CPP₂: más cantidad o calidad de factores, o mejor tecnología.'],
+  eq: ['A: dentro de la CPP (desempleo). B: sobre CPP₁. C: sobre CPP₂, inalcanzable antes del crecimiento.'],
+  areas: [],
+  calc: ['Tasa de crecimiento del PIB real = `(Y₂ − Y₁) ÷ Y₁ × 100`.'],
+  cad: ['Aumenta la DA y se emplean recursos ociosos: A → B.', 'Se invierte en capital físico y humano: la CPP se desplaza.', 'La economía puede producir más de ambos bienes de forma sostenida.'],
+  err: ['Confundir crecimiento real con crecimiento potencial.', 'Dibujar CPP₂ cruzando CPP₁.', 'No usar flechas entre las dos curvas.'] },
+
+{ id: 'da-aumento-y', u: 'macro', st: '3.3', stn: 'Objetivos macroeconómicos', t: 'Aumento de la DA con aumento de la producción real',
+  pr: 'P1 parte a · P2 partes c–f',
+  fig: { panels: [
+    { t: 'Monetarista (corto plazo)', ...AXM, lines: [{ l: DA(8), k: 'k-da', t: 'DA_1' }, { l: DA(10), k: 'k-da', t: 'DA_2' }, { l: OACP(0), k: 'k-oacp', t: 'OACP' }, { l: OALP(5), k: 'k-oalp', t: 'OALP', tp: [5.15, 9.5] }],
+      guides: [{ p: [4, 4], yl: 'NGP_1', xl: 'Y_1' }, { p: [5, 5], yl: 'NGP_2', xl: 'Y_f' }], arrows: [{ a: [1.3, 7], b: [2.7, 7], k: 'k-exp' }], pts: [{ p: [4, 4] }, { p: [5, 5] }] },
+    (() => { const E1 = kInt(6), E2 = kInt(8); return { t: 'Keynesiano (tramo con capacidad ociosa)', ...AXM, paths: [{ pts: KAS(0), k: 'k-oalp', t: 'OA keynesiana', tp: [5.2, 9.6] }],
+      lines: [{ l: DA(6), k: 'k-da', t: 'DA_1' }, { l: DA(8), k: 'k-da', t: 'DA_2' }], guides: [{ p: E1, xl: 'Y_1' }, { p: E2, yl: 'NGP_1', xl: 'Y_2' }, { p: [8, 0], xl: 'Y_f', noY: true }],
+      arrows: [{ a: [1.3, 4.7], b: [2.7, 4.7], k: 'k-exp' }], pts: [{ p: E1 }, { p: E2 }] }; })()
+  ] },
+  cap: 'Con capacidad ociosa, un aumento de la DA eleva el PIB real. En el modelo keynesiano, en el tramo horizontal, casi sin inflación.',
+  ejes: EJM,
+  curvas: ['**DA₁ → DA₂** (verde): aumento de C, I, G o X − M.', 'Movimiento a lo largo de la OACP / OA keynesiana.'],
+  eq: ['Monetarista: (4; 4) → (5; 5): Y sube hasta Y_f, el NGP sube.', 'Keynesiano: Y₁ → Y₂ con NGP casi constante.'],
+  areas: [],
+  calc: ['Tasa de crecimiento = `(Y₂ − Y₁) ÷ Y₁ × 100`.'],
+  cad: ['Aumenta un componente de la DA.', 'Las empresas venden más y contratan factores ociosos.', 'El PIB real aumenta: crecimiento de corto plazo.', 'Cuanto más cerca de Y_f, mayor la presión inflacionaria.'],
+  err: ['Afirmar que el aumento de la DA siempre genera crecimiento de largo plazo.', 'No mostrar el punto de partida por debajo de Y_f.', 'Olvidar rotular el nuevo NGP.'] },
+
+{ id: 'oalp-aumento', u: 'macro', st: '3.3', stn: 'Objetivos macroeconómicos', t: 'Aumento de la OALP con aumento de la producción de pleno empleo',
+  pr: 'P1 parte a · P2 parte g',
+  fig: { panels: [
+    { t: 'Monetarista: crecimiento sin inflación', ...AXM, lines: [{ l: DA(10), k: 'k-da', t: 'DA_1' }, { l: DA(12), k: 'k-da', t: 'DA_2' }, { l: OACP(0), k: 'k-oacp', t: 'OACP_1' }, { l: OACP(-2), k: 'k-oacp', t: 'OACP_2' }, { l: OALP(5), k: 'k-oalp', t: 'OALP_1', tp: [3.4, 9.5] }, { l: OALP(7), k: 'k-oalp', t: 'OALP_2', tp: [7.15, 9.5] }],
+      guides: [{ p: [5, 5], yl: 'NGP_e', xl: 'Y_{f1}' }, { p: [7, 5], xl: 'Y_{f2}', noY: true }], arrows: [{ a: [5.2, 8.6], b: [6.8, 8.6], k: 'k-exp' }], pts: [{ p: [5, 5], t: 'E_1', dx: -26 }, { p: [7, 5], t: 'E_2', dx: 8 }] },
+    (() => { const E1 = kInt(10.5, 0), E2 = kInt(12, 1.5); return { t: 'Keynesiano', ...AXM, paths: [{ pts: KAS(0), k: 'k-oalp', t: 'OA_1', tp: [6.6, 9.6] }, { pts: KAS(1.5), k: 'k-oalp', t: 'OA_2', tp: [9.6, 8.6] }],
+      lines: [{ l: DA(10.5), k: 'k-da', t: 'DA_1' }, { l: DA(12), k: 'k-da', t: 'DA_2' }], guides: [{ p: E1, xl: 'Y_1' }, { p: E2, xl: 'Y_2' }], arrows: [{ a: [7.2, 5.6], b: [8.6, 5.6], k: 'k-exp' }], pts: [{ p: E1 }, { p: E2 }] }; })()
+  ] },
+  cap: 'Si la capacidad productiva crece al mismo ritmo que la DA, el PIB real aumenta sin presión sobre el nivel de precios: crecimiento sostenible.',
+  ejes: EJM,
+  curvas: ['**OALP₁ → OALP₂** y **OA₁ → OA₂**: aumento de la producción potencial.', 'DA₁ → DA₂ acompaña el crecimiento de la capacidad.'],
+  eq: ['Monetarista: E₁ (5; 5) → E₂ (7; 5): Y_f aumenta, NGP estable.'],
+  areas: [],
+  calc: ['Crecimiento potencial = `(Y_f₂ − Y_f₁) ÷ Y_f₁ × 100`.'],
+  cad: ['Aumentan la cantidad y la calidad de los factores.', 'La OALP se desplaza a la derecha.', 'La economía puede crecer sin generar brecha inflacionaria.', 'Es la base del crecimiento de largo plazo y del desarrollo.'],
+  err: ['Mostrar solo la DA y llamarlo crecimiento de largo plazo.', 'No rotular Y_f₁ y Y_f₂.', 'Olvidar que el crecimiento puede tener costos ambientales (sostenibilidad).'] },
+
+{ id: 'salario-minimo', u: 'macro', st: '3.3', stn: 'Objetivos macroeconómicos', t: 'Salario mínimo y desempleo',
+  pr: 'P1 parte a · P2 partes c–f',
+  fig: { panels: [{ ...AXL,
+    lines: [{ l: G.L([1, 9], [9, 1]), k: 'k-d', t: 'D_L' }, { l: G.L([1, 1], [9, 9]), k: 'k-s', t: 'O_L' }, { l: G.L([0, 7], [9.2, 7]), k: 'k-v', dash: true }],
+    guides: [{ p: [5, 5], yl: 'W_e', xl: 'L_e' }, { p: [3, 7], xl: 'L_d', noY: true }, { p: [7, 7], xl: 'L_o', noY: true }, { p: [0, 7], yl: 'W_{mín}', noX: true, noY: true }],
+    spans: [{ a: [3, 7.6], b: [7, 7.6], t: 'Desempleo' }], pts: [{ p: [5, 5], t: 'E', dx: 8, dy: 4 }] }] },
+  cap: 'Un salario mínimo por encima del de equilibrio reduce el empleo (L_e → L_d) y atrae más oferentes (L_o). La diferencia L_o − L_d es desempleo.',
+  ejes: EJL,
+  curvas: ['**D_L**: demanda de trabajo de las empresas (derivada de la demanda de bienes).', '**O_L**: oferta de trabajo de los hogares.', '**W_mín**: salario mínimo legal, recta horizontal por encima de W_e.'],
+  eq: ['Equilibrio: E (L_e; W_e).', 'Con W_mín: empleo L_d; oferta L_o.', 'Desempleo = L_o − L_d. Pérdida de empleo = L_e − L_d.'],
+  areas: [],
+  calc: ['Tasa de desempleo = `desempleados ÷ fuerza de trabajo × 100`.'],
+  cad: ['Se fija W_mín por encima de W_e.', 'Contratar es más caro: las empresas emplean menos (L_d).', 'Más personas buscan empleo a ese salario (L_o).', 'Surge desempleo (de desequilibrio o estructural), sobre todo entre trabajadores poco calificados.'],
+  err: ['Medir el desempleo desde L_e (es de L_d a L_o).', 'Dibujar el salario mínimo por debajo de W_e.', 'Rotular el eje Y como «Precio».', 'No evaluar: en la práctica el efecto depende de la elasticidad de D_L y de la informalidad.'] },
+
+{ id: 'desempleo-estructural', u: 'macro', st: '3.3', stn: 'Objetivos macroeconómicos', t: 'Caída de la demanda de trabajo (desempleo estructural)',
+  pr: 'P1 parte a · P2 partes c–f',
+  fig: { panels: [{ ...AXL,
+    lines: [{ l: G.L([1, 9], [9, 1]), k: 'k-d', t: 'D_{L1}' }, { l: G.L([0, 8], [7, 1]), k: 'k-d', t: 'D_{L2}' }, { l: G.L([1, 1], [9, 9]), k: 'k-s', t: 'O_L' }],
+    guides: [{ p: [5, 5], yl: 'W_1', xl: 'L_1' }, { p: [3, 5], xl: 'L_2', noY: true }],
+    spans: [{ a: [3, 5.6], b: [5, 5.6], t: 'Desempleo' }], arrows: [{ a: [6.3, 3.7], b: [4.9, 3.1], k: 'k-con' }],
+    pts: [{ p: [5, 5], t: 'E_1', dx: 8, dy: 4 }, { p: [3, 5] }] }] },
+  cap: 'Cae la demanda de trabajo en un sector o región (cambio tecnológico, cierre de una industria). Si el salario no baja, el empleo cae de L₁ a L₂.',
+  ejes: [['Eje vertical (Y)', 'Salario real (W) del sector o región'], ['Eje horizontal (X)', 'Cantidad de trabajo (L) en ese sector o región']],
+  curvas: ['**D_L1 → D_L2** (izquierda): menor demanda de un tipo de calificación o en una zona geográfica.', 'O_L no cambia a corto plazo: los trabajadores no pueden recalificarse o mudarse de inmediato.'],
+  eq: ['E₁ (L₁; W₁).', 'Con salario rígido W₁: empleo L₂; desempleo L₁ − L₂.', 'Si el salario fuera flexible, bajaría a un nuevo equilibrio con menos empleo.'],
+  areas: [],
+  calc: [],
+  cad: ['Un cambio estructural reduce la demanda de cierta calificación (p. ej., mecanización agrícola).', 'D_L se desplaza a la izquierda en ese mercado.', 'Los trabajadores no tienen las calificaciones que piden otros sectores (desajuste de calificaciones) o no pueden mudarse.', 'El desempleo dura mucho: es estructural, no cíclico.'],
+  err: ['Explicarlo como caída de la DA de toda la economía (eso es cíclico).', 'Desplazar la oferta de trabajo.', 'No mencionar la inmovilidad ocupacional o geográfica.'] },
+
+{ id: 'brecha-deflacionaria', u: 'macro', st: '3.3', stn: 'Objetivos macroeconómicos', t: 'Brecha deflacionaria con desempleo cíclico',
+  pr: 'P1 partes a–b · P2 partes c–f',
+  fig: { panels: [
+    { t: 'Monetarista', ...AXM, lines: [{ l: DA(10), k: 'k-da', t: 'DA_1' }, { l: DA(8), k: 'k-da', t: 'DA_2' }, { l: OACP(0), k: 'k-oacp', t: 'OACP' }, { l: OALP(5), k: 'k-oalp', t: 'OALP', tp: [5.15, 9.5] }],
+      guides: [{ p: [5, 5], yl: 'NGP_1', xl: 'Y_f' }, { p: [4, 4], yl: 'NGP_2', xl: 'Y_2' }], spans: [{ a: [4, 1.6], b: [5, 1.6], t: 'Brecha', below: true }],
+      arrows: [{ a: [3.7, 6], b: [2.3, 6], k: 'k-con' }], pts: [{ p: [5, 5] }, { p: [4, 4] }] },
+    (() => { const E1 = kInt(9.5), E2 = kInt(7.5); return { t: 'Keynesiano', ...AXM, paths: [{ pts: KAS(0), k: 'k-oalp', t: 'OA keynesiana', tp: [5.2, 9.6] }],
+      lines: [{ l: DA(9.5), k: 'k-da', t: 'DA_1' }, { l: DA(7.5), k: 'k-da', t: 'DA_2' }], guides: [{ p: E1, xl: 'Y_1' }, { p: E2, xl: 'Y_2' }, { p: [8, 0], xl: 'Y_f', noY: true }],
+      spans: [{ a: [E2[0], 1.6], b: [8, 1.6], t: 'Brecha', below: true }], arrows: [{ a: [3.7, 5], b: [2.3, 5], k: 'k-con' }], pts: [{ p: E1 }, { p: E2 }] }; })()
+  ] },
+  cap: 'Cae la DA: la producción queda por debajo de Y_f. Menos producción requiere menos trabajadores: desempleo cíclico (por demanda insuficiente).',
+  ejes: EJM,
+  curvas: ['**DA₁ → DA₂** (izquierda, rojo): caída de C, I, G o X − M (p. ej., caída de exportaciones por menor demanda de Brasil o Argentina).', 'Movimiento a lo largo de la OACP / OA keynesiana.'],
+  eq: ['Monetarista: (5; 5) → (4; 4). Brecha = Y_f − Y₂.', 'Keynesiano: Y₁ → Y₂ con NGP casi constante y brecha mayor.'],
+  areas: [],
+  calc: ['Tasa de desempleo = `desempleados ÷ fuerza de trabajo × 100`.'],
+  cad: ['Cae la DA.', 'Las empresas venden menos y reducen la producción.', 'Despiden trabajadores: aumenta el desempleo cíclico.', 'Justifica políticas expansivas de demanda.'],
+  err: ['Llamar «estructural» a este desempleo.', 'No señalar la brecha en el eje del PIB real.', 'Olvidar dibujar Y_f.'] },
+
+{ id: 'inflacion-demanda', u: 'macro', st: '3.3', stn: 'Objetivos macroeconómicos', t: 'Inflación de demanda',
+  pr: 'P1 partes a–b · P2 partes c–f',
+  fig: { panels: [
+    { t: 'Monetarista', ...AXM, lines: [{ l: DA(10), k: 'k-da', t: 'DA_1' }, { l: DA(12), k: 'k-da', t: 'DA_2' }, { l: OACP(0), k: 'k-oacp', t: 'OACP' }, { l: OALP(5), k: 'k-oalp', t: 'OALP', tp: [5.15, 9.5] }],
+      guides: [{ p: [5, 5], yl: 'NGP_1', xl: 'Y_f' }, { p: [6, 6], yl: 'NGP_2', xl: 'Y_2' }], arrows: [{ a: [2.3, 8], b: [3.7, 8], k: 'k-exp' }], pts: [{ p: [5, 5] }, { p: [6, 6] }] },
+    (() => { const E1 = kInt(10.5), E2 = kInt(13); return { t: 'Keynesiano (tramos II y III)', ...AXM, paths: [{ pts: KAS(0), k: 'k-oalp', t: 'OA keynesiana', tp: [5.2, 9.6] }],
+      lines: [{ l: DA(10.5), k: 'k-da', t: 'DA_1' }, { l: DA(13), k: 'k-da', t: 'DA_2' }], guides: [{ p: E1, yl: 'NGP_1', xl: 'Y_1' }, { p: E2, yl: 'NGP_2', noX: true }, { p: [8, 0], xl: 'Y_f', noY: true }],
+      arrows: [{ a: [2.4, 7.5], b: [4.6, 7.5], k: 'k-exp' }], pts: [{ p: E1 }, { p: E2 }] }; })()
+  ] },
+  cap: 'La DA crece más rápido que la capacidad productiva. Cerca o por encima de Y_f, el aumento de la DA se traduce sobre todo en mayor nivel de precios.',
+  ejes: EJM,
+  curvas: ['**DA₁ → DA₂** (derecha): gasto excesivo (crédito barato, gasto público, auge exportador).', 'Movimiento a lo largo de la OACP o hacia el tramo vertical de la OA keynesiana.'],
+  eq: ['Monetarista: (5; 5) → (6; 6): NGP sube y Y supera transitoriamente a Y_f.', 'Keynesiano: en el tramo III el PIB casi no crece y el NGP sube mucho.'],
+  areas: [],
+  calc: ['Tasa de inflación = `(IPC₂ − IPC₁) ÷ IPC₁ × 100`.', 'IPC = costo de la canasta en el año t ÷ costo en el año base × 100.'],
+  cad: ['Aumenta la DA con la economía cerca del pleno empleo.', 'Las empresas no pueden ampliar la producción con rapidez.', 'Compiten por factores escasos y suben precios.', 'Aumenta el NGP: inflación de demanda.'],
+  err: ['Desplazar la OACP para mostrar inflación de demanda.', 'Dibujar el punto inicial muy lejos de Y_f (en el tramo I no hay inflación).', 'No rotular NGP₁ y NGP₂.'] },
+
+{ id: 'inflacion-costos', u: 'macro', st: '3.3', stn: 'Objetivos macroeconómicos', t: 'Inflación por alza de costos',
+  pr: 'P1 partes a–b · P2 partes c–f',
+  fig: { panels: [{ ...AXM, lines: [{ l: DA(10), k: 'k-da', t: 'DA' }, { l: OACP(0), k: 'k-oacp', t: 'OACP_1' }, { l: OACP(2), k: 'k-oacp', t: 'OACP_2' }, { l: OALP(5), k: 'k-oalp', t: 'OALP', tp: [5.15, 9.5] }],
+    guides: [{ p: [5, 5], yl: 'NGP_1', xl: 'Y_f' }, { p: [4, 6], yl: 'NGP_2', xl: 'Y_2' }], arrows: [{ a: [7.7, 8], b: [6.3, 8], k: 'k-con' }],
+    pts: [{ p: [5, 5], t: 'E_1', dx: 8, dy: 4 }, { p: [4, 6], t: 'E_2', dx: -26 }] }] },
+  cap: 'Sube el costo de producción (petróleo, salarios, energía): la OACP se desplaza a la izquierda. Suben los precios y cae la producción: estanflación.',
+  ejes: EJM,
+  curvas: ['**OACP₁ → OACP₂** (izquierda, rojo): shock de costos.', 'DA y OALP no se desplazan.'],
+  eq: ['E₁ (5; 5) → E₂ (4; 6): NGP sube, PIB real cae.'],
+  areas: [],
+  calc: ['Tasa de inflación = `(IPC₂ − IPC₁) ÷ IPC₁ × 100`.'],
+  cad: ['Sube el precio de un insumo clave (p. ej., combustibles importados).', 'Aumentan los costos de todas las empresas.', 'A cada NGP se ofrece menos: la OACP se desplaza a la izquierda.', 'Mayor inflación con menor producción y más desempleo.'],
+  err: ['Desplazar la DA.', 'Afirmar que aumenta la producción.', 'Desplazar la OALP por un shock transitorio de costos.', 'No mencionar el dilema de política (combatir inflación agrava la recesión).'] },
+
+{ id: 'deflacion', u: 'macro', st: '3.3', stn: 'Objetivos macroeconómicos', t: 'Deflación «buena» vs. deflación «mala»',
+  pr: 'P1 parte b · P2 parte g',
+  fig: { panels: [
+    { t: 'Deflación «buena» (por oferta)', ...AXM, lines: [{ l: DA(10), k: 'k-da', t: 'DA' }, { l: OACP(0), k: 'k-oacp', t: 'OACP_1' }, { l: OACP(-2), k: 'k-oacp', t: 'OACP_2' }],
+      guides: [{ p: [5, 5], yl: 'NGP_1', xl: 'Y_1' }, { p: [6, 4], yl: 'NGP_2', xl: 'Y_2' }], arrows: [{ a: [6.3, 6.4], b: [7.7, 6.4], k: 'k-exp' }], pts: [{ p: [5, 5] }, { p: [6, 4] }] },
+    { t: 'Deflación «mala» (por demanda)', ...AXM, lines: [{ l: DA(10), k: 'k-da', t: 'DA_1' }, { l: DA(8), k: 'k-da', t: 'DA_2' }, { l: OACP(0), k: 'k-oacp', t: 'OACP' }],
+      guides: [{ p: [5, 5], yl: 'NGP_1', xl: 'Y_1' }, { p: [4, 4], yl: 'NGP_2', xl: 'Y_2' }], arrows: [{ a: [3.7, 6], b: [2.3, 6], k: 'k-con' }], pts: [{ p: [5, 5] }, { p: [4, 4] }] }
+  ] },
+  cap: 'Ambas reducen el nivel de precios. La «buena» aumenta la producción (mejoras de productividad); la «mala» la reduce (caída del gasto).',
+  ejes: EJM,
+  curvas: ['Buena: **OACP₁ → OACP₂** (derecha) por menores costos o avances tecnológicos.', 'Mala: **DA₁ → DA₂** (izquierda) por caída de confianza y del gasto.'],
+  eq: ['Buena: (5; 5) → (6; 4): NGP baja, Y sube.', 'Mala: (5; 5) → (4; 4): NGP baja, Y baja.'],
+  areas: [],
+  calc: ['Tasa de inflación negativa: `(IPC₂ − IPC₁) ÷ IPC₁ × 100 < 0`.'],
+  cad: ['En la deflación mala los consumidores postergan compras esperando precios menores.', 'Cae aún más la DA y las empresas recortan producción.', 'Aumenta el peso real de las deudas.', 'Puede formarse una espiral deflacionaria; la política monetaria pierde eficacia cerca de tasa cero.'],
+  err: ['Confundir deflación con desinflación (baja de la tasa de inflación, que sigue siendo positiva).', 'Tratar toda deflación como negativa sin distinguir su causa.', 'No mencionar los efectos sobre deudores.'] },
+
+/* ---------- 3.4 ---------- */
+{ id: 'lorenz', u: 'macro', st: '3.4', stn: 'Desigualdad y pobreza', t: 'Curva de Lorenz',
+  pr: 'P1 parte a · P2 partes c–e',
+  fig: { panels: [(() => { const L1 = G.samp(x => 100 * (x / 100) ** 2.6, 0, 100), L2 = G.samp(x => 100 * (x / 100) ** 1.7, 0, 100);
+    return { xmax: 100, ymax: 100, y: '% acumulado del ingreso', x: '% acumulado de la población',
+      areas: [{ pts: [[0, 0], [100, 100], ...L1.slice().reverse()], c: 'f-gov', t: 'A', at: [47, 37], n: 'Área A: entre la igualdad perfecta y la curva de Lorenz' }, { pts: [[0, 0], ...L1, [100, 0]], c: 'f-gray', t: 'B', at: [80, 18], n: 'Área B: debajo de la curva de Lorenz' }],
+      lines: [{ l: G.L([0, 0], [100, 100]), k: 'k-n', t: 'Igualdad perfecta', tp: [40, 52], ta: 'end' }],
+      paths: [{ pts: L1, k: 'k-da', t: 'Lorenz_1', tp: [74, 36] }, { pts: L2, k: 'k-exp', dash: true, t: 'Lorenz_2', tp: [33, 17], ta: 'end' }],
+      guides: [{ p: [20, 0], xl: '20', noY: true }, { p: [40, 100 * 0.4 ** 2.6], xl: '40', yl: '9' }, { p: [60, 0], xl: '60', noY: true }, { p: [80, 0], xl: '80', noY: true }, { p: [100, 0], xl: '100', noY: true }, { p: [0, 100], yl: '100', noX: true, noY: true }],
+      pts: [{ p: [40, 100 * 0.4 ** 2.6], t: 'M', dx: 4, dy: -8 }] }; })()] },
+  cap: 'Cuanto más se aleja la curva de Lorenz de la diagonal, más desigual es la distribución. Lorenz₂ (más cerca de la diagonal) muestra el efecto de políticas redistributivas.',
+  ejes: [['Eje vertical (Y)', 'Porcentaje acumulado del ingreso (0–100 %)'], ['Eje horizontal (X)', 'Porcentaje acumulado de la población, ordenada de menor a mayor ingreso (0–100 %)']],
+  curvas: ['**Diagonal** de 45°: igualdad perfecta (cada 20 % de la población recibe el 20 % del ingreso).', '**Lorenz₁**: distribución real; siempre por debajo de la diagonal.', '**Lorenz₂** (verde, discontinua): desplazamiento hacia la diagonal tras impuestos progresivos y transferencias.', 'El diagrama es cuadrado: ambos ejes van de 0 a 100 %.'],
+  eq: ['Punto M: el 40 % más pobre recibe ≈ 9 % del ingreso total.', 'Coeficiente de Gini: 0 = igualdad perfecta; 1 = desigualdad total.'],
+  areas: ['**A** (violeta): entre la diagonal y la curva de Lorenz.', '**B** (gris): debajo de la curva de Lorenz.', 'A + B = mitad del cuadrado.'],
+  calc: ['Coeficiente de Gini = `A ÷ (A + B)`.', 'En el dibujo: Gini ≈ 0,44 para Lorenz₁ y ≈ 0,26 para Lorenz₂.', 'Participación de un quintil = % acumulado hasta ese quintil − % acumulado hasta el anterior.'],
+  ns: ['Construcción de la curva de Lorenz a partir de datos de quintiles de ingreso.'],
+  cad: ['Se ordena a la población de menor a mayor ingreso.', 'Se grafica qué parte del ingreso acumula cada porcentaje de la población.', 'Si la curva se aleja de la diagonal, aumenta la desigualdad (Gini mayor).', 'Las políticas redistributivas acercan la curva a la diagonal.'],
+  err: ['Dibujar la curva por encima de la diagonal.', 'Invertir los ejes (población en Y).', 'Calcular el Gini como B ÷ A.', 'No dibujar el diagrama cuadrado ni rotular 100 % en ambos ejes.'] },
+
+/* ---------- 3.5 ---------- */
+{ id: 'politica-monetaria', u: 'macro', st: '3.5', stn: 'Política monetaria', t: 'Política monetaria expansiva y restrictiva',
+  pr: 'P1 partes a–b · P2 partes f–g',
+  fig: { panels: [
+    { t: 'Expansiva: cierra una brecha recesiva', ...AXM, lines: [{ l: DA(8), k: 'k-da', t: 'DA_1' }, { l: DA(10), k: 'k-da', t: 'DA_2' }, { l: OACP(0), k: 'k-oacp', t: 'OACP' }, { l: OALP(5), k: 'k-oalp', t: 'OALP', tp: [5.15, 9.5] }],
+      guides: [{ p: [4, 4], yl: 'NGP_1', xl: 'Y_1' }, { p: [5, 5], yl: 'NGP_2', xl: 'Y_f' }], arrows: [{ a: [1.3, 7], b: [2.7, 7], k: 'k-exp' }], pts: [{ p: [4, 4], t: 'E_1', dx: -26 }, { p: [5, 5], t: 'E_2', dx: 8, dy: 4 }] },
+    { t: 'Restrictiva: cierra una brecha inflacionaria', ...AXM, lines: [{ l: DA(12), k: 'k-da', t: 'DA_1' }, { l: DA(10), k: 'k-da', t: 'DA_2' }, { l: OACP(0), k: 'k-oacp', t: 'OACP' }, { l: OALP(5), k: 'k-oalp', t: 'OALP', tp: [5.15, 9.5] }],
+      guides: [{ p: [6, 6], yl: 'NGP_1', xl: 'Y_1' }, { p: [5, 5], yl: 'NGP_2', xl: 'Y_f' }], arrows: [{ a: [3.7, 8], b: [2.3, 8], k: 'k-con' }], pts: [{ p: [6, 6], t: 'E_1', dx: 8, dy: 12 }, { p: [5, 5], t: 'E_2', dx: -26 }] }
+  ] },
+  cap: 'El banco central (BCP) baja la tasa de política monetaria para estimular la DA, o la sube para frenarla. La meta de inflación del BCP es del 3,5 % anual desde 2025 (antes, 4 %).',
+  ejes: EJM,
+  curvas: ['Expansiva: baja la tasa de interés → más C e I → **DA₁ → DA₂** (derecha, verde).', 'Restrictiva: sube la tasa → menos C e I → **DA₁ → DA₂** (izquierda, rojo).', 'Herramientas: tasa de política monetaria, operaciones de mercado abierto (instrumentos de regulación monetaria), encaje legal.'],
+  eq: ['Expansiva: E₁ (4; 4) → E₂ (5; 5) en Y_f.', 'Restrictiva: E₁ (6; 6) → E₂ (5; 5).'],
+  areas: [],
+  calc: ['Tasa de interés real = `tasa nominal − tasa de inflación`.', 'Ejemplo: tasa nominal 6 %, inflación 4 % → tasa real 2 %.'],
+  ns: ['Determinación de la tasa de interés de equilibrio en el mercado de dinero (oferta y demanda de dinero).'],
+  cad: ['El BCP baja la tasa de política monetaria.', 'Bajan las tasas de los bancos comerciales: crédito más barato.', 'Aumentan el consumo de bienes durables y la inversión; puede depreciarse la moneda y subir X − M.', 'La DA se desplaza a la derecha y se cierra la brecha recesiva.'],
+  err: ['Desplazar la OACP con la política monetaria.', 'Decir que el banco central fija directamente las tasas de los préstamos.', 'Olvidar los rezagos temporales y la confianza en la evaluación.', 'Confundir política monetaria con fiscal.'] },
+
+/* ---------- 3.6 ---------- */
+{ id: 'politica-fiscal', u: 'macro', st: '3.6', stn: 'Política fiscal', t: 'Política fiscal expansiva y restrictiva: keynesianos y monetaristas',
+  pr: 'P1 partes a–b · P2 partes f–g',
+  fig: { panels: [
+    (() => { const E1 = kInt(6), E2 = kInt(8); return { t: 'Keynesiano: expansiva en recesión', ...AXM, paths: [{ pts: KAS(0), k: 'k-oalp', t: 'OA', tp: [7.2, 9.6] }], lines: [{ l: DA(6), k: 'k-da', t: 'DA_1' }, { l: DA(8), k: 'k-da', t: 'DA_2' }],
+      guides: [{ p: E1, xl: 'Y_1' }, { p: E2, xl: 'Y_2' }, { p: [8, 0], xl: 'Y_f', noY: true }], arrows: [{ a: [1.3, 4.7], b: [2.7, 4.7], k: 'k-exp' }], pts: [{ p: E1 }, { p: E2 }] }; })(),
+    (() => { const E1 = kInt(10.5), E2 = kInt(9); return { t: 'Keynesiano: restrictiva con presión inflacionaria', ...AXM, paths: [{ pts: KAS(0), k: 'k-oalp', t: 'OA', tp: [7.2, 9.6] }], lines: [{ l: DA(10.5), k: 'k-da', t: 'DA_1' }, { l: DA(9), k: 'k-da', t: 'DA_2' }],
+      guides: [{ p: E1, yl: 'NGP_1', xl: 'Y_1' }, { p: E2, yl: 'NGP_2', xl: 'Y_2' }, { p: [8, 0], xl: 'Y_f', noY: true }], arrows: [{ a: [3.2, 7], b: [1.8, 7], k: 'k-con' }], pts: [{ p: E1 }, { p: E2 }] }; })(),
+    { t: 'Monetarista: expansiva en Y_f', ...AXM, lines: [{ l: DA(10), k: 'k-da', t: 'DA_1' }, { l: DA(12), k: 'k-da', t: 'DA_2' }, { l: OACP(0), k: 'k-oacp', t: 'OACP_1' }, { l: OACP(2), k: 'k-oacp', dash: true, t: 'OACP_2' }, { l: OALP(5), k: 'k-oalp', t: 'OALP', tp: [5.15, 9.5] }],
+      guides: [{ p: [5, 5], yl: 'NGP_1' }, { p: [6, 6], yl: 'NGP_2' }, { p: [5, 7], yl: 'NGP_3', xl: 'Y_f' }], arrows: [{ a: [2.3, 8], b: [3.7, 8], k: 'k-exp' }, { a: [8.3, 9], b: [7.1, 9], k: 'k-con' }],
+      pts: [{ p: [5, 5], t: 'E_1', dx: -26, dy: 4 }, { p: [6, 6], t: 'E_2', dx: 8, dy: 12 }, { p: [5, 7], t: 'E_3', dx: -26 }] },
+    { t: 'Monetarista: restrictiva (austeridad)', ...AXM, lines: [{ l: DA(10), k: 'k-da', t: 'DA_1' }, { l: DA(8), k: 'k-da', t: 'DA_2' }, { l: OACP(0), k: 'k-oacp', t: 'OACP_1' }, { l: OACP(-2), k: 'k-oacp', dash: true, t: 'OACP_2' }, { l: OALP(5), k: 'k-oalp', t: 'OALP', tp: [5.15, 9.5] }],
+      guides: [{ p: [5, 5], yl: 'NGP_1' }, { p: [4, 4], yl: 'NGP_2', xl: 'Y_2' }, { p: [5, 3], yl: 'NGP_3', xl: 'Y_f' }], arrows: [{ a: [3.7, 6], b: [2.3, 6], k: 'k-con' }, { a: [6.3, 6.6], b: [7.7, 6.6], k: 'k-exp' }],
+      pts: [{ p: [5, 5], t: 'E_1', dx: 8, dy: -4 }, { p: [4, 4], t: 'E_2', dx: -26 }, { p: [5, 3], t: 'E_3', dx: 8, dy: 14 }] }
+  ] },
+  cap: 'Keynesianos: con capacidad ociosa, la política fiscal expansiva aumenta mucho el PIB real con poca inflación. Monetaristas: a largo plazo la economía vuelve a Y_f y solo cambia el nivel de precios.',
+  ejes: EJM,
+  curvas: ['Expansiva: más gasto público (G) o menos impuestos (T) → **DA a la derecha**.', 'Restrictiva o de austeridad: menos G o más T → **DA a la izquierda**.', 'Monetarista: tras el shock, los salarios se ajustan y la OACP se desplaza (OACP₁ → OACP₂) hasta volver a Y_f.', 'Estabilizadores automáticos: impuesto a la renta progresivo y subsidios por desempleo amortiguan el ciclo.'],
+  eq: ['Keynesiano expansiva: Y₁ → Y₂ con NGP casi constante.', 'Monetarista expansiva: E₁ (5; 5) → E₂ (6; 6) → E₃ (5; 7).', 'Monetarista restrictiva: E₁ (5; 5) → E₂ (4; 4) → E₃ (5; 3).'],
+  areas: [],
+  calc: ['Saldo presupuestario = `ingresos del gobierno − gasto del gobierno` (déficit si es negativo).', 'Deuda pública como % del PIB = deuda ÷ PIB nominal × 100.'],
+  ns: ['Multiplicador keynesiano y cálculo del efecto en el PIB de un cambio de G, I o X.', 'Efecto desplazamiento (crowding out).'],
+  cad: ['El gobierno aumenta el gasto en obras públicas.', 'Aumenta G y, con él, el ingreso de empresas y hogares.', 'La DA se desplaza a la derecha.', 'Keynesianos: sube el PIB real y baja el desempleo. Monetaristas: solo hay efecto transitorio; a largo plazo sube el NGP.'],
+  err: ['Desplazar la OALP con política fiscal de demanda.', 'Olvidar el costo en deuda y los rezagos de implementación.', 'Presentar un solo modelo cuando la pregunta pide comparar escuelas.', 'Confundir déficit fiscal con deuda pública.'] },
+
+/* ---------- 3.7 ---------- */
+{ id: 'politicas-oferta', u: 'macro', st: '3.7', stn: 'Políticas del lado de la oferta', t: 'Efecto de las políticas del lado de la oferta',
+  pr: 'P1 partes a–b · P2 parte g',
+  fig: { panels: [
+    { t: 'Monetarista', ...AXM, lines: [{ l: DA(10), k: 'k-da', t: 'DA' }, { l: OACP(0), k: 'k-oacp', t: 'OACP_1' }, { l: OACP(-4), k: 'k-oacp', t: 'OACP_2' }, { l: OALP(5), k: 'k-oalp', t: 'OALP_1', tp: [3.4, 9.5] }, { l: OALP(7), k: 'k-oalp', t: 'OALP_2', tp: [7.15, 9.5] }],
+      guides: [{ p: [5, 5], yl: 'NGP_1', xl: 'Y_{f1}' }, { p: [7, 3], yl: 'NGP_2', xl: 'Y_{f2}' }], arrows: [{ a: [5.2, 8.6], b: [6.8, 8.6], k: 'k-exp' }], pts: [{ p: [5, 5], t: 'E_1', dx: -26 }, { p: [7, 3], t: 'E_2', dx: 8, dy: 14 }] },
+    (() => { const E1 = kInt(10.5, 0), E2 = kInt(10.5, 1.5); return { t: 'Keynesiano', ...AXM, paths: [{ pts: KAS(0), k: 'k-oalp', t: 'OA_1', tp: [6.6, 9.6] }, { pts: KAS(1.5), k: 'k-oalp', t: 'OA_2', tp: [9.6, 8.6] }], lines: [{ l: DA(10.5), k: 'k-da', t: 'DA' }],
+      guides: [{ p: E1, yl: 'NGP_1', xl: 'Y_1' }, { p: E2, yl: 'NGP_2', xl: 'Y_2' }], arrows: [{ a: [7.2, 5.6], b: [8.6, 5.6], k: 'k-exp' }], pts: [{ p: E1 }, { p: E2 }] }; })()
+  ] },
+  cap: 'Las políticas del lado de la oferta aumentan la capacidad productiva: más producción potencial con menor presión sobre el nivel de precios.',
+  ejes: EJM,
+  curvas: ['**OALP₁ → OALP₂** (y OA keynesiana a la derecha): aumenta la producción potencial.', 'Basadas en el mercado: fomentar la competencia (privatización, desregulación), reformas del mercado laboral, incentivos (menores impuestos a la renta y a las empresas).', 'Intervencionistas: inversión en capital humano (educación, salud), en tecnología, en infraestructura; política industrial.', 'Las intervencionistas también aumentan la DA a corto plazo, porque implican gasto público.'],
+  eq: ['Monetarista: E₁ (5; 5) → E₂ (7; 3): más PIB real y menor NGP.'],
+  areas: [],
+  calc: [],
+  cad: ['El gobierno invierte en educación técnica e infraestructura vial y energética.', 'Mejora la productividad de los factores.', 'La OALP se desplaza a la derecha.', 'Crecimiento sostenible y menor inflación; los efectos llegan con rezago de varios años.'],
+  err: ['Mostrar solo un desplazamiento de la DA.', 'Ignorar el largo plazo de implementación en la evaluación.', 'No distinguir políticas basadas en el mercado de las intervencionistas.', 'Olvidar los efectos sobre la equidad (p. ej., reformas laborales).'] },
+
+{ id: 'salario-minimo-reforma', u: 'macro', st: '3.7', stn: 'Políticas del lado de la oferta', t: 'Reforma del mercado laboral: reducción del salario mínimo',
+  pr: 'P1 parte b · P2 parte g',
+  fig: { panels: [{ ...AXL,
+    lines: [{ l: G.L([1, 9], [9, 1]), k: 'k-d', t: 'D_L' }, { l: G.L([1, 1], [9, 9]), k: 'k-s', t: 'O_L' }, { l: G.L([0, 7], [9.2, 7]), k: 'k-v', dash: true }],
+    guides: [{ p: [5, 5], yl: 'W_e', xl: 'L_e' }, { p: [3, 7], xl: 'L_1', noY: true }, { p: [0, 7], yl: 'W_{mín}', noX: true, noY: true }],
+    arrows: [{ a: [3.25, 6.6], b: [4.7, 5.3], k: 'k-exp' }, { a: [0.6, 6.7], b: [0.6, 5.3], k: 'k-con' }],
+    pts: [{ p: [3, 7], t: 'A', dx: -16 }, { p: [5, 5], t: 'E', dx: 8, dy: 4 }] }] },
+  cap: 'Política basada en el mercado: reducir o eliminar el salario mínimo permite que el salario baje a W_e y el empleo suba de L₁ a L_e. Ver también la ficha de salario mínimo (3.3).',
+  ejes: EJL,
+  curvas: ['W_mín baja hasta W_e (flecha roja en el eje).', 'Movimiento a lo largo de D_L de A a E (flecha verde): las empresas contratan más.', 'D_L y O_L no se desplazan.'],
+  eq: ['Antes: empleo L₁ a W_mín.', 'Después: E (L_e; W_e); desaparece el desempleo de desequilibrio.'],
+  areas: [],
+  calc: [],
+  cad: ['Se reduce el salario mínimo.', 'Baja el costo de contratar.', 'Las empresas emplean más trabajadores: el empleo pasa de L₁ a L_e.', 'Aumenta la producción potencial, pero bajan los ingresos de trabajadores de menores salarios (conflicto con la equidad).'],
+  err: ['Presentarla como política intervencionista.', 'Omitir el costo en equidad y pobreza.', 'Afirmar que el empleo sube por encima de L_e.', 'No mencionar que la informalidad limita el efecto en Paraguay.'] }
+];
+/* ================= ECONOMÍA GLOBAL (Unidad 4) ================= */
+const AXG = { y: 'Precio (US$/tonelada)', x: 'Cantidad (toneladas/año)' };
+const EJG = [['Eje vertical (Y)', 'Precio del bien, en US$ por unidad (p. ej., por tonelada)'], ['Eje horizontal (X)', 'Cantidad del bien, en unidades por año (producción, consumo y comercio)']];
+const AXFX = { y: 'Precio del guaraní (US$ por Gs. 1.000)', x: 'Cantidad de guaraníes' };
+const EJFX = [['Eje vertical (Y)', 'Tipo de cambio: precio del guaraní expresado en otra moneda (US$ por Gs. 1.000)'], ['Eje horizontal (X)', 'Cantidad de guaraníes intercambiada por período']];
+const DD = D0, SD = S0; // demanda y oferta nacionales
+const tradeBase = (Pw, extra = {}) => ({ ...AXG, ...extra });
+
+const GLOBAL = [
+/* ---------- 4.1 ---------- */
+{ id: 'exportaciones', u: 'global', st: '4.1', stn: 'Beneficios del comercio internacional', t: 'Libre comercio con exportaciones (P_m > P_nacional)',
+  pr: 'P1 parte a · P2 partes c–f',
+  fig: { panels: [{ ...AXG,
+    areas: [{ pts: [[0, 9], [0, 7], [2.5, 7]], c: 'f-ec', t: 'EC', at: [0.8, 7.6], n: 'Excedente del consumidor con libre comercio' }, { pts: [[0, 1], [0, 7], [7.5, 7]], c: 'f-ep', t: 'EP', at: [2.6, 4.2], n: 'Excedente del productor con libre comercio' }],
+    lines: [{ l: DD, k: 'k-d', t: 'D_{nac}' }, { l: SD, k: 'k-s', t: 'O_{nac}' }, { l: G.L([0, 7], [9.6, 7]), k: 'k-n', thin: true }],
+    guides: [{ p: [5, 5], yl: 'P_e', xl: 'Q_e' }, { p: [2.5, 7], xl: 'Q_1', noY: true }, { p: [7.5, 7], xl: 'Q_2', noY: true }, { p: [0, 7], yl: 'P_m', noX: true, noY: true }],
+    spans: [{ a: [2.5, 7.7], b: [7.5, 7.7], t: 'Exportaciones' }], pts: [{ p: [5, 5], t: 'E', dx: -4, dy: 16 }] }] },
+  cap: 'El precio mundial supera al precio interno sin comercio. Los productores nacionales venden al mundo: producen Q₂, los consumidores compran Q₁ y se exporta Q₂ − Q₁ (p. ej., soja o carne paraguaya).',
+  ejes: EJG,
+  curvas: ['**D_nac** y **O_nac**: demanda y oferta internas.', '**P_m**: precio mundial, recta horizontal (el país es tomador de precios; oferta mundial perfectamente elástica).', 'No hay desplazamientos: al abrirse el comercio, el precio interno sube de P_e a P_m.'],
+  eq: ['Sin comercio: E (Q_e; P_e).', 'Con comercio: consumo Q₁, producción Q₂ al precio P_m.', 'Exportaciones = Q₂ − Q₁.'],
+  areas: ['EC baja: pasa del triángulo hasta P_e al triángulo amarillo hasta P_m.', 'EP sube: triángulo verde hasta P_m.', 'Ganancia neta de bienestar: triángulo con vértices (Q₁; P_m), (Q₂; P_m) y E.'],
+  calc: ['Cantidad exportada = `Q₂ − Q₁`.'],
+  ns: ['Ingreso por exportaciones = P_m × (Q₂ − Q₁) = 7 × 5 = 35.', 'Cálculo de cantidades exportadas e importadas a partir del diagrama.'],
+  cad: ['El país se abre al comercio y su precio interno es menor que el mundial.', 'Los productores nacionales venden al precio mundial, más alto.', 'Producen más y exportan el excedente.', 'Ganan los productores y pierden los consumidores; el país gana en neto.'],
+  err: ['Dibujar P_m por debajo de P_e para exportaciones.', 'Medir las exportaciones desde Q_e.', 'No mostrar que los consumidores pierden excedente.', 'Desplazar la oferta nacional.'] },
+
+{ id: 'importaciones', u: 'global', st: '4.1', stn: 'Beneficios del comercio internacional', t: 'Libre comercio con importaciones (P_m < P_nacional)',
+  pr: 'P1 parte a · P2 partes c–f',
+  fig: { panels: [{ ...AXG,
+    areas: [{ pts: [[0, 9], [0, 3], [7.5, 3]], c: 'f-ec', t: 'EC', at: [2.0, 6.0], n: 'Excedente del consumidor con libre comercio' }, { pts: [[0, 1], [0, 3], [2.5, 3]], c: 'f-ep', t: 'EP', at: [0.8, 2.4], n: 'Excedente del productor con libre comercio' }],
+    lines: [{ l: DD, k: 'k-d', t: 'D_{nac}' }, { l: SD, k: 'k-s', t: 'O_{nac}' }, { l: G.L([0, 3], [9.6, 3]), k: 'k-n', thin: true }],
+    guides: [{ p: [5, 5], yl: 'P_e', xl: 'Q_e' }, { p: [2.5, 3], xl: 'Q_1', noY: true }, { p: [7.5, 3], xl: 'Q_2', noY: true }, { p: [0, 3], yl: 'P_m', noX: true, noY: true }],
+    spans: [{ a: [2.5, 2.3], b: [7.5, 2.3], t: 'Importaciones', below: true }], pts: [{ p: [5, 5], t: 'E', dx: 8, dy: 4 }] }] },
+  cap: 'El precio mundial es menor que el interno. Los consumidores compran Q₂, los productores nacionales venden Q₁ y se importa Q₂ − Q₁.',
+  ejes: EJG,
+  curvas: ['**P_m**: precio mundial (oferta mundial perfectamente elástica).', 'Al abrirse el comercio, el precio interno baja de P_e a P_m.'],
+  eq: ['Producción nacional Q₁; consumo Q₂.', 'Importaciones = Q₂ − Q₁.'],
+  areas: ['EC sube (triángulo amarillo hasta P_m).', 'EP baja (triángulo verde pequeño).', 'Ganancia neta: triángulo (Q₁; P_m), (Q₂; P_m), E.'],
+  calc: ['Cantidad importada = `Q₂ − Q₁`.'],
+  ns: ['Gasto en importaciones = P_m × (Q₂ − Q₁) = 3 × 5 = 15.'],
+  cad: ['Se abre el comercio con un precio mundial más bajo.', 'Los consumidores pagan menos y compran más.', 'Los productores nacionales menos eficientes reducen su producción.', 'El país gana en neto, aunque hay perdedores (productores y trabajadores del sector).'],
+  err: ['Dibujar P_m por encima de P_e.', 'Medir las importaciones solo hasta Q_e.', 'Omitir a los perdedores del libre comercio en la evaluación.'] },
+
+/* ---------- 4.2 ---------- */
+{ id: 'arancel', u: 'global', st: '4.2', stn: 'Tipos de protección comercial', t: 'Efecto de un arancel',
+  pr: 'P1 partes a–b · P2 partes c–f',
+  fig: { panels: [{ ...AXG,
+    areas: [{ pts: [[0, 3], [0, 4.6], [4.5, 4.6], [2.5, 3]], c: 'f-ep', t: 'a', at: [1.9, 3.8], n: 'a: aumento del excedente del productor nacional' },
+      { pts: [[2.5, 3], [4.5, 4.6], [4.5, 3]], c: 'f-dwl', t: 'b', at: [3.85, 3.5], n: 'b y d: pérdida de bienestar' },
+      { pts: [[4.5, 3], [4.5, 4.6], [5.5, 4.6], [5.5, 3]], c: 'f-gov', t: 'c', n: 'c: recaudación del arancel' },
+      { pts: [[5.5, 4.6], [5.5, 3], [7.5, 3]], c: 'f-dwl', t: 'd', at: [6.1, 3.5], n: 'b y d: pérdida de bienestar' }],
+    lines: [{ l: DD, k: 'k-d', t: 'D_{nac}' }, { l: SD, k: 'k-s', t: 'O_{nac}' }, { l: G.L([0, 3], [9.6, 3]), k: 'k-n', thin: true }, { l: G.L([0, 4.6], [9.6, 4.6]), k: 'k-con', thin: true }],
+    guides: [{ p: [0, 3], yl: 'P_m', noX: true, noY: true }, { p: [0, 4.6], yl: 'P_m + t', noX: true, noY: true }, { p: [2.5, 3], xl: 'Q_1', noY: true }, { p: [4.5, 4.6], xl: 'Q_2', noY: true }, { p: [5.5, 4.6], xl: 'Q_3', noY: true }, { p: [7.5, 3], xl: 'Q_4', noY: true }],
+    spans: [{ a: [2.5, 2.2], b: [7.5, 2.2], t: 'Importaciones sin arancel', below: true }, { a: [4.5, 5.4], b: [5.5, 5.4], t: 'Con arancel' }] }] },
+  cap: 'El arancel t eleva el precio interno de P_m a P_m + t. Aumenta la producción nacional (Q₁ → Q₂), cae el consumo (Q₄ → Q₃) y las importaciones se reducen de Q₄ − Q₁ a Q₃ − Q₂.',
+  ejes: EJG,
+  curvas: ['D_nac y O_nac no se desplazan.', 'La recta del precio mundial sube en t: **P_m → P_m + t** (oferta mundial con arancel).'],
+  eq: ['Producción nacional: Q₁ → Q₂.', 'Consumo: Q₄ → Q₃.', 'Importaciones: (Q₄ − Q₁) → (Q₃ − Q₂).'],
+  areas: ['Pérdida del EC = a + b + c + d.', '**a** (verde): ganancia de los productores nacionales.', '**c** (violeta): recaudación del gobierno = t × importaciones.', '**b**: pérdida por producir de forma ineficiente en el país lo que podría importarse más barato.', '**d**: pérdida por menor consumo.', 'Pérdida irrecuperable de bienestar = **b + d**.'],
+  calc: ['Variación de las importaciones = `(Q₃ − Q₂) − (Q₄ − Q₁)`.'],
+  ns: ['Recaudación = t × (Q₃ − Q₂) = 1,6 × 1 = 1,6.', 'Pérdida de bienestar = ½ × (Q₂ − Q₁) × t + ½ × (Q₄ − Q₃) × t = 1,6 + 1,6 = 3,2.', 'Gasto de los consumidores, ingreso de los productores nacionales y extranjeros a partir del diagrama.'],
+  cad: ['El gobierno cobra un impuesto a las importaciones.', 'El precio interno sube en el monto del arancel.', 'Los productores nacionales venden más; los consumidores compran menos.', 'El Estado recauda, pero el país pierde b + d de bienestar y puede sufrir represalias.'],
+  err: ['Desplazar la oferta nacional en lugar del precio mundial.', 'Confundir el área de recaudación con la de pérdida de bienestar.', 'Medir las nuevas importaciones desde Q₁ (es de Q₂ a Q₃).', 'No rotular P_m + t.'] },
+
+{ id: 'cuota', u: 'global', st: '4.2', stn: 'Tipos de protección comercial', t: 'Efecto de una cuota de importación',
+  pr: 'P1 partes a–b · P2 partes c–f',
+  fig: { panels: [{ ...AXG,
+    areas: [{ pts: [[0, 3], [0, 4.6], [4.5, 4.6], [2.5, 3]], c: 'f-ep', t: 'a', at: [1.9, 3.8], n: 'a: aumento del excedente del productor nacional' },
+      { pts: [[2.5, 3], [4.5, 4.6], [4.5, 3]], c: 'f-dwl', t: 'b', at: [3.85, 3.5], n: 'b y d: pérdida de bienestar' },
+      { pts: [[4.5, 3], [4.5, 4.6], [5.5, 4.6], [5.5, 3]], c: 'f-gray', t: 'c', n: 'c: renta de la cuota (importadores o exportadores extranjeros)' },
+      { pts: [[5.5, 4.6], [5.5, 3], [7.5, 3]], c: 'f-dwl', t: 'd', at: [6.1, 3.5], n: 'b y d: pérdida de bienestar' }],
+    lines: [{ l: DD, k: 'k-d', t: 'D_{nac}' }, { l: SD, k: 'k-s', t: 'O_{nac}' }, { l: G.L([3.5, 3], [10, 8.2]), k: 'k-s', dash: true, t: 'O_{nac} + cuota', tp: [7.8, 5.7] }, { l: G.L([0, 3], [9.6, 3]), k: 'k-n', thin: true }],
+    guides: [{ p: [0, 3], yl: 'P_m', noX: true, noY: true }, { p: [4.5, 4.6], yl: 'P_c', xl: 'Q_2', noX: false }, { p: [2.5, 3], xl: 'Q_1', noY: true }, { p: [5.5, 4.6], xl: 'Q_3', noY: true }, { p: [7.5, 3], xl: 'Q_4', noY: true }],
+    spans: [{ a: [4.5, 5.4], b: [5.5, 5.4], t: 'Cuota' }], pts: [{ p: [5.5, 4.6], t: 'E_c', dx: 6, dy: -6 }] }] },
+  cap: 'La cuota limita las importaciones a Q₃ − Q₂. La oferta total pasa a ser la oferta nacional más la cuota; el precio interno sube a P_c.',
+  ejes: EJG,
+  curvas: ['**O_nac + cuota**: a partir de P_m, la oferta nacional se desplaza a la derecha en la cantidad de la cuota.', 'D_nac y O_nac no cambian.'],
+  eq: ['Equilibrio con cuota: E_c (Q₃; P_c), donde D_nac corta a O_nac + cuota.', 'Producción nacional Q₂; importaciones = cuota = Q₃ − Q₂.'],
+  areas: ['**a**: ganancia de productores nacionales.', '**c** (gris): renta de la cuota; la ganan los importadores con licencia o los exportadores extranjeros, **no** el gobierno (salvo que subaste las licencias).', '**b + d**: pérdida de bienestar.'],
+  calc: ['Cuota = `Q₃ − Q₂`.'],
+  ns: ['Cálculo de los efectos de la cuota en las partes interesadas a partir del diagrama.'],
+  cad: ['El gobierno fija un máximo de importaciones.', 'La oferta disponible en el país se reduce y sube el precio.', 'Los productores nacionales venden más y los consumidores pagan más.', 'A diferencia del arancel, el gobierno no recauda: la renta va a los importadores.'],
+  err: ['Sombrear c como recaudación del gobierno.', 'Iniciar la curva O_nac + cuota en el origen.', 'Confundir cuota con arancel en la explicación.'] },
+
+{ id: 'subvencion-comercio', u: 'global', st: '4.2', stn: 'Tipos de protección comercial', t: 'Efecto de una subvención a productores nacionales',
+  pr: 'P1 partes a–b · P2 partes c–f',
+  fig: { panels: [{ ...AXG,
+    areas: [{ pts: [[0, 3], [0, 4.6], [4.5, 4.6], [4.5, 3]], c: 'f-gov', t: 'Costo', at: [1.6, 3.8], n: 'Costo de la subvención para el gobierno' }, { pts: [[2.5, 3], [4.5, 4.6], [4.5, 3]], c: 'f-dwl', n: 'Pérdida de bienestar' }],
+    lines: [{ l: DD, k: 'k-d', t: 'D_{nac}' }, { l: SD, k: 'k-s', t: 'O_{nac}' }, { l: G.L([0.75, 0], [10, 7.4]), k: 'k-s', t: 'O_{nac} − s' }, { l: G.L([0, 3], [9.6, 3]), k: 'k-n', thin: true }],
+    guides: [{ p: [0, 3], yl: 'P_m', noX: true, noY: true }, { p: [4.5, 4.6], yl: 'P_m + s', noX: true }, { p: [2.5, 3], xl: 'Q_1', noY: true }, { p: [4.5, 3], xl: 'Q_2', noY: true }, { p: [7.5, 3], xl: 'Q_3', noY: true }],
+    arrows: [{ a: [8, 7.2], b: [8, 5.7], k: 'k-exp' }],
+    spans: [{ a: [2.5, 2.2], b: [7.5, 2.2], t: 'Importaciones antes', below: true }, { a: [4.5, 1.2], b: [7.5, 1.2], t: 'Importaciones después', below: true }] }] },
+  cap: 'La subvención s por unidad baja la oferta nacional. Al precio mundial P_m los productores nacionales venden más (Q₁ → Q₂); el consumo no cambia (Q₃) y las importaciones caen.',
+  ejes: EJG,
+  curvas: ['**O_nac → O_nac − s**: desplazamiento hacia abajo (a la derecha) igual a la subvención.', 'El precio para los consumidores sigue siendo P_m.'],
+  eq: ['Producción nacional: Q₁ → Q₂.', 'Consumo: Q₃ (sin cambio).', 'Importaciones: (Q₃ − Q₁) → (Q₃ − Q₂).', 'Los productores reciben P_m + s por unidad.'],
+  areas: ['**Costo para el gobierno** (violeta) = s × Q₂.', 'Una parte del costo es ganancia del productor (trapecio entre P_m y P_m + s hasta O_nac).', '**Pérdida de bienestar** (azul): producción nacional ineficiente entre Q₁ y Q₂.', 'Los consumidores no pierden excedente.'],
+  calc: ['Variación de las importaciones = `Q₂ − Q₁`.'],
+  ns: ['Costo = s × Q₂ = 1,6 × 4,5 = 7,2. Pérdida de bienestar = ½ × 2 × 1,6 = 1,6.'],
+  cad: ['El gobierno subvenciona a los productores nacionales.', 'Baja su costo y pueden competir al precio mundial.', 'Aumenta la producción nacional y caen las importaciones.', 'El costo fiscal tiene costo de oportunidad y puede violar normas de la OMC.'],
+  err: ['Hacer que suba el precio al consumidor (no cambia).', 'Desplazar la demanda.', 'No sombrear el costo completo de la subvención.', 'Olvidar la reacción de los socios comerciales en la evaluación.'] },
+
+/* ---------- 4.5 ---------- */
+{ id: 'tc-flotante', u: 'global', st: '4.5', stn: 'Tipos de cambio', t: 'Tipo de cambio flotante: determinación y cambios',
+  pr: 'P1 parte a · P2 partes c–f',
+  fig: { panels: [
+    { t: 'Aumento de la demanda: apreciación', ...AXFX, lines: [{ l: G.L([1, 9], [8, 2]), k: 'k-d', t: 'D_{Gs1}' }, { l: G.L([3, 9], [10, 2]), k: 'k-d', t: 'D_{Gs2}' }, { l: G.L([1, 1], [8.6, 8.6]), k: 'k-s', t: 'O_{Gs}' }],
+      guides: [{ p: [5, 5], yl: 'e_1', xl: 'Q_1' }, { p: [6, 6], yl: 'e_2', xl: 'Q_2' }], arrows: [{ a: [2.8, 7.5], b: [4.4, 7.5], k: 'k-exp' }], pts: [{ p: [5, 5] }, { p: [6, 6] }] },
+    { t: 'Aumento de la oferta: depreciación', ...AXFX, lines: [{ l: G.L([1, 9], [8, 2]), k: 'k-d', t: 'D_{Gs}' }, { l: G.L([1, 1], [8.6, 8.6]), k: 'k-s', t: 'O_{Gs1}' }, { l: G.L([3, 1], [10, 8]), k: 'k-s', t: 'O_{Gs2}' }],
+      guides: [{ p: [5, 5], yl: 'e_1', xl: 'Q_1' }, { p: [6, 4], yl: 'e_2', xl: 'Q_2' }], arrows: [{ a: [2.6, 2.6], b: [4.2, 2.6], k: 'k-con' }], pts: [{ p: [5, 5] }, { p: [6, 4] }] }
+  ] },
+  cap: 'En un régimen flotante el tipo de cambio surge de la oferta y la demanda de la moneda. Más demanda de guaraníes lo aprecia; más oferta lo deprecia.',
+  ejes: EJFX,
+  curvas: ['**D_Gs**: demanda de guaraníes = extranjeros que compran exportaciones paraguayas, turismo receptivo, inversión extranjera en Paraguay, remesas recibidas, especulación.', '**O_Gs**: oferta de guaraníes = residentes que compran importaciones, invierten o viajan al exterior.', 'D_Gs1 → D_Gs2: p. ej., suben los precios internacionales de la soja → más exportaciones → **apreciación**.', 'O_Gs1 → O_Gs2: p. ej., más importaciones o salida de capitales → **depreciación**.'],
+  eq: ['Panel 1: e₁ → e₂ (sube el precio del guaraní).', 'Panel 2: e₁ → e₂ (baja el precio del guaraní).'],
+  areas: [],
+  calc: ['Precio de un bien en otra moneda = `precio en moneda nacional ÷ tipo de cambio`.', 'Ejemplo: un producto de Gs. 150.000 con un tipo de cambio de Gs. 7.500 por US$ cuesta US$ 20.', 'Variación del valor de una moneda = `(e₂ − e₁) ÷ e₁ × 100`.'],
+  cad: ['Aumentan las exportaciones de soja.', 'Los compradores extranjeros necesitan guaraníes para pagar.', 'Sube la demanda de guaraníes.', 'El guaraní se aprecia: las importaciones se abaratan y las exportaciones se encarecen.'],
+  err: ['Rotular el eje Y como «Precio» sin indicar que es el precio de una moneda en otra.', 'Confundir apreciación con depreciación al leer «Gs. por US$» (si el guaraní se aprecia, se necesitan **menos** guaraníes por dólar).', 'Atribuir a la demanda factores que aumentan la oferta de la moneda.', 'No rotular e₁ y e₂.'] },
+
+{ id: 'tc-da-oa', u: 'global', st: '4.5', stn: 'Tipos de cambio', t: 'Consecuencias de los cambios del tipo de cambio en DA y OA',
+  pr: 'P1 parte b · P2 parte g',
+  fig: { panels: [
+    { t: 'Depreciación', ...AXM, lines: [{ l: DA(10), k: 'k-da', t: 'DA_1' }, { l: DA(12), k: 'k-da', t: 'DA_2' }, { l: OACP(0), k: 'k-oacp', t: 'OACP_1' }, { l: OACP(1), k: 'k-oacp', dash: true, t: 'OACP_2', tp: [7.4, 9.6], ta: 'end' }],
+      guides: [{ p: [5, 5], yl: 'NGP_1', xl: 'Y_1' }, { p: [5.5, 6.5], yl: 'NGP_2', xl: 'Y_2' }], arrows: [{ a: [2.3, 8], b: [3.7, 8], k: 'k-exp' }, { a: [8.2, 7.6], b: [7.0, 7.6], k: 'k-con' }], pts: [{ p: [5, 5], t: 'E_1', dx: 8, dy: 4 }, { p: [5.5, 6.5], t: 'E_2', dx: -26 }] },
+    { t: 'Apreciación', ...AXM, lines: [{ l: DA(10), k: 'k-da', t: 'DA_1' }, { l: DA(8), k: 'k-da', t: 'DA_2' }, { l: OACP(0), k: 'k-oacp', t: 'OACP_1' }, { l: OACP(-1), k: 'k-oacp', dash: true, t: 'OACP_2' }],
+      guides: [{ p: [5, 5], yl: 'NGP_1', xl: 'Y_1' }, { p: [4.5, 3.5], yl: 'NGP_2', xl: 'Y_2' }], arrows: [{ a: [3.7, 6], b: [2.3, 6], k: 'k-con' }, { a: [6.4, 6.0], b: [7.6, 6.0], k: 'k-exp' }], pts: [{ p: [5, 5], t: 'E_1', dx: 8, dy: 4 }, { p: [4.5, 3.5], t: 'E_2', dx: -26 }] }
+  ] },
+  cap: 'Una depreciación abarata las exportaciones y encarece las importaciones (DA a la derecha) y también encarece los insumos importados (OACP a la izquierda). La apreciación produce los efectos opuestos.',
+  ejes: EJM,
+  curvas: ['Depreciación: X ↑ y M ↓ → **DA₁ → DA₂** (derecha); insumos importados más caros → **OACP₁ → OACP₂** (izquierda).', 'Apreciación: X ↓ y M ↑ → DA a la izquierda; insumos más baratos → OACP a la derecha.', 'El efecto neto sobre el PIB real depende de la magnitud de cada desplazamiento.'],
+  eq: ['Depreciación: E₁ (5; 5) → E₂ (5,5; 6,5): sube el NGP (inflación).', 'Apreciación: E₁ (5; 5) → E₂ (4,5; 3,5): baja el NGP.'],
+  areas: [],
+  calc: [],
+  ns: ['Condición de Marshall-Lerner y curva J.'],
+  cad: ['El guaraní se deprecia.', 'Las exportaciones paraguayas son más competitivas y las importaciones más caras.', 'Aumentan las exportaciones netas: la DA se desplaza a la derecha.', 'Pero los combustibles e insumos importados se encarecen: inflación importada.'],
+  err: ['Mostrar solo el efecto sobre la DA.', 'Afirmar que la depreciación siempre mejora la balanza comercial de inmediato.', 'Olvidar la inflación importada en la evaluación.'] },
+
+{ id: 'tc-fijo', u: 'global', st: '4.5', stn: 'Tipos de cambio', t: 'Mantenimiento de un tipo de cambio fijo',
+  pr: 'P1 parte a · P2 partes c–f',
+  fig: { panels: [{ ...AXFX,
+    lines: [{ l: G.L([1, 9], [9, 1]), k: 'k-d', t: 'D_1 = D_3' }, { l: G.L([1, 7], [7, 1]), k: 'k-d', t: 'D_2' }, { l: G.L([1, 1], [9, 9]), k: 'k-s', t: 'O' }, { l: G.L([0, 5], [9.4, 5]), k: 'k-v', dash: true }],
+    guides: [{ p: [0, 5], yl: 'e_{fijo}', noX: true, noY: true }, { p: [4, 4], yl: 'e_2', noX: true }, { p: [3, 5], xl: 'Q_2', noY: true }, { p: [5, 5], xl: 'Q_1', noY: true }],
+    spans: [{ a: [3, 5.6], b: [5, 5.6], t: 'Exceso de oferta' }],
+    arrows: [{ a: [1.6, 6.6], b: [3.2, 6.6], k: 'k-exp' }, { a: [6.8, 3.0], b: [5.2, 3.0], k: 'k-con' }],
+    pts: [{ p: [5, 5], t: 'E_1', dx: 8, dy: -4 }, { p: [4, 4], t: 'E_2', dx: -22, dy: 14 }] }] },
+  cap: 'Cae la demanda de la moneda (D₁ → D₂): sin intervención el tipo de cambio bajaría a e₂. Para sostener e_fijo, el banco central compra su moneda con reservas (D₂ → D₃ = D₁) o sube la tasa de interés.',
+  ejes: EJFX,
+  curvas: ['**D₁ → D₂** (izquierda, rojo): menor demanda de la moneda (caen las exportaciones).', '**D₂ → D₃** (derecha, verde): el banco central compra su moneda usando reservas de divisas.', 'Alternativas: subir la tasa de interés para atraer capitales o restringir la compra de divisas.'],
+  eq: ['Tipo fijo: e_fijo.', 'A e_fijo con D₂: exceso de oferta de la moneda = Q₁ − Q₂.', 'Sin intervención: E₂ con e₂ < e_fijo (devaluación).'],
+  areas: [],
+  calc: [],
+  cad: ['Cae la demanda de la moneda nacional.', 'A e_fijo aparece un exceso de oferta.', 'El banco central compra el exceso con reservas o sube la tasa de interés.', 'Si las reservas se agotan, debe devaluar.'],
+  err: ['Confundir devaluación (régimen fijo) con depreciación (régimen flotante).', 'Ignorar el límite de las reservas internacionales.', 'No marcar el exceso de oferta a e_fijo.'] },
+
+{ id: 'tc-controlado', u: 'global', st: '4.5', stn: 'Tipos de cambio', t: 'Tipo de cambio controlado (flotación administrada)',
+  pr: 'P1 parte a · P2 partes c–f',
+  fig: { panels: [{ ...AXFX,
+    lines: [{ l: G.L([1, 9], [9, 1]), k: 'k-d', t: 'D_1' }, { l: G.L([0.5, 6.5], [6, 1]), k: 'k-d', t: 'D_2' }, { l: G.L([1.2, 6.8], [7.2, 0.8]), k: 'k-d', dash: true, t: 'D_3' }, { l: G.L([1, 1], [9, 9]), k: 'k-s', t: 'O' },
+      { l: G.L([0, 6.5], [9.4, 6.5]), k: 'k-v', dash: true, thin: true, t: 'Límite superior', tp: [5.6, 6.75] }, { l: G.L([0, 4], [9.4, 4]), k: 'k-v', dash: true, thin: true, t: 'Límite inferior', tp: [5.6, 4.25] }],
+    guides: [{ p: [5, 5], yl: 'e_1' }, { p: [3.5, 3.5], yl: 'e_2', noX: true }, { p: [4, 4], yl: 'e_3' }],
+    arrows: [{ a: [3.7, 6], b: [1.3, 6], k: 'k-con' }, { a: [4.95, 2.2], b: [5.65, 2.2], k: 'k-exp' }],
+    pts: [{ p: [5, 5], t: 'E_1', dx: 8, dy: -4 }, { p: [3.5, 3.5], t: 'E_2', dx: -26, dy: 6 }, { p: [4, 4], t: 'E_3', dx: 6, dy: 16 }] }] },
+  cap: 'La moneda flota dentro de una banda. Si una caída de la demanda (D₁ → D₂) la llevaría por debajo del límite inferior (e₂), el banco central compra moneda (D₂ → D₃) para mantenerla en el límite (e₃).',
+  ejes: EJFX,
+  curvas: ['Dentro de la banda la moneda flota con la oferta y la demanda.', '**D₁ → D₂**: presión hacia la depreciación.', '**D₂ → D₃**: intervención del banco central (compra de su moneda con reservas).', 'El BCP aplica una flotación administrada: interviene para suavizar movimientos bruscos del guaraní, sin una banda anunciada.'],
+  eq: ['E₁ inicial dentro de la banda.', 'E₂ quedaría por debajo del límite inferior.', 'E₃: tipo de cambio sostenido en el límite inferior.'],
+  areas: [],
+  calc: [],
+  cad: ['Cae la demanda de la moneda.', 'El tipo de cambio tiende a salir de la banda.', 'El banco central vende divisas y compra moneda nacional.', 'La moneda queda dentro de la banda; se reduce la volatilidad a costa de reservas.'],
+  err: ['Dibujar la banda sin explicar cuándo se interviene.', 'Afirmar que en un tipo controlado nunca cambia el tipo de cambio.', 'Desplazar la oferta cuando el banco central compra moneda (aumenta la demanda).'] },
+
+/* ---------- 4.9 ---------- */
+{ id: 'ciclo-pobreza', u: 'global', st: '4.9', stn: 'Barreras al crecimiento y al desarrollo', t: 'Ciclo de la pobreza (trampa de pobreza)',
+  pr: 'P1 partes a–b · P2 parte g',
+  fig: { flow: { w: 760, h: 440, aria: 'Ciclo de la pobreza',
+    nodes: [{ id: 'y', x: 380, y: 52, w: 190, h: 50, t: 'Ingresos bajos', c: 'hl' }, { id: 's', x: 635, y: 135, w: 170, h: 48, t: 'Ahorro bajo' }, { id: 'i', x: 635, y: 300, w: 190, h: 56, t: 'Inversión baja\n(capital físico)' },
+      { id: 'p', x: 380, y: 388, w: 200, h: 56, t: 'Baja productividad\ndel trabajo', c: 'hl' }, { id: 'h', x: 125, y: 300, w: 200, h: 56, t: 'Capital humano débil\n(salud y educación)' }, { id: 'g', x: 125, y: 135, w: 200, h: 56, t: 'Poco gasto en\nsalud y educación' }],
+    edges: [{ f: 'y', t: 's' }, { f: 's', t: 'i' }, { f: 'i', t: 'p' }, { f: 'y', t: 'g' }, { f: 'g', t: 'h' }, { f: 'h', t: 'p' }, { f: 'p', t: 'y', l: 'la baja productividad\nreproduce los ingresos bajos', lp: [390, 210], la: 'start' }],
+    notes: [{ p: [380, 432], t: 'Romper el ciclo: inversión en capital humano, IED, ayuda externa, microfinanzas, infraestructura.' }] } },
+  cap: 'Una combinación de factores que se refuerzan entre sí mantiene a hogares, regiones o países en la pobreza de una generación a la siguiente.',
+  ejes: [['Diagrama sin ejes', 'Ciclo de causas encadenadas. Cada flecha significa «causa».']],
+  curvas: ['Bucle de capital físico: ingresos bajos → ahorro bajo → inversión baja → baja productividad → ingresos bajos.', 'Bucle de capital humano: ingresos bajos → poco gasto en salud y educación → capital humano débil → baja productividad.', 'Otros factores que pueden agregarse: instituciones débiles, corrupción, falta de acceso al crédito, informalidad, deuda externa.'],
+  eq: ['No hay equilibrio gráfico: el ciclo se autorrefuerza.'],
+  areas: [],
+  calc: [],
+  cad: ['Los ingresos bajos impiden ahorrar e invertir.', 'Sin inversión no aumenta el capital por trabajador.', 'La productividad sigue baja y los ingresos también.', 'Se necesita una intervención externa al ciclo para romperlo.'],
+  err: ['Presentar una lista de causas sin flechas que cierren el ciclo.', 'Omitir el vínculo con la productividad.', 'No proponer cómo romper el ciclo cuando la pregunta pide evaluar estrategias.'] }
+];
+
+/* ================= Páginas complementarias ================= */
+const MX_ROWS = [
+  ['Sustitución de importaciones', ['arancel', 'cuota', 'subvencion-comercio']],
+  ['Fomento de las exportaciones', ['exportaciones', 'tc-da-oa', 'da-aumento-y']],
+  ['Integración económica y liberalización del comercio', ['importaciones', 'arancel']],
+  ['Diversificación', ['cpp-crecimiento', 'oalp-desplaz']],
+  ['Privatización y desregulación (políticas basadas en el mercado)', ['politicas-oferta', 'salario-minimo-reforma']],
+  ['Redistribución: impuestos, transferencias monetarias, salario mínimo', ['lorenz', 'salario-minimo']],
+  ['Programas educativos y de salud', ['ext-pos-cons', 'subvencion-ext', 'politicas-oferta']],
+  ['Infraestructura (energía, transporte, telecomunicaciones, agua)', ['politicas-oferta', 'da-desplaz']],
+  ['Inversión extranjera directa', ['da-desplaz', 'oalp-aumento', 'tc-flotante']],
+  ['Ayuda externa y alivio de la deuda', ['ciclo-pobreza', 'cpp-crecimiento']],
+  ['Asistencia multilateral (Banco Mundial, FMI)', ['ciclo-pobreza', 'politica-fiscal']],
+  ['Cambio institucional: microfinanzas, derechos de propiedad y de la tierra, poder de la mujer, menos corrupción', ['ciclo-pobreza', 'oalp-desplaz']]
+];
+const NS_LIST = [
+  ['2.5', 'EPD a lo largo de una demanda lineal'],
+  ['2.11', 'Competencia perfecta: P = D = IMe = IM; empresa con ganancias extraordinarias, normales y pérdidas; equilibrio de largo plazo con eficiencia'],
+  ['2.11', 'Poder de mercado (IMe > CM); monopolio con ganancias y pérdidas; comparación monopolio vs. competencia perfecta con pérdida de bienestar; monopolio natural'],
+  ['2.11', 'Oligopolio colusorio que actúa como monopolio; competencia monopolística (corto y largo plazo)'],
+  ['2.12', 'Flujo circular que ilustra por qué el libre mercado genera desigualdad'],
+  ['3.3', 'DA y OA con el conflicto entre desempleo bajo e inflación baja; curva de Phillips de corto y largo plazo'],
+  ['3.4', 'Construcción de la curva de Lorenz a partir de datos de quintiles'],
+  ['3.5', 'Mercado de dinero: determinación de la tasa de interés de equilibrio'],
+  ['3.6', 'Efecto desplazamiento (crowding out); cálculo del multiplicador keynesiano'],
+  ['4.1', 'CPP lineales de ventaja comparativa y cálculo de costos de oportunidad'],
+  ['4.6', 'Relación entre la cuenta corriente y el tipo de cambio; curva J y condición de Marshall-Lerner'],
+  ['2.3 · 2.7 · 2.8 · 4.2', 'Cálculos de áreas: excedentes, recaudación, costo de subvenciones, pérdida de bienestar y efectos de aranceles y cuotas']
+];
+const EXTRA = [
+  { id: 'nota-bienes-publicos', u: 'micro', st: '2.9', stn: 'Bienes públicos', type: 'page', t: 'Bienes públicos y recursos comunes: sin diagrama exigido',
+    render: () => `<div class="blk intro"><p>La guía no exige un diagrama para los <b>bienes públicos</b> (2.9) ni para los <b>recursos de uso común</b> (2.8). En el examen se explican con conceptos: no rivalidad, no exclusión y problema del polizón; o rivalidad sin exclusión y sobreexplotación.</p>
+      <p>Si querés apoyar la explicación de un recurso común con un gráfico, usá el diagrama de <button type="button" class="lnk" data-id="ext-neg-prod">externalidad negativa de la producción</button> y aclaralo en el texto. No inventes un diagrama propio de bienes públicos: no suma puntos.</p></div>` },
+  { id: 'matriz-410', u: 'global', st: '4.10', stn: 'Estrategias de crecimiento y desarrollo', type: 'page', t: 'Matriz de reutilización de diagramas',
+    render: () => `<p class="intro">En 4.10 la guía indica usar los diagramas de las otras secciones. Elegí la estrategia, abrí el diagrama y adaptá la explicación al país del caso.</p>
+      <div class="tbl-wrap"><table class="mx"><thead><tr><th>Estrategia (4.10)</th><th>Diagramas que la sostienen</th></tr></thead><tbody>${MX_ROWS.map(r => `<tr><td>${r[0]}</td><td>${r[1].map(id => BY[id] ? `<button type="button" class="lnk" data-id="${id}">${esc(BY[id].code)} · ${esc(BY[id].t)}</button>` : '').join('<br>')}</td></tr>`).join('')}</tbody></table></div>` },
+  { id: 'ns-ref', st: 'NS', stn: 'Referencia', type: 'page', t: 'Diagramas solo NS (no evaluables en NM)',
+    render: () => `<p class="intro">Estos diagramas y cálculos están marcados como <b>solo NS</b> en la guía oficial y la Prueba 2 de NM los excluye. Si aparecen en un libro o en un artículo, no hace falta estudiarlos para el examen de NM.</p>
+      <div class="tbl-wrap"><table class="mx"><thead><tr><th style="width:120px">Subtema</th><th>Diagrama o cálculo solo NS</th></tr></thead><tbody>${NS_LIST.map(r => `<tr><td>${r[0]}</td><td>${r[1]}</td></tr>`).join('')}</tbody></table></div>` }
+];
+/* ================= Aplicación ================= */
+const UNITS = {
+  micro: { n: 'Microeconomía', s: 'Unidades 1 y 2' },
+  macro: { n: 'Macroeconomía', s: 'Unidad 3' },
+  global: { n: 'Economía Global', s: 'Unidad 4' }
+};
+const ALL = [...MICRO, ...MACRO, ...GLOBAL, ...EXTRA];
+(() => { // códigos por subtema: 2.7 A, 2.7 B…
+  const cnt = {};
+  ALL.forEach(f => { if (f.type) { f.code = f.code || f.st; return; } cnt[f.st] = (cnt[f.st] || 0) + 1; f.code = f.st + ' ' + String.fromCharCode(64 + cnt[f.st]); });
+})();
+const BY = Object.fromEntries(ALL.map(f => [f.id, f]));
+const S = { unit: 'micro', id: null, q: '', practice: false };
+const $ = s => document.querySelector(s);
+const store = {
+  get(k, d) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch (e) { return d; } },
+  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { } }
+};
+const norm = s => String(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+
+function listFor(unit) { return ALL.filter(f => f.u === unit); }
+function matches(f, q) {
+  if (!q) return true;
+  const hay = norm([f.t, f.st, f.stn, f.code, ...(f.curvas || []), ...(f.err || [])].join(' '));
+  return norm(q).split(/\s+/).every(w => hay.includes(w));
+}
+
+function renderUnits() {
+  $('#units').innerHTML = Object.entries(UNITS).map(([k, u]) =>
+    `<button type="button" data-u="${k}" aria-pressed="${S.unit === k}">${u.n}<span class="n">${listFor(k).filter(f => !f.type).length}</span></button>`).join('');
+}
+
+function renderIndex() {
+  const q = S.q.trim();
+  const pool = q ? ALL.filter(f => matches(f, q)) : listFor(S.unit);
+  const groups = new Map();
+  pool.forEach(f => { const key = (q ? UNITS[f.u] ? UNITS[f.u].n + ' · ' : '' : '') + f.st + '|' + f.stn; if (!groups.has(key)) groups.set(key, []); groups.get(key).push(f); });
+  let h = '';
+  if (!pool.length) h = `<p class="empty">No hay fichas que coincidan con «${esc(q)}». Probá con otra palabra, por ejemplo «subvención» o «brecha».</p>`;
+  groups.forEach((items, key) => {
+    const [st, stn] = key.split('|');
+    h += `<div class="grp"><h3><span class="c">${esc(st)}</span><span>${esc(stn)}</span></h3>` +
+      items.map(f => `<button type="button" class="item" data-id="${f.id}" aria-current="${f.id === S.id}"><span class="code">${esc(f.type ? '▤' : f.code.split(' ')[1])}</span><span>${esc(f.t)}</span></button>`).join('') + '</div>';
+  });
+  h += `<div class="side-foot"><button type="button" class="item" data-id="ns-ref" aria-current="${S.id === 'ns-ref'}"><span class="code">NS</span><span>Diagramas solo NS (no evaluables en NM)</span></button>
+  <p class="empty">Con <b>Modo práctica</b> se ocultan rótulos, ejes y letras: dibujá el diagrama completo en tu cuaderno y compará.</p></div>`;
+  $('#idx').innerHTML = h;
+}
+
+function block(title, inner, cls = '') { return inner ? `<section class="blk ${cls}"><h2>${title}</h2>${inner}</section>` : ''; }
+const ul = a => a && a.length ? `<ul>${a.map(x => `<li>${ht(x)}</li>`).join('')}</ul>` : '';
+
+const CHECK = [
+  'El diagrama corresponde al modelo económico analizado.',
+  'Los ejes están rotulados con variable y unidad.',
+  'Las curvas relevantes están identificadas con su notación.',
+  'El equilibrio inicial (precio y cantidad) está indicado.',
+  'Los desplazamientos están representados con flechas y en la dirección correcta.',
+  'El nuevo equilibrio está claramente señalado.'
+];
+
+function renderFicha(f) {
+  const u = UNITS[f.u];
+  let h = `<div class="sheet"><div class="eyebrow">${u ? u.n : 'Referencia'} · ${esc(f.st)} ${esc(f.stn)}</div><h1>${ht(f.t)}</h1>`;
+  if (f.type === 'page') {
+    h += (f.render ? f.render() : f.html) + navHtml(f) + '</div>';
+    $('#main').innerHTML = h; return;
+  }
+  h += `<div class="meta"><span class="chip">Ficha ${esc(f.code)}</span>${f.pr ? `<span class="chip ex">Aparece en: ${esc(f.pr)}</span>` : ''}</div>`;
+  const fig = renderFig(f.fig);
+  h += `<div class="figure"><div class="practice-note">Modo práctica: rótulos ocultos. Nombrá ejes, curvas, puntos y áreas antes de volver a mostrarlos.</div><div class="panels">${fig.html}</div>${fig.lg ? `<div class="legend">${fig.lg}</div>` : ''}${f.cap ? `<p class="cap">${ht(f.cap)}</p>` : ''}</div>`;
+  const ejes = f.ejes ? `<table class="ax-t"><tbody>${f.ejes.map(r => `<tr><th>${ht(r[0])}</th><td>${ht(r[1])}</td></tr>`).join('')}</tbody></table>` : '';
+  const calc = (f.calc && f.calc.length ? ul(f.calc) : '') + (f.ns && f.ns.length ? `<div class="ns"><b class="tag">Ampliación NS · no evaluable en NM</b>${ul(f.ns)}</div>` : '');
+  const ck = store.get('atlas-ck-' + f.id, []);
+  const chk = `<div class="check">${CHECK.map((c, i) => `<label><input type="checkbox" id="ck-${f.id}-${i}" data-ck="${i}"${ck[i] ? ' checked' : ''}><span>${i + 1}. ${c}</span></label>`).join('')}<div class="score" id="ck-score">${ck.filter(Boolean).length} de 6 criterios cumplidos</div></div>`;
+  h += `<div class="blocks">
+    ${block('Ejes', ejes)}
+    ${block('Curvas y desplazamientos', ul(f.curvas))}
+    ${block('Equilibrios y coordenadas clave', ul(f.eq))}
+    ${block('Áreas y sombreados', ul(f.areas) || '<p>Este diagrama no tiene áreas de bienestar que sombrear.</p>')}
+    ${block('Cálculos asociados', calc || '<p>No hay cálculos evaluables en NM asociados a este diagrama.</p>')}
+    ${block('Cadena causal para la explicación', f.cad && f.cad.length ? `<ol class="chain">${f.cad.map(x => `<li><span>${ht(x)}</span></li>`).join('')}</ol>` : '')}
+    ${block('⚠ Errores típicos de examen', ul(f.err), 'warn full')}
+    ${block('Autocontrol · Anexo 1 (ítems 1–6)', chk, 'full')}
+  </div>${navHtml(f)}</div>`;
+  $('#main').innerHTML = h;
+}
+
+function navHtml(f) {
+  const list = listFor(f.u);
+  const i = list.indexOf(f);
+  if (i < 0) return '';
+  const p = list[i - 1], n = list[i + 1];
+  return `<div class="nav">${p ? `<button type="button" data-id="${p.id}"><small>← Anterior · ${esc(p.code)}</small>${esc(p.t)}</button>` : '<span></span>'}${n ? `<button type="button" data-id="${n.id}" style="text-align:right"><small>${esc(n.code)} · Siguiente →</small>${esc(n.t)}</button>` : '<span></span>'}</div>`;
+}
+
+function go(id, push = true) {
+  const f = BY[id] || listFor(S.unit)[0];
+  S.id = f.id;
+  if (f.u && UNITS[f.u]) S.unit = f.u;
+  renderUnits(); renderIndex(); renderFicha(f);
+  if (push) { try { history.replaceState(null, '', '#' + f.id); } catch (e) { } }
+  store.set('atlas-last', f.id);
+  window.scrollTo({ top: 0 });
+  if (window.matchMedia('(max-width:860px)').matches) $('#idx').classList.add('closed');
+}
+
+document.addEventListener('click', e => {
+  const u = e.target.closest('[data-u]');
+  if (u) { S.unit = u.dataset.u; S.q = ''; $('#q').value = ''; go(listFor(S.unit)[0].id); return; }
+  const b = e.target.closest('[data-id]');
+  if (b) { go(b.dataset.id); return; }
+  if (e.target.closest('#menu')) $('#idx').classList.toggle('closed');
+});
+document.addEventListener('change', e => {
+  if (e.target.id === 'prac') { S.practice = e.target.checked; document.body.classList.toggle('practice', S.practice); store.set('atlas-prac', S.practice); }
+  if (e.target.dataset.ck != null) {
+    const k = 'atlas-ck-' + S.id, a = store.get(k, []);
+    a[+e.target.dataset.ck] = e.target.checked; store.set(k, a);
+    const sc = $('#ck-score'); if (sc) sc.textContent = a.filter(Boolean).length + ' de 6 criterios cumplidos';
+  }
+});
+$('#q').addEventListener('input', e => { S.q = e.target.value; renderIndex(); $('#idx').classList.remove('closed'); });
+window.addEventListener('hashchange', () => { const id = location.hash.slice(1); if (BY[id] && id !== S.id) go(id, false); });
+
+S.practice = store.get('atlas-prac', false);
+$('#prac').checked = S.practice; document.body.classList.toggle('practice', S.practice);
+go(BY[location.hash.slice(1)] ? location.hash.slice(1) : (BY[store.get('atlas-last', '')] ? store.get('atlas-last', '') : MICRO[0].id), true);
+</script>
+</body>
+</html>
