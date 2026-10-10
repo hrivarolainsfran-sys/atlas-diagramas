@@ -1403,7 +1403,7 @@ function renderHome() {
   <section class="extras" aria-label="Más recursos">
     <button class="xcard" type="button" data-go="ppt"><b>PPT</b><span>Las presentaciones de clase por subtema.</span></button>
     <button class="xcard" type="button" data-go="podcast"><b>Podcast</b><span>Episodios para escuchar mientras practicas.</span></button>
-    <button class="xcard" type="button" data-go="juegos"><b>Juegos</b><span>${Object.values(JUEGOS_ACTIVOS).some(Boolean) ? 'Battle City: Operación Blindada, Grand Prix Académico y más juegos para repasar el curso.' : 'Próximamente: juegos para repasar el curso.'}</span></button>
+    <button class="xcard" type="button" data-go="juegos"><b>Juegos</b><span>${Object.values(JUEGOS_ACTIVOS).some(Boolean) ? 'Seis juegos: Contrarreloj, Memoria, ¿Quién quiere ser economista?, Jeopardy, Battle City y Grand Prix.' : 'Próximamente: juegos para repasar el curso.'}</span></button>
   </section>
   <div id="temas">${Object.keys(UNITS).map(unitBlock).join('')}</div>
   <p class="foot">Contenidos alineados al Nivel Medio: no incluye utilidad marginal, efectos ingreso y sustitución, multiplicador keynesiano, curva de Phillips ni la condición Marshall-Lerner. Los datos numéricos de los ejercicios son hipotéticos. El progreso se guarda solo en este navegador.</p>`;
@@ -3247,7 +3247,7 @@ function markHeard(id) {
 
 /* =============== 7 · Juegos =============== */
 /* Para habilitar un juego, cambie su valor a true. */
-const JUEGOS_ACTIVOS = { blindada: true, grandprix: true, reloj: false, memoria: false, millonario: false, jeopardy: false };
+const JUEGOS_ACTIVOS = { blindada: true, grandprix: true, reloj: true, memoria: true, millonario: true, jeopardy: true };
 const GAMES = store.get('games', { reloj: {}, memoria: {}, mill: {} });
 const saveGames = () => store.set('games', GAMES);
 let GAME_TIMER = null;
