@@ -473,6 +473,29 @@ body.docked{padding-bottom:190px}
   .wtabs::-webkit-scrollbar{display:none}
   .wtabs button{white-space:nowrap;flex:none}
 }
+/* v13: Escribir en bloques */
+.wnav{display:grid;gap:8px;margin-bottom:18px;justify-items:start}
+.wblk button{display:inline-flex;align-items:center;gap:7px}
+.wbn{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:var(--rule);color:var(--ink);font-size:12px}
+.wblk button[aria-pressed="true"] .wbn{background:var(--gold);color:var(--ink)}
+.wsub{background:transparent;border-color:transparent;padding:0;gap:6px}
+.wsub button{border:1px solid var(--rule);background:var(--sheet);padding:5px 11px;font-size:13.5px}
+.wsub button[aria-pressed="true"]{background:var(--gold-soft);color:var(--ink);border-color:var(--gold)}
+@media (max-width:860px){.wblk{display:grid;grid-template-columns:1fr 1fr;width:100%;overflow:visible}.wblk button{white-space:normal;text-align:left;flex:initial}.wsub{flex-wrap:wrap;overflow:visible}.wsub button{white-space:normal}}
+.tcount{display:inline-block;min-width:20px;padding:0 6px;border-radius:10px;background:var(--gold-soft);color:var(--ink);font-size:12px;margin-left:4px}
+.rsec{margin-bottom:8px}
+.rlinks{display:flex;flex-wrap:wrap;gap:8px}
+.rlinks .btn{text-decoration:none;white-space:normal;text-align:left}
+.rdefs{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:8px}
+.rdefs details{background:var(--sheet);border:1px solid var(--rule);border-radius:8px;padding:8px 12px}
+.rdefs summary{cursor:pointer;font-weight:700}
+.rdefs p{margin:8px 0 2px;font-size:15px}
+.ejdrw{margin:14px 0 4px;border:1.5px dashed var(--gold);border-radius:var(--r);padding:10px 14px;background:var(--paper)}
+.ejdrw>summary{cursor:pointer;font-weight:700}
+.ejmgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px;margin-top:10px}
+.ejmini{background:var(--sheet);border:1px solid var(--rule);border-radius:8px;padding:10px 12px;min-width:0}
+.ejmini .fu{font-weight:700;color:var(--gold)}
+.dstf{display:flex;flex-wrap:wrap;gap:8px;align-items:center;background:var(--gold-soft);border:1px solid var(--gold);border-radius:8px;padding:8px 12px;margin:0 0 12px}
 /* v7: constructor de diagramas */
 .dbcta{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:6px 16px;align-items:center;width:100%;max-width:1100px;text-align:left;background:var(--gold-soft);border:1.5px solid var(--gold);border-radius:var(--r);padding:14px 18px;margin:4px 0 8px;color:var(--ink)}
 .dbcta:hover{filter:brightness(1.03)}
@@ -1609,14 +1632,18 @@ function renderTopic(t) {
       <div class="seg" role="group" aria-label="Sección">
         <button type="button" id="tabEss" aria-pressed="${S.tab === 'ess'}">Lo esencial</button>
         <button type="button" id="tabPrac" aria-pressed="${S.tab === 'prac'}">Práctica</button>
+        <button type="button" id="tabRec" aria-pressed="${S.tab === 'rec'}">Recursos <span class="tcount">${topicResN(t.id)}</span></button>
       </div>
       ${labBtns}
     </div>
     <div id="tbody"></div>`;
   $('#tabEss').onclick = () => { S.tab = 'ess'; renderTopic(t); };
   $('#tabPrac').onclick = () => { S.tab = 'prac'; renderTopic(t); };
+  $('#tabRec').onclick = () => { S.tab = 'rec'; renderTopic(t); };
+  if (S.tab === 'rec') return renderTopicRes(t, $('#tbody'));
   if (S.tab === 'ess') {
-    $('#tbody').innerHTML = `<div class="essentials"><ul>${t.ess.map(x => `<li>${x}</li>`).join('')}</ul><div class="trap"><b>Error frecuente:</b> ${t.trap}</div><div class="row" style="margin-top:14px"><button class="btn primary" type="button" id="toPrac">Ir a la práctica (${t.items.length} ejercicios)</button></div></div>`;
+    $('#tbody').innerHTML = `<div class="essentials"><ul>${t.ess.map(x => `<li>${x}</li>`).join('')}</ul><div class="trap"><b>Error frecuente:</b> ${t.trap}</div><div class="row" style="margin-top:14px"><button class="btn primary" type="button" id="toPrac">Ir a la práctica (${t.items.length} ejercicios)</button><button class="btn" type="button" id="toRec">Ver definiciones, ejemplos y diagramas</button></div></div>`;
+    $('#toRec').onclick = () => { S.tab = 'rec'; renderTopic(t); };
     $('#toPrac').onclick = () => { S.tab = 'prac'; renderTopic(t); };
   } else renderDeck(t, S);
 }
@@ -2923,6 +2950,7 @@ function renderEval(c) {
     ${stepper(EVA_STEPS, W.step, doneFlags)}
     <div class="card wcard"><div class="card-b" id="wb"></div>
     <div class="card-f"><button class="btn sm" type="button" id="wp" ${W.step === 0 ? 'disabled' : ''}>← Anterior</button><button class="btn primary" type="button" id="wn">${W.step === EVA_STEPS.length - 1 ? 'Volver a las preguntas' : 'Siguiente paso →'}</button></div></div>`;
+  ejDrawer(app, { sts: [c.st], txt: c.q, mix: 1, note: 'Un ejemplo real desarrollado respalda la <b>explicación</b> de un factor en tu párrafo F-E-I-J y te acerca a las bandas altas.' });
   app.querySelectorAll('[data-step]').forEach(b => b.onclick = () => { W.step = +b.dataset.step; save(); renderEval(c); });
   $('#wp').onclick = () => { W.step--; save(); renderEval(c); window.scrollTo(0, 0); };
   $('#wn').onclick = () => { if (W.step === EVA_STEPS.length - 1) return go('escribir-evaluar'); W.step++; save(); renderEval(c); window.scrollTo(0, 0); };
@@ -3160,9 +3188,17 @@ function renderReport() {
 }
 
 /* ---- Escribir: portada, pestañas y ejercicios de base ---- */
-const WTABS = [['escribir-comandos', 'Comandos'], ['escribir-conceptos', 'Conceptos clave'], ['escribir-def', 'Definiciones'], ['escribir-ej', 'Ejemplos reales'], ['escribir-explicar', 'Explicar · 10'], ['escribir-analizar', 'Analizar · 10'], ['escribir-evaluar', 'Evaluar · 15'], ['escribir-discutir', 'Discutir · 15'], ['escribir-hqp', '¿Hasta qué punto? · 15'], ['escribir-errores', 'Encuentra el error'], ['escribir-p1', 'Simulacro P1'], ['escribir-calc', 'Cálculos P2'], ['escribir-p2', 'Prueba 2'], ['escribir-ei', 'Evaluación Interna']];
+const WBLOCKS = [
+  ['Base', [['escribir-comandos', 'Comandos'], ['escribir-conceptos', 'Conceptos clave'], ['escribir-def', 'Definiciones'], ['escribir-ej', 'Ejemplos reales']]],
+  ['Términos de instrucción', [['escribir-explicar', 'Explicar · 10'], ['escribir-analizar', 'Analizar · 10'], ['escribir-evaluar', 'Evaluar · 15'], ['escribir-discutir', 'Discutir · 15'], ['escribir-hqp', '¿Hasta qué punto? · 15'], ['escribir-errores', 'Encuentra el error']]],
+  ['Simulacros', [['escribir-p1', 'Prueba 1'], ['escribir-calc', 'Cálculos P2'], ['escribir-p2', 'Prueba 2']]],
+  ['Evaluación Interna', [['escribir-ei', 'Comentarios de la EI']]]
+];
+const WTABS = WBLOCKS.flatMap(b => b[1]);
 function writeTabs(cur) {
-  return `<div class="seg wtabs" role="group" aria-label="Secciones de Escribir" style="margin-bottom:18px">${WTABS.map(([r, l], i) => `<button type="button" data-go="${r}" aria-pressed="${r === cur}">${i + 1}. ${l}</button>`).join('')}</div>`;
+  const bi = Math.max(0, WBLOCKS.findIndex(b => b[1].some(x => x[0] === cur)));
+  const subs = WBLOCKS[bi][1];
+  return `<nav class="wnav" aria-label="Secciones de Escribir"><div class="seg wtabs wblk" role="group" aria-label="Bloques">${WBLOCKS.map(([l, r], i) => `<button type="button" data-go="${i === bi ? cur : r[0][0]}" aria-pressed="${i === bi}"><span class="wbn">${i + 1}</span>${l}</button>`).join('')}</div>${subs.length > 1 ? `<div class="seg wtabs wsub" role="group" aria-label="${WBLOCKS[bi][0]}">${subs.map(([r, l]) => `<button type="button" data-go="${r}" aria-pressed="${r === cur}">${l}</button>`).join('')}</div>` : ''}</nav>`;
 }
 function renderWriteHome() {
   const pc = t => `${topicDone(t.id)}/${t.items.length} ejercicios`;
@@ -3173,13 +3209,12 @@ function renderWriteHome() {
       ['escribir-conceptos', 'Conceptos clave', 'Los nueve conceptos del curso aplicados a casos, como en la Evaluación Interna.', pc(DRILLS.kc)],
       ['escribir-def', 'Definiciones · Prueba 2 (a)', `${DEFS.length} términos del Nivel Medio: escribe la definición y compárala con el modelo.`, `${Object.keys(DEFST).length}/${DEFS.length} practicadas`],
       ['escribir-ej', 'Ejemplos del mundo real', 'Casos reales por subtema con país, año, dato, diagrama y un punto para evaluar.', `${EJ.length} ejemplos`]]],
-    ['Términos de instrucción', 'un método paso a paso para cada uno', [
+    ['Términos de instrucción', 'un método paso a paso para cada uno y corregir como examinador', [
       ['escribir-explicar', 'Explicar · 10 puntos', 'Cadena causal en 4 pasos: ejemplo resuelto, guiado y por tu cuenta.', `${EXP.filter(p => expState(p).done).length}/${EXP.length} completas`],
       ['escribir-analizar', 'Analizar · 10 puntos', 'Descomponer en partes, examinar cada una y relacionarlas, sin juicio de valor.', cm('analizar')],
       ['escribir-evaluar', 'Evaluar · 15 puntos', 'Pros y contras, corto y largo plazo y partes interesadas.', `${EVA.filter(c => evaState(c).done).length}/${EVA.length} completos`],
       ['escribir-discutir', 'Discutir · 15 puntos', 'Dos posturas con esfuerzo equivalente, matices y una conclusión justificada.', cm('discutir')],
-      ['escribir-hqp', '¿Hasta qué punto? · 15 puntos', 'Tesis, antítesis, condiciones y una conclusión con grado, plazo y condición.', cm('hqp')]]],
-    ['Revisar', 'corregir como un examinador', [
+      ['escribir-hqp', '¿Hasta qué punto? · 15 puntos', 'Tesis, antítesis, condiciones y una conclusión con grado, plazo y condición.', cm('hqp')],
       ['escribir-errores', 'Encuentra el error', 'Lee respuestas con errores típicos y corrígelas.', pc(DRILLS.err)]]],
     ['Simulacros', 'en condiciones de examen', [
       ['escribir-p1', 'Simulacro de Prueba 1 · 25 p', '5 min de lectura y 1 h 15 min. Eliges 1 de 3 preguntas, dibujas tus diagramas y te autocorriges.', P1S.hist.length ? `${P1S.hist.length} hechos · último ${P1S.hist[P1S.hist.length - 1].total}/25` : 'Sin empezar'],
@@ -3242,6 +3277,7 @@ function renderExplain(p) {
     ${stepper(EXP_STEPS, W.step, doneFlags, true)}
     <div class="card wcard"><div class="card-b" id="wb"></div>
     <div class="card-f"><button class="btn sm" type="button" id="wp" ${W.step === 0 ? 'disabled' : ''}>← Anterior</button><button class="btn primary" type="button" id="wn">${W.step === EXP_STEPS.length - 1 ? (nextP ? 'Siguiente pregunta →' : 'Volver a las preguntas') : 'Siguiente paso →'}</button></div></div>`;
+  ejDrawer(app, { sts: [p.st], txt: p.q, mix: 1, note: 'En una pregunta de «explicar» de la Prueba 1 (a) no se exige un ejemplo real; guárdalo para la parte (b) o para la Prueba 2 (g).' });
   app.querySelectorAll('[data-step]').forEach(b => b.onclick = () => { W.step = +b.dataset.step; save(); renderExplain(p); });
   $('#wp').onclick = () => { W.step--; save(); renderExplain(p); window.scrollTo(0, 0); };
   $('#wn').onclick = () => { if (W.step === EXP_STEPS.length - 1) return go(nextP ? 'exp-' + nextP.id : 'escribir-explicar'); W.step++; save(); renderExplain(p); window.scrollTo(0, 0); };
@@ -4025,6 +4061,7 @@ function p1Write(expired) {
         <details class="padwrap"><summary>Espacio para el diagrama de la parte (b)</summary><div id="p1padB"></div></details>
         <textarea id="p1b" rows="16" placeholder="Teoría, ejemplos reales, pros y contras, corto y largo plazo, partes interesadas y juicio final…">${esc(C.b)}</textarea><p class="small muted" id="p1bw"></p></div>
     </div>`);
+  if (!C.timed) ejDrawer($('#p1bw'), { pos: 'afterend', txt: q.a + ' ' + q.b, u: (String(q.u).match(/\d/) || [])[0], note: 'Solo aparece cuando practicas sin reloj: en el examen no tendrás esta ayuda.' });
   const cnt = () => { $('#p1aw').textContent = wc(C.a) + ' palabras'; $('#p1bw').textContent = wc(C.b) + ' palabras'; };
   let tm = null;
   ['a', 'b'].forEach(k => $('#p1' + k).oninput = e => { C[k] = e.target.value; cnt(); clearTimeout(tm); tm = setTimeout(saveP1, 400); });
@@ -4194,6 +4231,7 @@ function renderP2(c) {
     const w = () => { $('#p2w').textContent = wc(s.ans[p.k]) + ' palabras'; };
     $('#p2a').oninput = e => { s.ans[p.k] = e.target.value; saveP2(); w(); }; w();
     $('#p2ev').ontoggle = () => { if ($('#p2ev').open) { s.tries[p.k] = 1; saveP2(); } };
+    if (!s.end) ejDrawer($('#p2w'), { pos: 'afterend', txt: c.title + ' ' + p.q, note: 'Además de los datos del texto, un ejemplo de otro país puede reforzar tu evaluación. Con el reloj de examen activado este cajón no aparece.' });
     app.querySelectorAll('#p2eck input').forEach(cb => cb.onchange = () => { cks[+cb.dataset.ck] = cb.checked; saveP2(); });
     bindBand('bdG', v => { s.sc[p.k] = v; saveP2(); const y = window.scrollY; renderP2(c); window.scrollTo(0, y); });
   }
@@ -4497,6 +4535,7 @@ function renderCmdWrite(k, i) {
   B.querySelectorAll('[data-c]').forEach(b => b.onclick = () => insertAtCursor(ta, b.dataset.c));
   B.querySelectorAll('[data-g]').forEach(b => b.onclick = () => insertAtCursor(ta, b.dataset.g.toLowerCase()));
   if (st.dia) sketchPad($('#cwPad'), w.dia, ops => { w.dia = ops; saveCMDW(); }, { file: 'diagrama-' + k + '-' + (i + 1) });
+  if (/Ejemplo|postura|Tesis|Antítesis|Factores|Condiciones/i.test(st.n)) ejDrawer(B, { txt: q, open: /Ejemplo/.test(st.n) });
 }
 
 
@@ -5676,7 +5715,8 @@ function defHL(d) { // resalta en la definición modelo las palabras clave
 const defTag = d => { const s = DEFST[defKey(d)]; return s ? `${s.best}/2` : ''; };
 function renderDefHome() {
   const U = SESS.dU = SESS.dU || 'all', M = SESS.dM = SESS.dM || 'prac';
-  const list = DEFS.filter(d => U === 'all' || d[0] === +U);
+  const DS = SESS.dSt, DSS = DS ? stsOf(DS) : null;
+  const list = DEFS.filter(d => DSS ? defSts(d).some(x => DSS.includes(x)) : (U === 'all' || d[0] === +U));
   const done = DEFS.filter(d => DEFST[defKey(d)]), full = done.filter(d => DEFST[defKey(d)].best === 2).length;
   const weak = DEFS.filter(d => DEFST[defKey(d)] && DEFST[defKey(d)].best < 2);
   app.innerHTML = `<div class="eyebrow">Escribir como en el examen</div><h1>Definiciones · Prueba 2 (a)</h1>${writeTabs('escribir-def')}
@@ -5686,18 +5726,20 @@ function renderDefHome() {
       <li>No uses la misma palabra para definirla («inflación es cuando hay inflación»). Una o dos oraciones bastan.</li>
       <li>No hace falta ejemplo ni diagrama en la parte (a), pero un ejemplo corto no resta.</li>
       <li>La corrección automática es aproximada: busca ideas clave, no evalúa la redacción. Compara siempre con el modelo.</li></ul></details>
-    <div class="row" style="margin:16px 0 10px;justify-content:space-between"><div class="seg" role="group" aria-label="Unidad">${[['all', 'Todas'], ['1', 'U1'], ['2', 'U2'], ['3', 'U3'], ['4', 'U4']].map(([v, l]) => `<button type="button" data-du="${v}" aria-pressed="${U === v}">${l}</button>`).join('')}</div>
+    <div class="row" style="margin:16px 0 10px;justify-content:space-between"><div class="seg" role="group" aria-label="Unidad">${[['all', 'Todas'], ['1', 'U1'], ['2', 'U2'], ['3', 'U3'], ['4', 'U4']].map(([v, l]) => `<button type="button" data-du="${v}" aria-pressed="${!DS && U === v}">${l}</button>`).join('')}</div>
       <span class="small muted">${done.length}/${DEFS.length} practicadas · ${full} con 2/2</span></div>
+    ${DS ? `<div class="dstf"><span>Solo el subtema <b>${tcode(DS)}</b> · ${list.length} términos</span><button class="btn sm" type="button" id="dStX">Quitar filtro</button><button class="btn sm" type="button" data-go="${tid(DS)}">Volver al subtema</button></div>` : ''}
     <div class="seg" role="group" aria-label="Modo" style="margin-bottom:14px">${[['prac', 'Practicar'], ['serie', 'Serie de 10'], ['fail', `Repasar las flojas (${weak.length})`], ['list', 'Estudiar la lista']].map(([v, l]) => `<button type="button" data-dm="${v}" aria-pressed="${M === v}">${l}</button>`).join('')}</div>
     <div id="dBody"></div>`;
-  app.querySelectorAll('[data-du]').forEach(b => b.onclick = () => { SESS.dU = b.dataset.du; SESS.dQ = null; renderDefHome(); });
+  app.querySelectorAll('[data-du]').forEach(b => b.onclick = () => { SESS.dU = b.dataset.du; SESS.dSt = null; SESS.dQ = null; renderDefHome(); });
+  const dx = $('#dStX'); if (dx) dx.onclick = () => { SESS.dSt = null; SESS.dQ = null; renderDefHome(); };
   app.querySelectorAll('[data-dm]').forEach(b => b.onclick = () => { SESS.dM = b.dataset.dm; SESS.dQ = null; renderDefHome(); });
   const B = $('#dBody');
   if (M === 'list') {
     B.innerHTML = `<div class="tscroll"><table class="dtab deflist"><thead><tr><th>Término</th><th>Definición modelo (ideas clave resaltadas)</th><th>Tu mejor</th></tr></thead><tbody>${list.map(d => `<tr><th scope="row"><span class="small muted">U${d[0]}</span> ${d[1]}</th><td>${defHL(d)}</td><td>${defTag(d) || '—'}</td></tr>`).join('')}</tbody></table></div>`;
     return;
   }
-  let pool = M === 'fail' ? weak.filter(d => U === 'all' || d[0] === +U) : list;
+  let pool = M === 'fail' ? weak.filter(d => list.includes(d)) : list;
   if (!pool.length) { B.innerHTML = `<div class="fb ok">${M === 'fail' ? 'No tienes definiciones flojas en esta selección. ¡Bien!' : 'No hay términos en esta unidad.'}</div>`; return; }
   if (!SESS.dQ) SESS.dQ = { items: M === 'serie' ? shuffle(pool).slice(0, 10) : shuffle(pool), i: 0, pts: 0, res: [] };
   const Q = SESS.dQ;
@@ -6041,7 +6083,162 @@ function renderEjemplos() {
   eq.oninput = () => { SESS.eQ = eq.value; const pos = eq.selectionStart; renderEjemplos(); const n = $('#eq'); n.focus(); try { n.setSelectionRange(pos, pos); } catch (e) { } };
   app.querySelectorAll('[data-eu]').forEach(b => b.onclick = () => { SESS.eU = b.dataset.eu; renderEjemplos(); });
   $('#epy').onclick = () => { SESS.ePY = !PY; renderEjemplos(); };
-  app.querySelectorAll('[data-ejc]').forEach(b => b.onclick = () => { const x = EJ.find(y => y.t === b.dataset.ejc); copyText(`Un ejemplo del mundo real es ${x.t.charAt(0).toLowerCase() + x.t.slice(1)} (${x.w}). ${x.h} ${x.d[0]} Esto ilustra la teoría porque…`, b); });
+  bindEjCopy(app);
+}
+
+/* =============== 18 · Recursos conectados por subtema (definiciones, ejemplos, fórmulas, cálculos y Atlas) =============== */
+const ST_GRP = { '4.2': ['4.2', '4.3'] };
+const stsOf = id => ST_GRP[id] || [id];
+const inSts = (v, S) => String(v || '').split(',').some(x => S.includes(x));
+const DEF_ST = {
+  'Escasez': '1.1', 'Costo de oportunidad': '1.1', 'Factores de producción': '1.1', 'Bien libre': '1.1', 'Curva de posibilidades de producción': '1.1', 'Economía de libre mercado': '1.1', 'Economía mixta': '1.1', 'Economía positiva': '1.2', 'Economía normativa': '1.2', 'Ceteris paribus': '1.2', 'Modelo del flujo circular del ingreso': '1.1,3.1',
+  'Demanda': '2.1', 'Ley de la demanda': '2.1', 'Oferta': '2.2', 'Ley de la oferta': '2.2', 'Equilibrio de mercado': '2.3', 'Exceso de demanda': '2.3', 'Exceso de oferta': '2.3', 'Excedente del consumidor': '2.3', 'Excedente del productor': '2.3', 'Eficiencia asignativa': '2.3,2.8',
+  'Elasticidad precio de la demanda (EPD)': '2.5', 'Elasticidad ingreso de la demanda (EID)': '2.5', 'Elasticidad precio de la oferta (EPO)': '2.6', 'Bien normal': '2.1,2.5', 'Bien inferior': '2.1,2.5', 'Bienes sustitutos': '2.1', 'Bienes complementarios': '2.1', 'Ingreso total': '2.5',
+  'Impuesto indirecto': '2.7', 'Impuesto específico': '2.7', 'Impuesto ad valorem': '2.7', 'Subvención': '2.7', 'Precio máximo': '2.7', 'Precio mínimo': '2.7', 'Pérdida de bienestar': '2.7,2.8',
+  'Falla de mercado': '2.8', 'Externalidad': '2.8', 'Externalidad negativa de la producción': '2.8', 'Externalidad positiva del consumo': '2.8', 'Bien meritorio': '2.8', 'Bien perjudicial': '2.8', 'Impuesto pigouviano': '2.8', 'Permisos negociables de contaminación': '2.8', 'Recurso de uso común': '2.8', 'Bien público': '2.9', 'Problema del polizón': '2.9',
+  'Producto interno bruto (PIB)': '3.1', 'PIB real': '3.1', 'Ingreso nacional bruto (INB)': '3.1', 'PIB per cápita': '3.1', 'Paridad del poder adquisitivo (PPA)': '3.1', 'Ciclo económico': '3.1', 'Recesión': '3.1', 'Crecimiento económico': '3.1,3.3',
+  'Demanda agregada (DA)': '3.2', 'Oferta agregada a corto plazo (OACP)': '3.2', 'Oferta agregada a largo plazo (OALP)': '3.2', 'Brecha deflacionaria (recesiva)': '3.2,3.3', 'Brecha inflacionaria': '3.2,3.3',
+  'Desempleo': '3.3', 'Tasa de desempleo': '3.3', 'Desempleo cíclico': '3.3', 'Desempleo estructural': '3.3', 'Desempleo friccional': '3.3', 'Desempleo estacional': '3.3', 'Tasa natural de desempleo': '3.3', 'Inflación': '3.3', 'Deflación': '3.3', 'Desinflación': '3.3', 'Índice de precios al consumidor (IPC)': '3.3', 'Inflación de demanda': '3.3', 'Inflación de costos': '3.3',
+  'Equidad': '3.4', 'Curva de Lorenz': '3.4', 'Coeficiente de Gini': '3.4', 'Pobreza absoluta': '3.4', 'Pobreza relativa': '3.4', 'Impuesto progresivo': '3.4', 'Impuesto regresivo': '3.4', 'Impuesto directo': '3.4,3.6', 'Transferencias': '3.4',
+  'Política monetaria': '3.5', 'Tasa de interés real': '3.5', 'Metas de inflación': '3.5', 'Política fiscal': '3.6', 'Déficit presupuestario': '3.6', 'Políticas del lado de la oferta': '3.7', 'Privatización': '3.7', 'Desregulación': '3.7',
+  'Libre comercio': '4.1', 'Organización Mundial del Comercio (OMC)': '4.1,4.4', 'Proteccionismo': '4.2', 'Arancel': '4.2', 'Cuota de importación': '4.2', 'Subvención a la exportación': '4.2', 'Barreras administrativas': '4.2', 'Dumping': '4.3',
+  'Área de libre comercio': '4.4', 'Unión aduanera': '4.4', 'Mercado común': '4.4', 'Unión monetaria': '4.4',
+  'Tipo de cambio': '4.5', 'Tipo de cambio flotante': '4.5', 'Tipo de cambio fijo': '4.5', 'Apreciación': '4.5', 'Depreciación': '4.5', 'Devaluación': '4.5',
+  'Balanza de pagos': '4.6', 'Cuenta corriente': '4.6', 'Cuenta financiera': '4.6', 'Inversión extranjera directa (IED)': '4.6,4.10',
+  'Desarrollo sostenible': '4.7', 'Desarrollo económico': '4.8', 'Índice de desarrollo humano (IDH)': '4.8', 'Trampa de la pobreza': '4.9', 'Economía informal': '4.9', 'Microfinanciación': '4.10', 'Diversificación': '4.10'
+};
+const defSts = d => String(DEF_ST[d[1]] || '').split(',');
+const FORM_ST = { cpp: '1.1', mkt: '2.3', exc: '2.3', epd: '2.5', epdq: '2.5', it: '2.5', eid: '2.5', epo: '2.6', pib: '3.1', inb: '3.1', real: '3.1', pc: '3.1', crec: '3.1,3.3', desem: '3.3', idx: '3.3', infl: '3.3', rreal: '3.5', gini: '3.4', fx: '4.5', inv: '4.5', fxchg: '4.5', bc: '4.6', cc: '4.6', bdp: '4.6' };
+const CALCT_ST = { epd: '2.5', epdq: '2.5', it: '2.5', yed: '2.5', yedq: '2.5', pes: '2.6', pesq: '2.6', pib: '3.1', inb: '3.1', real: '3.1', realpc: '3.1', growth: '3.1,3.3', growthr: '3.1,3.3', unemp: '3.3', infl: '3.3', rreal: '3.5', fx: '4.5', fxchg: '4.5', cc: '4.6', bdp: '4.6' };
+/* Fichas del Atlas de Diagramas (id y subtema); si se agrega una ficha al Atlas, agregarla aquí. */
+const ATLAS_F = [
+  ['1.1', 'cpp', 'Curva de posibilidades de producción (CPP)'],
+  ['1.1', 'cpp-costo', 'CPP con costo de oportunidad creciente vs. constante'],
+  ['2.1', 'demanda', 'Curva de demanda con pendiente negativa'],
+  ['2.1', 'demanda-mov', 'Movimiento a lo largo de D vs. desplazamiento de D'],
+  ['2.2', 'oferta', 'Curva de oferta con pendiente positiva'],
+  ['2.2', 'oferta-mov', 'Movimiento a lo largo de O vs. desplazamiento de O'],
+  ['2.3', 'equilibrio', 'Equilibrio de mercado y desequilibrios'],
+  ['2.3', 'equilibrio-cambio', 'Cambio del equilibrio y funciones del mecanismo de precios'],
+  ['2.3', 'excedentes', 'Excedente del consumidor y del productor'],
+  ['2.5', 'epd-rel', 'Demanda relativamente elástica vs. relativamente inelástica'],
+  ['2.5', 'epd-const', 'EPD constante: perfectamente inelástica, perfectamente elástica y unitaria'],
+  ['2.5', 'epd-it', 'EPD e ingreso total'],
+  ['2.5', 'engel', 'Curva de Engel: bienes elásticos, inelásticos e inferiores al ingreso'],
+  ['2.6', 'epo-rel', 'Oferta relativamente elástica vs. relativamente inelástica'],
+  ['2.6', 'epo-const', 'EPO constante: perfectamente inelástica, perfectamente elástica y unitaria'],
+  ['2.7', 'precio-max', 'Precio máximo'],
+  ['2.7', 'precio-min', 'Precio mínimo'],
+  ['2.7', 'impuesto-especifico', 'Impuesto indirecto específico (por unidad)'],
+  ['2.7', 'impuesto-advalorem', 'Impuesto indirecto ad valorem (porcentual)'],
+  ['2.7', 'subvencion', 'Subvención (subsidio) a la producción'],
+  ['2.7', 'incidencia', 'Incidencia del impuesto según la EPD (complementaria)'],
+  ['2.8', 'eficiencia', 'Eficiencia en la asignación de recursos (BMS = CMS)'],
+  ['2.8', 'ext-neg-prod', 'Externalidad negativa de la producción'],
+  ['2.8', 'ext-neg-cons', 'Externalidad negativa del consumo'],
+  ['2.8', 'ext-pos-prod', 'Externalidad positiva de la producción'],
+  ['2.8', 'ext-pos-cons', 'Externalidad positiva del consumo'],
+  ['2.8', 'impuesto-pigou', 'Impuesto pigouviano sobre una externalidad negativa'],
+  ['2.8', 'impuesto-carbono', 'Impuesto al carbono en una industria muy contaminante'],
+  ['2.8', 'subvencion-ext', 'Subvención para corregir una externalidad positiva'],
+  ['2.8', 'regulacion', 'Legislación y reglamentación frente a una externalidad negativa'],
+  ['2.8', 'educacion', 'Educación y sensibilización (desplazamiento de la demanda)'],
+  ['3.1', 'flujo-circular', 'Flujo circular del ingreso con fugas e inyecciones'],
+  ['3.1', 'ciclo-economico', 'Ciclo económico y tendencia de crecimiento a largo plazo'],
+  ['3.2', 'da', 'Curva de demanda agregada (DA)'],
+  ['3.2', 'da-desplaz', 'Desplazamientos de la demanda agregada'],
+  ['3.2', 'oacp', 'Curva de oferta agregada a corto plazo (OACP)'],
+  ['3.2', 'oacp-desplaz', 'Desplazamientos de la oferta agregada a corto plazo'],
+  ['3.2', 'oa-perspectivas', 'Perspectivas alternativas de la oferta agregada'],
+  ['3.2', 'oalp-desplaz', 'Desplazamientos de la OALP y de la OA keynesiana'],
+  ['3.2', 'equilibrio-macro', 'Equilibrio macroeconómico de corto y largo plazo'],
+  ['3.3', 'cpp-crecimiento', 'CPP: crecimiento real y aumento de las posibilidades de producción'],
+  ['3.3', 'da-aumento-y', 'Aumento de la DA con aumento de la producción real'],
+  ['3.3', 'oalp-aumento', 'Aumento de la OALP con aumento de la producción de pleno empleo'],
+  ['3.3', 'salario-minimo', 'Salario mínimo y desempleo'],
+  ['3.3', 'desempleo-estructural', 'Caída de la demanda de trabajo (desempleo estructural)'],
+  ['3.3', 'brecha-deflacionaria', 'Brecha deflacionaria con desempleo cíclico'],
+  ['3.3', 'inflacion-demanda', 'Inflación de demanda'],
+  ['3.3', 'inflacion-costos', 'Inflación por alza de costos'],
+  ['3.3', 'deflacion', 'Deflación «buena» vs. deflación «mala»'],
+  ['3.4', 'lorenz', 'Curva de Lorenz'],
+  ['3.5', 'politica-monetaria', 'Política monetaria expansiva y restrictiva'],
+  ['3.6', 'politica-fiscal', 'Política fiscal expansiva y restrictiva: keynesianos y monetaristas'],
+  ['3.7', 'politicas-oferta', 'Efecto de las políticas del lado de la oferta'],
+  ['3.7', 'salario-minimo-reforma', 'Reforma del mercado laboral: reducción del salario mínimo'],
+  ['4.1', 'exportaciones', 'Libre comercio con exportaciones (P_m > P_nacional)'],
+  ['4.1', 'importaciones', 'Libre comercio con importaciones (P_m < P_nacional)'],
+  ['4.2', 'arancel', 'Efecto de un arancel'],
+  ['4.2', 'cuota', 'Efecto de una cuota de importación'],
+  ['4.2', 'subvencion-comercio', 'Efecto de una subvención a productores nacionales'],
+  ['4.5', 'tc-flotante', 'Tipo de cambio flotante: determinación y cambios'],
+  ['4.5', 'tc-da-oa', 'Consecuencias de los cambios del tipo de cambio en DA y OA'],
+  ['4.5', 'tc-fijo', 'Mantenimiento de un tipo de cambio fijo'],
+  ['4.5', 'tc-controlado', 'Tipo de cambio controlado (flotación administrada)'],
+  ['4.9', 'ciclo-pobreza', 'Ciclo de la pobreza (trampa de pobreza)']
+];
+function topicRes(id) {
+  const S = stsOf(id);
+  return { atl: ATLAS_F.filter(a => S.includes(a[0])), defs: DEFS.filter(d => defSts(d).some(x => S.includes(x))), ej: EJ.filter(x => S.includes(x.st)), forms: FORMS.filter(F => inSts(FORM_ST[F.k], S)), calc: CALC_T.filter(c => inSts(CALCT_ST[c.k], S)) };
+}
+const ejCopyTxt = x => `Un ejemplo del mundo real es ${x.t.charAt(0).toLowerCase() + x.t.slice(1)} (${x.w}). ${x.h} ${x.d[0]} Esto ilustra la teoría porque…`;
+function bindEjCopy(root) { root.querySelectorAll('[data-ejc]').forEach(b => b.onclick = () => { const x = EJ.find(y => y.t === b.dataset.ejc); if (x) copyText(ejCopyTxt(x), b); }); }
+function renderTopicRes(t, B) {
+  const R = topicRes(t.id), sec = (h, n, body) => `<section class="rsec"><h2 class="wgroup">${h}<span>${n}</span></h2>${body}</section>`;
+  const parts = [];
+  if (R.atl.length) parts.push(sec('Diagramas en el Atlas', `${R.atl.length} fichas con el diagrama paso a paso`, `<div class="rlinks">${R.atl.map(([, id, n]) => `<a class="btn sm" href="${ATLAS}#${id}">${n}</a>`).join('')}</div>`));
+  if (R.defs.length) parts.push(sec('Definiciones · Prueba 2 (a)', `${R.defs.length} términos de este subtema`, `<div class="rdefs">${R.defs.map(d => `<details><summary>${d[1]} ${defTag(d) || ''}</summary><p>${defHL(d)}</p></details>`).join('')}</div>
+    <div class="row" style="margin-top:10px"><button class="btn primary sm" type="button" id="rDefP">Practicar estas ${R.defs.length} definiciones</button></div>`));
+  if (R.ej.length) parts.push(sec('Ejemplos del mundo real', `${R.ej.length} para la Prueba 1 (b) y la Prueba 2 (g)`, `<div class="fgrid">${R.ej.map(ejCard).join('')}</div>`));
+  if (R.forms.length) parts.push(sec('Fórmulas', `${R.forms.length} con ejemplo y calculadora`, `<div class="fgrid">${R.forms.map(formCard).join('')}</div>`));
+  if (R.calc.length) parts.push(sec('Banco de cálculos · Prueba 2', `${R.calc.length} tipos con números nuevos`, `<div class="rlinks">${R.calc.map(c => `<button class="btn sm" type="button" data-go="calc-${c.k}">${c.n}</button>`).join('')}</div>`));
+  B.innerHTML = parts.length ? parts.join('') : '<p class="muted">Este subtema todavía no tiene recursos conectados.</p>';
+  bindEjCopy(B);
+  B.querySelectorAll('[data-fk]').forEach(i => i.oninput = () => formRun(i.dataset.fk));
+  R.forms.forEach(F => { if (F.in) formRun(F.k); });
+  const dp = $('#rDefP'); if (dp) dp.onclick = () => { SESS.dSt = t.id; SESS.dM = 'prac'; SESS.dQ = null; go('escribir-def'); };
+}
+const topicResN = id => { const R = topicRes(id); return R.atl.length + R.defs.length + R.ej.length + R.forms.length + R.calc.length; };
+
+/* Cajón «Ejemplos reales» para los entrenadores y simulacros: subtema conocido o adivinado por palabras clave. */
+const ST_KW = [
+  ['2.1', /\bdemanda\b(?! agregada)|sustitut|complementari|preferencias/], ['2.2', /\boferta\b(?! agregada)|sequia|cosecha|costos de produccion/],
+  ['2.3', /equilibrio de mercado|mecanismo de precios|excedente del|opep|petroleo/], ['2.5', /elasticidad precio de la demanda|\bepd\b|elasticidad ingreso|\beid\b|ingreso total|bienes de lujo|cigarrillo|tabaco/],
+  ['2.6', /elasticidad precio de la oferta|\bepo\b|materias primas/], ['2.7', /impuesto indirecto|impuesto (al|a la|a los|sobre)|subvencion|subsidio|precio maximo|precio minimo|salario minimo|control(es)? de precios/],
+  ['2.8', /externalidad|contamina|meritori|perjudicial|tabaco|cigarrillo|alcohol|carbono|deforestacion|uso comun|pigou|vacuna|sobrepesca/], ['2.9', /bienes? publicos?|polizon|alumbrado/],
+  ['3.1', /\bpib\b|\binb\b|ingreso nacional|flujo circular|ciclo economico|recesion/], ['3.2', /demanda agregada|oferta agregada|\bda\b|\boacp\b|\boalp\b/],
+  ['3.3', /desempleo|inflacion|deflacion|crecimiento economico/], ['3.4', /desigualdad|pobreza|gini|lorenz|transferencias|progresiv|regresiv|tekopora/],
+  ['3.5', /politica monetaria|tasa de interes|banco central|\bbcp\b|\btpm\b/], ['3.6', /politica fiscal|gasto publico|deficit fiscal|deficit presupuestario|deuda publica|inversion publica|responsabilidad fiscal|estimulo/],
+  ['3.7', /lado de la oferta|privatiza|desregula|infraestructura|capacitacion|educacion|reforma laboral/], ['4.1', /libre comercio|exportacion|importacion|comercio internacional|apertura comercial/],
+  ['4.2', /protecci|arancel|cuota|dumping|guerra comercial/], ['4.4', /mercosur|union europea|bloque comercial|integracion|acuerdo comercial|union aduanera/],
+  ['4.5', /tipo de cambio|depreciacion|apreciacion|devaluacion|\bdolar|remesas/], ['4.6', /balanza de pagos|cuenta corriente|cuenta financiera|\bied\b|inversion extranjera/],
+  ['4.7', /sostenib|\bods\b|medio ambiente|cambio climatico|emisiones/], ['4.8', /\bidh\b|desarrollo humano|indicadores? de desarrollo/],
+  ['4.9', /barreras? al desarrollo|trampa de la pobreza|informal|corrupcion|dependencia/], ['4.10', /microcredito|microfinanc|ayuda externa|ayuda oficial|diversifica|estrategias? de (crecimiento|desarrollo)|orientad[ao]s? al mercado|inversion extranjera|\bied\b/]
+];
+function guessSts(txt) {
+  const t = normTxt(String(txt || '').replace(/<[^>]+>/g, ' '));
+  const sc = ST_KW.map(([st, re]) => [st, (t.match(new RegExp(re.source, 'g')) || []).length]).filter(x => x[1] > 0).sort((a, b) => b[1] - a[1]);
+  return sc.slice(0, 2).map(x => x[0]).flatMap(stsOf);
+}
+function ejMini(x) {
+  return `<article class="ejmini"><div><span class="fu">${x.st}</span> <b>${x.t}</b> <span class="small muted">· ${x.w}${x.py ? ' · Paraguay' : ''}</span></div>
+    <p class="small" style="margin:6px 0 4px">${x.h}</p><ul class="ejd small">${x.d.map(v => `<li>${v}</li>`).join('')}</ul>
+    <p class="small" style="margin:4px 0"><b>Diagrama:</b> ${x.g}</p><p class="small" style="margin:4px 0"><b>Para evaluar:</b> ${x.e}</p>
+    <button class="btn sm" type="button" data-ejc="${esc(x.t)}">Copiar como ejemplo</button></article>`;
+}
+/* sts: subtemas conocidos; txt: texto para adivinar si no hay subtema; note: aclaración opcional. */
+function ejDrawer(root, o) {
+  if (!root) return;
+  let S = (o.sts || []).flatMap(stsOf);
+  if (o.txt && (o.mix || !S.length)) S = [...new Set([...S, ...guessSts(o.txt)])];
+  let list = EJ.filter(x => S.includes(x.st));
+  if (!list.length && o.u) list = EJ.filter(x => x.st[0] === String(o.u));
+  if (!list.length) return;
+  const lbl = [...new Set(list.map(x => x.st))].join(', ');
+  root.insertAdjacentHTML(o.pos || 'beforeend', `<details class="ejdrw"${o.open ? ' open' : ''}><summary>Ver ejemplos reales relacionados <span class="tag">${list.length} · ${lbl}</span></summary>
+    ${o.note ? `<p class="small muted" style="margin:8px 0 0">${o.note}</p>` : ''}<div class="ejmgrid">${list.map(ejMini).join('')}</div>
+    <p class="small muted" style="margin:8px 0 0">Úsalo con la regla C-A-D-I: contexto, año, dato e impacto. <a href="#escribir-ej">Ver todos los ejemplos</a></p></details>`);
+  bindEjCopy(/^(afterend|beforebegin)$/.test(o.pos || '') ? root.parentNode : root);
 }
 
 render();
