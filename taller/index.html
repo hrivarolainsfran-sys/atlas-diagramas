@@ -505,6 +505,14 @@ body.docked{padding-bottom:190px}
 .eicr{display:grid;gap:14px}
 .eicrow > div:first-child{margin-bottom:6px}
 @media (max-width:860px){.eicrit{grid-template-columns:repeat(3,minmax(0,1fr))}.eigrid,.kcgrid{grid-template-columns:1fr}}
+/* v12: definiciones */
+.deflist td mark{background:var(--gold-soft,#fdf0c4);color:inherit;padding:0 2px;border-radius:3px}
+.deflist th{white-space:normal;min-width:130px}
+.deflist td{text-align:left;vertical-align:top}
+@media (max-width:640px){.deflist thead{display:none}.deflist,.deflist tbody,.deflist tr,.deflist th,.deflist td{display:block;width:auto}.deflist tr{padding:10px 0;border-bottom:1px solid var(--rule)}.deflist th,.deflist td{border:0;padding:2px 4px}.deflist td:last-child:not(:empty)::before{content:"Tu mejor: ";color:var(--muted)}}
+.defchk{margin:6px 0 0;padding-left:18px}.defchk li.ok{color:var(--ok)}.defchk li.no{color:var(--bad)}
+.fb mark{background:var(--gold-soft,#fdf0c4);color:inherit;padding:0 2px;border-radius:3px}
+#dTx{width:100%;box-sizing:border-box;font:inherit;font-size:16px;padding:10px 12px;border:1.5px solid var(--ink-2);border-radius:8px;background:var(--sheet);color:var(--ink)}
 /* v11: hoja de fórmulas */
 .fctl{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:16px 0 6px}
 .fctl #fq{flex:1 1 220px;min-width:0;max-width:340px}
@@ -1521,6 +1529,7 @@ function render() {
   if (route === 'escribir-hqp') { setNav('escribir'); return renderCmd('hqp'); }
   if (route.startsWith('cmd-')) { const [, k, i] = route.split('-'); if (CMDT[k] && CMDT[k].bank[+i]) { setNav('escribir'); return renderCmdWrite(k, +i); } }
   if (route === 'escribir-p2') { setNav('escribir'); return renderP2Home(); }
+  if (route === 'escribir-def') { setNav('escribir'); return renderDefHome(); }
   if (route === 'formulas') { setNav('formulas'); return renderFormulas(); }
   if (route === 'escribir-calc') { setNav('escribir'); return renderCalcHome(); }
   if (route === 'calc-serie') { setNav('escribir'); return renderCalcSerie(); }
@@ -3117,6 +3126,7 @@ function reportText() {
   L.push(`- Prueba 2: ${p2h.length ? `${p2h.length} ${p2h.length > 1 ? 'casos' : 'caso'} · último ${p2h[p2h.length - 1].total}/40 · mejor ${Math.max(...p2h.map(x => x.total))}/40 (autoevaluado)` : 'sin hacer'}`);
   { const ct = Object.entries(CALC_ST).filter(([k, v]) => calcT(k) && v.n), tt = ct.reduce((a, [, v]) => [a[0] + v.ok, a[1] + v.n], [0, 0]), weakC = ct.filter(([, v]) => v.ok / v.n < .6).map(([k]) => calcT(k).n), ls = CALC_SER[CALC_SER.length - 1];
     L.push(`- Banco de cálculos (Prueba 2): ${tt[1] ? `${tt[0]}/${tt[1]} correctos a la primera${ls ? ` · última serie ${ls.ok}/${ls.n}` : ''}${weakC.length ? ` · a reforzar: ${weakC.join(', ')}` : ''}` : 'sin practicar'}`); }
+  { const dk = Object.keys(DEFST); L.push(`- Definiciones (Prueba 2 a): ${dk.length ? `${dk.length}/${DEFS.length} practicadas · ${dk.filter(k => DEFST[k].best === 2).length} con 2/2` : 'sin practicar'}`); }
   const labs = Object.entries(PROG.labs || {}).filter(([k, v]) => LABS[k] && v.n);
   L.push('', `Laboratorios (aciertos): ${labs.length ? labs.map(([k, v]) => `${LABS[k].name} ${v.ok}/${v.n}`).join('; ') : 'sin registros'}`);
   const gr = [];
@@ -3145,7 +3155,7 @@ function renderReport() {
 }
 
 /* ---- Escribir: portada, pestañas y ejercicios de base ---- */
-const WTABS = [['escribir-comandos', 'Comandos'], ['escribir-conceptos', 'Conceptos clave'], ['escribir-explicar', 'Explicar · 10'], ['escribir-analizar', 'Analizar · 10'], ['escribir-evaluar', 'Evaluar · 15'], ['escribir-discutir', 'Discutir · 15'], ['escribir-hqp', '¿Hasta qué punto? · 15'], ['escribir-errores', 'Encuentra el error'], ['escribir-p1', 'Simulacro P1'], ['escribir-calc', 'Cálculos P2'], ['escribir-p2', 'Prueba 2'], ['escribir-ei', 'Evaluación Interna']];
+const WTABS = [['escribir-comandos', 'Comandos'], ['escribir-conceptos', 'Conceptos clave'], ['escribir-def', 'Definiciones'], ['escribir-explicar', 'Explicar · 10'], ['escribir-analizar', 'Analizar · 10'], ['escribir-evaluar', 'Evaluar · 15'], ['escribir-discutir', 'Discutir · 15'], ['escribir-hqp', '¿Hasta qué punto? · 15'], ['escribir-errores', 'Encuentra el error'], ['escribir-p1', 'Simulacro P1'], ['escribir-calc', 'Cálculos P2'], ['escribir-p2', 'Prueba 2'], ['escribir-ei', 'Evaluación Interna']];
 function writeTabs(cur) {
   return `<div class="seg wtabs" role="group" aria-label="Secciones de Escribir" style="margin-bottom:18px">${WTABS.map(([r, l], i) => `<button type="button" data-go="${r}" aria-pressed="${r === cur}">${i + 1}. ${l}</button>`).join('')}</div>`;
 }
@@ -3155,7 +3165,8 @@ function renderWriteHome() {
   const groups = [
     ['Base', 'qué pide cada pregunta y qué concepto aplica', [
       ['escribir-comandos', 'Comandos evaluativos', 'Qué pide cada término, cuánto vale y cómo se cierra.', pc(DRILLS.cmd)],
-      ['escribir-conceptos', 'Conceptos clave', 'Los nueve conceptos del curso aplicados a casos, como en la Evaluación Interna.', pc(DRILLS.kc)]]],
+      ['escribir-conceptos', 'Conceptos clave', 'Los nueve conceptos del curso aplicados a casos, como en la Evaluación Interna.', pc(DRILLS.kc)],
+      ['escribir-def', 'Definiciones · Prueba 2 (a)', `${DEFS.length} términos del Nivel Medio: escribe la definición y compárala con el modelo.`, `${Object.keys(DEFST).length}/${DEFS.length} practicadas`]]],
     ['Términos de instrucción', 'un método paso a paso para cada uno', [
       ['escribir-explicar', 'Explicar · 10 puntos', 'Cadena causal en 4 pasos: ejemplo resuelto, guiado y por tu cuenta.', `${EXP.filter(p => expState(p).done).length}/${EXP.length} completas`],
       ['escribir-analizar', 'Analizar · 10 puntos', 'Descomponer en partes, examinar cada una y relacionarlas, sin juicio de valor.', cm('analizar')],
@@ -5507,6 +5518,200 @@ function renderFormulas() {
   $('#fpr').onclick = () => { SESS.fV = 'sheet'; renderFormulas(); setTimeout(() => window.print(), 100); };
   app.querySelectorAll('[data-fk]').forEach(i => i.oninput = () => formRun(i.dataset.fk));
   app.querySelectorAll('.fcalc').forEach(d => d.ontoggle = () => { if (d.open) formRun(d.querySelector('[data-fk]').dataset.fk); });
+}
+
+/* =============== 16 · Definiciones para la Prueba 2 (a) =============== */
+/* [unidad, término, definición modelo, palabras clave: grupos separados por ';', alternativas por '|'] */
+const DEFS = [
+  [1, 'Escasez', 'Situación en la que los recursos son limitados frente a necesidades y deseos ilimitados, lo que obliga a elegir.', 'recurso; limitad|finit; ilimitad|infinit; elegir|eleccion|decid'],
+  [1, 'Costo de oportunidad', 'Valor de la mejor alternativa a la que se renuncia al tomar una decisión.', 'mejor|siguiente; alternativa|opcion; renuncia|sacrifica|deja'],
+  [1, 'Factores de producción', 'Recursos que se usan para producir bienes y servicios: tierra, trabajo, capital y capacidad empresarial.', 'tierra; trabajo; capital; empresari|emprend'],
+  [1, 'Bien libre', 'Bien que existe en cantidad suficiente para satisfacer a todos sin usar recursos escasos, por lo que no tiene costo de oportunidad.', 'sin |no requiere|no usa|no tiene|gratuit; escas|costo de oportunidad|suficiente|abundan'],
+  [1, 'Curva de posibilidades de producción', 'Curva que muestra las combinaciones máximas de dos bienes que una economía puede producir usando todos sus recursos y la tecnología disponibles de forma eficiente.', 'combinacion; maxim; dos bienes|dos productos; recursos|tecnologia'],
+  [1, 'Economía de libre mercado', 'Sistema económico en el que las decisiones de qué, cómo y para quién producir las toman los consumidores y las empresas privadas a través del mecanismo de precios.', 'privad|empresa; precio|mercado; que|como|para quien'],
+  [1, 'Economía mixta', 'Sistema económico que combina la asignación por el mercado con la intervención y la provisión del Estado.', 'mercado|privad; estado|gobierno|public'],
+  [1, 'Economía positiva', 'Enunciados económicos objetivos que pueden comprobarse o refutarse con evidencia.', 'comprob|verific|refut|test; evidencia|dato|hecho'],
+  [1, 'Economía normativa', 'Enunciados económicos que contienen juicios de valor sobre lo que debería ser y no pueden comprobarse con evidencia.', 'juicio de valor|opinion|deberia; no (se )?pueden? comprob|no comprob|subjetiv'],
+  [1, 'Ceteris paribus', 'Supuesto de que todas las demás variables permanecen constantes, para analizar el efecto de una sola variable.', 'demas|otras; constante|igual|sin cambio'],
+  [1, 'Modelo del flujo circular del ingreso', 'Modelo que muestra cómo circulan el ingreso, el gasto y los factores entre hogares y empresas, con fugas (ahorro, impuestos, importaciones) e inyecciones (inversión, gasto público, exportaciones).', 'hogar; empresa; fuga|inyecc|ingreso'],
+  [2, 'Demanda', 'Cantidades de un bien que los consumidores están dispuestos y pueden comprar a cada precio, en un período, ceteris paribus.', 'dispuest; pueden|capac|capaz; precio; cantidad'],
+  [2, 'Ley de la demanda', 'Relación inversa entre el precio de un bien y la cantidad demandada, ceteris paribus.', 'inversa|negativa|sube.*baja|aumenta.*disminuye; precio; cantidad demandada'],
+  [2, 'Oferta', 'Cantidades de un bien que los productores están dispuestos y pueden vender a cada precio, en un período, ceteris paribus.', 'dispuest; pueden|capac|capaz; precio; productor|empresa|vender|ofrec'],
+  [2, 'Ley de la oferta', 'Relación directa entre el precio de un bien y la cantidad ofrecida, ceteris paribus.', 'directa|positiva; precio; cantidad ofrecida|cantidad ofertada'],
+  [2, 'Equilibrio de mercado', 'Situación en la que la cantidad demandada es igual a la cantidad ofrecida, sin tendencia a cambiar el precio.', 'cantidad demandada; cantidad ofrecida|cantidad ofertada; igual'],
+  [2, 'Exceso de demanda', 'Situación en la que, a un precio dado, la cantidad demandada supera a la cantidad ofrecida (escasez).', 'cantidad demandada; mayor|supera|excede; cantidad ofrecida|cantidad ofertada'],
+  [2, 'Exceso de oferta', 'Situación en la que, a un precio dado, la cantidad ofrecida supera a la cantidad demandada (excedente).', 'cantidad ofrecida|cantidad ofertada; mayor|supera|excede; cantidad demandada'],
+  [2, 'Excedente del consumidor', 'Diferencia entre el precio máximo que el consumidor está dispuesto a pagar y el precio que efectivamente paga.', 'dispuest; pagar|paga; diferencia|menos|resta'],
+  [2, 'Excedente del productor', 'Diferencia entre el precio que recibe el productor y el precio mínimo al que estaría dispuesto a vender.', 'recibe|cobra; minimo|dispuest; diferencia|menos|resta'],
+  [2, 'Eficiencia asignativa', 'Situación en la que los recursos se asignan para producir la combinación que más valora la sociedad: el beneficio marginal es igual al costo marginal.', 'beneficio marginal|bmg|bm; costo marginal|cmg|cm; igual'],
+  [2, 'Elasticidad precio de la demanda (EPD)', 'Medida de la sensibilidad de la cantidad demandada ante un cambio del precio del bien.', 'sensib|respuesta|reaccion|grado; cantidad demandada; precio'],
+  [2, 'Elasticidad ingreso de la demanda (EID)', 'Medida de la sensibilidad de la cantidad demandada ante un cambio del ingreso de los consumidores.', 'sensib|respuesta|reaccion|grado; cantidad demandada|demanda; ingreso|renta'],
+  [2, 'Elasticidad precio de la oferta (EPO)', 'Medida de la sensibilidad de la cantidad ofrecida ante un cambio del precio del bien.', 'sensib|respuesta|reaccion|grado; cantidad ofrecida|cantidad ofertada; precio'],
+  [2, 'Bien normal', 'Bien cuya demanda aumenta cuando aumenta el ingreso de los consumidores (EID positiva).', 'demanda; aumenta|sube; ingreso'],
+  [2, 'Bien inferior', 'Bien cuya demanda disminuye cuando aumenta el ingreso de los consumidores (EID negativa).', 'demanda; disminuye|baja|cae; ingreso'],
+  [2, 'Bienes sustitutos', 'Bienes que pueden usarse uno en lugar del otro: si sube el precio de uno, aumenta la demanda del otro.', 'en lugar|reemplaz|alternativ|misma necesidad; precio; aumenta|sube'],
+  [2, 'Bienes complementarios', 'Bienes que se consumen juntos: si sube el precio de uno, disminuye la demanda del otro.', 'junt|conjunt; precio; disminuye|baja|cae'],
+  [2, 'Ingreso total', 'Monto que recibe una empresa por sus ventas: precio por cantidad vendida.', 'precio; cantidad'],
+  [2, 'Impuesto indirecto', 'Impuesto que se aplica al gasto en bienes y servicios; lo paga el productor al Estado y aumenta sus costos.', 'gasto|bien|consumo|venta; costo|precio|productor'],
+  [2, 'Impuesto específico', 'Impuesto indirecto de un monto fijo por cada unidad vendida.', 'fijo|monto; unidad'],
+  [2, 'Impuesto ad valorem', 'Impuesto indirecto que es un porcentaje del precio del bien, como el IVA.', 'porcentaje|%; precio|valor'],
+  [2, 'Subvención', 'Pago del gobierno a los productores por unidad producida para reducir sus costos y aumentar la oferta.', 'pago|dinero|transferencia; gobierno|estado; productor|empresa'],
+  [2, 'Precio máximo', 'Precio fijado por el gobierno por debajo del precio de equilibrio; no se puede cobrar más que ese precio.', 'gobierno|estado|legal; debajo|menor; equilibrio'],
+  [2, 'Precio mínimo', 'Precio fijado por el gobierno por encima del precio de equilibrio; no se puede pagar menos que ese precio.', 'gobierno|estado|legal; encima|mayor; equilibrio'],
+  [2, 'Falla de mercado', 'Situación en la que el mercado no asigna los recursos de forma eficiente, porque no se produce la cantidad socialmente óptima.', 'no|falla; eficien|optim; asign|recurso|cantidad'],
+  [2, 'Externalidad', 'Costo o beneficio que recae sobre terceros que no participan en la producción o el consumo de un bien.', 'costo|beneficio|efecto; tercer|ajeno|no particip'],
+  [2, 'Externalidad negativa de la producción', 'Costo externo que la producción de un bien impone a terceros, por lo que el costo marginal social supera al costo marginal privado.', 'costo; tercer|externo|ajeno; produccion|producir|empresa'],
+  [2, 'Externalidad positiva del consumo', 'Beneficio externo que el consumo de un bien genera para terceros, por lo que el beneficio marginal social supera al beneficio marginal privado.', 'beneficio; tercer|externo|ajeno; consumo|consumir'],
+  [2, 'Pérdida de bienestar', 'Pérdida de excedente social que se produce cuando no se produce la cantidad socialmente óptima.', 'excedente|bienestar; perdida|reduc; optim|eficien'],
+  [2, 'Bien meritorio', 'Bien que beneficia a quien lo consume y a la sociedad, y que el mercado provee o consume por debajo de lo socialmente deseable.', 'beneficio|benefic; por debajo|subconsum|insuficient|menos'],
+  [2, 'Bien perjudicial', 'Bien que daña a quien lo consume o a la sociedad, y que el mercado consume por encima de lo socialmente deseable.', 'dan|perjud|nociv; por encima|sobreconsum|exces|mas'],
+  [2, 'Impuesto pigouviano', 'Impuesto que busca corregir una externalidad negativa haciendo que el productor o el consumidor pague el costo externo.', 'impuesto; externalidad negativa|costo externo; corregir|internaliz|reducir'],
+  [2, 'Permisos negociables de contaminación', 'Autorizaciones para emitir una cantidad limitada de contaminación que las empresas pueden comprar y vender entre sí.', 'permiso|derecho|autoriz; contamin|emision; comprar|vender|negoci'],
+  [2, 'Recurso de uso común', 'Recurso rival en el consumo y no excluible, que tiende a sobreexplotarse.', 'rival; no excluible|no se puede excluir'],
+  [2, 'Bien público', 'Bien no rival y no excluible en el consumo, que el mercado no provee o provee en cantidad insuficiente.', 'no rival; no excluible|no se puede excluir'],
+  [2, 'Problema del polizón', 'Situación en la que las personas se benefician de un bien sin pagar por él, lo que desalienta su provisión privada.', 'benefic|usa|consum; sin pagar|no paga'],
+  [3, 'Producto interno bruto (PIB)', 'Valor total de los bienes y servicios finales producidos dentro de un país en un período, normalmente un año.', 'valor; bienes y servicios|produccion; finales; dentro|interno|pais'],
+  [3, 'PIB real', 'PIB ajustado por la inflación, es decir, medido a precios constantes de un año base.', 'inflacion|precios constantes|ajust|deflact'],
+  [3, 'Ingreso nacional bruto (INB)', 'PIB más los ingresos que reciben los residentes desde el exterior, menos los ingresos que se pagan a no residentes.', 'pib; ingreso; exterior|extranjer|no residente'],
+  [3, 'PIB per cápita', 'PIB dividido por la población del país.', 'pib; poblacion|habitante'],
+  [3, 'Paridad del poder adquisitivo (PPA)', 'Ajuste del ingreso que corrige las diferencias de precios entre países para comparar lo que se puede comprar en cada uno.', 'precio|costo de vida; pais|comparar'],
+  [3, 'Ciclo económico', 'Fluctuaciones de corto plazo del PIB real alrededor de su tendencia de crecimiento a largo plazo.', 'fluctuac|variacion|subidas y bajadas|expansion; pib real|actividad; tendencia|largo plazo'],
+  [3, 'Recesión', 'Disminución del PIB real durante dos trimestres consecutivos.', 'pib real|produccion; disminu|cae|negativ|baja; dos trimestres|consecutiv'],
+  [3, 'Crecimiento económico', 'Aumento del PIB real de una economía a lo largo del tiempo.', 'aumento|crecimiento|incremento; pib real|produccion real'],
+  [3, 'Demanda agregada (DA)', 'Gasto total planeado en los bienes y servicios finales de una economía a cada nivel general de precios: C + I + G + (X − M).', 'gasto total|demanda total; nivel de precios|nivel general'],
+  [3, 'Oferta agregada a corto plazo (OACP)', 'Producción total que las empresas están dispuestas a ofrecer a cada nivel general de precios, con los precios de los factores constantes.', 'produccion total|produccion; nivel de precios|nivel general; costo|factor|corto plazo'],
+  [3, 'Oferta agregada a largo plazo (OALP)', 'Producción de pleno empleo (potencial) de una economía, que no depende del nivel general de precios.', 'pleno empleo|potencial; nivel de precios|no depende|vertical'],
+  [3, 'Brecha deflacionaria (recesiva)', 'Situación en la que el PIB real de equilibrio está por debajo del nivel de pleno empleo y hay desempleo cíclico.', 'debajo|menor; pleno empleo|potencial'],
+  [3, 'Brecha inflacionaria', 'Situación en la que el PIB real de equilibrio está por encima del nivel de pleno empleo y hay presión sobre los precios.', 'encima|mayor; pleno empleo|potencial'],
+  [3, 'Desempleo', 'Situación de las personas en edad y condiciones de trabajar que buscan empleo activamente y no lo encuentran.', 'busca|buscan; trabajo|empleo; no (lo )?encuentra|sin trabajo|sin empleo'],
+  [3, 'Tasa de desempleo', 'Porcentaje de la fuerza de trabajo que está desempleada.', 'porcentaje|%; fuerza de trabajo|fuerza laboral|poblacion activa; desemplead|desocupad'],
+  [3, 'Desempleo cíclico', 'Desempleo causado por una caída de la demanda agregada en la fase de contracción del ciclo económico.', 'demanda agregada|demanda; caida|insuficien|baja|recesion'],
+  [3, 'Desempleo estructural', 'Desempleo causado por un desajuste entre las habilidades o la ubicación de los trabajadores y los empleos disponibles, por cambios en la estructura de la economía.', 'habilidad|calific|ubicacion|desajuste; cambio|estructura|tecnolog'],
+  [3, 'Desempleo friccional', 'Desempleo temporal de quienes están cambiando de trabajo o buscando su primer empleo.', 'temporal|transitori|corto; cambi|busca|primer'],
+  [3, 'Desempleo estacional', 'Desempleo que se produce porque la demanda de trabajo cambia en ciertas épocas del año.', 'epoca|temporada|estacion; ano|ciclo anual'],
+  [3, 'Tasa natural de desempleo', 'Desempleo que existe cuando la economía está en pleno empleo: suma del desempleo friccional, estructural y estacional.', 'friccional; estructural; estacional|pleno empleo'],
+  [3, 'Inflación', 'Aumento sostenido del nivel general de precios en una economía.', 'aumento|subida|incremento; sostenid|continu|persist; nivel general'],
+  [3, 'Deflación', 'Disminución sostenida del nivel general de precios en una economía.', 'disminu|caida|baja; sostenid|continu|persist; nivel general'],
+  [3, 'Desinflación', 'Disminución de la tasa de inflación: los precios siguen subiendo, pero más despacio.', 'tasa de inflacion|inflacion; baja|disminu|menor; siguen subiendo|positiva|mas despacio|mas lento'],
+  [3, 'Índice de precios al consumidor (IPC)', 'Índice que mide la variación del precio de una canasta representativa de bienes y servicios que compran los hogares.', 'canasta|cesta; precio; hogar|consumidor'],
+  [3, 'Inflación de demanda', 'Inflación causada por un aumento de la demanda agregada cuando la economía está cerca del pleno empleo.', 'demanda agregada|demanda; aumento|crece'],
+  [3, 'Inflación de costos', 'Inflación causada por un aumento de los costos de producción que desplaza la oferta agregada a corto plazo hacia la izquierda.', 'costo; aumento|suba; oferta agregada|oacp|produccion'],
+  [3, 'Equidad', 'Idea de justicia en la distribución del ingreso, la riqueza o las oportunidades; no significa igualdad.', 'justicia|justo; distribucion|reparto'],
+  [3, 'Curva de Lorenz', 'Curva que muestra el porcentaje acumulado del ingreso que recibe cada porcentaje acumulado de la población.', 'acumulad; ingreso; poblacion|hogar'],
+  [3, 'Coeficiente de Gini', 'Medida de la desigualdad del ingreso entre 0 (igualdad perfecta) y 1 (desigualdad total), calculada a partir de la curva de Lorenz.', 'desigualdad; 0|cero; 1|uno|lorenz'],
+  [3, 'Pobreza absoluta', 'Situación de quienes no pueden cubrir sus necesidades básicas, medida con una línea de pobreza fija (por ejemplo, el umbral internacional del Banco Mundial).', 'necesidades basicas|minimo; linea|umbral|fij'],
+  [3, 'Pobreza relativa', 'Situación de quienes tienen un ingreso muy inferior al promedio o a la mediana de su sociedad.', 'promedio|mediana|resto|sociedad; inferior|menor|por debajo'],
+  [3, 'Impuesto progresivo', 'Impuesto cuyo tipo promedio aumenta a medida que aumenta el ingreso.', 'aumenta|sube|mayor; ingreso; porcentaje|tipo|proporcion'],
+  [3, 'Impuesto regresivo', 'Impuesto cuyo tipo promedio disminuye a medida que aumenta el ingreso: pesa más sobre los ingresos bajos.', 'disminu|baja|menor; ingreso; porcentaje|tipo|proporcion|pesa'],
+  [3, 'Impuesto directo', 'Impuesto que se aplica sobre el ingreso o la riqueza de personas y empresas.', 'ingreso|renta|riqueza|patrimonio'],
+  [3, 'Transferencias', 'Pagos del gobierno a personas o grupos sin una contraprestación en bienes o servicios, como jubilaciones o subsidios.', 'pago|dinero; gobierno|estado; sin contraprestacion|sin produc|jubilac|subsidio|ayuda'],
+  [3, 'Política monetaria', 'Uso que hace el banco central de las tasas de interés y de la oferta de dinero para influir en la demanda agregada.', 'banco central|bcp; tasa de interes|oferta de dinero|dinero; demanda agregada|inflacion|economia'],
+  [3, 'Tasa de interés real', 'Tasa de interés nominal menos la tasa de inflación.', 'nominal; inflacion'],
+  [3, 'Metas de inflación', 'Régimen en el que el banco central anuncia un objetivo de inflación y ajusta la tasa de interés para alcanzarlo.', 'banco central; objetivo|meta|anuncia; inflacion'],
+  [3, 'Política fiscal', 'Uso que hace el gobierno del gasto público y los impuestos para influir en la demanda agregada.', 'gobierno|estado; gasto; impuesto'],
+  [3, 'Déficit presupuestario', 'Situación en la que el gasto del gobierno supera sus ingresos en un año.', 'gasto; supera|mayor|excede; ingreso|recaudacion'],
+  [3, 'Políticas del lado de la oferta', 'Políticas que buscan aumentar la capacidad productiva de la economía y desplazar la OALP hacia la derecha.', 'capacidad productiva|potencial|productividad|oalp; aument|mejor|desplaz'],
+  [3, 'Privatización', 'Venta de empresas o activos del Estado al sector privado.', 'venta|transfer; estado|public; privad'],
+  [3, 'Desregulación', 'Eliminación o reducción de normas del gobierno que limitan la competencia o la actividad de las empresas.', 'elimin|reduc; norma|regla|regulac'],
+  [4, 'Libre comercio', 'Intercambio de bienes y servicios entre países sin barreras como aranceles, cuotas o subvenciones.', 'pais|internacional; sin; barrera|arancel'],
+  [4, 'Proteccionismo', 'Uso de barreras al comercio para proteger a los productores nacionales de la competencia extranjera.', 'barrera|arancel|cuota; proteger|protec; nacional|local'],
+  [4, 'Arancel', 'Impuesto que se aplica a los bienes importados.', 'impuesto; import'],
+  [4, 'Cuota de importación', 'Límite legal a la cantidad de un bien que se puede importar.', 'limite|maxim|tope; cantidad; import'],
+  [4, 'Subvención a la exportación', 'Pago del gobierno a los productores nacionales por exportar, para que sean más competitivos en el exterior.', 'pago|subsid|dinero; gobierno|estado; export'],
+  [4, 'Barreras administrativas', 'Normas, trámites o requisitos técnicos y sanitarios que dificultan la entrada de importaciones.', 'norma|tramite|requisito|reglament|estandar; import|dificult'],
+  [4, 'Dumping', 'Venta de un bien en el extranjero a un precio inferior a su costo de producción o al precio en su propio mercado.', 'precio; inferior|menor|debajo; costo|mercado interno|propio'],
+  [4, 'Organización Mundial del Comercio (OMC)', 'Organismo internacional que promueve el libre comercio, administra los acuerdos comerciales y resuelve disputas entre países.', 'libre comercio|comercio; acuerdo|disputa|regla'],
+  [4, 'Área de libre comercio', 'Acuerdo entre países que eliminan las barreras comerciales entre ellos, mientras cada uno mantiene su propia política comercial hacia terceros.', 'elimin|sin; barrera|arancel; cada|propia|terceros'],
+  [4, 'Unión aduanera', 'Acuerdo de libre comercio entre países que además aplican un arancel externo común a los no miembros.', 'libre comercio|sin aranceles; arancel externo comun|externo comun'],
+  [4, 'Mercado común', 'Unión aduanera que además permite el libre movimiento de los factores de producción, como el trabajo y el capital.', 'union aduanera|arancel externo; libre movimiento|libre circulacion; trabajo|capital|factor'],
+  [4, 'Unión monetaria', 'Acuerdo en el que dos o más países comparten la misma moneda y un banco central común.', 'misma moneda|moneda comun|moneda unica; banco central'],
+  [4, 'Tipo de cambio', 'Valor de una moneda expresado en términos de otra moneda.', 'valor|precio; moneda|divisa; otra'],
+  [4, 'Tipo de cambio flotante', 'Tipo de cambio que se determina por la oferta y la demanda de la moneda en el mercado de divisas, sin intervención del gobierno.', 'oferta; demanda; mercado|sin intervencion'],
+  [4, 'Tipo de cambio fijo', 'Tipo de cambio que el gobierno o el banco central fija a un valor determinado frente a otra moneda y mantiene con su intervención.', 'fij; gobierno|banco central; valor|otra moneda'],
+  [4, 'Apreciación', 'Aumento del valor de una moneda frente a otra en un sistema de tipo de cambio flotante.', 'aumento|sube; valor; flotante|mercado'],
+  [4, 'Depreciación', 'Disminución del valor de una moneda frente a otra en un sistema de tipo de cambio flotante.', 'disminu|baja|cae; valor; flotante|mercado'],
+  [4, 'Devaluación', 'Disminución del valor de una moneda decidida por el gobierno en un sistema de tipo de cambio fijo.', 'disminu|baja|reduc; valor; fijo|gobierno|banco central'],
+  [4, 'Balanza de pagos', 'Registro de todas las transacciones económicas de los residentes de un país con el resto del mundo en un período.', 'registro|cuenta; transacc|pagos|flujos; resto del mundo|exterior|otros paises'],
+  [4, 'Cuenta corriente', 'Parte de la balanza de pagos que registra el comercio de bienes y servicios, el ingreso primario y las transferencias corrientes.', 'bienes; servicios; ingreso|transferencia'],
+  [4, 'Cuenta financiera', 'Parte de la balanza de pagos que registra la inversión extranjera directa, la inversión de cartera y los activos de reserva.', 'inversion; directa|cartera|reserva'],
+  [4, 'Inversión extranjera directa (IED)', 'Inversión de largo plazo de una empresa extranjera en activos productivos de otro país, con control sobre su gestión.', 'extranjer; activos|fabrica|empresa|productiv; control|largo plazo'],
+  [4, 'Desarrollo sostenible', 'Desarrollo que satisface las necesidades del presente sin comprometer la capacidad de las generaciones futuras para satisfacer las suyas.', 'necesidades; presente|actual; generaciones futuras|futuro'],
+  [4, 'Desarrollo económico', 'Mejora del bienestar y la calidad de vida de la población: más ingreso, salud, educación y libertades, con menos pobreza.', 'bienestar|calidad de vida|nivel de vida; salud|educacion|pobreza'],
+  [4, 'Índice de desarrollo humano (IDH)', 'Indicador compuesto del PNUD que combina salud (esperanza de vida), educación (años de escolaridad) e ingreso (INB per cápita).', 'esperanza de vida|salud; educacion|escolar; ingreso|inb'],
+  [4, 'Trampa de la pobreza', 'Círculo en el que el bajo ingreso impide ahorrar e invertir en capital físico y humano, lo que mantiene el bajo ingreso.', 'ciclo|circulo|trampa|perpet; ingreso|ahorro|inversion'],
+  [4, 'Economía informal', 'Actividad económica que no se registra ni paga impuestos y queda fuera de la regulación del Estado.', 'no (se )?registr|sin registr|no declar; impuesto|regulac|estado'],
+  [4, 'Microfinanciación', 'Pequeños préstamos y servicios financieros para personas de bajos ingresos sin acceso a la banca tradicional.', 'prestamo|credito; pequen|micro; bajos ingresos|pobre|sin acceso'],
+  [4, 'Diversificación', 'Ampliación de la variedad de bienes y servicios que produce y exporta un país, para depender menos de unos pocos productos.', 'variedad|ampli|distint|mas productos; depender menos|pocos productos|riesgo']
+];
+const DEFST = store.get('defs', {});
+const saveDefs = () => store.set('defs', DEFST);
+const defKey = d => d[1];
+function defCheck(d, txt) {
+  const t = normTxt(txt), groups = d[3].split(';').map(g => g.trim()).filter(Boolean);
+  const hit = groups.map(g => g.split('|').some(alt => { try { return new RegExp(alt.trim()).test(t); } catch (e) { return t.includes(alt.trim()); } }));
+  const n = hit.filter(Boolean).length, r = n / groups.length;
+  return { hit, groups, n, pts: r >= 0.99 ? 2 : r >= 0.5 ? 1 : 0 };
+}
+function defHL(d) { // resalta en la definición modelo las palabras clave
+  let h = esc(d[2]);
+  d[3].split(';').forEach(g => g.split('|').forEach(alt => { alt = alt.trim(); if (alt.length < 3 || /[.*()?%]/.test(alt)) return; const re = new RegExp('(?<![a-zñáéíóú])(' + alt.split('').map(ch => ({ a: '[aá]', e: '[eé]', i: '[ií]', o: '[oó]', u: '[uúü]', n: '[nñ]' })[ch] || ch.replace(/[\\^$+[\]{}]/g, '\\$&')).join('') + '[a-zñáéíóú]*)', 'i'); h = h.replace(re, '<mark>$1</mark>'); }));
+  return h;
+}
+const defTag = d => { const s = DEFST[defKey(d)]; return s ? `${s.best}/2` : ''; };
+function renderDefHome() {
+  const U = SESS.dU = SESS.dU || 'all', M = SESS.dM = SESS.dM || 'prac';
+  const list = DEFS.filter(d => U === 'all' || d[0] === +U);
+  const done = DEFS.filter(d => DEFST[defKey(d)]), full = done.filter(d => DEFST[defKey(d)].best === 2).length;
+  const weak = DEFS.filter(d => DEFST[defKey(d)] && DEFST[defKey(d)].best < 2);
+  app.innerHTML = `<div class="eyebrow">Escribir como en el examen</div><h1>Definiciones · Prueba 2 (a)</h1>${writeTabs('escribir-def')}
+    <p class="lede">La parte (a) de la Prueba 2 pide definir dos términos: 2 puntos cada uno. Escribe la definición con tus palabras; el Taller busca las ideas clave y te muestra la definición modelo.</p>
+    <details class="essentials"><summary><b>Cómo se gana el punto completo</b></summary><ul>
+      <li><b>2 puntos:</b> definición precisa, con todas las ideas clave. <b>1 punto:</b> definición vaga o incompleta.</li>
+      <li>No uses la misma palabra para definirla («inflación es cuando hay inflación»). Una o dos oraciones bastan.</li>
+      <li>No hace falta ejemplo ni diagrama en la parte (a), pero un ejemplo corto no resta.</li>
+      <li>La corrección automática es aproximada: busca ideas clave, no evalúa la redacción. Compara siempre con el modelo.</li></ul></details>
+    <div class="row" style="margin:16px 0 10px;justify-content:space-between"><div class="seg" role="group" aria-label="Unidad">${[['all', 'Todas'], ['1', 'U1'], ['2', 'U2'], ['3', 'U3'], ['4', 'U4']].map(([v, l]) => `<button type="button" data-du="${v}" aria-pressed="${U === v}">${l}</button>`).join('')}</div>
+      <span class="small muted">${done.length}/${DEFS.length} practicadas · ${full} con 2/2</span></div>
+    <div class="seg" role="group" aria-label="Modo" style="margin-bottom:14px">${[['prac', 'Practicar'], ['serie', 'Serie de 10'], ['fail', `Repasar las flojas (${weak.length})`], ['list', 'Estudiar la lista']].map(([v, l]) => `<button type="button" data-dm="${v}" aria-pressed="${M === v}">${l}</button>`).join('')}</div>
+    <div id="dBody"></div>`;
+  app.querySelectorAll('[data-du]').forEach(b => b.onclick = () => { SESS.dU = b.dataset.du; SESS.dQ = null; renderDefHome(); });
+  app.querySelectorAll('[data-dm]').forEach(b => b.onclick = () => { SESS.dM = b.dataset.dm; SESS.dQ = null; renderDefHome(); });
+  const B = $('#dBody');
+  if (M === 'list') {
+    B.innerHTML = `<div class="tscroll"><table class="dtab deflist"><thead><tr><th>Término</th><th>Definición modelo (ideas clave resaltadas)</th><th>Tu mejor</th></tr></thead><tbody>${list.map(d => `<tr><th scope="row"><span class="small muted">U${d[0]}</span> ${d[1]}</th><td>${defHL(d)}</td><td>${defTag(d) || '—'}</td></tr>`).join('')}</tbody></table></div>`;
+    return;
+  }
+  let pool = M === 'fail' ? weak.filter(d => U === 'all' || d[0] === +U) : list;
+  if (!pool.length) { B.innerHTML = `<div class="fb ok">${M === 'fail' ? 'No tienes definiciones flojas en esta selección. ¡Bien!' : 'No hay términos en esta unidad.'}</div>`; return; }
+  if (!SESS.dQ) SESS.dQ = { items: M === 'serie' ? shuffle(pool).slice(0, 10) : shuffle(pool), i: 0, pts: 0, res: [] };
+  const Q = SESS.dQ;
+  if (Q.i >= Q.items.length) {
+    const max = Q.items.length * 2;
+    B.innerHTML = `<div class="fb ${Q.pts >= max * .8 ? 'ok' : 'info'}"><b class="h">Terminaste: ${Q.pts}/${max} puntos</b>${Q.res.filter(r => r.pts < 2).length ? 'Repasa las que no llegaron a 2/2 en «Repasar las flojas».' : 'Todas con el puntaje completo.'}</div><div class="row" style="margin-top:10px"><button class="btn primary" type="button" id="dAg">Otra ronda</button></div>`;
+    $('#dAg').onclick = () => { SESS.dQ = null; renderDefHome(); };
+    return;
+  }
+  const d = Q.items[Q.i], r = Q.res[Q.i];
+  B.innerHTML = `<div class="card cpad"><div class="eyebrow">Término ${Q.i + 1} de ${Q.items.length} · Unidad ${d[0]}${M === 'serie' ? ` · ${Q.pts} puntos` : ''}</div>
+    <h2 style="margin:6px 0 10px">Defina «${d[1]}».</h2>
+    <textarea id="dTx" rows="4" placeholder="Escribe tu definición con tus palabras…" ${r ? 'disabled' : ''}>${r ? esc(r.txt) : ''}</textarea>
+    <div class="row" style="margin-top:10px">${r ? `<button class="btn primary" type="button" id="dNx">${Q.i + 1 < Q.items.length ? 'Siguiente término' : 'Ver resultado'}</button>` : '<button class="btn primary" type="button" id="dOk">Comprobar</button><button class="btn" type="button" id="dSk">No la sé: ver el modelo</button>'}</div>
+    <div id="dFb" style="margin-top:12px"></div></div>`;
+  const show = res => {
+    const c = res.chk;
+    $('#dFb').innerHTML = `<div class="fb ${res.pts === 2 ? 'ok' : res.pts === 1 ? 'info' : 'no'}"><b class="h">${res.skip ? 'Estúdiala y vuelve a intentarlo' : `Puntaje estimado: ${res.pts}/2`}</b>
+      ${res.skip ? '' : `<ul class="defchk">${c.groups.map((g, k) => `<li class="${c.hit[k] ? 'ok' : 'no'}">${c.hit[k] ? 'Incluiste' : 'Falta'} la idea de «${g.split('|')[0].replace(/[.*()?]/g, ' ').trim()}»</li>`).join('')}</ul>`}
+      <p style="margin:8px 0 0"><b>Definición modelo:</b> ${defHL(d)}</p></div>`;
+  };
+  if (r) { show(r); $('#dNx').onclick = () => { Q.i++; renderDefHome(); }; return; }
+  const finish = (skip) => {
+    const txt = $('#dTx').value.trim();
+    if (!skip && txt.split(/\s+/).length < 4) { $('#dFb').innerHTML = '<div class="fb info">Escribe una definición completa (al menos una oración).</div>'; return; }
+    const chk = defCheck(d, skip ? '' : txt), pts = skip ? 0 : chk.pts;
+    const st = DEFST[defKey(d)] = DEFST[defKey(d)] || { n: 0, best: 0 }; st.n++; st.best = Math.max(st.best, pts); st.last = pts; saveDefs();
+    Q.res[Q.i] = { txt, pts, chk, skip }; Q.pts += pts; renderDefHome();
+  };
+  $('#dOk').onclick = () => finish(false); $('#dSk').onclick = () => finish(true);
 }
 
 render();
