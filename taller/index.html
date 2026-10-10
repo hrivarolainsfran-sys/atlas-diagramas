@@ -472,6 +472,21 @@ body.docked{padding-bottom:190px}
   .wtabs::-webkit-scrollbar{display:none}
   .wtabs button{white-space:nowrap;flex:none}
 }
+/* v7: constructor de diagramas */
+.dbcta{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:6px 16px;align-items:center;width:100%;max-width:1100px;text-align:left;background:var(--gold-soft);border:1.5px solid var(--gold);border-radius:var(--r);padding:14px 18px;margin:4px 0 8px;color:var(--ink)}
+.dbcta:hover{filter:brightness(1.03)}
+.dbcta .code{font-family:var(--f-display);font-weight:700;font-size:40px;line-height:1;color:var(--gold)}
+.dbcta b{display:block;font-family:var(--f-display);font-size:22px}
+.dbcta .ds{font-size:14px;color:var(--ink-2)}
+.dbwrap .figure svg{touch-action:none;background:#fff}
+.dbwrap svg text{font-family:var(--f-body)}
+.dbo{cursor:move}.dbh{cursor:grab}
+.dbadd{display:flex;flex-wrap:wrap;gap:6px}
+.dbf{display:grid;gap:3px;margin:6px 0;font-size:13.5px;font-weight:700;color:var(--ink-2)}
+.dbf select,.dbf .inp{font-weight:400;padding:7px 9px;border:1.5px solid var(--ink-2);border-radius:7px;background:var(--sheet);color:var(--ink)}
+.dbf.chk{display:flex;align-items:center;gap:8px}
+.subs{gap:4px}.subs .btn{min-width:34px;padding:4px 8px}
+@media (max-width:860px){.dbcta{grid-template-columns:auto minmax(0,1fr)}.dbcta .btn{grid-column:1/-1;justify-self:start}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
@@ -1413,6 +1428,7 @@ function render() {
   stopGameTimers();
   updateBadge();
   if (route.startsWith('t') && TOPICS.some(t => tid(t.id) === route)) { setNav('inicio'); return renderTopic(TOPICS.find(t => tid(t.id) === route)); }
+  if (route === 'lab-crear') { setNav('labs'); return labBuild(); }
   if (route.startsWith('lab-') && LABS[route.slice(4)]) { setNav('labs'); return renderLabPage(route.slice(4)); }
   if (route === 'labs') { setNav('labs'); return renderLabs(); }
   if (route === 'examen') { setNav('repasar'); return renderExam(); }
@@ -1484,7 +1500,7 @@ function renderHome() {
   </section>
   <section class="route" aria-label="Cómo usar el taller">
     <button class="rcard" type="button" data-scroll="temas"><span class="rn">1</span><b>Aprende</b><span class="d">Lo esencial y ejercicios con corrección inmediata en los ${TOPICS.length} subtemas.</span></button>
-    <button class="rcard" type="button" data-go="labs"><span class="rn">2</span><b>Diagramas</b><span class="d">${Object.keys(LABS).length} laboratorios: mueve curvas y dibuja desplazamientos.</span></button>
+    <button class="rcard" type="button" data-go="labs"><span class="rn">2</span><b>Diagramas</b><span class="d">${Object.keys(LABS).length} laboratorios y un constructor para crear tus propios diagramas.</span></button>
     <button class="rcard" type="button" data-go="escribir"><span class="rn">3</span><b>Escribe</b><span class="d">Comandos, conceptos clave, Explicar (${EXP.length}), Evaluar (${EVA.length}) y encontrar errores.</span></button>
     <button class="rcard" type="button" data-go="repasar"><span class="rn">4</span><b>Repasa</b><span class="d">${errCount() ? `${errCount()} errores pendientes` : 'Tus errores'}, examen rápido, tarjetas y tu reporte.</span></button>
   </section>
@@ -1777,6 +1793,7 @@ const sw = cls => `<span class="sw" style="background:var(${cls})"></span>`;
 /* =============== laboratorios =============== */
 function renderLabs() {
   app.innerHTML = `<div class="eyebrow">Diagramas interactivos</div><h1>Laboratorios</h1><p class="lede">Cada laboratorio usa los códigos de color del curso: demanda en azul, oferta en rojo, incidencia del consumidor en amarillo, del productor en verde y pérdida de bienestar en azul claro.</p>
+  <button class="dbcta" type="button" data-go="lab-crear"><span class="code">+</span><span><b>Crea tu propio diagrama</b><span class="ds">Plantillas de todos los diagramas del curso, elementos que puedes mover y editar, y descarga como imagen.</span></span><span class="btn primary sm">Abrir</span></button>
   ${Object.keys(UNITS).map(u => { const ls = Object.keys(LABS).filter(k => LABS[k].topic[0] === u); return ls.length ? `<div class="unit-h"><h2>Unidad ${u} · ${UNITS[u]}</h2></div><div class="tiles">${ls.map(tileLab).join('')}</div>` : ''; }).join('')}`;
 }
 const ATLAS = 'https://hrivarolainsfran-sys.github.io/atlas-diagramas/';
@@ -4110,7 +4127,7 @@ function p2Result(c, B) {
 /* ---------- Envío del reporte a Google Forms ---------- */
 /* Pegue aquí el «enlace prellenado» del formulario, con las respuestas 1, 2, 3 y 4 en este orden:
    1 = Nombre y apellido, 2 = Curso, 3 = Resumen, 4 = Reporte completo. */
-const REPORTE_FORM_LINK = '';
+const REPORTE_FORM_LINK = 'https://docs.google.com/forms/d/e/1FAIpQLSfrLcfHX1nKQ1NSHA1JaTP-949Um7VT5nVaPn-LVJpIcBveFg/viewform?usp=pp_url&entry.1752115616=1&entry.1516863016=2&entry.1810766453=3&entry.621917576=4';
 function formConf() {
   const m = REPORTE_FORM_LINK.match(/^(https?:\/\/[^?]+)\/viewform\?(.*)$/);
   if (!m) return null;
@@ -4227,10 +4244,10 @@ const CMDT = {
       { n: 'Descomponer en partes', g: 'Nombra las partes del problema: agentes afectados, efectos o componentes del modelo. Por ejemplo: «Conviene distinguir cuatro grupos de agentes…».', c: ['Conviene distinguir entre', 'En primer lugar', 'En segundo lugar', 'Por un lado', 'Por otro lado'] },
       { n: 'Examinar cada parte', g: 'Desarrolla cada parte en su propio párrafo, con su cadena causal interna.', c: ['Porque', 'Dado que', 'Por consiguiente', 'En consecuencia', 'Esto provoca que'] },
       { n: 'Relacionar las partes', g: 'Muestra cómo se conectan las partes entre sí. Esto es lo que distingue un análisis de una simple lista.', c: ['Esto se relaciona con', 'A su vez, esto afecta a', 'En conexión con lo anterior', 'Ambos efectos se combinan en', 'Esto implica que'] },
-      { n: 'Aplicar a Paraguay', g: 'Cierra con un ejemplo real del país: un dato del BCP, el INE o el MEF, una ley o una institución.', c: ['Tal como ocurre en Paraguay con', 'Según datos del BCP', 'Un caso ilustrativo del país es'] }
+      { n: 'Ejemplo del mundo real', g: 'Cierra con un ejemplo real y concreto, como pide el IB: un país, un año y, si puedes, un dato. Puede ser de Paraguay o de cualquier otro país.', c: ['Un ejemplo del mundo real es', 'Tal como ocurrió en', 'Según datos de', 'Un caso ilustrativo es'] }
     ],
     errs: ['Tratar el problema como una sola línea causal: eso es explicar.', 'Listar las partes sin examinarlas ni relacionarlas.', 'Colar un juicio de valor («esto es negativo para el país»): eso es evaluar.'],
-    ck: ['Definí con precisión los conceptos centrales.', 'Incluí un diagrama pertinente, rotulado y con el desplazamiento.', 'Descompuse el problema en partes claramente identificadas.', 'Examiné cada parte en su propio párrafo, con su cadena causal.', 'Usé conectores de descomposición («en primer lugar», «por un lado»).', 'Relacioné las partes entre sí (no quedó como una lista).', 'Usé conectores causales dentro de cada parte.', 'Apliqué el análisis a Paraguay con un dato, ley o ejemplo real.', 'Examiné implicaciones, no solo efectos inmediatos.', 'No emití juicios de valor (eso sería evaluar).'],
+    ck: ['Definí con precisión los conceptos centrales.', 'Incluí un diagrama pertinente, rotulado y con el desplazamiento.', 'Descompuse el problema en partes claramente identificadas.', 'Examiné cada parte en su propio párrafo, con su cadena causal.', 'Usé conectores de descomposición («en primer lugar», «por un lado»).', 'Relacioné las partes entre sí (no quedó como una lista).', 'Usé conectores causales dentro de cada parte.', 'Incluí un ejemplo del mundo real (país, año y, si es posible, un dato).', 'Examiné implicaciones, no solo efectos inmediatos.', 'No emití juicios de valor (eso sería evaluar).'],
     ex: {
       q: 'Analice los efectos de un aumento del precio internacional de la soja sobre la economía paraguaya.', p: 10, tpl: 'adas',
       s: [
@@ -4253,13 +4270,13 @@ const CMDT = {
       { n: 'Definir', g: 'Define con precisión los conceptos centrales del tema.', c: [] },
       { n: 'Diagrama', g: 'Dibuja el diagrama que mejor representa el fenómeno, rotulado. Servirá de apoyo a los argumentos.', dia: true, c: ['Como se observa en el diagrama'] },
       { n: 'Identificar las posturas', g: '¿Quiénes están a favor y quiénes en contra? ¿Qué factores o hipótesis sostiene cada lado?', c: ['El tema admite dos posiciones encontradas', 'Quienes defienden esta posición sostienen que', 'Quienes se oponen argumentan que'] },
-      { n: 'Primera postura (a favor)', g: 'Al menos dos argumentos a favor, cada uno con su cadena causal y, si puedes, un dato paraguayo.', c: ['Por un lado', 'En primer lugar', 'Quienes defienden esta posición sostienen que', 'Dado que', 'Como resultado'] },
+      { n: 'Primera postura (a favor)', g: 'Al menos dos argumentos a favor, cada uno con su cadena causal y un ejemplo del mundo real.', c: ['Por un lado', 'En primer lugar', 'Quienes defienden esta posición sostienen que', 'Dado que', 'Como resultado'] },
       { n: 'Postura opuesta (en contra)', g: 'Con un esfuerzo equivalente: al menos dos argumentos en contra o factores que cuestionan la primera postura.', c: ['Por otro lado', 'Sin embargo', 'No obstante', 'Desde otra perspectiva', 'Quienes se oponen argumentan que'] },
       { n: 'Factores y matices', g: 'Agrega plazos (corto y largo), otros agentes o supuestos que podrían no cumplirse.', c: ['Además, debe considerarse', 'Otro factor relevante es', 'Cabe plantear la hipótesis de que', 'En el corto plazo… mientras que a largo plazo', 'Bajo el supuesto de que'] },
       { n: 'Conclusión equilibrada', g: 'Pronúnciate con razones: indica qué argumentos te parecen más sólidos y por qué. No basta con «depende».', c: ['Tras sopesar ambas posiciones', 'Considerando los distintos argumentos', 'En definitiva, el argumento más sólido parece ser', 'Por todo lo expuesto, se concluye que'] }
     ],
     errs: ['Desarrollar mucho un lado y casi nada el otro: se rompe el equilibrio.', 'Concluir con un «depende» sin justificar.', 'Presentar un solo argumento por lado: el IB pide una serie de argumentos, factores o hipótesis.'],
-    ck: ['Definí con precisión los conceptos centrales.', 'Incluí un diagrama pertinente, rotulado.', 'Identifiqué claramente las dos posturas en juego.', 'Desarrollé la primera postura con al menos dos argumentos.', 'Desarrollé la postura opuesta con un esfuerzo equivalente.', 'Usé conectores de contraste («por otro lado», «sin embargo»).', 'Agregué factores o matices (plazos, agentes, supuestos).', 'Apliqué la discusión a Paraguay con un dato, ley o ejemplo real.', 'Concluí con razones (no me quedé en un «depende»).', 'La conclusión se apoya en los argumentos más sólidos.'],
+    ck: ['Definí con precisión los conceptos centrales.', 'Incluí un diagrama pertinente, rotulado.', 'Identifiqué claramente las dos posturas en juego.', 'Desarrollé la primera postura con al menos dos argumentos.', 'Desarrollé la postura opuesta con un esfuerzo equivalente.', 'Usé conectores de contraste («por otro lado», «sin embargo»).', 'Agregué factores o matices (plazos, agentes, supuestos).', 'Usé al menos un ejemplo del mundo real (país, año y, si es posible, un dato).', 'Concluí con razones (no me quedé en un «depende»).', 'La conclusión se apoya en los argumentos más sólidos.'],
     ex: {
       q: 'Discuta el uso de una política fiscal expansiva para estimular el crecimiento económico de Paraguay.', p: 15, tpl: 'adas',
       s: [
@@ -4284,13 +4301,13 @@ const CMDT = {
       { n: 'Identificar la afirmación', g: '¿Qué afirma exactamente la pregunta? ¿Que algo «controla la inflación», «estimula el crecimiento», «protege a los consumidores»? Eso es lo que vas a medir.', c: ['La pregunta afirma que', 'Lo que hay que medir es'] },
       { n: 'Definir', g: 'Define con precisión los conceptos centrales de la pregunta.', c: [] },
       { n: 'Teoría con diagrama', g: 'Dibuja el diagrama pertinente, rotulado, y explica el cambio teórico esperado.', dia: true, c: ['Como se observa en el diagrama', 'Por consiguiente'] },
-      { n: 'Tesis (a favor)', g: 'Uno o dos párrafos con argumentos que respaldan la afirmación, con teoría y datos paraguayos.', c: ['Por una parte', 'Es cierto que', 'Cabe destacar que', 'Hasta cierto punto sí, porque', 'En segundo lugar'] },
+      { n: 'Tesis (a favor)', g: 'Uno o dos párrafos con argumentos que respaldan la afirmación, con teoría y ejemplos del mundo real.', c: ['Por una parte', 'Es cierto que', 'Cabe destacar que', 'Hasta cierto punto sí, porque', 'En segundo lugar'] },
       { n: 'Antítesis (en contra)', g: 'Uno o dos párrafos con argumentos que limitan o contradicen la afirmación: efectos no deseados, restricciones, rezagos.', c: ['Sin embargo', 'No obstante', 'Por otra parte', 'Pese a ello', 'Ahora bien'] },
       { n: 'Condiciones y plazos', g: '¿Bajo qué condiciones se cumple la afirmación y bajo cuáles no? ¿Qué cambia entre el corto y el largo plazo?', c: ['Siempre que', 'A condición de que', 'En la medida en que', 'En el corto plazo', 'A largo plazo'] },
       { n: 'Conclusión con grado', g: 'Responde directamente: ¿en qué grado se cumple? Usa la escala y agrega un plazo y una condición.', grade: true, c: ['En definitiva', 'Por todo lo expuesto', 'siempre que', 'en el corto plazo', 'a largo plazo'] }
     ],
     errs: ['Responder solo con la tesis o solo con la antítesis: sin las dos no hay grado que medir.', 'Olvidar el plazo: casi toda política tiene efectos distintos en el corto y en el largo plazo.', 'Describir la política sin medir su eficacia.'],
-    ck: ['Identifiqué qué afirma la pregunta (qué hay que medir).', 'Definí con precisión los conceptos centrales.', 'Incluí un diagrama rotulado y lo expliqué.', 'Desarrollé una tesis con al menos dos argumentos.', 'Desarrollé una antítesis con al menos dos argumentos o limitaciones.', 'Apliqué el análisis a Paraguay con un dato, ley o ejemplo real.', 'Identifiqué las condiciones en que la afirmación se cumple o no.', 'Distinguí el corto y el largo plazo.', 'Usé conectores de contraste («sin embargo», «no obstante»).', 'Cerré con un GRADO claro y al menos una CONDICIÓN.'],
+    ck: ['Identifiqué qué afirma la pregunta (qué hay que medir).', 'Definí con precisión los conceptos centrales.', 'Incluí un diagrama rotulado y lo expliqué.', 'Desarrollé una tesis con al menos dos argumentos.', 'Desarrollé una antítesis con al menos dos argumentos o limitaciones.', 'Usé al menos un ejemplo del mundo real (país, año y, si es posible, un dato).', 'Identifiqué las condiciones en que la afirmación se cumple o no.', 'Distinguí el corto y el largo plazo.', 'Usé conectores de contraste («sin embargo», «no obstante»).', 'Cerré con un GRADO claro y al menos una CONDICIÓN.'],
     ex: {
       q: '¿Hasta qué punto la política monetaria contractiva del BCP es eficaz para controlar la inflación?', p: 15, tpl: 'adas',
       s: [
@@ -4306,6 +4323,7 @@ const CMDT = {
     bank: ['¿Hasta qué punto un subsidio al transporte público urbano mejora el bienestar de los consumidores en Paraguay?', '¿Hasta qué punto un precio máximo a los productos de la canasta básica protege a los consumidores de bajos ingresos?', '¿Hasta qué punto una depreciación del guaraní mejora la balanza comercial paraguaya?', '¿En qué medida la inversión pública en infraestructura vial puede acelerar el crecimiento de Paraguay a largo plazo?', '¿En qué medida la dependencia de las exportaciones de soja y carne hace vulnerable al PIB paraguayo a los shocks climáticos?', '¿En qué medida la regla de la Ley de Responsabilidad Fiscal limita la capacidad de la política fiscal paraguaya para enfrentar una recesión?', '¿Hasta qué punto la informalidad laboral reduce la eficacia de las políticas redistributivas en Paraguay?', '¿En qué medida la integración al MERCOSUR ha contribuido al crecimiento económico de Paraguay?']
   }
 };
+const RW_PLACES = ['paraguay', 'argentina', 'brasil', 'chile', 'uruguay', 'bolivia', 'peru', 'colombia', 'mexico', 'venezuela', 'ecuador', 'estados unidos', 'ee. uu', 'eeuu', 'china', 'india', 'japon', 'corea', 'alemania', 'francia', 'espana', 'reino unido', 'italia', 'suecia', 'noruega', 'canada', 'australia', 'rusia', 'ucrania', 'sudafrica', 'nigeria', 'kenia', 'union europea', 'mercosur', 'bcp', 'fed ', 'bce', 'fmi', 'banco mundial', 'oms', 'asuncion'];
 const CMDW = store.get('cmdw', {});
 const saveCMDW = () => store.set('cmdw', CMDW);
 const cmdKey = (k, i) => k + '#' + i;
@@ -4315,7 +4333,8 @@ function cmdFull(T, w) { return T.steps.map((st, j) => st.dia ? (w.s[j] ? '[Diag
 function cmdAuto(k, T, w) {
   const all = normTxt(cmdFull(T, w)), last = normTxt(w.s[T.steps.length - 1] || ''), has = (t, l) => l.some(x => t.includes(normTxt(x)));
   const fb = [], good = (m) => fb.push(['ok', m]), warn = (m) => fb.push(['no', m]);
-  if (has(all, ['paraguay', 'bcp', 'ine', 'mef', 'guarani', 'mercosur', 'itaipu'])) good('Aplicaste el tema a Paraguay.'); else warn('No aparece un ejemplo paraguayo (BCP, INE, MEF, una ley o un dato).');
+  const realEx = /(19|20)\d\d|\d+([.,]\d+)? ?%|por ejemplo|tal como ocurr|en el caso de|segun datos|un ejemplo del mundo real|caso ilustrativo/.test(all) || has(all, RW_PLACES);
+  if (realEx) good('Incluiste un ejemplo del mundo real.'); else warn('No aparece un ejemplo del mundo real: nombra un país, un año o un dato concreto.');
   if (k === 'analizar') {
     has(all, ['en primer lugar', 'en segundo lugar', 'por un lado', 'por otro lado', 'conviene distinguir']) ? good('Usaste conectores para descomponer en partes.') : warn('Faltan conectores para separar las partes («en primer lugar», «conviene distinguir…»).');
     has(all, ['se relaciona', 'a su vez', 'en conexion', 'se combinan', 'esto implica', 'implica que']) ? good('Relacionaste las partes entre sí.') : warn('No se ve la relación entre las partes («a su vez», «esto se relaciona con…»).');
@@ -4387,6 +4406,207 @@ function renderCmdWrite(k, i) {
   B.querySelectorAll('[data-c]').forEach(b => b.onclick = () => insertAtCursor(ta, b.dataset.c));
   B.querySelectorAll('[data-g]').forEach(b => b.onclick = () => insertAtCursor(ta, b.dataset.g.toLowerCase()));
   if (st.dia) sketchPad($('#cwPad'), w.dia, ops => { w.dia = ops; saveCMDW(); }, { file: 'diagrama-' + k + '-' + (i + 1) });
+}
+
+
+/* =============== 11 · Laboratorio: crea tu propio diagrama =============== */
+/* Editor de objetos en SVG: cada elemento se puede seleccionar, mover, editar y borrar. Coordenadas 0–100 dentro del área de los ejes. */
+const DB_COL = { d: ['#1F4E9E', 'Azul (demanda)'], s: ['#C0392B', 'Rojo (oferta)'], n: ['#1E8E3E', 'Verde (curva nueva)'], k: ['#14213D', 'Negro'], p: ['#6B3FA0', 'Violeta'], g: ['#6B7280', 'Gris'] };
+const DB_FILL = { con: ['rgba(240,186,30,.45)', 'Consumidor (amarillo)'], pro: ['rgba(39,174,96,.35)', 'Productor (verde)'], dwl: ['rgba(47,128,237,.35)', 'Pérdida de bienestar (celeste)'], gov: ['rgba(142,68,173,.25)', 'Gobierno: recaudación o gasto (violeta)'], tr: ['rgba(184,134,43,.32)', 'Otra área (dorado)'] };
+const DBV = { w: 800, h: 540, L: 90, T: 30, W: 660, H: 430 };
+const dbX = x => DBV.L + x / 100 * DBV.W, dbY = y => DBV.T + DBV.H - y / 100 * DBV.H;
+const L_ = (a, b, col, lab, o = {}) => Object.assign({ t: 'line', a, b, col, lab, dash: false }, o);
+const G_ = (p, xl, yl) => ({ t: 'guide', p, xl, yl });
+const P_ = (pts, fill) => ({ t: 'poly', pts, fill });
+const T_ = (p, s) => ({ t: 'text', p, s });
+const DB_TPL = {
+  blank: ['En blanco (solo ejes)', 'P', 'Q', []],
+  sd: ['Oferta y demanda', 'P', 'Q', [L_([10, 90], [90, 10], 'd', 'D'), L_([10, 10], [90, 90], 's', 'O'), G_([50, 50], 'Q*', 'P*'), { t: 'dot', p: [50, 50], lab: 'E' }]],
+  shiftD: ['Aumento de la demanda', 'P', 'Q', [L_([10, 90], [90, 10], 'd', 'D₀'), L_([25, 90], [100, 15], 'n', 'D₁'), L_([10, 10], [90, 90], 's', 'O'), G_([50, 50], 'Q₀', 'P₀'), G_([57.5, 57.5], 'Q₁', 'P₁'), { t: 'arrow', a: [68, 30], b: [80, 30], col: 'k' }]],
+  tax: ['Impuesto indirecto', 'P', 'Q', [P_([[0, 50], [40, 50], [40, 60], [0, 60]], 'con'), P_([[0, 40], [40, 40], [40, 50], [0, 50]], 'pro'), P_([[40, 60], [50, 50], [40, 40]], 'dwl'), L_([10, 90], [90, 10], 'd', 'D'), L_([10, 10], [90, 90], 's', 'O'), L_([10, 30], [75, 95], 's', 'O + impuesto'), G_([40, 60], 'Q₁', 'Pc'), G_([40, 40], '', 'Pp'), G_([50, 50], 'Q*', 'P*')]],
+  sub: ['Subsidio', 'P', 'Q', [P_([[0, 40], [60, 40], [60, 60], [0, 60]], 'gov'), P_([[50, 50], [60, 60], [60, 40]], 'dwl'), L_([10, 90], [90, 10], 'd', 'D'), L_([10, 10], [90, 90], 's', 'O'), L_([30, 10], [100, 80], 'n', 'O + subsidio'), G_([60, 40], 'Q₁', 'Pc'), G_([60, 60], '', 'Pp'), G_([50, 50], 'Q*', 'P*')]],
+  ceil: ['Precio máximo', 'P', 'Q', [L_([10, 90], [90, 10], 'd', 'D'), L_([10, 10], [90, 90], 's', 'O'), L_([0, 35], [96, 35], 'k', 'P máx'), G_([35, 35], 'Qo', ''), G_([65, 35], 'Qd', ''), G_([50, 50], 'Q*', 'P*'), T_([39, 29], 'Exceso de demanda (escasez)')]],
+  floor: ['Precio mínimo', 'P', 'Q', [L_([10, 90], [90, 10], 'd', 'D'), L_([10, 10], [90, 90], 's', 'O'), L_([0, 65], [96, 65], 'k', 'P mín'), G_([35, 65], 'Qd', ''), G_([65, 65], 'Qo', ''), G_([50, 50], 'Q*', 'P*'), T_([39, 71], 'Exceso de oferta (excedente)')]],
+  extneg: ['Externalidad negativa de producción', 'Costos y beneficios', 'Q', [P_([[40, 60], [50, 70], [50, 50]], 'dwl'), L_([10, 90], [90, 10], 'd', 'D = BMgP = BMgS'), L_([10, 10], [90, 90], 's', 'O = CMgP'), L_([0, 20], [75, 95], 's', 'CMgS', { dash: true }), G_([50, 50], 'Qm', 'Pm'), G_([40, 60], 'Q*', 'P*')]],
+  extpos: ['Externalidad positiva de consumo', 'Costos y beneficios', 'Q', [P_([[50, 50], [60, 60], [50, 70]], 'dwl'), L_([10, 90], [90, 10], 'd', 'D = BMgP'), L_([25, 95], [100, 20], 'd', 'BMgS', { dash: true }), L_([10, 10], [90, 90], 's', 'O = CMgP = CMgS'), G_([50, 50], 'Qm', 'Pm'), G_([60, 60], 'Q*', 'P*')]],
+  adas: ['DA y OA (OACP y OALP)', 'Nivel general de precios', 'PIB real (Y)', [L_([10, 90], [90, 10], 'd', 'DA'), L_([10, 10], [90, 90], 's', 'OACP'), L_([50, 2], [50, 96], 'k', 'OALP'), G_([50, 50], 'Yp', 'P')]],
+  keynes: ['DA y OA keynesiana', 'Nivel general de precios', 'PIB real (Y)', [{ t: 'curve', a: [5, 25], c: [74, 25], b: [76, 95], col: 's', lab: 'OA' }, L_([10, 85], [85, 10], 'd', 'DA'), L_([75, 2], [75, 96], 'g', 'Yfe', { dash: true })]],
+  ppc: ['Curva de posibilidades de producción', 'Bien Y', 'Bien X', [{ t: 'curve', a: [0, 85], c: [88, 88], b: [85, 0], col: 'k', lab: 'CPP' }, { t: 'dot', p: [35, 40], lab: 'A' }, { t: 'dot', p: [61, 62], lab: 'B' }, { t: 'dot', p: [80, 80], lab: 'C' }]],
+  lorenz: ['Curva de Lorenz', '% acumulado del ingreso', '% acumulado de la población', [L_([0, 0], [100, 100], 'k', 'Igualdad perfecta'), { t: 'curve', a: [0, 0], c: [85, 12], b: [100, 100], col: 'd', lab: 'Curva de Lorenz' }]],
+  tariff: ['Arancel', 'P', 'Q', [P_([[35, 25], [65, 25], [65, 35], [35, 35]], 'gov'), P_([[25, 25], [35, 35], [35, 25]], 'dwl'), P_([[65, 25], [65, 35], [75, 25]], 'dwl'), L_([10, 90], [90, 10], 'd', 'Dd'), L_([10, 10], [90, 90], 's', 'Od'), L_([0, 25], [96, 25], 'k', 'Pm'), L_([0, 35], [96, 35], 'k', 'Pm + arancel'), G_([25, 25], 'Q₁', ''), G_([35, 35], 'Q₃', ''), G_([65, 35], 'Q₄', ''), G_([75, 25], 'Q₂', '')]],
+  fx: ['Mercado de divisas (guaraní)', 'Valor del guaraní (US$ por Gs.)', 'Cantidad de guaraníes', [L_([10, 90], [90, 10], 'd', 'D Gs.'), L_([10, 10], [90, 90], 's', 'O Gs.'), G_([50, 50], 'Q₀', 'TC₀')]]
+};
+const DB_ADD = [
+  ['D', 'Curva de demanda', () => L_([10, 85], [85, 10], 'd', 'D')],
+  ['O', 'Curva de oferta', () => L_([10, 10], [85, 85], 's', 'O')],
+  ['DA', 'DA', () => L_([10, 85], [85, 10], 'd', 'DA')],
+  ['OACP', 'OACP', () => L_([10, 10], [85, 85], 's', 'OACP')],
+  ['vert', 'Línea vertical (OALP)', () => L_([60, 2], [60, 94], 'k', 'OALP')],
+  ['hor', 'Línea horizontal (precio)', () => L_([0, 30], [94, 30], 'k', 'P máx')],
+  ['curve', 'Curva', () => ({ t: 'curve', a: [10, 20], c: [70, 20], b: [80, 90], col: 'k', lab: 'Curva' })],
+  ['guide', 'Líneas guía punteadas', () => G_([45, 45], 'Q₁', 'P₁')],
+  ['dot', 'Punto', () => ({ t: 'dot', p: [50, 50], lab: 'E₁' })],
+  ['arrow', 'Flecha', () => ({ t: 'arrow', a: [40, 20], b: [55, 20], col: 'k' })],
+  ['text', 'Texto', () => T_([40, 75], 'Texto')],
+  ['tri', 'Área triangular', () => P_([[30, 40], [45, 55], [45, 40]], 'dwl')],
+  ['rect', 'Área rectangular', () => P_([[0, 30], [40, 30], [40, 45], [0, 45]], 'gov')]
+];
+const DB_NAME = { line: 'Línea o curva recta', curve: 'Curva', guide: 'Líneas guía', dot: 'Punto', arrow: 'Flecha', text: 'Texto', poly: 'Área sombreada' };
+function labBuild() {
+  const saved = store.get('diag', null);
+  const S = { d: saved || { yl: 'P', xl: 'Q', objs: JSON.parse(JSON.stringify(DB_TPL.sd[3])) }, sel: -1, hist: [], fut: [], drag: null };
+  if (!saved) { S.d.yl = DB_TPL.sd[1]; S.d.xl = DB_TPL.sd[2]; }
+  app.innerHTML = `<button class="crumb" type="button" data-go="labs">← Laboratorios</button>
+    <div class="eyebrow" style="margin-top:12px">Laboratorio libre</div><h1>Crea tu propio diagrama</h1>
+    <p class="lede">Empieza con una plantilla o con los ejes en blanco. Toca un elemento para seleccionarlo: arrastra los círculos para moverlo o cambiar su inclinación y edita su rótulo y color en el panel. Al terminar, descárgalo como imagen.</p>
+    <div class="lab dbwrap"><div class="figure"><svg id="dbs" viewBox="0 0 ${DBV.w} ${DBV.h}" role="img" aria-label="Tu diagrama"></svg></div><div class="panel" id="dbp"></div></div>`;
+  const svg = $('#dbs'), pan = $('#dbp');
+  svg.style.touchAction = 'none';
+  const NS = 'http://www.w3.org/2000/svg';
+  const mk = (tag, a, par) => { const e = document.createElementNS(NS, tag); for (const k in a) e.setAttribute(k, a[k]); if (par) par.appendChild(e); return e; };
+  const txt = (s, x, y, a, par) => { const e = mk('text', Object.assign({ x, y, 'font-family': 'Atkinson Hyperlegible, Arial, sans-serif', 'font-size': 17, fill: '#14213D' }, a), par); e.textContent = s; return e; };
+  const save = () => store.set('diag', S.d);
+  const snap = () => { S.hist.push(JSON.stringify(S.d)); if (S.hist.length > 60) S.hist.shift(); S.fut = []; };
+  const col = c => (DB_COL[c] || DB_COL.k)[0];
+  const qpt = (o, t) => [(1 - t) * (1 - t) * o.a[0] + 2 * (1 - t) * t * o.c[0] + t * t * o.b[0], (1 - t) * (1 - t) * o.a[1] + 2 * (1 - t) * t * o.c[1] + t * t * o.b[1]];
+  function labelAt(p, s, c, g) {
+    if (!s) return; const x = dbX(p[0]), y = dbY(p[1]); const right = p[0] > 88;
+    txt(s, right ? x - 6 : x + 8, y - 8, { fill: c, 'font-weight': 700, 'text-anchor': right ? 'end' : 'start' }, g);
+  }
+  function draw() {
+    svg.innerHTML = '';
+    mk('rect', { x: 0, y: 0, width: DBV.w, height: DBV.h, fill: '#FFFFFF' }, svg);
+    const gA = mk('g', {}, svg);
+    S.d.objs.forEach((o, i) => {
+      const g = mk('g', { 'data-i': i, class: 'dbo' + (i === S.sel ? ' sel' : '') }, svg);
+      if (o.t === 'poly') { mk('polygon', { points: o.pts.map(q => dbX(q[0]) + ',' + dbY(q[1])).join(' '), fill: (DB_FILL[o.fill] || DB_FILL.tr)[0], stroke: i === S.sel ? '#B8862B' : 'none', 'stroke-width': 2 }, g); }
+      else if (o.t === 'line' || o.t === 'arrow') {
+        const c = col(o.col), x1 = dbX(o.a[0]), y1 = dbY(o.a[1]), x2 = dbX(o.b[0]), y2 = dbY(o.b[1]);
+        mk('line', { x1, y1, x2, y2, stroke: 'transparent', 'stroke-width': 18 }, g);
+        mk('line', { x1, y1, x2, y2, stroke: c, 'stroke-width': o.t === 'arrow' ? 2.5 : 3.2, 'stroke-dasharray': o.dash ? '9 7' : 'none', 'stroke-linecap': 'round' }, g);
+        if (o.t === 'arrow') { const an = Math.atan2(y2 - y1, x2 - x1), L = 13; mk('polygon', { points: `${x2},${y2} ${x2 - L * Math.cos(an - .42)},${y2 - L * Math.sin(an - .42)} ${x2 - L * Math.cos(an + .42)},${y2 - L * Math.sin(an + .42)}`, fill: c }, g); }
+        else labelAt(o.b, o.lab, c, g);
+      } else if (o.t === 'curve') {
+        const c = col(o.col), d = `M${dbX(o.a[0])},${dbY(o.a[1])} Q${dbX(o.c[0])},${dbY(o.c[1])} ${dbX(o.b[0])},${dbY(o.b[1])}`;
+        mk('path', { d, fill: 'none', stroke: 'transparent', 'stroke-width': 18 }, g);
+        mk('path', { d, fill: 'none', stroke: c, 'stroke-width': 3.2, 'stroke-dasharray': o.dash ? '9 7' : 'none' }, g);
+        labelAt(o.b, o.lab, c, g);
+      } else if (o.t === 'guide') {
+        const x = dbX(o.p[0]), y = dbY(o.p[1]);
+        mk('path', { d: `M${dbX(0)},${y} H${x} V${dbY(0)}`, fill: 'none', stroke: '#6B7280', 'stroke-width': 1.6, 'stroke-dasharray': '5 5' }, g);
+        mk('circle', { cx: x, cy: y, r: 9, fill: 'transparent' }, g);
+        if (o.xl) txt(o.xl, x, dbY(0) + 22, { 'text-anchor': 'middle', 'font-size': 16 }, g);
+        if (o.yl) txt(o.yl, dbX(0) - 8, y + 5, { 'text-anchor': 'end', 'font-size': 16 }, g);
+      } else if (o.t === 'dot') {
+        const x = dbX(o.p[0]), y = dbY(o.p[1]);
+        mk('circle', { cx: x, cy: y, r: 12, fill: 'transparent' }, g); mk('circle', { cx: x, cy: y, r: 5.5, fill: '#14213D' }, g);
+        if (o.lab) txt(o.lab, x + 9, y - 9, { 'font-weight': 700 }, g);
+      } else if (o.t === 'text') {
+        const t = txt(o.s, dbX(o.p[0]), dbY(o.p[1]), { 'font-size': o.size || 16, fill: col(o.col || 'k') }, g);
+        if (i === S.sel) { const bb = t.getBBox(); mk('rect', { x: bb.x - 4, y: bb.y - 3, width: bb.width + 8, height: bb.height + 6, fill: 'none', stroke: '#B8862B', 'stroke-dasharray': '4 3' }, g); }
+      }
+    });
+    // ejes por encima de las áreas
+    mk('path', { d: `M${dbX(0)},${dbY(100)} V${dbY(0)} H${dbX(100)}`, fill: 'none', stroke: '#14213D', 'stroke-width': 2.6 }, gA);
+    svg.appendChild(gA);
+    txt(S.d.yl, dbX(0) + 10, DBV.T + 6, { 'font-size': 17, 'font-weight': 600 }, svg);
+    txt(S.d.xl, dbX(100), dbY(0) + 44, { 'font-size': 17, 'font-weight': 600, 'text-anchor': 'end' }, svg);
+    txt('0', dbX(0) - 10, dbY(0) + 20, { 'text-anchor': 'end', 'font-size': 16 }, svg);
+    // manijas del elemento seleccionado
+    const o = S.d.objs[S.sel];
+    if (o) handles(o).forEach(([key, p]) => mk('circle', { cx: dbX(p[0]), cy: dbY(p[1]), r: 9, fill: '#FFFFFF', stroke: '#B8862B', 'stroke-width': 3, class: 'dbh', 'data-h': key }, svg));
+  }
+  function handles(o) {
+    if (o.t === 'line' || o.t === 'arrow') return [['a', o.a], ['b', o.b]];
+    if (o.t === 'curve') return [['a', o.a], ['c', o.c], ['b', o.b]];
+    if (o.t === 'poly') return o.pts.map((q, j) => ['v' + j, q]);
+    if (o.t === 'guide' || o.t === 'dot' || o.t === 'text') return [['p', o.p]];
+    return [];
+  }
+  const toData = e => { const pt = svg.createSVGPoint(); pt.x = e.clientX; pt.y = e.clientY; const p = pt.matrixTransform(svg.getScreenCTM().inverse()); return [(p.x - DBV.L) / DBV.W * 100, (DBV.T + DBV.H - p.y) / DBV.H * 100]; };
+  const clamp = v => Math.round(Math.max(-8, Math.min(108, v)) * 2) / 2;
+  function movePts(o, dx, dy, base) {
+    const sh = q => [clamp(q[0] + dx), clamp(q[1] + dy)];
+    if (o.a) o.a = sh(base.a); if (o.b) o.b = sh(base.b); if (o.c) o.c = sh(base.c); if (o.p) o.p = sh(base.p); if (o.pts) o.pts = base.pts.map(sh);
+  }
+  svg.onpointerdown = e => {
+    const h = e.target.closest('.dbh'), g = e.target.closest('.dbo'), p = toData(e);
+    if (h) { snap(); S.drag = { kind: 'h', key: h.dataset.h }; }
+    else if (g) { const i = +g.dataset.i; S.sel = i; snap(); S.drag = { kind: 'm', p0: p, base: JSON.parse(JSON.stringify(S.d.objs[i])), moved: false }; }
+    else { S.sel = -1; S.drag = null; }
+    try { svg.setPointerCapture(e.pointerId); } catch (er) { }
+    e.preventDefault(); draw(); props();
+  };
+  svg.onpointermove = e => {
+    if (!S.drag) return; const o = S.d.objs[S.sel]; if (!o) return; const p = toData(e);
+    if (S.drag.kind === 'h') { const k = S.drag.key, q = [clamp(p[0]), clamp(p[1])]; if (k[0] === 'v') o.pts[+k.slice(1)] = q; else o[k] = q; }
+    else { S.drag.moved = true; movePts(o, p[0] - S.drag.p0[0], p[1] - S.drag.p0[1], S.drag.base); }
+    draw();
+  };
+  svg.onpointerup = svg.onpointercancel = () => { if (S.drag && S.drag.kind === 'm' && !S.drag.moved) S.hist.pop(); S.drag = null; save(); props(); };
+  const sel = () => S.d.objs[S.sel];
+  function props() {
+    const o = sel(), box = $('#dbProps', pan); if (!box) return;
+    if (!o) { box.innerHTML = '<p class="small muted">Toca un elemento del diagrama para editarlo.</p>'; return; }
+    const colSel = (k, v) => `<label class="dbf"><span>Color</span><select data-k="${k}">${Object.entries(DB_COL).map(([c, [, n]]) => `<option value="${c}" ${c === v ? 'selected' : ''}>${n}</option>`).join('')}</select></label>`;
+    let f = '';
+    if (o.t === 'line' || o.t === 'curve') f = `<label class="dbf"><span>Rótulo</span><input class="inp" data-k="lab" value="${esc(o.lab || '')}" maxlength="30"></label>${colSel('col', o.col)}<label class="dbf chk"><input type="checkbox" data-k="dash" ${o.dash ? 'checked' : ''}> Línea punteada</label>`;
+    if (o.t === 'arrow') f = colSel('col', o.col);
+    if (o.t === 'guide') f = `<label class="dbf"><span>Rótulo en el eje horizontal</span><input class="inp" data-k="xl" value="${esc(o.xl || '')}" maxlength="14"></label><label class="dbf"><span>Rótulo en el eje vertical</span><input class="inp" data-k="yl" value="${esc(o.yl || '')}" maxlength="14"></label>`;
+    if (o.t === 'dot') f = `<label class="dbf"><span>Rótulo</span><input class="inp" data-k="lab" value="${esc(o.lab || '')}" maxlength="14"></label>`;
+    if (o.t === 'text') f = `<label class="dbf"><span>Texto</span><input class="inp" data-k="s" value="${esc(o.s || '')}" maxlength="60"></label>${colSel('col', o.col || 'k')}<label class="dbf"><span>Tamaño</span><select data-k="size">${[14, 16, 19, 23].map(v => `<option value="${v}" ${(o.size || 16) === v ? 'selected' : ''}>${v}</option>`).join('')}</select></label>`;
+    if (o.t === 'poly') f = `<label class="dbf"><span>Tipo de área</span><select data-k="fill">${Object.entries(DB_FILL).map(([c, [, n]]) => `<option value="${c}" ${c === o.fill ? 'selected' : ''}>${n}</option>`).join('')}</select></label>`;
+    box.innerHTML = `<p class="small" style="margin:0 0 6px"><b>${DB_NAME[o.t]}</b> seleccionado</p>${f}
+      <div class="row subs">${['₀', '₁', '₂', '₃', '*'].map(s => `<button class="btn sm" type="button" data-sub="${s}" title="Agregar al rótulo">${s}</button>`).join('')}</div>
+      <div class="row" style="margin-top:8px"><button class="btn sm" type="button" id="dbDup">Duplicar</button><button class="btn sm" type="button" id="dbDel">Eliminar</button></div>`;
+    let lastInp = box.querySelector('input.inp');
+    box.querySelectorAll('[data-k]').forEach(inp => {
+      const k = inp.dataset.k;
+      const ev = inp.type === 'checkbox' || inp.tagName === 'SELECT' ? 'onchange' : 'oninput';
+      if (inp.classList.contains('inp')) inp.onfocus = () => { lastInp = inp; };
+      inp.onfocus = inp.onfocus || null;
+      inp[ev] = () => { if (!inp._s) { snap(); inp._s = 1; } o[k] = inp.type === 'checkbox' ? inp.checked : k === 'size' ? +inp.value : inp.value; draw(); save(); };
+      inp.onblur = () => { inp._s = 0; };
+    });
+    box.querySelectorAll('[data-sub]').forEach(b => b.onclick = () => { if (!lastInp) return; lastInp.value += b.dataset.sub; lastInp.dispatchEvent(new Event('input')); lastInp._s = 0; });
+    $('#dbDup', box).onclick = () => { snap(); const c = JSON.parse(JSON.stringify(o)); movePts(c, 4, -4, JSON.parse(JSON.stringify(o))); S.d.objs.push(c); S.sel = S.d.objs.length - 1; draw(); props(); save(); };
+    $('#dbDel', box).onclick = () => { snap(); S.d.objs.splice(S.sel, 1); S.sel = -1; draw(); props(); save(); };
+  }
+  pan.innerHTML = `
+    <div class="ctl"><span class="lbl">1 · Plantilla</span><div class="row"><select id="dbTpl" class="inp" style="flex:1;min-width:0">${Object.entries(DB_TPL).map(([k, v]) => `<option value="${k}">${v[0]}</option>`).join('')}</select><button class="btn sm primary" type="button" id="dbLoad">Usar</button></div><p class="small muted" style="margin:4px 0 0">Reemplaza el diagrama actual. Si te equivocas, usa Deshacer.</p></div>
+    <div class="ctl"><span class="lbl">2 · Agregar elementos</span><div class="dbadd">${DB_ADD.map(([k, n]) => `<button class="btn sm" type="button" data-add="${k}">${n}</button>`).join('')}</div></div>
+    <div class="ctl"><span class="lbl">3 · Elemento seleccionado</span><div id="dbProps"></div></div>
+    <div class="ctl"><span class="lbl">Rótulos de los ejes</span><label class="dbf"><span>Eje vertical</span><input class="inp" id="dbYl" maxlength="40"></label><label class="dbf"><span>Eje horizontal</span><input class="inp" id="dbXl" maxlength="40"></label></div>
+    <div class="ctl"><div class="row"><button class="btn sm" type="button" id="dbUndo">Deshacer</button><button class="btn sm" type="button" id="dbRedo">Rehacer</button><button class="btn sm" type="button" id="dbClr">Vaciar</button><button class="btn sm primary" type="button" id="dbPng">Descargar imagen</button></div>
+      <label class="dbf" style="margin-top:8px"><span>Nombre del archivo</span><input class="inp" id="dbName" maxlength="40" value="${esc(store.get('diagName', 'mi-diagrama'))}"></label></div>`;
+  const axesInputs = () => { $('#dbYl').value = S.d.yl; $('#dbXl').value = S.d.xl; };
+  axesInputs();
+  $('#dbYl').oninput = e => { S.d.yl = e.target.value; draw(); save(); };
+  $('#dbXl').oninput = e => { S.d.xl = e.target.value; draw(); save(); };
+  $('#dbLoad').onclick = () => { const t = DB_TPL[$('#dbTpl').value]; snap(); S.d = { yl: t[1], xl: t[2], objs: JSON.parse(JSON.stringify(t[3])) }; S.sel = -1; axesInputs(); draw(); props(); save(); };
+  pan.querySelectorAll('[data-add]').forEach(b => b.onclick = () => { snap(); S.d.objs.push(DB_ADD.find(x => x[0] === b.dataset.add)[2]()); S.sel = S.d.objs.length - 1; draw(); props(); save(); });
+  $('#dbUndo').onclick = () => { if (!S.hist.length) return; S.fut.push(JSON.stringify(S.d)); S.d = JSON.parse(S.hist.pop()); S.sel = -1; axesInputs(); draw(); props(); save(); };
+  $('#dbRedo').onclick = () => { if (!S.fut.length) return; S.hist.push(JSON.stringify(S.d)); S.d = JSON.parse(S.fut.pop()); S.sel = -1; axesInputs(); draw(); props(); save(); };
+  $('#dbClr').onclick = () => { snap(); S.d.objs = []; S.sel = -1; draw(); props(); save(); };
+  $('#dbName').oninput = e => store.set('diagName', e.target.value);
+  $('#dbPng').onclick = () => {
+    const keep = S.sel; S.sel = -1; draw();
+    const cl = svg.cloneNode(true); cl.setAttribute('xmlns', 'http://www.w3.org/2000/svg'); cl.setAttribute('width', DBV.w); cl.setAttribute('height', DBV.h); cl.removeAttribute('style'); cl.removeAttribute('id');
+    const xml = new XMLSerializer().serializeToString(cl);
+    S.sel = keep; draw();
+    const img = new Image();
+    img.onload = () => {
+      const c = document.createElement('canvas'), k = 2; c.width = DBV.w * k; c.height = DBV.h * k;
+      const cx = c.getContext('2d'); cx.scale(k, k); cx.drawImage(img, 0, 0);
+      const a = document.createElement('a'); a.href = c.toDataURL('image/png');
+      a.download = (($('#dbName').value || 'mi-diagrama').trim().replace(/[^\wáéíóúñÁÉÍÓÚÑ -]+/g, '').replace(/\s+/g, '-') || 'mi-diagrama') + '.png';
+      document.body.appendChild(a); a.click(); a.remove();
+    };
+    img.onerror = () => { $('#dbPng').textContent = 'No se pudo generar la imagen'; };
+    img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(xml);
+  };
+  document.onkeydown = e => { if ((e.key === 'Delete' || e.key === 'Backspace') && S.sel >= 0 && !/INPUT|TEXTAREA|SELECT/.test((document.activeElement || {}).tagName || '')) { e.preventDefault(); snap(); S.d.objs.splice(S.sel, 1); S.sel = -1; draw(); props(); save(); } };
+  draw(); props();
 }
 
 render();
