@@ -505,6 +505,42 @@ body.docked{padding-bottom:190px}
 .eicr{display:grid;gap:14px}
 .eicrow > div:first-child{margin-bottom:6px}
 @media (max-width:860px){.eicrit{grid-template-columns:repeat(3,minmax(0,1fr))}.eigrid,.kcgrid{grid-template-columns:1fr}}
+/* v9: EI respaldo, planificador, validador, modelos */
+.eiacts{margin:14px 0 22px}
+.bkbox{margin-top:22px;max-width:820px}
+.tscroll{overflow-x:auto;max-width:100%}
+.dtab.plan td,.dtab.plan th{text-align:left;vertical-align:middle}
+.dtab.plan .inp{padding:5px 7px;max-width:160px}
+.warnc{color:var(--bad);font-weight:700;font-size:12.5px}
+td.late{color:var(--bad);font-weight:700}td.soon{color:var(--warn-ink);font-weight:700;background:var(--warn-bg)}
+.kcmap{display:flex;flex-wrap:wrap;gap:6px}
+.kcm{border:1px solid var(--rule);border-radius:99px;padding:3px 10px;font-size:13px;color:var(--muted)}
+.kcm.on{border-color:var(--ok);background:var(--ok-bg);color:var(--ink)}.kcm.dup{border-color:var(--bad);background:var(--bad-bg);color:var(--ink)}
+.declc{display:flex;gap:10px;align-items:flex-start;font-size:15.5px;background:var(--paper);border:1px solid var(--rule);border-radius:7px;padding:10px 12px}
+.declc input{margin-top:4px;accent-color:var(--ok)}
+.vwrap{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:18px;align-items:start}
+.vqs{display:grid;gap:12px}
+.vq{background:var(--sheet);border:1px solid var(--rule);border-radius:var(--r);padding:12px 14px;display:grid;gap:8px}
+.vopts{display:flex;flex-wrap:wrap;gap:6px}
+.vopt{border:1.5px solid var(--rule);background:var(--paper);border-radius:7px;padding:6px 10px;font-size:14px;text-align:left;color:var(--ink)}
+.vopt.sel{border-color:var(--navy-2);background:var(--navy-2);color:#fff}
+.vres{position:sticky;top:72px;background:var(--sheet);border:1.5px solid var(--rule);border-radius:var(--r);padding:14px 16px}
+.vres h3{margin:8px 0 2px}
+.light{display:flex;gap:8px}.light i{width:22px;height:22px;border-radius:50%;background:var(--grid);display:block}
+.vres.red .light .r{background:#C0392B}.vres.yel .light .y{background:#E2A13B}.vres.grn .light .g{background:#1E8E3E}
+.vres.red{border-color:#C0392B}.vres.yel{border-color:#E2A13B}.vres.grn{border-color:#1E8E3E}
+.autofb.yel li.no{background:var(--warn-bg);border-color:var(--warn-bd)}
+.autofb.yel li.no::before{content:'~ ';color:var(--warn-ink)}
+.vres .autofb{margin-top:8px}
+.eicover{max-width:900px}.eicover th{width:200px}.eicover td{text-align:left}
+.mrow2{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:16px;margin:12px 0;max-width:1100px;align-items:start}
+.mtext{background:var(--sheet);border:1px solid var(--rule);border-radius:var(--r);padding:12px 16px}
+.mtext p{margin:6px 0;line-height:1.65}
+.mtag{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.annn{font-size:13.5px;line-height:1.4;margin-bottom:8px;display:flex;gap:8px;align-items:flex-start}
+.ann{display:inline-grid;place-items:center;min-width:22px;height:22px;border-radius:5px;font-family:var(--f-display);font-weight:700;font-size:14px;color:#fff;flex:none}
+.ann.aA{background:#1F4E9E}.ann.aB{background:#6B3FA0}.ann.aC{background:#1E8E3E}.ann.aD{background:#B8862B}.ann.aE{background:#C0392B}
+@media (max-width:860px){.vwrap,.mrow2{grid-template-columns:1fr}.vres{position:static}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
@@ -1472,6 +1508,9 @@ function render() {
   if (route === 'escribir-p1') { setNav('escribir'); return renderP1(); }
   if (route === 'escribir-ei') { setNav('escribir'); return renderEIHome(); }
   if (/^ei-[234]$/.test(route)) { setNav('escribir'); return renderEI(+route.slice(3)); }
+  if (route === 'ei-articulo') { setNav('escribir'); return renderEIArticle(); }
+  if (route === 'ei-modelos') { setNav('escribir'); return renderEIModels(); }
+  if (/^ei-modelo-[234]$/.test(route)) { setNav('escribir'); return renderEIModel(+route.slice(10)); }
   if (route === 'escribir-analizar') { setNav('escribir'); return renderCmd('analizar'); }
   if (route === 'escribir-discutir') { setNav('escribir'); return renderCmd('discutir'); }
   if (route === 'escribir-hqp') { setNav('escribir'); return renderCmd('hqp'); }
@@ -3095,7 +3134,8 @@ function renderReport() {
     <div class="essentials repform"><div><label class="lbl2" for="rname">Nombre y apellido</label><input id="rname" class="inp" autocomplete="name" value="${esc(store.get('alumno', ''))}"></div>
       <div><label class="lbl2" for="rcurso">Curso o sección</label><input id="rcurso" class="inp" value="${esc(store.get('curso', ''))}"></div></div>
     <h3 style="margin-top:18px">Vista previa</h3><pre class="answer rep" id="rtxt"></pre>
-    <div class="row" style="margin-top:10px">${formConf() ? '<button class="btn primary" type="button" id="rsend">Enviar a mi profesor</button>' : ''}<button class="btn ${formConf() ? '' : 'primary'}" type="button" id="rcp">Copiar reporte</button><span class="small muted">El reporte se arma con lo que hiciste en este dispositivo.${store.get('sent', '') ? ' Último envío: ' + esc(store.get('sent', '')) + '.' : ''}</span></div><div id="rsout" style="margin-top:10px"></div>`;
+    <div class="row" style="margin-top:10px">${formConf() ? '<button class="btn primary" type="button" id="rsend">Enviar a mi profesor</button>' : ''}<button class="btn ${formConf() ? '' : 'primary'}" type="button" id="rcp">Copiar reporte</button><span class="small muted">El reporte se arma con lo que hiciste en este dispositivo.${store.get('sent', '') ? ' Último envío: ' + esc(store.get('sent', '')) + '.' : ''}</span></div><div id="rsout" style="margin-top:10px"></div>${backupBox('bkR')}`;
+  bindBackup('bkR');
   const sb = $('#rsend'); if (sb) sb.onclick = () => sendReport(sb, $('#rsout'));
   const upd = () => { $('#rtxt').textContent = reportText(); };
   $('#rname').oninput = e => { store.set('alumno', e.target.value); upd(); };
@@ -4691,21 +4731,25 @@ function renderEIHome() {
     <div class="method"><div><b>La carpeta · 30 % de la nota (NM)</b><p>Tres comentarios de hasta <b>800 palabras</b> sobre artículos de prensa: uno de <b>Microeconomía</b>, uno de <b>Macroeconomía</b> y uno de <b>Economía global</b>. Total: 45 puntos.</p></div>
       <div><b>Requisitos</b><p>Artículo de <b>menos de un año</b> al momento de escribir; una <b>fuente distinta</b> por comentario; un <b>concepto clave distinto</b> en cada uno; periódico, revista o sitio de noticias (no televisión ni radio).</p></div>
       <div><b>No cuentan en las 800 palabras</b><p>Diagramas, sus rótulos (hasta 5 palabras) y títulos (hasta 10), tablas de datos, fórmulas y cálculos, citas y referencias.</p></div></div>
+    <div class="row eiacts"><button class="btn primary" type="button" data-go="ei-articulo">¿Sirve mi artículo? Valídalo antes de escribir</button><button class="btn" type="button" data-go="ei-modelos">Ver comentarios modelo anotados</button></div>
     <h2>Criterios de cada comentario · 14 puntos</h2>
     <div class="eicrit">${EI_CRIT.map(([k, n, m]) => `<div><b>${k}</b><span>${n}</span><i>${m} p</i></div>`).join('')}<div><b>F</b><span>Requisitos de la carpeta</span><i>3 p</i></div></div>
     <h2 style="margin-top:22px">Mi carpeta</h2>
     <div class="tiles games">${Object.entries(EI_UNITS).map(([u, n]) => { const w = EIS.s[u], st = eiStarted(u), wds = w ? eiWords(w) : 0; return `<button class="tile" type="button" data-go="ei-${u}"><span class="code">${u}</span><span class="nm">Comentario de ${n}</span><span class="ds">${st ? esc(w.title || 'Sin título') + (w.kc ? ' · ' + KC[w.kc] : '') : 'Sin empezar'}</span><span class="ft">${st ? `<span class="tag ${wds > 800 ? '' : 'prog'}">${wds}/800 palabras</span><span class="tag">${eiScore(u)}/14</span>` : '<span class="tag">Empezar</span>'}</span></button>`; }).join('')}</div>
+    ${eiPlanner()}
     <div class="fb info" style="margin-top:14px"><b class="h">Estimación de la carpeta: ${tot}/45</b>${F.msg}<br><span class="small">Autoevaluación orientativa: la nota la pone tu profesor y la modera el IB.</span></div>
     <h2 style="margin-top:22px">Cómo repartir las 800 palabras</h2>
     <table class="dtab eibud"><thead><tr><th>Bloque</th><th>Qué escribir</th><th>Palabras</th></tr></thead><tbody>${EI_BLOCKS.map(b => `<tr><th scope="row">${b.n}</th><td>${b.g}</td><td>${b.bud || 'No cuenta'}</td></tr>`).join('')}<tr><th scope="row">Margen</th><td>Colchón para revisar sin pasarte.</td><td>50</td></tr></tbody></table>
-    <p class="small muted">Reparto tomado de la guía «El Arte de la Síntesis» de tu profesor.</p>`;
+    <p class="small muted">Reparto tomado de la guía «El Arte de la Síntesis» de tu profesor.</p>
+    ${backupBox('bkE')}`;
+  bindPlanner(); bindBackup('bkE');
 }
 function eiHead(u) { return `<button class="crumb" type="button" data-go="escribir-ei">← Mi carpeta</button><div class="eyebrow" style="margin-top:12px">Evaluación Interna · Unidad ${u}</div><h1 style="margin-bottom:6px">Comentario de ${EI_UNITS[u]}</h1>`; }
 function renderEI(u) {
-  const w = eiSlot(u), steps = ['Artículo y portada', ...EI_BLOCKS.map(b => b.n), 'Revisar'], n = steps.length - 1;
+  const w = eiSlot(u), steps = ['Artículo y portada', ...EI_BLOCKS.map(b => b.n), 'Declaración', 'Revisar'], n = steps.length - 1;
   if (w.st > n) w.st = n;
   const words = eiWords(w);
-  const doneF = [!!(w.title && w.source && w.pub && w.kc), ...EI_BLOCKS.map(b => b.k === 'dia' ? padUsed(w.dia) : !!(w.txt[b.k] || '').trim()), !!Object.keys(w.cr).length];
+  const doneF = [!!(w.title && w.source && w.pub && w.kc), ...EI_BLOCKS.map(b => b.k === 'dia' ? padUsed(w.dia) : !!(w.txt[b.k] || '').trim()), !!(w.decl || {}).ok, !!Object.keys(w.cr).length];
   app.innerHTML = eiHead(u) + `
     <div class="simbar"><span>Palabras: <b id="eiW" class="${words > 800 ? 'over' : ''}">${words}</b>/800</span>${w.kc ? `<span>Concepto: <b>${KC[w.kc]}</b></span>` : ''}<span>Estimado: <b>${eiScore(u)}</b>/14</span></div>
     ${stepper(steps, w.st, doneF, true)}
@@ -4742,6 +4786,7 @@ function renderEI(u) {
     val(); return;
   }
   if (w.st === n) return eiReview(u, B);
+  if (w.st === n - 1) return eiDecl(u, B);
   const blk = EI_BLOCKS[w.st - 1];
   if (blk.k === 'dia') {
     B.innerHTML = `<p class="q">${blk.g}</p><label class="dbf"><span>Título del diagrama</span><input class="inp" id="eiDT" value="${esc(w.diaT)}" maxlength="90" placeholder="Ej.: Efecto del aumento del gasoil en el mercado del pan en Paraguay"></label>
@@ -4779,21 +4824,261 @@ function eiReview(u, B) {
   fb.push(/en definitiva|por todo lo expuesto|se puede concluir|en ultima instancia|en conclusion/.test(ev) ? ['ok', 'Hay una conclusión.'] : ['no', 'Cierra la evaluación con una conclusión («En definitiva…»).']);
   if (c.kcDup) fb.push(['no', 'El concepto clave se repite con otro comentario: el criterio D sería 0.']);
   if (w.pub && !c.dateOk) fb.push(['no', 'La fecha del artículo no cumple el límite de un año.']);
+  fb.push((w.decl || {}).ok ? ['ok', 'Completaste la declaración de autoría' + ((w.decl || {}).ai === 'si' ? ' e informaste el uso de IA.' : '.')] : ['no', 'Falta la declaración de autoría y uso de IA (paso anterior).']);
   const ck5 = ['<b>Límite.</b> 800 palabras o menos, con un pequeño margen.', '<b>Un solo tema.</b> Me mantuve en una unidad del programa.', '<b>Diagrama vivo.</b> Título, ejes con variables del artículo, curvas y puntos rotulados, y lo cito en el texto.', '<b>Explica ≠ Evalúa.</b> La explicación dice por qué; la evaluación emite un juicio con dos ejes.', '<b>Concepto y fuente.</b> Nombré y expliqué el concepto clave; el artículo tiene menos de un año y la fuente es válida.'];
   const cover = `Título del artículo: ${w.title}\nFuente: ${w.source}${w.url ? ' (' + w.url + ')' : ''}\nFecha de publicación: ${w.pub}${w.acc ? '\nFecha de consulta: ' + w.acc : ''}\nFecha de redacción del comentario: ${w.red}\nCómputo de palabras: ${words}\nUnidad del programa: Unidad ${u} · ${EI_UNITS[u]}\nConcepto clave: ${w.kc ? KC[w.kc] : '—'}`;
-  const full = cover + '\n\n' + (w.txt.intro || '') + '\n\n[Diagrama: ' + (w.diaT || 'sin título') + ']\n\n' + (w.txt.exp || '') + '\n\n' + (w.txt.eva || '');
+  const full = cover + '\n\n' + (w.txt.intro || '') + '\n\n[Diagrama: ' + (w.diaT || 'sin título') + ']\n\n' + (w.txt.exp || '') + '\n\n' + (w.txt.eva || '') + '\n\n' + eiDeclText(w);
   B.innerHTML = `<h3 style="margin-top:0">Revisión automática</h3><ul class="autofb">${fb.map(([cl, m]) => `<li class="${cl}">${m}</li>`).join('')}</ul>
     <p class="small muted">Busca palabras y conectores; no evalúa si tu economía es correcta.</p>
     <h3>Los 5 controles antes de entregar</h3>${checklistHtml(ck5, w.ck, 'eick')}
     <h3>Autoevaluación con los criterios</h3>
     <div class="eicr">${EI_CRIT.map(([k, nm, mx, ds]) => `<div class="eicrow"><div><b>${k} · ${nm}</b>${k === 'D' && c.kcDup ? ' <span class="tag">0 por concepto repetido</span>' : ''}</div><div class="bands" data-cr="${k}">${ds.map((d, v) => `<div class="band ${w.cr[k] === v ? 'on' : ''}"><div class="bn"><button type="button" class="bnum ${w.cr[k] === v ? 'sel' : ''}" data-v="${v}">${v}</button></div><p>${d}</p></div>`).join('')}</div></div>`).join('')}</div>
     <div class="fb info" style="margin-top:12px"><b class="h">Estimado de este comentario: ${eiScore(u)}/14</b>Más el criterio F de la carpeta (hasta 3 puntos). Autoevaluación orientativa.</div>
-    <div class="row" style="margin-top:12px"><button class="btn primary" type="button" id="eiCp">Copiar el comentario con su portada</button></div>
+    <div class="row" style="margin-top:12px"><button class="btn primary" type="button" id="eiDoc">Descargar en Word (.docx)</button><button class="btn" type="button" id="eiCp">Copiar el comentario con su portada</button></div>
+    <p class="small muted">El Word incluye la portada, el texto, el diagrama y la declaración. Ábrelo en Word o súbelo a Google Docs para el formato final.</p>
     ${padUsed(w.dia) ? '<h4>Tu diagrama</h4><div id="eiRO"></div>' : ''}`;
   bindChecklist(B, 'eick', ck5, w.ck, saveEI);
   B.querySelectorAll('[data-cr]').forEach(g => g.querySelectorAll('.bnum').forEach(b => b.onclick = () => { w.cr[g.dataset.cr] = +b.dataset.v; saveEI(); const y = window.scrollY; renderEI(u); window.scrollTo(0, y); }));
   $('#eiCp').onclick = e => copyText(full, e.currentTarget);
+  $('#eiDoc').onclick = e => eiDocx(u, e.currentTarget);
   if (padUsed(w.dia)) sketchPad($('#eiRO'), w.dia, null, { readOnly: true, file: 'EI-unidad-' + u });
+}
+
+
+/* =============== 13 · EI: respaldo, Word, planificador, declaración, validador y modelos =============== */
+/* Fechas límite fijadas por el profesor (formato 'AAAA-MM-DD'). Si quedan vacías, cada alumno pone las suyas. */
+const EI_FECHAS = { 2: '', 3: '', 4: '' };
+let DOCX_P = null;
+function loadDocx() {
+  if (window.docx) return Promise.resolve(window.docx);
+  if (!DOCX_P) DOCX_P = new Promise((res, rej) => { const s = document.createElement('script'); s.src = 'vendor/docx-8.5.0.min.js'; s.onload = () => res(window.docx); s.onerror = () => { DOCX_P = null; rej(new Error('No se pudo cargar el generador de Word')); }; document.head.appendChild(s); });
+  return DOCX_P;
+}
+function padPNG(ops, width = 900) {
+  const box = document.createElement('div'); box.style.cssText = `position:absolute;left:-10000px;top:0;width:${width}px`;
+  document.body.appendChild(box); sketchPad(box, ops, null, { readOnly: true });
+  const cv = box.querySelector('canvas'), url = cv.toDataURL('image/png'), h = Math.round(width * .62); box.remove();
+  const bin = atob(url.split(',')[1]), bytes = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+  return { bytes, w: width, h };
+}
+function saveBlob(blob, name) { const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name; document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 500); }
+const fileSafe = s => String(s || '').trim().replace(/[^\wáéíóúñÁÉÍÓÚÑ -]+/g, '').replace(/\s+/g, '-').slice(0, 40);
+function eiDeclText(w) {
+  const d = w.decl || {};
+  if (!d.ok) return 'Declaración de autoría: pendiente.';
+  let t = 'Declaración de autoría: declaro que este comentario es mi trabajo original, que elegí el artículo y que cité todas las fuentes que utilicé.';
+  t += d.ai === 'si' ? ` Uso de inteligencia artificial: sí. Herramienta: ${d.tool || '—'}. Para: ${(d.uses || []).join(', ') || '—'}. ${d.how ? 'Detalle: ' + d.how : ''}` : ' Uso de inteligencia artificial: no utilicé herramientas de IA.';
+  return t;
+}
+async function eiDocx(u, btn) {
+  const w = eiSlot(u), o = btn.textContent; btn.disabled = true; btn.textContent = 'Generando…';
+  try {
+    const D = await loadDocx();
+    const { Document, Packer, Paragraph, TextRun, ImageRun, Table, TableRow, TableCell, WidthType, AlignmentType, HeadingLevel, BorderStyle } = D;
+    const words = eiWords(w);
+    const row = (k, v) => new TableRow({ children: [new TableCell({ width: { size: 34, type: WidthType.PERCENTAGE }, children: [new Paragraph({ children: [new TextRun({ text: k, bold: true, size: 20 })] })] }), new TableCell({ width: { size: 66, type: WidthType.PERCENTAGE }, children: [new Paragraph({ children: [new TextRun({ text: v || '—', size: 20 })] })] })] });
+    const para = t => String(t || '').split(/\n+/).filter(x => x.trim()).map(x => new Paragraph({ spacing: { after: 160, line: 300 }, children: [new TextRun({ text: x.trim(), size: 24 })] }));
+    const kids = [
+      new Paragraph({ heading: HeadingLevel.HEADING_1, children: [new TextRun({ text: `Comentario de Evaluación Interna · Unidad ${u}: ${EI_UNITS[u]}`, bold: true })] }),
+      new Table({ width: { size: 100, type: WidthType.PERCENTAGE }, rows: [row('Título del artículo', w.title), row('Fuente', w.source + (w.url ? ` (${w.url})` : '')), row('Fecha de publicación', w.pub), row('Fecha de consulta', w.acc), row('Fecha de redacción del comentario', w.red), row('Cómputo de palabras', String(words)), row('Unidad del programa', `Unidad ${u} · ${EI_UNITS[u]}`), row('Concepto clave', w.kc ? KC[w.kc] : '')] }),
+      new Paragraph({ text: '' }),
+      ...para(w.txt.intro)
+    ];
+    if (padUsed(w.dia)) {
+      const img = padPNG(w.dia, 900);
+      kids.push(new Paragraph({ alignment: AlignmentType.CENTER, spacing: { before: 120 }, children: [new TextRun({ text: w.diaT || 'Diagrama', bold: true, size: 22 })] }));
+      kids.push(new Paragraph({ alignment: AlignmentType.CENTER, children: [new ImageRun({ data: img.bytes, transformation: { width: 560, height: Math.round(560 * .62) } })] }));
+    }
+    kids.push(...para(w.txt.exp), ...para(w.txt.eva));
+    kids.push(new Paragraph({ border: { top: { style: BorderStyle.SINGLE, size: 6, color: '999999', space: 8 } }, spacing: { before: 240 }, children: [new TextRun({ text: eiDeclText(w), italics: true, size: 18 })] }));
+    const doc = new Document({ creator: store.get('alumno', '') || 'Alumno', title: `EI Unidad ${u}`, styles: { default: { document: { run: { font: 'Calibri' } } } }, sections: [{ children: kids }] });
+    const blob = await Packer.toBlob(doc);
+    saveBlob(blob, `EI-Unidad-${u}${store.get('alumno', '') ? '-' + fileSafe(store.get('alumno', '')) : ''}.docx`);
+    btn.textContent = 'Descargado ✓';
+  } catch (e) { btn.textContent = 'No se pudo generar: revisa tu conexión'; }
+  setTimeout(() => { btn.disabled = false; btn.textContent = o; }, 3000);
+}
+/* Respaldo de todo el Taller (progreso, simulacros y la carpeta de la EI) */
+function backupAll() {
+  const data = {}; for (let i = 0; i < localStorage.length; i++) { const k = localStorage.key(i); if (k && k.startsWith('tallerEco.')) data[k] = localStorage.getItem(k); }
+  let d; try { d = new Date().toISOString().slice(0, 10); } catch (e) { d = 'hoy'; }
+  saveBlob(new Blob([JSON.stringify({ app: 'taller-economia-ib', v: 1, fecha: d, data }, null, 1)], { type: 'application/json' }), `respaldo-taller-economia-${fileSafe(store.get('alumno', '')) || 'alumno'}-${d}.json`);
+}
+function restoreAll(file, out) {
+  const r = new FileReader();
+  r.onload = () => {
+    try {
+      const j = JSON.parse(r.result);
+      if (j.app !== 'taller-economia-ib' || !j.data) throw new Error('formato');
+      Object.entries(j.data).forEach(([k, v]) => { if (k.startsWith('tallerEco.')) localStorage.setItem(k, v); });
+      out.innerHTML = `<div class="fb ok"><b class="h">Respaldo recuperado</b>Se restauraron tus datos del ${esc(j.fecha || '')}. La página se recarga en un momento.</div>`;
+      setTimeout(() => location.reload(), 1500);
+    } catch (e) { out.innerHTML = '<div class="fb no">Ese archivo no es un respaldo del Taller.</div>'; }
+  };
+  r.readAsText(file);
+}
+function backupBox(id) {
+  return `<div class="essentials bkbox"><b>Respaldo de todo mi Taller</b><p class="small" style="margin:4px 0 8px">Tus comentarios, simulacros y progreso se guardan solo en este navegador. Descarga un respaldo cada tanto y recupéralo si cambias de dispositivo o se borra el historial.</p>
+    <div class="row"><button class="btn sm" type="button" id="${id}B">Descargar respaldo (.json)</button><label class="btn sm" for="${id}F">Recuperar un respaldo</label><input type="file" id="${id}F" accept=".json,application/json" hidden></div><div id="${id}O" style="margin-top:8px"></div></div>`;
+}
+function bindBackup(id) { $('#' + id + 'B').onclick = backupAll; $('#' + id + 'F').onchange = e => { if (e.target.files[0]) restoreAll(e.target.files[0], $('#' + id + 'O')); }; }
+
+/* Planificador de la carpeta */
+function eiState(u) { const w = EIS.s[u]; if (!eiStarted(u)) return ['Sin empezar', '']; const full = w.title && w.kc && EI_BLOCKS.every(b => b.k === 'dia' ? padUsed(w.dia) : (w.txt[b.k] || '').trim()); return full && (w.decl || {}).ok ? ['Listo para revisar', 'ok'] : ['En progreso', 'prog']; }
+function eiPlanner() {
+  const PL = store.get('eiPlan', {});
+  const rows = Object.entries(EI_UNITS).map(([u, n]) => {
+    const w = EIS.s[u] || {}, [st, cl] = eiState(u), fix = EI_FECHAS[u], dl = fix || PL[u] || '';
+    const left = dl ? Math.round((new Date(dl + 'T12:00:00') - new Date(today() + 'T12:00:00')) / 864e5) : null;
+    const ck = eiStarted(u) ? eiChecks(u) : {};
+    return `<tr><th scope="row">U${u} · ${n}</th><td><span class="tag ${cl}">${st}</span></td><td>${w.kc ? KC[w.kc] + (ck.kcDup ? ' <span class="warnc">repetido</span>' : '') : '—'}</td><td>${w.source ? esc(w.source) + (ck.srcDup ? ' <span class="warnc">repetida</span>' : '') : '—'}</td><td>${ck.days !== null && ck.days !== undefined ? ck.days + ' días' + (ck.dateOk ? '' : ' <span class="warnc">fuera de plazo</span>') : '—'}</td>
+      <td>${fix ? `<b>${fix}</b><span class="small muted"> (profesor)</span>` : `<input type="date" class="inp pldl" data-u="${u}" value="${esc(dl)}">`}</td><td class="${left !== null && left < 0 ? 'late' : left !== null && left <= 7 ? 'soon' : ''}">${left === null ? '—' : left < 0 ? `vencida hace ${-left} d` : left === 0 ? 'hoy' : left + ' d'}</td></tr>`;
+  }).join('');
+  const used = {}; Object.keys(EI_UNITS).forEach(u => { const k = (EIS.s[u] || {}).kc; if (k) (used[k] = used[k] || []).push('U' + u); });
+  return `<h2 style="margin-top:22px">Planificador de la carpeta</h2>
+    <div class="tscroll"><table class="dtab plan"><thead><tr><th>Comentario</th><th>Estado</th><th>Concepto clave</th><th>Fuente</th><th>Antigüedad del artículo</th><th>Fecha límite</th><th>Faltan</th></tr></thead><tbody>${rows}</tbody></table></div>
+    <p class="small muted" style="margin:6px 0 4px">Conceptos clave usados (cada uno solo una vez en la carpeta):</p>
+    <div class="kcmap">${Object.entries(KC).map(([k, v]) => `<span class="kcm ${used[k] ? (used[k].length > 1 ? 'dup' : 'on') : ''}">${v}${used[k] ? ' · ' + used[k].join(', ') : ''}</span>`).join('')}</div>`;
+}
+function bindPlanner() { app.querySelectorAll('.pldl').forEach(i => i.onchange = () => { const PL = store.get('eiPlan', {}); PL[i.dataset.u] = i.value; store.set('eiPlan', PL); renderEIHome(); }); }
+
+/* Declaración de autoría y uso de IA */
+function eiDecl(u, B) {
+  const w = eiSlot(u), d = w.decl = w.decl || { ok: false, ai: '', tool: '', uses: [], how: '' };
+  const USES = ['Buscar o entender información', 'Ideas o esquema', 'Revisar ortografía o redacción', 'Traducción', 'Otro'];
+  B.innerHTML = `<p class="q"><b>Declaración de autoría y uso de inteligencia artificial.</b> No cuenta en las 800 palabras. Se agrega al final de tu comentario en Word y al copiarlo.</p>
+    <label class="declc"><input type="checkbox" id="dOk" ${d.ok ? 'checked' : ''}><span>Declaro que este comentario es <b>mi trabajo original</b>: lo escribí yo, elegí el artículo y cité todas las fuentes que utilicé.</span></label>
+    <h4>¿Usaste herramientas de inteligencia artificial (ChatGPT, Claude, Gemini, Copilot, traductores con IA)?</h4>
+    <div class="seg" role="group" id="dAi"><button type="button" data-ai="no" aria-pressed="${d.ai === 'no'}">No</button><button type="button" data-ai="si" aria-pressed="${d.ai === 'si'}">Sí</button></div>
+    <div id="dAiBox" ${d.ai === 'si' ? '' : 'hidden'} style="margin-top:10px">
+      <label class="dbf"><span>Herramienta</span><input class="inp" id="dTool" value="${esc(d.tool)}" maxlength="60"></label>
+      <div class="cklist" id="dUses">${USES.map((x, i) => `<label><input type="checkbox" data-us="${esc(x)}" ${(d.uses || []).includes(x) ? 'checked' : ''}><span>${x}</span></label>`).join('')}</div>
+      <label class="dbf"><span>Explica brevemente cómo la usaste</span><textarea id="dHow" rows="3">${esc(d.how)}</textarea></label>
+    </div>
+    <div class="note">El IB exige citar el uso de herramientas de IA como cualquier otra fuente. Presentar como propio un texto generado por IA es una falta de integridad académica. La revisión automática del Taller no escribe por ti y no hace falta declararla. Ante cualquier duda, consulta a tu profesor.</div>
+    <p class="small" style="margin-top:10px"><b>Texto que se agregará:</b> <span id="dPrev">${esc(eiDeclText(w))}</span></p>`;
+  const sv = () => { saveEI(); $('#dPrev').textContent = eiDeclText(w); };
+  $('#dOk').onchange = e => { d.ok = e.target.checked; sv(); };
+  B.querySelectorAll('[data-ai]').forEach(b => b.onclick = () => { d.ai = b.dataset.ai; B.querySelectorAll('[data-ai]').forEach(z => z.setAttribute('aria-pressed', z === b)); $('#dAiBox').hidden = d.ai !== 'si'; sv(); });
+  $('#dTool').oninput = e => { d.tool = e.target.value; sv(); };
+  $('#dHow').oninput = e => { d.how = e.target.value; sv(); };
+  B.querySelectorAll('[data-us]').forEach(c => c.onchange = () => { d.uses = [...B.querySelectorAll('[data-us]:checked')].map(z => z.dataset.us); sv(); });
+}
+
+/* Validador «¿Sirve mi artículo?» */
+const EI_DIAGS = { 2: ['Oferta y demanda (desplazamientos)', 'Elasticidad (EPD, EPO)', 'Impuesto indirecto o subsidio', 'Precio máximo o mínimo', 'Externalidades (CMgS, BMgS)', 'Otro de microeconomía'], 3: ['DA y OA (desplazamientos)', 'OA keynesiana o neoclásica', 'Ciclo económico o brechas', 'Curva de Lorenz', 'Otro de macroeconomía'], 4: ['Mercado de divisas', 'Arancel, cuota o subsidio a la exportación', 'Libre comercio (importaciones/exportaciones)', 'DA y OA por el sector externo', 'Otro de economía global'] };
+const VQ = [
+  { k: 'date', t: 'date', q: '¿Cuándo se publicó el artículo?' },
+  { k: 'src', q: '¿De dónde es?', o: [['news', 'Periódico o sitio de noticias'], ['mag', 'Revista económica o académica'], ['blog', 'Blog o columna personal'], ['gov', 'Informe del gobierno o de un organismo'], ['social', 'Red social o video'], ['tvr', 'Televisión o radio']] },
+  { k: 'type', q: '¿De qué trata principalmente?', o: [['econ', 'Un mercado, una política o un país (precios, inflación, comercio, impuestos…)'], ['biz', 'Una empresa en particular (sus ventas, su estrategia, su marketing)'], ['mix', 'Las dos cosas']] },
+  { k: 'unit', q: '¿A qué unidad pertenece?', o: [['2', 'Unidad 2 · Microeconomía'], ['3', 'Unidad 3 · Macroeconomía'], ['4', 'Unidad 4 · Economía global']] },
+  { k: 'change', q: '¿Describe un cambio concreto (una política, un shock, una variación de precios o cantidades)?', o: [['si', 'Sí'], ['no', 'No, es una descripción general']] },
+  { k: 'dia', q: '¿Qué diagrama del programa permite dibujar?', o: [], dyn: true },
+  { k: 'data', q: '¿Trae al menos un dato concreto (cifra, porcentaje, monto)?', o: [['si', 'Sí'], ['no', 'No']] },
+  { k: 'eval', q: '¿Permite evaluar? (hay quienes ganan y quienes pierden, o efectos distintos en el corto y el largo plazo)', o: [['si', 'Sí, claramente'], ['poco', 'Un poco'], ['no', 'No']] },
+  { k: 'kc', q: '¿Qué concepto clave encaja mejor?', o: Object.entries(KC) },
+  { k: 'len', q: '¿Qué extensión tiene?', o: [['corto', 'Una página o menos'], ['largo', 'Más de una página (habrá que resaltar el fragmento usado)']] }
+];
+function vVerdict(A) {
+  const R = [], Y = [], G = [];
+  if (A.date) { const days = Math.round((new Date(today()) - new Date(A.date)) / 864e5); if (days < 0) R.push('La fecha es posterior a hoy.'); else if (days > 365) R.push(`Tiene ${days} días: supera el año permitido.`); else if (days > 300) Y.push(`Tiene ${days} días: si tardas en escribir, puede quedar fuera del plazo de un año.`); else G.push(`Es reciente (${days} días).`); }
+  if (A.src) ({ news: () => G.push('Fuente adecuada.'), mag: () => G.push('Fuente adecuada.'), blog: () => Y.push('Un blog u opinión personal es una fuente débil: busca la noticia en un medio.'), gov: () => Y.push('Tu profesor recomienda evitar informes del gobierno: busca una noticia de prensa sobre el mismo tema.'), social: () => R.push('Las redes sociales y los videos no sirven como artículo.'), tvr: () => R.push('El IB no admite artículos de televisión ni radio.') })[A.src]();
+  if (A.type === 'biz') R.push('Es un artículo de negocios: la EI pide teoría económica, no la estrategia de una empresa.'); else if (A.type === 'mix') Y.push('Mezcla negocios y economía: enfócate solo en la parte económica.'); else if (A.type) G.push('Es un artículo económico.');
+  if (A.unit && eiStarted(A.unit)) Y.push(`Ya empezaste el comentario de la Unidad ${A.unit}: este artículo lo reemplazaría.`);
+  if (A.change === 'no') R.push('Sin un cambio concreto no hay desplazamiento que dibujar ni explicar.'); else if (A.change) G.push('Describe un cambio concreto.');
+  if (A.dia) { if (/^Otro/.test(A.dia)) Y.push('Asegúrate de que el diagrama esté en el programa de Nivel Medio.'); else G.push('Permite un diagrama del programa: ' + A.dia + '.'); }
+  if (A.data === 'no') Y.push('Sin datos, tu explicación quedará abstracta: busca un artículo con cifras.'); else if (A.data) G.push('Trae datos para citar.');
+  if (A.eval === 'no') R.push('Si no permite evaluar, el criterio E quedará bajo.'); else if (A.eval === 'poco') Y.push('La evaluación tendrá poco material: piensa en partes interesadas y plazos antes de elegirlo.'); else if (A.eval) G.push('Da para evaluar.');
+  if (A.kc) { const usedIn = Object.keys(EI_UNITS).filter(u => u !== A.unit && (EIS.s[u] || {}).kc === A.kc); if (usedIn.length) R.push(`Ya usaste «${KC[A.kc]}» en la Unidad ${usedIn.join(', ')}: elige otro concepto.`); else G.push(`Concepto clave disponible: ${KC[A.kc]}.`); }
+  if (A.len === 'largo') Y.push('Es largo: tendrás que resaltar el fragmento en el que se basa tu comentario.');
+  return { R, Y, G, light: R.length ? 'red' : Y.length ? 'yel' : 'grn' };
+}
+function renderEIArticle() {
+  const A = SESS.vArt = SESS.vArt || {};
+  const qs = VQ.map(q => {
+    let opts = q.o; if (q.dyn) opts = A.unit ? EI_DIAGS[A.unit].map(x => [x, x]).concat([['ninguno', 'Ninguno claro']]) : [];
+    const body = q.t === 'date' ? `<input type="date" class="inp" data-v="date" value="${esc(A.date || '')}" style="max-width:220px">`
+      : q.dyn && !A.unit ? '<p class="small muted">Primero elige la unidad.</p>'
+      : `<div class="vopts">${opts.map(([v, l]) => `<button type="button" class="vopt ${A[q.k] === v ? 'sel' : ''}" data-q="${q.k}" data-val="${esc(v)}">${l}</button>`).join('')}</div>`;
+    return `<div class="vq"><b>${q.q}</b>${body}</div>`;
+  }).join('');
+  if (A.dia === 'ninguno') A.dia = 'Otro';
+  const answered = VQ.filter(q => A[q.k]).length, V = vVerdict(A);
+  app.innerHTML = `<button class="crumb" type="button" data-go="escribir-ei">← Mi carpeta</button><div class="eyebrow" style="margin-top:12px">Evaluación Interna</div><h1>¿Sirve mi artículo?</h1>
+    <p class="lede">Responde estas preguntas antes de empezar a escribir. Un mal artículo no se salva con buena redacción.</p>
+    <div class="vwrap"><div class="vqs">${qs}</div>
+      <aside class="vres ${answered ? V.light : ''}"><div class="light"><i class="r"></i><i class="y"></i><i class="g"></i></div>
+        <h3>${!answered ? 'Responde las preguntas' : V.light === 'red' ? 'Busca otro artículo' : V.light === 'yel' ? 'Sirve, con cuidado' : 'Sirve'}</h3>
+        <p class="small muted">${answered}/${VQ.length} respuestas</p>
+        ${V.R.length ? `<ul class="autofb">${V.R.map(x => `<li class="no">${x}</li>`).join('')}</ul>` : ''}
+        ${V.Y.length ? `<ul class="autofb yel">${V.Y.map(x => `<li class="no">${x}</li>`).join('')}</ul>` : ''}
+        ${V.G.length ? `<ul class="autofb">${V.G.map(x => `<li class="ok">${x}</li>`).join('')}</ul>` : ''}
+        ${answered === VQ.length && V.light !== 'red' && A.unit ? `<button class="btn primary" type="button" id="vUse" style="margin-top:10px">Usarlo en mi comentario de la Unidad ${A.unit}</button>` : ''}
+        <button class="btn sm" type="button" id="vReset" style="margin-top:8px">Evaluar otro artículo</button></aside></div>`;
+  app.querySelectorAll('[data-q]').forEach(b => b.onclick = () => { A[b.dataset.q] = b.dataset.val; if (b.dataset.q === 'unit') A.dia = ''; const y = window.scrollY; renderEIArticle(); window.scrollTo(0, y); });
+  const di = app.querySelector('[data-v="date"]'); if (di) di.onchange = () => { A.date = di.value; const y = window.scrollY; renderEIArticle(); window.scrollTo(0, y); };
+  $('#vReset').onclick = () => { SESS.vArt = {}; renderEIArticle(); };
+  const us = $('#vUse'); if (us) us.onclick = () => { const w = eiSlot(A.unit); if (!w.pub) w.pub = A.date; if (!w.kc) w.kc = A.kc; w.st = 0; saveEI(); go('ei-' + A.unit); };
+}
+
+/* Comentarios modelo anotados (práctica: artículos de más de un año, no sirven para la carpeta) */
+const EI_ANN = { A: 'Diagramas', B: 'Terminología', C: 'Aplicación y análisis', D: 'Concepto clave', E: 'Evaluación' };
+const EI_MODELS = {
+  2: {
+    kc: 'escasez', title: 'Efecto de la sequía: Paraguay perdió dos lugares en el ranking de producción y exportación de soja', source: 'La Nación (Paraguay)', date: '14/01/2023',
+    url: 'https://www.lanacion.com.py/negocios/2023/01/14/efecto-de-la-sequia-paraguay-perdio-dos-lugares-en-el-ranking-de-produccion-y-exportacion-de-soja/',
+    sum: 'La sequía de la zafra 2021/22 redujo la cosecha de soja a 4,3 millones de toneladas (se esperaban 10 millones). Las exportaciones cayeron de 6.329.425 t (2021) a 2.334.309 t (2022) y Paraguay bajó del 4.º al 6.º lugar entre los exportadores mundiales. Pese a precios internacionales más altos, los ingresos del complejo soja cayeron en poco más de US$ 2.000 millones.',
+    diaT: 'Efecto de la sequía 2021/22 en el mercado de la soja paraguaya',
+    dia: [...PAD_TPL.pq, { t: 'l', c: 'd', a: [.18, .18], b: [.85, .8], w: 3 }, { t: 'l', c: 's', a: [.18, .8], b: [.85, .18], w: 3 }, { t: 'l', c: 'n', a: [.12, .735], b: [.72, .18], w: 3 }, { t: 'l', c: 'k', a: [.1, .49], b: [.515, .49], w: 1 }, { t: 'l', c: 'k', a: [.515, .49], b: [.515, .9], w: 1 }, { t: 'l', c: 'k', a: [.1, .43], b: [.45, .43], w: 1 }, { t: 'l', c: 'k', a: [.45, .43], b: [.45, .9], w: 1 }, { t: 'a', c: 'k', a: [.70, .30], b: [.61, .30], w: 2 }, { t: 'x', c: 'd', p: [.86, .82], s: 'D' }, { t: 'x', c: 's', p: [.86, .16], s: 'O₁' }, { t: 'x', c: 'n', p: [.72, .15], s: 'O₂' }, { t: 'x', c: 'k', p: [.02, .50], s: 'P₁' }, { t: 'x', c: 'k', p: [.02, .42], s: 'P₂' }, { t: 'x', c: 'k', p: [.42, .95], s: 'Q₂' }, { t: 'x', c: 'k', p: [.5, .95], s: 'Q₁' }, { t: 'x', c: 'k', p: [.53, .53], s: 'E₁' }, { t: 'x', c: 'k', p: [.38, .40], s: 'E₂' }],
+    paras: [
+      ['intro', 'El artículo de La Nación (14/01/2023) informa que la sequía de la zafra 2021/22 redujo la cosecha paraguaya de soja a 4,3 millones de toneladas, cuando se esperaban 10 millones, y que las exportaciones cayeron de 6,3 a 2,3 millones de toneladas. Este comentario analiza el hecho desde el concepto de escasez: los recursos para producir —la tierra y, sobre todo, el agua— se volvieron más limitados frente a una demanda que no cambió. La oferta es la cantidad que los productores están dispuestos a vender y pueden vender a cada precio; un factor no relacionado con el precio, como el clima, desplaza toda la curva. La escasez, a su vez, es la situación en que los recursos disponibles no alcanzan para satisfacer todas las necesidades y deseos, y por eso obliga a elegir. El comentario usa el modelo de oferta y demanda y evalúa a quién afectó el hecho y por cuánto tiempo. Se sostiene que la sequía redujo la oferta y, sobre todo, los ingresos de los productores.', [['C', 'Contexto en una frase con los datos clave del artículo.'], ['B', 'Define «oferta» y «factor no relacionado con el precio» y los usa después.'], ['D', 'Nombra el concepto y explica por qué encaja: el agua se volvió un recurso escaso.']]],
+      ['exp', 'La sequía es un factor de la oferta no relacionado con el precio: con menos lluvia, cada hectárea rinde menos y los productores pueden ofrecer menos soja a cualquier precio. Por eso la oferta se desplaza de O₁ a O₂. Al precio inicial P₁ surge un exceso de demanda, lo cual presiona el precio hacia P₂, mientras la cantidad cae de Q₁ a Q₂ (nuevo equilibrio E₂). Tal como informa el artículo, las exportaciones bajaron cerca de un 63 %. La escasez es evidente: el mismo factor tierra, sin agua suficiente, produjo menos de la mitad de lo previsto. Además, los ingresos del complejo sojero cayeron en más de US$ 2.000 millones pese a precios internacionales más altos: la suba de P₁ a P₂ no alcanzó a compensar la fuerte caída de Q₁ a Q₂. En el diagrama, el ingreso de los productores es el rectángulo precio × cantidad: el área P₂ × Q₂ es menor que P₁ × Q₁, lo que muestra que la escasez pesó más que el aumento del precio. A su vez, menos soja exportada significa menos dólares entrando al país, de modo que la escasez de un recurso natural se transmite al resto de la economía.', [['A', 'Explica el diagrama con sus rótulos (O₁ → O₂, P₁ → P₂, Q₁ → Q₂, E₂): ahorra palabras.'], ['C', 'Cadena causal completa y anclada en un dato calculado del artículo (−63 %).'], ['B', 'Usa con precisión «exceso de demanda» y «equilibrio».'], ['D', 'Vuelve al concepto clave dentro del análisis, no solo en la introducción.'], ['A', 'Usa el área del diagrama (P × Q) para probar lo que dice sobre los ingresos.']]],
+      ['eva', 'Por un lado, los más perjudicados fueron los productores, sobre todo los pequeños y medianos, que perdieron ingresos y pudieron quedar endeudados por los insumos de la campaña. También pierden el Estado, que recauda menos por la menor actividad, y las empresas de transporte y acopio, cuyo trabajo depende del volumen cosechado. Sin embargo, quienes tenían soja almacenada pudieron venderla a precios internacionales más altos.\nEn el corto plazo el impacto es fuerte porque la oferta de soja es inelástica: una vez sembrada, no se puede producir más hasta la próxima zafra. No obstante, a largo plazo, si vuelven las lluvias, la oferta regresaría hacia O₁; el riesgo es que sequías más frecuentes conviertan esta escasez en algo recurrente.\nUna limitación del diagrama es que supone que el precio se forma en el mercado paraguayo. En realidad, Paraguay toma en buena parte el precio internacional, así que la sequía local afectó más a la cantidad y a los ingresos que al precio.\nUna respuesta posible del Estado sería financiar seguros agrícolas o crédito para riego, lo que reduciría el riesgo de futuras sequías. Sin embargo, los fondos públicos también son escasos y tienen un costo de oportunidad: lo que se destina al riego deja de ir a salud o educación. Además, los grandes productores, con más acceso al crédito, podrían aprovechar estas medidas más que los pequeños.\nEn definitiva, la sequía mostró cuán vulnerable es una economía que depende de un recurso escaso como el agua: su efecto fue grave en el corto plazo, pero su peso a largo plazo dependerá de que se invierta en riego, seguros agrícolas y diversificación.', [['E', 'Eje 1: partes interesadas (quién pierde y quién gana).'], ['E', 'Eje 2: corto y largo plazo, con la elasticidad de la oferta como argumento.'], ['E', 'Cuestiona el supuesto del propio diagrama: eso muestra pensamiento crítico.'], ['E', 'Evalúa una política posible con su costo de oportunidad y su efecto en la equidad.'], ['D', 'La conclusión retoma la escasez y agrega una condición.']]]
+    ],
+    low: [['A', 'Diagrama sin título, sin rotular E₁ y E₂, o que no se cita en el texto: 1 o 2 puntos.'], ['B', 'Definir «oferta» y después confundirla con «cantidad ofrecida».'], ['C', 'Contar la noticia sin teoría: sería un resumen, no un análisis.'], ['D', 'Nombrar «escasez» solo en la introducción: 1 punto.'], ['E', 'Listar efectos sin juicio, o concluir con datos nuevos.']]
+  },
+  3: {
+    kc: 'intervencion', title: 'Inflación: BCP elevó a 8,50 % su tasa de política monetaria', source: 'ABC Color', date: '22/09/2022',
+    url: 'https://www.abc.com.py/economia/2022/09/22/inflacion-bcp-elevo-a-850-su-tasa-de-politica-monetaria/',
+    sum: 'El BCP subió la tasa de política monetaria (TPM) de 8,25 % a 8,50 %. Los ajustes empezaron en agosto de 2021, cuando la tasa estaba en 0,75 %. La inflación interanual de agosto de 2022 fue de 10,5 %, frente a 11,1 % del mes anterior.',
+    diaT: 'Efecto de la suba de la TPM del BCP sobre la economía paraguaya',
+    dia: [...PAD_TPL.adas, { t: 'l', c: 'd', a: [.2, .16], b: [.85, .78], w: 3 }, { t: 'l', c: 'n', a: [.12, .3], b: [.72, .87], w: 3 }, { t: 'l', c: 's', a: [.18, .8], b: [.85, .18], w: 3 }, { t: 'l', c: 'k', a: [.1, .476], b: [.531, .476], w: 1 }, { t: 'l', c: 'k', a: [.531, .476], b: [.531, .9], w: 1 }, { t: 'l', c: 'k', a: [.1, .581], b: [.416, .581], w: 1 }, { t: 'l', c: 'k', a: [.416, .581], b: [.416, .9], w: 1 }, { t: 'a', c: 'k', a: [.77, .72], b: [.58, .72], w: 2 }, { t: 'x', c: 'd', p: [.86, .80], s: 'DA₁' }, { t: 'x', c: 'n', p: [.73, .89], s: 'DA₂' }, { t: 'x', c: 's', p: [.86, .16], s: 'OACP' }, { t: 'x', c: 'k', p: [.02, .47], s: 'P₁' }, { t: 'x', c: 'k', p: [.02, .59], s: 'P₂' }, { t: 'x', c: 'k', p: [.40, .95], s: 'Y₂' }, { t: 'x', c: 'k', p: [.52, .95], s: 'Y₁' }],
+    paras: [
+      ['intro', 'Según ABC Color (22/09/2022), el Banco Central del Paraguay (BCP) subió su tasa de política monetaria (TPM) de 8,25 % a 8,50 %, tras una serie de aumentos que empezó en agosto de 2021, cuando la tasa estaba en 0,75 %. La inflación interanual de agosto fue de 10,5 %, muy por encima del rango meta del BCP (4 % ± 2 puntos). La política monetaria es el uso de la tasa de interés por parte del banco central para influir en la demanda agregada; una política contractiva busca frenar la inflación. Este comentario usa el concepto de intervención: el Estado, a través del BCP, actúa sobre el costo del crédito porque el mercado, por sí solo, no lograba una inflación baja y estable. Una inflación alta reduce el poder de compra, sobre todo de quienes tienen ingresos fijos, y vuelve más difícil planificar. El hecho se analiza con el modelo de demanda y oferta agregadas, y se evalúa a quién afecta la medida, en qué plazo y con qué límites. Se sostiene que la suba reduce la presión de demanda, pero que su eficacia depende del tipo de inflación.', [['C', 'Contexto y datos del artículo en dos frases.'], ['B', 'Define política monetaria y política contractiva, y nombra la meta de inflación.'], ['D', 'Explica por qué es «intervención»: el Estado actúa donde el mercado no logra el objetivo.']]],
+      ['exp', 'Una TPM más alta se transmite a las tasas de los préstamos: el crédito se encarece y ahorrar rinde más, por lo que bajan el consumo (C) y la inversión (I), dos componentes de la demanda agregada. Por consiguiente, la DA se desplaza de DA₁ a DA₂ y el nivel general de precios crece menos (de P₁ a P₂), aunque el PIB real también baja de Y₁ a Y₂. Además, tasas más altas atraen inversión financiera y tienden a apreciar el guaraní, lo cual abarata las importaciones. Tal como informa el artículo, la inflación pasó de 11,1 % en julio a 10,5 % en agosto: una primera señal de que la intervención empezaba a operar, aunque también pudieron influir otros precios. Conviene notar, sin embargo, que con una inflación de 10,5 % y una TPM de 8,50 % la tasa de interés real seguía siendo negativa (alrededor de −2 %): el crédito era más caro que un año antes, pero todavía no frenaba el gasto con fuerza. Por eso la intervención del BCP se hizo de forma gradual, con subas sucesivas, para que la DA se desplazara sin provocar una caída brusca del producto.', [['A', 'Lee el diagrama con sus rótulos: DA₁ → DA₂, P₁ → P₂, Y₁ → Y₂.'], ['C', 'Mecanismo de transmisión completo (tasa → crédito → C e I → DA), con dos canales.'], ['C', 'Usa un dato del artículo y no exagera la causalidad («también pudieron influir»).'], ['D', 'El concepto aparece dentro del análisis.'], ['C', 'Calcula la tasa real con datos del artículo: un análisis que no está en la noticia.']]],
+      ['eva', 'Por un lado, la intervención beneficia a los ahorristas y a los hogares de ingresos fijos, que pierden menos poder de compra si la inflación cede. Sin embargo, la pagan los deudores, porque las familias y empresas con créditos en guaraníes enfrentan cuotas más altas, y los exportadores, si el guaraní se aprecia.\nEn el corto plazo el costo se ve en menos consumo, inversión y empleo, mientras que el beneficio llega con rezagos de varios meses. No obstante, a largo plazo una respuesta firme protege la credibilidad del régimen de metas y ayuda a anclar las expectativas de inflación.\nUna limitación importante es que parte de la inflación de 2022 venía de costos importados, como combustibles y alimentos. La TPM actúa sobre la demanda, no sobre esos precios, y una parte del crédito en Paraguay está en dólares, lo que debilita la transmisión.\nUna alternativa sería que la política fiscal acompañe, reduciendo el gasto público para bajar también la DA. Sin embargo, recortar gasto suele afectar a programas sociales y a la inversión pública, y las medidas del lado de la oferta, como mejorar la infraestructura de transporte para abaratar los alimentos, actúan solo a largo plazo. La TPM, en cambio, se puede ajustar cada mes.\nEn definitiva, la intervención del BCP es razonable y eficaz en parte: sirve para evitar que la inflación se propague a las expectativas, siempre que la suba se mantenga solo el tiempo necesario, porque frente a shocks de oferta su costo en crecimiento puede ser alto.', [['E', 'Eje 1: partes interesadas con quién gana y quién pierde.'], ['E', 'Eje 2: corto y largo plazo, con rezagos y expectativas.'], ['E', 'Limitaciones propias del contexto paraguayo (inflación de costos, dolarización).'], ['E', 'Compara con políticas alternativas (fiscal y de oferta) y sus costos.'], ['D', 'Conclusión con juicio, condición y retomando la intervención.']]]
+    ],
+    low: [['A', 'Dibujar la DA desplazándose sin rotular P y Y o con ejes mal nombrados («precio» y «cantidad»).'], ['B', 'Confundir política monetaria con política fiscal.'], ['C', 'Saltar pasos: «sube la tasa, baja la inflación», sin el mecanismo.'], ['D', 'Elegir «intervención» y no explicar qué falla del mercado justifica la intervención.'], ['E', 'Concluir que «funciona» sin condición, o agregar datos de meses posteriores.']]
+  },
+  4: {
+    kc: 'interdependencia', title: 'El guaraní fue el menos depreciado: factores que influyeron para mantener su valor', source: 'La Nación (Paraguay)', date: '04/01/2025',
+    url: 'https://www.lanacion.com.py/negocios/2025/01/04/el-guarani-fue-el-menos-depreciado-factores-que-influyeron-para-mantener-su-valor/',
+    sum: 'En 2024 el guaraní se depreció 5,5 % frente al dólar, menos que el peso uruguayo (12 %), el peso chileno (12,1 %), el real brasileño (23,9 %) y el peso argentino (71 %). Según un economista citado, influyeron las intervenciones del BCP, que vendió dólares cuando la cotización llegó a Gs. 8.000, la fortaleza mundial del dólar y la poca presión inflacionaria.',
+    diaT: 'Depreciación del guaraní en 2024 e intervención del BCP en el mercado de divisas',
+    dia: [{ t: 'l', c: 'k', a: [.1, .06], b: [.1, .9], w: 2.5 }, { t: 'l', c: 'k', a: [.1, .9], b: [.95, .9], w: 2.5 }, { t: 'x', c: 'k', p: [.12, .05], s: 'Valor del guaraní (US$ por Gs.)' }, { t: 'x', c: 'k', p: [.62, .965], s: 'Cantidad de guaraníes' }, { t: 'l', c: 'd', a: [.2, .16], b: [.85, .78], w: 3 }, { t: 'l', c: 'd', a: [.1, .32], b: [.68, .86], w: 2 }, { t: 'l', c: 'n', a: [.15, .24], b: [.77, .83], w: 3 }, { t: 'l', c: 's', a: [.18, .8], b: [.85, .18], w: 3 }, { t: 'l', c: 'k', a: [.1, .476], b: [.531, .476], w: 1 }, { t: 'l', c: 'k', a: [.1, .538], b: [.463, .538], w: 1 }, { t: 'l', c: 'k', a: [.1, .598], b: [.399, .598], w: 1 }, { t: 'a', c: 'k', a: [.79, .74], b: [.57, .74], w: 2 }, { t: 'x', c: 'd', p: [.86, .80], s: 'D₁' }, { t: 'x', c: 'd', p: [.6, .9], s: 'D₂' }, { t: 'x', c: 'n', p: [.78, .85], s: 'D₃' }, { t: 'x', c: 's', p: [.86, .16], s: 'O Gs.' }, { t: 'x', c: 'k', p: [.005, .47], s: 'TC₁' }, { t: 'x', c: 'k', p: [.005, .54], s: 'TC₃' }, { t: 'x', c: 'k', p: [.005, .61], s: 'TC₂' }],
+    paras: [
+      ['intro', 'La Nación (04/01/2025) informa que en 2024 el guaraní se depreció 5,5 % frente al dólar, mucho menos que el real brasileño (23,9 %) o el peso argentino (71 %). Paraguay tiene un tipo de cambio flotante administrado: el valor del guaraní lo fijan la oferta y la demanda, pero el BCP interviene para evitar movimientos bruscos. Una depreciación es la caída del valor de una moneda frente a otra en ese régimen. Este comentario usa el concepto de interdependencia: el valor del guaraní depende de lo que ocurre con el dólar en el mundo y con las monedas de los socios comerciales. Lo contrario, la apreciación, es el aumento del valor de una moneda frente a otra. El hecho se analiza con el diagrama de oferta y demanda de guaraníes, y se evalúan sus efectos sobre distintos grupos y en distintos plazos. Se sostiene que la intervención del BCP suavizó la depreciación, pero dejó al guaraní relativamente caro frente a la región.', [['C', 'Contexto y comparación regional con datos del artículo.'], ['B', 'Define tipo de cambio flotante administrado y depreciación.'], ['D', 'La interdependencia se justifica: la moneda depende de factores externos.']]],
+      ['exp', 'La fortaleza mundial del dólar llevó a los inversores a preferir activos en dólares; para comprarlos venden guaraníes, por lo que la demanda de guaraníes cae de D₁ a D₂ y su valor tiende a bajar (depreciación). Sin embargo, el BCP intervino vendiendo dólares de sus reservas cuando la cotización llegó a Gs. 8.000. Al vender dólares, el BCP compra guaraníes, lo cual desplaza la demanda hacia D₃ y limita la caída: el valor del guaraní baja de TC₁ solo hasta TC₃, en lugar de llegar a TC₂. Por eso, según el artículo, el guaraní perdió solo 5,5 %, mientras otras monedas de la región perdieron entre 12 % y 71 %. La interdependencia se ve en ambos lados: un shock externo (el dólar fuerte) presionó al guaraní, y una respuesta interna (las reservas del BCP) lo amortiguó. Una depreciación, aunque sea pequeña, abarata las exportaciones paraguayas para los compradores extranjeros y encarece las importaciones medidas en guaraníes. Como el guaraní cayó poco frente al dólar pero subió frente al real, el efecto sobre el comercio depende del socio: con Brasil, uno de los principales socios comerciales, los productos paraguayos se volvieron relativamente más caros.', [['A', 'Explica los tres desplazamientos con sus rótulos (D₁ → D₂ → D₃, TC₁ → TC₃).'], ['C', 'Distingue la causa del cambio y la intervención, con datos del artículo.'], ['D', 'Relaciona el concepto con el mecanismo, no solo con el tema.'], ['C', 'Distingue el efecto frente al dólar y frente al real: aplica la teoría al caso, no solo la repite.']]],
+      ['eva', 'Por un lado, una depreciación menor beneficia a los importadores y a los consumidores, porque los combustibles, la maquinaria y los bienes importados se encarecen poco; el artículo señala que no hubo una fuerte presión inflacionaria. Sin embargo, como el real se depreció mucho más, los productos brasileños se abarataron en guaraníes: pierden competitividad los productores y comerciantes paraguayos que compiten con Brasil, sobre todo en la frontera.\nEn el corto plazo la intervención da estabilidad y previsibilidad a familias y empresas, muchas con deudas en dólares. No obstante, a largo plazo vender reservas tiene un límite y un costo de oportunidad, y sostener un guaraní fuerte frente a la región puede frenar las exportaciones. El Estado, que tiene parte de su deuda en dólares, también se beneficia en el corto plazo, porque las cuotas medidas en guaraníes suben menos.\nUna limitación del análisis es que el artículo recoge la opinión de un solo economista: los factores mencionados son una interpretación, no una medición del peso de cada uno. Además, el diagrama muestra solo el mercado del guaraní frente al dólar y no puede representar a la vez lo que ocurrió con el real o con el peso argentino.\nEn definitiva, la intervención del BCP fue eficaz para suavizar un shock externo, siempre que sea temporal y no intente fijar un valor que los fundamentos no sostienen; en una economía tan interdependiente como la paraguaya, el tipo de cambio frente a Brasil importa tanto como frente al dólar.', [['E', 'Eje 1: ganadores (importadores, consumidores) y perdedores (quienes compiten con Brasil).'], ['E', 'Eje 2: corto plazo (estabilidad) frente a largo plazo (reservas, competitividad).'], ['E', 'Cuestiona la fuente (una sola opinión) y los límites del diagrama.'], ['D', 'La conclusión vuelve a la interdependencia con un argumento nuevo de la región, sin datos nuevos.']]]
+    ],
+    low: [['A', 'Ejes sin rotular o confundir «valor del guaraní» con «precio del dólar»: invierte todo el análisis.'], ['B', 'Usar «devaluación» (régimen fijo) en vez de «depreciación» (flotante).'], ['C', 'Explicar solo la intervención y no la causa de la presión.'], ['D', 'Decir «hay interdependencia» sin mostrar cómo.'], ['E', 'Evaluar solo el lado positivo de una moneda estable.']]
+  }
+};
+function renderEIModels() {
+  app.innerHTML = `<button class="crumb" type="button" data-go="escribir-ei">← Mi carpeta</button><div class="eyebrow" style="margin-top:12px">Evaluación Interna</div><h1>Comentarios modelo</h1>
+    <div class="fb info"><b class="h">Solo para practicar</b>Estos modelos usan noticias reales de <b>más de un año</b>: no sirven para tu carpeta y no se pueden copiar. Úsalos para ver dónde se ganan los puntos de cada criterio.</div>
+    <div class="tiles games" style="margin-top:14px">${Object.entries(EI_MODELS).map(([u, m]) => `<button class="tile" type="button" data-go="ei-modelo-${u}"><span class="code">${u}</span><span class="nm">${EI_UNITS[u]}: ${KC[m.kc]}</span><span class="ds">${esc(m.title)} · ${m.source}, ${m.date}</span></button>`).join('')}</div>`;
+}
+function renderEIModel(u) {
+  const m = EI_MODELS[u], words = m.paras.reduce((s, p) => s + wc(p[1]), 0);
+  app.innerHTML = `<button class="crumb" type="button" data-go="ei-modelos">← Comentarios modelo</button><div class="eyebrow" style="margin-top:12px">Modelo · Unidad ${u} · ${EI_UNITS[u]}</div><h1>${KC[m.kc]}: ${esc(m.title)}</h1>
+    <div class="fb info">Modelo de práctica, escrito sobre una noticia de ${m.date}. <b>No sirve para tu carpeta.</b></div>
+    <table class="dtab eicover"><tbody><tr><th scope="row">Artículo</th><td><a href="${m.url}" target="_blank" rel="noopener">${esc(m.title)}</a></td></tr><tr><th scope="row">Fuente y fecha</th><td>${m.source}, ${m.date}</td></tr><tr><th scope="row">Resumen (no cuenta)</th><td>${m.sum}</td></tr><tr><th scope="row">Unidad y concepto clave</th><td>Unidad ${u} · ${KC[m.kc]}</td></tr><tr><th scope="row">Cómputo de palabras</th><td>${words}</td></tr></tbody></table>
+    <p class="small muted">Las marcas de colores señalan qué criterio gana puntos en cada parte: ${Object.entries(EI_ANN).map(([k, n]) => `<span class="ann a${k}">${k}</span> ${n}`).join(' · ')}</p>
+    ${m.paras.map(([k, t, notes], i) => `${i === 1 ? `<div class="mrow2"><div><h4 style="margin:0 0 6px">${esc(m.diaT)}</h4><div id="emDia"></div></div><aside><div class="annn"><span class="ann aA">A</span> Título completo, ejes con las variables del artículo, curvas y equilibrios rotulados. El texto lo cita con esos rótulos.</div></aside></div>` : ''}
+      <div class="mrow2"><div class="mtext"><span class="mtag">${EI_BLOCKS.find(b => b.k === k).n} · ${wc(t)} palabras</span>${t.split('\n').map(x => `<p>${x}</p>`).join('')}</div><aside>${notes.map(([c, n]) => `<div class="annn"><span class="ann a${c}">${c}</span> ${n}</div>`).join('')}</aside></div>`).join('')}
+    <h2>Qué bajaría el puntaje</h2><ul class="okl">${m.low.map(([c, t]) => `<li><span class="ann a${c}">${c}</span> ${t}</li>`).join('')}</ul>`;
+  sketchPad($('#emDia'), m.dia, null, { readOnly: true, file: 'modelo-EI-U' + u });
 }
 
 render();
