@@ -1,0 +1,1063 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<meta name="theme-color" content="#0B0C10">
+<meta name="description" content="Juego de Fórmula 1 para repasar la Unidad 4 de Economía Global.">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="GP Académico">
+<title>Grand Prix Académico</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,400;0,600;0,700;0,900;1,700;1,900&family=Barlow:wght@400;500;600&display=swap">
+<style>
+:root{
+  color-scheme:dark;
+  --bg:#0B0C10; --panel:#14161C; --panel2:#1B1E26; --line:#2A2E39; --text:#F2F3F5; --muted:#98A0AE;
+  --red:#E8112D; --green:#2FD17C; --yellow:#FFD23F; --purple:#B04BFF; --cyan:#22C3E6;
+  --display:"Titillium Web","Arial Narrow","Segoe UI",system-ui,sans-serif;
+  --body:"Barlow","Segoe UI",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+body{background:var(--bg); color:var(--text); font-family:var(--body); font-size:16px; line-height:1.45; padding-inline:16px; padding-block:12px 40px}
+.wrap{max-width:1240px; margin:0 auto; display:flex; flex-direction:column; gap:12px}
+button{font:inherit; color:inherit}
+:focus-visible{outline:3px solid var(--yellow); outline-offset:2px}
+
+.brand{display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; border-bottom:2px solid var(--red); padding-bottom:8px}
+.logo{display:flex; align-items:center; gap:10px}
+.logo .mark{background:var(--red); color:#fff; font:italic 900 18px/1 var(--display); padding:6px 10px; transform:skewX(-12deg)}
+.logo h1{margin:0; font:italic 900 clamp(20px,3vw,28px)/1 var(--display); letter-spacing:.02em; text-transform:uppercase}
+.season{font:600 14px var(--display); color:var(--muted); text-transform:uppercase; letter-spacing:.08em; display:flex; gap:16px; flex-wrap:wrap}
+.season b{color:var(--text); font-size:18px}
+
+.label{font:700 12px var(--display); text-transform:uppercase; letter-spacing:.14em; color:var(--muted)}
+.panel{background:var(--panel); border:1px solid var(--line); border-radius:6px; padding:20px}
+.btn{font:italic 900 17px var(--display); text-transform:uppercase; letter-spacing:.04em; border:none; background:var(--red); color:#fff; padding:11px 22px; border-radius:4px; cursor:pointer; transform:skewX(-8deg)}
+.btn span{display:inline-block; transform:skewX(8deg)}
+.btn.ghost{background:transparent; border:1.5px solid var(--line)}
+.btn:disabled{opacity:.35; cursor:not-allowed}
+.row-actions{display:flex; gap:12px; flex-wrap:wrap; align-items:center}
+kbd{font:700 12px var(--display); border:1px solid var(--line); border-bottom-width:3px; border-radius:4px; padding:1px 6px; background:var(--panel2)}
+
+/* Garaje */
+.garage{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.2fr); gap:16px}
+.garage h2{font:italic 900 clamp(26px,4vw,40px)/1.05 var(--display); margin:6px 0 10px; text-transform:uppercase; text-wrap:balance}
+.garage p{margin:0 0 14px; color:var(--muted)}
+.field{display:flex; flex-direction:column; gap:6px; margin-bottom:14px}
+.field input{font:600 18px var(--display); background:var(--panel2); border:1.5px solid var(--line); color:var(--text); padding:10px 12px; border-radius:4px; width:100%}
+.liveries{display:flex; gap:10px; flex-wrap:wrap}
+.livery{width:44px; height:30px; border-radius:4px; border:2px solid transparent; cursor:pointer; transform:skewX(-10deg)}
+.livery[aria-pressed="true"]{border-color:#fff; box-shadow:0 0 0 2px var(--bg), 0 0 0 4px #fff}
+.cal{display:flex; flex-direction:column; gap:6px}
+.cal .c{display:grid; grid-template-columns:36px 1fr auto; gap:10px; align-items:center; padding:8px 10px; background:var(--panel2); border-radius:4px; border-left:4px solid var(--line)}
+.cal .c.done{border-left-color:var(--green)} .cal .c.now{border-left-color:var(--red)}
+.cal .n{font:900 italic 18px var(--display); color:var(--muted)}
+.cal .t{font:700 15px var(--display); text-transform:uppercase; letter-spacing:.03em}
+.cal .u{font-size:13px; color:var(--muted); display:block; font-family:var(--body); text-transform:none; letter-spacing:0; font-weight:500}
+.cal .r{font:700 14px var(--display); color:var(--muted); text-align:right; white-space:nowrap}
+.cal .c.done .r{color:var(--green)}
+.rules{display:grid; grid-template-columns:auto 1fr; gap:6px 12px; font-size:15px; margin:4px 0 16px}
+.rules b{font-family:var(--display); text-transform:uppercase; font-size:13px; letter-spacing:.06em; color:var(--yellow); padding-top:2px}
+
+/* Carrera */
+.race{display:grid; grid-template-columns:210px minmax(0,1fr); gap:12px; align-items:start}
+.tower{background:var(--panel); border:1px solid var(--line); border-radius:6px; padding:6px 0}
+.tower .head{font:900 italic 14px var(--display); text-transform:uppercase; padding:4px 12px 6px; display:flex; justify-content:space-between; color:var(--muted)}
+.tower .list{position:relative; height:calc(20 * 24px)}
+.trow{position:absolute; left:0; right:0; height:24px; display:grid; grid-template-columns:26px 4px 1fr auto; gap:7px; align-items:center; padding:0 10px; font:700 13px var(--display); transition:top .7s cubic-bezier(.3,.8,.3,1)}
+.trow .p{text-align:right; color:var(--muted); font-variant-numeric:tabular-nums}
+.trow .bar{height:14px; border-radius:1px}
+.trow .nm{white-space:nowrap; overflow:hidden; text-overflow:ellipsis; letter-spacing:.04em}
+.trow .tg{font-size:10px; letter-spacing:.08em; padding:1px 5px; border-radius:2px}
+.trow.me{background:var(--text); color:var(--bg)} .trow.me .p{color:var(--bg)}
+.trow.me .tg{background:var(--red); color:#fff}
+.trow.boss .tg{background:var(--purple); color:#fff}
+
+.main{display:flex; flex-direction:column; gap:10px; min-width:0}
+.gp{display:flex; justify-content:space-between; gap:6px 16px; flex-wrap:wrap; align-items:baseline}
+.gp h2{margin:0; font:italic 900 clamp(20px,2.6vw,28px)/1 var(--display); text-transform:uppercase}
+.gp .unit{color:var(--muted); font-size:14px}
+.board{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px}
+.tile{background:var(--panel); border:1px solid var(--line); border-radius:6px; padding:8px 12px; display:flex; flex-direction:column; gap:4px; min-width:0}
+.tile .v{font:900 italic 24px/1 var(--display); font-variant-numeric:tabular-nums}
+.tile .v small{font-size:14px; color:var(--muted); font-style:normal}
+.tyre{display:flex; align-items:center; gap:8px; font:700 17px/1 var(--display); text-transform:uppercase}
+.tyre i{width:18px; height:18px; border-radius:50%; border:4px solid currentColor; background:#111; flex:none}
+.ers{height:10px; display:flex; gap:2px}
+.ers div{flex:1; background:var(--panel2)}
+.ers div.on{background:var(--cyan)}
+.ersv{font:700 13px var(--display); color:var(--cyan)}
+.sectors{display:flex; gap:4px}
+.sectors span{flex:1; font:700 11px var(--display); text-align:center; padding:3px 0; background:var(--panel2); border-radius:2px; color:var(--muted); letter-spacing:.06em}
+.sectors span.ok{background:var(--green); color:#062}
+.sectors span.bad{background:var(--yellow); color:#430}
+.sectors span.now{outline:2px solid var(--text); color:var(--text)}
+.sectors span.boss.ok{background:var(--purple); color:#fff}
+
+.stage{position:relative; width:100%; aspect-ratio:16/9; border-radius:6px; overflow:hidden; border:1px solid var(--line); background:#123021}
+.stage canvas{display:block; width:100%; height:100%}
+.ov{position:absolute; inset:0; background:rgba(6,7,10,.62); display:flex; align-items:center; justify-content:center; padding:12px; overflow:auto}
+.ov .panel{width:min(760px,100%); max-height:100%; overflow:auto; box-shadow:0 18px 50px rgba(0,0,0,.5)}
+
+.radio{background:linear-gradient(90deg, rgba(232,17,45,.14), transparent 70%); border-left:4px solid var(--red); padding:8px 14px; border-radius:0 6px 6px 0}
+.radio .label{color:var(--red); display:flex; align-items:center; gap:8px}
+.radio .label::before{content:""; width:8px; height:8px; border-radius:50%; background:var(--red); animation:pulse 1.2s infinite}
+@keyframes pulse{50%{opacity:.25}}
+.radio p{margin:4px 0 0; font-size:16px}
+.radio em{font-family:var(--display); font-weight:700; color:var(--yellow); font-style:italic}
+.keys{color:var(--muted); font-size:14px; display:flex; gap:14px; flex-wrap:wrap}
+
+.qcard{display:flex; flex-direction:column; gap:12px}
+.kicker{display:flex; gap:8px; align-items:center; flex-wrap:wrap}
+.chip{font:900 italic 13px var(--display); text-transform:uppercase; letter-spacing:.06em; padding:4px 10px; background:var(--panel2); border-radius:2px}
+.chip.boss{background:var(--purple); color:#fff}
+.case{background:var(--panel2); border-radius:4px; padding:10px 14px; font-size:15px; border-left:3px solid var(--purple)}
+.q{font:700 clamp(18px,2.2vw,22px)/1.25 var(--display); margin:0; text-wrap:balance}
+.opts{display:grid; grid-template-columns:1fr; gap:7px}
+.opt{text-align:left; display:flex; gap:12px; align-items:flex-start; background:var(--panel2); border:1.5px solid var(--line); border-radius:4px; padding:9px 12px; cursor:pointer; font-size:15px; line-height:1.35}
+.opt:hover:not(:disabled){border-color:var(--text)}
+.opt .l{font:900 italic 14px var(--display); flex:none; width:24px; height:24px; display:grid; place-items:center; background:var(--bg); border-radius:2px}
+.opt:disabled{cursor:default}
+.opt.right{border-color:var(--green); background:rgba(47,209,124,.12)} .opt.right .l{background:var(--green); color:#062}
+.opt.wrong{border-color:var(--red); background:rgba(232,17,45,.12)} .opt.wrong .l{background:var(--red); color:#fff}
+.opt.faded{opacity:.4}
+.opt.gone{opacity:.15; text-decoration:line-through}
+.fb{padding:10px 14px; border-radius:4px; border-left:4px solid var(--green); background:rgba(47,209,124,.1)}
+.fb.bad{border-left-color:var(--yellow); background:rgba(255,210,63,.08)}
+.fb strong{font:900 italic 15px var(--display); text-transform:uppercase; display:block; margin-bottom:2px}
+.fb p{margin:4px 0 0; font-size:15px}
+.fb .mine{margin-top:8px; padding:8px 10px; background:var(--bg); border-radius:4px; font-size:14px; color:var(--muted)}
+textarea{font:inherit; font-size:15px; width:100%; min-height:80px; background:var(--panel2); color:var(--text); border:1.5px solid var(--line); border-radius:4px; padding:10px 12px; resize:vertical}
+.hint{color:var(--muted); font-size:14px}
+
+.pad{display:none; justify-content:space-between; gap:10px; user-select:none; -webkit-user-select:none; touch-action:none}
+.pad div{display:flex; gap:8px}
+.pad button{font:900 22px var(--display); width:64px; height:56px; border-radius:10px; border:1.5px solid var(--line); background:var(--panel); touch-action:none}
+@media (pointer:coarse){ .pad{display:flex} .keys{display:none} }
+
+.result{display:flex; flex-direction:column; gap:18px}
+.result h2{font:italic 900 clamp(26px,4vw,42px)/1 var(--display); margin:0; text-transform:uppercase; text-wrap:balance}
+.podium{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); align-items:end; gap:8px; max-width:560px}
+.step{display:flex; flex-direction:column; align-items:center; gap:6px; text-align:center}
+.step .who{font:700 15px var(--display); overflow-wrap:anywhere}
+.step .who.me{color:var(--yellow)}
+.step .blk{width:100%; background:var(--panel2); border-top:4px solid var(--line); display:grid; place-items:center; font:900 italic 34px var(--display)}
+.step.p1 .blk{height:130px; border-top-color:var(--yellow)} .step.p2 .blk{height:95px; border-top-color:#C9CED6} .step.p3 .blk{height:70px; border-top-color:#C98A4B}
+.stats{display:flex; gap:24px; flex-wrap:wrap}
+.stats div{display:flex; flex-direction:column}
+.stats b{font:900 italic 30px var(--display)}
+
+@media (max-width:900px){
+  .garage{grid-template-columns:1fr}
+  .race{grid-template-columns:1fr}
+  .tower{order:2}
+  .board{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:600px){ .stage{aspect-ratio:4/5} }
+@media (prefers-reduced-motion:reduce){ .trow{transition:none} .radio .label::before{animation:none} }
+html,body{overscroll-behavior:none}
+body{padding-top:max(12px, env(safe-area-inset-top)); padding-bottom:max(40px, env(safe-area-inset-bottom)); padding-left:max(16px, env(safe-area-inset-left)); padding-right:max(16px, env(safe-area-inset-right)); -webkit-tap-highlight-color:transparent}
+.stage canvas{touch-action:none}
+.pad{position:absolute; left:12px; right:12px; bottom:12px; pointer-events:none}
+.pad div{pointer-events:auto}
+.pad button{width:74px; height:74px; font-size:26px; background:rgba(20,22,28,.55); border-color:rgba(255,255,255,.25); backdrop-filter:blur(2px)}
+.pad button:active{background:rgba(232,17,45,.7)}
+.ov{z-index:2}
+@media (pointer:coarse){
+  .tower{display:none}
+  .race{grid-template-columns:1fr}
+  .stage{aspect-ratio:auto; height:min(68dvh, 125vw)}
+}
+@media (pointer:coarse) and (orientation:landscape){
+  body.racing{padding-top:max(6px, env(safe-area-inset-top)); padding-bottom:6px}
+  body.racing .brand, body.racing .gp, body.racing .radio{display:none}
+  body.racing .wrap{gap:6px}
+  body.racing .board{grid-template-columns:repeat(4,minmax(0,1fr)); gap:6px}
+  body.racing .tile{padding:4px 8px; gap:2px}
+  body.racing .tile .label{font-size:10px}
+  body.racing .tile .v{font-size:18px}
+  body.racing .stage{height:calc(100dvh - 72px - env(safe-area-inset-top))}
+}
+</style>
+</head>
+<body>
+
+
+<div class="wrap">
+  <div class="brand">
+    <div class="logo"><span class="mark">GP</span><h1>Grand Prix Académico</h1></div>
+    <div class="season" id="seasonBar"></div>
+  </div>
+
+  <section id="garage" class="garage">
+    <div class="panel">
+      <span class="label">Temporada · Unidad 4 · Economía global</span>
+      <h2>Subite al auto, piloto novato</h2>
+      <p>Manejás tu auto con las flechas del teclado. Cuando alcanzás a un rival, aparece una pregunta: si acertás, lo pasás; si fallás, hacés un trompo y te pasan.</p>
+      <div class="field"><label class="label" for="inName">Nombre de corredor</label><input id="inName" maxlength="22" placeholder="Ej.: Sofía Rivas"></div>
+      <div class="field"><label class="label" for="inTeam">Escudería</label><input id="inTeam" maxlength="26" placeholder="Ej.: Ventaja Comparativa Racing"></div>
+      <div class="field"><span class="label">Color del auto</span><div class="liveries" id="liveries"></div></div>
+      <div class="rules">
+        <b>Manejo</b><span><kbd>↑</kbd> acelerar · <kbd>↓</kbd> frenar · <kbd>←</kbd> <kbd>→</kbd> doblar. Si te vas al pasto, perdés velocidad.</span>
+        <b>Rivales</b><span>3 rivales por circuito y, al final, el Jefe de Nivel (auto violeta).</span>
+        <b>ERS</b><span>Cada acierto carga la batería 25 %. Con 50 % podés descartar dos respuestas.</span>
+        <b>Jefe</b><span>Caso práctico: elegís la decisión, escribís tu justificación y elegís el mejor argumento.</span>
+      </div>
+      <div class="row-actions">
+        <button class="btn" id="btnStart"><span>Salir a pista</span></button>
+        <button class="btn ghost" id="btnReset" hidden><span>Nueva temporada</span></button>
+        <button class="btn ghost" id="btnInstall" hidden><span>Instalar app</span></button>
+        <a class="btn ghost" href="https://gp-academico-batan.netlify.app/" target="_blank" rel="noopener" style="text-decoration:none"><span>App para el celular ↗</span></a>
+      </div>
+      <p class="hint" id="resetConfirm" hidden style="margin-top:10px">Se va a borrar el progreso guardado en este dispositivo. <button class="btn ghost" id="btnResetYes" style="padding:6px 12px;font-size:14px"><span>Sí, empezar de cero</span></button></p>
+    </div>
+    <div class="panel">
+      <span class="label">Calendario</span>
+      <div class="cal" id="calendar" style="margin-top:10px"></div>
+    </div>
+  </section>
+
+  <section id="race" class="race" hidden>
+    <aside class="tower" aria-label="Clasificación en vivo">
+      <div class="head"><span>Posiciones</span><span id="towerLap"></span></div>
+      <div class="list" id="tower"></div>
+    </aside>
+    <div class="main">
+      <div class="gp"><h2 id="gpName"></h2><span class="unit" id="gpUnit"></span></div>
+      <div class="board">
+        <div class="tile"><span class="label">Posición</span><span class="v" id="bPos"></span></div>
+        <div class="tile"><span class="label">Neumáticos</span><span class="tyre" id="bTyre"></span></div>
+        <div class="tile"><span class="label">Batería ERS</span><div class="ers" id="bErs"></div><span class="ersv" id="bErsV"></span></div>
+        <div class="tile"><span class="label">Progreso</span><div class="sectors" id="bSec"></div></div>
+      </div>
+      <div class="stage" id="stage">
+        <canvas id="cv" width="960" height="540" tabindex="0" aria-label="Pista de carrera. Usá las flechas para manejar."></canvas>
+        <div class="pad" id="pad">
+          <div><button data-k="left" aria-label="Izquierda">◀</button><button data-k="right" aria-label="Derecha">▶</button></div>
+          <div><button data-k="down" aria-label="Frenar">▼</button><button data-k="up" aria-label="Acelerar">▲</button></div>
+        </div>
+        <div class="ov" id="qov" hidden><div class="panel qcard" id="qcard" role="dialog" aria-modal="true"></div></div>
+      </div>
+      <div class="radio" aria-live="polite"><span class="label">En vivo · Comentario</span><p id="radio"></p></div>
+      <div class="keys"><span><kbd>↑</kbd> acelerar</span><span><kbd>↓</kbd> frenar</span><span><kbd>←</kbd> <kbd>→</kbd> doblar</span><span><kbd>1</kbd>–<kbd>4</kbd> responder</span></div>
+    </div>
+  </section>
+
+  <section id="result" class="panel result" hidden></section>
+</div>
+
+<script>
+const CIRCUITS = [
+{ gp:"GP de Clasificación · Sakhir", unit:"4.1 Beneficios del comercio internacional", boss:"El Titán del Sector",
+  obs:[
+  {q:"Según el capítulo, ¿cuál de estos NO es un beneficio del libre comercio internacional?",
+   o:["Proteger a las industrias nacionales de la competencia extranjera","Mayor competencia, que lleva a precios más bajos y más variedad","Acceso a divisas para importar bienes de capital","Economías de escala para las empresas exportadoras"],
+   e:"Proteger a la industria nacional es un argumento del proteccionismo (Unidad 4.2), no un beneficio del libre comercio. El capítulo menciona competencia, precios más bajos, variedad, acceso a recursos y divisas, nuevos mercados, economías de escala y eficiencia."},
+  {q:"Samsung vende teléfonos en todo el mundo y no solo en Corea del Sur. Sus costos unitarios bajan a medida que aumenta la producción. ¿Qué beneficio del comercio ilustra?",
+   o:["Economías de escala","Eficiencia asignativa","Acceso a divisas","Disponibilidad de bienes y servicios"],
+   e:"Al exportar, la empresa aumenta su producción y reduce su costo unitario: son economías de escala."},
+  {q:"El país A deja de cultivar tomates en invernaderos costosos, los importa del país B y usa esos recursos para producir patatas de forma más eficiente. ¿Qué beneficio ilustra?",
+   o:["Eficiencia asignativa","Economías de escala","Aprendizaje de técnicas extranjeras","Acceso a nuevos mercados"],
+   e:"El comercio permite reasignar recursos hacia lo que el país produce con menor costo de oportunidad: es eficiencia asignativa."},
+  {q:"Hay ventaja comparativa cuando un país…",
+   o:["…tiene un menor costo de oportunidad para producir un bien que otro país","…produce más cantidad de ambos bienes que otro país","…tiene más recursos naturales que sus vecinos","…exporta más de lo que importa"],
+   e:"La ventaja comparativa se basa en el costo de oportunidad, no en la cantidad producida. Producir más de ambos bienes es ventaja absoluta."},
+  {q:"Con una unidad de recursos, el país X produce 20 limones o 5 unidades de trigo. ¿Cuál es el costo de oportunidad de 1 unidad de trigo?",
+   o:["4 limones","0,25 limones","5 limones","20 limones"],
+   e:"20 / 5 = 4. Para producir 1 unidad de trigo, X resigna 4 limones. (0,25 es el costo de un limón medido en trigo.)"},
+  {q:"Muchas empresas manufactureras mejoraron su eficiencia al adoptar el control de inventarios «justo a tiempo» de Japón. ¿Qué beneficio del comercio es este?",
+   o:["Aprendizaje de las técnicas de competidores extranjeros","Fuente de divisas","Economías de escala","Disponibilidad de materias primas"],
+   e:"El capítulo lo llama «aprendizaje»: las empresas que comercian adoptan técnicas de producción de sus competidores extranjeros."}
+  ],
+  bossCase:"Con una unidad de recursos, el país X produce 20 limones o 16 computadoras. El país Y produce 4 limones o 12 computadoras. X es más productivo en los dos bienes.",
+  b1:{q:"¿Cómo deberían especializarse los dos países para beneficiarse del comercio?",
+      o:["X en limones e Y en computadoras","X produce ambos bienes y no comercia","Y en limones y X en computadoras","No conviene comerciar porque X tiene ventaja absoluta en todo"],
+      e:"Aunque X tenga ventaja absoluta en ambos, el comercio conviene si los costos de oportunidad son distintos."},
+  b2:{q:"¿Qué argumento justifica mejor esa especialización?",
+      o:["Un limón le cuesta a X 0,8 computadoras y a Y, 3. Una computadora le cuesta a Y 0,33 limones y a X, 1,25. Cada país se especializa donde su costo de oportunidad es menor.",
+         "X produce más limones y más computadoras, así que debería concentrarse en el bien que más produce.",
+         "Y debería producir limones porque su costo de oportunidad en limones es de 0,33 computadoras.",
+         "Debe especializarse el país con más recursos, porque así aprovecha las economías de escala."],
+      e:"Es la lógica de Ricardo: se compara el costo de oportunidad de cada bien (16/20 = 0,8 y 12/4 = 3 para los limones; 20/16 = 1,25 y 4/12 = 0,33 para las computadoras)."}
+},
+{ gp:"GP de Mónaco", unit:"4.2–4.3 Proteccionismo comercial", boss:"La Baronesa de la Aduana",
+  obs:[
+  {q:"¿Qué es un arancel?",
+   o:["Un impuesto sobre los bienes importados, que paga quien los importa","Un límite a la cantidad o al valor de las importaciones","Un pago del gobierno a los productores nacionales","Un trámite burocrático para frenar importaciones"],
+   e:"Los aranceles son impuestos a las importaciones. El límite de cantidad es una cuota, el pago a productores es un subsidio y el trámite es una barrera administrativa."},
+  {q:"EE. UU. aplica un arancel de $40 por panel solar y las importaciones caen a 8 millones de unidades. ¿Cuánto recauda el gobierno?",
+   o:["$320 millones","$520 millones","$40 millones","$2.320 millones"],
+   e:"Ingreso arancelario = cantidad importada × arancel = 8 millones × $40 = $320 millones. ($520 millones usaría las importaciones previas al arancel.)"},
+  {q:"Según el libro, ¿qué ventaja tiene una cuota frente a un arancel?",
+   o:["Reduce las importaciones en un monto fijo sin depender de que suba el precio y caiga la demanda","Genera más ingresos para el gobierno","No causa pérdida de bienestar","Reduce la corrupción en la aduana"],
+   e:"La cuota fija directamente el límite. Pero no genera ingresos y puede fomentar la corrupción, porque los funcionarios deciden qué entra."},
+  {q:"El gobierno argentino da un subsidio de $2 por bushel a los productores de maíz. ¿Qué pasa con los consumidores argentinos?",
+   o:["No se ven afectados: el precio interno sigue siendo el precio mundial","Pagan $2 más por bushel","Pagan $2 menos por bushel","Compran más maíz importado"],
+   e:"El subsidio aumenta la producción nacional y reduce las importaciones, pero el precio de mercado no cambia. El costo lo paga el gobierno ($24 millones)."},
+  {q:"La UE prohíbe la carne vacuna tratada con hormonas, gran parte de la cual viene de EE. UU. ¿Qué tipo de barrera es?",
+   o:["Una barrera administrativa: norma de salud y seguridad","Un arancel ad valorem","Una cuota de importación","Un subsidio a la exportación"],
+   e:"Las normas de salud y seguridad son barreras administrativas: restringen importaciones sin un impuesto ni un límite de cantidad."},
+  {q:"Corea del Sur subsidia su industria de baterías para vehículos eléctricos para que alcance economías de escala y pueda competir. ¿Qué argumento proteccionista usa?",
+   o:["Industria naciente","Industria en declive","Antidumping","Recaudar ingresos"],
+   e:"El argumento de la industria naciente protege a una industria nueva hasta que logre las economías de escala necesarias para competir."}
+  ],
+  bossCase:"Un país importa un alimento básico con demanda muy inelástica. El ministro quiere bajar las importaciones exactamente en 20 millones de kg este año.",
+  b1:{q:"¿Qué barrera comercial le recomendás?",
+      o:["Una cuota de importación","Un arancel","Un subsidio a la exportación","Una campaña patriótica"],
+      e:"El objetivo es una reducción exacta de la cantidad importada con demanda inelástica."},
+  b2:{q:"¿Qué argumento justifica mejor la recomendación?",
+      o:["Con demanda inelástica, un arancel reduce poco la cantidad importada. La cuota fija el límite directamente sin depender de la caída de la demanda. Costo: no genera ingresos y puede fomentar la corrupción.",
+         "La cuota recauda más ingresos fiscales que el arancel y así financia a los productores.",
+         "La cuota no genera pérdida de bienestar para los consumidores porque el precio no cambia.",
+         "El arancel siempre reduce más las importaciones cuando la demanda es inelástica."],
+      e:"El libro dice que los aranceles pueden no reducir tanto las importaciones si la demanda es inelástica. Las cuotas tienen más probabilidades de lograrlo, pero no recaudan y son susceptibles a la corrupción."}
+},
+{ gp:"GP de Gran Bretaña · Silverstone", unit:"4.4 Integración económica", boss:"El Comisario del Bloque",
+  obs:[
+  {q:"¿Qué diferencia a una unión aduanera de una zona de libre comercio?",
+   o:["La unión aduanera agrega un arancel externo común para los países no miembros","La unión aduanera usa una moneda común","La zona de libre comercio permite la libre circulación de trabajadores","No hay diferencias"],
+   e:"En una zona de libre comercio, cada miembro fija sus propios aranceles a terceros. En una unión aduanera, todos aplican el mismo arancel externo común."},
+  {q:"En la Comunidad de África Oriental (Burundi, Kenia, Ruanda, Tanzania y Uganda), las personas pueden trabajar libremente en cualquier país miembro. ¿Qué tipo de bloque es?",
+   o:["Un mercado común","Una zona de libre comercio","Una unión aduanera","Un acuerdo bilateral"],
+   e:"Un mercado común suma la libre circulación de mano de obra y capital al libre comercio."},
+  {q:"El acuerdo JAEPA entre Japón y Australia (2015) es un ejemplo de acuerdo…",
+   o:["…bilateral","…regional","…multilateral","…de unión monetaria"],
+   e:"Lo firman dos países para aumentar su comercio: es bilateral."},
+  {q:"¿Cuál de estas es una función de la OMC?",
+   o:["Actuar como árbitro en las disputas comerciales entre países","Fijar las tasas de interés de sus miembros","Emitir una moneda común","Otorgar préstamos blandos para infraestructura"],
+   e:"La OMC administra acuerdos, es un foro de negociación, arbitra disputas (como la de EE. UU. y la UE por el acero), supervisa políticas y brinda asistencia técnica."},
+  {q:"¿Qué debilidad de los mercados comunes menciona el libro con el ejemplo de los médicos de Polonia?",
+   o:["La salida de trabajadores puede dejar escasez de mano de obra en un país y excedente en otro","Los miembros pierden el control de su moneda","Las negociaciones de la OMC se vuelven más lentas","Suben los aranceles entre los miembros"],
+   e:"La libre circulación de trabajadores puede provocar escasez en un país (médicos en Polonia) y excedente en otro."},
+  {q:"¿Qué etapa de integración implica una moneda única y un banco central común?",
+   o:["La unión monetaria","El mercado común","La unión aduanera","La zona de libre comercio"],
+   e:"La unión monetaria (como la zona euro) es una de las etapas finales de la integración económica."}
+  ],
+  bossCase:"Sudáfrica integra la SACU (con Botsuana, Namibia, Lesoto y Suazilandia). Quiere desarrollar su sector de energías renovables, pero el arancel externo común sobre los paneles solares es del 15 % y le parece demasiado bajo.",
+  b1:{q:"¿Puede Sudáfrica fijar por su cuenta un arancel del 30 % a los paneles solares de países no miembros?",
+      o:["No, porque en una unión aduanera todos los miembros aplican el mismo arancel externo común","Sí, porque la SACU es solo una zona de libre comercio","Sí, porque la OMC permite cualquier arancel para las industrias nacientes","No, porque la SACU es una unión monetaria con banco central propio"],
+      e:"La SACU es una unión aduanera, así que el arancel a terceros es común."},
+  b2:{q:"¿Qué argumento lo justifica mejor?",
+      o:["El arancel externo común asegura que todos importen al mismo precio y que ningún miembro gane ventaja con un arancel más bajo. A cambio, cada país pierde cierto control sobre su política comercial.",
+         "Los miembros de una unión aduanera no pueden cobrar ningún arancel a terceros países.",
+         "Los aranceles solo los decide la OMC, que actúa como banco central del bloque.",
+         "En una unión aduanera los trabajadores circulan libremente, por eso no se pueden proteger las industrias."],
+      e:"El libro usa este mismo ejemplo: un arancel externo común del 15 % puede ser demasiado bajo para Sudáfrica. Esa es la pérdida de control sobre la política comercial."}
+},
+{ gp:"GP de Italia · Monza", unit:"4.5 Tipos de cambio", boss:"El Especulador de Monza",
+  obs:[
+  {q:"Si el tipo de cambio pasa de 1 USD = 7 CNY a 1 USD = 8 CNY, el dólar…",
+   o:["…se apreció frente al yuan","…se depreció frente al yuan","…fue devaluado por el banco central","…no cambió su valor"],
+   e:"Ahora un dólar compra más yuanes, así que su valor aumentó: se apreció."},
+  {q:"¿Cuál de estas transacciones genera DEMANDA de dólares estadounidenses?",
+   o:["Un comprador francés adquiere Microsoft Office 365 a EE. UU.","Un estadounidense compra un BMW fabricado en Alemania","Un banco de EE. UU. compra bonos del gobierno británico","Una empresa de EE. UU. compra una planta en México"],
+   e:"Los compradores extranjeros de exportaciones estadounidenses necesitan dólares. Las otras tres opciones ofrecen dólares para comprar otras monedas."},
+  {q:"La Reserva Federal sube las tasas de interés. ¿Qué pasa con el dólar?",
+   o:["Aumenta su demanda y se aprecia","Aumenta su oferta y se deprecia","Baja su demanda y se deprecia","No hay ningún efecto"],
+   e:"Los inversores de cartera y los especuladores compran dólares para aprovechar la mayor rentabilidad: la demanda sube y el dólar se aprecia."},
+  {q:"Una camioneta Dodge cuesta $30.000. Si el dólar pasa de 7 a 8 CNY, ¿qué pasa con su precio en China?",
+   o:["Sube de ¥210.000 a ¥240.000","Baja de ¥240.000 a ¥210.000","Se mantiene en ¥210.000","Baja de $30.000 a $26.250"],
+   e:"30.000 × 7 = 210.000 y 30.000 × 8 = 240.000. Una apreciación encarece las exportaciones."},
+  {q:"¿Cuál es una desventaja de un tipo de cambio fijo?",
+   o:["El país renuncia a la política monetaria como herramienta macroeconómica","Aumenta la volatilidad del tipo de cambio","A los exportadores les cuesta prever sus ingresos","Promueve las devaluaciones competitivas"],
+   e:"Para sostener el tipo fijo, las tasas de interés se ajustan al tipo de cambio y no al crecimiento, la inflación o el desempleo. Las otras opciones son justamente cosas que el tipo fijo evita."},
+  {q:"En un sistema de flotación administrada…",
+   o:["…el mercado fija el valor, pero el banco central interviene cuando hay mucha volatilidad","…el banco central fija un valor que nunca cambia","…varios países comparten una moneda única","…no existe mercado de divisas"],
+   e:"La oferta y la demanda determinan el valor, con intervenciones ocasionales si la moneda se vuelve muy volátil, sobrevaluada o infravalorada."}
+  ],
+  bossCase:"Un país mantiene su moneda fija frente al dólar. Cae la demanda de su moneda y hay presión para que baje del valor fijado. Al mismo tiempo, la economía se está desacelerando.",
+  b1:{q:"¿Qué debe hacer el banco central para mantener el tipo de cambio fijo?",
+      o:["Comprar su propia moneda con reservas y/o subir las tasas de interés","Vender su moneda y bajar las tasas de interés","No hacer nada: el mercado lo corrige solo","Devaluar para ganar competitividad"],
+      e:"Hay que aumentar la demanda de la moneda nacional."},
+  b2:{q:"¿Qué argumento justifica mejor la decisión y su costo?",
+      o:["Comprar la moneda aumenta su demanda, y subir las tasas atrae a los inversores de cartera. El costo es que necesita grandes reservas y debe subir las tasas justo cuando la economía necesitaría tasas bajas.",
+         "Vender la moneda aumenta su valor porque hay menos en circulación.",
+         "Subir las tasas no tiene costos porque reduce la inflación y acelera el crecimiento.",
+         "Un tipo fijo se mantiene solo con aranceles, sin intervenir en el mercado de divisas."],
+      e:"El libro explica los dos mecanismos (intervención directa y tasas de interés) y la desventaja: el país renuncia a la política monetaria y necesita grandes reservas."}
+},
+{ gp:"GP de Bélgica · Spa", unit:"4.6 Balanza de pagos", boss:"El Contador de Eau Rouge",
+  obs:[
+  {q:"¿Qué registra la cuenta corriente de la balanza de pagos?",
+   o:["El comercio de bienes y servicios, las rentas de inversión y las transferencias corrientes","La compra de patentes y marcas","La compra de acciones y bonos","Las reservas de oro y divisas"],
+   e:"Las patentes van a la cuenta de capital. Las acciones, los bonos y las reservas van a la cuenta financiera."},
+  {q:"Una farmacéutica de EE. UU. compra una patente a una empresa alemana por $200 millones. ¿Dónde se registra?",
+   o:["En la cuenta de capital","En la cuenta corriente","En la inversión de cartera","En los activos de reserva"],
+   e:"La cuenta de capital registra la compraventa de activos intangibles no producidos: patentes, derechos de autor, marcas y franquicias."},
+  {q:"Coca-Cola compra el 50 % de un fabricante de bebidas sudafricano por $400 millones. Para Sudáfrica es…",
+   o:["…una entrada en la cuenta financiera (inversión extranjera directa)","…una salida en la cuenta corriente","…una entrada en la cuenta de capital","…una transferencia corriente"],
+   e:"Es IED. Ojo: los beneficios que Coca-Cola repatríe después serán una salida en la cuenta corriente de Sudáfrica."},
+  {q:"Un trabajador extranjero envía parte de su salario a su país de origen. ¿Cómo se registra en el país donde trabaja?",
+   o:["Como una salida en transferencias corrientes (cuenta corriente)","Como una entrada en la cuenta financiera","Como una salida en la cuenta de capital","No se registra"],
+   e:"Las remesas son transferencias corrientes. Si salen del país, son una salida de la cuenta corriente."},
+  {q:"¿Qué dice la condición de Marshall-Lerner?",
+   o:["La suma de las elasticidades precio de la demanda de exportaciones e importaciones es mayor que 1","La suma de las elasticidades es menor que 1","La elasticidad ingreso de las importaciones es negativa","Las exportaciones deben ser iguales a las importaciones"],
+   e:"Si se cumple (la suma es mayor que 1), una devaluación corrige el déficit por cuenta corriente."},
+  {q:"Subir impuestos, recortar el gasto público y subir tasas para reducir un déficit por cuenta corriente es una política de…",
+   o:["…reducción del gasto","…reorientación del gasto (devaluación)","…oferta basada en el mercado","…proteccionismo"],
+   e:"Las políticas fiscal y monetaria contractivas reducen la demanda agregada y, con ella, las importaciones. El riesgo es provocar una recesión."}
+  ],
+  bossCase:"Un país devalúa su moneda para corregir un déficit por cuenta corriente. Seis meses después, el déficit empeoró. Un ministro dice: «La devaluación fracasó, hay que revertirla ya».",
+  b1:{q:"¿Qué le recomendás al gobierno?",
+      o:["Esperar: probablemente es el efecto de la curva J y el déficit puede mejorar a largo plazo","Revertir la devaluación de inmediato","Aplicar aranceles a todas las importaciones","Aceptar que una devaluación siempre empeora el déficit"],
+      e:"El empeoramiento inicial es lo que predice la curva J."},
+  b2:{q:"¿Qué argumento lo justifica mejor?",
+      o:["A corto plazo, la demanda de exportaciones e importaciones es inelástica (contratos, lealtad a las marcas) y la oferta interna no puede responder. Con el tiempo se vuelven más elásticas y, si se cumple Marshall-Lerner, el déficit mejora.",
+         "La devaluación abarata las importaciones, y por eso el déficit mejora con el tiempo.",
+         "El déficit empeora porque la suma de las elasticidades siempre es menor que 1.",
+         "La curva J muestra que el déficit mejora primero y empeora después."],
+      e:"El libro explica que la curva J se debe a la elasticidad baja a corto plazo (del punto A al B) y más alta a largo plazo (del punto B al C)."}
+},
+{ gp:"GP de Brasil · Interlagos", unit:"4.7 Desarrollo sostenible", boss:"La Guardiana del Futuro",
+  obs:[
+  {q:"¿Cómo definió la Comisión Brundtland el desarrollo sostenible?",
+   o:["El desarrollo que satisface las necesidades del presente sin comprometer la capacidad de las generaciones futuras de satisfacer las suyas","El crecimiento más rápido posible del PIB real","Proteger el ambiente aunque se frene todo crecimiento","Reducir la población para cuidar los recursos"],
+   e:"Es la definición del informe Brundtland, que luego pasó a ser un objetivo central del PNUD."},
+  {q:"¿Cuál de estos NO aparece en el libro como una forma de mejorar el bienestar (desarrollo)?",
+   o:["Aumentar la dependencia de las exportaciones de materias primas","Aumentar a largo plazo los ingresos reales de los hogares","Reducir la pobreza absoluta","Mejorar la salud y la educación"],
+   e:"El libro menciona ingresos reales, pobreza absoluta, salud, educación y equidad. La dependencia de materias primas es, en cambio, una barrera al desarrollo (Unidad 4.9)."},
+  {q:"¿Cuál de estos es un ejemplo de desarrollo insostenible?",
+   o:["La pesca que sobreexplota recursos finitos y limita su disponibilidad futura","Instalar energía solar en zonas rurales","Ampliar el acceso a la educación","Mejorar la atención de la salud"],
+   e:"La minería, la silvicultura, la pesca y la agricultura pueden sobreexplotar recursos finitos."},
+  {q:"¿Cuántos Objetivos de Desarrollo Sostenible fijó la ONU en 2015, y para qué año?",
+   o:["17 objetivos para 2030","8 objetivos para 2015","17 objetivos para 2050","10 objetivos para 2030"],
+   e:"En 2015 la ONU estableció 17 objetivos que los países miembros deberían alcanzar para 2030."},
+  {q:"¿Cuál es uno de los ejes centrales del plan de los ODS?",
+   o:["La acción coordinada de todos los países en una alianza global","Que cada país fije sus metas sin cooperar","Priorizar solo el crecimiento del PIB","Reducir solo las emisiones de carbono"],
+   e:"El plan se basa en una alianza global: reducir la pobreza, mejorar la salud y la educación y la igualdad, mientras se gestiona el cambio climático."},
+  {q:"¿Por qué el crecimiento puede generar externalidades negativas que vuelven insostenible el desarrollo?",
+   o:["Porque la producción y el consumo generan costos, como el cambio climático, que afectan a las personas en el futuro","Porque siempre reduce los ingresos de los hogares","Porque baja la recaudación de impuestos","Porque reduce la población urbana"],
+   e:"El libro menciona las externalidades negativas globales (cambio climático) y la contaminación localizada."}
+  ],
+  bossCase:"Un gobierno exige que un porcentaje de la electricidad sea renovable. Como resultado, las familias pagan más por la luz hoy.",
+  b1:{q:"¿Esta política es coherente con el desarrollo sostenible?",
+      o:["Sí: se resigna parte del bienestar presente para no comprometer el de las generaciones futuras","No: el desarrollo sostenible solo busca subir los ingresos reales ahora","No: cualquier suba de precios va contra el desarrollo","Sí: porque aumenta el PIB en el corto plazo"],
+      e:"Es el dilema del concepto clave «bienestar económico»."},
+  b2:{q:"¿Qué argumento lo justifica mejor?",
+      o:["Según Brundtland, las mejoras actuales no deben lograrse a costa de las generaciones futuras. La energía renovable reduce las externalidades como el cambio climático, aunque hoy baje el bienestar de los hogares.",
+         "La energía renovable siempre es más barata, así que los hogares ganan desde el primer día.",
+         "El desarrollo sostenible solo mide el PIB real, que sube con las nuevas centrales.",
+         "Los ODS prohíben la energía fósil desde 2015, así que el gobierno no tenía opción."],
+      e:"El libro usa este ejemplo: se paga más por la electricidad para beneficiar a los hogares del futuro. El costo es un menor bienestar presente."}
+},
+{ gp:"GP de Japón · Suzuka", unit:"4.8 Medición del desarrollo", boss:"El Estadístico de las Eses",
+  obs:[
+  {q:"¿Cómo se calcula el Ingreso Nacional Bruto (INB) real?",
+   o:["PIB real + renta neta de la propiedad en el extranjero","PIB real − impuestos","PIB real ÷ población","PIB nominal + inflación"],
+   e:"INB real = PIB real + renta neta de la propiedad. Dividido por la población, da el INB real per cápita."},
+  {q:"¿Qué criterios combina el IDH?",
+   o:["Esperanza de vida, escolaridad (años promedio y esperados) e INB per cápita PPA","PIB per cápita, coeficiente de Gini y emisiones","Mortalidad materna, escaños de mujeres y participación laboral","Felicidad, huella ecológica y esperanza de vida"],
+   e:"Salud, educación y nivel de vida material se combinan en un valor entre 0 y 1."},
+  {q:"En el Índice de Desigualdad de Género (IDG), un valor más ALTO indica…",
+   o:["…mayores disparidades entre mujeres y hombres","…mayor desarrollo económico","…más mujeres en el parlamento","…mayor esperanza de vida"],
+   e:"Es al revés que el IDH: un IDG bajo indica mayor desarrollo."},
+  {q:"¿Cuál es una debilidad del PIB/INB real per cápita como medida del desarrollo?",
+   o:["Es un promedio y no muestra cómo se distribuye el ingreso","No es una medida objetiva","No es ampliamente aceptado","Es muy difícil de calcular"],
+   e:"Tampoco considera la salud, la educación ni la sostenibilidad. Pero sí es objetivo, sencillo y aceptado: esas son sus fortalezas."},
+  {q:"Si el coeficiente de Gini de un país se acerca a 1…",
+   o:["…hay mayor desigualdad en la distribución del ingreso","…hay igualdad perfecta","…su IDH es muy alto","…su PIB está creciendo"],
+   e:"Cuanto más cerca de 1, mayor es la desigualdad, lo que indicaría un menor desarrollo."},
+  {q:"¿Qué le da mucho peso al Índice del Planeta Feliz?",
+   o:["Los factores ambientales (el bienestar sostenible)","La desigualdad de género","Los ingresos por exportaciones","La tasa de interés"],
+   e:"Lo elabora la New Economics Foundation y mide el bienestar sostenible."}
+  ],
+  bossCase:"Los países A y B tienen el mismo IDH: 0,80. Pero el IDH ajustado por desigualdad (IDH-D) de A es 0,75, y el de B es 0,62.",
+  b1:{q:"¿Qué país tiene un desarrollo más equitativo?",
+      o:["El país A","El país B","Los dos por igual, porque tienen el mismo IDH","No se puede saber con estos datos"],
+      e:"El IDH-D baja más cuanto mayor es la desigualdad."},
+  b2:{q:"¿Qué argumento lo justifica mejor?",
+      o:["El IDH-D aplica un coeficiente de desigualdad a la salud, la educación y el ingreso. B pierde 0,18 puntos y A solo 0,05, así que en B los logros están peor distribuidos.",
+         "B tiene un IDH-D más bajo, lo que significa que su población es más joven.",
+         "El IDH-D mide la desigualdad de género, y A tiene más mujeres en el parlamento.",
+         "Como el IDH es igual, la diferencia en el IDH-D se debe a errores de medición."],
+      e:"El libro dice que dos países pueden tener el mismo IDH pero distinto IDH-D: los más desiguales tienen un IDH-D menor."}
+},
+{ gp:"GP de Singapur · Marina Bay", unit:"4.9 Barreras al desarrollo económico", boss:"El Señor de la Noche",
+  obs:[
+  {q:"¿Por qué los precios de las materias primas son tan inestables?",
+   o:["Por los shocks de oferta (el clima) sumados a una demanda y una oferta inelásticas","Porque su demanda es muy elástica","Porque los gobiernos los fijan cada año","Porque su elasticidad ingreso es muy alta"],
+   e:"La demanda es inelástica (alimentos, energía) y la oferta también (temporadas de cultivo, capacidad de extracción). Por eso los precios varían mucho."},
+  {q:"¿Qué describe el «ciclo de la pobreza» del libro?",
+   o:["Ingresos bajos → poco ahorro → poca inversión → baja productividad → ingresos bajos","Inflación alta → devaluación → más exportaciones","Más impuestos → más infraestructura → más crecimiento","Más IED → más repatriación → más ahorro"],
+   e:"Es un círculo que mantiene al país en la pobreza: los ingresos bajos reducen el ahorro y los fondos para invertir."},
+  {q:"¿Cuál es un ejemplo de tecnología APROPIADA según el libro?",
+   o:["Las 4.000 unidades de energía solar en Rangpur, Bangladesh, que dieron electricidad a 20.000 personas","La tecnología de fertilización en Ghana, adoptada sin capacitación","Maquinaria agrícola pensada para grandes granjas europeas","Robots industriales en zonas sin electricidad"],
+   e:"La tecnología apropiada eleva el nivel de vida sin explotar demasiado los recursos y se adapta al país. El caso de Ghana es tecnología inapropiada."},
+  {q:"¿Por qué la economía informal es una barrera al desarrollo?",
+   o:["Porque no paga los impuestos que financian los servicios públicos y la infraestructura","Porque genera demasiadas economías de escala","Porque la integran solo empresas multinacionales","Porque aumenta la recaudación del gobierno"],
+   e:"Además, las empresas informales siguen siendo chicas y no logran economías de escala, y suelen atraer actividades ilegales."},
+  {q:"¿Por qué no tener salida al mar puede ser una barrera al desarrollo?",
+   o:["Porque, sin puertos, suben los costos de transporte y el país depende de sus vecinos","Porque el país no puede tener agricultura","Porque no puede integrar bloques comerciales","Porque tiene más enfermedades"],
+   e:"También pierde industrias como la pesca, el turismo costero y el transporte marítimo."},
+  {q:"Si la corrupción en el sistema legal hace que los emprendedores no confíen en él, ¿qué tipo de barrera es?",
+   o:["Política/social: marcos institucionales débiles","Geográfica: el clima","Económica: la tecnología inapropiada","Geográfica: la falta de salida al mar"],
+   e:"Los sistemas legal, político y financiero son las instituciones clave. Si fallan, frenan el desarrollo."}
+  ],
+  bossCase:"En Kalumbia, un país ficticio, el cobre representa el 64 % de las exportaciones. Este año el precio mundial del cobre cayó un 30 %.",
+  b1:{q:"¿Qué barrera al desarrollo muestra mejor esta situación?",
+      o:["La dependencia de la producción del sector primario (falta de diversificación)","La economía informal","Los marcos institucionales débiles","Las enfermedades"],
+      e:"Una sola materia prima domina las exportaciones."},
+  b2:{q:"¿Qué argumento lo justifica mejor?",
+      o:["Los precios de las materias primas son inestables porque la oferta y la demanda son inelásticas, y la sobreespecialización concentra el riesgo: al caer el precio, caen los ingresos por exportaciones y las divisas.",
+         "La caída del cobre se debe a que Kalumbia tiene una economía informal que no paga impuestos.",
+         "Las materias primas tienen una elasticidad ingreso alta, así que el precio volverá a subir enseguida.",
+         "El problema es que Kalumbia exporta demasiados bienes manufacturados."],
+      e:"El libro usa el cobre de Zambia (64 % de las exportaciones) y el petróleo de Irán, Venezuela y Arabia Saudita como ejemplos de este riesgo."}
+},
+{ gp:"GP de Abu Dabi · Final de temporada", unit:"4.10 Estrategias de crecimiento y desarrollo", boss:"El Campeón del Mundo",
+  obs:[
+  {q:"¿En qué consiste la sustitución de importaciones?",
+   o:["Dejar de importar manufacturas y producirlas en el país, protegiendo a la industria con barreras comerciales","Concentrar los recursos en fabricar bienes para exportar","Eliminar todas las barreras comerciales","Recibir ayuda exterior para importar bienes de capital"],
+   e:"Es una estrategia «orientada hacia el interior». La usaron Chile, Brasil e India."},
+  {q:"¿Qué grupo de países se asocia a la promoción de exportaciones?",
+   o:["China, Singapur, Corea del Sur, Taiwán e Indonesia","Chile, Brasil e India","Zimbabue y Venezuela","Botsuana, Etiopía y Níger"],
+   e:"Chile, Brasil e India se asocian a la sustitución de importaciones. La promoción de exportaciones es la estrategia «orientada hacia el exterior»."},
+  {q:"¿Qué es un préstamo blando?",
+   o:["Un préstamo con una tasa de interés menor que la del mercado","Un préstamo que no hay que devolver","Un préstamo de un banco comercial a tasa normal","Una donación de una ONG"],
+   e:"Por ejemplo, los préstamos de China a Angola para infraestructura."},
+  {q:"¿Qué es la ayuda condicionada?",
+   o:["Ayuda que obliga al país receptor a hacer algo que beneficia al donante","Ayuda para emergencias humanitarias","Ayuda de una agencia internacional como la ONU","La cancelación de la deuda externa"],
+   e:"El ejemplo del libro: el Reino Unido financió una presa en Malasia a cambio de contratos de defensa con fabricantes británicos."},
+  {q:"¿Qué son las microfinanzas?",
+   o:["Pequeños préstamos a personas que no califican para el crédito bancario tradicional","Préstamos del FMI a los gobiernos","Inversión de cartera en países en desarrollo","Subsidios a la exportación"],
+   e:"En Bangladesh, 20 millones de personas, en su mayoría mujeres, usan el microcrédito para salir de la pobreza."},
+  {q:"¿Cuál es una debilidad de la IED para un país en desarrollo?",
+   o:["La repatriación de beneficios es una salida en la cuenta corriente y reduce el INB","Crea empleo directo","Trae conocimientos de producción","Aumenta los ingresos por exportaciones"],
+   e:"Las otras tres son fortalezas de la IED."}
+  ],
+  bossCase:"Un país en desarrollo depende del café. El ministro quiere tres cosas: 1) diversificar su economía más allá de las materias primas, 2) entrar en mercados cuya demanda crezca con el ingreso mundial y 3) evitar las represalias y las pérdidas de bienestar de los aranceles.",
+  b1:{q:"¿Qué estrategia comercial le recomendás?",
+      o:["Promoción de exportaciones (orientada hacia el exterior)","Sustitución de importaciones con aranceles altos","Depender solo de la ayuda exterior","Aumentar la producción de café"],
+      e:"El tercer requisito descarta la sustitución de importaciones."},
+  b2:{q:"¿Qué argumento lo justifica mejor?",
+      o:["Se enfoca en manufacturas con elasticidad ingreso positiva (electrónica, autos) y genera un ciclo: exportaciones → ganancias → inversión → productividad. La sustitución de importaciones usa barreras que traen represalias y pérdidas de bienestar. Riesgos: proteccionismo ajeno y costos ambientales.",
+         "La promoción de exportaciones prohíbe importar, así que protege a la industria naciente sin costo.",
+         "La sustitución de importaciones es mejor porque nunca provoca represalias.",
+         "Aumentar el café es lo mejor porque su demanda crece mucho con el ingreso mundial."],
+      e:"El libro compara las dos estrategias. Las materias primas tienen una elasticidad ingreso baja, y las manufacturas, alta."}
+}
+];
+
+
+/* =========================================================
+   MOTOR DEL JUEGO
+   ========================================================= */
+const RIVALS = [
+ ["VAL","Valdés","#3671C6"],["NOR","Nordqvist","#FF8000"],["MOR","Moretti","#E8112D"],["KAN","Kane","#27F4D2"],
+ ["RUS","Russo","#27F4D2"],["PIA","Piatti","#FF8000"],["DUV","Duval","#64C4FF"],["IBA","Ibarra","#229971"],
+ ["GAS","Gasparini","#FF87BC"],["OCO","Ocampo","#B6BABD"],["ALB","Albers","#64C4FF"],["TSU","Tsuda","#6692FF"],
+ ["HUL","Hultberg","#B6BABD"],["STR","Strand","#229971"],["BRA","Brandt","#52E252"],["ZHO","Zhou Lin","#52E252"],
+ ["OKO","Okoye","#B6BABD"],["LAW","Lawless","#6692FF"],["SOU","Sousa","#FF87BC"]
+];
+const LIVERIES = ["#E8112D","#FFD23F","#22C3E6","#B04BFF","#2FD17C","#FF8000"];
+const POINTS = [25,18,15,12,10,8,6,4,2,1];
+const TYRES = {3:["Óptimo","var(--green)"],2:["Medio","var(--yellow)"],1:["Crítico","var(--red)"]};
+const KINDS = [
+  {k:"overtake", t:"Adelantamiento", intro:(r)=>`¡${r} está adelante! Pisá a fondo <em>(↑)</em> y alcanzalo en la recta. <em>¡Ruuuuum!</em>`},
+  {k:"curve", t:"Curva peligrosa", intro:(r)=>`Se viene la zona de curvas enlazadas y ${r} va adelante. <em>¡Doblá con las flechas y no te vayas al pasto!</em>`},
+  {k:"pit", t:"Salida de boxes", intro:(r)=>`<em>¡Radio de equipo!</em> «${r} acaba de salir de boxes con gomas frías. ¡Es tu oportunidad, atacalo!»`},
+  {k:"rain", t:"Lluvia imprevista", intro:(r)=>`¡Empiezan a caer gotas! <em>¡Bandera amarilla!</em> La pista está resbaladiza y ${r} va adelante con cuidado.`},
+  {k:"safety", t:"Relanzada", intro:(r)=>`<em>¡Se va el safety car!</em> Relanzada con ${r} adelante. ¡Pegate a su caja de cambios!`}
+];
+const $ = id => document.getElementById(id);
+const shuffle = a => { a=[...a]; for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]];} return a; };
+const esc = s => String(s).replace(/[&<>"]/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const KEY = "gp-academico-v1";
+
+let S = load() || fresh();
+let R = null;
+
+function fresh(){
+  return { name:"", team:"", livery:LIVERIES[0], circuit:0, startPos:15, points:0, results:[], ers:50,
+           grid: shuffle(RIVALS.map(r=>r[0])) };
+}
+function load(){ try{ return JSON.parse(localStorage.getItem(KEY)); }catch(e){ return null; } }
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){} }
+function show(id){ ["garage","race","result"].forEach(s=>$(s).hidden = s!==id); document.body.classList.toggle("racing", id==="race"); window.scrollTo({top:0,behavior:"smooth"}); if(id==="race") setTimeout(resizeCanvas,300); }
+function code(){ return (S.name||"Piloto").normalize("NFD").replace(/[^\p{L}]/gu,"").slice(0,3).toUpperCase() || "YOU"; }
+function rival(c){ return RIVALS.find(r=>r[0]===c); }
+
+function renderSeasonBar(){
+  $("seasonBar").innerHTML = S.name
+    ? `<span>Piloto <b>${esc(S.name)}</b></span><span>Escudería <b>${esc(S.team||"Independiente")}</b></span><span>Puntos <b>${S.points}</b></span>`
+    : `<span>Temporada 2026</span>`;
+}
+
+/* ---------- Garaje ---------- */
+function renderGarage(){
+  $("inName").value = S.name; $("inTeam").value = S.team;
+  const lv = $("liveries"); lv.innerHTML = "";
+  LIVERIES.forEach(c=>{
+    const b=document.createElement("button"); b.type="button"; b.className="livery"; b.style.background=c;
+    b.setAttribute("aria-label","Color "+c); b.setAttribute("aria-pressed", S.livery===c);
+    b.onclick=()=>{ S.livery=c; renderGarage(); }; lv.append(b);
+  });
+  const cal=$("calendar"); cal.innerHTML="";
+  CIRCUITS.forEach((c,i)=>{
+    const r=S.results[i], d=document.createElement("div");
+    d.className="c"+(r?" done":"")+(i===S.circuit && !r?" now":"");
+    d.innerHTML=`<span class="n">${String(i+1).padStart(2,"0")}</span><span class="t">${esc(c.gp)}<span class="u">Unidad ${esc(c.unit)}</span></span><span class="r">${r?`P${r.pos} · ${r.pts} pts`:(i===S.circuit?"Próxima":"—")}</span>`;
+    cal.append(d);
+  });
+  const started = S.results.length>0;
+  $("btnStart").innerHTML = `<span>${S.circuit>=CIRCUITS.length ? "Ver temporada" : started ? `Correr ronda ${S.circuit+1}` : "Salir a pista"}</span>`;
+  $("btnReset").hidden = !started;
+  renderSeasonBar();
+}
+$("btnStart").onclick=()=>{
+  S.name = $("inName").value.trim() || "Piloto Novato";
+  S.team = $("inTeam").value.trim() || "Escudería Independiente";
+  save();
+  if(S.circuit>=CIRCUITS.length) return seasonEnd();
+  startCircuit();
+};
+$("btnReset").onclick=()=>{ $("resetConfirm").hidden=false; };
+$("btnResetYes").onclick=()=>{ const n=S.name, t=S.team, l=S.livery; S=fresh(); S.name=n; S.team=t; S.livery=l; save(); $("resetConfirm").hidden=true; renderGarage(); };
+
+/* =========================================================
+   PISTA (canvas)
+   ========================================================= */
+const cv=$("cv"), ctx=cv.getContext("2d");
+let W=960, H=540;
+let ROAD=200;                         // mitad del ancho de la pista
+const keys={up:false,down:false,left:false,right:false};
+const G={ mode:"idle", p:{x:0,speed:0,dist:0,spin:0,boost:0}, t:null, passers:[], timer:0, rain:[], curve:40, anim:null };
+const PY=()=>H-110;
+
+function resizeCanvas(){
+  const r=$("stage").getBoundingClientRect();
+  const w=Math.round(r.width), h=Math.round(r.height);
+  if(!w||!h) return;
+  const dpr=Math.min(2, window.devicePixelRatio||1);
+  W=Math.max(320, Math.round(w)); H=Math.max(300, Math.round(h));
+  cv.width=W*dpr; cv.height=H*dpr; ctx.setTransform(dpr,0,0,dpr,0,0);
+  ROAD=Math.round(Math.min(200, W*0.36));
+}
+window.addEventListener("resize", resizeCanvas);
+
+function center(y){ // centro de la pista en la coordenada de pantalla y
+  const wd = G.p.dist + (PY()-y);
+  return W/2 + G.curve*Math.sin(wd/520) + G.curve*0.5*Math.sin(wd/233);
+}
+
+function spawnTarget(){
+  const i=R.grid.indexOf("YOU");
+  const boss = R.step===3;
+  const c = R.grid[i>0?i-1:1];
+  if(boss) R.boss=c;
+  const base = 5.2 + S.circuit*0.18;
+  G.t={ code:c, color: boss?"#B04BFF":rival(c)[2], boss, dist:G.p.dist+950, speed:base,
+        x:(Math.random()<.5?-1:1)*ROAD*0.35, tx:(Math.random()<.5?-1:1)*ROAD*0.35, state:"ahead" };
+  const K=R.kinds[Math.min(R.step,2)];
+  G.curve = K.k==="curve" ? 150 : 45;
+  G.raining = K.k==="rain";
+  G.mode="drive";
+  renderTower();
+}
+
+function startLights(){
+  G.p={x:0,speed:0,dist:0,spin:0,boost:0}; G.passers=[]; G.t=null; G.curve=45; G.raining=false;
+  G.mode="lights"; G.timer=0;
+}
+
+function update(){
+  if(G.mode==="lights"){
+    G.timer++;
+    if(G.timer===260){ G.mode="drive"; spawnTarget(); }
+    return;
+  }
+  if(!["drive","overtake","spin"].includes(G.mode)) return;
+  const p=G.p;
+  const off = Math.abs(p.x) > ROAD-22;
+  if(p.spin>0){ p.spin--; p.speed*=0.93; }
+  else{
+    const grip = G.raining ? 0.75 : 1;
+    if(keys.up) p.speed+=0.17*grip; else if(keys.down) p.speed-=0.38; else p.speed-=0.035;
+    const max=(off?4:10) + (p.boost>0?3:0);
+    if(p.speed>max) p.speed=Math.max(max, p.speed-0.4);
+    const steer = 4.4*Math.min(1, 0.35+p.speed/8)*grip;
+    if(keys.left) p.x-=steer; if(keys.right) p.x+=steer;
+  }
+  p.speed=Math.max(0,p.speed);
+  // la curva empuja el auto hacia afuera
+  const dc = center(PY()-p.speed) - center(PY());
+  p.x -= dc*0.85;
+  p.x = Math.max(-ROAD-110, Math.min(ROAD+110, p.x));
+  p.dist += p.speed;
+  if(p.boost>0) p.boost--;
+
+  for(const q of G.passers){ q.dist+=q.speed; }
+  G.passers = G.passers.filter(q=>q.dist-p.dist < H+200);
+
+  const t=G.t;
+  if(t){
+    t.dist += t.speed; t.x += (t.tx-t.x)*0.03;
+    if(Math.random()<0.004 && t.state==="ahead") t.tx=(Math.random()*2-1)*ROAD*0.45;
+    const gap=t.dist-p.dist;
+    if(G.mode==="drive" && t.state==="ahead" && gap<150){
+      p.speed=Math.min(p.speed, t.speed); G.mode="question"; openQuestion(); return;
+    }
+    if(G.mode==="overtake" && gap < -(H)){ endAnim(); return; }
+    if(G.mode==="spin" && gap > H+300 && p.spin<=0 && G.passers.length===0){ endAnim(); return; }
+  }
+  if(G.raining){
+    for(let i=0;i<4;i++) G.rain.push({x:Math.random()*W, y:-10, v:12+Math.random()*6});
+  }
+  G.rain.forEach(r=>{ r.y+=r.v; r.x-=1.5; }); G.rain=G.rain.filter(r=>r.y<H);
+}
+
+function drawCar(x,y,color,rot,label,lblColor,isMe){
+  ctx.save(); ctx.translate(x,y); ctx.rotate(rot);
+  ctx.fillStyle="rgba(0,0,0,.35)"; ctx.fillRect(-15,-26,34,58);
+  ctx.fillStyle="#111";
+  ctx.fillRect(-20,-24,9,15); ctx.fillRect(11,-24,9,15);   // ruedas delanteras
+  ctx.fillRect(-21,10,10,17); ctx.fillRect(11,10,10,17);   // ruedas traseras
+  ctx.fillStyle=color;
+  ctx.fillRect(-18,-34,36,6);                               // alerón delantero
+  ctx.beginPath(); ctx.moveTo(-4,-34); ctx.lineTo(4,-34); ctx.lineTo(9,-6); ctx.lineTo(12,24); ctx.lineTo(-12,24); ctx.lineTo(-9,-6); ctx.closePath(); ctx.fill();
+  ctx.fillRect(-19,26,38,7);                                // alerón trasero
+  ctx.fillStyle="#0B0C10"; ctx.beginPath(); ctx.ellipse(0,2,5,8,0,0,Math.PI*2); ctx.fill(); // cockpit
+  ctx.fillStyle=isMe?"#fff":"rgba(255,255,255,.7)"; ctx.fillRect(-2,-30,4,10);
+  ctx.restore();
+  if(label){
+    ctx.font="800 13px 'Titillium Web', sans-serif"; ctx.textAlign="center";
+    const w=ctx.measureText(label).width+12;
+    ctx.fillStyle=lblColor; ctx.fillRect(x-w/2,y-60,w,18);
+    ctx.fillStyle="#fff"; ctx.fillText(label,x,y-47); ctx.textAlign="start";
+  }
+}
+
+function draw(){
+  const p=G.p, py=PY();
+  ctx.fillStyle="#17402A"; ctx.fillRect(0,0,W,H);
+  // franjas de pasto
+  const band=60, off=(p.dist%(band*2));
+  ctx.fillStyle="#1B4A31";
+  for(let y=-band*2+off; y<H; y+=band*2) ctx.fillRect(0,y,W,band);
+  // pista por tiras horizontales
+  const step=6;
+  for(let y=0;y<H;y+=step){
+    const c=center(y);
+    const wd=p.dist+(py-y), stripe=Math.floor(wd/28)%2===0;
+    ctx.fillStyle=stripe?"#E8112D":"#F2F3F5"; ctx.fillRect(c-ROAD-14,y,14,step); ctx.fillRect(c+ROAD,y,14,step);
+    ctx.fillStyle=G.raining?"#24272D":"#2D3038"; ctx.fillRect(c-ROAD,y,ROAD*2,step);
+    if(Math.floor(wd/40)%2===0){ ctx.fillStyle="rgba(255,255,255,.55)"; ctx.fillRect(c-ROAD/3-2,y,4,step); ctx.fillRect(c+ROAD/3-2,y,4,step); }
+  }
+  // línea de largada
+  if(G.mode==="lights" || p.dist<300){
+    const y=py+40+p.dist, c=center(y);
+    for(let i=0;i<20;i++){ ctx.fillStyle=i%2?"#fff":"#111"; ctx.fillRect(c-ROAD+i*ROAD/10,y,ROAD/10,10); ctx.fillStyle=i%2?"#111":"#fff"; ctx.fillRect(c-ROAD+i*ROAD/10,y+10,ROAD/10,10); }
+  }
+  // autos que pasan
+  for(const q of G.passers){ const y=py-(q.dist-p.dist); drawCar(center(y)+q.x,y,q.color,0,q.code,"#333",false); }
+  // rival objetivo
+  const t=G.t;
+  if(t){
+    const y=py-(t.dist-p.dist);
+    if(y>-80 && y<H+80) drawCar(center(y)+t.x,y,t.color,0,t.boss?"JEFE · "+t.code:t.code,t.boss?"#B04BFF":"#E8112D",false);
+    else if(y<=-80 && G.mode==="drive"){ // indicador de rival fuera de pantalla
+      const gapS=((t.dist-p.dist)/Math.max(6,t.speed*60)).toFixed(1).replace(".",",");
+      ctx.fillStyle=t.boss?"#B04BFF":"#E8112D"; ctx.beginPath(); const cx=center(10)+t.x; ctx.moveTo(cx,6); ctx.lineTo(cx-10,22); ctx.lineTo(cx+10,22); ctx.fill();
+      ctx.font="700 13px 'Titillium Web', sans-serif"; ctx.textAlign="center"; ctx.fillStyle="#fff"; ctx.fillText(`${t.boss?"JEFE ":""}${t.code} +${gapS} s`,cx,40); ctx.textAlign="start";
+    }
+  }
+  // mi auto
+  drawCar(center(py)+p.x, py, S.livery, p.spin>0 ? p.spin*0.35 : (keys.left?-0.08:keys.right?0.08:0), code(), "#0B0C10", true);
+  // lluvia
+  if(G.raining){ ctx.strokeStyle="rgba(200,220,255,.45)"; ctx.lineWidth=1.5; ctx.beginPath(); G.rain.forEach(r=>{ ctx.moveTo(r.x,r.y); ctx.lineTo(r.x-3,r.y+12); }); ctx.stroke(); }
+  // HUD
+  ctx.fillStyle="rgba(11,12,16,.75)"; ctx.fillRect(12,12,150,50);
+  ctx.fillStyle="#fff"; ctx.font="italic 900 30px 'Titillium Web', sans-serif"; ctx.fillText(String(Math.round(p.speed*32)).padStart(3," "),22,48);
+  ctx.font="700 12px 'Titillium Web', sans-serif"; ctx.fillStyle="#98A0AE"; ctx.fillText("KM/H",84,48);
+  ctx.fillStyle=Math.abs(p.x)>ROAD-22?"#FFD23F":"#2FD17C"; ctx.fillText(Math.abs(p.x)>ROAD-22?"¡PASTO!":"EN PISTA",84,32);
+  if(G.mode==="drive" && p.speed<1 && p.dist<400){
+    ctx.fillStyle="rgba(11,12,16,.8)"; ctx.fillRect(W/2-150,H/2-24,300,48);
+    ctx.fillStyle="#FFD23F"; ctx.font="italic 900 20px 'Titillium Web', sans-serif"; ctx.textAlign="center";
+    ctx.fillText("Mantené ↑ para acelerar",W/2,H/2+7); ctx.textAlign="start";
+  }
+  // semáforo
+  if(G.mode==="lights"){
+    const n=Math.min(5,Math.floor(G.timer/40)), go=G.timer>=240;
+    ctx.fillStyle="rgba(11,12,16,.85)"; ctx.fillRect(W/2-130,40,260,62);
+    for(let i=0;i<5;i++){ ctx.fillStyle = go?"#1c1c1c":(i<n?"#E8112D":"#2a2a2a"); ctx.beginPath(); ctx.arc(W/2-100+i*50,71,18,0,Math.PI*2); ctx.fill(); }
+    if(go){ ctx.fillStyle="#2FD17C"; ctx.font="italic 900 34px 'Titillium Web', sans-serif"; ctx.textAlign="center"; ctx.fillText("¡LARGADA!",W/2,82); ctx.textAlign="start"; }
+  }
+}
+
+let last=0, acc=0;
+function loop(t){
+  acc+=Math.min(100,t-last); last=t;
+  while(acc>=1000/60){ update(); acc-=1000/60; }
+  if(!$("race").hidden) draw();
+  requestAnimationFrame(loop);
+}
+
+/* ---------- Controles ---------- */
+const KM={ArrowUp:"up",KeyW:"up",ArrowDown:"down",KeyS:"down",ArrowLeft:"left",KeyA:"left",ArrowRight:"right",KeyD:"right"};
+document.addEventListener("keydown",e=>{
+  if($("race").hidden || e.target.tagName==="TEXTAREA" || e.target.tagName==="INPUT") return;
+  if(!$("qov").hidden){
+    const n="1234".indexOf(e.key);
+    if(n>=0){ const all=$("qcard").querySelectorAll(".opts"); const b=all.length && all[all.length-1].children[n]; if(b && !b.disabled){ e.preventDefault(); b.click(); } }
+    return;
+  }
+  if(KM[e.code]){ e.preventDefault(); keys[KM[e.code]]=true; }
+});
+document.addEventListener("keyup",e=>{ if(KM[e.code]) keys[KM[e.code]]=false; });
+window.addEventListener("blur",()=>{ for(const k in keys) keys[k]=false; });
+document.querySelectorAll("#pad button").forEach(b=>{
+  const k=b.dataset.k;
+  b.addEventListener("pointerdown",e=>{ e.preventDefault(); keys[k]=true; b.setPointerCapture?.(e.pointerId); });
+  ["pointerup","pointercancel","pointerleave"].forEach(ev=>b.addEventListener(ev,()=>keys[k]=false));
+});
+
+/* =========================================================
+   CARRERA Y PREGUNTAS
+   ========================================================= */
+function startCircuit(){
+  const C = CIRCUITS[S.circuit];
+  const grid = S.grid.filter(c=>c!=="YOU");
+  grid.splice(Math.min(S.startPos-1, 19), 0, "YOU");
+  R = { C, grid, tyres:3, ers:S.ers, step:0, sectors:[], obstacles: shuffle(C.obs).slice(0,3),
+        kinds: shuffle(KINDS).slice(0,3), boss:null, bossWon:false, snapshot:{grid:[...grid], ers:S.ers} };
+  $("gpName").textContent = `Ronda ${S.circuit+1} · ${C.gp}`;
+  $("gpUnit").textContent = "Unidad " + C.unit;
+  $("qov").hidden=true;
+  show("race");
+  requestAnimationFrame(()=>{ resizeCanvas(); cv.focus({preventScroll:true}); });
+  renderTower(); renderBoard();
+  setRadio(`Los autos se acomodan en la grilla… ${esc(S.name)} (${esc(S.team)}) larga desde la <em>P${pos()}</em>. Cinco luces rojas… <em>¡Ruuuuum!</em>`);
+  startLights();
+  setTimeout(()=>{ if(G.mode!=="idle") setRadio(R.kinds[0].intro(esc(rivalName()))); }, 4400);
+}
+function pos(){ return R.grid.indexOf("YOU")+1; }
+function move(delta){
+  const i=R.grid.indexOf("YOU"); R.grid.splice(i,1);
+  const n=Math.max(0, Math.min(19, i+delta)); R.grid.splice(n,0,"YOU"); return i-n;
+}
+function rivalName(){ const i=R.grid.indexOf("YOU"); return rival(R.grid[i>0?i-1:1])[1]; }
+
+function renderTower(){
+  const t=$("tower");
+  if(!t.children.length){
+    ["YOU",...RIVALS.map(r=>r[0])].forEach(c=>{ const d=document.createElement("div"); d.className="trow"; d.dataset.c=c; t.append(d); });
+  }
+  [...t.children].forEach(d=>{
+    const c=d.dataset.c, i=R.grid.indexOf(c), me=c==="YOU", isBoss=R.boss===c && R.step>=3;
+    d.style.top=(i*24)+"px"; d.className="trow"+(me?" me":"")+(isBoss?" boss":"");
+    const col = me ? S.livery : rival(c)[2];
+    d.innerHTML=`<span class="p">${i+1}</span><span class="bar" style="background:${col}"></span><span class="nm">${me?esc(code()):c} ${me?"":`<span style="color:var(--muted);font-weight:400">${rival(c)[1]}</span>`}</span>${me?'<span class="tg">TÚ</span>':isBoss?'<span class="tg">JEFE</span>':'<span></span>'}`;
+  });
+  $("towerLap").textContent = R.step<3 ? `Rival ${Math.min(R.step+1,3)}/3` : "Jefe";
+}
+function renderBoard(){
+  $("bPos").innerHTML = `P${pos()} <small>de 20</small>`;
+  const [tn,tc]=TYRES[R.tyres]; $("bTyre").innerHTML=`<i style="color:${tc}"></i>${tn}`;
+  const e=$("bErs"); e.innerHTML=""; for(let i=0;i<10;i++){ const d=document.createElement("div"); if(R.ers>=(i+1)*10) d.className="on"; e.append(d); }
+  $("bErsV").textContent = R.ers+" %";
+  const s=$("bSec"); s.innerHTML="";
+  ["R1","R2","R3","JEFE"].forEach((l,i)=>{ const d=document.createElement("span"); d.textContent=l;
+    d.className=(i===3?"boss ":"")+(R.sectors[i]===true?"ok":R.sectors[i]===false?"bad":"")+(i===R.step?" now":""); s.append(d); });
+}
+function setRadio(html){ $("radio").innerHTML = html; }
+
+function optionButtons(list, onPick){
+  const box=document.createElement("div"); box.className="opts";
+  list.forEach((o,i)=>{
+    const b=document.createElement("button"); b.type="button"; b.className="opt";
+    b.innerHTML=`<span class="l">${i+1}</span><span>${esc(o.t)}</span>`;
+    b.onclick=()=>onPick(i); box.append(b);
+  });
+  return box;
+}
+function mark(box, list, picked){
+  [...box.children].forEach((b,k)=>{ b.disabled=true; b.classList.add(list[k].ok?"right":k===picked?"wrong":"faded"); });
+}
+function ersButton(box, list){
+  const b=document.createElement("button"); b.type="button"; b.className="btn ghost";
+  b.innerHTML=`<span>Activar ERS · −50 %</span>`; b.disabled = R.ers<50;
+  b.title = R.ers<50 ? "Necesitás al menos 50 % de batería" : "Descarta dos respuestas incorrectas";
+  b.onclick=()=>{
+    R.ers-=50; renderBoard(); b.disabled=true;
+    shuffle(list.map((o,i)=>o.ok?-1:i).filter(i=>i>=0)).slice(0,2)
+      .forEach(i=>{ const o=box.children[i]; o.disabled=true; o.classList.add("gone"); });
+    setRadio(`<em>¡Botón de overtake!</em> ${esc(S.name)} despliega toda la energía eléctrica. Quedan dos caminos posibles…`);
+  };
+  return b;
+}
+function continueButton(label, anim){
+  const a=document.createElement("div"); a.className="row-actions";
+  const b=document.createElement("button"); b.className="btn"; b.innerHTML=`<span>${label}</span>`;
+  b.onclick=()=>{ $("qov").hidden=true; runAnim(anim); cv.focus({preventScroll:true}); };
+  a.append(b); $("qcard").append(a); b.focus({preventScroll:true});
+}
+
+function openQuestion(){
+  for(const k in keys) keys[k]=false;
+  $("qov").hidden=false;
+  if(R.step<3) askObstacle(); else askBoss();
+}
+
+function askObstacle(){
+  const Q=R.obstacles[R.step], K=R.kinds[R.step], r=rival(G.t.code)[1];
+  setRadio(`<em>¡${esc(S.name)} está pegado a la caja de cambios de ${esc(r)}!</em> Para pasarlo, hay que responder…`);
+  const list=shuffle(Q.o.map((t,i)=>({t,ok:i===0})));
+  const card=$("qcard"); card.innerHTML="";
+  card.insertAdjacentHTML("beforeend",`<div class="kicker"><span class="chip">Rival ${R.step+1} de 3 · ${esc(r)}</span><span class="chip">${K.t}</span></div><p class="q">${esc(Q.q)}</p>`);
+  const actions=document.createElement("div"); actions.className="row-actions";
+  const box=optionButtons(list, i=>{
+    mark(box,list,i); actions.remove();
+    const ok=list[i].ok, before=pos();
+    let msg;
+    if(ok){
+      R.sectors[R.step]=true;
+      const g=move(-(2+(R.tyres===3?1:0))); R.ers=Math.min(100,R.ers+25);
+      msg=`<em>¡¡QUÉ MANIOBRA!!</em> ${esc(S.name)} se tira por dentro y pasa a ${esc(r)}. ¡Gana ${g} ${g===1?"posición":"posiciones"}: de P${before} a P${pos()}! Batería ERS +25 %.`;
+    } else {
+      R.sectors[R.step]=false;
+      let lost=-move(2);
+      if(R.tyres===1){ lost+=-move(2); R.tyres=3;
+        msg=`<em>¡Trompo y neumáticos destruidos!</em> ${esc(S.name)} entra a boxes de urgencia y cae ${lost} posiciones hasta la P${pos()}.`;
+      } else { R.tyres--;
+        msg=`<em>¡Uyyy, trompo!</em> ${esc(S.name)} pierde la trasera, ${esc(r)} se escapa y lo pasan dos autos más. P${pos()}. Los neumáticos sufren.`;
+      }
+    }
+    setRadio(msg);
+    card.insertAdjacentHTML("beforeend",`<div class="fb${ok?"":" bad"}"><strong>${ok?"¡Correcto!":"Revisión del ingeniero"}</strong><p>${esc(Q.e)}</p></div>`);
+    R.step++; renderBoard(); renderTower();
+    continueButton(ok?"¡Pasarlo!":"Seguir corriendo", ok?"overtake":"spin");
+  });
+  card.append(box); actions.append(ersButton(box,list)); card.append(actions);
+  box.firstChild.focus({preventScroll:true});
+}
+
+function askBoss(){
+  const C=R.C, card=$("qcard");
+  setRadio(`<em>¡Lo alcanzó!</em> Adelante está <em>${esc(C.boss)}</em>, el rival más duro del circuito. Esto no se gana con memoria: se gana con análisis.`);
+  card.innerHTML="";
+  card.insertAdjacentHTML("beforeend",`<div class="kicker"><span class="chip boss">Jefe de Nivel</span><span class="chip">${esc(C.boss)}</span><span class="chip">Paso 1 de 2 · Decisión</span></div>
+    <div class="case"><span class="label">Caso práctico</span><p style="margin:4px 0 0">${esc(C.bossCase)}</p></div><p class="q">${esc(C.b1.q)}</p>`);
+  const list=shuffle(C.b1.o.map((t,i)=>({t,ok:i===0})));
+  const actions=document.createElement("div"); actions.className="row-actions";
+  const box=optionButtons(list, k=>{
+    mark(box,list,k); actions.remove();
+    if(!list[k].ok) return bossLose(C.b1.e);
+    setRadio(`<em>¡Se pone a su lado!</em> Rueda con rueda en la recta… ahora hay que justificar la maniobra ante los comisarios.`);
+    card.insertAdjacentHTML("beforeend",`<div class="fb"><strong>Buena decisión</strong><p>${esc(C.b1.e)}</p></div>`);
+    bossJustify();
+  });
+  card.append(box); actions.append(ersButton(box,list)); card.append(actions);
+  box.firstChild.focus({preventScroll:true});
+}
+function bossJustify(){
+  const C=R.C, card=$("qcard");
+  const wrap=document.createElement("div"); wrap.style.cssText="display:flex;flex-direction:column;gap:10px";
+  wrap.innerHTML=`<div class="kicker"><span class="chip boss">Paso 2 de 2 · Justificación</span></div>
+    <label class="label" for="just">Escribí tu justificación (2 o 3 líneas) por radio al equipo</label>
+    <textarea id="just" placeholder="Porque…"></textarea>
+    <div class="row-actions"><button class="btn" id="sendJust" disabled><span>Enviar por radio</span></button><span class="hint" id="justHint">Escribí al menos 60 caracteres.</span></div>`;
+  card.append(wrap);
+  const ta=$("just"), send=$("sendJust");
+  ta.oninput=()=>{ const n=ta.value.trim().length; send.disabled=n<60; $("justHint").textContent = n<60 ? `Escribí al menos 60 caracteres (${n}/60).` : "¡Listo para transmitir!"; };
+  ta.focus({preventScroll:true}); wrap.scrollIntoView({behavior:"smooth",block:"nearest"});
+  send.onclick=()=>{
+    const mine=ta.value.trim(); ta.disabled=true; send.parentElement.remove();
+    wrap.insertAdjacentHTML("beforeend",`<p class="q">${esc(C.b2.q)}</p><p class="hint">Elegí el argumento que mejor coincide con un razonamiento correcto.</p>`);
+    const list=shuffle(C.b2.o.map((t,i)=>({t,ok:i===0})));
+    const box=optionButtons(list, k=>{ mark(box,list,k); if(list[k].ok) bossWin(mine); else bossLose(C.b2.e, mine, C.b2.o[0]); });
+    wrap.append(box); box.firstChild.focus({preventScroll:true});
+    box.scrollIntoView({behavior:"smooth",block:"nearest"});
+  };
+}
+function bossWin(mine){
+  const C=R.C;
+  R.sectors[3]=true; R.bossWon=true; R.step=4;
+  const i=R.grid.indexOf("YOU"); if(i>0) move(-Math.min(4,i));
+  setRadio(`<em>¡¡¡INCREÍBLE!!! ¡¡LO PASÓ!!</em> ${esc(S.name)} vence a ${esc(C.boss)} con un razonamiento impecable. Termina en P${pos()}.`);
+  $("qcard").insertAdjacentHTML("beforeend",`<div class="fb"><strong>¡Jefe derrotado!</strong><p>${esc(C.b2.e)}</p><div class="mine"><b>Tu radio:</b> ${esc(mine)}</div></div>`);
+  renderBoard(); renderTower(); continueButton("¡Pasarlo y a la bandera!", "overtake");
+}
+function bossLose(expl, mine, model){
+  const C=R.C;
+  R.sectors[3]=false; R.bossWon=false; R.step=4; move(1);
+  setRadio(`<em>¡Se le cierra la puerta!</em> ${esc(C.boss)} defiende la posición y se escapa. ${esc(S.name)} cae a la P${pos()}.`);
+  $("qcard").insertAdjacentHTML("beforeend",`<div class="fb bad"><strong>Revisión del ingeniero</strong><p>${esc(expl)}</p>${model?`<p><b>Argumento modelo:</b> ${esc(model)}</p>`:""}${mine?`<div class="mine"><b>Tu radio:</b> ${esc(mine)}</div>`:""}</div>`);
+  renderBoard(); renderTower(); continueButton("Seguir corriendo", "spin");
+}
+
+/* ---------- Animaciones de resultado en pista ---------- */
+function runAnim(kind){
+  const t=G.t, p=G.p;
+  if(kind==="overtake"){
+    G.mode="overtake"; p.boost=150; p.speed=Math.max(p.speed,8);
+    t.speed=3; t.state="passed"; t.tx = p.x>0 ? -ROAD*0.65 : ROAD*0.65;
+  } else {
+    G.mode="spin"; p.spin=70; t.speed=13; t.state="gone";
+    const n = G.t.boss ? 1 : 2;
+    const me=R.grid.indexOf("YOU"), behind=R.grid.slice(Math.max(0,me-n), me);
+    G.passers = behind.map((c,i)=>({code:c, color:rival(c)?.[2]||"#888", dist:p.dist-160-i*90, speed:12.5, x:(i%2?-1:1)*ROAD*0.55}));
+  }
+}
+function endAnim(){
+  G.mode="idle";
+  if(R.step<=3){ spawnTarget(); setRadio(R.kinds[Math.min(R.step,2)] && R.step<3 ? R.kinds[R.step].intro(esc(rivalName())) : `<em>¡Radio de equipo!</em> «Adelante está el Jefe de Nivel: ${esc(R.C.boss)}. Alcanzalo.»`); renderBoard(); }
+  else result(R.bossWon);
+}
+
+/* ---------- Resultados ---------- */
+function result(won){
+  G.mode="idle";
+  const p=pos(), pts=won?(POINTS[p-1]||0):0, C=R.C;
+  const top=R.grid.slice(0,3).map(c=>c==="YOU"?{n:S.name,me:true}:{n:rival(c)[1]});
+  if(won){
+    S.results[S.circuit]={pos:p,pts}; S.points+=pts; S.circuit++;
+    S.startPos=p; S.ers=R.ers; S.grid=[...R.grid]; save();
+  }
+  const podium=[1,0,2].map(k=>`<div class="step p${k+1}"><span class="who${top[k].me?" me":""}">${esc(top[k].n)}</span><div class="blk">${k+1}</div></div>`).join("");
+  const el=$("result");
+  el.innerHTML=`
+    <span class="label">${esc(C.gp)} · Resultado final</span>
+    <h2>${won ? (p===1?"¡Victoria! ¡Ganaste el Gran Premio!": p<=3?"¡Al podio!":"¡Jefe derrotado!") : "El Jefe se escapó"}</h2>
+    <div class="podium">${podium}</div>
+    <div class="stats">
+      <div><span class="label">Posición final</span><b>P${p}</b></div>
+      <div><span class="label">Puntos ganados</span><b>${pts}</b></div>
+      <div><span class="label">Total temporada</span><b>${S.points}</b></div>
+    </div>
+    <p style="margin:0;color:var(--muted);max-width:65ch">${won
+      ? (S.circuit<CIRCUITS.length ? `Largás la próxima carrera desde la P${p}. Siguiente: <b style="color:var(--text)">${esc(CIRCUITS[S.circuit].gp)}</b>, sobre ${esc(CIRCUITS[S.circuit].unit)}. Más difícil y con rivales más rápidos.` : "¡Terminaste la temporada!")
+      : "Para avanzar al siguiente circuito hay que vencer al Jefe. Repasá la explicación y volvé a correr: los rivales traen otras preguntas."}</p>
+    <div class="row-actions" id="resActions"></div>`;
+  const acts=el.querySelector("#resActions");
+  const mk=(label,fn,ghost)=>{ const b=document.createElement("button"); b.className="btn"+(ghost?" ghost":""); b.innerHTML=`<span>${label}</span>`; b.onclick=fn; acts.append(b); return b; };
+  if(won){ if(S.circuit<CIRCUITS.length) mk("Siguiente circuito", startCircuit); else mk("Ver campeonato", seasonEnd); }
+  else mk("Reintentar circuito", ()=>{ S.grid=R.snapshot.grid; S.ers=R.snapshot.ers; startCircuit(); });
+  mk("Volver al garaje", ()=>{ renderGarage(); show("garage"); }, true);
+  renderSeasonBar(); show("result");
+}
+function seasonEnd(){
+  const el=$("result"), wins=S.results.filter(r=>r&&r.pos===1).length, pods=S.results.filter(r=>r&&r.pos<=3).length;
+  el.innerHTML=`<span class="label">Fin de temporada</span>
+    <h2>${S.points>=150?"¡Campeón del Mundo Académico!":"¡Temporada completada!"}</h2>
+    <div class="stats"><div><span class="label">Puntos</span><b>${S.points}</b></div><div><span class="label">Victorias</span><b>${wins}</b></div><div><span class="label">Podios</span><b>${pods}</b></div></div>
+    <div class="cal">${CIRCUITS.map((c,i)=>{const r=S.results[i]; return `<div class="c done"><span class="n">${String(i+1).padStart(2,"0")}</span><span class="t">${esc(c.gp)}<span class="u">Unidad ${esc(c.unit)}</span></span><span class="r">P${r.pos} · ${r.pts} pts</span></div>`;}).join("")}</div>
+    <div class="row-actions" id="endActs"></div>`;
+  const b=document.createElement("button"); b.className="btn"; b.innerHTML="<span>Volver al garaje</span>"; b.onclick=()=>{ renderGarage(); show("garage"); };
+  el.querySelector("#endActs").append(b); renderSeasonBar(); show("result");
+}
+
+renderGarage();
+requestAnimationFrame(t=>{ last=t; loop(t); });
+
+/* ---------- App instalable ---------- */
+let installEvt=null;
+window.addEventListener("beforeinstallprompt", e=>{ e.preventDefault(); installEvt=e; $("btnInstall").hidden=false; });
+$("btnInstall").onclick=async()=>{ if(!installEvt) return; installEvt.prompt(); await installEvt.userChoice; installEvt=null; $("btnInstall").hidden=true; };
+window.addEventListener("orientationchange", ()=>setTimeout(resizeCanvas,300));
+</script>
+</body>
+</html>

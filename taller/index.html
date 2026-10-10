@@ -333,6 +333,7 @@ body.docked{padding-bottom:190px}
 .tile.game .ft{flex-wrap:wrap}
 .blindada-frame{display:block;width:100%;height:clamp(640px,90vh,980px);border:0;background:#0e0e10;border-radius:4px}
 .blindada-note{margin:.6rem 0 0;font-size:.9rem}
+.gp-frame{display:block;width:100%;height:clamp(700px,94vh,1040px);border:0;background:#0B0C10;border-radius:4px}
 .tile.game.off{background:transparent;cursor:default}.tile.game.off:hover{border-color:var(--rule)}.tile.game.off .code,.tile.game.off .nm{color:var(--muted)}
 .gset{display:grid;gap:14px}
 .gset p{margin:0}
@@ -1350,6 +1351,7 @@ function render() {
   if (route === 'juego-memoria') { setNav('juegos'); return JUEGOS_ACTIVOS.memoria ? renderMemoria() : renderGamesHome(); }
   if (route === 'juego-millonario') { setNav('juegos'); return JUEGOS_ACTIVOS.millonario ? renderMill() : renderGamesHome(); }
   if (route === 'juego-blindada') { setNav('juegos'); return JUEGOS_ACTIVOS.blindada ? renderBlindada() : renderGamesHome(); }
+  if (route === 'juego-grandprix') { setNav('juegos'); return JUEGOS_ACTIVOS.grandprix ? renderGrandPrix() : renderGamesHome(); }
   if (route === 'juego-jeopardy') { setNav('juegos'); return JUEGOS_ACTIVOS.jeopardy ? renderJeopardy() : renderGamesHome(); }
   if (route === 'escribir-evaluar') { setNav('escribir'); return renderWrite('eva'); }
   if (route.startsWith('exp-') && EXP.some(x => x.id === route.slice(4))) { setNav('escribir'); return renderExplain(EXP.find(x => x.id === route.slice(4))); }
@@ -1401,7 +1403,7 @@ function renderHome() {
   <section class="extras" aria-label="Más recursos">
     <button class="xcard" type="button" data-go="ppt"><b>PPT</b><span>Las presentaciones de clase por subtema.</span></button>
     <button class="xcard" type="button" data-go="podcast"><b>Podcast</b><span>Episodios para escuchar mientras practicas.</span></button>
-    <button class="xcard" type="button" data-go="juegos"><b>Juegos</b><span>${Object.values(JUEGOS_ACTIVOS).some(Boolean) ? 'Battle City: Operación Blindada y más juegos para repasar el curso.' : 'Próximamente: juegos para repasar el curso.'}</span></button>
+    <button class="xcard" type="button" data-go="juegos"><b>Juegos</b><span>${Object.values(JUEGOS_ACTIVOS).some(Boolean) ? 'Battle City: Operación Blindada, Grand Prix Académico y más juegos para repasar el curso.' : 'Próximamente: juegos para repasar el curso.'}</span></button>
   </section>
   <div id="temas">${Object.keys(UNITS).map(unitBlock).join('')}</div>
   <p class="foot">Contenidos alineados al Nivel Medio: no incluye utilidad marginal, efectos ingreso y sustitución, multiplicador keynesiano, curva de Phillips ni la condición Marshall-Lerner. Los datos numéricos de los ejercicios son hipotéticos. El progreso se guarda solo en este navegador.</p>`;
@@ -3245,7 +3247,7 @@ function markHeard(id) {
 
 /* =============== 7 · Juegos =============== */
 /* Para habilitar un juego, cambie su valor a true. */
-const JUEGOS_ACTIVOS = { blindada: true, reloj: false, memoria: false, millonario: false, jeopardy: false };
+const JUEGOS_ACTIVOS = { blindada: true, grandprix: true, reloj: false, memoria: false, millonario: false, jeopardy: false };
 const GAMES = store.get('games', { reloj: {}, memoria: {}, mill: {} });
 const saveGames = () => store.set('games', GAMES);
 let GAME_TIMER = null;
@@ -3283,6 +3285,7 @@ const gameCrumb = `<button class="crumb" type="button" data-go="juegos">← Todo
 
 const GAME_LIST = [
   { k: 'blindada', name: 'Battle City: Operación Blindada', who: 'Individual', ds: 'Defiende al Águila con tu tanque: cada impacto abre un desafío de la Unidad 2 (demanda, oferta, elasticidades, gobierno y fallos del mercado).', rec: () => '' },
+  { k: 'grandprix', name: 'Grand Prix Académico', who: 'Individual', ds: 'Maneja tu Fórmula 1 con las flechas: cada rival que alcanzas abre una pregunta de la Unidad 4 (comercio, tipos de cambio, balanza de pagos y desarrollo). Nueve circuitos con un Jefe de Nivel en cada uno.', rec: () => '' },
   { k: 'reloj', name: 'Contrarreloj', who: 'Individual', ds: '60 segundos para acertar la mayor cantidad posible. Cada error descuenta 3 segundos.', rec: () => { const v = Object.values(GAMES.reloj); return v.length ? 'Récord: ' + Math.max(...v) + ' aciertos' : ''; } },
   { k: 'memoria', name: 'Memoria', who: 'Individual', ds: 'Voltea las cartas y une cada término con su definición en la menor cantidad de jugadas.', rec: () => { const v = Object.values(GAMES.memoria).map(x => x.mv); return v.length ? 'Mejor: ' + Math.min(...v) + ' jugadas' : ''; } },
   { k: 'millonario', name: '¿Quién quiere ser economista?', who: 'Individual', ds: '15 preguntas de dificultad creciente, con tres comodines y dos niveles seguros.', rec: () => { const v = Object.values(GAMES.mill); return v.length ? 'Mejor: ' + fmt(Math.max(...v)) + ' puntos' : ''; } },
@@ -3295,6 +3298,15 @@ function renderBlindada() {
     <iframe class="blindada-frame" id="blindada" src="operacion-blindada.html" title="Battle City: Operación Blindada" allow="autoplay; fullscreen"></iframe>
     <p class="blindada-note"><a href="operacion-blindada.html" target="_blank" rel="noopener">Abrir el juego en pantalla completa ↗</a></p>`;
   const f = document.getElementById('blindada');
+  f.addEventListener('load', () => { try { f.contentWindow.focus(); } catch (e) {} });
+}
+function renderGrandPrix() {
+  stopGameTimers();
+  app.innerHTML = `${gameCrumb}<div class="eyebrow">Aprender jugando · Unidad 4</div><h1>Grand Prix Académico</h1>
+    <p class="lede">Acelera con ↑, frena con ↓ y dobla con ← →. Cuando alcanzas a un rival aparece una pregunta: si aciertas, lo pasas. <b>Haz clic una vez dentro del juego</b> para que responda el teclado.</p>
+    <iframe class="gp-frame" id="grandprix" src="grand-prix-academico.html" title="Grand Prix Académico" allow="fullscreen"></iframe>
+    <p class="blindada-note"><a href="grand-prix-academico.html" target="_blank" rel="noopener">Abrir el juego en pantalla completa ↗</a> · <a href="https://gp-academico-batan.netlify.app/" target="_blank" rel="noopener">Instalar la app en el celular ↗</a></p>`;
+  const f = document.getElementById('grandprix');
   f.addEventListener('load', () => { try { f.contentWindow.focus(); } catch (e) {} });
 }
 function renderGamesHome() {
