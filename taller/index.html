@@ -487,6 +487,24 @@ body.docked{padding-bottom:190px}
 .dbf.chk{display:flex;align-items:center;gap:8px}
 .subs{gap:4px}.subs .btn{min-width:34px;padding:4px 8px}
 @media (max-width:860px){.dbcta{grid-template-columns:auto minmax(0,1fr)}.dbcta .btn{grid-column:1/-1;justify-self:start}}
+/* v8: Evaluación Interna */
+.eicrit{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;max-width:1000px}
+.eicrit div{background:var(--sheet);border:1px solid var(--rule);border-radius:var(--r);padding:10px;display:grid;gap:2px}
+.eicrit b{font-family:var(--f-display);font-size:26px;line-height:1;color:var(--navy-2)}
+.eicrit span{font-size:14px;font-weight:700}.eicrit i{font-style:normal;font-size:13px;color:var(--muted)}
+.eibud td:last-child{text-align:right;white-space:nowrap}.eibud td:nth-child(2){text-align:left}
+.eigrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px 14px}
+.kcgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.kcb{text-align:left;border:1.5px solid var(--rule);background:var(--paper);border-radius:var(--r);padding:8px 10px;display:grid;gap:2px;color:var(--ink)}
+.kcb b{font-size:14.5px}.kcb span{font-size:12.5px;color:var(--muted);line-height:1.3}
+.kcb.sel{border-color:var(--navy-2);background:var(--sheet);box-shadow:0 0 0 2px var(--navy-2) inset}
+.budbar{display:flex;align-items:center;gap:10px;margin-top:6px;font-size:14px;font-variant-numeric:tabular-nums}
+.budbar .bar{flex:1}.budbar .bar.over i{background:var(--bad)}
+#eiW.over{color:var(--bad)}
+.tplc{border-color:var(--gold);background:var(--gold-soft)}
+.eicr{display:grid;gap:14px}
+.eicrow > div:first-child{margin-bottom:6px}
+@media (max-width:860px){.eicrit{grid-template-columns:repeat(3,minmax(0,1fr))}.eigrid,.kcgrid{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
@@ -1452,6 +1470,8 @@ function render() {
   if (route === 'juego-jeopardy') { setNav('juegos'); return JUEGOS_ACTIVOS.jeopardy ? renderJeopardy() : renderGamesHome(); }
   if (route === 'escribir-evaluar') { setNav('escribir'); return renderWrite('eva'); }
   if (route === 'escribir-p1') { setNav('escribir'); return renderP1(); }
+  if (route === 'escribir-ei') { setNav('escribir'); return renderEIHome(); }
+  if (/^ei-[234]$/.test(route)) { setNav('escribir'); return renderEI(+route.slice(3)); }
   if (route === 'escribir-analizar') { setNav('escribir'); return renderCmd('analizar'); }
   if (route === 'escribir-discutir') { setNav('escribir'); return renderCmd('discutir'); }
   if (route === 'escribir-hqp') { setNav('escribir'); return renderCmd('hqp'); }
@@ -3054,6 +3074,7 @@ function reportText() {
   L.push(`- Evaluar: ${EVA.filter(c => evaState(c).done).length}/${EVA.length} casos completos`);
   ['analizar', 'discutir', 'hqp'].forEach(k => L.push(`- ${CMDT[k].name}: ${CMDT[k].bank.filter((_, i) => (CMDW[cmdKey(k, i)] || {}).done).length}/${CMDT[k].bank.length} preguntas completas`));
   L.push(`- Encuentra el error: ${topicDone('err')}/${DRILLS.err.items.length}`);
+  L.push(`- Evaluación Interna: ${Object.keys(EI_UNITS).filter(eiStarted).map(u => `U${u} ${eiWords(EIS.s[u])} palabras, ${eiScore(u)}/14${EIS.s[u].kc ? ' (' + KC[EIS.s[u].kc] + ')' : ''}`).join('; ') || 'sin empezar'}`);
   const p1h = P1S.hist, p2h = P2H;
   L.push(`- Simulacro de Prueba 1: ${p1h.length ? `${p1h.length} ${p1h.length > 1 ? 'hechos' : 'hecho'} · último ${p1h[p1h.length - 1].total}/25 · mejor ${Math.max(...p1h.map(x => x.total))}/25 (autoevaluado)` : 'sin hacer'}`);
   L.push(`- Prueba 2: ${p2h.length ? `${p2h.length} ${p2h.length > 1 ? 'casos' : 'caso'} · último ${p2h[p2h.length - 1].total}/40 · mejor ${Math.max(...p2h.map(x => x.total))}/40 (autoevaluado)` : 'sin hacer'}`);
@@ -3084,7 +3105,7 @@ function renderReport() {
 }
 
 /* ---- Escribir: portada, pestañas y ejercicios de base ---- */
-const WTABS = [['escribir-comandos', 'Comandos'], ['escribir-conceptos', 'Conceptos clave'], ['escribir-explicar', 'Explicar · 10'], ['escribir-analizar', 'Analizar · 10'], ['escribir-evaluar', 'Evaluar · 15'], ['escribir-discutir', 'Discutir · 15'], ['escribir-hqp', '¿Hasta qué punto? · 15'], ['escribir-errores', 'Encuentra el error'], ['escribir-p1', 'Simulacro P1'], ['escribir-p2', 'Prueba 2']];
+const WTABS = [['escribir-comandos', 'Comandos'], ['escribir-conceptos', 'Conceptos clave'], ['escribir-explicar', 'Explicar · 10'], ['escribir-analizar', 'Analizar · 10'], ['escribir-evaluar', 'Evaluar · 15'], ['escribir-discutir', 'Discutir · 15'], ['escribir-hqp', '¿Hasta qué punto? · 15'], ['escribir-errores', 'Encuentra el error'], ['escribir-p1', 'Simulacro P1'], ['escribir-p2', 'Prueba 2'], ['escribir-ei', 'Evaluación Interna']];
 function writeTabs(cur) {
   return `<div class="seg wtabs" role="group" aria-label="Secciones de Escribir" style="margin-bottom:18px">${WTABS.map(([r, l], i) => `<button type="button" data-go="${r}" aria-pressed="${r === cur}">${i + 1}. ${l}</button>`).join('')}</div>`;
 }
@@ -3105,7 +3126,9 @@ function renderWriteHome() {
       ['escribir-errores', 'Encuentra el error', 'Lee respuestas con errores típicos y corrígelas.', pc(DRILLS.err)]]],
     ['Simulacros', 'en condiciones de examen', [
       ['escribir-p1', 'Simulacro de Prueba 1 · 25 p', '5 min de lectura y 1 h 15 min. Eliges 1 de 3 preguntas, dibujas tus diagramas y te autocorriges.', P1S.hist.length ? `${P1S.hist.length} hechos · último ${P1S.hist[P1S.hist.length - 1].total}/25` : 'Sin empezar'],
-      ['escribir-p2', 'Prueba 2 · 40 p', 'Casos con datos reales de Paraguay: definiciones, cálculos, diagramas y una evaluación de 15 puntos.', P2H.length ? `${P2H.length} terminados · último ${P2H[P2H.length - 1].total}/40` : `${P2.length} casos`]]]
+      ['escribir-p2', 'Prueba 2 · 40 p', 'Casos con datos reales de Paraguay: definiciones, cálculos, diagramas y una evaluación de 15 puntos.', P2H.length ? `${P2H.length} terminados · último ${P2H[P2H.length - 1].total}/40` : `${P2.length} casos`]]],
+    ['Evaluación Interna', '30 % de la nota final', [
+      ['escribir-ei', 'Comentarios de la EI · 800 palabras', 'Tu carpeta de tres comentarios: portada, concepto clave, diagrama, explicación y evaluación con presupuesto de palabras y los criterios A–F.', `${Object.keys(EI_UNITS).filter(eiStarted).length}/3 comentarios`]]]
   ];
   let n = 0;
   app.innerHTML = `<div class="eyebrow">Escribir como en el examen</div><h1>Escribir</h1>
@@ -4607,6 +4630,170 @@ function labBuild() {
   };
   document.onkeydown = e => { if ((e.key === 'Delete' || e.key === 'Backspace') && S.sel >= 0 && !/INPUT|TEXTAREA|SELECT/.test((document.activeElement || {}).tagName || '')) { e.preventDefault(); snap(); S.d.objs.splice(S.sel, 1); S.sel = -1; draw(); props(); save(); } };
   draw(); props();
+}
+
+
+/* =============== 12 · Entrenador de la Evaluación Interna =============== */
+/* Requisitos y criterios A–F según la Guía de Economía del IB (primera evaluación 2024); reparto de palabras según «El Arte de la Síntesis» del Prof. Rivarola. */
+const KC = {
+  escasez: 'Escasez', eleccion: 'Elección', eficiencia: 'Eficiencia', equidad: 'Equidad', bienestar: 'Bienestar económico',
+  sostenibilidad: 'Sostenibilidad', cambio: 'Cambio', interdependencia: 'Interdependencia', intervencion: 'Intervención'
+};
+const KC_DS = {
+  escasez: 'Recursos limitados frente a necesidades y deseos ilimitados.', eleccion: 'Elegir entre alternativas y asumir su costo de oportunidad.',
+  eficiencia: 'Mejor uso posible de recursos escasos, sin desperdicio.', equidad: 'Lo justo en la distribución del ingreso, la riqueza o las oportunidades.',
+  bienestar: 'Prosperidad y calidad de vida: seguridad financiera, necesidades básicas, capacidad de elegir.', sostenibilidad: 'Satisfacer necesidades actuales sin comprometer las de generaciones futuras.',
+  cambio: 'La economía está en cambio constante: se estudia cómo pasan las variables de una situación a otra.', interdependencia: 'Los agentes y países dependen unos de otros; las decisiones de unos afectan a otros.',
+  intervencion: 'Participación del Estado en los mercados para lograr objetivos que el mercado no alcanza.'
+};
+const EI_UNITS = { 2: 'Microeconomía', 3: 'Macroeconomía', 4: 'Economía global' };
+const EI_BLOCKS = [
+  { k: 'intro', n: 'Introducción y concepto clave', bud: 200, g: 'Contexto del artículo en una frase, las definiciones que <b>usas</b> (no una lista), el concepto clave y tu tesis.', c: ['El artículo informa que', 'Se entiende por', 'Desde el concepto de', 'Este comentario sostiene que'] },
+  { k: 'dia', n: 'Diagrama', bud: 0, g: 'El diagrama <b>no cuenta</b> en el límite. Título completo, ejes con las variables del artículo, curvas y puntos rotulados (P₁, Q₁, E₁).' },
+  { k: 'exp', n: 'Explica', bud: 250, g: '¿<b>Por qué</b> ocurre? Lee el diagrama paso a paso con sus rótulos (O₁ → O₂, P₁ → P₂) y engánchalo con el dato del artículo.', c: ['porque', 'por consiguiente', 'lo cual provoca', 'desplazando', 'Tal como informa el artículo'] },
+  { k: 'eva', n: 'Evalúa', bud: 300, g: 'Juicio crítico con <b>dos ejes</b>: partes interesadas (quién gana y quién pierde) y corto y largo plazo. Cierra con una conclusión equilibrada que no introduzca datos nuevos.', c: ['Por un lado', 'Sin embargo', 'No obstante', 'En el corto plazo', 'a largo plazo', 'En definitiva', 'siempre que'],
+    tpl: 'Por un lado, [ganador] se beneficia porque [razón]. Sin embargo, [perdedor] soporta [costo]. En el corto plazo, [efecto inmediato]; no obstante, a largo plazo [efecto opuesto o secundario]. En definitiva, [la política] resulta eficaz siempre que [condición], pero su sostenibilidad dependerá de [factor decisivo].' }
+];
+const EI_CRIT = [
+  ['A', 'Diagramas', 3, ['No alcanza el nivel 1.', 'Diagramas pertinentes, pero sin explicar o con explicaciones incorrectas.', 'Diagramas pertinentes, precisos y bien rotulados, con explicación limitada.', 'Diagramas pertinentes, precisos y bien rotulados, con explicación completa.']],
+  ['B', 'Terminología', 2, ['No alcanza el nivel 1.', 'Incluye terminología económica pertinente para el artículo.', 'Usa adecuadamente terminología pertinente en todo el comentario.']],
+  ['C', 'Aplicación y análisis', 3, ['No alcanza el nivel 1.', 'Aplica la teoría pertinente al artículo, con análisis limitado.', 'Aplica la teoría en todo el comentario, con análisis adecuado.', 'Aplica la teoría en todo el comentario, con análisis eficaz.']],
+  ['D', 'Concepto clave', 3, ['No alcanza el nivel 1, o el concepto ya se usó en otro comentario.', 'Identifica un concepto clave e intenta relacionarlo con el artículo.', 'Identifica un concepto clave y explica parcialmente su relación.', 'Identifica un concepto clave y explica plenamente su relación.']],
+  ['E', 'Evaluación', 3, ['No alcanza el nivel 1.', 'Emite juicios con razonamiento limitado.', 'Emite juicios con razonamiento adecuado.', 'Emite juicios con razonamiento eficaz y equilibrado.']]
+];
+const EIS = store.get('ei', { s: {} });
+const saveEI = () => store.set('ei', EIS);
+const today = () => { const d = new Date(); return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); };
+const eiSlot = u => EIS.s[u] = EIS.s[u] || { st: 0, title: '', source: '', url: '', pub: '', acc: '', red: today(), kc: '', frag: '', txt: {}, dia: [], diaT: '', ck: {}, cr: {} };
+const eiWords = w => EI_BLOCKS.reduce((s, b) => s + (b.bud ? wc(w.txt[b.k]) : 0), 0);
+const eiStarted = u => { const w = EIS.s[u]; return w && (w.title || EI_BLOCKS.some(b => (w.txt || {})[b.k])); };
+const srcKey = w => { try { if (w.url) return new URL(w.url).hostname.replace(/^www\./, ''); } catch (e) { } return normTxt(w.source).replace(/[^a-z0-9]/g, ''); };
+function eiChecks(u) {
+  const w = eiSlot(u), out = [];
+  const days = w.pub && w.red ? Math.round((new Date(w.red) - new Date(w.pub)) / 864e5) : null;
+  const dateOk = days !== null && days >= 0 && days <= 365;
+  const others = Object.keys(EI_UNITS).filter(x => x !== String(u) && eiStarted(x)).map(x => EIS.s[x]);
+  const kcDup = w.kc && others.some(o => o.kc === w.kc);
+  const srcDup = srcKey(w) && others.some(o => srcKey(o) && srcKey(o) === srcKey(w));
+  return { days, dateOk, kcDup, srcDup };
+}
+function eiF() {
+  const done = Object.keys(EI_UNITS).filter(eiStarted);
+  if (done.length < 3) return { f: null, msg: `El criterio F se calcula con los tres comentarios (tienes ${done.length}).` };
+  const req = [true, new Set(done.map(u => srcKey(EIS.s[u]))).size === 3 && done.every(u => srcKey(EIS.s[u])), done.every(u => eiChecks(u).dateOk)];
+  return { f: req.filter(Boolean).length, msg: ['Cada artículo de una unidad distinta', 'Cada artículo de una fuente distinta', 'Artículos de menos de un año'].map((t, i) => (req[i] ? '✓ ' : '✗ ') + t).join(' · ') };
+}
+const eiScore = u => { const w = eiSlot(u); const ck = eiChecks(u); return EI_CRIT.reduce((s, [k]) => s + (k === 'D' && ck.kcDup ? 0 : (w.cr[k] || 0)), 0); };
+function renderEIHome() {
+  const F = eiF();
+  const tot = Object.keys(EI_UNITS).reduce((s, u) => s + (eiStarted(u) ? eiScore(u) : 0), 0) + (F.f || 0);
+  app.innerHTML = `<div class="eyebrow">Escribir como en el examen</div><h1>Evaluación Interna</h1>${writeTabs('escribir-ei')}
+    <div class="method"><div><b>La carpeta · 30 % de la nota (NM)</b><p>Tres comentarios de hasta <b>800 palabras</b> sobre artículos de prensa: uno de <b>Microeconomía</b>, uno de <b>Macroeconomía</b> y uno de <b>Economía global</b>. Total: 45 puntos.</p></div>
+      <div><b>Requisitos</b><p>Artículo de <b>menos de un año</b> al momento de escribir; una <b>fuente distinta</b> por comentario; un <b>concepto clave distinto</b> en cada uno; periódico, revista o sitio de noticias (no televisión ni radio).</p></div>
+      <div><b>No cuentan en las 800 palabras</b><p>Diagramas, sus rótulos (hasta 5 palabras) y títulos (hasta 10), tablas de datos, fórmulas y cálculos, citas y referencias.</p></div></div>
+    <h2>Criterios de cada comentario · 14 puntos</h2>
+    <div class="eicrit">${EI_CRIT.map(([k, n, m]) => `<div><b>${k}</b><span>${n}</span><i>${m} p</i></div>`).join('')}<div><b>F</b><span>Requisitos de la carpeta</span><i>3 p</i></div></div>
+    <h2 style="margin-top:22px">Mi carpeta</h2>
+    <div class="tiles games">${Object.entries(EI_UNITS).map(([u, n]) => { const w = EIS.s[u], st = eiStarted(u), wds = w ? eiWords(w) : 0; return `<button class="tile" type="button" data-go="ei-${u}"><span class="code">${u}</span><span class="nm">Comentario de ${n}</span><span class="ds">${st ? esc(w.title || 'Sin título') + (w.kc ? ' · ' + KC[w.kc] : '') : 'Sin empezar'}</span><span class="ft">${st ? `<span class="tag ${wds > 800 ? '' : 'prog'}">${wds}/800 palabras</span><span class="tag">${eiScore(u)}/14</span>` : '<span class="tag">Empezar</span>'}</span></button>`; }).join('')}</div>
+    <div class="fb info" style="margin-top:14px"><b class="h">Estimación de la carpeta: ${tot}/45</b>${F.msg}<br><span class="small">Autoevaluación orientativa: la nota la pone tu profesor y la modera el IB.</span></div>
+    <h2 style="margin-top:22px">Cómo repartir las 800 palabras</h2>
+    <table class="dtab eibud"><thead><tr><th>Bloque</th><th>Qué escribir</th><th>Palabras</th></tr></thead><tbody>${EI_BLOCKS.map(b => `<tr><th scope="row">${b.n}</th><td>${b.g}</td><td>${b.bud || 'No cuenta'}</td></tr>`).join('')}<tr><th scope="row">Margen</th><td>Colchón para revisar sin pasarte.</td><td>50</td></tr></tbody></table>
+    <p class="small muted">Reparto tomado de la guía «El Arte de la Síntesis» de tu profesor.</p>`;
+}
+function eiHead(u) { return `<button class="crumb" type="button" data-go="escribir-ei">← Mi carpeta</button><div class="eyebrow" style="margin-top:12px">Evaluación Interna · Unidad ${u}</div><h1 style="margin-bottom:6px">Comentario de ${EI_UNITS[u]}</h1>`; }
+function renderEI(u) {
+  const w = eiSlot(u), steps = ['Artículo y portada', ...EI_BLOCKS.map(b => b.n), 'Revisar'], n = steps.length - 1;
+  if (w.st > n) w.st = n;
+  const words = eiWords(w);
+  const doneF = [!!(w.title && w.source && w.pub && w.kc), ...EI_BLOCKS.map(b => b.k === 'dia' ? padUsed(w.dia) : !!(w.txt[b.k] || '').trim()), !!Object.keys(w.cr).length];
+  app.innerHTML = eiHead(u) + `
+    <div class="simbar"><span>Palabras: <b id="eiW" class="${words > 800 ? 'over' : ''}">${words}</b>/800</span>${w.kc ? `<span>Concepto: <b>${KC[w.kc]}</b></span>` : ''}<span>Estimado: <b>${eiScore(u)}</b>/14</span></div>
+    ${stepper(steps, w.st, doneF, true)}
+    <div class="card cwcard"><div class="card-b" id="eib"></div><div class="card-f"><button class="btn" type="button" id="eiPrev" ${w.st === 0 ? 'disabled' : ''}>← Anterior</button><button class="btn primary" type="button" id="eiNext">${w.st < n - 1 ? 'Siguiente →' : w.st === n - 1 ? 'Revisar →' : 'Volver a la carpeta'}</button></div></div>`;
+  app.querySelectorAll('[data-step]').forEach(b => b.onclick = () => { w.st = +b.dataset.step; saveEI(); renderEI(u); });
+  $('#eiPrev').onclick = () => { w.st--; saveEI(); renderEI(u); };
+  $('#eiNext').onclick = () => { if (w.st >= n) return go('escribir-ei'); w.st++; saveEI(); window.scrollTo(0, 0); renderEI(u); };
+  const B = $('#eib');
+  const upW = () => { const x = eiWords(w), el2 = $('#eiW'); if (el2) { el2.textContent = x; el2.classList.toggle('over', x > 800); } };
+  if (w.st === 0) {
+    const ck = eiChecks(u);
+    B.innerHTML = `<p class="q">Datos de la portada. El IB pide registrarlos en cada comentario; no cuentan en las 800 palabras.</p>
+      <div class="eigrid">
+        <label class="dbf"><span>Título del artículo</span><input class="inp" data-f="title" value="${esc(w.title)}" maxlength="200"></label>
+        <label class="dbf"><span>Fuente (periódico o sitio)</span><input class="inp" data-f="source" value="${esc(w.source)}" maxlength="80" placeholder="Ej.: La Nación, Reuters, BBC Mundo"></label>
+        <label class="dbf"><span>Enlace (URL)</span><input class="inp" data-f="url" value="${esc(w.url)}" maxlength="400" inputmode="url" placeholder="https://…"></label>
+        <label class="dbf"><span>Fecha de publicación</span><input class="inp" type="date" data-f="pub" value="${esc(w.pub)}"></label>
+        <label class="dbf"><span>Fecha de consulta (si es de internet)</span><input class="inp" type="date" data-f="acc" value="${esc(w.acc)}"></label>
+        <label class="dbf"><span>Fecha de redacción del comentario</span><input class="inp" type="date" data-f="red" value="${esc(w.red)}"></label>
+      </div>
+      <h4>Concepto clave</h4><div class="kcgrid">${Object.entries(KC).map(([k, v]) => { const used = Object.keys(EI_UNITS).some(x => x !== String(u) && EIS.s[x] && EIS.s[x].kc === k); return `<button type="button" class="kcb ${w.kc === k ? 'sel' : ''}" data-kc="${k}"><b>${v}${used ? ' · ya usado' : ''}</b><span>${KC_DS[k]}</span></button>`; }).join('')}</div>
+      <div id="eiVal"></div>
+      <label class="dbf" style="margin-top:12px"><span>Fragmento clave del artículo (opcional, para tenerlo a mano; no cuenta)</span><textarea data-f="frag" rows="4">${esc(w.frag)}</textarea></label>`;
+    const val = () => {
+      const c = eiChecks(u), m = [];
+      if (w.pub) m.push(c.dateOk ? ['ok', `Artículo de hace ${c.days} días: cumple el límite de un año.`] : ['no', c.days < 0 ? 'La fecha de publicación es posterior a la de redacción.' : `El artículo tiene ${c.days} días: supera el año permitido (pierdes puntos en el criterio F).`]);
+      if (c.kcDup) m.push(['no', 'Ese concepto clave ya lo usaste en otro comentario: el criterio D sería 0 en este.']);
+      if (c.srcDup) m.push(['no', 'Esa fuente ya la usaste en otro comentario: cada uno debe tener una fuente distinta.']);
+      if (/youtube|tiktok|instagram|facebook|twitter|x\.com|radio|tv/i.test(w.url + ' ' + w.source)) m.push(['no', 'La fuente parece ser televisión, radio o redes sociales: el IB no las admite.']);
+      $('#eiVal').innerHTML = m.length ? `<ul class="autofb" style="margin-top:12px">${m.map(([cl, t]) => `<li class="${cl}">${t}</li>`).join('')}</ul>` : '';
+    };
+    B.querySelectorAll('[data-f]').forEach(i => i.oninput = () => { w[i.dataset.f] = i.value; saveEI(); val(); });
+    B.querySelectorAll('[data-kc]').forEach(b => b.onclick = () => { w.kc = b.dataset.kc; saveEI(); renderEI(u); });
+    val(); return;
+  }
+  if (w.st === n) return eiReview(u, B);
+  const blk = EI_BLOCKS[w.st - 1];
+  if (blk.k === 'dia') {
+    B.innerHTML = `<p class="q">${blk.g}</p><label class="dbf"><span>Título del diagrama</span><input class="inp" id="eiDT" value="${esc(w.diaT)}" maxlength="90" placeholder="Ej.: Efecto del aumento del gasoil en el mercado del pan en Paraguay"></label>
+      <div id="eiPad" style="margin-top:8px"></div>
+      <p class="small muted" style="margin-top:8px">También puedes armarlo en <a href="#lab-crear">Laboratorios → Crea tu propio diagrama</a> y descargarlo como imagen para pegarlo en tu documento.</p>`;
+    $('#eiDT').oninput = e => { w.diaT = e.target.value; saveEI(); };
+    sketchPad($('#eiPad'), w.dia, ops => { w.dia = ops; saveEI(); }, { file: 'EI-unidad-' + u });
+    return;
+  }
+  const tw = wc(w.txt[blk.k]);
+  B.innerHTML = `<p class="q"><b>${blk.n}</b> · unas ${blk.bud} palabras. ${blk.g}</p>
+    ${w.kc ? `<p class="small">Tu concepto clave: <b>${KC[w.kc]}</b>. Nómbralo y conéctalo con el artículo a lo largo del texto, no solo en la introducción.</p>` : '<p class="small" style="color:var(--bad)">Elige el concepto clave en el paso 1.</p>'}
+    <div class="conn">${blk.c.map(c => `<button type="button" class="chip" data-c="${esc(c)}">${c}</button>`).join('')}${w.kc ? `<button type="button" class="chip" data-c="${KC[w.kc].toLowerCase()}">${KC[w.kc]}</button>` : ''}${blk.tpl ? '<button type="button" class="chip tplc" id="eiTpl">Insertar plantilla de 2 ejes</button>' : ''}</div>
+    <textarea id="eit" rows="${blk.k === 'eva' ? 14 : 10}">${esc(w.txt[blk.k] || '')}</textarea>
+    <div class="budbar"><div class="bar"><i id="eiBar" style="width:${Math.min(100, tw / blk.bud * 100)}%"></i></div><span id="eiBW">${tw}/${blk.bud}</span></div>
+    ${blk.k === 'exp' ? '<details class="model"><summary>Ver el ejemplo de la guía: narrativa larga y sintetizada</summary><p class="small"><b>Larga (≈ 110 palabras):</b> describe el desplazamiento con frases completas.</p><p class="small"><b>Sintetizada (≈ 58 palabras):</b> «La suba del gasoil eleva los costos de las panaderías (transporte y horneado), desplazando la oferta de S₁ a S₂. Al precio P₁ surge un exceso de demanda que empuja el precio hasta P₂ y reduce la cantidad de Q₁ a Q₂ (nuevo equilibrio E₂). El pan, bien de primera necesidad de demanda inelástica, absorbe casi toda la suba.»</p></details>' : ''}`;
+  const ta = $('#eit');
+  const upd = () => { const x = wc(ta.value); $('#eiBW').textContent = x + '/' + blk.bud; $('#eiBar').style.width = Math.min(100, x / blk.bud * 100) + '%'; $('#eiBar').parentNode.classList.toggle('over', x > blk.bud * 1.15); upW(); };
+  ta.oninput = () => { w.txt[blk.k] = ta.value; saveEI(); upd(); }; upd();
+  B.querySelectorAll('[data-c]').forEach(b => b.onclick = () => insertAtCursor(ta, b.dataset.c));
+  const tp = $('#eiTpl'); if (tp) tp.onclick = () => insertAtCursor(ta, blk.tpl);
+}
+function eiReview(u, B) {
+  const w = eiSlot(u), all = EI_BLOCKS.filter(b => b.bud).map(b => w.txt[b.k] || '').join('\n\n'), t = normTxt(all), words = eiWords(w), c = eiChecks(u);
+  const kcN = w.kc ? (t.match(new RegExp(normTxt(KC[w.kc]).split(' ')[0], 'g')) || []).length : 0;
+  const fb = [];
+  fb.push(words <= 800 ? ['ok', `${words} palabras: dentro del límite de 800.`] : ['no', `${words} palabras: el moderador deja de leer en la palabra 800. Recorta ${words - 800}.`]);
+  fb.push(kcN >= 3 ? ['ok', `Nombras el concepto clave ${kcN} veces a lo largo del texto.`] : ['no', w.kc ? `Nombras el concepto clave solo ${kcN} ${kcN === 1 ? 'vez' : 'veces'}: conéctalo con el artículo en la explicación y en la evaluación.` : 'No elegiste concepto clave.']);
+  fb.push(padUsed(w.dia) ? ['ok', 'Hay un diagrama dibujado.'] : ['no', 'Falta el diagrama: sin él, el criterio A es 0.']);
+  fb.push(/[₀₁₂₃]|\b(P|Q|E|O|S|D|DA|OA|OACP|OALP|TC)[ ]?[0-3]\b/.test(all) ? ['ok', 'El texto cita el diagrama con sus rótulos (P₁, O₂…).'] : ['no', 'Cita el diagrama con sus rótulos (P₁ → P₂, O₁ → O₂): ahorra palabras y explica el diagrama.']);
+  fb.push(/\d/.test(w.txt.exp || '') || /segun el articulo|tal como informa|el articulo/.test(normTxt(w.txt.exp)) ? ['ok', 'La explicación se apoya en el artículo.'] : ['no', 'Engancha la explicación con un dato o una frase del artículo.']);
+  const ev = normTxt(w.txt.eva);
+  fb.push(/corto plazo/.test(ev) && /largo plazo/.test(ev) ? ['ok', 'La evaluación distingue corto y largo plazo.'] : ['no', 'Agrega el eje del tiempo (corto y largo plazo) a la evaluación.']);
+  fb.push(/por un lado|se beneficia|pierde|perjudica|consumidores|productores|gobierno|trabajadores|empresas|hogares/.test(ev) ? ['ok', 'La evaluación considera partes interesadas.'] : ['no', 'Indica quién gana y quién pierde (partes interesadas).']);
+  fb.push(/en definitiva|por todo lo expuesto|se puede concluir|en ultima instancia|en conclusion/.test(ev) ? ['ok', 'Hay una conclusión.'] : ['no', 'Cierra la evaluación con una conclusión («En definitiva…»).']);
+  if (c.kcDup) fb.push(['no', 'El concepto clave se repite con otro comentario: el criterio D sería 0.']);
+  if (w.pub && !c.dateOk) fb.push(['no', 'La fecha del artículo no cumple el límite de un año.']);
+  const ck5 = ['<b>Límite.</b> 800 palabras o menos, con un pequeño margen.', '<b>Un solo tema.</b> Me mantuve en una unidad del programa.', '<b>Diagrama vivo.</b> Título, ejes con variables del artículo, curvas y puntos rotulados, y lo cito en el texto.', '<b>Explica ≠ Evalúa.</b> La explicación dice por qué; la evaluación emite un juicio con dos ejes.', '<b>Concepto y fuente.</b> Nombré y expliqué el concepto clave; el artículo tiene menos de un año y la fuente es válida.'];
+  const cover = `Título del artículo: ${w.title}\nFuente: ${w.source}${w.url ? ' (' + w.url + ')' : ''}\nFecha de publicación: ${w.pub}${w.acc ? '\nFecha de consulta: ' + w.acc : ''}\nFecha de redacción del comentario: ${w.red}\nCómputo de palabras: ${words}\nUnidad del programa: Unidad ${u} · ${EI_UNITS[u]}\nConcepto clave: ${w.kc ? KC[w.kc] : '—'}`;
+  const full = cover + '\n\n' + (w.txt.intro || '') + '\n\n[Diagrama: ' + (w.diaT || 'sin título') + ']\n\n' + (w.txt.exp || '') + '\n\n' + (w.txt.eva || '');
+  B.innerHTML = `<h3 style="margin-top:0">Revisión automática</h3><ul class="autofb">${fb.map(([cl, m]) => `<li class="${cl}">${m}</li>`).join('')}</ul>
+    <p class="small muted">Busca palabras y conectores; no evalúa si tu economía es correcta.</p>
+    <h3>Los 5 controles antes de entregar</h3>${checklistHtml(ck5, w.ck, 'eick')}
+    <h3>Autoevaluación con los criterios</h3>
+    <div class="eicr">${EI_CRIT.map(([k, nm, mx, ds]) => `<div class="eicrow"><div><b>${k} · ${nm}</b>${k === 'D' && c.kcDup ? ' <span class="tag">0 por concepto repetido</span>' : ''}</div><div class="bands" data-cr="${k}">${ds.map((d, v) => `<div class="band ${w.cr[k] === v ? 'on' : ''}"><div class="bn"><button type="button" class="bnum ${w.cr[k] === v ? 'sel' : ''}" data-v="${v}">${v}</button></div><p>${d}</p></div>`).join('')}</div></div>`).join('')}</div>
+    <div class="fb info" style="margin-top:12px"><b class="h">Estimado de este comentario: ${eiScore(u)}/14</b>Más el criterio F de la carpeta (hasta 3 puntos). Autoevaluación orientativa.</div>
+    <div class="row" style="margin-top:12px"><button class="btn primary" type="button" id="eiCp">Copiar el comentario con su portada</button></div>
+    ${padUsed(w.dia) ? '<h4>Tu diagrama</h4><div id="eiRO"></div>' : ''}`;
+  bindChecklist(B, 'eick', ck5, w.ck, saveEI);
+  B.querySelectorAll('[data-cr]').forEach(g => g.querySelectorAll('.bnum').forEach(b => b.onclick = () => { w.cr[g.dataset.cr] = +b.dataset.v; saveEI(); const y = window.scrollY; renderEI(u); window.scrollTo(0, y); }));
+  $('#eiCp').onclick = e => copyText(full, e.currentTarget);
+  if (padUsed(w.dia)) sketchPad($('#eiRO'), w.dia, null, { readOnly: true, file: 'EI-unidad-' + u });
 }
 
 render();
