@@ -638,6 +638,7 @@ function resizeCanvas(){
   ROAD=Math.round(Math.min(200, W*0.36));
 }
 window.addEventListener("resize", resizeCanvas);
+cv.addEventListener("pointerdown", ()=>{ cv.focus({preventScroll:true}); });
 
 function center(y){ // centro de la pista en la coordenada de pantalla y
   const wd = G.p.dist + (PY()-y);
@@ -650,7 +651,7 @@ function spawnTarget(){
   const c = R.grid[i>0?i-1:1];
   if(boss) R.boss=c;
   const base = 5.2 + S.circuit*0.18;
-  G.t={ code:c, color: boss?"#B04BFF":rival(c)[2], boss, dist:G.p.dist+950, speed:base,
+  G.t={ code:c, color: boss?"#B04BFF":rival(c)[2], boss, dist:G.p.dist+(R.step===0?950:650), speed:base,
         x:(Math.random()<.5?-1:1)*ROAD*0.35, tx:(Math.random()<.5?-1:1)*ROAD*0.35, state:"ahead" };
   const K=R.kinds[Math.min(R.step,2)];
   G.curve = K.k==="curve" ? 150 : 45;
@@ -683,6 +684,7 @@ function update(){
     if(keys.left) p.x-=steer; if(keys.right) p.x+=steer;
   }
   p.speed=Math.max(0,p.speed);
+  if(G.mode==="overtake") p.speed=Math.max(p.speed,8);   // el adelantamiento se completa siempre
   // la curva empuja el auto hacia afuera
   const dc = center(PY()-p.speed) - center(PY());
   p.x -= dc*0.85;
@@ -774,10 +776,12 @@ function draw(){
   ctx.fillStyle="#fff"; ctx.font="italic 900 30px 'Titillium Web', sans-serif"; ctx.fillText(String(Math.round(p.speed*32)).padStart(3," "),22,48);
   ctx.font="700 12px 'Titillium Web', sans-serif"; ctx.fillStyle="#98A0AE"; ctx.fillText("KM/H",84,48);
   ctx.fillStyle=Math.abs(p.x)>ROAD-22?"#FFD23F":"#2FD17C"; ctx.fillText(Math.abs(p.x)>ROAD-22?"¡PASTO!":"EN PISTA",84,32);
-  if(G.mode==="drive" && p.speed<1 && p.dist<400){
-    ctx.fillStyle="rgba(11,12,16,.8)"; ctx.fillRect(W/2-150,H/2-24,300,48);
-    ctx.fillStyle="#FFD23F"; ctx.font="italic 900 20px 'Titillium Web', sans-serif"; ctx.textAlign="center";
-    ctx.fillText("Mantené ↑ para acelerar",W/2,H/2+7); ctx.textAlign="start";
+  if((G.mode==="drive" && p.speed<1.5) || (G.mode!=="lights" && G.mode!=="question" && !document.hasFocus())){
+    const msg = document.hasFocus() ? "Mantené ↑ para acelerar" : "Hacé clic en la pista para manejar";
+    ctx.font="italic 900 20px 'Titillium Web', sans-serif";
+    const w=ctx.measureText(msg).width+40;
+    ctx.fillStyle="rgba(11,12,16,.85)"; ctx.fillRect(W/2-w/2,H/2-24,w,48);
+    ctx.fillStyle="#FFD23F"; ctx.textAlign="center"; ctx.fillText(msg,W/2,H/2+7); ctx.textAlign="start";
   }
   // semáforo
   if(G.mode==="lights"){
@@ -801,6 +805,8 @@ const KM={ArrowUp:"up",KeyW:"up",ArrowDown:"down",KeyS:"down",ArrowLeft:"left",K
 document.addEventListener("keydown",e=>{
   if($("race").hidden || e.target.tagName==="TEXTAREA" || e.target.tagName==="INPUT") return;
   if(!$("qov").hidden){
+    const go=$("qcard").querySelector(".go");
+    if(go && (e.key==="Enter" || e.key===" " || e.code==="ArrowUp")){ e.preventDefault(); go.click(); return; }
     const n="1234".indexOf(e.key);
     if(n>=0){ const all=$("qcard").querySelectorAll(".opts"); const b=all.length && all[all.length-1].children[n]; if(b && !b.disabled){ e.preventDefault(); b.click(); } }
     return;
@@ -832,14 +838,15 @@ function startCircuit(){
   renderTower(); renderBoard();
   setRadio(`Los autos se acomodan en la grilla… ${esc(S.name)} (${esc(S.team)}) larga desde la <em>P${pos()}</em>. Cinco luces rojas… <em>¡Ruuuuum!</em>`);
   startLights();
-  setTimeout(()=>{ if(G.mode!=="idle") setRadio(R.kinds[0].intro(esc(rivalName()))); }, 4400);
+  const thisRace=R;
+  setTimeout(()=>{ if(R===thisRace && R.step===0 && G.mode==="drive") setRadio(R.kinds[0].intro(esc(rivalName()))); }, 4400);
 }
 function pos(){ return R.grid.indexOf("YOU")+1; }
 function move(delta){
   const i=R.grid.indexOf("YOU"); R.grid.splice(i,1);
   const n=Math.max(0, Math.min(19, i+delta)); R.grid.splice(n,0,"YOU"); return i-n;
 }
-function rivalName(){ const i=R.grid.indexOf("YOU"); return rival(R.grid[i>0?i-1:1])[1]; }
+function rivalName(){ if(G.t && G.t.state==="ahead" && rival(G.t.code)) return rival(G.t.code)[1]; const i=R.grid.indexOf("YOU"); return rival(R.grid[i>0?i-1:1])[1]; }
 
 function renderTower(){
   const t=$("tower");
@@ -891,15 +898,23 @@ function ersButton(box, list){
 }
 function continueButton(label, anim){
   const a=document.createElement("div"); a.className="row-actions";
-  const b=document.createElement("button"); b.className="btn"; b.innerHTML=`<span>${label}</span>`;
-  b.onclick=()=>{ $("qov").hidden=true; runAnim(anim); cv.focus({preventScroll:true}); };
+  const b=document.createElement("button"); b.className="btn go"; b.innerHTML=`<span>${label}</span> <small style="opacity:.7;font-size:12px">(Enter)</small>`;
+  let used=false;
+  b.onclick=()=>{ if(used) return; used=true; $("qov").hidden=true; for(const k in keys) keys[k]=false; runAnim(anim); cv.focus({preventScroll:true}); };
   a.append(b); $("qcard").append(a); b.focus({preventScroll:true});
 }
 
 function openQuestion(){
   for(const k in keys) keys[k]=false;
+  $("qcard").innerHTML="";
   $("qov").hidden=false;
-  if(R.step<3) askObstacle(); else askBoss();
+  try{ if(R.step<3) askObstacle(); else askBoss(); }
+  catch(err){
+    console.error(err);
+    $("qov").hidden=true;
+    if(G.t){ G.t.state="passed"; G.t.speed=3; }
+    G.mode="overtake";
+  }
 }
 
 function askObstacle(){
