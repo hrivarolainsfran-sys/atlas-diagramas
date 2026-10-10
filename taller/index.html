@@ -505,6 +505,8 @@ body.docked{padding-bottom:190px}
 .eicr{display:grid;gap:14px}
 .eicrow > div:first-child{margin-bottom:6px}
 @media (max-width:860px){.eicrit{grid-template-columns:repeat(3,minmax(0,1fr))}.eigrid,.kcgrid{grid-template-columns:1fr}}
+.ejd{margin:4px 0 8px;padding-left:18px;font-size:15px}.ejd li{margin:2px 0}
+#epy[aria-pressed="true"]{background:var(--navy-2);color:var(--navy-ink);border-color:var(--navy-2)}
 /* v12: definiciones */
 .deflist td mark{background:var(--gold-soft,#fdf0c4);color:inherit;padding:0 2px;border-radius:3px}
 .deflist th{white-space:normal;min-width:130px}
@@ -515,7 +517,7 @@ body.docked{padding-bottom:190px}
 #dTx{width:100%;box-sizing:border-box;font:inherit;font-size:16px;padding:10px 12px;border:1.5px solid var(--ink-2);border-radius:8px;background:var(--sheet);color:var(--ink)}
 /* v11: hoja de fórmulas */
 .fctl{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:16px 0 6px}
-.fctl #fq{flex:1 1 220px;min-width:0;max-width:340px}
+.fctl #fq,.fctl #eq{flex:1 1 220px;min-width:0;max-width:340px}
 .fgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,360px),1fr));gap:14px}
 .fcard{background:var(--sheet);border:1px solid var(--rule);border-radius:var(--r);padding:16px 18px;min-width:0}
 .fh{display:flex;gap:10px;align-items:baseline}.fh h3{margin:0;font-size:18px}
@@ -1529,6 +1531,7 @@ function render() {
   if (route === 'escribir-hqp') { setNav('escribir'); return renderCmd('hqp'); }
   if (route.startsWith('cmd-')) { const [, k, i] = route.split('-'); if (CMDT[k] && CMDT[k].bank[+i]) { setNav('escribir'); return renderCmdWrite(k, +i); } }
   if (route === 'escribir-p2') { setNav('escribir'); return renderP2Home(); }
+  if (route === 'escribir-ej') { setNav('escribir'); return renderEjemplos(); }
   if (route === 'escribir-def') { setNav('escribir'); return renderDefHome(); }
   if (route === 'formulas') { setNav('formulas'); return renderFormulas(); }
   if (route === 'escribir-calc') { setNav('escribir'); return renderCalcHome(); }
@@ -3155,7 +3158,7 @@ function renderReport() {
 }
 
 /* ---- Escribir: portada, pestañas y ejercicios de base ---- */
-const WTABS = [['escribir-comandos', 'Comandos'], ['escribir-conceptos', 'Conceptos clave'], ['escribir-def', 'Definiciones'], ['escribir-explicar', 'Explicar · 10'], ['escribir-analizar', 'Analizar · 10'], ['escribir-evaluar', 'Evaluar · 15'], ['escribir-discutir', 'Discutir · 15'], ['escribir-hqp', '¿Hasta qué punto? · 15'], ['escribir-errores', 'Encuentra el error'], ['escribir-p1', 'Simulacro P1'], ['escribir-calc', 'Cálculos P2'], ['escribir-p2', 'Prueba 2'], ['escribir-ei', 'Evaluación Interna']];
+const WTABS = [['escribir-comandos', 'Comandos'], ['escribir-conceptos', 'Conceptos clave'], ['escribir-def', 'Definiciones'], ['escribir-ej', 'Ejemplos reales'], ['escribir-explicar', 'Explicar · 10'], ['escribir-analizar', 'Analizar · 10'], ['escribir-evaluar', 'Evaluar · 15'], ['escribir-discutir', 'Discutir · 15'], ['escribir-hqp', '¿Hasta qué punto? · 15'], ['escribir-errores', 'Encuentra el error'], ['escribir-p1', 'Simulacro P1'], ['escribir-calc', 'Cálculos P2'], ['escribir-p2', 'Prueba 2'], ['escribir-ei', 'Evaluación Interna']];
 function writeTabs(cur) {
   return `<div class="seg wtabs" role="group" aria-label="Secciones de Escribir" style="margin-bottom:18px">${WTABS.map(([r, l], i) => `<button type="button" data-go="${r}" aria-pressed="${r === cur}">${i + 1}. ${l}</button>`).join('')}</div>`;
 }
@@ -3163,10 +3166,11 @@ function renderWriteHome() {
   const pc = t => `${topicDone(t.id)}/${t.items.length} ejercicios`;
   const cm = k => { const n = CMDT[k].bank.filter((_, i) => (CMDW[cmdKey(k, i)] || {}).done).length; return `${n}/${CMDT[k].bank.length} completas`; };
   const groups = [
-    ['Base', 'qué pide cada pregunta y qué concepto aplica', [
+    ['Base', 'qué pide cada pregunta, conceptos, definiciones y ejemplos', [
       ['escribir-comandos', 'Comandos evaluativos', 'Qué pide cada término, cuánto vale y cómo se cierra.', pc(DRILLS.cmd)],
       ['escribir-conceptos', 'Conceptos clave', 'Los nueve conceptos del curso aplicados a casos, como en la Evaluación Interna.', pc(DRILLS.kc)],
-      ['escribir-def', 'Definiciones · Prueba 2 (a)', `${DEFS.length} términos del Nivel Medio: escribe la definición y compárala con el modelo.`, `${Object.keys(DEFST).length}/${DEFS.length} practicadas`]]],
+      ['escribir-def', 'Definiciones · Prueba 2 (a)', `${DEFS.length} términos del Nivel Medio: escribe la definición y compárala con el modelo.`, `${Object.keys(DEFST).length}/${DEFS.length} practicadas`],
+      ['escribir-ej', 'Ejemplos del mundo real', 'Casos reales por subtema con país, año, dato, diagrama y un punto para evaluar.', `${EJ.length} ejemplos`]]],
     ['Términos de instrucción', 'un método paso a paso para cada uno', [
       ['escribir-explicar', 'Explicar · 10 puntos', 'Cadena causal en 4 pasos: ejemplo resuelto, guiado y por tu cuenta.', `${EXP.filter(p => expState(p).done).length}/${EXP.length} completas`],
       ['escribir-analizar', 'Analizar · 10 puntos', 'Descomponer en partes, examinar cada una y relacionarlas, sin juicio de valor.', cm('analizar')],
@@ -5712,6 +5716,320 @@ function renderDefHome() {
     Q.res[Q.i] = { txt, pts, chk, skip }; Q.pts += pts; renderDefHome();
   };
   $('#dOk').onclick = () => finish(false); $('#dSk').onclick = () => finish(true);
+}
+
+/* =============== 17 · Ejemplos del mundo real (base: guía C-A-D-I del Prof. Rivarola; datos revisados oct. 2026) =============== */
+const EJ = [
+  { st: '2.1', t: 'Uber y los taxis de Nueva York', w: 'Nueva York (EE. UU.), 2013–2019',
+    h: 'La llegada de Uber y Lyft, con tarifas más bajas, ofreció un sustituto cercano del taxi amarillo.',
+    d: ['El precio de una licencia de taxi (medallón) pasó de más de US$ 1 millón (2013–2014) a menos de US$ 200.000 en 2018.', 'En una subasta de 2019 solo se vendieron 3 de 16 medallones, a unos US$ 137.000 cada uno.'],
+    f: 'Comisión de Taxis y Limusinas de NY; prensa (Wikipedia: Taxi medallion).',
+    g: 'Mercado de viajes en taxi: la demanda D₁ se desplaza a la izquierda (D₂) porque bajó el precio de un sustituto. P y Q caen.',
+    k: 'Cambio · Interdependencia', e: 'Ganan los usuarios (más opciones, precios más bajos); pierden los taxistas que se endeudaron para comprar medallones. A largo plazo, los reguladores tuvieron que intervenir con nuevas reglas para las plataformas.' },
+  { st: '2.2', t: 'Sequía y soja en Paraguay', w: 'Paraguay, zafra 2021/22', py: 1,
+    h: 'La sequía redujo el rendimiento de los cultivos: un factor no relacionado con el precio desplazó la oferta.',
+    d: ['La cosecha de soja fue de unos 4,3 millones de toneladas, cuando se esperaban cerca de 10 millones.', 'Las exportaciones de soja cayeron de 6.329.425 t (2021) a 2.334.309 t (2022), un 63 % menos.'],
+    f: 'La Nación (Paraguay), 14/01/2023, con datos de la CAPECO.',
+    g: 'Mercado de la soja: la oferta O₁ se desplaza a la izquierda (O₂). Sube el precio y baja la cantidad.',
+    k: 'Escasez · Cambio', e: 'Pierden los productores (sobre todo los pequeños), el transporte y el Estado; los que tenían soja guardada se beneficiaron del mayor precio. A largo plazo: riego, seguros agrícolas y diversificación.' },
+  { st: '2.2', t: 'La peor sequía de Argentina en 60 años', w: 'Argentina, campaña 2022/23',
+    h: 'El fenómeno de La Niña dejó sin lluvias a la región pampeana durante la siembra y la cosecha.',
+    d: ['La producción de soja cayó alrededor de 51 % respecto de la campaña anterior (unos 21 millones de toneladas frente a 43).', 'El PIB argentino cayó en 2023, arrastrado por la caída de las exportaciones agrícolas.'],
+    f: 'Bolsa de Cereales de Buenos Aires; prensa (Gestión, La Nación).',
+    g: 'Mercado de la soja: la oferta se desplaza a la izquierda; P sube y Q baja.',
+    k: 'Escasez · Interdependencia', e: 'Ganan los exportadores de otros países que venden a mejor precio; pierden los productores argentinos y el Estado, que recauda menos por retenciones y recibe menos dólares.' },
+  { st: '2.3', t: 'Recortes de la OPEP+ en 2023', w: 'Mercado mundial del petróleo, abril de 2023',
+    h: 'Varios países de la OPEP+ anunciaron recortes voluntarios de producción mientras la demanda de China se debilitaba.',
+    d: ['En abril de 2023 se anunció un recorte de unos 1,16 millones de barriles diarios desde mayo.', 'El precio del Brent subió alrededor de 6 % el día del anuncio, pero bajó hacia fin de año por la menor demanda.'],
+    f: 'OPEP; agencias de noticias (Reuters, AP).',
+    g: 'Mercado del petróleo con dos desplazamientos: la oferta a la izquierda y la demanda a la izquierda. Q baja con seguridad; el efecto sobre P depende de qué curva se mueve más.',
+    k: 'Interdependencia · Intervención', e: 'Ganan los países exportadores; pierden los importadores de combustible, como Paraguay. El resultado final depende de la demanda mundial.' },
+  { st: '2.5', t: 'Impuesto al tabaco en Australia', w: 'Australia, 2010–2020',
+    h: 'El gobierno subió el impuesto específico al tabaco un 25 % en 2010 y luego un 12,5 % por año entre 2013 y 2020.',
+    d: ['La proporción de personas que fuman a diario bajó de 12,2 % (2016) a 11 % (2019).', 'El consumo cayó, pero proporcionalmente mucho menos que la suba del precio: la demanda es inelástica.'],
+    f: 'Australian Institute of Health and Welfare, Encuesta Nacional de Hogares sobre Drogas 2019.',
+    g: 'Demanda relativamente inelástica: una gran suba del precio provoca una caída pequeña de la cantidad; el ingreso total (y la recaudación) aumenta.',
+    k: 'Intervención · Bienestar económico', e: 'Funciona para recaudar y reduce algo el consumo, pero es un impuesto regresivo: pesa más sobre los fumadores de bajos ingresos.' },
+  { st: '2.5', t: 'China y la demanda de bienes de lujo', w: 'China, 2010–2019',
+    h: 'El fuerte aumento del ingreso de la clase media china disparó la compra de bienes de lujo.',
+    d: ['El PIB per cápita de China pasó de unos US$ 4.550 (2010) a unos US$ 10.100 (2019).', 'En 2018 los consumidores chinos ya hacían cerca de un tercio de todas las compras de lujo del mundo.'],
+    f: 'Banco Mundial; Bain & Company, informe de lujo 2019.',
+    g: 'Curva de Engel de un bien de lujo (EID > 1): la cantidad crece proporcionalmente más que el ingreso. Compárala con un bien de primera necesidad y uno inferior.',
+    k: 'Cambio · Interdependencia', e: 'Las empresas de lujo europeas dependen cada vez más de China: si su ingreso se frena, sus ventas caen más que proporcionalmente.' },
+  { st: '2.6', t: 'Cobre en Chile: precio récord, producción estancada', w: 'Chile, 2020–2022',
+    h: 'La demanda mundial de cobre subió por la electrificación, pero abrir una mina nueva lleva años.',
+    d: ['El precio del cobre llegó a máximos históricos en marzo de 2022 (más de US$ 10.000 por tonelada).', 'Aun así, Chile produjo 5,35 millones de toneladas en 2022, un 5 % menos que en 2021.'],
+    f: 'Cochilco; AFP (swissinfo, enero de 2023).',
+    g: 'Oferta inelástica a corto plazo: cuando la demanda se desplaza a la derecha, sube mucho el precio y casi nada la cantidad. A largo plazo la oferta es más elástica.',
+    k: 'Escasez · Sostenibilidad', e: 'El país gana más divisas e impuestos por el precio, pero no puede aprovecharlo con más producción; las nuevas minas tienen costos ambientales y de agua.' },
+  { st: '2.7', t: 'Impuesto a las bebidas azucaradas en el Reino Unido', w: 'Reino Unido, desde abril de 2018',
+    h: 'Un impuesto de dos tramos según el azúcar por litro empujó a las empresas a cambiar sus recetas.',
+    d: ['Un estudio de 2023 lo asoció con una baja del 8 % en la obesidad de niñas de 10 a 11 años.', 'Eso equivale a unos 5.234 casos de obesidad evitados por año en ese grupo.'],
+    f: 'Rogers et al. (2023), PLOS Medicine; Universidad de Cambridge.',
+    g: 'Impuesto indirecto específico: la oferta se desplaza hacia arriba; sube el precio al consumidor y baja la cantidad. Puede dibujarse también como corrección de una externalidad negativa del consumo.',
+    k: 'Intervención · Bienestar económico', e: 'Logró cambiar la oferta (menos azúcar) además de la demanda; no tuvo efecto en los varones y pesa más en los hogares de bajos ingresos.' },
+  { st: '2.7', t: 'Subsidio a las energías renovables en Alemania', w: 'Alemania, desde 2000 (ley EEG)',
+    h: 'Se garantizó a los productores de energía renovable un precio fijo por 20 años, financiado con un recargo en la factura eléctrica.',
+    d: ['El recargo (EEG-Umlage) llegó a 6,88 céntimos por kWh en 2017.', 'Las renovables cubrieron cerca del 46 % del consumo bruto de electricidad en 2022.'],
+    f: 'Gobierno federal de Alemania; Umweltbundesamt (2023).',
+    g: 'Subvención: la oferta se desplaza hacia abajo; baja el precio para el consumidor del bien subsidiado y sube la cantidad.',
+    k: 'Sostenibilidad · Intervención', e: 'Aumentó mucho la energía limpia, pero encareció la electricidad de los hogares: tuvo un costo de oportunidad y efectos sobre la equidad.' },
+  { st: '2.7', t: 'Controles de precios en Venezuela', w: 'Venezuela, desde 2003',
+    h: 'El gobierno fijó precios máximos para alimentos, medicamentos y artículos de higiene por debajo del equilibrio.',
+    d: ['La consultora Datanálisis midió una escasez promedio de 51,9 % de productos básicos en el primer trimestre de 2014.', 'Surgieron mercados paralelos y contrabando hacia Colombia.'],
+    f: 'Datanálisis, citado por El Universal e Infobae (abril de 2014).',
+    g: 'Precio máximo por debajo del equilibrio: la cantidad demandada supera a la ofrecida y aparece escasez.',
+    k: 'Intervención · Equidad', e: 'Buscaba proteger a los hogares pobres, pero la escasez y las colas los perjudicaron; los productores dejaron de producir con pérdidas.' },
+  { st: '2.7', t: 'Salario mínimo en Seattle', w: 'Seattle (EE. UU.), 2015–2016',
+    h: 'La ciudad subió el salario mínimo a US$ 11 (2015) y a US$ 13 (2016) para grandes empleadores.',
+    d: ['Un estudio de la Universidad de Washington (2018) estimó que el paso a US$ 13 subió el salario por hora alrededor de 3 %, pero redujo las horas trabajadas alrededor de 6 %.', 'Otros estudios encontraron efectos casi nulos sobre el empleo: el resultado es discutido.'],
+    f: 'Jardim et al. (2018), Universidad de Washington; estudios posteriores.',
+    g: 'Precio (salario) mínimo por encima del equilibrio en el mercado laboral: la cantidad ofrecida de trabajo supera a la demandada (desempleo).',
+    k: 'Equidad · Intervención', e: 'Ganan quienes conservan el empleo con más salario; pueden perder los menos calificados si les reducen las horas. Buen caso para discutir: la evidencia no es concluyente.' },
+  { st: '2.8', t: 'Contaminación del aire en Pekín', w: 'Pekín (China), 2013–2017',
+    h: 'Las centrales a carbón y la industria pesada generaron niveles extremos de contaminación en el invierno de 2013.',
+    d: ['En enero de 2013 la concentración de partículas PM2.5 llegó a casi 1.000 µg/m³.', 'En septiembre de 2013 el gobierno lanzó un plan de acción contra la contaminación que cerró fábricas y redujo el uso de carbón.'],
+    f: 'Gobierno municipal de Pekín; Consejo de Estado de China (Wikipedia: Air pollution in China).',
+    g: 'Externalidad negativa de la producción: CMS por encima de CMP; el mercado produce más que el óptimo social y hay pérdida de bienestar.',
+    k: 'Sostenibilidad · Bienestar económico', e: 'La regulación mejoró el aire, pero cerró empresas y empleos a corto plazo; el beneficio en salud llega a largo plazo.' },
+  { st: '2.8', t: 'Vacuna contra el VPH', w: 'Inglaterra, desde 2008',
+    h: 'La vacunación gratuita en las escuelas aumentó el consumo de un bien meritorio que el mercado subconsume.',
+    d: ['En mujeres vacunadas a los 12–13 años, los casos de cáncer de cuello uterino fueron alrededor de 87 % menores.'],
+    f: 'Falcaro et al. (2021), The Lancet.',
+    g: 'Externalidad positiva del consumo: BMS por encima de BMP; el mercado consume menos que el óptimo. La provisión gratuita o la subvención acerca Q al óptimo.',
+    k: 'Bienestar económico · Equidad', e: 'Tiene costo para el Estado, pero ahorra tratamientos futuros. Requiere información para vencer la desconfianza.' },
+  { st: '2.8', t: 'Política contra el alcohol en Rusia', w: 'Rusia, 2005–2016',
+    h: 'Más impuestos, precio mínimo del vodka, prohibición de venta nocturna (desde 2012) y de publicidad.',
+    d: ['Según la OMS, el consumo de alcohol por persona cayó alrededor de 43 % y llegó a 11,7 litros en 2016.', 'La esperanza de vida de los hombres aumentó varios años en ese período.'],
+    f: 'Organización Mundial de la Salud (2019).',
+    g: 'Bien perjudicial con externalidad negativa del consumo: BMP por encima de BMS. El impuesto y la regulación reducen la cantidad hacia el óptimo.',
+    k: 'Intervención · Bienestar económico', e: 'Combinar varias medidas fue más eficaz que solo el impuesto; el riesgo es el alcohol ilegal o casero.' },
+  { st: '2.8', t: 'Pago por servicios ambientales en Costa Rica', w: 'Costa Rica, desde 1997',
+    h: 'El Estado paga a los dueños de bosques por conservarlos, con fondos de un impuesto a los combustibles.',
+    d: ['El programa (FONAFIFO) ayudó a revertir la deforestación: los bosques volvieron a cubrir cerca de la mitad del territorio.'],
+    f: 'FONAFIFO; Ley Forestal 7575 (Wikipedia: Payment for ecosystem services).',
+    g: 'Externalidad positiva de la producción (conservación): BMS por encima de BMP. La subvención aumenta la cantidad hacia el óptimo.',
+    k: 'Sostenibilidad · Intervención', e: 'Es eficaz y lo financian quienes contaminan, pero depende del presupuesto público y del control de los contratos.' },
+  { st: '2.8', t: 'Colapso del bacalao en Terranova', w: 'Canadá, 1992',
+    h: 'Décadas de pesca sin límites agotaron un recurso de uso común: rival y no excluible.',
+    d: ['La captura llegó a 810.000 toneladas en 1968; en 1992 la población de bacalao era cerca del 1 % de sus niveles históricos.', 'La moratoria de 1992 dejó sin trabajo a unas 35.000 a 37.000 personas.'],
+    f: 'Gobierno de Canadá (Wikipedia: Collapse of the Atlantic northwest cod fishery).',
+    g: 'No hay diagrama exigido para los recursos comunes: explica rivalidad, no exclusión y sobreexplotación. Si quieres, usa el de externalidad negativa de la producción.',
+    k: 'Sostenibilidad · Escasez', e: 'La moratoria llegó tarde: muestra que la intervención temprana (cuotas, permisos) es más barata que la recuperación.' },
+  { st: '2.9', t: 'Sistemas de alerta de tsunamis', w: 'Océano Pacífico e Índico, 2004–2011',
+    h: 'Una alerta temprana es no rival (sirve a todos a la vez) y no excluible (no se puede cobrar a quien la escucha).',
+    d: ['El tsunami del océano Índico (2004) causó unas 230.000 muertes en países sin sistema de alerta.', 'En Japón (2011) la alerta se emitió unos 3 minutos después del sismo y permitió evacuar la costa.'],
+    f: 'UNESCO; Agencia Meteorológica de Japón.',
+    g: 'No hay diagrama exigido para los bienes públicos: explica no rivalidad, no exclusión y el problema del polizón.',
+    k: 'Bienestar económico · Interdependencia', e: 'Ninguna empresa privada lo provee porque no puede cobrarlo: lo financian los gobiernos y la cooperación internacional.' },
+  { st: '3.1', t: 'PIB de Paraguay: crecimiento volátil', w: 'Paraguay, 2022–2024', py: 1,
+    h: 'El PIB paraguayo depende mucho del agro y del clima.',
+    d: ['Crecimiento del PIB real: 0,0 % en 2022 (sequía), 5,3 % en 2023 y 4,7 % en 2024 (cifras revisadas del BCP).'],
+    f: 'Banco Central del Paraguay, cuentas nacionales.',
+    g: 'Ciclo económico: fluctuaciones del PIB real alrededor de la tendencia de largo plazo.',
+    k: 'Cambio · Interdependencia', e: 'El PIB real muestra la producción, pero no cómo se reparte ni el costo ambiental: por eso se complementa con otros indicadores.' },
+  { st: '3.2', t: 'Plan de Rescate de EE. UU.', w: 'Estados Unidos, marzo de 2021',
+    h: 'Un estímulo fiscal de US$ 1,9 billones con cheques de US$ 1.400 por persona y más ayuda por desempleo.',
+    d: ['El PIB real creció cerca de 6 % en 2021 y el desempleo bajó a 3,9 % en diciembre.', 'La inflación llegó a 7 % en diciembre de 2021 y a 9,1 % en junio de 2022, la más alta en 40 años.'],
+    f: 'Congreso de EE. UU.; Oficina de Estadísticas Laborales (BLS); BEA.',
+    g: 'DA y OA: la DA se desplaza a la derecha. Cerca del pleno empleo, el efecto va más a precios que a producción.',
+    k: 'Intervención · Cambio', e: 'Redujo rápido el desempleo, pero contribuyó a la inflación: un estudio de la Fed de San Francisco estimó que las ayudas fiscales de 2020 y 2021 sumaron unos 3 puntos a la inflación subyacente. El efecto depende de cuánta capacidad ociosa había.' },
+  { st: '3.2', t: 'Guerra en Ucrania y costos de la energía', w: 'Economía mundial, 2022',
+    h: 'La invasión rusa disparó los precios del petróleo, el gas y el trigo.',
+    d: ['El Brent superó los US$ 120 por barril en marzo de 2022.', 'La inflación de la zona del euro llegó a 10,6 % en octubre de 2022.'],
+    f: 'Eurostat; mercados de materias primas.',
+    g: 'DA y OA: la OACP se desplaza a la izquierda; sube el nivel de precios y baja el PIB real (estanflación).',
+    k: 'Interdependencia · Escasez', e: 'Pierden los importadores de energía; ganan los exportadores. Los bancos centrales enfrentaron un dilema entre inflación y crecimiento.' },
+  { st: '3.3', t: 'Crecimiento de China tras entrar a la OMC', w: 'China, 2001–2019',
+    h: 'Alta inversión, apertura comercial e industrialización.',
+    d: ['El PIB real creció en promedio cerca de 9 % por año.', 'Según el Banco Mundial, unos 800 millones de personas salieron de la pobreza extrema desde 1978.'],
+    f: 'Banco Mundial.',
+    g: 'Crecimiento a largo plazo: la OALP (o la CPP) se desplaza hacia afuera por más capital, trabajo y tecnología.',
+    k: 'Cambio · Equidad', e: 'Mejoró el nivel de vida, pero aumentaron la desigualdad y la contaminación: el crecimiento no siempre es sostenible ni equitativo.' },
+  { st: '3.3', t: 'Desempleo en España tras 2008', w: 'España, 2007–2013',
+    h: 'El estallido de la burbuja inmobiliaria destruyó empleo en la construcción y en toda la economía.',
+    d: ['El desempleo pasó de cerca de 8 % (2007) a 26,9 % en el primer trimestre de 2013.', 'El desempleo de los menores de 25 años superó el 50 %.'],
+    f: 'Instituto Nacional de Estadística (EPA).',
+    g: 'Desempleo cíclico: brecha deflacionaria en DA y OA. Desempleo estructural: caída de la demanda de trabajo en la construcción.',
+    k: 'Cambio · Equidad', e: 'Las políticas de demanda ayudan con el desempleo cíclico, pero el estructural necesita capacitación: los obreros de la construcción no pasan fácil a otros sectores.' },
+  { st: '3.3', t: 'Hiperinflación en Venezuela', w: 'Venezuela, 2017–2019',
+    h: 'El banco central financió el déficit del gobierno emitiendo dinero.',
+    d: ['La inflación fue de unos 65.374 % en 2018 según el FMI.', 'Cerca de 7,7 millones de venezolanos emigraron hasta 2023.'],
+    f: 'FMI, Perspectivas de la economía mundial; ACNUR/R4V.',
+    g: 'DA y OA: la DA se desplaza a la derecha una y otra vez mientras la producción no crece, y el nivel de precios se dispara.',
+    k: 'Bienestar económico · Intervención', e: 'Ganan los deudores; pierden los ahorristas y quienes viven de un salario fijo. La gente pasó a usar dólares.' },
+  { st: '3.3', t: 'Inflación en Paraguay en 2022', w: 'Paraguay, 2022–2024', py: 1,
+    h: 'Subas de combustibles y alimentos importados elevaron los precios.',
+    d: ['La inflación interanual llegó a 11,8 % en abril de 2022 y bajó a 3,7 % en 2023 y 3,8 % en 2024.'],
+    f: 'Banco Central del Paraguay.',
+    g: 'Inflación de costos: la OACP se desplaza a la izquierda.',
+    k: 'Cambio · Interdependencia', e: 'Pierden los hogares con ingresos fijos; la inflación importada es difícil de controlar con la tasa de interés.' },
+  { st: '3.4', t: 'Bolsa Família en Brasil', w: 'Brasil, desde 2003',
+    h: 'Transferencias de dinero a familias pobres con la condición de que los hijos vayan a la escuela y a controles de salud.',
+    d: ['Llegó a unos 14 millones de familias, con un costo cercano al 0,5 % del PIB.', 'Un estudio del PNUD le atribuye alrededor del 20 % de la caída de la desigualdad en Brasil desde 2001.'],
+    f: 'PNUD, International Policy Centre; Gobierno de Brasil.',
+    g: 'Curva de Lorenz: la curva se acerca a la línea de igualdad perfecta y baja el coeficiente de Gini.',
+    k: 'Equidad · Intervención', e: 'Es barato y focalizado, pero depende del presupuesto y de controlar bien quién cumple las condiciones.' },
+  { st: '3.4', t: 'Pobreza en Paraguay', w: 'Paraguay, 2023–2024', py: 1,
+    h: 'La pobreza total bajó con el crecimiento y los programas sociales.',
+    d: ['La pobreza total pasó de 22,3 % (2023) a 20,1 % (2024).'],
+    f: 'Instituto Nacional de Estadística (INE), EPH.',
+    g: 'Curva de Lorenz y diagrama de AD/OA con crecimiento, según el enfoque de la pregunta.',
+    k: 'Equidad · Bienestar económico', e: 'Bajar 2,2 puntos es un avance, pero la pobreza rural sigue siendo mayor: el crecimiento no llega igual a todos.' },
+  { st: '3.4', t: 'Pensión Garantizada Universal en Chile', w: 'Chile, desde febrero de 2022',
+    h: 'Una pensión no contributiva para mayores de 65 años del 90 % de menores ingresos.',
+    d: ['En 2024 el monto rondaba los 214.000 pesos chilenos por mes, sin depender de lo aportado.'],
+    f: 'Ley 21.419; Superintendencia de Pensiones de Chile.',
+    g: 'Curva de Lorenz después de transferencias: se acerca a la diagonal.',
+    k: 'Equidad · Bienestar económico', e: 'Reduce la pobreza en la vejez, pero tiene un alto costo fiscal y puede desalentar el ahorro si no se diseña bien.' },
+  { st: '3.5', t: 'El BCP sube la tasa contra la inflación', w: 'Paraguay, 2021–2022', py: 1,
+    h: 'El Banco Central del Paraguay aplicó una política monetaria contractiva.',
+    d: ['La tasa de política monetaria subió de 0,75 % a 8,50 % entre agosto de 2021 y septiembre de 2022.', 'La inflación bajó de 11,8 % (abril de 2022) a 3,7 % en 2023, dentro del rango meta.'],
+    f: 'Banco Central del Paraguay.',
+    g: 'DA y OA: la DA se desplaza a la izquierda; baja la presión sobre los precios y el PIB real crece menos.',
+    k: 'Intervención · Cambio', e: 'Ganan los ahorristas y los asalariados con ingresos fijos; pierden los deudores. Su efecto llega con rezago.' },
+  { st: '3.5', t: 'El BCE contra la inflación', w: 'Zona del euro, julio de 2022 – septiembre de 2023',
+    h: 'El Banco Central Europeo hizo la suba de tasas más rápida de su historia.',
+    d: ['La tasa de depósito pasó de −0,50 % a 4,00 %.', 'La inflación bajó de 10,6 % (octubre de 2022) a 2,9 % (diciembre de 2023), con un crecimiento muy bajo en 2023.'],
+    f: 'Banco Central Europeo; Eurostat.',
+    g: 'DA y OA: política monetaria contractiva; la DA se desplaza a la izquierda.',
+    k: 'Intervención · Interdependencia', e: 'Bajó la inflación sin una gran suba del desempleo, pero frenó el crecimiento y encareció las deudas.' },
+  { st: '3.6', t: 'Ley CARES de EE. UU.', w: 'Estados Unidos, marzo de 2020',
+    h: 'Un paquete fiscal de US$ 2,2 billones para enfrentar la pandemia.',
+    d: ['Incluyó cheques de US$ 1.200 por adulto y US$ 600 semanales extra por desempleo.', 'El déficit federal llegó a cerca del 15 % del PIB en 2020.'],
+    f: 'Congreso de EE. UU.; Oficina de Presupuesto del Congreso (CBO).',
+    g: 'DA y OA: la caída de la DA abre una brecha recesiva; la política fiscal expansiva desplaza la DA a la derecha.',
+    k: 'Intervención · Bienestar económico', e: 'Sostuvo los ingresos de los hogares, pero aumentó mucho la deuda pública.' },
+  { st: '3.7', t: 'Reformas de Thatcher', w: 'Reino Unido, 1979–1990',
+    h: 'Privatizaciones (British Telecom en 1984, British Gas en 1986), menos poder sindical y rebaja del impuesto a la renta.',
+    d: ['La tasa máxima del impuesto a la renta bajó de 83 % a 40 % (1988).', 'La inflación bajó, pero el desempleo superó el 11 % a mediados de los ochenta y la desigualdad aumentó.'],
+    f: 'Oficina Nacional de Estadística del Reino Unido; Institute for Fiscal Studies.',
+    g: 'Políticas de oferta basadas en el mercado: la OALP se desplaza a la derecha.',
+    k: 'Eficiencia · Equidad', e: 'Mejoró la eficiencia a largo plazo, con altos costos sociales a corto plazo: tensión entre eficiencia y equidad.' },
+  { st: '3.7', t: 'Educación en Corea del Sur', w: 'Corea del Sur, 1960–2010',
+    h: 'Inversión pública sostenida en educación y en institutos tecnológicos ligados a la industria.',
+    d: ['El PIB per cápita pasó de unos US$ 158 (1960) a más de US$ 20.000 (2010).', 'Corea entró a la OCDE en 1996.'],
+    f: 'Banco Mundial; OCDE.',
+    g: 'Políticas de oferta intervencionistas: la OALP (o la CPP) se desplaza hacia afuera por más capital humano.',
+    k: 'Cambio · Bienestar económico', e: 'Es eficaz a largo plazo, pero tiene un costo fiscal alto y sus resultados tardan años.' },
+  { st: '4.1', t: 'Apertura comercial de Vietnam', w: 'Vietnam, desde 1986 (Đổi Mới)',
+    h: 'Reformas de mercado y apertura; ingreso a la OMC en 2007.',
+    d: ['Las exportaciones superaron los US$ 370.000 millones en 2022.', 'El PIB per cápita llegó a unos US$ 4.100 en 2022 y la pobreza bajó a alrededor del 5 % en 2020.'],
+    f: 'Banco Mundial; Oficina General de Estadística de Vietnam.',
+    g: 'Libre comercio con exportaciones: al precio mundial, la producción nacional supera al consumo y el excedente se exporta.',
+    k: 'Interdependencia · Bienestar económico', e: 'Ganan los trabajadores y las empresas exportadoras; la economía queda más expuesta a las crisis externas.' },
+  { st: '4.1', t: 'Soja paraguaya en el mercado mundial', w: 'Paraguay, 2023', py: 1,
+    h: 'Paraguay vende al precio mundial mucho más soja de la que consume.',
+    d: ['Las exportaciones totales del país fueron de unos US$ 17.311,7 millones en 2023, con superávit comercial de bienes.'],
+    f: 'Banco Central del Paraguay, comercio exterior.',
+    g: 'Libre comercio con exportaciones: el precio mundial está por encima del precio interno; se exporta la diferencia entre lo producido y lo consumido.',
+    k: 'Interdependencia · Escasez', e: 'Genera divisas y empleo, pero hace a la economía dependiente del clima y de los precios internacionales.' },
+  { st: '4.2', t: 'Aranceles de EE. UU. al acero', w: 'Estados Unidos, marzo de 2018',
+    h: 'Se impuso un arancel de 25 % al acero y de 10 % al aluminio importados.',
+    d: ['Varios socios respondieron con aranceles de represalia sobre productos como el bourbon y las motocicletas.'],
+    f: 'Gobierno de EE. UU.; Comisión Europea.',
+    g: 'Arancel: sube el precio interno, aumenta la producción nacional, baja el consumo y las importaciones; el gobierno recauda y hay pérdida de bienestar.',
+    k: 'Intervención · Interdependencia', e: 'Ganan los productores de acero; pierden las industrias que usan acero y los consumidores, y las represalias dañan a los exportadores.' },
+  { st: '4.2', t: 'Política Agrícola Común de la UE', w: 'Unión Europea, 2021–2027',
+    h: 'Pagos a los agricultores y protección frente a importaciones de productos sensibles.',
+    d: ['El presupuesto de la PAC para 2021–2027 es de unos € 386.600 millones, cerca de un tercio del presupuesto de la UE.'],
+    f: 'Comisión Europea.',
+    g: 'Subvención a los productores nacionales: sube la producción interna y bajan las importaciones.',
+    k: 'Intervención · Equidad', e: 'Protege el ingreso rural europeo, pero dificulta el acceso de exportadores de países en desarrollo, como Paraguay, al mercado europeo.' },
+  { st: '4.3', t: 'Guerra comercial EE. UU.–China y la soja', w: 'EE. UU. y China, 2018',
+    h: 'En represalia por los aranceles de EE. UU., China aplicó un arancel de 25 % a la soja estadounidense.',
+    d: ['Las exportaciones agrícolas de EE. UU. a China cayeron de US$ 19.500 millones (2017) a unos US$ 9.100 millones (2018).', 'Brasil aumentó sus ventas de soja a China y ocupó el lugar de EE. UU.'],
+    f: 'American Farm Bureau Federation; USDA.',
+    g: 'Arancel en el mercado chino de soja estadounidense: sube su precio y bajan las importaciones desde EE. UU.',
+    k: 'Interdependencia · Intervención', e: 'Argumento contra el proteccionismo: las represalias. Los agricultores de EE. UU. necesitaron ayuda del gobierno.' },
+  { st: '4.4', t: 'MERCOSUR y Paraguay', w: 'Paraguay, desde 1991', py: 1,
+    h: 'Paraguay es miembro fundador del MERCOSUR (Tratado de Asunción, 1991), una unión aduanera con arancel externo común.',
+    d: ['Brasil y Argentina están entre los principales destinos de las exportaciones paraguayas.'],
+    f: 'Tratado de Asunción; Banco Central del Paraguay.',
+    g: 'No hay diagrama exigido: explica el nivel de integración (unión aduanera) y sus ventajas y desventajas.',
+    k: 'Interdependencia · Cambio', e: 'Ventaja: un mercado más grande sin aranceles. Desventaja: pérdida de soberanía, porque Paraguay debe aplicar el arancel externo común.' },
+  { st: '4.5', t: 'El guaraní en 2024', w: 'Paraguay, 2024', py: 1,
+    h: 'Con un dólar fuerte en el mundo, el guaraní se depreció, pero mucho menos que las monedas vecinas.',
+    d: ['El guaraní se depreció 5,5 % frente al dólar; el real brasileño, 23,9 %, y el peso argentino, 71 %.', 'El BCP vendió dólares de sus reservas cuando la cotización llegó a Gs. 8.000.'],
+    f: 'La Nación (Paraguay), 04/01/2025.',
+    g: 'Mercado de divisas (tipo de cambio flotante administrado): cae la demanda de guaraníes; la intervención del BCP limita la depreciación.',
+    k: 'Interdependencia · Intervención', e: 'Ganan los importadores y consumidores (inflación baja); pierden competitividad los productores que compiten con Brasil.' },
+  { st: '4.5', t: 'El «cepo» cambiario argentino', w: 'Argentina, 2019–2023',
+    h: 'El Banco Central limitó la compra de dólares a US$ 200 por mes por persona y aplicó recargos.',
+    d: ['Surgió un tipo de cambio paralelo («dólar blue») muy por encima del oficial.', 'La inflación anual llegó a 211,4 % en 2023.'],
+    f: 'BCRA; INDEC.',
+    g: 'Tipo de cambio controlado por debajo del equilibrio: exceso de demanda de dólares y un mercado paralelo.',
+    k: 'Intervención · Interdependencia', e: 'Buscaba cuidar las reservas, pero desalentó las exportaciones y la inversión.' },
+  { st: '4.6', t: 'Superávit en cuenta corriente de China', w: 'China, 2001–2014',
+    h: 'Las exportaciones superaron con amplitud a las importaciones durante años.',
+    d: ['El superávit en cuenta corriente llegó a cerca del 10 % del PIB en 2007.', 'Las reservas internacionales llegaron a unos US$ 3,99 billones en junio de 2014.'],
+    f: 'Administración Estatal de Divisas de China (SAFE); FMI.',
+    g: 'No hay diagrama exigido: explica cómo un superávit en cuenta corriente se compensa con salidas en la cuenta financiera (por ejemplo, más reservas).',
+    k: 'Interdependencia · Intervención', e: 'Le dio estabilidad a China, pero generó tensiones comerciales con sus socios.' },
+  { st: '4.7', t: 'Reino Unido: crecer emitiendo menos', w: 'Reino Unido, 1990–2022',
+    h: 'La Ley de Cambio Climático (2008) fijó metas obligatorias; en 2019 se elevó a «cero neto» para 2050.',
+    d: ['Las emisiones bajaron cerca de 50 % mientras la economía creció alrededor de 79 % (1990–2022).', 'La última central eléctrica a carbón cerró en septiembre de 2024.'],
+    f: 'Gobierno del Reino Unido (DESNZ).',
+    g: 'Externalidad negativa de la producción corregida con regulación e impuesto al carbono.',
+    k: 'Sostenibilidad · Cambio', e: 'Muestra que se puede crecer reduciendo emisiones, aunque parte de la reducción se debe a que se importan bienes producidos en otros países.' },
+  { st: '4.8', t: 'Guinea Ecuatorial: PIB alto, IDH bajo', w: 'Guinea Ecuatorial, 2023',
+    h: 'El petróleo le da uno de los PIB per cápita más altos de África subsahariana, pero el ingreso está muy concentrado.',
+    d: ['Su IDH fue 0,674 en 2023 (puesto 133), muy por debajo de países con un ingreso parecido.'],
+    f: 'PNUD, Informe sobre Desarrollo Humano 2025.',
+    g: 'No hay diagrama exigido: compara un indicador simple (PIB per cápita) con uno compuesto (IDH).',
+    k: 'Equidad · Bienestar económico', e: 'Muestra el límite del PIB per cápita: un ingreso alto no garantiza salud ni educación para todos.' },
+  { st: '4.8', t: 'El IDH de Paraguay', w: 'Paraguay, 2023', py: 1,
+    h: 'Paraguay está en el grupo de desarrollo humano alto.',
+    d: ['Su IDH fue 0,756 en 2023 (puesto 99), por debajo de Chile (0,878, puesto 45).'],
+    f: 'PNUD, Informe sobre Desarrollo Humano 2025.',
+    g: 'No hay diagrama exigido: compara los tres componentes (salud, educación e ingreso) con otros países.',
+    k: 'Bienestar económico · Equidad', e: 'Para mejorar, Paraguay necesita más años de escolaridad e ingreso; la desigualdad interna reduce el desarrollo real.' },
+  { st: '4.9', t: 'Nigeria y la dependencia del petróleo', w: 'Nigeria',
+    h: 'El petróleo genera la mayor parte de las exportaciones y cerca de dos tercios de los ingresos del Estado.',
+    d: ['En 2019, alrededor del 40 % de la población vivía bajo la línea nacional de pobreza.'],
+    f: 'Oficina Nacional de Estadística de Nigeria (NBS, 2020).',
+    g: 'Ciclo de la pobreza: bajo ingreso → poco ahorro e inversión → baja productividad → bajo ingreso.',
+    k: 'Sostenibilidad · Escasez', e: 'Barreras: dependencia de un producto primario, volatilidad de precios, corrupción y poca inversión en capital humano.' },
+  { st: '4.10', t: 'Industrialización exportadora de Corea del Sur', w: 'Corea del Sur, 1962–1997',
+    h: 'Planes de desarrollo con crédito dirigido y apoyo a grandes grupos industriales orientados a exportar.',
+    d: ['Pasó de exportar textiles a exportar barcos, autos y semiconductores; entró a la OCDE en 1996.'],
+    f: 'Banco de Corea; OCDE.',
+    g: 'Usa los diagramas de otras secciones: la CPP o la OALP se desplazan hacia afuera.',
+    k: 'Cambio · Intervención', e: 'El fomento de las exportaciones funcionó, pero la crisis asiática de 1997 mostró los riesgos de la deuda y la concentración.' }
+];
+const EJ_ST = { '2.1': 'Demanda', '2.2': 'Oferta', '2.3': 'Equilibrio', '2.5': 'Elasticidad de la demanda', '2.6': 'Elasticidad de la oferta', '2.7': 'El gobierno en los mercados', '2.8': 'Fallas de mercado', '2.9': 'Bienes públicos', '3.1': 'Medición de la actividad económica', '3.2': 'DA y OA', '3.3': 'Objetivos macroeconómicos', '3.4': 'Desigualdad y pobreza', '3.5': 'Política monetaria', '3.6': 'Política fiscal', '3.7': 'Políticas de oferta', '4.1': 'Beneficios del comercio', '4.2': 'Proteccionismo', '4.3': 'Argumentos sobre el proteccionismo', '4.4': 'Integración económica', '4.5': 'Tipos de cambio', '4.6': 'Balanza de pagos', '4.7': 'Desarrollo sostenible', '4.8': 'Medición del desarrollo', '4.9': 'Barreras al desarrollo', '4.10': 'Estrategias de desarrollo' };
+function ejCard(x) {
+  return `<article class="fcard ejc"><div class="fh"><span class="fu">${x.st}</span><h3>${x.t}</h3></div>
+    <p class="small muted" style="margin:4px 0 8px">${x.w}${x.py ? ' · <b>Paraguay</b>' : ''}</p>
+    <p style="margin:0 0 6px"><b>Qué pasó:</b> ${x.h}</p>
+    <ul class="ejd">${x.d.map(v => `<li>${v}</li>`).join('')}</ul>
+    <p class="small"><b>Diagrama:</b> ${x.g}</p>
+    <p class="small"><b>Conceptos clave:</b> ${x.k}</p>
+    <div class="trap small" style="background:var(--paper);border-color:var(--rule);color:var(--ink)"><b>Para evaluar:</b> ${x.e}</div>
+    <p class="small muted" style="margin:8px 0 0">Fuente: ${x.f}</p>
+    <div class="row" style="margin-top:8px"><button class="btn sm" type="button" data-ejc="${esc(x.t)}">Copiar como ejemplo</button></div></article>`;
+}
+function renderEjemplos() {
+  const U = SESS.eU = SESS.eU || 'all', Q = SESS.eQ || '', PY = !!SESS.ePY;
+  const nq = normTxt(Q), list = EJ.filter(x => (U === 'all' || x.st[0] === U) && (!PY || x.py) && (!nq || normTxt([x.st, x.t, x.w, x.h, x.d.join(' '), x.k, EJ_ST[x.st]].join(' ')).includes(nq)));
+  const by = {}; list.forEach(x => (by[x.st] = by[x.st] || []).push(x));
+  app.innerHTML = `<div class="eyebrow">Escribir como en el examen</div><h1>Ejemplos del mundo real</h1>${writeTabs('escribir-ej')}
+    <p class="lede">Para llegar a las bandas altas de la Prueba 1 (b) y la Prueba 2 (g) necesitas un ejemplo real <b>desarrollado</b>: país, año, un dato y por qué ilustra la teoría. Aquí tienes ${EJ.length} ejemplos ordenados por subtema, con su diagrama y un punto para evaluar.</p>
+    <details class="essentials"><summary><b>Cómo usar un ejemplo (regla C-A-D-I)</b></summary><ul>
+      <li><b>C</b>ontexto: dónde ocurrió. <b>A</b>ño: cuándo. <b>D</b>ato: una cifra concreta. <b>I</b>mpacto: qué efecto económico tuvo.</li>
+      <li>El ejemplo va <b>después</b> de la teoría y el diagrama: los ilustra, no los reemplaza.</li>
+      <li>No lo nombres solamente: explica por qué muestra la teoría («Esto ocurrió porque…»).</li>
+      <li>Con un ejemplo bien desarrollado alcanza; dos ejemplos superficiales valen menos que uno explicado.</li></ul></details>
+    <div class="fctl"><input class="inp" id="eq" type="search" placeholder="Buscar: arancel, inflación, Paraguay…" value="${esc(Q)}" aria-label="Buscar ejemplo">
+      <div class="seg" role="group" aria-label="Unidad">${[['all', 'Todas'], ['2', 'U2'], ['3', 'U3'], ['4', 'U4']].map(([v, l]) => `<button type="button" data-eu="${v}" aria-pressed="${U === v}">${l}</button>`).join('')}</div>
+      <button type="button" class="btn sm" id="epy" aria-pressed="${PY}">${PY ? '✓ ' : ''}Solo Paraguay</button></div>
+    <div id="elist">${list.length ? Object.keys(by).sort((a, b) => a.localeCompare(b, 'es', { numeric: true })).map(st => `<h2 class="wgroup">${st} · ${EJ_ST[st] || ''}</h2><div class="fgrid">${by[st].map(ejCard).join('')}</div>`).join('') : '<p class="muted">No hay ejemplos con esa búsqueda.</p>'}</div>
+    <p class="small muted" style="margin-top:18px">Basado en la <i>Guía de ejemplos del mundo real</i> del Prof. Econ. Hugo Rivarola. Datos revisados con sus fuentes en octubre de 2026; si encuentras un dato desactualizado, avísale a tu profesor.</p>`;
+  const eq = $('#eq');
+  eq.oninput = () => { SESS.eQ = eq.value; const pos = eq.selectionStart; renderEjemplos(); const n = $('#eq'); n.focus(); try { n.setSelectionRange(pos, pos); } catch (e) { } };
+  app.querySelectorAll('[data-eu]').forEach(b => b.onclick = () => { SESS.eU = b.dataset.eu; renderEjemplos(); });
+  $('#epy').onclick = () => { SESS.ePY = !PY; renderEjemplos(); };
+  app.querySelectorAll('[data-ejc]').forEach(b => b.onclick = () => { const x = EJ.find(y => y.t === b.dataset.ejc); copyText(`Un ejemplo del mundo real es ${x.t.charAt(0).toLowerCase() + x.t.slice(1)} (${x.w}). ${x.h} ${x.d[0]} Esto ilustra la teoría porque…`, b); });
 }
 
 render();
