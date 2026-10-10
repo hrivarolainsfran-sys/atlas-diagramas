@@ -505,6 +505,22 @@ body.docked{padding-bottom:190px}
 .eicr{display:grid;gap:14px}
 .eicrow > div:first-child{margin-bottom:6px}
 @media (max-width:860px){.eicrit{grid-template-columns:repeat(3,minmax(0,1fr))}.eigrid,.kcgrid{grid-template-columns:1fr}}
+/* v11: hoja de fórmulas */
+.fctl{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:16px 0 6px}
+.fctl #fq{flex:1 1 220px;min-width:0;max-width:340px}
+.fgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,360px),1fr));gap:14px}
+.fcard{background:var(--sheet);border:1px solid var(--rule);border-radius:var(--r);padding:16px 18px;min-width:0}
+.fh{display:flex;gap:10px;align-items:baseline}.fh h3{margin:0;font-size:18px}
+.fu{font-family:var(--f-display);font-weight:700;color:var(--navy-2);font-size:14px;letter-spacing:.04em;flex:none}
+.fbig{font-family:var(--f-math);font-size:18px;line-height:1.45;background:var(--paper);border:1px solid var(--rule);border-left:4px solid var(--navy-2);border-radius:6px;padding:10px 12px;margin:10px 0;overflow-wrap:anywhere}
+.fvars{margin:0 0 8px;display:grid;gap:3px;font-size:14px}.fvars div{display:flex;gap:6px;flex-wrap:wrap}.fvars dt{font-weight:600}.fvars dt::after{content:':'}.fvars dd{margin:0;color:var(--ink-2)}
+.fex{font-size:15px;margin:6px 0}
+.fcard .trap{margin-top:8px;background:var(--warn-bg);border:1px solid var(--warn-bd);color:var(--warn-ink);border-radius:6px;padding:8px 10px}
+.fcalc{margin-top:10px;border-top:1px dashed var(--rule);padding-top:8px}.fcalc summary{cursor:pointer;font-weight:600;color:var(--navy-2)}
+.fin{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px;margin:8px 0}.fin label{display:grid;gap:3px;font-size:13px}.fin .inp{width:100%;font-variant-numeric:tabular-nums}
+.fout{background:var(--paper);border-radius:6px;padding:8px 10px;min-height:20px}
+.fsheet td,.fsheet th{vertical-align:top}.fsheet td:last-child{font-family:var(--f-math)}
+@media print{header,.nav,.fctl,.crumb,button,.btn,details.essentials{display:none!important}body{background:#fff!important}.fsheet{font-size:12px}.site-foot{border:0}}
 /* v10: banco de cálculos */
 .cpad{padding:16px 18px}
 .cpad table{margin:10px 0;border-collapse:collapse}
@@ -561,6 +577,7 @@ td.late{color:var(--bad);font-weight:700}td.soon{color:var(--warn-ink);font-weig
     <button type="button" data-go="podcast">Podcast</button>
     <button type="button" data-go="labs">Laboratorios</button>
     <button type="button" data-go="escribir">Escribir</button>
+    <button type="button" data-go="formulas">Fórmulas</button>
     <button type="button" data-go="juegos">Juegos</button>
     <button type="button" data-go="repasar">Repasar<span class="badge" id="errBadge" hidden>0</span></button>
     <a href="https://hrivarolainsfran-sys.github.io/atlas-diagramas/">Atlas de diagramas</a>
@@ -1523,6 +1540,7 @@ function render() {
   if (route === 'escribir-hqp') { setNav('escribir'); return renderCmd('hqp'); }
   if (route.startsWith('cmd-')) { const [, k, i] = route.split('-'); if (CMDT[k] && CMDT[k].bank[+i]) { setNav('escribir'); return renderCmdWrite(k, +i); } }
   if (route === 'escribir-p2') { setNav('escribir'); return renderP2Home(); }
+  if (route === 'formulas') { setNav('formulas'); return renderFormulas(); }
   if (route === 'escribir-calc') { setNav('escribir'); return renderCalcHome(); }
   if (route === 'calc-serie') { setNav('escribir'); return renderCalcSerie(); }
   if (route.startsWith('calc-') && calcT(route.slice(5))) { setNav('escribir'); return renderCalc(route.slice(5)); }
@@ -5300,7 +5318,7 @@ function calcEss() {
     <li>Toda variación porcentual se calcula sobre el valor <b>inicial</b>. Error frecuente: dividir por el valor nuevo.</li>
     <li>Puntos porcentuales no es lo mismo que variación porcentual: de 4 % a 5 % es +1 punto porcentual, pero +25 %.</li>
     <li>Aquí solo hay cálculos del Nivel Medio. Excedentes, impuestos y aranceles a partir de diagramas, el multiplicador y el índice ponderado son del NS.</li></ul>
-    <div class="tscroll"><table class="dtab"><tbody>${CALC_FORM.map(([a, b]) => `<tr><th scope="row">${a}</th><td><span class="formula">${b}</span></td></tr>`).join('')}</tbody></table></div></details>`;
+    <div class="tscroll"><table class="dtab"><tbody>${CALC_FORM.map(([a, b]) => `<tr><th scope="row">${a}</th><td><span class="formula">${b}</span></td></tr>`).join('')}</tbody></table></div><div class="row" style="margin-top:8px"><button class="btn sm" type="button" data-go="formulas">Ver todas las fórmulas con ejemplos y calculadora →</button></div></details>`;
 }
 function renderCalcHome() {
   const U = SESS.calcU = SESS.calcU || 'all', list = CALC_T.filter(t => U === 'all' || t.u === +U);
@@ -5357,6 +5375,168 @@ function renderCalcSerie() {
     S.res[S.i] = { k: cur.k, ok, v: $('#sAns').value }; if (ok) S.ok++; calcRec(cur.k, ok);
     renderCalcSerie();
   };
+}
+
+/* =============== 15 · Hoja de fórmulas (Nivel Medio) =============== */
+const fN = (n, d = 2) => { const t = fmt(n, d); return t.includes(',') ? t.replace(/,?0+$/, '') : t; };
+const sgnN = (v, d = 2) => (v > 0 ? '+' : '') + fN(v, d);
+const FU = { 0: 'Herramientas generales', 1: 'Introducción a la economía', 2: 'Microeconomía', 3: 'Macroeconomía', 4: 'Economía global' };
+const pc = (a, b) => (b - a) / a * 100;
+const FORMS = [
+  { k: 'var', u: 0, n: 'Variación porcentual', f: '%Δ = (valor final − valor inicial) ÷ valor inicial × 100', v: [['valor inicial', 'el dato del período anterior (la base)'], ['valor final', 'el dato del período nuevo']],
+    ej: 'El precio de la chipa sube de Gs. 5.000 a Gs. 6.000: (6.000 − 5.000) ÷ 5.000 × 100 = <b>+20 %</b>.', lee: 'Positivo: aumentó. Negativo: disminuyó. Es la base de las elasticidades, el crecimiento y la inflación.',
+    err: 'Dividir por el valor final: (6.000 − 5.000) ÷ 6.000 = 16,7 %, que es incorrecto.',
+    in: [['a', 'Valor inicial', '5000'], ['b', 'Valor final', '6000']], run: o => [`${sgnN(pc(o.a, o.b), 2)} %`, `(${fN(o.b, 2)} − ${fN(o.a, 2)}) ÷ ${fN(o.a, 2)} × 100 = ${sgnN(pc(o.a, o.b), 2)} %`] },
+  { k: 'pp', u: 0, n: 'Puntos porcentuales', f: 'Δ p.p. = tasa final − tasa inicial', v: [['tasa', 'un dato que ya es un porcentaje (inflación, desempleo, tasa de interés)']],
+    ej: 'La inflación pasa de 4 % a 5 %: subió <b>1 punto porcentual</b>, pero su variación porcentual es (5 − 4) ÷ 4 × 100 = <b>25 %</b>.', lee: 'Se usa para comparar tasas. Si la pregunta dice «puntos porcentuales», es una resta.',
+    err: 'Decir «la inflación subió 1 %» cuando subió 1 punto porcentual.',
+    in: [['a', 'Tasa inicial (%)', '4'], ['b', 'Tasa final (%)', '5']], run: o => [`${sgnN(o.b - o.a, 2)} p.p. · variación ${sgnN(pc(o.a, o.b), 1)} %`, `${fN(o.b, 2)} − ${fN(o.a, 2)} = ${sgnN(o.b - o.a, 2)} puntos porcentuales<br>(${fN(o.b, 2)} − ${fN(o.a, 2)}) ÷ ${fN(o.a, 2)} × 100 = ${sgnN(pc(o.a, o.b), 1)} %`] },
+  { k: 'idx', u: 0, n: 'Número índice', f: 'Índice = valor del período ÷ valor del año base × 100', v: [['año base', 'el período de referencia; su índice siempre es 100']],
+    ej: 'Una canasta costaba Gs. 800.000 en el año base y hoy Gs. 920.000: 920.000 ÷ 800.000 × 100 = <b>115</b>.', lee: 'Un índice de 115 significa que el valor está 15 % por encima del año base.',
+    err: 'Leer la diferencia entre dos índices como porcentaje sin dividir por el índice inicial.',
+    in: [['a', 'Valor del año base', '800000'], ['b', 'Valor del período', '920000']], run: o => [fN(o.b / o.a * 100, 1), `${fN(o.b)} ÷ ${fN(o.a)} × 100 = ${fN(o.b / o.a * 100, 1)}`] },
+  { k: 'nuevo', u: 0, n: 'Valor después de un cambio porcentual', f: 'Valor nuevo = valor inicial × (1 + %Δ ÷ 100)', v: [['%Δ', 'con signo negativo si es una baja']],
+    ej: 'Una canasta de Gs. 2.000.000 con una inflación de 11,8 %: 2.000.000 × 1,118 = <b>Gs. 2.236.000</b>.', lee: 'Sirve para despejar cantidades a partir de elasticidades y para aplicar inflación o crecimiento.',
+    err: 'Sumar solo el porcentaje (2.000.000 + 11,8) en lugar de multiplicar.',
+    in: [['a', 'Valor inicial', '2000000'], ['p', 'Cambio porcentual (%)', '11.8']], run: o => [fN(o.a * (1 + o.p / 100), 2), `${fN(o.a, 2)} × (1 ${o.p < 0 ? '−' : '+'} ${fN(Math.abs(o.p) / 100, 4)}) = ${fN(o.a * (1 + o.p / 100), 2)}`] },
+  { k: 'cpp', u: 1, n: 'Costo de oportunidad en la CPP', f: 'Costo de oportunidad de X = unidades de Y que se dejan ÷ unidades de X que se ganan', v: [['X', 'el bien que aumenta'], ['Y', 'el bien que se sacrifica']],
+    ej: 'De A (10 X; 50 Y) a B (20 X; 44 Y): se dejan 6 Y para ganar 10 X. Costo de oportunidad = 6 ÷ 10 = <b>0,6 Y por cada unidad de X</b>.', lee: 'Si al seguir avanzando cada unidad de X cuesta más Y, el costo de oportunidad es creciente (CPP cóncava).',
+    err: 'Dar solo el total (6 Y) cuando la pregunta pide el costo por unidad, o invertir la división.', go: 't1-1',
+    in: [['y', 'Unidades de Y que se dejan', '6'], ['x', 'Unidades de X que se ganan', '10']], run: o => [`${fN(o.y / o.x, 2)} unidades de Y por unidad de X`, `${fN(o.y, 2)} ÷ ${fN(o.x, 2)} = ${fN(o.y / o.x, 2)}`] },
+  { k: 'mkt', u: 2, n: 'Demanda y oferta de mercado', f: 'Q del mercado = Q₁ + Q₂ + Q₃ + … (a un mismo precio)', v: [['Q₁, Q₂…', 'las cantidades de cada consumidor (o productor) a ese precio']],
+    ej: 'A Gs. 5.000, Lucía compra 8 chipas, Mateo 6 y Sofía 10: demanda de mercado = 8 + 6 + 10 = <b>24</b>.', lee: 'Es una suma horizontal: se suman cantidades, nunca precios.',
+    err: 'Sumar las cantidades de precios distintos o promediar.', go: 't2-1' },
+  { k: 'exc', u: 2, n: 'Exceso de demanda o de oferta', f: 'Desequilibrio = Qd − Qo', v: [['Qd', 'cantidad demandada a ese precio'], ['Qo', 'cantidad ofrecida a ese precio']],
+    ej: 'A un precio máximo de Gs. 2.000.000, Qd = 70 y Qo = 40: exceso de demanda (escasez) de <b>30</b>.', lee: 'Positivo: exceso de demanda, el precio tiende a subir. Negativo: exceso de oferta, el precio tiende a bajar.',
+    err: 'Responder con el precio en lugar de la cantidad.', go: 't2-3',
+    in: [['d', 'Qd', '70'], ['s', 'Qo', '40']], run: o => [`${fN(Math.abs(o.d - o.s), 2)} · ${o.d > o.s ? 'exceso de demanda' : o.d < o.s ? 'exceso de oferta' : 'equilibrio'}`, `${fN(o.d, 2)} − ${fN(o.s, 2)} = ${fN(o.d - o.s, 2)}`] },
+  { k: 'epd', u: 2, n: 'Elasticidad precio de la demanda (EPD)', f: 'EPD = %ΔQd ÷ %ΔP', v: [['%ΔQd', 'variación porcentual de la cantidad demandada'], ['%ΔP', 'variación porcentual del precio']],
+    ej: 'El precio sube de Gs. 5.000 a 6.000 (+20 %) y la cantidad baja de 1.000 a 700 (−30 %): EPD = |−30 ÷ 20| = <b>1,5</b>.', lee: 'Se usa el valor absoluto. 0: perfectamente inelástica · entre 0 y 1: inelástica · 1: unitaria · mayor que 1: elástica · infinita: perfectamente elástica.',
+    err: 'Poner el precio arriba (%ΔP ÷ %ΔQd) o calcular las variaciones sobre el valor nuevo.', go: 'calc-epd',
+    in: [['p1', 'Precio inicial', '5000'], ['p2', 'Precio final', '6000'], ['q1', 'Cantidad inicial', '1000'], ['q2', 'Cantidad final', '700']],
+    run: o => { const dq = pc(o.q1, o.q2), dp = pc(o.p1, o.p2), v = Math.abs(dq / dp); return [`EPD = ${fN(v, 2)} · ${v > 1 ? 'elástica' : v < 1 ? 'inelástica' : 'unitaria'}`, `%ΔQd = ${sgnN(dq, 2)} %<br>%ΔP = ${sgnN(dp, 2)} %<br>EPD = |${fN(dq, 2)} ÷ ${fN(dp, 2)}| = ${fN(v, 2)}`]; } },
+  { k: 'epdq', u: 2, n: 'Despejes con la EPD', f: '%ΔQd = EPD × %ΔP   ·   %ΔP = %ΔQd ÷ EPD', v: [['signo', 'la cantidad se mueve en dirección contraria al precio']],
+    ej: 'Con EPD = 0,5 y una suba del precio de 10 %: %ΔQd = 0,5 × 10 = 5 %, es decir, la cantidad <b>baja 5 %</b>.', lee: 'Después aplica ese porcentaje a la cantidad inicial para obtener la nueva cantidad.',
+    err: 'Olvidar que la cantidad baja cuando el precio sube.', go: 'calc-epdq',
+    in: [['e', 'EPD', '0.5'], ['p', 'Cambio del precio (%)', '10'], ['q', 'Cantidad inicial (opcional)', '2000']],
+    run: o => { const dq = -o.e * o.p; return [`%ΔQd = ${sgnN(dq, 2)} %${isNaN(o.q) ? '' : ` · nueva cantidad ${fN(o.q * (1 + dq / 100), 1)}`}`, `%ΔQd = −${fN(o.e, 2)} × ${fN(o.p, 2)} = ${sgnN(dq, 2)} %${isNaN(o.q) ? '' : `<br>${fN(o.q, 2)} × (1 ${dq < 0 ? '−' : '+'} ${fN(Math.abs(dq) / 100, 4)}) = ${fN(o.q * (1 + dq / 100), 1)}`}`]; }, opt: ['q'] },
+  { k: 'it', u: 2, n: 'Ingreso total', f: 'IT = P × Q   ·   ΔIT = IT final − IT inicial', v: [['P', 'precio'], ['Q', 'cantidad vendida']],
+    ej: 'Antes: Gs. 25.000 × 4.000 = Gs. 100 millones. Después: Gs. 27.500 × 3.800 = Gs. 104,5 millones. ΔIT = <b>+4,5 millones</b>.', lee: 'Demanda inelástica: el IT se mueve en la misma dirección que el precio. Elástica: en dirección contraria. Unitaria: no cambia.',
+    err: 'Concluir que subir el precio siempre aumenta el ingreso: depende de la EPD.', go: 'calc-it',
+    in: [['p1', 'Precio inicial', '25000'], ['q1', 'Cantidad inicial', '4000'], ['p2', 'Precio final', '27500'], ['q2', 'Cantidad final', '3800']],
+    run: o => { const a = o.p1 * o.q1, b = o.p2 * o.q2; return [`ΔIT = ${sgnN(b - a, 0)}`, `IT inicial = ${fN(o.p1)} × ${fN(o.q1)} = ${fN(a)}<br>IT final = ${fN(o.p2)} × ${fN(o.q2)} = ${fN(b)}<br>ΔIT = ${fN(b)} − ${fN(a)} = ${sgnN(b - a, 0)}`]; } },
+  { k: 'eid', u: 2, n: 'Elasticidad ingreso de la demanda (EID)', f: 'EID = %ΔQd ÷ %ΔY', v: [['%ΔY', 'variación porcentual del ingreso de los consumidores']],
+    ej: 'El ingreso sube 10 % y la demanda de viajes al exterior sube 25 %: EID = 25 ÷ 10 = <b>2,5</b> (bien de lujo).', lee: 'El signo importa. Negativa: bien inferior · entre 0 y 1: bien normal de primera necesidad · mayor que 1: bien normal de lujo.',
+    err: 'Usar valor absoluto: un bien inferior quedaría mal clasificado.', go: 'calc-yed',
+    in: [['y1', 'Ingreso inicial', '4000000'], ['y2', 'Ingreso final', '4400000'], ['q1', 'Cantidad inicial', '100'], ['q2', 'Cantidad final', '125']],
+    run: o => { const dq = pc(o.q1, o.q2), dy = pc(o.y1, o.y2), v = dq / dy; return [`EID = ${fN(v, 2)} · ${v < 0 ? 'bien inferior' : v > 1 ? 'bien normal de lujo' : 'bien normal de primera necesidad'}`, `%ΔQd = ${sgnN(dq, 2)} %<br>%ΔY = ${sgnN(dy, 2)} %<br>EID = ${fN(dq, 2)} ÷ ${fN(dy, 2)} = ${fN(v, 2)}`]; } },
+  { k: 'epo', u: 2, n: 'Elasticidad precio de la oferta (EPO)', f: 'EPO = %ΔQo ÷ %ΔP', v: [['%ΔQo', 'variación porcentual de la cantidad ofrecida']],
+    ej: 'El precio del tomate sube 20 % y la cantidad ofrecida sube 10 %: EPO = 10 ÷ 20 = <b>0,5</b> (inelástica).', lee: 'Siempre es positiva. 0: perfectamente inelástica · entre 0 y 1: inelástica · 1: unitaria · mayor que 1: elástica.',
+    err: 'Confundirla con la EPD: aquí precio y cantidad se mueven en la misma dirección.', go: 'calc-pes',
+    in: [['p1', 'Precio inicial', '6000'], ['p2', 'Precio final', '7200'], ['q1', 'Cantidad inicial', '1000'], ['q2', 'Cantidad final', '1100']],
+    run: o => { const dq = pc(o.q1, o.q2), dp = pc(o.p1, o.p2), v = dq / dp; return [`EPO = ${fN(v, 2)} · ${v > 1 ? 'elástica' : v < 1 ? 'inelástica' : 'unitaria'}`, `%ΔQo = ${sgnN(dq, 2)} %<br>%ΔP = ${sgnN(dp, 2)} %<br>EPO = ${fN(dq, 2)} ÷ ${fN(dp, 2)} = ${fN(v, 2)}`]; } },
+  { k: 'pib', u: 3, n: 'PIB por el enfoque del gasto', f: 'PIB = C + I + G + (X − M)', v: [['C', 'consumo de los hogares'], ['I', 'inversión de las empresas'], ['G', 'gasto del gobierno en bienes y servicios'], ['X − M', 'exportaciones menos importaciones (exportaciones netas)']],
+    ej: 'C = 30.000, I = 9.000, G = 5.000, X = 16.000, M = 15.000: PIB = 30.000 + 9.000 + 5.000 + (16.000 − 15.000) = <b>45.000</b>.', lee: 'Mide el valor de la producción nueva dentro del país en un año.',
+    err: 'Sumar las transferencias (jubilaciones, subsidios) o los bienes usados, o sumar las importaciones.', go: 'calc-pib',
+    in: [['c', 'C', '30000'], ['i', 'I', '9000'], ['g', 'G', '5000'], ['x', 'X', '16000'], ['m', 'M', '15000']], run: o => { const y = o.c + o.i + o.g + o.x - o.m; return [`PIB = ${fN(y, 2)}`, `${fN(o.c, 2)} + ${fN(o.i, 2)} + ${fN(o.g, 2)} + (${fN(o.x, 2)} − ${fN(o.m, 2)}) = ${fN(y, 2)}`]; } },
+  { k: 'inb', u: 3, n: 'Ingreso nacional bruto (INB)', f: 'INB = PIB + ingresos recibidos del exterior − ingresos pagados al exterior', v: [['ingresos del exterior', 'salarios, utilidades e intereses que reciben los residentes desde otros países'], ['pagados al exterior', 'utilidades de empresas extranjeras e intereses de la deuda externa']],
+    ej: 'PIB 44.000; recibido 1.200; pagado 3.000: INB = 44.000 + 1.200 − 3.000 = <b>42.200</b>.', lee: 'El PIB mide dónde se produce; el INB, a quién pertenece el ingreso.',
+    err: 'Sumar los pagos al exterior en lugar de restarlos.', go: 'calc-inb',
+    in: [['y', 'PIB', '44000'], ['r', 'Recibido del exterior', '1200'], ['p', 'Pagado al exterior', '3000']], run: o => [`INB = ${fN(o.y + o.r - o.p, 2)}`, `${fN(o.y, 2)} + ${fN(o.r, 2)} − ${fN(o.p, 2)} = ${fN(o.y + o.r - o.p, 2)}`] },
+  { k: 'real', u: 3, n: 'PIB real (o INB real)', f: 'PIB real = PIB nominal ÷ deflactor del PIB × 100', v: [['deflactor', 'índice de precios de toda la producción (año base = 100)']],
+    ej: 'PIB nominal 45.000 y deflactor 120: PIB real = 45.000 ÷ 120 × 100 = <b>37.500</b>.', lee: 'Quita el efecto de los precios: permite comparar la producción entre años.',
+    err: 'Multiplicar por el deflactor en lugar de dividir.', go: 'calc-real',
+    in: [['n', 'PIB nominal', '45000'], ['d', 'Deflactor', '120']], run: o => [`PIB real = ${fN(o.n / o.d * 100, 2)}`, `${fN(o.n, 2)} ÷ ${fN(o.d, 2)} × 100 = ${fN(o.n / o.d * 100, 2)}`] },
+  { k: 'pc', u: 3, n: 'PIB o INB per cápita', f: 'Per cápita = PIB (o INB) ÷ población', v: [['población', 'número de habitantes, en las mismas unidades que el PIB']],
+    ej: 'PIB real de US$ 42.000 millones y 7 millones de habitantes: 42.000 ÷ 7 = <b>US$ 6.000 por habitante</b>.', lee: 'Es un promedio: no muestra cómo se distribuye el ingreso.',
+    err: 'Mezclar unidades (millones de dólares divididos por habitantes sin convertir).', go: 'calc-realpc',
+    in: [['y', 'PIB (millones)', '42000'], ['p', 'Población (millones)', '7']], run: o => [`${fN(o.y / o.p, 2)} por habitante`, `${fN(o.y, 2)} ÷ ${fN(o.p, 2)} = ${fN(o.y / o.p, 2)}`] },
+  { k: 'crec', u: 3, n: 'Tasa de crecimiento económico', f: 'Crecimiento = (PIB real final − PIB real inicial) ÷ PIB real inicial × 100', v: [['PIB real', 'si te dan el nominal, primero deflacta']],
+    ej: 'PIB real de 37.500 a 39.000: (39.000 − 37.500) ÷ 37.500 × 100 = <b>4 %</b>.', lee: 'Negativo: la economía se contrajo. Dos trimestres seguidos de crecimiento negativo se llaman recesión.',
+    err: 'Calcularlo con el PIB nominal, que mezcla crecimiento con inflación.', go: 'calc-growthr',
+    in: [['a', 'PIB real inicial', '37500'], ['b', 'PIB real final', '39000']], run: o => [`${sgnN(pc(o.a, o.b), 2)} %`, `(${fN(o.b, 2)} − ${fN(o.a, 2)}) ÷ ${fN(o.a, 2)} × 100 = ${sgnN(pc(o.a, o.b), 2)} %`] },
+  { k: 'desem', u: 3, n: 'Tasa de desempleo', f: 'Tasa de desempleo = desocupados ÷ fuerza de trabajo × 100   ·   Fuerza de trabajo = ocupados + desocupados', v: [['desocupados', 'personas sin trabajo que lo buscan activamente'], ['inactivos', 'no trabajan ni buscan: no entran en la fuerza de trabajo']],
+    ej: '3.300 ocupados y 200 desocupados: 200 ÷ 3.500 × 100 = <b>5,7 %</b>.', lee: 'Mide qué parte de quienes quieren trabajar no consiguen empleo.',
+    err: 'Dividir por la población total o incluir a los inactivos.', go: 'calc-unemp',
+    in: [['o', 'Ocupados', '3300'], ['d', 'Desocupados', '200']], run: o => [`${fN(o.d / (o.o + o.d) * 100, 2)} %`, `Fuerza de trabajo = ${fN(o.o, 2)} + ${fN(o.d, 2)} = ${fN(o.o + o.d, 2)}<br>${fN(o.d, 2)} ÷ ${fN(o.o + o.d, 2)} × 100 = ${fN(o.d / (o.o + o.d) * 100, 2)} %`] },
+  { k: 'infl', u: 3, n: 'Tasa de inflación con el IPC', f: 'Inflación = (IPC final − IPC inicial) ÷ IPC inicial × 100', v: [['IPC', 'índice de precios al consumidor (canasta de bienes de los hogares)']],
+    ej: 'IPC de 132,4 a 137,8: (137,8 − 132,4) ÷ 132,4 × 100 = <b>4,1 %</b>.', lee: 'Negativa: deflación (bajan los precios). Positiva pero menor que antes: desinflación.',
+    err: 'Responder la resta de puntos del índice (5,4 puntos) como si fuera la inflación.', go: 'calc-infl',
+    in: [['a', 'IPC inicial', '132.4'], ['b', 'IPC final', '137.8']], run: o => [`${sgnN(pc(o.a, o.b), 2)} %`, `(${fN(o.b, 2)} − ${fN(o.a, 2)}) ÷ ${fN(o.a, 2)} × 100 = ${sgnN(pc(o.a, o.b), 2)} %`] },
+  { k: 'rreal', u: 3, n: 'Tasa de interés real', f: 'Tasa de interés real = tasa de interés nominal − tasa de inflación', v: [['nominal', 'la tasa que paga o cobra el banco']],
+    ej: 'Un depósito paga 8,5 % y la inflación es 3,8 %: tasa real = 8,5 − 3,8 = <b>4,7 %</b>.', lee: 'Negativa: el ahorro pierde poder de compra. Ganan los deudores y pierden los ahorristas.',
+    err: 'Sumar la inflación en lugar de restarla.', go: 'calc-rreal',
+    in: [['i', 'Tasa nominal (%)', '8.5'], ['p', 'Inflación (%)', '3.8']], run: o => [`${sgnN(o.i - o.p, 2)} %`, `${fN(o.i, 2)} − ${fN(o.p, 2)} = ${sgnN(o.i - o.p, 2)} %`] },
+  { k: 'gini', u: 3, n: 'Coeficiente de Gini (solo interpretación)', f: 'Gini = A ÷ (A + B)', v: [['A', 'área entre la línea de igualdad perfecta y la curva de Lorenz'], ['B', 'área debajo de la curva de Lorenz']],
+    ej: 'Un Gini de 0,45 (o índice de 45) indica más desigualdad que uno de 0,30.', lee: '0: igualdad perfecta. 1: desigualdad total. Cuanto más se aleja la curva de Lorenz de la diagonal, mayor es el Gini.',
+    err: 'En el NM no se pide calcularlo a partir de áreas: se pide interpretarlo y relacionarlo con la curva de Lorenz.', go: 't3-4' },
+  { k: 'fx', u: 4, n: 'Precio en otra divisa', f: 'Precio en Gs. = precio en US$ × tipo de cambio   ·   Precio en US$ = precio en Gs. ÷ tipo de cambio', v: [['tipo de cambio', 'guaraníes por cada dólar (por ejemplo, US$ 1 = Gs. 7.300)']],
+    ej: 'Un celular de US$ 480 con US$ 1 = Gs. 7.300: 480 × 7.300 = <b>Gs. 3.504.000</b>.', lee: 'Si sube el tipo de cambio (más guaraníes por dólar), lo importado se encarece en guaraníes.',
+    err: 'Dividir cuando hay que multiplicar: piensa si el resultado debe ser un número más grande (guaraníes) o más chico (dólares).', go: 'calc-fx',
+    in: [['p', 'Precio en US$', '480'], ['e', 'Gs. por US$', '7300']], run: o => [gs(Math.round(o.p * o.e)), `${fN(o.p, 2)} × ${fN(o.e, 2)} = ${fN(o.p * o.e, 2)} Gs.`] },
+  { k: 'inv', u: 4, n: 'Tipo de cambio inverso', f: 'Valor de 1 Gs. en US$ = 1 ÷ (Gs. por US$)', v: [['tipo de cambio', 'Gs. por cada US$']],
+    ej: 'Si US$ 1 = Gs. 7.300, entonces Gs. 1 = 1 ÷ 7.300 = US$ 0,000137 (Gs. 1.000 = US$ 0,137).', lee: 'Sirve para expresar el valor de la moneda local en la otra divisa.',
+    err: 'Creer que la variación del guaraní y la del dólar tienen el mismo porcentaje.', go: 'calc-fxchg',
+    in: [['e', 'Gs. por US$', '7300']], run: o => [`Gs. 1 = US$ ${fN(1 / o.e, 6)}`, `1 ÷ ${fN(o.e, 2)} = ${fN(1 / o.e, 6)}`] },
+  { k: 'fxchg', u: 4, n: 'Apreciación y depreciación', f: 'Variación del dólar = (E₂ − E₁) ÷ E₁ × 100   ·   Variación del guaraní = (E₁ ÷ E₂ − 1) × 100', v: [['E₁, E₂', 'tipo de cambio inicial y final, en Gs. por US$']],
+    ej: 'De Gs. 7.300 a Gs. 7.700 por dólar: el dólar se apreció 5,5 % y el guaraní se depreció 5,2 %.', lee: 'Positivo: la moneda se apreció (vale más). Negativo: se depreció. En un tipo de cambio fijo se habla de revaluación y devaluación.',
+    err: 'Calcular solo una variación y suponer que la otra es igual con signo contrario.', go: 'calc-fxchg',
+    in: [['a', 'E₁ (Gs. por US$)', '7300'], ['b', 'E₂ (Gs. por US$)', '7700']], run: o => [`Dólar ${sgnN(pc(o.a, o.b), 2)} % · guaraní ${sgnN((o.a / o.b - 1) * 100, 2)} %`, `Dólar: (${fN(o.b, 2)} − ${fN(o.a, 2)}) ÷ ${fN(o.a, 2)} × 100 = ${sgnN(pc(o.a, o.b), 2)} %<br>Guaraní: (${fN(o.a, 2)} ÷ ${fN(o.b, 2)} − 1) × 100 = ${sgnN((o.a / o.b - 1) * 100, 2)} %`] },
+  { k: 'bc', u: 4, n: 'Balanza comercial', f: 'Balanza de bienes = exportaciones de bienes − importaciones de bienes (lo mismo para servicios)', v: [['saldo positivo', 'superávit'], ['saldo negativo', 'déficit']],
+    ej: 'Exportaciones de bienes 17.311,7 e importaciones 15.680,0 (millones de US$): saldo = <b>+1.631,7</b> (superávit).', lee: 'Es una parte de la cuenta corriente, no toda.',
+    err: 'Llamar «balanza de pagos» a la balanza comercial.', go: 'calc-cc',
+    in: [['x', 'Exportaciones', '17311.7'], ['m', 'Importaciones', '15680']], run: o => [`${sgnN(o.x - o.m, 2)} · ${o.x >= o.m ? 'superávit' : 'déficit'}`, `${fN(o.x, 2)} − ${fN(o.m, 2)} = ${sgnN(o.x - o.m, 2)}`] },
+  { k: 'cc', u: 4, n: 'Cuenta corriente', f: 'Cuenta corriente = balanza de bienes + balanza de servicios + ingreso primario neto + transferencias corrientes netas', v: [['ingreso primario', 'salarios, utilidades e intereses con el exterior'], ['transferencias corrientes', 'remesas y donaciones']],
+    ej: 'Bienes +1.000; servicios −300; ingreso primario −2.500; remesas +700: CC = <b>−1.100</b> (déficit).', lee: 'La IED, la inversión de cartera y las reservas van en la cuenta financiera; las transferencias de capital, en la cuenta de capital.',
+    err: 'Meter la inversión extranjera directa en la cuenta corriente.', go: 'calc-cc',
+    in: [['b', 'Balanza de bienes', '1000'], ['s', 'Balanza de servicios', '-300'], ['i', 'Ingreso primario neto', '-2500'], ['t', 'Transferencias corrientes netas', '700']], run: o => { const v = o.b + o.s + o.i + o.t; return [`${sgnN(v, 2)} · ${v >= 0 ? 'superávit' : 'déficit'}`, `${fN(o.b, 2)} + (${fN(o.s, 2)}) + (${fN(o.i, 2)}) + ${fN(o.t, 2)} = ${sgnN(v, 2)}`]; } },
+  { k: 'bdp', u: 4, n: 'Balanza de pagos', f: 'Cuenta corriente + cuenta de capital + cuenta financiera + errores y omisiones = 0', v: [['errores y omisiones', 'partida de ajuste para que la suma dé cero']],
+    ej: 'CC = −1.100, cuenta de capital = 30, errores = 70: cuenta financiera = −(−1.100 + 30 + 70) = <b>+1.000</b>.', lee: 'Un déficit en cuenta corriente se compensa con una entrada neta en la cuenta financiera (inversión, préstamos o reservas).',
+    err: 'Olvidar los errores y omisiones, o el signo al despejar.', go: 'calc-bdp',
+    in: [['c', 'Cuenta corriente', '-1100'], ['k', 'Cuenta de capital', '30'], ['e', 'Errores y omisiones', '70']], run: o => { const v = -(o.c + o.k + o.e); return [`Cuenta financiera = ${sgnN(v, 2)}`, `CF = −(${fN(o.c, 2)} + ${fN(o.k, 2)} + ${fN(o.e, 2)}) = ${sgnN(v, 2)}`]; } }
+];
+function formCard(F) {
+  return `<article class="fcard" id="f-${F.k}"><div class="fh"><span class="fu">${F.u ? 'U' + F.u : 'Gral.'}</span><h3>${F.n}</h3></div>
+    <div class="fbig">${F.f}</div>
+    <dl class="fvars">${F.v.map(([a, b]) => `<div><dt>${a}</dt><dd>${b}</dd></div>`).join('')}</dl>
+    <p class="fex"><b>Ejemplo:</b> ${F.ej}</p>
+    <p class="small"><b>Cómo se interpreta:</b> ${F.lee}</p>
+    <div class="trap small"><b>Error típico:</b> ${F.err}</div>
+    ${F.in ? `<details class="fcalc"><summary>Calcular con mis datos</summary><div class="fin">${F.in.map(([id, l, d]) => `<label><span>${l}</span><input class="inp" inputmode="decimal" data-fk="${F.k}" data-fi="${id}" value="${esc(String(d).replace('.', ','))}"></label>`).join('')}</div><div class="fout" id="fo-${F.k}"></div></details>` : ''}
+    ${F.go ? `<div class="row" style="margin-top:10px"><button class="btn sm" type="button" data-go="${F.go}">Practicar →</button></div>` : ''}</article>`;
+}
+function formRun(k) {
+  const F = FORMS.find(x => x.k === k), o = {}; let miss = false;
+  F.in.forEach(([id]) => { const v = parseNum((app.querySelector(`[data-fk="${k}"][data-fi="${id}"]`) || {}).value || ''); o[id] = v; if (isNaN(v) && !(F.opt || []).includes(id)) miss = true; });
+  const out = $('#fo-' + k); if (!out) return;
+  if (miss) { out.innerHTML = '<span class="muted small">Completa todos los datos con números.</span>'; return; }
+  const [r, st] = F.run(o);
+  out.innerHTML = /NaN|Infinity/.test(r + st) ? '<span class="muted small">Revisa los datos: hay una división por cero.</span>' : `<b>${r}</b><div class="sol small" style="margin-top:4px">${st}</div>`;
+}
+function renderFormulas() {
+  const U = SESS.fU = SESS.fU || 'all', Q = SESS.fQ || '', V = SESS.fV || 'cards';
+  const nq = normTxt(Q), list = FORMS.filter(F => (U === 'all' || F.u === +U) && (!nq || normTxt(F.n + ' ' + F.f + ' ' + F.v.flat().join(' ')).includes(nq)));
+  const byU = {}; list.forEach(F => (byU[F.u] = byU[F.u] || []).push(F));
+  app.innerHTML = `<div class="eyebrow">Hoja de fórmulas · Nivel Medio</div><h1>Fórmulas</h1>
+    <p class="lede">Todas las fórmulas que puedes necesitar en la Prueba 2, con un ejemplo, cómo interpretar el resultado, el error típico y una calculadora para comprobar tus cuentas.</p>
+    <details class="essentials" ${Q || U !== 'all' ? '' : 'open'}><summary><b>Cómo presentar un cálculo en la Prueba 2</b></summary><ol>
+      <li><b>Escribe la fórmula</b> con palabras o símbolos.</li><li><b>Sustituye</b> los números del texto o de la tabla.</li><li><b>Da el resultado</b> con su unidad (%, US$, Gs., unidades) y el redondeo que pide la pregunta.</li><li>Si la pregunta dice «comente», agrega <b>qué significa</b> el resultado.</li></ol>
+      <p class="small muted" style="margin:6px 0 0">En el examen no hay hoja de fórmulas: tienes que sabértelas. En la Prueba 2 puedes usar calculadora; en la Prueba 1, no. Esta hoja solo incluye los cálculos del Nivel Medio.</p></details>
+    <div class="fctl"><input class="inp" id="fq" type="search" placeholder="Buscar: inflación, EPD, PIB…" value="${esc(Q)}" aria-label="Buscar fórmula">
+      <div class="seg" role="group" aria-label="Unidad">${[['all', 'Todas'], ['0', 'General'], ['1', 'U1'], ['2', 'U2'], ['3', 'U3'], ['4', 'U4']].map(([v, l]) => `<button type="button" data-fu="${v}" aria-pressed="${U === v}">${l}</button>`).join('')}</div>
+      <div class="seg" role="group" aria-label="Vista"><button type="button" data-fv="cards" aria-pressed="${V === 'cards'}">Fichas</button><button type="button" data-fv="sheet" aria-pressed="${V === 'sheet'}">Hoja resumen</button></div>
+      <button class="btn sm" type="button" id="fpr">Imprimir hoja</button></div>
+    <div id="flist">${!list.length ? '<p class="muted">No hay fórmulas con esa búsqueda.</p>' : V === 'sheet'
+      ? `<div class="tscroll"><table class="dtab fsheet"><thead><tr><th>Unidad</th><th>Cálculo</th><th>Fórmula</th></tr></thead><tbody>${list.map(F => `<tr><td>${F.u ? 'U' + F.u : 'Gral.'}</td><th scope="row">${F.n}</th><td>${F.f}</td></tr>`).join('')}</tbody></table></div>`
+      : Object.keys(byU).map(u => `<h2 class="wgroup">${+u ? 'Unidad ' + u + ' · ' : ''}${FU[u]}</h2><div class="fgrid">${byU[u].map(formCard).join('')}</div>`).join('')}</div>
+    <p class="small muted" style="margin-top:18px">No incluye los cálculos del Nivel Superior (multiplicador, índice de precios ponderado, excedentes, impuestos y aranceles a partir de diagramas, ventaja comparativa).</p>`;
+  const fq = $('#fq');
+  fq.oninput = () => { SESS.fQ = fq.value; const pos = fq.selectionStart; renderFormulas(); const n = $('#fq'); n.focus(); try { n.setSelectionRange(pos, pos); } catch (e) { } };
+  app.querySelectorAll('[data-fu]').forEach(b => b.onclick = () => { SESS.fU = b.dataset.fu; renderFormulas(); });
+  app.querySelectorAll('[data-fv]').forEach(b => b.onclick = () => { SESS.fV = b.dataset.fv; renderFormulas(); });
+  $('#fpr').onclick = () => { SESS.fV = 'sheet'; renderFormulas(); setTimeout(() => window.print(), 100); };
+  app.querySelectorAll('[data-fk]').forEach(i => i.oninput = () => formRun(i.dataset.fk));
+  app.querySelectorAll('.fcalc').forEach(d => d.ontoggle = () => { if (d.open) formRun(d.querySelector('[data-fk]').dataset.fk); });
 }
 
 render();
