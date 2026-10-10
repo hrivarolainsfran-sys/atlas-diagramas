@@ -900,7 +900,7 @@ const TOPICS = [
       { t: 'mc', q: 'Una sequía reduce la oferta de soja y su precio sube. Algunos compradores dejan de comprar. ¿Qué función del precio está actuando?', o: ['Racionamiento', 'Señal de eficiencia productiva', 'Soberanía del productor', 'Excedente del productor'], a: 0, e: 'El precio más alto <b>raciona</b> el bien escaso: lo reciben quienes están dispuestos y pueden pagar más.' },
       { t: 'mc', q: 'Sube el precio del maracuyá por la demanda de jugos y productores de Caaguazú deciden plantar más. El precio actuó como…', o: ['Señal e incentivo para asignar más recursos a ese bien', 'Mecanismo de racionamiento únicamente', 'Precio máximo', 'Una externalidad'], a: 0, e: 'El precio más alto <b>señala</b> que la gente quiere más maracuyá e <b>incentiva</b> a producirlo: así se reasignan recursos.' },
       { t: 'mc', q: 'La demanda y la oferta de celulares aumentan al mismo tiempo. ¿Qué se puede afirmar con seguridad?', o: ['La cantidad aumenta; el efecto sobre el precio es indeterminado', 'El precio aumenta y la cantidad aumenta', 'El precio baja y la cantidad aumenta', 'No cambian ni el precio ni la cantidad'], a: 0, e: 'Ambos desplazamientos empujan la cantidad hacia arriba. Para el precio, uno lo sube y el otro lo baja: depende de cuál sea mayor.' },
-      { t: 'mc', q: 'Ana estaba dispuesta a pagar Gs. 60.000 por una entrada, pero la compró a Gs. 45.000. Su excedente del consumidor es…', o: ['Gs. 15.000', 'Gs. 45.000', 'Gs. 60.000', 'Gs. 105.000'], a: 0, e: 'Excedente del consumidor = disposición a pagar − precio pagado = 60.000 − 45.000.' },
+      { t: 'mc', q: 'Ana estaba dispuesta a pagar Gs. 60.000 por una entrada, pero la compró a Gs. 45.000. La diferencia entre lo que estaba dispuesta a pagar y lo que pagó se llama…', o: ['Excedente del consumidor', 'Excedente del productor', 'Pérdida de bienestar', 'Exceso de demanda'], a: 0, e: 'Es el beneficio extra que obtiene el consumidor. En el diagrama es el área entre la demanda y el precio.' },
       { t: 'mc', q: 'Un mercado competitivo en equilibrio, sin externalidades, logra eficiencia asignativa porque…', o: ['El beneficio marginal es igual al costo marginal y el excedente social es máximo', 'Las empresas obtienen la mayor ganancia posible', 'Todos los consumidores compran el bien', 'El precio es el más bajo posible'], a: 0, e: 'En el equilibrio se producen todas las unidades cuyo beneficio supera su costo, y ninguna más.' },
       { t: 'mc', q: 'El <b>excedente del productor</b> es…', o: ['La diferencia entre el precio recibido y el precio mínimo al que estaba dispuesto a vender', 'La ganancia total de la empresa', 'Lo que sobra sin vender en el mercado', 'El ingreso total menos los impuestos'], a: 0, e: 'En el diagrama es el área entre el precio de mercado y la curva de oferta.' }
     ]
@@ -911,10 +911,9 @@ const TOPICS = [
       '<span class="formula">EPD = %ΔQd ÷ %ΔP</span> (se usa en valor absoluto). EPD > 1 elástica; EPD < 1 inelástica; = 1 unitaria; 0 perfectamente inelástica; ∞ perfectamente elástica.',
       'Determinantes de la EPD: <b>número y cercanía de sustitutos</b>, <b>necesidad o lujo</b>, <b>proporción del ingreso</b> que se gasta, <b>tiempo</b> (a largo plazo es más elástica).',
       '<b>Ingreso total</b> = P × Q. Con demanda inelástica, subir el precio sube el ingreso; con demanda elástica, subir el precio baja el ingreso.',
-      'En una demanda lineal, la EPD cambia: es elástica en la parte alta y inelástica en la parte baja (unitaria en el punto medio).',
-      '<span class="formula">YED = %ΔQd ÷ %ΔY</span> (con signo). YED < 0 bien inferior; 0–1 normal de primera necesidad; > 1 normal de lujo. Los productos primarios suelen tener YED baja.'
+      '<span class="formula">YED = %ΔQd ÷ %ΔY</span> (con signo). YED < 0 bien inferior; 0–1 normal de primera necesidad; > 1 normal de lujo.'
     ],
-    trap: 'La pendiente <b>no es</b> la elasticidad: a lo largo de una misma recta la pendiente es constante, pero la EPD cambia en cada punto.',
+    trap: 'Las variaciones porcentuales se calculan sobre el valor <b>inicial</b>. La EPD se informa en valor absoluto: lo que importa es si es mayor o menor que 1.',
     items: [
       { t: 'gen', g: 'ped' },
       { t: 'genmc', g: 'trmc' },
@@ -923,7 +922,6 @@ const TOPICS = [
       { t: 'mc', q: '¿Por qué la demanda de nafta es más elástica a <b>largo</b> plazo que a corto plazo?', o: ['Con el tiempo las personas encuentran alternativas: autos más eficientes, transporte público, mudarse cerca del trabajo', 'Porque a largo plazo la nafta se vuelve un bien de lujo', 'Porque el precio de la nafta baja con el tiempo', 'Porque a corto plazo hay más sustitutos'], a: 0, e: 'El <b>tiempo</b> permite ajustar hábitos y buscar sustitutos, así que la cantidad responde más al precio.' },
       { t: 'mc', q: 'Si la EPD es <b>0,4</b>, una suba del precio del 10% provoca…', o: ['Una caída del 4% en la cantidad demandada', 'Una caída del 40% en la cantidad demandada', 'Un aumento del 4% en la cantidad demandada', 'Una caída del 25% en la cantidad demandada'], a: 0, e: '%ΔQd = EPD × %ΔP = 0,4 × 10% = 4% (cae, por la ley de la demanda).' },
       { t: 'mc', q: '¿Qué valor de EPD corresponde a una demanda <b>perfectamente inelástica</b> (curva vertical)?', o: ['0', '1', 'Infinito', 'Menor que 0'], a: 0, e: 'La cantidad no cambia nada aunque cambie el precio: %ΔQd = 0.' },
-      { t: 'mc', q: 'Muchos productos primarios, como la soja o la carne, tienen <b>YED baja</b>. ¿Qué implica para un país exportador como Paraguay cuando el ingreso mundial crece?', o: ['La demanda de sus exportaciones crece proporcionalmente menos que el ingreso mundial', 'Sus exportaciones crecen más rápido que las de bienes industriales', 'La demanda de sus exportaciones cae', 'No tiene ninguna consecuencia'], a: 0, e: 'Con YED < 1, si el ingreso mundial sube 10%, la demanda de esos productos sube menos de 10%. Los países que exportan manufacturas y servicios (YED más alta) ganan más con el crecimiento mundial.' },
       { t: 'mc', q: 'Un bien con <b>YED = 2,1</b> es…', o: ['Un bien normal de lujo', 'Un bien normal de primera necesidad', 'Un bien inferior', 'Un bien de demanda perfectamente inelástica'], a: 0, e: 'YED > 1: la demanda crece proporcionalmente más que el ingreso.' },
       { t: 'mc', q: '¿Por qué al gobierno le conviene gravar bienes de <b>demanda inelástica</b> si busca recaudar?', o: ['Porque la cantidad vendida cae poco y la recaudación se mantiene alta', 'Porque los consumidores dejan de comprarlos', 'Porque bajan sus precios', 'Porque así el productor paga todo el impuesto'], a: 0, e: 'Con demanda inelástica la cantidad casi no cae y la mayor parte del impuesto la paga el consumidor. Por eso el impuesto selectivo recae sobre tabaco, alcohol y combustibles.' }
     ]
@@ -933,7 +931,6 @@ const TOPICS = [
     ess: [
       '<span class="formula">EPO = %ΔQo ÷ %ΔP</span>. Es positiva. EPO > 1 elástica; < 1 inelástica; 0 perfectamente inelástica (vertical); ∞ perfectamente elástica (horizontal).',
       'Determinantes: <b>tiempo</b> (corto y largo plazo), <b>capacidad ociosa</b>, <b>inventarios</b>, <b>movilidad de los factores</b> y si el bien es <b>perecedero</b>.',
-      'Los <b>productos primarios</b> (agro) tienen oferta inelástica a corto plazo: hay que esperar una nueva siembra o cosecha. Las <b>manufacturas</b> suelen ser más elásticas.',
       'Oferta y demanda inelásticas juntas explican la <b>volatilidad</b> de los precios agrícolas: un shock (sequía) mueve mucho el precio.'
     ],
     trap: 'En la EPO <b>no</b> hay signo negativo que ignorar: precio y cantidad ofrecida se mueven en la misma dirección.',
@@ -943,7 +940,7 @@ const TOPICS = [
       { t: 'sort', q: '¿Oferta más elástica o más inelástica?', bins: ['Más elástica', 'Más inelástica'], items: [['Remeras estampadas (hay máquinas sin usar)', 0], ['Soja dentro de una misma campaña', 1], ['Departamentos nuevos en Asunción (corto plazo)', 1], ['Souvenirs con stock en el depósito', 0], ['Entradas para un partido en un estadio lleno', 1], ['Pan de una panadería con hornos libres', 0]], e: 'Capacidad ociosa e inventarios hacen la oferta elástica. Plazos largos de producción o capacidad fija la hacen inelástica.' },
       { t: 'mc', q: 'Una <b>EPO = 0</b> significa…', o: ['La cantidad ofrecida no cambia aunque cambie el precio (oferta vertical)', 'Los productores no ofrecen nada', 'La oferta es horizontal', 'El precio no cambia'], a: 0, e: 'Ejemplo: asientos de un estadio para un partido concreto.' },
       { t: 'mc', q: '¿Qué factor vuelve <b>más elástica</b> la oferta?', o: ['Tener capacidad ociosa e inventarios', 'Que el bien sea muy perecedero', 'Un plazo de producción largo', 'Que los factores de producción no puedan cambiar de uso'], a: 0, e: 'Si hay máquinas libres o stock guardado, la empresa responde rápido a un aumento del precio.' },
-      { t: 'mc', q: 'Los precios agrícolas suelen ser más volátiles que los de las manufacturas. Una razón es que…', o: ['La oferta y la demanda agrícolas son inelásticas, así que un shock como una sequía mueve mucho el precio', 'Los productores agrícolas fijan precios altos', 'La demanda de alimentos es muy elástica', 'Las manufacturas no tienen oferta'], a: 0, e: 'Con curvas empinadas, un pequeño desplazamiento de la oferta produce un gran cambio de precio.' },
+      { t: 'mc', q: 'Los precios agrícolas, como el de la soja, suelen ser muy volátiles. Una razón es que…', o: ['La oferta y la demanda agrícolas son inelásticas, así que un shock como una sequía mueve mucho el precio', 'Los productores agrícolas fijan precios altos', 'La demanda de alimentos es muy elástica', 'Las manufacturas no tienen oferta'], a: 0, e: 'Con curvas empinadas, un pequeño desplazamiento de la oferta produce un gran cambio de precio.' },
       { t: 'mc', q: 'Si el precio sube 20% y la cantidad ofrecida sube 30%, la EPO es…', o: ['1,5 (elástica)', '0,67 (inelástica)', '−1,5', '50'], a: 0, e: 'EPO = 30 ÷ 20 = 1,5.' }
     ]
   },
@@ -961,11 +958,9 @@ const TOPICS = [
       { t: 'sort', q: '¿Impuesto específico o ad valorem? (ejemplos)', bins: ['Específico', 'Ad valorem'], items: [['IVA del 10% sobre una heladera', 1], ['Gs. 500 adicionales por cada litro de combustible', 0], ['IVA del 5% sobre productos de la canasta básica', 1], ['Un monto fijo por cada cajetilla de cigarrillos', 0], ['15% sobre el precio de las bebidas alcohólicas', 1], ['Gs. 1.000 por cada botella de gaseosa', 0]], e: 'Específico = monto fijo por unidad (curvas paralelas). Ad valorem = porcentaje del precio (curvas que se separan).' },
       { t: 'mc', q: 'Un impuesto indirecto <b>específico</b> desplaza la curva de oferta…', o: ['Verticalmente hacia arriba en el monto del impuesto, en paralelo', 'Hacia la derecha', 'Hacia arriba, separándose cada vez más', 'No la desplaza: desplaza la demanda'], a: 0, e: 'El impuesto es un costo extra por unidad: a cada cantidad, el productor necesita un precio mayor exactamente en el monto del impuesto.' },
       { t: 'mc', q: 'La demanda de cigarrillos es muy inelástica. Si el gobierno sube el impuesto selectivo al consumo, ¿quién soporta la mayor parte?', o: ['Los consumidores', 'Los productores', 'Se reparte siempre en partes iguales', 'El gobierno'], a: 0, e: 'La incidencia recae más en el lado del mercado más inelástico: los fumadores siguen comprando aunque suba el precio.' },
-      { t: 'gen', g: 'tax' },
       { t: 'mc', q: 'El gobierno paga un subsidio por litro a los productores de leche. ¿Qué ocurre?', o: ['La oferta se desplaza hacia abajo: baja el precio y sube la cantidad', 'La demanda se desplaza a la derecha: sube el precio', 'La oferta se desplaza hacia arriba: sube el precio', 'No cambia nada porque el subsidio va al productor'], a: 0, e: 'El subsidio baja el costo por unidad. Ganan consumidores (precio menor) y productores (reciben precio + subsidio).' },
       { t: 'mc', q: 'Un <b>precio máximo</b> para los alquileres, fijado por debajo del equilibrio, provoca…', o: ['Exceso de demanda (escasez) de viviendas en alquiler', 'Exceso de oferta de viviendas', 'Que suban los alquileres', 'Ningún efecto'], a: 0, e: 'A un precio bajo, más personas quieren alquilar y menos propietarios ofrecen: Qd > Qo.' },
       { t: 'mc', q: 'Si el <b>salario mínimo</b> se fija por encima del salario de equilibrio…', o: ['La cantidad ofrecida de trabajo supera a la demandada: desempleo', 'Las empresas contratan más trabajadores', 'Hay escasez de trabajadores', 'No tiene ningún efecto'], a: 0, e: 'Es un precio mínimo en el mercado laboral: más personas quieren trabajar a ese salario y las empresas contratan menos.' },
-      { t: 'gen', g: 'ceiling' },
       { t: 'mc', q: 'Un precio máximo fijado <b>por encima</b> del equilibrio…', o: ['No tiene efecto: no es vinculante', 'Genera escasez', 'Genera excedente', 'Baja el precio de mercado'], a: 0, e: 'El mercado ya cobra menos que ese tope, así que el límite no restringe nada.' },
       { t: 'mc', q: '¿Cuál es un <b>costo de oportunidad</b> de un subsidio para el gobierno?', o: ['Dejar de gastar ese dinero en otras áreas, como salud o rutas', 'Que suba el precio del bien subsidiado', 'Que baje la producción', 'Que los consumidores paguen más impuestos al bien'], a: 0, e: 'El dinero público es escaso: lo que se gasta en un subsidio no se usa en otra cosa (o exige más impuestos o deuda).' }
     ]
@@ -1020,7 +1015,7 @@ const UNITS = { 1: 'Introducción a la economía', 2: 'Microeconomía', 3: 'Macr
 const LABS = {
   cpp: { name: 'Curva de posibilidades de producción', short: 'CPP', topic: '1.1', ds: 'Ubica puntos eficientes, ineficientes e inalcanzables; desplaza la curva.' },
   shifts: { name: '¿Qué curva se mueve?', short: 'D y O', topic: '2.3', ds: 'Lee una noticia, predice el desplazamiento y comprueba en el diagrama.' },
-  ped: { name: 'EPD e ingreso total', short: 'EPD', topic: '2.5', ds: 'Mueve el precio y observa el tramo elástico, el inelástico y el ingreso total.' },
+  ped: { name: 'EPD e ingreso total', short: 'EPD', topic: '2.5', ds: 'Compara una demanda elástica y una inelástica: qué pasa con el ingreso total al cambiar el precio.' },
   tax: { name: 'Impuestos y subsidios', short: 'IMP', topic: '2.7', ds: 'Incidencia, recaudación y pérdida de bienestar según las elasticidades.' },
   ceil: { name: 'Precios máximos y mínimos', short: 'P máx', topic: '2.7', ds: 'Escasez, excedentes y salario mínimo.' },
   ext: { name: 'Externalidades', short: 'EXT', topic: '2.8', ds: 'Los cuatro tipos, la pérdida de bienestar y la corrección del gobierno.' },
@@ -1128,14 +1123,13 @@ TOPICS.push(
     ]
   },
   {
-    id: '3.3', u: 3, name: 'Objetivos macroeconómicos', ds: 'Crecimiento, desempleo, inflación, deflación y deuda pública', labs: ['adas'],
+    id: '3.3', u: 3, name: 'Objetivos macroeconómicos', ds: 'Crecimiento, desempleo, inflación y deflación', labs: ['adas'],
     ess: [
       '<b>Crecimiento económico</b>: aumento del PIB real. A corto plazo lo impulsa la DA; a largo plazo, la OALP. Beneficios: ingresos, empleo, recaudación. Costos posibles: desigualdad y daño ambiental.',
       '<b>Desempleo</b>: personas que buscan trabajo y no lo encuentran. Tipos: <b>friccional</b>, <b>estructural</b>, <b>estacional</b> (forman la tasa natural) y <b>cíclico</b> (por falta de DA). También existen subempleo y desempleo oculto.',
       '<b>Inflación</b>: aumento sostenido del nivel general de precios, medido con el IPC. Puede ser <b>de demanda</b> o <b>de costos</b>.',
       '<b>Deflación</b>: caída sostenida del nivel de precios. <b>Desinflación</b>: la inflación baja pero sigue positiva.',
       'Costos de la inflación: pérdida de poder adquisitivo, incertidumbre, redistribución (ganan los deudores con tasa fija), pérdida de competitividad. Costos de la deflación: se posterga el consumo y pesa más la deuda.',
-      '<b>Déficit fiscal</b>: gasto mayor que los ingresos en un año. <b>Deuda pública</b>: acumulación de déficits pasados.'
     ],
     trap: 'Desinflación no es deflación. Si la inflación baja de 6% a 3%, los precios siguen subiendo, más despacio.',
     items: [
@@ -1147,8 +1141,7 @@ TOPICS.push(
       { t: 'mc', q: 'La inflación pasa de 6% a 3%. Esto es…', o: ['Desinflación: los precios siguen subiendo, pero más lento', 'Deflación', 'Hiperinflación', 'Recesión'], a: 0, e: 'Deflación sería una inflación negativa (precios que bajan).' },
       { t: 'mc', q: 'Un costo de la <b>deflación</b> es que…', o: ['Los consumidores postergan compras esperando precios más bajos, y cae la DA', 'Aumenta el poder adquisitivo de los deudores', 'Las exportaciones se encarecen siempre', 'Bajan los salarios reales'], a: 0, e: 'Además, la carga real de las deudas aumenta.' },
       { t: 'mc', q: 'La <b>tasa natural</b> de desempleo incluye el desempleo…', o: ['Friccional, estructural y estacional', 'Cíclico solamente', 'Cíclico y friccional', 'Que causa una recesión'], a: 0, e: 'Existe aun cuando la economía está en su producción potencial.' },
-      { t: 'mc', q: '¿Cuál es un costo económico del desempleo?', o: ['Producción perdida: la economía produce dentro de su CPP', 'Mayor recaudación de impuestos', 'Menor gasto en transferencias', 'Aumento de la productividad'], a: 0, e: 'También baja la recaudación, suben las transferencias y se pierden habilidades.' },
-      { t: 'mc', q: '¿Cuál es la diferencia entre déficit fiscal y deuda pública?', o: ['El déficit es la brecha anual entre gasto e ingresos; la deuda es la acumulación de déficits pasados', 'Son lo mismo', 'La deuda es anual y el déficit acumulado', 'El déficit es con el exterior'], a: 0, e: 'Cada déficit anual se financia con deuda, que se suma a la existente.' }
+      { t: 'mc', q: '¿Cuál es un costo económico del desempleo?', o: ['Producción perdida: la economía produce dentro de su CPP', 'Mayor recaudación de impuestos', 'Menor gasto en transferencias', 'Aumento de la productividad'], a: 0, e: 'También baja la recaudación, suben las transferencias y se pierden habilidades.' }
     ]
   },
   {
@@ -1177,7 +1170,7 @@ TOPICS.push(
   {
     id: '3.5', u: 3, name: 'Política monetaria', ds: 'Banco central, tasas de interés, metas de inflación, fortalezas y límites', labs: ['adas'],
     ess: [
-      'La aplica el <b>banco central</b> (en Paraguay, el BCP) con la tasa de interés de política monetaria, operaciones de mercado abierto y el encaje legal.',
+      'La aplica el <b>banco central</b> (en Paraguay, el BCP) principalmente con la <b>tasa de interés de política monetaria</b> (TPM).',
       'Objetivos: inflación baja y estable (el BCP trabaja con <b>metas de inflación</b>), apoyo al crecimiento y al empleo, estabilidad financiera y del tipo de cambio.',
       '<b>Expansiva</b>: baja la tasa → más crédito, consumo e inversión → la DA se desplaza a la derecha. <b>Contractiva</b>: sube la tasa → la DA se desplaza a la izquierda → baja la inflación.',
       'Transmisión: la tasa afecta el crédito y el ahorro (C e I) y el tipo de cambio (tasas más altas atraen capitales y aprecian la moneda).',
@@ -1187,8 +1180,8 @@ TOPICS.push(
     items: [
       { t: 'mc', q: '¿Quién aplica la política monetaria en Paraguay?', o: ['El Banco Central del Paraguay (BCP)', 'El Ministerio de Economía y Finanzas', 'El Congreso Nacional', 'El Ministerio de Industria y Comercio'], a: 0, e: 'El MEF y el Congreso intervienen en la política fiscal (presupuesto, impuestos y gasto).' },
       { t: 'mc', q: 'Con una política monetaria <b>expansiva</b>…', o: ['Baja la tasa de interés, aumentan el crédito, el consumo y la inversión, y la DA se desplaza a la derecha', 'Sube la tasa y baja la DA', 'El gobierno aumenta el gasto', 'Se suben los impuestos'], a: 0, e: 'Se usa para combatir recesiones y desempleo cíclico.' },
-      { t: 'mc', q: 'La inflación supera la meta del BCP. ¿Qué medida es coherente?', o: ['Subir la tasa de política monetaria', 'Bajar la tasa de política monetaria', 'Bajar el encaje legal', 'Comprar bonos a los bancos'], a: 0, e: 'Una tasa más alta encarece el crédito, reduce la DA y frena la suba de precios.' },
-      { t: 'sort', q: '¿Política monetaria expansiva o contractiva?', bins: ['Expansiva', 'Contractiva'], items: [['Bajar la tasa de política monetaria', 0], ['Subir el encaje legal', 1], ['El banco central compra bonos y entrega dinero a los bancos', 0], ['Subir la tasa de política monetaria', 1], ['El banco central vende bonos y retira dinero de circulación', 1], ['Bajar el encaje legal', 0]], e: 'Expansiva = más dinero y crédito más barato. Contractiva = menos dinero y crédito más caro.' },
+      { t: 'mc', q: 'La inflación supera la meta del BCP. ¿Qué medida es coherente?', o: ['Subir la tasa de política monetaria', 'Bajar la tasa de política monetaria', 'Aumentar el gasto público', 'Bajar el IVA'], a: 0, e: 'Una tasa más alta encarece el crédito, reduce la DA y frena la suba de precios.' },
+      { t: 'sort', q: '¿Política monetaria expansiva o contractiva?', bins: ['Expansiva', 'Contractiva'], items: [['Bajar la tasa de política monetaria', 0], ['Subir la tasa de política monetaria', 1], ['El BCP abarata el crédito para reactivar la economía', 0], ['El BCP encarece el crédito para frenar la inflación', 1]], e: 'Expansiva = más dinero y crédito más barato. Contractiva = menos dinero y crédito más caro.' },
       { t: 'mc', q: '¿Por qué bajar las tasas puede no reactivar la economía en una recesión profunda?', o: ['Con baja confianza, hogares y empresas no quieren endeudarse aunque el crédito sea barato', 'Porque las tasas bajas suben los impuestos', 'Porque el gobierno gasta menos', 'Porque se aprecia la moneda'], a: 0, e: 'La política monetaria depende de que la gente responda a tasas más bajas.' },
       { t: 'mc', q: 'Si el BCP sube su tasa de interés, ¿qué tiende a pasar con el guaraní?', o: ['Se aprecia, porque entran capitales que buscan mayor rendimiento', 'Se deprecia', 'No cambia', 'Se vuelve un tipo de cambio fijo'], a: 0, e: 'Más demanda de guaraníes para invertir a tasas más altas.' },
       { t: 'mc', q: 'Un régimen de <b>metas de inflación</b> significa que…', o: ['El banco central anuncia un objetivo de inflación y ajusta la tasa para alcanzarlo', 'El gobierno fija los precios', 'La inflación debe ser cero', 'El tipo de cambio es fijo'], a: 0, e: 'Anunciar la meta ayuda a anclar las expectativas de inflación.' },
@@ -1196,19 +1189,17 @@ TOPICS.push(
     ]
   },
   {
-    id: '3.6', u: 3, name: 'Política fiscal', ds: 'Gasto e impuestos, expansiva y contractiva, estabilizadores automáticos, deuda', labs: ['adas'],
+    id: '3.6', u: 3, name: 'Política fiscal', ds: 'Gasto e impuestos, expansiva y contractiva, fortalezas y limitaciones', labs: ['adas'],
     ess: [
       'La define el <b>gobierno</b> (Poder Ejecutivo a través del MEF, con el Presupuesto que aprueba el Congreso) mediante el <b>gasto público</b> y los <b>impuestos</b>.',
       'Ingresos: impuestos directos (sobre la renta) e indirectos (IVA, selectivo, aranceles), ventas de bienes y servicios, ingresos de empresas públicas y binacionales (royalties de Itaipú y Yacyretá).',
       '<b>Expansiva</b>: más gasto o menos impuestos → la DA se desplaza a la derecha. <b>Contractiva</b>: menos gasto o más impuestos → la DA se desplaza a la izquierda.',
-      '<b>Estabilizadores automáticos</b>: en una recesión baja la recaudación y suben algunas transferencias sin que nadie decida nada nuevo.',
       'Fortalezas: actúa directamente sobre la DA, puede dirigirse a sectores o regiones, el gasto de capital también aumenta la OALP. Limitaciones: rezagos, déficit y deuda, presiones políticas, gastos difíciles de revertir.'
     ],
     trap: 'Déficit fiscal no es déficit comercial. El primero es del presupuesto del gobierno; el segundo, del comercio con el exterior.',
     items: [
       { t: 'sort', q: '¿Política fiscal expansiva o contractiva?', bins: ['Expansiva', 'Contractiva'], items: [['Bajar el IVA', 0], ['Aumentar el gasto en rutas', 0], ['Subir el impuesto a la renta personal', 1], ['Recortar subsidios', 1], ['Aumentar transferencias como Tekoporã', 0], ['Congelar contrataciones en el Estado', 1]], e: 'Expansiva = más gasto o menos impuestos. Contractiva = menos gasto o más impuestos.' },
       { t: 'mc', q: '¿Quién decide la política fiscal en Paraguay?', o: ['El gobierno: el Poder Ejecutivo (MEF) y el Congreso con el Presupuesto', 'El Banco Central del Paraguay', 'Los bancos comerciales', 'El MERCOSUR'], a: 0, e: 'El BCP decide la política monetaria.' },
-      { t: 'mc', q: 'En una recesión la recaudación cae sola porque las personas ganan y compran menos. Esto es un ejemplo de…', o: ['Estabilizador automático', 'Política monetaria contractiva', 'Política de oferta', 'Inflación de costos'], a: 0, e: 'Amortigua la caída de la DA sin una decisión nueva del gobierno.' },
       { t: 'mc', q: 'Para combatir una recesión con alto desempleo, la política fiscal adecuada es…', o: ['Expansiva: más gasto público o menos impuestos', 'Contractiva: más impuestos', 'Subir la tasa de interés', 'No hacer nada en ningún caso'], a: 0, e: 'Busca desplazar la DA a la derecha para cerrar la brecha recesiva.' },
       { t: 'mc', q: '¿Cuál es una limitación de la política fiscal?', o: ['Aprobar e implementar el gasto lleva tiempo y puede aumentar la deuda pública', 'No afecta la DA', 'La decide el banco central', 'Solo funciona en economías cerradas'], a: 0, e: 'Además, puede haber presiones políticas para gastar en época de elecciones.' },
       { t: 'mc', q: 'Mayor gasto público en educación e infraestructura…', o: ['Aumenta la DA en el corto plazo y la OALP en el largo plazo', 'Solo aumenta la OALP', 'Solo reduce la DA', 'No tiene efecto en el largo plazo'], a: 0, e: 'Es gasto (DA) y a la vez inversión en capital humano y físico (OALP).' },
@@ -1237,21 +1228,20 @@ TOPICS.push(
     ]
   },
   {
-    id: '4.1', u: 4, name: 'Beneficios del comercio internacional', ds: 'Ventaja absoluta y comparativa, beneficios, críticas y la OMC', labs: [],
+    id: '4.1', u: 4, name: 'Beneficios del comercio internacional', ds: 'Beneficios del comercio y libre comercio con importaciones y exportaciones', labs: [],
     ess: [
-      'Beneficios: precios más bajos, más variedad, acceso a recursos, economías de escala, más competencia, ingreso de divisas, transferencia de tecnología.',
-      '<b>Ventaja absoluta</b>: producir más con los mismos recursos. <b>Ventaja comparativa</b>: producir con <b>menor costo de oportunidad</b>. Especializándose según la ventaja comparativa, ambos países pueden ganar.',
-      'Fuentes de ventaja comparativa: dotación de factores (en Paraguay, tierra fértil, agua y energía hidroeléctrica), clima, tecnología.',
-      'Límites del modelo: supone pleno empleo, sin costos de transporte y factores que cambian de uso sin costo. Riesgo de depender de pocos productos.',
+      'Beneficios: <b>más competencia</b>, <b>precios más bajos</b>, <b>más variedad</b>, <b>acceso a recursos</b>, <b>ingreso de divisas</b>, <b>mercados más grandes</b> y <b>economías de escala</b>, una asignación más eficaz de los recursos y una producción más eficiente.',
+      'Libre comercio con <b>importaciones</b>: si el precio mundial es menor que el precio interno de equilibrio, los consumidores compran más a menor precio, la producción nacional baja y la diferencia entre la cantidad demandada y la ofrecida se importa.',
+      'Libre comercio con <b>exportaciones</b>: si el precio mundial es mayor que el precio interno, los productores venden más al precio mundial, el consumo interno baja y el excedente se exporta (por ejemplo, la soja paraguaya).',
+      'Riesgos: depender de pocos productos y de los precios internacionales, y el cierre de industrias que no pueden competir.',
       'La <b>OMC</b> promueve el libre comercio, administra acuerdos y resuelve disputas entre países.'
     ],
-    trap: 'Un país puede tener ventaja comparativa en un bien aunque no tenga ventaja absoluta en ninguno: lo que importa es el costo de oportunidad.',
+    trap: 'En el diagrama de libre comercio el precio mundial es una línea horizontal: el país es pequeño y no puede influir en él.',
     items: [
-      { t: 'mc', q: 'Un país tiene <b>ventaja comparativa</b> en un bien cuando…', o: ['Lo produce con menor costo de oportunidad que otro país', 'Produce más unidades que cualquier otro país', 'Lo exporta a mayor precio', 'Tiene más trabajadores'], a: 0, e: 'Producir más con los mismos recursos es ventaja absoluta.' },
-      { t: 'mc', q: 'Argentina produce más trigo y más carne por trabajador que Paraguay. ¿Puede Paraguay beneficiarse del comercio con Argentina?', o: ['Sí: si su costo de oportunidad es menor en algún bien, tiene ventaja comparativa en él', 'No, porque no tiene ventaja absoluta', 'Solo si fija aranceles', 'Solo si usa la misma moneda'], a: 0, e: 'Ese es el argumento central de la ventaja comparativa.' },
       { t: 'sort', q: '¿Beneficio o riesgo del comercio para Paraguay?', bins: ['Beneficio', 'Riesgo'], items: [['Precios más bajos para los consumidores', 0], ['Acceso a maquinaria y tecnología importada', 0], ['Dependencia de pocos productos primarios', 1], ['Economías de escala al vender a mercados grandes', 0], ['Cierre de industrias que no pueden competir', 1], ['Mayor variedad de productos', 0], ['Exposición a la volatilidad de los precios internacionales', 1]], e: 'El comercio genera ganancias totales, pero también ganadores y perdedores dentro del país.' },
-      { t: 'mc', q: '¿Cuál es una fuente de la ventaja comparativa de Paraguay en energía eléctrica?', o: ['Recursos hídricos abundantes y grandes represas hidroeléctricas compartidas', 'Reservas de petróleo', 'Salida al mar', 'Clima frío'], a: 0, e: 'Itaipú (con Brasil) y Yacyretá (con Argentina) generan mucha más electricidad de la que Paraguay consume.' },
-      { t: 'mc', q: 'Una crítica al modelo de ventaja comparativa es que…', o: ['Supone pleno empleo y que los factores pasan sin costo de una industria a otra', 'Demuestra que el comercio siempre perjudica', 'Ignora la existencia de dos países', 'Supone que no hay costo de oportunidad'], a: 0, e: 'En la práctica, trabajadores y capital tardan en reubicarse, y hay costos de transporte.' },
+      { t: 'mc', q: 'Si el precio mundial de un bien es <b>menor</b> que su precio de equilibrio interno, con libre comercio el país…', o: ['Importa la diferencia entre la cantidad demandada y la ofrecida internamente', 'Exporta el excedente', 'Deja de comerciar ese bien', 'Sube su precio interno'], a: 0, e: 'Al precio mundial, los consumidores quieren más de lo que producen los productores nacionales: el faltante se importa.' },
+      { t: 'mc', q: 'El precio mundial de la soja es mayor que el que tendría en Paraguay sin comercio. Con libre comercio…', o: ['Los productores venden más y el excedente se exporta; los consumidores locales pagan el precio mundial', 'Paraguay importa soja', 'Baja la producción nacional', 'Bajan los precios para los consumidores locales'], a: 0, e: 'Es el diagrama de libre comercio con exportaciones: la cantidad ofrecida supera a la demandada al precio mundial.' },
+      { t: 'mc', q: '¿Quién pierde cuando un país abre su mercado a importaciones más baratas?', o: ['Los productores nacionales que compiten con esas importaciones', 'Los consumidores', 'Nadie', 'Los exportadores'], a: 0, e: 'Los consumidores ganan con precios más bajos y más variedad; los productores que compiten con las importaciones venden menos.' },
       { t: 'mc', q: '¿Cuál es una función de la OMC?', o: ['Promover el libre comercio y resolver disputas comerciales entre países', 'Fijar el tipo de cambio de cada país', 'Prestar dinero a gobiernos en crisis', 'Cobrar aranceles a los países miembros'], a: 0, e: 'Los préstamos en crisis corresponden al FMI.' },
       { t: 'mc', q: 'Exportar a todo el MERCOSUR permite a una fábrica paraguaya…', o: ['Producir a mayor escala y bajar sus costos medios', 'Subir sus costos', 'Evitar toda competencia', 'Dejar de importar insumos'], a: 0, e: 'Son economías de escala: un mercado más grande permite producir más con menor costo por unidad.' }
     ]
@@ -1278,22 +1268,21 @@ TOPICS.push(
     ]
   },
   {
-    id: '4.4', u: 4, name: 'Integración económica', ds: 'Niveles de integración, MERCOSUR, creación y desviación de comercio', labs: [],
+    id: '4.4', u: 4, name: 'Integración económica', ds: 'Acuerdos preferenciales, bloques comerciales, MERCOSUR, unión monetaria y OMC', labs: [],
     ess: [
       'Acuerdos <b>bilaterales</b>, <b>regionales</b> y <b>multilaterales</b> (OMC).',
       'Niveles de menor a mayor integración: acuerdo comercial preferencial → <b>área de libre comercio</b> (sin aranceles entre miembros, cada uno con su arancel externo) → <b>unión aduanera</b> (+ arancel externo común) → <b>mercado común</b> (+ libre movimiento de trabajo y capital) → <b>unión económica y monetaria</b> (+ moneda y banco central comunes).',
       'Paraguay es miembro fundador del <b>MERCOSUR</b> (Tratado de Asunción, 1991), diseñado como unión aduanera con arancel externo común.',
-      '<b>Creación de comercio</b>: se pasa de un productor caro a uno más eficiente del bloque. <b>Desviación de comercio</b>: se pasa de un productor eficiente de afuera a uno menos eficiente del bloque.',
-      'Ventajas: mercados más grandes, economías de escala, competencia, inversión extranjera, poder de negociación. Desventajas: pérdida de soberanía, desviación de comercio; con moneda común, pérdida de la política monetaria propia.'
+      'Ventajas de los bloques comerciales: un mercado más grande con potencial para economías de escala, más oportunidades de empleo con libre movimiento del trabajo, más poder en las negociaciones multilaterales y mayor estabilidad política. Desventajas: pérdida de soberanía y un desafío a las negociaciones comerciales multilaterales.',
+      'Una <b>unión monetaria</b> se produce cuando dos o más países comparten la misma moneda y un banco central común (por ejemplo, la zona del euro).'
     ],
     trap: 'En un área de libre comercio cada país mantiene su propio arancel hacia terceros; en una unión aduanera todos aplican el mismo arancel externo común.',
     items: [
       { t: 'sort', q: 'Ubica cada rasgo o ejemplo en su nivel de integración.', bins: ['Área de libre comercio', 'Unión aduanera', 'Mercado común', 'Unión económica y monetaria'], items: [['Sin aranceles entre miembros; cada país fija su arancel a terceros', 0], ['Además de libre comercio, un arancel externo común', 1], ['Además, libre movimiento de trabajadores y capital', 2], ['Además, una moneda común y un banco central común', 3], ['El T-MEC entre Estados Unidos, México y Canadá', 0], ['La eurozona', 3], ['El MERCOSUR, en su diseño', 1]], e: 'Cada nivel incluye lo del anterior y agrega un grado más de integración.' },
       { t: 'mc', q: 'El MERCOSUR se creó con…', o: ['El Tratado de Asunción, en 1991', 'El Tratado de Roma, en 1957', 'El Acuerdo de París, en 2015', 'La creación de la OMC, en 1995'], a: 0, e: 'Paraguay es miembro fundador junto con Argentina, Brasil y Uruguay.' },
-      { t: 'mc', q: 'La <b>creación de comercio</b> ocurre cuando…', o: ['Un país pasa a comprar a un productor más eficiente del bloque, que antes estaba frenado por aranceles', 'Un país deja de comprar a un productor eficiente de afuera', 'Se crean nuevas empresas exportadoras', 'Aumentan los aranceles'], a: 0, e: 'Mejora la asignación de recursos y baja los precios.' },
-      { t: 'mc', q: 'Por el arancel externo común, Paraguay compra a Brasil una maquinaria que antes importaba más barata de China. Es…', o: ['Desviación de comercio', 'Creación de comercio', 'Dumping', 'Una cuota'], a: 0, e: 'Se reemplaza a un productor más eficiente de afuera por uno menos eficiente del bloque.' },
       { t: 'mc', q: '¿Cuál es una ventaja del MERCOSUR para Paraguay?', o: ['Acceso sin aranceles a mercados mucho más grandes, como Brasil', 'Elegir su propio arancel externo para todo', 'Tener una moneda común', 'Eliminar la competencia'], a: 0, e: 'Los mercados grandes permiten economías de escala y atraen inversión.' },
-      { t: 'mc', q: 'Un país que entra en una unión monetaria…', o: ['Pierde su política monetaria propia y no puede devaluar su moneda', 'Gana una política monetaria independiente', 'Mantiene su tipo de cambio con los socios', 'No cambia nada'], a: 0, e: 'Las tasas las fija un banco central común para todos los miembros.' },
+      { t: 'mc', q: 'Una <b>unión monetaria</b> se produce cuando…', o: ['Dos o más países comparten la misma moneda y un banco central común', 'Dos países eliminan los aranceles entre ellos', 'Un país fija su moneda al dólar', 'Varios países firman un acuerdo en la OMC'], a: 0, e: 'Ejemplo: los países de la zona del euro.' },
+      { t: 'mc', q: '¿Qué factor limita la influencia de la OMC?', o: ['El poder de negociación desigual entre los países miembros', 'Que no tiene países miembros', 'Que fija el tipo de cambio de cada país', 'Que presta dinero a países en crisis'], a: 0, e: 'También cuesta llegar a acuerdos sobre servicios y bienes primarios.' },
       { t: 'mc', q: 'Un <b>acuerdo comercial preferencial</b>…', o: ['Reduce barreras para algunos productos entre países, sin eliminarlas todas', 'Elimina todas las barreras y crea una moneda común', 'Es lo mismo que una unión aduanera', 'Aumenta los aranceles entre los miembros'], a: 0, e: 'Es el nivel más básico de integración.' }
     ]
   },
@@ -1319,32 +1308,30 @@ TOPICS.push(
     ]
   },
   {
-    id: '4.6', u: 4, name: 'Balanza de pagos', ds: 'Cuenta corriente, de capital y financiera; déficit y corrección', labs: [],
+    id: '4.6', u: 4, name: 'Balanza de pagos', ds: 'Cuenta corriente, de capital y financiera; créditos, débitos y saldos', labs: [],
     ess: [
       'Registro de todas las transacciones de un país con el resto del mundo en un período.',
       '<b>Cuenta corriente</b>: bienes, servicios, <b>ingreso primario</b> (salarios, intereses, dividendos) e <b>ingreso secundario</b> (transferencias corrientes, como las remesas).',
       '<b>Cuenta de capital</b>: transferencias de capital y compraventa de activos no financieros no producidos (patentes, derechos de marca).',
       '<b>Cuenta financiera</b>: inversión extranjera directa, inversión de cartera, otras inversiones y activos de reserva.',
       'Cuenta corriente + cuenta de capital + cuenta financiera (+ errores y omisiones) = 0. Un déficit corriente se financia con entradas en las otras cuentas.',
-      'Para corregir un déficit corriente: reducir el gasto (políticas contractivas), cambiar el gasto hacia lo nacional (depreciación, proteccionismo) y mejorar la competitividad (políticas de oferta).'
+      'Cada transacción es un <b>crédito</b> (entra dinero al país, por ejemplo una exportación) o un <b>débito</b> (sale dinero, por ejemplo una importación). Una cuenta tiene superávit si los créditos superan a los débitos, y déficit en el caso contrario.'
     ],
     trap: 'Las remesas de familiares que viven afuera van al <b>ingreso secundario</b> de la cuenta corriente, no a la cuenta financiera.',
     items: [
       { t: 'sort', q: '¿En qué cuenta de la balanza de pagos se registra?', bins: ['Cuenta corriente', 'Cuenta de capital', 'Cuenta financiera'], items: [['Exportación de soja', 0], ['Turistas brasileños gastan en Paraguay', 0], ['Remesas de paraguayos en España', 0], ['Dividendos que una multinacional envía a su casa matriz', 0], ['Una empresa extranjera construye una fábrica en Paraguay', 2], ['Un inversor paraguayo compra acciones extranjeras', 2], ['Venta de los derechos de una marca a una empresa extranjera', 1], ['El BCP aumenta sus reservas en dólares', 2]], e: 'Comercio, ingresos y transferencias corrientes → cuenta corriente. Activos no producidos → cuenta de capital. Inversiones y reservas → cuenta financiera.' },
       { t: 'mc', q: 'Los intereses que Paraguay paga por su deuda externa se registran en…', o: ['El ingreso primario de la cuenta corriente', 'La cuenta de capital', 'La balanza de bienes', 'Los activos de reserva'], a: 0, e: 'Intereses, dividendos y salarios son ingreso primario.' },
       { t: 'mc', q: 'Un déficit de cuenta corriente…', o: ['Se financia con un superávit en las cuentas de capital y financiera', 'No necesita financiarse', 'Siempre indica una recesión', 'Se registra en la cuenta financiera'], a: 0, e: 'Por ejemplo, con inversión extranjera, préstamos o uso de reservas.' },
-      { t: 'mc', q: 'Una depreciación busca reducir el déficit de cuenta corriente porque…', o: ['Abarata las exportaciones y encarece las importaciones', 'Encarece las exportaciones', 'Sube la tasa de interés', 'Reduce el ingreso primario'], a: 0, e: 'Es una política de cambio del gasto: desvía compras hacia la producción nacional.' },
-      { t: 'mc', q: 'Una política de <b>reducción del gasto</b> para corregir un déficit corriente es…', o: ['Subir impuestos o tasas de interés para bajar la DA y con ella las importaciones', 'Depreciar la moneda', 'Subsidiar las importaciones', 'Bajar las tasas de interés'], a: 0, e: 'Su costo es menos crecimiento y más desempleo en el corto plazo.' },
-      { t: 'mc', q: 'Un déficit de cuenta corriente persistente puede llevar a…', o: ['Mayor endeudamiento externo, venta de activos al exterior y presión a la depreciación', 'Apreciación permanente de la moneda', 'Superávit fiscal', 'Más reservas internacionales'], a: 0, e: 'Si los inversores pierden confianza, el financiamiento puede cortarse.' },
-      { t: 'mc', q: 'A largo plazo, la forma más sostenible de mejorar la cuenta corriente es…', o: ['Mejorar la productividad y la competitividad de las exportaciones con políticas de oferta', 'Aplicar aranceles a todo', 'Fijar el tipo de cambio', 'Prohibir las remesas'], a: 0, e: 'Exportar más por ser más competitivo, no por cerrar la economía.' }
+      { t: 'mc', q: 'En la balanza de pagos, una exportación de soja se registra como…', o: ['Un crédito en la cuenta corriente', 'Un débito en la cuenta corriente', 'Un crédito en la cuenta financiera', 'Un débito en la cuenta de capital'], a: 0, e: 'Entra dinero al país por una venta de bienes: es un crédito en la balanza de bienes.' },
+      { t: 'mc', q: 'La cuenta corriente tiene un déficit de US$ 500 millones y la cuenta de capital un superávit de US$ 20 millones (sin errores y omisiones). La cuenta financiera debe tener…', o: ['Un superávit de US$ 480 millones', 'Un déficit de US$ 480 millones', 'Un superávit de US$ 520 millones', 'Un saldo de cero'], a: 0, e: 'La balanza de pagos suma cero: −500 + 20 + CF = 0, así que CF = +480.' },
+      { t: 'mc', q: 'La condonación de una deuda por parte de otro país se registra en…', o: ['La cuenta de capital (transferencias de capital)', 'La cuenta corriente', 'Los activos de reserva', 'La balanza de servicios'], a: 0, e: 'Las transferencias de capital incluyen la condonación de deudas.' },
     ]
   },
   {
-    id: '4.7', u: 4, name: 'Desarrollo sostenible', ds: 'Definición, ODS, pobreza y ambiente, tensiones del crecimiento', labs: [],
+    id: '4.7', u: 4, name: 'Desarrollo sostenible', ds: 'Definición, ODS y tensiones entre crecimiento y ambiente', labs: [],
     ess: [
       '<b>Desarrollo sostenible</b>: satisfacer las necesidades del presente sin comprometer la capacidad de las generaciones futuras de satisfacer las suyas.',
       'Los <b>17 Objetivos de Desarrollo Sostenible</b> (ONU, 2015, Agenda 2030): fin de la pobreza, hambre cero, salud, educación, igualdad de género, agua, energía limpia, trabajo decente, acción por el clima, entre otros.',
-      'Pobreza y ambiente se refuerzan: la pobreza puede llevar a sobreexplotar recursos (leña, desmonte) y el daño ambiental afecta más a los pobres.',
       'Tensiones: crecimiento rápido frente a medio ambiente; por ejemplo, la expansión agrícola y ganadera frente a los bosques del Chaco.',
       'Paraguay genera casi toda su electricidad con hidroeléctricas, pero buena parte de su consumo de energía todavía proviene de leña y combustibles fósiles importados.'
     ],
@@ -1352,7 +1339,6 @@ TOPICS.push(
     items: [
       { t: 'mc', q: 'El <b>desarrollo sostenible</b> es…', o: ['Satisfacer las necesidades actuales sin comprometer las de las generaciones futuras', 'Crecer lo más rápido posible', 'Dejar de producir para cuidar el ambiente', 'Aumentar las exportaciones'], a: 0, e: 'Combina dimensiones económicas, sociales y ambientales.' },
       { t: 'mc', q: 'Los Objetivos de Desarrollo Sostenible fueron adoptados por…', o: ['Las Naciones Unidas en 2015, con metas para 2030', 'El MERCOSUR en 1991', 'El FMI en 2000', 'La OMC en 1995'], a: 0, e: 'Son 17 objetivos que reemplazaron a los Objetivos de Desarrollo del Milenio.' },
-      { t: 'mc', q: 'Familias rurales sin acceso a gas ni electricidad cocinan con leña del monte cercano. Esto muestra que…', o: ['La pobreza puede presionar sobre los recursos naturales', 'La leña es un bien público', 'El crecimiento siempre es sostenible', 'No hay relación entre pobreza y ambiente'], a: 0, e: 'Reducir la pobreza (por ejemplo, con acceso a energía) también puede proteger el ambiente.' },
       { t: 'sort', q: '¿Práctica sostenible o no sostenible?', bins: ['Sostenible', 'No sostenible'], items: [['Ganadería que reemplaza bosque nativo sin reforestar', 1], ['Reforestación con especies nativas', 0], ['Pescar durante la veda', 1], ['Paneles solares en escuelas rurales', 0], ['Siembra directa y rotación de cultivos para cuidar el suelo', 0], ['Quema de pastizales para limpiar campos', 1]], e: 'Es sostenible lo que permite seguir usando el recurso en el futuro.' },
       { t: 'mc', q: '¿Cuál es una tensión entre crecimiento y sostenibilidad en Paraguay?', o: ['La expansión agrícola y ganadera aumenta las exportaciones, pero puede reducir los bosques', 'Las hidroeléctricas contaminan más que el carbón', 'El turismo siempre destruye el ambiente', 'No existe ninguna tensión'], a: 0, e: 'El crecimiento de hoy puede tener costos ambientales para el futuro.' },
       { t: 'mc', q: 'Paraguay genera casi toda su electricidad con…', o: ['Energía hidroeléctrica', 'Carbón', 'Gas natural', 'Energía nuclear'], a: 0, e: 'Gracias a Itaipú, Yacyretá y Acaray.' },
@@ -1451,12 +1437,9 @@ CARDS.push(
   [3, 'Política monetaria', 'Uso de las tasas de interés y la oferta de dinero por el banco central para influir en la economía.'],
   [3, 'Metas de inflación', 'Régimen en el que el banco central anuncia un objetivo de inflación y ajusta la tasa para cumplirlo.'],
   [3, 'Política fiscal', 'Uso del gasto público y los impuestos por el gobierno para influir en la economía.'],
-  [3, 'Estabilizadores automáticos', 'Cambios en impuestos y transferencias que amortiguan el ciclo sin decisiones nuevas.'],
   [3, 'Déficit fiscal', 'Exceso del gasto público sobre los ingresos del gobierno en un año.'],
-  [3, 'Deuda pública', 'Monto total adeudado por el gobierno; acumulación de déficits pasados.'],
+  [3, 'Deuda pública', 'Monto total que adeuda el gobierno.'],
   [3, 'Políticas de oferta', 'Medidas para aumentar la capacidad productiva y desplazar la OALP a la derecha.'],
-  [4, 'Ventaja absoluta', 'Capacidad de producir más de un bien con los mismos recursos que otro país.'],
-  [4, 'Ventaja comparativa', 'Capacidad de producir un bien con menor costo de oportunidad que otro país.'],
   [4, 'Arancel', 'Impuesto sobre los bienes importados.'],
   [4, 'Cuota de importación', 'Límite a la cantidad de un bien que se puede importar.'],
   [4, 'Dumping', 'Vender en el exterior por debajo del costo o del precio en el mercado propio.'],
@@ -1464,8 +1447,6 @@ CARDS.push(
   [4, 'Área de libre comercio', 'Bloque sin aranceles entre miembros, cada uno con su propio arancel hacia terceros.'],
   [4, 'Unión aduanera', 'Área de libre comercio con un arancel externo común.'],
   [4, 'Mercado común', 'Unión aduanera con libre movimiento de trabajo y capital.'],
-  [4, 'Creación de comercio', 'Paso de un productor caro a uno más eficiente del bloque.'],
-  [4, 'Desviación de comercio', 'Paso de un productor eficiente de afuera a uno menos eficiente del bloque.'],
   [4, 'Tipo de cambio flotante', 'Lo determinan la oferta y la demanda de la moneda.'],
   [4, 'Tipo de cambio administrado', 'Flota, pero el banco central interviene para evitar movimientos bruscos.'],
   [4, 'Apreciación', 'Aumento del valor de una moneda frente a otra en un régimen flotante.'],
@@ -2138,15 +2119,15 @@ function labLorenz(svg, pan, leg) {
     $('#r20', pan).textContent = fmt(100 - share(.8, k), 1) + '%';
     $('#lk', pan).value = k;
   }
-  function newTarget() { S.target = pick([3, 4, 5, 6, 8, 10, 12].filter(v => v !== S.target)); $('#lt', pan).textContent = `En un país, el 20% más pobre recibe el ${S.target}% del ingreso total. Mueve el control hasta representarlo.`; $('#lfb', pan).innerHTML = ''; }
+  function newTarget() { S.target = pick([0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55].filter(v => v !== S.target)); $('#lt', pan).textContent = `El coeficiente de Gini de un país es ${fmt(S.target, 2)}. Mueve el control hasta representarlo.`; $('#lfb', pan).innerHTML = ''; }
   $('#lk', pan).oninput = e => { S.k = +e.target.value; draw(); };
   $('#lp', pan).onclick = () => { S.k = Math.max(1, S.k - 0.25); draw(); };
   $('#lm', pan).onclick = () => { S.k = Math.min(5, S.k + 0.25); draw(); };
   $('#ln', pan).onclick = newTarget;
   $('#lc', pan).onclick = () => {
-    const v = share(.2, S.k), ok = Math.abs(v - S.target) <= 0.6, G = (S.k - 1) / (S.k + 1);
+    const G = (S.k - 1) / (S.k + 1), ok = Math.abs(G - S.target) <= 0.012;
     const st = PROG.labs.lorenz = PROG.labs.lorenz || { ok: 0, n: 0 }; st.n++; if (ok) st.ok++; saveProg();
-    $('#lfb', pan).innerHTML = `<div class="fb ${ok ? 'ok' : 'no'}"><b class="h">${ok ? 'Correcto' : 'Todavía no'}</b>${ok ? `Con esa distribución el Gini es aproximadamente <b>${fmt(G, 2)}</b>. Cuanto menos recibe el 20% más pobre, más se aleja la curva de la diagonal.` : `Ahora el 20% más pobre recibe ${fmt(v, 1)}%. ${v > S.target ? 'Mueve hacia más desigualdad.' : 'Mueve hacia más igualdad.'}`}</div>`;
+    $('#lfb', pan).innerHTML = `<div class="fb ${ok ? 'ok' : 'no'}"><b class="h">${ok ? 'Correcto' : 'Todavía no'}</b>${ok ? `Con un Gini de ${fmt(G, 2)}, el 20% más pobre recibe cerca del ${fmt(share(.2, S.k), 1)}% del ingreso. Cuanto más alto el Gini, más se aleja la curva de Lorenz de la diagonal.` : `Ahora el Gini es ${fmt(G, 2)}. ${G < S.target ? 'Mueve hacia más desigualdad.' : 'Mueve hacia más igualdad.'}`}</div>`;
   };
   newTarget(); draw();
 }
@@ -2176,8 +2157,8 @@ function labTariff(svg, pan, leg) {
     if (t > 0) [[qs1, 'Q₂'], [qd1, 'Q₃']].forEach(([q, l]) => { el('line', { x1: P.X(q), y1: P.Y(P1), x2: P.X(q), y2: P.T + P.H, class: 'gd' }, P.gG); P.text(q, 0, l, 'tk', 'middle').setAttribute('y', P.T + P.H + 16); });
     $('#tal', pan).textContent = `Arancel por par: ${gs(t * 1000)}`;
     const rev = t * (qd1 - qs1), dwl = t * (qs1 - qs0) / 2 + t * (qd0 - qd1) / 2, pg = t * (qs0 + qs1) / 2, cl = t * (qd0 + qd1) / 2;
-    $('#ro', pan).innerHTML = [['Precio interno', gs(P1 * 1000)], ['Producción nacional', fmt(qs0, 1) + ' → ' + fmt(qs1, 1)], ['Consumo', fmt(qd0, 1) + ' → ' + fmt(qd1, 1)], ['Importaciones', fmt(qd0 - qs0, 1) + ' → ' + fmt(qd1 - qs1, 1)], [sw('--f-gov') + 'Recaudación del gobierno', fmt(rev, 0) + ' M Gs.'], [sw('--f-pro') + 'Ganancia de los productores nacionales', fmt(pg, 0) + ' M Gs.'], ['Pérdida de excedente del consumidor', fmt(cl, 0) + ' M Gs.'], [sw('--f-dwl') + 'Pérdida de bienestar', fmt(dwl, 0) + ' M Gs.']].map(r => `<tr><td>${r[0]}</td><td>${r[1]}</td></tr>`).join('');
-    $('#note', pan).innerHTML = t > 0 ? `<div class="fb info">Los consumidores pierden ${fmt(cl, 0)} M Gs.: una parte va a los productores nacionales (verde), otra al gobierno (rectángulo violeta) y el resto es pérdida de bienestar (los dos triángulos azules): producción nacional ineficiente y consumo que se deja de hacer.${qd1 - qs1 < 0.5 ? ' Con este arancel las importaciones desaparecen.' : ''}</div>` : '<div class="fb info">Libre comercio: el precio interno es el precio mundial y las importaciones cubren la diferencia entre consumo (Q₄) y producción nacional (Q₁). Sube el arancel.</div>';
+    $('#ro', pan).innerHTML = (t > 0 ? [['Precio interno', 'sube: P mundial → P mundial + arancel'], ['Producción nacional', 'sube: Q₁ → Q₂'], ['Consumo', 'baja: Q₄ → Q₃'], ['Importaciones', 'bajan: de Q₁–Q₄ a Q₂–Q₃'], [sw('--f-gov') + 'Recaudación del gobierno', 'rectángulo violeta'], [sw('--f-pro') + 'Ganancia de los productores nacionales', 'área verde'], [sw('--f-dwl') + 'Pérdida de bienestar', 'triángulos azules']] : [['Precio interno', 'P mundial'], ['Importaciones', 'de Q₁ a Q₄']]).map(r => `<tr><td>${r[0]}</td><td>${r[1]}</td></tr>`).join('');
+    $('#note', pan).innerHTML = t > 0 ? `<div class="fb info">Los consumidores pierden excedente: una parte va a los productores nacionales (verde), otra al gobierno (rectángulo violeta) y el resto es pérdida de bienestar (los dos triángulos azules): producción nacional ineficiente y consumo que se deja de hacer.${qd1 - qs1 < 0.5 ? ' Con este arancel las importaciones desaparecen.' : ''}</div>` : '<div class="fb info">Libre comercio: el precio interno es el precio mundial y las importaciones cubren la diferencia entre consumo (Q₄) y producción nacional (Q₁). Sube el arancel.</div>';
     leg.innerHTML = `<span>${sw('--f-pro')}Ganancia productores</span><span>${sw('--f-gov')}Recaudación</span><span>${sw('--f-dwl')}Pérdida de bienestar</span>`;
   }
   draw();
@@ -2185,49 +2166,38 @@ function labTariff(svg, pan, leg) {
 
 /* ---- EPD e ingreso total ---- */
 function labPED(svg, pan, leg) {
-  let P0 = 70, prev = null;
-  const D = { a: 100, b: -1 };
+  const S = { k: 'el', p: 60 };
   pan.innerHTML = `
-    <p class="small" style="margin:0">Mercado de entradas de cine en un día (datos hipotéticos). Precio en miles de Gs.; demanda lineal.</p>
-    <div class="ctl"><label for="pr">Precio: <span id="prv"></span></label><input type="range" id="pr" min="10" max="90" step="5" value="70">
-      <div class="row" style="margin-top:8px"><button class="btn sm" type="button" id="dn">Bajar 5</button><button class="btn sm" type="button" id="up">Subir 5</button></div></div>
-    <table class="readout"><tr><td>Precio (P)</td><td id="r1"></td></tr><tr><td>Cantidad demandada (Q)</td><td id="r2"></td></tr><tr><td>${sw('--f-tr')}Ingreso total (P × Q)</td><td id="r3"></td></tr><tr><td>EPD en este punto</td><td id="r4"></td></tr></table>
-    <div id="msg"></div>
-    <svg id="trs" viewBox="0 0 410 150" role="img" aria-label="Ingreso total según la cantidad"></svg>`;
-  leg.innerHTML = `<span>${sw('--f-tr')}Ingreso total</span><span><span class="sw" style="background:var(--k-d)"></span>Demanda</span>`;
+    <p class="small" style="margin:0">Mercado de entradas de cine (datos hipotéticos). Precio inicial: Gs. 50.000; cantidad inicial: 50 entradas por día.</p>
+    <div class="ctl"><span class="lbl">Demanda</span>${segBtns('pk', [['el', 'Relativamente elástica'], ['in', 'Relativamente inelástica']], 'el')}</div>
+    <div class="ctl"><label for="pr">Nuevo precio: <span id="prv"></span></label><input type="range" id="pr" min="35" max="65" step="5" value="60"></div>
+    <table class="readout"><tr><td>Precio</td><td id="r1"></td></tr><tr><td>Cantidad demandada</td><td id="r2"></td></tr><tr><td>Ingreso total (P × Q)</td><td id="r3"></td></tr><tr><td>EPD = %ΔQd ÷ %ΔP</td><td id="r4"></td></tr></table>
+    <div id="msg"></div>`;
+  leg.innerHTML = `<span>${sw('--f-tr')}Ingreso que se mantiene</span><span>${sw('--f-pro')}Ingreso que se gana</span><span>${sw('--f-dwl')}Ingreso que se pierde</span><span><span class="sw" style="background:var(--k-d)"></span>Demanda</span>`;
+  bindSeg(pan, 'pk', v => { S.k = v; draw(); });
+  $('#pr', pan).oninput = e => { S.p = +e.target.value; draw(); };
   function draw() {
+    const s = S.k === 'el' ? 0.4 : 2.5, D = { a: 50 + 50 * s, b: -s }, p = S.p, q = qAt(D, p);
     const P = Plot(svg, { yl: 'Precio (miles de Gs.)', xl: 'Entradas por día' });
-    const q = 100 - P0, ped = P0 / (100 - P0);
-    P.rect(0, 0, q, P0, 'a-tr');
-    P.line(D, 'c-d', 'D');
-    P.text(34, 74, 'Elástica (EPD > 1)', 'pl'); P.text(62, 34, 'Inelástica (EPD < 1)', 'pl');
-    P.dot(50, 50, 'EPD = 1', 6, -8);
-    P.guide(q, P0, fmt(q), fmt(P0));
-    P.dot(q, P0, '');
-    $('#prv', pan).textContent = gs(P0 * 1000);
-    $('#r1', pan).textContent = gs(P0 * 1000); $('#r2', pan).textContent = fmt(q);
-    $('#r3', pan).textContent = gs(P0 * q * 1000); $('#r4', pan).textContent = fmt(ped, 2) + (ped > 1.0001 ? ' (elástica)' : ped < 0.9999 ? ' (inelástica)' : ' (unitaria)');
-    if (prev !== null && prev !== P0) {
-      const tr0 = prev * (100 - prev), tr1 = P0 * (100 - P0);
-      const dir = P0 > prev ? 'Subir' : 'Bajar';
-      const res = tr1 > tr0 ? 'aumenta' : tr1 < tr0 ? 'disminuye' : 'no cambia';
-      const zone = (Math.min(prev, P0) >= 50) ? 'tramo elástico' : (Math.max(prev, P0) <= 50) ? 'tramo inelástico' : 'cruce del punto unitario';
-      $('#msg', pan).innerHTML = `<div class="fb ${tr1 >= tr0 ? 'ok' : 'no'}">${dir} el precio de ${gs(prev * 1000)} a ${gs(P0 * 1000)}: el ingreso total <b>${res}</b> (de ${gs(tr0 * 1000)} a ${gs(tr1 * 1000)}), en el ${zone}.</div>`;
-    } else if (prev === null) $('#msg', pan).innerHTML = '<div class="fb info">Baja el precio de a 5 desde arriba. Mientras la demanda sea elástica, bajar el precio aumenta el ingreso total. Pasado el punto medio, ya no.</div>';
-    // gráfico de ingreso total
-    const t = $('#trs', pan); t.innerHTML = '';
-    const L = 52, W = 338, T = 12, H = 110, X = qq => L + qq / 100 * W, Y = v => T + H - v / 2500 * H;
-    el('path', { d: `M${L},${T - 4} L${L},${T + H} L${L + W + 4},${T + H}`, class: 'ax' }, t);
-    let d = ''; for (let i = 0; i <= 100; i += 2) d += (i ? 'L' : 'M') + X(i) + ',' + Y(i * (100 - i));
-    el('path', { d, class: 'cv c-gold' }, t);
-    el('circle', { cx: X(q), cy: Y(q * P0), r: 5, class: 'pt' }, t);
-    const a = el('text', { x: L + 6, y: T + 6, class: 'axl' }, t); a.textContent = 'Ingreso total';
-    const b = el('text', { x: L + W, y: T + H + 22, class: 'axl', 'text-anchor': 'end' }, t); b.textContent = 'Cantidad';
-    const c = el('text', { x: X(50), y: Y(2500) + 14, class: 'tk', 'text-anchor': 'middle' }, t); c.textContent = 'máximo con EPD = 1';
+    if (p !== 50) {
+      const lo = Math.min(p, 50), ql = Math.min(q, 50);
+      P.rect(0, 0, ql, lo, 'a-tr');
+      if (p > 50) { P.rect(0, 50, q, p, 'a-pro'); P.rect(q, 0, 50, 50, 'a-dwl'); }
+      else { P.rect(50, 0, q, p, 'a-pro'); P.rect(0, p, 50, 50, 'a-dwl'); }
+    } else P.rect(0, 0, 50, 50, 'a-tr');
+    P.line(D, 'c-d', S.k === 'el' ? 'D elástica' : 'D inelástica');
+    P.guide(50, 50, 'Q₀', 'P₀'); P.dot(50, 50, '');
+    if (p !== 50) { P.guide(q, p, 'Q₁', 'P₁', { qdx: q > 50 ? 8 : -8 }); P.dot(q, p, ''); }
+    const it0 = 50 * 50, it1 = p * q, dq = (q - 50) / 50 * 100, dp = (p - 50) / 50 * 100;
+    $('#prv', pan).textContent = gs(p * 1000);
+    $('#r1', pan).textContent = `${gs(50000)} → ${gs(p * 1000)}`;
+    $('#r2', pan).textContent = `50 → ${fmt(q, 1)}`;
+    $('#r3', pan).textContent = `${gs(it0 * 1000)} → ${gs(Math.round(it1 * 1000))}`;
+    $('#r4', pan).textContent = p === 50 ? '—' : `${fmt(Math.abs(dq / dp), 1)} (${Math.abs(dq / dp) > 1 ? 'elástica' : 'inelástica'})`;
+    const res = it1 > it0 + 1e-9 ? 'aumenta' : it1 < it0 - 1e-9 ? 'disminuye' : 'no cambia';
+    $('#msg', pan).innerHTML = p === 50 ? '<div class="fb info">Mueve el precio y compara las dos demandas: ¿cuándo conviene subir el precio para ganar más?</div>'
+      : `<div class="fb ${it1 >= it0 ? 'ok' : 'no'}">${p > 50 ? 'Subir' : 'Bajar'} el precio con demanda <b>${S.k === 'el' ? 'elástica' : 'inelástica'}</b>: el ingreso total <b>${res}</b>. ${S.k === 'el' ? 'La cantidad cambia proporcionalmente más que el precio, así que el ingreso se mueve en dirección <b>contraria</b> al precio.' : 'La cantidad cambia proporcionalmente menos que el precio, así que el ingreso se mueve en la <b>misma</b> dirección que el precio.'}</div>`;
   }
-  const set = v => { prev = P0; P0 = Math.max(10, Math.min(90, v)); $('#pr', pan).value = P0; draw(); };
-  $('#pr', pan).oninput = e => set(+e.target.value);
-  $('#dn', pan).onclick = () => set(P0 - 5); $('#up', pan).onclick = () => set(P0 + 5);
   draw();
 }
 
@@ -2266,8 +2236,8 @@ function labTax(svg, pan, leg) {
       P.dot(q0, p0, '');
       const ci = (pc - p0) * qt, pi = (p0 - pp) * qt, rev = t * qt, dwl = t * (q0 - qt) / 2;
       const share = t > 0 ? (pc - p0) / t : 0;
-      rows = [['Precio que paga el consumidor', gs(pc * 1000)], ['Precio que recibe el productor', gs(pp * 1000)], ['Cantidad', fmt(qt, 1) + ' mil'], [sw('--f-con') + 'Incidencia consumidor', fmt(ci, 0) + ' M Gs.'], [sw('--f-pro') + 'Incidencia productor', fmt(pi, 0) + ' M Gs.'], ['Recaudación total', fmt(rev, 0) + ' M Gs.'], [sw('--f-dwl') + 'Pérdida de bienestar', fmt(dwl, 0) + ' M Gs.']];
-      if (S.amt > 0) note = S.bd === S.bs ? `Con elasticidades iguales, el impuesto se reparte por mitades (${fmt(share * 100, 0)}% el consumidor).` : `El consumidor paga el <b>${fmt(share * 100, 0)}%</b> del impuesto por unidad. La carga recae más sobre el lado <b>${S.bd > S.bs ? 'de la demanda (más inelástica)' : 'de la oferta (más inelástica)'}</b>.`;
+      rows = S.amt > 0 ? [['Precio que paga el consumidor', 'sube (P₀ → Pc)'], ['Precio que recibe el productor', 'baja (P₀ → Pp)'], ['Cantidad', 'baja (Q₀ → Q₁)'], [sw('--f-con') + 'Carga del consumidor', 'rectángulo amarillo'], [sw('--f-pro') + 'Carga del productor', 'rectángulo verde'], ['Recaudación del gobierno', 'amarillo + verde'], [sw('--f-dwl') + 'Pérdida de bienestar', 'triángulo azul']] : [['Precio', 'P₀'], ['Cantidad', 'Q₀']];
+      if (S.amt > 0) note = S.bd === S.bs ? 'Con elasticidades iguales, la carga del impuesto se reparte por igual entre consumidores y productores.' : `La carga del impuesto recae más sobre el lado <b>${S.bd > S.bs ? 'de la demanda (más inelástica)' : 'de la oferta (más inelástica)'}</b>: compara el tamaño del rectángulo amarillo y del verde.`;
     } else {
       const O1 = { a: O.a - S.amt, b: O.b };
       const [qs, pc] = cross(D, O1), pp = pc + S.amt;
@@ -2282,8 +2252,8 @@ function labTax(svg, pan, leg) {
       if (S.amt > 0) { P.guide(qs, pp, null, 'Pp', { pdy: -2 }); P.guide(qs, pc, 'Q₁', 'Pc', { pdy: 6, qdx: 6 }); P.dot(qs, pc, ''); }
       P.dot(q0, p0, '');
       const cg = (p0 - pc) * (q0 + qs) / 2, pg = (pp - p0) * (q0 + qs) / 2, gov = S.amt * qs, dwl = S.amt * (qs - q0) / 2;
-      rows = [['Precio que paga el consumidor', gs(pc * 1000)], ['Precio que recibe el productor (con subsidio)', gs(pp * 1000)], ['Cantidad', fmt(qs, 1) + ' mil'], [sw('--f-con') + 'Ganancia de excedente del consumidor', fmt(cg, 0) + ' M Gs.'], [sw('--f-pro') + 'Ganancia de excedente del productor', fmt(pg, 0) + ' M Gs.'], [sw('--f-gov') + 'Costo para el gobierno', fmt(gov, 0) + ' M Gs.'], [sw('--f-dwl') + 'Pérdida de bienestar', fmt(dwl, 0) + ' M Gs.']];
-      if (S.amt > 0) note = `El gobierno gasta ${fmt(gov, 0)} M Gs. Consumidores y productores ganan juntos ${fmt(cg + pg, 0)} M Gs.; la diferencia es la pérdida de bienestar. Gana más el lado <b>${S.bd > S.bs ? 'de la demanda (más inelástica)' : S.bd < S.bs ? 'de la oferta (más inelástica)' : 'que sea más inelástico (aquí, en partes iguales)'}</b>.`;
+      rows = S.amt > 0 ? [['Precio que paga el consumidor', 'baja (P₀ → Pc)'], ['Precio que recibe el productor (con subsidio)', 'sube (P₀ → Pp)'], ['Cantidad', 'sube (Q₀ → Q₁)'], [sw('--f-con') + 'Ganancia de los consumidores', 'área amarilla'], [sw('--f-pro') + 'Ganancia de los productores', 'área verde'], [sw('--f-gov') + 'Costo para el gobierno', 'rectángulo violeta'], [sw('--f-dwl') + 'Pérdida de bienestar', 'triángulo azul']] : [['Precio', 'P₀'], ['Cantidad', 'Q₀']];
+      if (S.amt > 0) note = `El costo para el gobierno (rectángulo) es mayor que lo que ganan juntos consumidores y productores: la diferencia es la pérdida de bienestar. Gana más el lado <b>${S.bd > S.bs ? 'de la demanda (más inelástica)' : S.bd < S.bs ? 'de la oferta (más inelástica)' : 'que sea más inelástico (aquí, en partes iguales)'}</b>.`;
     }
     $('#ro', pan).innerHTML = rows.map(r => `<tr><td>${r[0]}</td><td>${r[1]}</td></tr>`).join('');
     $('#note', pan).innerHTML = note ? `<div class="fb info">${note}</div>` : '';
@@ -2323,7 +2293,7 @@ function labCeil(svg, pan, leg) {
     }
     $('#pvl', pan).textContent = (S.mode === 'max' ? 'Precio máximo: ' : 'Salario mínimo: ') + gs(S.p * (lab ? 50000 : 40000));
     const unit = lab ? 'mil trabajadores' : 'cientos';
-    $('#ro', pan).innerHTML = [['Precio de equilibrio', gs(p0 * (lab ? 50000 : 40000))], ['Cantidad demandada', fmt(qd, 1) + ' ' + unit], ['Cantidad ofrecida', fmt(qs, 1) + ' ' + unit], [S.mode === 'max' ? 'Escasez (Qd − Qo)' : (lab ? 'Desempleo (Qo − Qd)' : 'Excedente'), binding ? fmt(Math.abs(qd - qs), 1) + ' ' + unit : '—'], ['Cantidad intercambiada', fmt(qt, 1) + ' ' + unit]].map(r => `<tr><td>${r[0]}</td><td>${r[1]}</td></tr>`).join('');
+    $('#ro', pan).innerHTML = [['Precio de equilibrio', 'P₀ (cantidad Q₀)'], ['Cantidad demandada', binding ? (S.mode === 'max' ? 'aumenta: Qd > Q₀' : 'baja: Qd < Q₀') : 'Q₀'], ['Cantidad ofrecida', binding ? (S.mode === 'max' ? 'baja: Qo < Q₀' : 'aumenta: Qo > Q₀') : 'Q₀'], [S.mode === 'max' ? 'Escasez' : (lab ? 'Desempleo' : 'Excedente'), binding ? (S.mode === 'max' ? 'distancia de Qo a Qd' : 'distancia de Qd a Qo') : '—'], ['Cantidad que se intercambia', binding ? (S.mode === 'max' ? 'Qo (la menor)' : 'Qd (la menor)') : 'Q₀']].map(r => `<tr><td>${r[0]}</td><td>${r[1]}</td></tr>`).join('');
     $('#note', pan).innerHTML = `<div class="fb ${binding ? 'info' : 'no'}">${!binding ? `<b class="h">No vinculante</b>${S.mode === 'max' ? 'El tope está por encima del equilibrio: el mercado ya cobra menos, así que no cambia nada.' : 'El piso está por debajo del equilibrio: el mercado ya paga más, así que no cambia nada.'}` : S.mode === 'max' ? 'Ganan quienes consiguen alquilar más barato; pierden quienes quedan sin vivienda y los propietarios. Riesgos: listas de espera, alquileres “por debajo de la mesa” y menos mantenimiento. El triángulo azul es la pérdida de bienestar.' : 'Ganan quienes conservan el empleo con un salario mayor; pierden quienes quedan sin trabajo. El efecto real depende de la elasticidad de la demanda de trabajo y de cuánto supera el salario mínimo al de equilibrio.'}</div>`;
     leg.innerHTML = `<span><span class="sw" style="background:var(--gold)"></span>${S.mode === 'max' ? 'Precio máximo' : 'Salario mínimo'}</span><span>${sw('--f-dwl')}Pérdida de bienestar</span>`;
   }
@@ -3883,7 +3853,7 @@ const P2 = [
       { k: 'd', lbl: '(d)', t: 'dia', pts: 4, q: 'Usando un diagrama del mercado del guaraní, explique cómo la caída de las exportaciones de soja en 2022 pudo presionar hacia la depreciación del guaraní.', dia: { m: 'fx', key: 'D', dir: -1, why: 'Los compradores extranjeros de soja necesitan guaraníes.' }, model: 'Los compradores extranjeros pagan las exportaciones paraguayas con guaraníes, así que las exportaciones generan demanda de guaraníes. Al caer las exportaciones de soja, baja la demanda de guaraníes (de D₀ a D₁) y el valor del guaraní baja: se deprecia.', ck: ['Las exportaciones generan <b>demanda de guaraníes</b>', 'La <b>demanda</b> de guaraníes se desplaza a la izquierda', 'El guaraní <b>se deprecia</b>'] },
       { k: 'e', lbl: '(e)', t: 'dia', pts: 4, q: 'Usando un diagrama del mercado del guaraní, explique cómo la venta de dólares por parte del BCP (párrafo 4) limita la depreciación del guaraní.', dia: { m: 'fx', key: 'D', dir: 1, why: 'Para vender dólares, el BCP recibe guaraníes a cambio.' }, model: 'Cuando el BCP vende dólares de sus reservas, recibe guaraníes a cambio: está comprando guaraníes. La demanda de guaraníes aumenta (de D₀ a D₁), lo que sostiene su valor. Así el guaraní se deprecia menos de lo que lo haría sin intervención.', ck: ['Vender dólares = <b>comprar guaraníes</b>', 'Aumenta la <b>demanda de guaraníes</b>', 'El guaraní se deprecia <b>menos</b> (o se aprecia)', 'Menciona las <b>reservas</b> del BCP'] },
       { k: 'f', lbl: '(f)', t: 'dia', pts: 4, q: 'Usando un diagrama de DA/OA, explique cómo la recuperación de las exportaciones en 2023 afectó al PIB real.', dia: { m: 'adas', key: 'DA', dir: 1, why: 'Las exportaciones netas son un componente de la DA.' }, model: 'Las exportaciones netas (X − M) son un componente de la DA. Con el aumento de las exportaciones, la DA se desplaza a la derecha (de DA₀ a DA₁): el PIB real sube de Y₀ a Y₁ y el nivel general de precios puede subir de P₀ a P₁.', ck: ['Las <b>exportaciones netas</b> son parte de la DA', 'La <b>DA</b> se desplaza a la derecha', 'Sube el <b>PIB real</b>', 'Usa un dato del texto'] },
-      { k: 'g', lbl: '(g)', t: 'eval', pts: 15, q: 'Usando información del texto y sus conocimientos de economía, <b>evalúe</b> las consecuencias para la economía paraguaya de depender de las exportaciones agrícolas.', ind: ['Define ventaja comparativa y especialización.', 'Explica la teoría: exportar según la ventaja comparativa genera divisas, empleo y crecimiento.', 'Usa datos: exportaciones de US$ 17.311,7 millones y superávit comercial en 2023; soja −63,1 % y PIB 0,0 % en 2022.', '<b>Pro:</b> fuente de divisas, empleo e ingresos fiscales; Paraguay es un exportador importante a nivel mundial.', '<b>Contra:</b> vulnerabilidad al clima y a los precios internacionales; volatilidad del crecimiento.', '<b>Contra:</b> presión sobre el guaraní e intervenciones del BCP con reservas; posibles costos ambientales.', '<b>Corto y largo plazo:</b> diversificar (industria, maquila, servicios) reduce el riesgo, pero lleva tiempo.', '<b>Partes interesadas:</b> productores, trabajadores rurales, importadores, gobierno y consumidores.', 'Conclusión con un juicio justificado, por ejemplo: beneficiosa, pero conviene diversificar y gestionar el riesgo climático.'] }
+      { k: 'g', lbl: '(g)', t: 'eval', pts: 15, q: 'Usando información del texto y sus conocimientos de economía, <b>evalúe</b> las consecuencias para la economía paraguaya de depender de las exportaciones agrícolas.', ind: ['Define exportaciones y dependencia del sector primario.', 'Explica la teoría con el diagrama de libre comercio con exportaciones: al precio mundial Paraguay produce más de lo que consume y exporta el excedente, lo que genera divisas, empleo y crecimiento.', 'Usa datos: exportaciones de US$ 17.311,7 millones y superávit comercial en 2023; soja −63,1 % y PIB 0,0 % en 2022.', '<b>Pro:</b> fuente de divisas, empleo e ingresos fiscales; Paraguay es un exportador importante a nivel mundial.', '<b>Contra:</b> vulnerabilidad al clima y a los precios internacionales; volatilidad del crecimiento.', '<b>Contra:</b> presión sobre el guaraní e intervenciones del BCP con reservas; posibles costos ambientales.', '<b>Corto y largo plazo:</b> diversificar (industria, maquila, servicios) reduce el riesgo, pero lleva tiempo.', '<b>Partes interesadas:</b> productores, trabajadores rurales, importadores, gobierno y consumidores.', 'Conclusión con un juicio justificado, por ejemplo: beneficiosa, pero conviene diversificar y gestionar el riesgo climático.'] }
     ]
   }
 ];
@@ -3910,7 +3880,7 @@ const P1 = [
         ib: ['Define impuesto indirecto.', 'Teoría: el impuesto desplaza la oferta a la izquierda y acerca la cantidad al óptimo.', '<b>Pro:</b> usa el mecanismo de precios, recauda e incentiva tecnologías más limpias.', '<b>Contra:</b> difícil medir el costo externo; con demanda inelástica la cantidad baja poco; puede ser regresivo.', '<b>Corto y largo plazo:</b> a largo plazo las empresas cambian de tecnología.', '<b>Partes interesadas:</b> empresas, consumidores, terceros afectados y gobierno.', 'Ejemplos: impuestos al carbono (Suecia) o impuestos selectivos a combustibles.', 'Juicio final, comparando con alternativas (regulación, permisos negociables).'] },
       { u: 'Unidad 3', a: 'Explique, utilizando un diagrama de DA/OA, cómo un aumento del gasto público puede reducir el desempleo cíclico.', b: 'Utilizando ejemplos del mundo real, evalúe el uso de una política fiscal expansiva para estimular el crecimiento económico.',
         ia: ['Define <b>desempleo cíclico</b> (por demanda deficiente) y <b>política fiscal expansiva</b>.', 'El gasto público (G) es un componente de la DA.', 'Diagrama DA/OA con brecha recesiva: la DA se desplaza a la derecha y el PIB real se acerca al potencial.', 'Al producir más, las empresas contratan más trabajadores (demanda derivada).', 'Posible aumento del nivel general de precios.'],
-        ib: ['Define política fiscal y crecimiento económico.', '<b>Pro:</b> efecto directo sobre la DA; la inversión en infraestructura también aumenta la OALP.', '<b>Contra:</b> rezagos; déficit y deuda pública; posible desplazamiento de la inversión privada; inflación cerca del pleno empleo.', '<b>Corto y largo plazo</b> distinguidos.', '<b>Partes interesadas:</b> desempleados, empresas, contribuyentes futuros y gobierno.', 'Ejemplos: endeudamiento de Paraguay en 2020 por la pandemia; Ley de Responsabilidad Fiscal (tope de déficit).', 'Juicio final justificado.'] },
+        ib: ['Define política fiscal y crecimiento económico.', '<b>Pro:</b> efecto directo sobre la DA; la inversión en infraestructura también aumenta la OALP.', '<b>Contra:</b> rezagos; déficit y deuda pública; inflación cerca del pleno empleo.', '<b>Corto y largo plazo</b> distinguidos.', '<b>Partes interesadas:</b> desempleados, empresas, contribuyentes futuros y gobierno.', 'Ejemplos: endeudamiento de Paraguay en 2020 por la pandemia; Ley de Responsabilidad Fiscal (tope de déficit).', 'Juicio final justificado.'] },
       { u: 'Unidad 4', a: 'Explique, utilizando un diagrama, cómo una disminución de la demanda de las exportaciones de un país puede provocar la depreciación de su moneda.', b: 'Utilizando ejemplos del mundo real, evalúe las consecuencias de una depreciación de la moneda para una economía.',
         ia: ['Define <b>tipo de cambio flotante</b> y <b>depreciación</b>.', 'Los extranjeros necesitan la moneda nacional para pagar las exportaciones.', 'Menos exportaciones → menor demanda de la moneda.', 'Diagrama del mercado de la moneda: la demanda a la izquierda; baja el valor de la moneda.', 'Ejemplo: sequía de 2022 y caída de las exportaciones de soja.'],
         ib: ['Define depreciación.', '<b>Pro:</b> exportaciones más competitivas; las importaciones más caras favorecen la producción local; más DA.', '<b>Contra:</b> inflación importada; deudas en dólares más caras; menor poder de compra.', '<b>Corto y largo plazo:</b> los precios suben rápido; el efecto sobre las exportaciones tarda.', '<b>Partes interesadas:</b> exportadores, importadores, consumidores, deudores en dólares y turistas.', 'Ejemplos: real brasileño en 2024 (−23,9 %) frente al guaraní (−5,5 %); peso argentino.', 'Juicio final justificado.'] }
@@ -5392,9 +5362,9 @@ const FORMS = [
     err: 'Decir «la inflación subió 1 %» cuando subió 1 punto porcentual.',
     in: [['a', 'Tasa inicial (%)', '4'], ['b', 'Tasa final (%)', '5']], run: o => [`${sgnN(o.b - o.a, 2)} p.p. · variación ${sgnN(pc(o.a, o.b), 1)} %`, `${fN(o.b, 2)} − ${fN(o.a, 2)} = ${sgnN(o.b - o.a, 2)} puntos porcentuales<br>(${fN(o.b, 2)} − ${fN(o.a, 2)}) ÷ ${fN(o.a, 2)} × 100 = ${sgnN(pc(o.a, o.b), 1)} %`] },
   { k: 'idx', u: 0, n: 'Número índice', f: 'Índice = valor del período ÷ valor del año base × 100', v: [['año base', 'el período de referencia; su índice siempre es 100']],
-    ej: 'Una canasta costaba Gs. 800.000 en el año base y hoy Gs. 920.000: 920.000 ÷ 800.000 × 100 = <b>115</b>.', lee: 'Un índice de 115 significa que el valor está 15 % por encima del año base.',
+    ej: 'El litro de leche costaba Gs. 8.000 en el año base y hoy Gs. 9.200: 9.200 ÷ 8.000 × 100 = <b>115</b>.', lee: 'Un índice de 115 significa que el valor está 15 % por encima del año base.',
     err: 'Leer la diferencia entre dos índices como porcentaje sin dividir por el índice inicial.',
-    in: [['a', 'Valor del año base', '800000'], ['b', 'Valor del período', '920000']], run: o => [fN(o.b / o.a * 100, 1), `${fN(o.b)} ÷ ${fN(o.a)} × 100 = ${fN(o.b / o.a * 100, 1)}`] },
+    in: [['a', 'Valor del año base', '8000'], ['b', 'Valor del período', '9200']], run: o => [fN(o.b / o.a * 100, 1), `${fN(o.b)} ÷ ${fN(o.a)} × 100 = ${fN(o.b / o.a * 100, 1)}`] },
   { k: 'nuevo', u: 0, n: 'Valor después de un cambio porcentual', f: 'Valor nuevo = valor inicial × (1 + %Δ ÷ 100)', v: [['%Δ', 'con signo negativo si es una baja']],
     ej: 'Una canasta de Gs. 2.000.000 con una inflación de 11,8 %: 2.000.000 × 1,118 = <b>Gs. 2.236.000</b>.', lee: 'Sirve para despejar cantidades a partir de elasticidades y para aplicar inflación o crecimiento.',
     err: 'Sumar solo el porcentaje (2.000.000 + 11,8) en lugar de multiplicar.',
@@ -5407,7 +5377,7 @@ const FORMS = [
     ej: 'A Gs. 5.000, Lucía compra 8 chipas, Mateo 6 y Sofía 10: demanda de mercado = 8 + 6 + 10 = <b>24</b>.', lee: 'Es una suma horizontal: se suman cantidades, nunca precios.',
     err: 'Sumar las cantidades de precios distintos o promediar.', go: 't2-1' },
   { k: 'exc', u: 2, n: 'Exceso de demanda o de oferta', f: 'Desequilibrio = Qd − Qo', v: [['Qd', 'cantidad demandada a ese precio'], ['Qo', 'cantidad ofrecida a ese precio']],
-    ej: 'A un precio máximo de Gs. 2.000.000, Qd = 70 y Qo = 40: exceso de demanda (escasez) de <b>30</b>.', lee: 'Positivo: exceso de demanda, el precio tiende a subir. Negativo: exceso de oferta, el precio tiende a bajar.',
+    ej: 'A un precio de Gs. 4.000, Qd = 70 y Qo = 40: exceso de demanda (escasez) de <b>30</b>, y el precio tiende a subir.', lee: 'Positivo: exceso de demanda, el precio tiende a subir. Negativo: exceso de oferta, el precio tiende a bajar.',
     err: 'Responder con el precio en lugar de la cantidad.', go: 't2-3',
     in: [['d', 'Qd', '70'], ['s', 'Qo', '40']], run: o => [`${fN(Math.abs(o.d - o.s), 2)} · ${o.d > o.s ? 'exceso de demanda' : o.d < o.s ? 'exceso de oferta' : 'equilibrio'}`, `${fN(o.d, 2)} − ${fN(o.s, 2)} = ${fN(o.d - o.s, 2)}`] },
   { k: 'epd', u: 2, n: 'Elasticidad precio de la demanda (EPD)', f: 'EPD = %ΔQd ÷ %ΔP', v: [['%ΔQd', 'variación porcentual de la cantidad demandada'], ['%ΔP', 'variación porcentual del precio']],
