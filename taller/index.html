@@ -436,6 +436,42 @@ body.docked{padding-bottom:190px}
   .simbar.sticky{top:96px}
   .band{grid-template-columns:1fr}
 }
+/* v6: pizarra de diagramas y entrenadores de términos */
+.pad{display:grid;gap:8px;max-width:760px}
+.padbar{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center}
+.seg.pt button{padding:5px 10px;font-size:13.5px}
+.pcols{display:flex;gap:6px}
+.pcols button{width:28px;height:28px;border-radius:50%;border:2px solid var(--sheet);background:var(--c);box-shadow:0 0 0 1px var(--rule)}
+.pcols button[aria-pressed="true"]{box-shadow:0 0 0 2.5px var(--gold)}
+.ptxtw{gap:4px}.ptxt{width:180px;padding:6px 9px}.ptxt.need{border-color:var(--bad);box-shadow:0 0 0 2px var(--bad-bg)}
+.psub{padding:4px 9px;min-width:32px}
+.ptpl,.pact{gap:6px}
+.padc{display:block;width:100%;border:1.5px solid var(--ink-2);border-radius:7px;background:#fff;cursor:crosshair}
+.pad.ro .padc{cursor:default;border-color:var(--rule)}
+.padhelp{margin:0}
+.padwrap{margin:8px 0 10px;border:1px solid var(--rule);border-radius:var(--r);padding:8px 12px;background:var(--sheet)}
+.padwrap summary{cursor:pointer;font-weight:700}
+.padwrap[open] summary{margin-bottom:8px}
+.wgroup{margin:22px 0 8px;font-family:var(--f-display);font-size:22px;border-bottom:2px solid var(--ink);padding-bottom:4px}
+.wgroup span{font-family:var(--f-body);font-size:14px;color:var(--muted);font-weight:400;margin-left:8px}
+.csteps{display:grid;gap:6px;max-width:820px;padding-left:22px}
+.cex{max-width:900px}.cex summary{cursor:pointer}
+.cwcard{max-width:900px;margin-top:10px}
+.conn{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.chip{border:1px solid var(--rule);background:var(--paper);border-radius:99px;padding:4px 11px;font-size:13.5px;color:var(--ink)}
+.chip:hover{border-color:var(--gold)}
+.gscale{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.autofb{list-style:none;padding:0;margin:0;display:grid;gap:6px}
+.autofb li{border-radius:7px;padding:7px 11px;font-size:14.5px}
+.autofb li.ok{background:var(--ok-bg);border:1px solid var(--ok)}
+.autofb li.no{background:var(--bad-bg);border:1px solid var(--bad)}
+.autofb li.ok::before{content:'✓ ';font-weight:700;color:var(--ok)}
+.autofb li.no::before{content:'! ';font-weight:700;color:var(--bad)}
+@media (max-width:860px){
+  .wtabs{display:flex;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;max-width:100%}
+  .wtabs::-webkit-scrollbar{display:none}
+  .wtabs button{white-space:nowrap;flex:none}
+}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
@@ -1400,6 +1436,10 @@ function render() {
   if (route === 'juego-jeopardy') { setNav('juegos'); return JUEGOS_ACTIVOS.jeopardy ? renderJeopardy() : renderGamesHome(); }
   if (route === 'escribir-evaluar') { setNav('escribir'); return renderWrite('eva'); }
   if (route === 'escribir-p1') { setNav('escribir'); return renderP1(); }
+  if (route === 'escribir-analizar') { setNav('escribir'); return renderCmd('analizar'); }
+  if (route === 'escribir-discutir') { setNav('escribir'); return renderCmd('discutir'); }
+  if (route === 'escribir-hqp') { setNav('escribir'); return renderCmd('hqp'); }
+  if (route.startsWith('cmd-')) { const [, k, i] = route.split('-'); if (CMDT[k] && CMDT[k].bank[+i]) { setNav('escribir'); return renderCmdWrite(k, +i); } }
   if (route === 'escribir-p2') { setNav('escribir'); return renderP2Home(); }
   if (route.startsWith('p2-') && P2.some(c => c.id === route.slice(3))) { setNav('escribir'); return renderP2(P2.find(c => c.id === route.slice(3))); }
   if (route.startsWith('exp-') && EXP.some(x => x.id === route.slice(4))) { setNav('escribir'); return renderExplain(EXP.find(x => x.id === route.slice(4))); }
@@ -2995,6 +3035,7 @@ function reportText() {
   L.push(`- Conceptos clave: ${topicDone('kc')}/${DRILLS.kc.items.length}`);
   L.push(`- Explicar: ${EXP.filter(p => expState(p).done).length}/${EXP.length} preguntas completas`);
   L.push(`- Evaluar: ${EVA.filter(c => evaState(c).done).length}/${EVA.length} casos completos`);
+  ['analizar', 'discutir', 'hqp'].forEach(k => L.push(`- ${CMDT[k].name}: ${CMDT[k].bank.filter((_, i) => (CMDW[cmdKey(k, i)] || {}).done).length}/${CMDT[k].bank.length} preguntas completas`));
   L.push(`- Encuentra el error: ${topicDone('err')}/${DRILLS.err.items.length}`);
   const p1h = P1S.hist, p2h = P2H;
   L.push(`- Simulacro de Prueba 1: ${p1h.length ? `${p1h.length} ${p1h.length > 1 ? 'hechos' : 'hecho'} · último ${p1h[p1h.length - 1].total}/25 · mejor ${Math.max(...p1h.map(x => x.total))}/25 (autoevaluado)` : 'sin hacer'}`);
@@ -3026,24 +3067,33 @@ function renderReport() {
 }
 
 /* ---- Escribir: portada, pestañas y ejercicios de base ---- */
-const WTABS = [['escribir-comandos', 'Comandos'], ['escribir-conceptos', 'Conceptos clave'], ['escribir-explicar', 'Explicar · 10 p'], ['escribir-evaluar', 'Evaluar · 15 p'], ['escribir-errores', 'Encuentra el error'], ['escribir-p1', 'Simulacro P1'], ['escribir-p2', 'Prueba 2']];
+const WTABS = [['escribir-comandos', 'Comandos'], ['escribir-conceptos', 'Conceptos clave'], ['escribir-explicar', 'Explicar · 10'], ['escribir-analizar', 'Analizar · 10'], ['escribir-evaluar', 'Evaluar · 15'], ['escribir-discutir', 'Discutir · 15'], ['escribir-hqp', '¿Hasta qué punto? · 15'], ['escribir-errores', 'Encuentra el error'], ['escribir-p1', 'Simulacro P1'], ['escribir-p2', 'Prueba 2']];
 function writeTabs(cur) {
   return `<div class="seg wtabs" role="group" aria-label="Secciones de Escribir" style="margin-bottom:18px">${WTABS.map(([r, l], i) => `<button type="button" data-go="${r}" aria-pressed="${r === cur}">${i + 1}. ${l}</button>`).join('')}</div>`;
 }
 function renderWriteHome() {
   const pc = t => `${topicDone(t.id)}/${t.items.length} ejercicios`;
-  const cards = [
-    ['escribir-comandos', 'Comandos evaluativos', 'Qué pide cada pregunta, cuánto vale y cómo se cierra.', pc(DRILLS.cmd)],
-    ['escribir-conceptos', 'Conceptos clave', 'Los nueve conceptos del curso aplicados a casos, como en la Evaluación Interna.', pc(DRILLS.kc)],
-    ['escribir-explicar', 'Explicar · 10 puntos', 'Respuestas en 4 pasos: primero un ejemplo resuelto, después guiado y luego por tu cuenta.', `${EXP.filter(p => expState(p).done).length}/${EXP.length} completas`],
-    ['escribir-evaluar', 'Evaluar · 15 puntos', 'Pros y contras, corto y largo plazo y partes interesadas.', `${EVA.filter(c => evaState(c).done).length}/${EVA.length} completos`],
-    ['escribir-errores', 'Encuentra el error', 'Lee respuestas con errores típicos y corrígelas como un examinador.', pc(DRILLS.err)],
-    ['escribir-p1', 'Simulacro de Prueba 1 · 25 p', 'En condiciones de examen: 5 min de lectura y 1 h 15 min. Eliges 1 de 3 preguntas y te autocorriges con bandas.', P1S.hist.length ? `${P1S.hist.length} hechos · último ${P1S.hist[P1S.hist.length - 1].total}/25` : 'Sin empezar'],
-    ['escribir-p2', 'Prueba 2 · 40 p', 'Casos con datos reales de Paraguay: definiciones, cálculos, diagramas y una evaluación de 15 puntos.', P2H.length ? `${P2H.length} terminados · último ${P2H[P2H.length - 1].total}/40` : `${P2.length} casos`]
+  const cm = k => { const n = CMDT[k].bank.filter((_, i) => (CMDW[cmdKey(k, i)] || {}).done).length; return `${n}/${CMDT[k].bank.length} completas`; };
+  const groups = [
+    ['Base', 'qué pide cada pregunta y qué concepto aplica', [
+      ['escribir-comandos', 'Comandos evaluativos', 'Qué pide cada término, cuánto vale y cómo se cierra.', pc(DRILLS.cmd)],
+      ['escribir-conceptos', 'Conceptos clave', 'Los nueve conceptos del curso aplicados a casos, como en la Evaluación Interna.', pc(DRILLS.kc)]]],
+    ['Términos de instrucción', 'un método paso a paso para cada uno', [
+      ['escribir-explicar', 'Explicar · 10 puntos', 'Cadena causal en 4 pasos: ejemplo resuelto, guiado y por tu cuenta.', `${EXP.filter(p => expState(p).done).length}/${EXP.length} completas`],
+      ['escribir-analizar', 'Analizar · 10 puntos', 'Descomponer en partes, examinar cada una y relacionarlas, sin juicio de valor.', cm('analizar')],
+      ['escribir-evaluar', 'Evaluar · 15 puntos', 'Pros y contras, corto y largo plazo y partes interesadas.', `${EVA.filter(c => evaState(c).done).length}/${EVA.length} completos`],
+      ['escribir-discutir', 'Discutir · 15 puntos', 'Dos posturas con esfuerzo equivalente, matices y una conclusión justificada.', cm('discutir')],
+      ['escribir-hqp', '¿Hasta qué punto? · 15 puntos', 'Tesis, antítesis, condiciones y una conclusión con grado, plazo y condición.', cm('hqp')]]],
+    ['Revisar', 'corregir como un examinador', [
+      ['escribir-errores', 'Encuentra el error', 'Lee respuestas con errores típicos y corrígelas.', pc(DRILLS.err)]]],
+    ['Simulacros', 'en condiciones de examen', [
+      ['escribir-p1', 'Simulacro de Prueba 1 · 25 p', '5 min de lectura y 1 h 15 min. Eliges 1 de 3 preguntas, dibujas tus diagramas y te autocorriges.', P1S.hist.length ? `${P1S.hist.length} hechos · último ${P1S.hist[P1S.hist.length - 1].total}/25` : 'Sin empezar'],
+      ['escribir-p2', 'Prueba 2 · 40 p', 'Casos con datos reales de Paraguay: definiciones, cálculos, diagramas y una evaluación de 15 puntos.', P2H.length ? `${P2H.length} terminados · último ${P2H[P2H.length - 1].total}/40` : `${P2.length} casos`]]]
   ];
+  let n = 0;
   app.innerHTML = `<div class="eyebrow">Escribir como en el examen</div><h1>Escribir</h1>
-    <p class="lede">Sigue este orden: primero entiende qué pide la pregunta y qué concepto aplica; después escribe; al final, revisa errores como lo haría un examinador.</p>
-    <div class="route wroute">${cards.map(([r, n, d, p], i) => `<button class="rcard" type="button" data-go="${r}"><span class="rn">${i + 1}</span><b>${n}</b><span class="d">${d}</span><span class="tag" style="justify-self:start;margin-top:6px">${p}</span></button>`).join('')}</div>`;
+    <p class="lede">Sigue este orden: primero entiende qué pide la pregunta y qué concepto aplica; después aprende el método de cada término; al final, practica en condiciones de examen.</p>
+    ${groups.map(([g, d, cards]) => `<h2 class="wgroup">${g}<span>${d}</span></h2><div class="route wroute">${cards.map(([r, nm, ds, p]) => `<button class="rcard" type="button" data-go="${r}"><span class="rn">${++n}</span><b>${nm}</b><span class="d">${ds}</span><span class="tag" style="justify-self:start;margin-top:6px">${p}</span></button>`).join('')}</div>`).join('')}`;
 }
 function renderDrill(t) {
   const S = SESS[t.id] = SESS[t.id] || { tab: 'prac', i: 0, res: {}, inst: {} };
@@ -3825,7 +3875,7 @@ function p1Setup() {
     <div class="essentials gset">
       <div><span class="lbl2">Simulacro</span><div class="seg" role="group" id="p1Set">${P1.map(s => `<button type="button" data-s="${s.id}" aria-pressed="${S.set === s.id}">Simulacro ${s.id}${doneSets.has(s.id) ? ' ✓' : ''}</button>`).join('')}</div></div>
       <div><span class="lbl2">Modo</span><div class="seg" role="group" id="p1Mode"><button type="button" data-t="1" aria-pressed="${S.timed}">Con reloj (examen)</button><button type="button" data-t="0" aria-pressed="${!S.timed}">Sin reloj (práctica)</button></div></div>
-      <p class="small muted">Dibuja tus diagramas en papel, como en el examen, y escribe <b>[Diagrama]</b> donde vaya cada uno. Tu texto se guarda solo en este dispositivo mientras escribes.</p>
+      <p class="small muted">Cada parte tiene un espacio para dibujar el diagrama, con lápiz, líneas, flechas, rótulos y ejes listos. Tu texto y tus diagramas se guardan en este dispositivo mientras trabajas.</p>
       <div class="row"><button class="btn primary" type="button" id="p1Go">Empezar el simulacro</button></div>
     </div>
     ${P1S.hist.length ? `<h2 style="margin-top:24px">Tus simulacros</h2><div class="mlist">${P1S.hist.slice().reverse().map(h => `<div class="mrow"><span class="code">${h.total}</span><span class="nm">Simulacro ${h.set} · ${h.u}<span class="ds">${h.d} · (a) ${h.a}/10 · (b) ${h.b}/15 · ${h.w} palabras${h.timed ? '' : ' · sin reloj'}</span></span><span class="act"><span class="tag">/25</span></span></div>`).join('')}</div>` : ''}`);
@@ -3841,6 +3891,7 @@ function p1Questions(C, pickable) {
 }
 function p1Start() { const C = P1S.cur; C.phase = 'write'; C.end = Date.now() + P1_WRITE; saveP1(); renderP1(); }
 function p1Read() {
+  stopGameTimers();
   const C = P1S.cur;
   app.innerHTML = p1Head(`
     <div class="simbar"><span><b>Tiempo de lectura</b>${C.timed ? ' · <span id="p1T" class="clock"></span>' : ''}</span><span class="small muted">Lee las tres preguntas y elige una. Todavía no se escribe.</span></div>
@@ -3859,13 +3910,21 @@ function p1Write(expired) {
   app.innerHTML = p1Head(`
     <div class="simbar sticky"><span><b>Pregunta ${C.q + 1}</b> · ${q.u}</span>${C.timed ? `<span class="clock" id="p1T"></span>` : '<span class="small muted">Sin reloj</span>'}<button class="btn sm primary" type="button" id="p1Sub">Entregar</button></div>
     <div class="p1w">
-      <div class="p1part"><p class="q"><b>(a)</b> ${q.a} <span class="pts">[10]</span></p><textarea id="p1a" rows="12" placeholder="Definiciones, [Diagrama] y cadena causal…">${esc(C.a)}</textarea><p class="small muted" id="p1aw"></p></div>
-      <div class="p1part"><p class="q"><b>(b)</b> ${q.b} <span class="pts">[15]</span></p><textarea id="p1b" rows="16" placeholder="Teoría, ejemplos reales, pros y contras, corto y largo plazo, partes interesadas y juicio final…">${esc(C.b)}</textarea><p class="small muted" id="p1bw"></p></div>
+      <div class="p1part"><p class="q"><b>(a)</b> ${q.a} <span class="pts">[10]</span></p>
+        <details class="padwrap" open><summary>Espacio para el diagrama de la parte (a)</summary><div id="p1padA"></div></details>
+        <textarea id="p1a" rows="12" placeholder="Definiciones, referencia al diagrama y cadena causal…">${esc(C.a)}</textarea><p class="small muted" id="p1aw"></p></div>
+      <div class="p1part"><p class="q"><b>(b)</b> ${q.b} <span class="pts">[15]</span></p>
+        <details class="padwrap"><summary>Espacio para el diagrama de la parte (b)</summary><div id="p1padB"></div></details>
+        <textarea id="p1b" rows="16" placeholder="Teoría, ejemplos reales, pros y contras, corto y largo plazo, partes interesadas y juicio final…">${esc(C.b)}</textarea><p class="small muted" id="p1bw"></p></div>
     </div>`);
   const cnt = () => { $('#p1aw').textContent = wc(C.a) + ' palabras'; $('#p1bw').textContent = wc(C.b) + ' palabras'; };
   let tm = null;
   ['a', 'b'].forEach(k => $('#p1' + k).oninput = e => { C[k] = e.target.value; cnt(); clearTimeout(tm); tm = setTimeout(saveP1, 400); });
   cnt();
+  sketchPad($('#p1padA'), C.dA = C.dA || [], ops => { C.dA = ops; saveP1(); }, { file: 'prueba1-parte-a' });
+  const pb = $('#p1padB').closest('details'); let pbOn = false;
+  const mkB = () => { if (pbOn) return; pbOn = true; sketchPad($('#p1padB'), C.dB = C.dB || [], ops => { C.dB = ops; saveP1(); }, { file: 'prueba1-parte-b' }); };
+  if (padUsed(C.dB)) { pb.open = true; mkB(); } else pb.ontoggle = () => { if (pb.open) mkB(); };
   const submit = () => { stopGameTimers(); C.phase = 'mark'; C.late = !!expired; saveP1(); window.scrollTo(0, 0); renderP1(); };
   $('#p1Sub').onclick = () => { saveP1(); submit(); };
   if (C.timed) {
@@ -3881,16 +3940,17 @@ function p1Mark() {
     <h2>Autocorrección</h2><p class="lede">Marca lo que <b>sí</b> está en tu respuesta y después elige el puntaje de la banda que mejor la describe.</p>
     <div class="p1mark">
       <section><h3>Parte (a) · 10 puntos</h3><p class="small">${q.a}</p>
-        <details class="model"><summary>Ver mi respuesta (${wc(C.a)} palabras)</summary><div class="answer">${esc(C.a || '(vacía)').replace(/\n/g, '<br>')}</div></details>
+        <details class="model"><summary>Ver mi respuesta (${wc(C.a)} palabras)</summary><div class="answer">${esc(C.a || '(vacía)').replace(/\n/g, '<br>')}</div>${padUsed(C.dA) ? '<div id="roA" style="margin-top:8px"></div>' : '<p class="small muted">No dibujaste diagrama en esta parte.</p>'}</details>
         <h4>Contenido esperado</h4>${ckBox(q.ia, C.ckA, 'ckA')}
         <h4>Banda</h4>${bandPicker('bdA', BANDS10, C.scA)}</section>
       <section><h3>Parte (b) · 15 puntos</h3><p class="small">${q.b}</p>
-        <details class="model"><summary>Ver mi respuesta (${wc(C.b)} palabras)</summary><div class="answer">${esc(C.b || '(vacía)').replace(/\n/g, '<br>')}</div></details>
+        <details class="model"><summary>Ver mi respuesta (${wc(C.b)} palabras)</summary><div class="answer">${esc(C.b || '(vacía)').replace(/\n/g, '<br>')}</div>${padUsed(C.dB) ? '<div id="roB" style="margin-top:8px"></div>' : ''}</details>
         <h4>Contenido esperado</h4>${ckBox(q.ib, C.ckB, 'ckB')}
         <h4>Banda</h4>${bandPicker('bdB', BANDS15, C.scB)}</section>
     </div>
     ${SIM_NOTE}
     <div class="row" style="margin-top:12px"><button class="btn primary" type="button" id="p1Save" ${C.scA === null || C.scB === null ? 'disabled' : ''}>Guardar resultado${C.scA !== null && C.scB !== null ? ` · ${C.scA + C.scB}/25` : ''}</button></div>`);
+  app.querySelectorAll('.p1mark details').forEach((d, j) => { let on = false; d.ontoggle = () => { if (!d.open || on) return; on = true; const h2 = $(j ? '#roB' : '#roA'); if (h2) sketchPad(h2, j ? C.dB : C.dA, null, { readOnly: true, file: 'prueba1-parte-' + (j ? 'b' : 'a') }); }; });
   [['ckA', C.ckA], ['ckB', C.ckB]].forEach(([id, st]) => app.querySelectorAll(`#${id} input`).forEach(cb => cb.onchange = () => { st[+cb.dataset.ck] = cb.checked; saveP1(); }));
   bindBand('bdA', v => { C.scA = v; saveP1(); const y = window.scrollY; p1Mark(); window.scrollTo(0, y); });
   bindBand('bdB', v => { C.scB = v; saveP1(); const y = window.scrollY; p1Mark(); window.scrollTo(0, y); });
@@ -3905,8 +3965,11 @@ function p1Done() {
   const txt = `Simulacro de Prueba 1 · Simulacro ${C.set}, pregunta ${C.q + 1}\n\n(a) ${plain(q.a)}\n\n${C.a}\n\n(b) ${plain(q.b)}\n\n${C.b}\n\nAutoevaluación: (a) ${C.scA}/10 · (b) ${C.scB}/15 · Total ${tot}/25`;
   app.innerHTML = p1Head(`<div class="fb ok"><b class="h">Resultado autoevaluado: ${tot}/25</b>(a) ${C.scA}/10 · (b) ${C.scB}/15. Quedó guardado en tu reporte.</div>
     <div class="row" style="margin-top:12px"><button class="btn primary" type="button" id="p1Cp">Copiar mis respuestas para entregar</button><button class="btn" type="button" id="p1New">Nuevo simulacro</button></div>
+    ${padUsed(C.dA) || padUsed(C.dB) ? `<h3 style="margin-top:18px">Tus diagramas</h3><p class="small muted">Descárgalos como imagen para entregarlos junto con el texto.</p><div class="p1mark">${padUsed(C.dA) ? '<section><b>Parte (a)</b><div id="fdA"></div></section>' : ''}${padUsed(C.dB) ? '<section><b>Parte (b)</b><div id="fdB"></div></section>' : ''}</div>` : ''}
     <h3 style="margin-top:20px">Para mejorar</h3><div class="row"><button class="btn sm" type="button" data-go="escribir-explicar">Practicar Explicar (parte a)</button><button class="btn sm" type="button" data-go="escribir-evaluar">Practicar Evaluar (parte b)</button></div>`);
   $('#p1Cp').onclick = e => copyText(txt, e.currentTarget);
+  if ($('#fdA')) sketchPad($('#fdA'), C.dA, null, { readOnly: true, file: 'prueba1-parte-a' });
+  if ($('#fdB')) sketchPad($('#fdB'), C.dB, null, { readOnly: true, file: 'prueba1-parte-b' });
   $('#p1New').onclick = () => { P1S.cur = null; saveP1(); SESS.p1set = null; renderP1(); };
 }
 
@@ -3914,7 +3977,7 @@ function p1Done() {
 const P2S = store.get('p2', {});
 const P2H = store.get('p2h', []);
 const saveP2 = () => store.set('p2', P2S);
-const p2St = c => P2S[c.id] = P2S[c.id] || { i: 0, ans: {}, sc: {}, dg: {}, ex: {}, ck: {}, tries: {}, end: null };
+const p2St = c => { const s = P2S[c.id] = P2S[c.id] || { i: 0, ans: {}, sc: {}, dg: {}, ex: {}, ck: {}, tries: {}, end: null }; s.pad = s.pad || {}; return s; };
 const p2Score = c => { const s = p2St(c); return c.parts.reduce((t, p) => t + (p.t === 'dia' || p.t === 'paper' ? (s.dg[p.k] || 0) + (s.ex[p.k] || 0) : (s.sc[p.k] || 0)), 0); };
 const p2Marked = (c, p) => { const s = p2St(c); return p.t === 'dia' || p.t === 'paper' ? s.dg[p.k] !== undefined && s.ex[p.k] !== undefined : s.sc[p.k] !== undefined; };
 function renderP2Home() {
@@ -3986,7 +4049,7 @@ function renderP2(c) {
   } else if (p.t === 'dia' || p.t === 'paper') {
     B.innerHTML = `${head}<h4>1 · Diagrama <span class="muted">(2 puntos)</span></h4>
       ${p.t === 'dia' ? `<div class="figure p2fig"><svg id="p2fig" role="img" aria-label="Diagrama"></svg></div><div id="p2dh" style="margin-top:8px"></div>`
-        : `<p>Dibuja el diagrama en papel. Después marca lo que tiene:</p><div class="cklist" id="p2dck">${p.dck.map((x, i) => `<label><input type="checkbox" data-ck="${i}" ${(s.ck[p.k + 'd'] || {})[i] ? 'checked' : ''}><span>${x}</span></label>`).join('')}</div>
+        : `<div id="p2pad"></div><p style="margin-top:10px">Marca lo que tiene tu diagrama:</p><div class="cklist" id="p2dck">${p.dck.map((x, i) => `<label><input type="checkbox" data-ck="${i}" ${(s.ck[p.k + 'd'] || {})[i] ? 'checked' : ''}><span>${x}</span></label>`).join('')}</div>
           <div class="row" style="margin-top:8px"><button class="btn sm" type="button" data-go="${p.link[0]}">${p.link[1]}</button></div><p class="small muted" id="p2dpts"></p>`}
       <h4 style="margin-top:16px">2 · Explicación <span class="muted">(2 puntos)</span></h4>
       <textarea id="p2a" rows="5" placeholder="Explica la cadena causal usando datos del texto…">${esc(s.ans[p.k] || '')}</textarea>
@@ -3996,6 +4059,7 @@ function renderP2(c) {
       drawShift($('#p2fig'), $('#p2dh'), p.dia.m, { key: p.dia.key, dir: p.dia.dir, why: p.dia.why }, ok => { if (s.dg[p.k] === undefined) { s.dg[p.k] = ok ? 2 : 0; saveP2(); upTot(); } });
       if (s.dg[p.k] !== undefined) { const sb = $('#dsol', $('#p2dh')); if (sb) sb.click(); $('#p2dh').insertAdjacentHTML('beforeend', `<p class="small muted">Puntaje del diagrama: ${s.dg[p.k]}/2</p>`); }
     } else {
+      sketchPad($('#p2pad'), s.pad[p.k] = s.pad[p.k] || [], ops => { s.pad[p.k] = ops; saveP2(); }, { file: c.id + '-' + p.k });
       const cks = s.ck[p.k + 'd'] = s.ck[p.k + 'd'] || {};
       const upd = () => { const nn = p.dck.filter((_, i) => cks[i]).length; s.dg[p.k] = nn === p.dck.length ? 2 : nn >= 2 ? 1 : 0; $('#p2dpts').textContent = `Puntaje del diagrama: ${s.dg[p.k]}/2 (todos los elementos = 2; al menos dos = 1).`; saveP2(); upTot(); };
       app.querySelectorAll('#p2dck input').forEach(cb => cb.onchange = () => { cks[+cb.dataset.ck] = cb.checked; upd(); });
@@ -4010,11 +4074,15 @@ function renderP2(c) {
     if (s.tries[p.k]) show();
   } else if (p.t === 'eval') {
     const cks = s.ck[p.k] = s.ck[p.k] || {};
-    B.innerHTML = `${head}<p class="small muted">Dibuja en papel el diagrama que uses y escribe [Diagrama] donde vaya. Cita datos del texto (por ejemplo, «párrafo 3»).</p>
+    B.innerHTML = `${head}<p class="small muted">Cita datos del texto (por ejemplo, «párrafo 3») y dibuja el diagrama que uses.</p>
+      <details class="padwrap" id="p2gpw"><summary>Espacio para el diagrama</summary><div id="p2gpad"></div></details>
       <textarea id="p2a" rows="16" placeholder="Definiciones, teoría con diagrama, datos del texto, pros y contras, corto y largo plazo, partes interesadas y juicio final…">${esc(s.ans[p.k] || '')}</textarea><p class="small muted" id="p2w"></p>
       <details class="model" ${s.tries[p.k] ? 'open' : ''} id="p2ev"><summary>Autocorregir: contenido esperado y bandas</summary>
         <h4>Marca lo que sí incluiste</h4><div class="cklist" id="p2eck">${p.ind.map((x, i) => `<label><input type="checkbox" data-ck="${i}" ${cks[i] ? 'checked' : ''}><span>${x}</span></label>`).join('')}</div>
         <h4>Banda</h4>${bandPicker('bdG', BANDS15, s.sc[p.k] ?? null)}${SIM_NOTE}</details>`;
+    const gp = $('#p2gpw'); let gpOn = false;
+    const mkG = () => { if (gpOn) return; gpOn = true; sketchPad($('#p2gpad'), s.pad[p.k] = s.pad[p.k] || [], ops => { s.pad[p.k] = ops; saveP2(); }, { file: c.id + '-g' }); };
+    if (padUsed(s.pad[p.k])) { gp.open = true; mkG(); } else gp.ontoggle = () => { if (gp.open) mkG(); };
     const w = () => { $('#p2w').textContent = wc(s.ans[p.k]) + ' palabras'; };
     $('#p2a').oninput = e => { s.ans[p.k] = e.target.value; saveP2(); w(); }; w();
     $('#p2ev').ontoggle = () => { if ($('#p2ev').open) { s.tries[p.k] = 1; saveP2(); } };
@@ -4071,6 +4139,254 @@ function sendReport(btn, out) {
   fr.onload = () => { let blank = false; try { blank = fr.contentWindow.location.href === 'about:blank'; } catch (e) { } if (!blank) done(); };
   setTimeout(() => { if (!ok) { btn.disabled = false; btn.textContent = 'Enviar a mi profesor'; out.innerHTML = '<div class="fb no">No se pudo confirmar el envío. Revisa tu conexión e inténtalo de nuevo, o usa «Copiar reporte».</div>'; } }, 15000);
   f.submit(); setTimeout(() => f.remove(), 1000);
+}
+
+
+/* =============== 9 · Pizarra para dibujar diagramas =============== */
+/* Guarda el dibujo como una lista de trazos en coordenadas 0–1, así se redibuja a cualquier tamaño. */
+const PAD_COL = { k: '#14213D', d: '#1F4E9E', s: '#C0392B', n: '#1E8E3E' };
+const PAD_TPL = {
+  pq: [{ t: 'l', c: 'k', a: [.1, .06], b: [.1, .9], w: 2.5 }, { t: 'l', c: 'k', a: [.1, .9], b: [.95, .9], w: 2.5 }, { t: 'x', c: 'k', p: [.035, .1], s: 'P' }, { t: 'x', c: 'k', p: [.93, .965], s: 'Q' }, { t: 'x', c: 'k', p: [.075, .965], s: '0' }],
+  adas: [{ t: 'l', c: 'k', a: [.1, .06], b: [.1, .9], w: 2.5 }, { t: 'l', c: 'k', a: [.1, .9], b: [.95, .9], w: 2.5 }, { t: 'x', c: 'k', p: [.12, .06], s: 'Nivel general de precios' }, { t: 'x', c: 'k', p: [.78, .965], s: 'PIB real (Y)' }, { t: 'x', c: 'k', p: [.075, .965], s: '0' }],
+  lorenz: [{ t: 'l', c: 'k', a: [.1, .06], b: [.1, .9], w: 2.5 }, { t: 'l', c: 'k', a: [.1, .9], b: [.62, .9], w: 2.5 }, { t: 'l', c: 'k', a: [.62, .06], b: [.62, .9], w: 1 }, { t: 'l', c: 'k', a: [.1, .06], b: [.62, .06], w: 1 }, { t: 'x', c: 'k', p: [.12, .045], s: '% acumulado del ingreso' }, { t: 'x', c: 'k', p: [.3, .965], s: '% acumulado de la población' }, { t: 'x', c: 'k', p: [.075, .965], s: '0' }, { t: 'x', c: 'k', p: [.64, .965], s: '100' }]
+};
+function sketchPad(host, ops, onChange, opts = {}) {
+  const S = { tool: 'p', col: 'k', ops: ops || [], cur: null, ro: !!opts.readOnly };
+  host.innerHTML = `<div class="pad ${S.ro ? 'ro' : ''}">
+    ${S.ro ? '<div class="row pact"><button class="btn sm" type="button" data-act="png">Descargar imagen</button></div>' : `<div class="padbar">
+      <div class="seg pt" role="group" aria-label="Herramienta">${[['p', 'Lápiz'], ['l', 'Línea'], ['a', 'Flecha'], ['x', 'Rótulo']].map(([k, l]) => `<button type="button" data-tool="${k}" aria-pressed="${k === 'p'}">${l}</button>`).join('')}</div>
+      <div class="pcols" role="group" aria-label="Color">${Object.entries(PAD_COL).map(([k, v]) => `<button type="button" data-col="${k}" aria-pressed="${k === 'k'}" aria-label="${{ k: 'Negro', d: 'Azul (demanda)', s: 'Rojo (oferta)', n: 'Verde (curva nueva)' }[k]}" style="--c:${v}"></button>`).join('')}</div>
+      <div class="row ptxtw" hidden><input class="inp ptxt" type="text" maxlength="24" placeholder="Rótulo: D₁, P₁, E₂…" aria-label="Texto del rótulo">${['₀', '₁', '₂', '*'].map(s => `<button class="btn sm psub" type="button" data-sub="${s}">${s}</button>`).join('')}</div>
+      <div class="row ptpl"><span class="small muted">Ejes:</span><button class="btn sm" type="button" data-tpl="pq">P–Q</button><button class="btn sm" type="button" data-tpl="adas">DA/OA</button><button class="btn sm" type="button" data-tpl="lorenz">Lorenz</button></div>
+      <div class="row pact"><button class="btn sm" type="button" data-act="undo">Deshacer</button><button class="btn sm" type="button" data-act="clear">Borrar todo</button><button class="btn sm" type="button" data-act="png">Descargar imagen</button></div>
+    </div>`}
+    <canvas class="padc" aria-label="Espacio para dibujar el diagrama"></canvas>
+    ${S.ro ? '' : '<p class="small muted padhelp">Lápiz: arrastra para dibujar a mano alzada. Línea y Flecha: arrastra desde el inicio hasta el final. Rótulo: escribe el texto y toca dónde ponerlo. Subíndices: ₀ ₁ ₂.</p>'}
+  </div>`;
+  const cv = $('canvas', host), ctx = cv.getContext('2d');
+  const txt = $('.ptxt', host);
+  let W = 0, H = 0;
+  function size() { const r = cv.getBoundingClientRect(); W = Math.max(260, Math.round(r.width)); H = Math.round(W * .62); const dpr = window.devicePixelRatio || 1; cv.width = W * dpr; cv.height = H * dpr; cv.style.height = H + 'px'; ctx.setTransform(dpr, 0, 0, dpr, 0, 0); draw(); }
+  const X = v => v * W, Y = v => v * H;
+  function arrowHead(x1, y1, x2, y2) { const a = Math.atan2(y2 - y1, x2 - x1), L = 12; ctx.beginPath(); ctx.moveTo(x2, y2); ctx.lineTo(x2 - L * Math.cos(a - .45), y2 - L * Math.sin(a - .45)); ctx.lineTo(x2 - L * Math.cos(a + .45), y2 - L * Math.sin(a + .45)); ctx.closePath(); ctx.fill(); }
+  function drawOp(o) {
+    const c = PAD_COL[o.c] || PAD_COL.k; ctx.strokeStyle = ctx.fillStyle = c; ctx.lineWidth = o.w || 2.5; ctx.lineCap = ctx.lineJoin = 'round';
+    if (o.t === 'p' && o.pts.length) { ctx.beginPath(); ctx.moveTo(X(o.pts[0][0]), Y(o.pts[0][1])); o.pts.forEach(q => ctx.lineTo(X(q[0]), Y(q[1]))); ctx.stroke(); }
+    else if (o.t === 'l' || o.t === 'a') { ctx.beginPath(); ctx.moveTo(X(o.a[0]), Y(o.a[1])); ctx.lineTo(X(o.b[0]), Y(o.b[1])); ctx.stroke(); if (o.t === 'a') arrowHead(X(o.a[0]), Y(o.a[1]), X(o.b[0]), Y(o.b[1])); }
+    else if (o.t === 'x') { ctx.font = `600 ${Math.max(13, Math.round(W / 40))}px "Atkinson Hyperlegible", Arial, sans-serif`; ctx.textBaseline = 'middle'; ctx.fillText(o.s, X(o.p[0]), Y(o.p[1])); }
+  }
+  function draw() {
+    ctx.fillStyle = '#FFFFFF'; ctx.fillRect(0, 0, W, H);
+    ctx.strokeStyle = '#E8EDF4'; ctx.lineWidth = 1; for (let g = 20; g < W; g += 20) { ctx.beginPath(); ctx.moveTo(g, 0); ctx.lineTo(g, H); ctx.stroke(); } for (let g = 20; g < H; g += 20) { ctx.beginPath(); ctx.moveTo(0, g); ctx.lineTo(W, g); ctx.stroke(); }
+    S.ops.forEach(drawOp); if (S.cur) drawOp(S.cur);
+  }
+  const pt = e => { const r = cv.getBoundingClientRect(); return [Math.min(1, Math.max(0, (e.clientX - r.left) / r.width)), Math.min(1, Math.max(0, (e.clientY - r.top) / r.height))]; };
+  const commit = () => { if (onChange) onChange(S.ops); };
+  if (!S.ro) {
+    cv.style.touchAction = 'none';
+    cv.onpointerdown = e => {
+      const p = pt(e); e.preventDefault();
+      if (S.tool === 'x') { const s = txt.value.trim(); if (!s) { txt.focus(); txt.classList.add('need'); return; } S.ops.push({ t: 'x', c: S.col, p, s }); draw(); commit(); return; }
+      try { cv.setPointerCapture(e.pointerId); } catch (er) { }
+      S.cur = S.tool === 'p' ? { t: 'p', c: S.col, pts: [p] } : { t: S.tool, c: S.col, a: p, b: p };
+    };
+    cv.onpointermove = e => { if (!S.cur) return; const p = pt(e); if (S.cur.t === 'p') S.cur.pts.push(p); else S.cur.b = p; draw(); };
+    cv.onpointerup = cv.onpointercancel = () => {
+      if (!S.cur) return; const o = S.cur; S.cur = null;
+      const long = o.t === 'p' ? o.pts.length > 1 : Math.hypot(o.b[0] - o.a[0], o.b[1] - o.a[1]) > .01;
+      if (long) { if (o.t === 'p') o.pts = o.pts.map(q => [Math.round(q[0] * 1000) / 1000, Math.round(q[1] * 1000) / 1000]); S.ops.push(o); commit(); }
+      draw();
+    };
+    host.querySelectorAll('[data-tool]').forEach(b => b.onclick = () => { S.tool = b.dataset.tool; host.querySelectorAll('[data-tool]').forEach(z => z.setAttribute('aria-pressed', z === b)); $('.ptxtw', host).hidden = S.tool !== 'x'; if (S.tool === 'x') txt.focus(); });
+    host.querySelectorAll('[data-col]').forEach(b => b.onclick = () => { S.col = b.dataset.col; host.querySelectorAll('[data-col]').forEach(z => z.setAttribute('aria-pressed', z === b)); });
+    txt.oninput = () => txt.classList.remove('need');
+    host.querySelectorAll('[data-sub]').forEach(b => b.onclick = () => { txt.value += b.dataset.sub; txt.classList.remove('need'); txt.focus(); });
+    host.querySelectorAll('[data-tpl]').forEach(b => b.onclick = () => { S.ops.push(...PAD_TPL[b.dataset.tpl].map(o => JSON.parse(JSON.stringify(o)))); draw(); commit(); });
+    host.querySelector('[data-act="undo"]').onclick = () => { S.ops.pop(); draw(); commit(); };
+    host.querySelector('[data-act="clear"]').onclick = () => { S.ops.length = 0; draw(); commit(); };
+  }
+  host.querySelector('[data-act="png"]').onclick = () => { const a = document.createElement('a'); a.href = cv.toDataURL('image/png'); a.download = (opts.file || 'diagrama') + '.png'; document.body.appendChild(a); a.click(); a.remove(); };
+  size();
+  if (window.ResizeObserver) { const ro = new ResizeObserver(() => { if (!document.body.contains(cv)) return ro.disconnect(); const w = Math.round(cv.getBoundingClientRect().width); if (w && Math.abs(w - W) > 2) size(); }); ro.observe(cv); }
+  return S;
+}
+const padUsed = ops => (ops || []).some(o => o.t === 'p' || o.t === 'a' || (o.t === 'l' && !(o.w === 2.5 && o.c === 'k' && (o.a[0] === .1 || o.a[1] === .9))));
+
+
+/* =============== 10 · Términos de instrucción: Analizar, Discutir, ¿Hasta qué punto? =============== */
+/* Método tomado de las guías del Prof. Rivarola. Ejemplos adaptados al Nivel Medio y con datos verificados. */
+const CMDT = {
+  analizar: {
+    route: 'escribir-analizar', name: 'Analizar', pts: 10, oe: 'OE2',
+    def: '«Separar (las partes de un todo) hasta llegar a identificar los elementos esenciales o la estructura».',
+    key: 'Analizar = explicar + <b>descomponer en partes</b> + <b>relacionar las partes</b> y examinar sus implicaciones. No emite juicio de valor: eso es evaluar (OE3).',
+    vs: [['Explicar', '¿Por qué ocurre?', 'Una cadena causal principal.'], ['Analizar', '¿De qué partes se compone y cómo se relacionan?', 'Varias partes examinadas y relacionadas, sin juicio de valor.']],
+    steps: [
+      { n: 'Definir', g: 'Define con precisión los conceptos económicos centrales de la pregunta.', c: [] },
+      { n: 'Diagrama', g: 'Dibuja el diagrama pertinente, rotulado y con el desplazamiento. Después explica en una frase qué muestra.', dia: true, c: ['Como se observa en el diagrama', 'El gráfico muestra que la curva se desplaza'] },
+      { n: 'Descomponer en partes', g: 'Nombra las partes del problema: agentes afectados, efectos o componentes del modelo. Por ejemplo: «Conviene distinguir cuatro grupos de agentes…».', c: ['Conviene distinguir entre', 'En primer lugar', 'En segundo lugar', 'Por un lado', 'Por otro lado'] },
+      { n: 'Examinar cada parte', g: 'Desarrolla cada parte en su propio párrafo, con su cadena causal interna.', c: ['Porque', 'Dado que', 'Por consiguiente', 'En consecuencia', 'Esto provoca que'] },
+      { n: 'Relacionar las partes', g: 'Muestra cómo se conectan las partes entre sí. Esto es lo que distingue un análisis de una simple lista.', c: ['Esto se relaciona con', 'A su vez, esto afecta a', 'En conexión con lo anterior', 'Ambos efectos se combinan en', 'Esto implica que'] },
+      { n: 'Aplicar a Paraguay', g: 'Cierra con un ejemplo real del país: un dato del BCP, el INE o el MEF, una ley o una institución.', c: ['Tal como ocurre en Paraguay con', 'Según datos del BCP', 'Un caso ilustrativo del país es'] }
+    ],
+    errs: ['Tratar el problema como una sola línea causal: eso es explicar.', 'Listar las partes sin examinarlas ni relacionarlas.', 'Colar un juicio de valor («esto es negativo para el país»): eso es evaluar.'],
+    ck: ['Definí con precisión los conceptos centrales.', 'Incluí un diagrama pertinente, rotulado y con el desplazamiento.', 'Descompuse el problema en partes claramente identificadas.', 'Examiné cada parte en su propio párrafo, con su cadena causal.', 'Usé conectores de descomposición («en primer lugar», «por un lado»).', 'Relacioné las partes entre sí (no quedó como una lista).', 'Usé conectores causales dentro de cada parte.', 'Apliqué el análisis a Paraguay con un dato, ley o ejemplo real.', 'Examiné implicaciones, no solo efectos inmediatos.', 'No emití juicios de valor (eso sería evaluar).'],
+    ex: {
+      q: 'Analice los efectos de un aumento del precio internacional de la soja sobre la economía paraguaya.', p: 10, tpl: 'adas',
+      s: [
+        'La <b>demanda agregada (DA)</b> es el gasto total planeado en bienes y servicios finales de una economía: consumo, inversión, gasto público y exportaciones netas. Las <b>exportaciones netas</b> son la diferencia entre exportaciones e importaciones.',
+        'Diagrama DA/OA: al subir el valor de las exportaciones, la DA se desplaza a la derecha (DA₀ → DA₁). El PIB real sube de Y₀ a Y₁ y el nivel general de precios de P₀ a P₁.',
+        '<b>Conviene distinguir</b> cuatro canales: (1) el sector exportador y el ingreso de divisas, (2) el gasto en el resto de la economía, (3) las cuentas fiscales y (4) el tipo de cambio y los precios.',
+        '<b>En primer lugar</b>, los productores y las exportadoras reciben más dólares; <b>como resultado</b>, aumenta el ingreso de divisas y mejora la balanza comercial. <b>En segundo lugar</b>, <b>dado que</b> el complejo sojero gasta parte de esos ingresos en transporte, maquinaria, servicios y salarios, <b>esto provoca que</b> se dinamicen otros sectores. <b>En tercer lugar</b>, la mayor actividad aumenta la recaudación de IVA e impuesto a la renta. <b>Finalmente</b>, el ingreso de divisas tiende a apreciar el guaraní y la mayor DA puede generar presiones inflacionarias.',
+        'Estos canales <b>se relacionan</b>: el ingreso de divisas alimenta el gasto en otros sectores, que <b>a su vez</b> mejora las cuentas fiscales. <b>Sin embargo</b>, la apreciación del guaraní <b>implica</b> que otros exportadores pierden competitividad: el beneficio no se reparte por igual entre sectores.',
+        '<b>Tal como ocurre en Paraguay</b>, el PIB es muy sensible a la soja: con la sequía de 2021/22 la cosecha cayó a 4,3 millones de toneladas y el PIB no creció en 2022 (0,0 %), mientras que la recuperación de 2023 llevó las exportaciones a un récord de US$ 17.311,7 millones.'
+      ]
+    },
+    bank: ['Analice los efectos de un subsidio al productor lechero sobre el mercado de la leche en Paraguay.', 'Analice los efectos de una externalidad negativa de producción en las curtiembres que vierten residuos al río Paraguay.', 'Analice los efectos de fijar un precio máximo a los productos de la canasta básica.', 'Analice los efectos de una sequía sobre el mercado de la soja en Paraguay.', 'Analice los efectos de una depreciación del guaraní sobre la economía paraguaya.', 'Analice los efectos de un aumento de la inversión pública en infraestructura sobre el PIB paraguayo.', 'Analice los efectos de una suba de la tasa de política monetaria del BCP sobre la economía nacional.', 'Analice los efectos de las remesas internacionales sobre la economía paraguaya.']
+  },
+  discutir: {
+    route: 'escribir-discutir', name: 'Discutir', pts: 15, oe: 'OE3',
+    def: '«Presentar una crítica equilibrada y bien fundamentada que incluye una serie de argumentos, factores o hipótesis. Las opiniones o conclusiones deberán presentarse de forma clara y justificarse mediante pruebas adecuadas».',
+    key: 'Discutir = presentar <b>varias posturas con esfuerzo equivalente</b> + factores y matices + <b>una conclusión justificada</b> (no un «depende» sin razones).',
+    vs: [['Evaluar', 'Valorar puntos fuertes y débiles.', '«Tiene ventajas… pero también limitaciones».'], ['¿Hasta qué punto?', 'Pronunciarse sobre un grado.', '«En gran medida sí, siempre que…»'], ['Discutir', 'Un abanico equilibrado de argumentos, factores e hipótesis.', '«Considerando los distintos argumentos, se concluye que…»']],
+    steps: [
+      { n: 'Definir', g: 'Define con precisión los conceptos centrales del tema.', c: [] },
+      { n: 'Diagrama', g: 'Dibuja el diagrama que mejor representa el fenómeno, rotulado. Servirá de apoyo a los argumentos.', dia: true, c: ['Como se observa en el diagrama'] },
+      { n: 'Identificar las posturas', g: '¿Quiénes están a favor y quiénes en contra? ¿Qué factores o hipótesis sostiene cada lado?', c: ['El tema admite dos posiciones encontradas', 'Quienes defienden esta posición sostienen que', 'Quienes se oponen argumentan que'] },
+      { n: 'Primera postura (a favor)', g: 'Al menos dos argumentos a favor, cada uno con su cadena causal y, si puedes, un dato paraguayo.', c: ['Por un lado', 'En primer lugar', 'Quienes defienden esta posición sostienen que', 'Dado que', 'Como resultado'] },
+      { n: 'Postura opuesta (en contra)', g: 'Con un esfuerzo equivalente: al menos dos argumentos en contra o factores que cuestionan la primera postura.', c: ['Por otro lado', 'Sin embargo', 'No obstante', 'Desde otra perspectiva', 'Quienes se oponen argumentan que'] },
+      { n: 'Factores y matices', g: 'Agrega plazos (corto y largo), otros agentes o supuestos que podrían no cumplirse.', c: ['Además, debe considerarse', 'Otro factor relevante es', 'Cabe plantear la hipótesis de que', 'En el corto plazo… mientras que a largo plazo', 'Bajo el supuesto de que'] },
+      { n: 'Conclusión equilibrada', g: 'Pronúnciate con razones: indica qué argumentos te parecen más sólidos y por qué. No basta con «depende».', c: ['Tras sopesar ambas posiciones', 'Considerando los distintos argumentos', 'En definitiva, el argumento más sólido parece ser', 'Por todo lo expuesto, se concluye que'] }
+    ],
+    errs: ['Desarrollar mucho un lado y casi nada el otro: se rompe el equilibrio.', 'Concluir con un «depende» sin justificar.', 'Presentar un solo argumento por lado: el IB pide una serie de argumentos, factores o hipótesis.'],
+    ck: ['Definí con precisión los conceptos centrales.', 'Incluí un diagrama pertinente, rotulado.', 'Identifiqué claramente las dos posturas en juego.', 'Desarrollé la primera postura con al menos dos argumentos.', 'Desarrollé la postura opuesta con un esfuerzo equivalente.', 'Usé conectores de contraste («por otro lado», «sin embargo»).', 'Agregué factores o matices (plazos, agentes, supuestos).', 'Apliqué la discusión a Paraguay con un dato, ley o ejemplo real.', 'Concluí con razones (no me quedé en un «depende»).', 'La conclusión se apoya en los argumentos más sólidos.'],
+    ex: {
+      q: 'Discuta el uso de una política fiscal expansiva para estimular el crecimiento económico de Paraguay.', p: 15, tpl: 'adas',
+      s: [
+        'Una <b>política fiscal expansiva</b> es un aumento del gasto público o una reducción de impuestos para elevar la demanda agregada. El <b>crecimiento económico</b> es el aumento del PIB real.',
+        'Diagrama DA/OA: el mayor gasto público desplaza la DA a la derecha (DA₀ → DA₁); el PIB real sube de Y₀ a Y₁ y el nivel general de precios de P₀ a P₁. Si el gasto es en infraestructura, a largo plazo también se desplaza la OALP.',
+        '<b>El tema admite dos posiciones encontradas</b>: quienes ven el gasto público, sobre todo en infraestructura, como un motor del crecimiento, y quienes advierten sobre sus riesgos fiscales y su eficacia limitada.',
+        '<b>Por un lado, quienes la defienden sostienen que</b> Paraguay tiene un déficit de infraestructura vial, logística y energética. <b>Dado que</b> el gasto público es un componente de la DA, <b>como resultado</b> sube la producción y el empleo en el corto plazo. <b>Además</b>, la infraestructura reduce costos de transporte y desplaza la OALP a la derecha, elevando el producto potencial.',
+        '<b>Por otro lado, quienes advierten sobre sus límites argumentan que</b> la Ley de Responsabilidad Fiscal limita el déficit del gobierno central al 1,5 % del PIB, lo que restringe el margen de expansión sin más deuda. <b>Sin embargo</b>, en una economía pequeña y abierta, parte del gasto se va en importaciones de maquinaria, insumos y combustibles. <b>A esto se suma</b> el riesgo de demoras y sobrecostos en la obra pública.',
+        '<b>Otro factor relevante es</b> el plazo: <b>en el corto plazo</b> el estímulo dinamiza la demanda y el empleo, <b>mientras que a largo plazo</b> la sostenibilidad de la deuda y la calidad de la inversión deciden si el crecimiento se mantiene. <b>Cabe plantear la hipótesis de que</b> una sequía reduzca la recaudación justo cuando sube el gasto.',
+        '<b>Considerando los distintos argumentos</b>, la política fiscal expansiva puede estimular el crecimiento de Paraguay, pero solo bajo condiciones específicas. <b>El argumento a favor más sólido</b> es el déficit de infraestructura; <b>el contraargumento más relevante</b> es la regla fiscal combinada con los problemas de ejecución. <b>Por todo lo expuesto</b>, es recomendable si se prioriza inversión de calidad y se respeta la sostenibilidad fiscal.'
+      ]
+    },
+    bank: ['Discuta el uso de un impuesto indirecto sobre las bebidas azucaradas para reducir su consumo en Paraguay.', 'Discuta los efectos de un subsidio al productor agrícola sobre el mercado y los distintos agentes económicos.', 'Discuta la conveniencia de fijar un precio máximo a los productos de la canasta básica en Paraguay.', 'Discuta los efectos de un subsidio al transporte público urbano sobre el bienestar de los consumidores paraguayos.', 'Discuta el uso de la política monetaria contractiva del BCP para controlar la inflación en Paraguay.', 'Discuta los efectos de una depreciación del guaraní sobre la economía paraguaya.', 'Discuta las consecuencias de la dependencia paraguaya de las exportaciones de soja y carne.', 'Discuta los beneficios y costos de la integración del Paraguay al MERCOSUR.']
+  },
+  hqp: {
+    route: 'escribir-hqp', name: '¿Hasta qué punto?', pts: 15, oe: 'OE3',
+    def: '(En la guía del IB: «¿En qué medida…?») «Considerar la eficacia u otros aspectos de un argumento o concepto. Las opiniones y conclusiones deberán presentarse de forma clara y justificarse mediante pruebas apropiadas y argumentos sólidos».',
+    key: '¿Hasta qué punto? = tesis + antítesis + condiciones y plazos + <b>una conclusión con GRADO</b> («en gran medida», «parcialmente», «solo hasta cierto punto»), <b>un PLAZO</b> y <b>una CONDICIÓN</b> («siempre que…»).',
+    vs: [['Evaluar', '¿Cuáles son los puntos fuertes y débiles?', 'Balance equilibrado.'], ['¿Hasta qué punto?', '¿En qué grado ocurre lo afirmado?', '«En gran medida sí, siempre que…»']],
+    scale: ['En nada', 'En poca medida', 'Parcialmente', 'En gran medida', 'Totalmente'],
+    steps: [
+      { n: 'Identificar la afirmación', g: '¿Qué afirma exactamente la pregunta? ¿Que algo «controla la inflación», «estimula el crecimiento», «protege a los consumidores»? Eso es lo que vas a medir.', c: ['La pregunta afirma que', 'Lo que hay que medir es'] },
+      { n: 'Definir', g: 'Define con precisión los conceptos centrales de la pregunta.', c: [] },
+      { n: 'Teoría con diagrama', g: 'Dibuja el diagrama pertinente, rotulado, y explica el cambio teórico esperado.', dia: true, c: ['Como se observa en el diagrama', 'Por consiguiente'] },
+      { n: 'Tesis (a favor)', g: 'Uno o dos párrafos con argumentos que respaldan la afirmación, con teoría y datos paraguayos.', c: ['Por una parte', 'Es cierto que', 'Cabe destacar que', 'Hasta cierto punto sí, porque', 'En segundo lugar'] },
+      { n: 'Antítesis (en contra)', g: 'Uno o dos párrafos con argumentos que limitan o contradicen la afirmación: efectos no deseados, restricciones, rezagos.', c: ['Sin embargo', 'No obstante', 'Por otra parte', 'Pese a ello', 'Ahora bien'] },
+      { n: 'Condiciones y plazos', g: '¿Bajo qué condiciones se cumple la afirmación y bajo cuáles no? ¿Qué cambia entre el corto y el largo plazo?', c: ['Siempre que', 'A condición de que', 'En la medida en que', 'En el corto plazo', 'A largo plazo'] },
+      { n: 'Conclusión con grado', g: 'Responde directamente: ¿en qué grado se cumple? Usa la escala y agrega un plazo y una condición.', grade: true, c: ['En definitiva', 'Por todo lo expuesto', 'siempre que', 'en el corto plazo', 'a largo plazo'] }
+    ],
+    errs: ['Responder solo con la tesis o solo con la antítesis: sin las dos no hay grado que medir.', 'Olvidar el plazo: casi toda política tiene efectos distintos en el corto y en el largo plazo.', 'Describir la política sin medir su eficacia.'],
+    ck: ['Identifiqué qué afirma la pregunta (qué hay que medir).', 'Definí con precisión los conceptos centrales.', 'Incluí un diagrama rotulado y lo expliqué.', 'Desarrollé una tesis con al menos dos argumentos.', 'Desarrollé una antítesis con al menos dos argumentos o limitaciones.', 'Apliqué el análisis a Paraguay con un dato, ley o ejemplo real.', 'Identifiqué las condiciones en que la afirmación se cumple o no.', 'Distinguí el corto y el largo plazo.', 'Usé conectores de contraste («sin embargo», «no obstante»).', 'Cerré con un GRADO claro y al menos una CONDICIÓN.'],
+    ex: {
+      q: '¿Hasta qué punto la política monetaria contractiva del BCP es eficaz para controlar la inflación?', p: 15, tpl: 'adas',
+      s: [
+        '<b>La pregunta afirma que</b> la política monetaria contractiva es eficaz para controlar la inflación. <b>Lo que hay que medir es</b> el grado de esa eficacia en el contexto paraguayo.',
+        'La <b>política monetaria contractiva</b> encarece el crédito para frenar la demanda agregada. En Paraguay, el BCP la aplica con la <b>tasa de política monetaria (TPM)</b>, dentro de un régimen de <b>metas de inflación</b>: 4 % ± 2 puntos hasta 2024 y 3,5 % ± 2 desde 2025.',
+        'Diagrama DA/OA: una TPM más alta reduce el consumo y la inversión; la DA se desplaza a la izquierda (DA₀ → DA₁). El nivel general de precios baja o crece menos y el PIB real cae en el corto plazo. Además, una TPM más alta tiende a apreciar el guaraní y abarata las importaciones.',
+        '<b>Por una parte</b>, la evidencia reciente respalda el instrumento. <b>Cabe destacar que</b> el BCP subió la TPM de 0,75 % (agosto de 2021) a 8,50 % (septiembre de 2022). La inflación, que llegó a 11,8 % en abril de 2022, cerró 2023 en 3,7 %, dentro del rango meta. <b>En segundo lugar</b>, la meta explícita ayuda a anclar las expectativas y reduce la inercia de la inflación.',
+        '<b>Sin embargo</b>, buena parte de la inflación de 2022 fue <b>importada</b>: combustibles, trigo y alimentos encarecidos por la guerra en Ucrania. La TPM actúa sobre la demanda y no puede neutralizar esos shocks. <b>Por otra parte</b>, una parte importante de los créditos y depósitos está en dólares y la informalidad es alta, lo que debilita la transmisión. <b>Pese a ello</b>, la baja de 2023 también coincidió con la normalización de los precios internacionales.',
+        'Es eficaz <b>siempre que</b> la inflación sea de demanda y el BCP mantenga su credibilidad; es menos eficaz frente a shocks de oferta. <b>En el corto plazo</b> tiene rezagos y costos en crecimiento; <b>a largo plazo</b> sostiene la estabilidad de precios.',
+        '<b>En definitiva</b>, la política monetaria del BCP es eficaz <b>en gran medida, pero no por sí sola</b>: ancla las expectativas y reconduce la inflación a la meta una vez que pasan los rezagos, <b>siempre que</b> los shocks externos no dominen. Frente a la inflación importada y en el muy corto plazo, su eficacia es limitada.'
+      ]
+    },
+    bank: ['¿Hasta qué punto un subsidio al transporte público urbano mejora el bienestar de los consumidores en Paraguay?', '¿Hasta qué punto un precio máximo a los productos de la canasta básica protege a los consumidores de bajos ingresos?', '¿Hasta qué punto una depreciación del guaraní mejora la balanza comercial paraguaya?', '¿En qué medida la inversión pública en infraestructura vial puede acelerar el crecimiento de Paraguay a largo plazo?', '¿En qué medida la dependencia de las exportaciones de soja y carne hace vulnerable al PIB paraguayo a los shocks climáticos?', '¿En qué medida la regla de la Ley de Responsabilidad Fiscal limita la capacidad de la política fiscal paraguaya para enfrentar una recesión?', '¿Hasta qué punto la informalidad laboral reduce la eficacia de las políticas redistributivas en Paraguay?', '¿En qué medida la integración al MERCOSUR ha contribuido al crecimiento económico de Paraguay?']
+  }
+};
+const CMDW = store.get('cmdw', {});
+const saveCMDW = () => store.set('cmdw', CMDW);
+const cmdKey = (k, i) => k + '#' + i;
+const cmdState = (k, i) => CMDW[cmdKey(k, i)] = CMDW[cmdKey(k, i)] || { st: 0, s: [], dia: [], ck: {}, done: false };
+const cmdStarted = (k, i) => { const w = CMDW[cmdKey(k, i)]; return w && (w.s.some(Boolean) || (w.dia || []).length); };
+function cmdFull(T, w) { return T.steps.map((st, j) => st.dia ? (w.s[j] ? '[Diagrama] ' + w.s[j] : '[Diagrama]') : (w.s[j] || '')).filter(x => x.trim()).join('\n\n'); }
+function cmdAuto(k, T, w) {
+  const all = normTxt(cmdFull(T, w)), last = normTxt(w.s[T.steps.length - 1] || ''), has = (t, l) => l.some(x => t.includes(normTxt(x)));
+  const fb = [], good = (m) => fb.push(['ok', m]), warn = (m) => fb.push(['no', m]);
+  if (has(all, ['paraguay', 'bcp', 'ine', 'mef', 'guarani', 'mercosur', 'itaipu'])) good('Aplicaste el tema a Paraguay.'); else warn('No aparece un ejemplo paraguayo (BCP, INE, MEF, una ley o un dato).');
+  if (k === 'analizar') {
+    has(all, ['en primer lugar', 'en segundo lugar', 'por un lado', 'por otro lado', 'conviene distinguir']) ? good('Usaste conectores para descomponer en partes.') : warn('Faltan conectores para separar las partes («en primer lugar», «conviene distinguir…»).');
+    has(all, ['se relaciona', 'a su vez', 'en conexion', 'se combinan', 'esto implica', 'implica que']) ? good('Relacionaste las partes entre sí.') : warn('No se ve la relación entre las partes («a su vez», «esto se relaciona con…»).');
+    if (has(all, ['es bueno', 'es malo', 'deberia', 'lo mejor es', 'es negativo para', 'es positivo para', 'es conveniente', 'recomiendo'])) warn('Parece haber un juicio de valor. Al analizar no se juzga: eso es evaluar.'); else good('No emitiste juicios de valor.');
+  }
+  if (k === 'discutir') {
+    has(all, ['por otro lado', 'sin embargo', 'no obstante', 'en cambio', 'desde otra perspectiva', 'quienes se oponen']) ? good('Usaste conectores de contraste.') : warn('Faltan conectores de contraste («por otro lado», «sin embargo»).');
+    const a = wc(w.s[3]), b = wc(w.s[4]);
+    if (a && b) { const r = Math.max(a, b) / Math.min(a, b); r > 2 ? warn(`Las posturas no están equilibradas: ${a} palabras a favor y ${b} en contra.`) : good(`Posturas equilibradas: ${a} palabras a favor y ${b} en contra.`); } else warn('Falta desarrollar una de las dos posturas.');
+    has(last, ['tras sopesar', 'considerando los distintos', 'en definitiva', 'por todo lo expuesto', 'se concluye']) ? good('La conclusión usa un conector de cierre.') : warn('La conclusión no tiene un conector de cierre («tras sopesar ambas posiciones…»).');
+    if (last.includes('depende') && !has(last, ['siempre que', 'porque', 'ya que', 'dado que', 'el argumento mas solido'])) warn('Concluyes con «depende» sin justificar.');
+  }
+  if (k === 'hqp') {
+    has(all, ['sin embargo', 'no obstante', 'por otra parte', 'pese a ello', 'ahora bien']) ? good('Usaste conectores de contraste.') : warn('Faltan conectores de contraste («sin embargo», «no obstante»).');
+    has(last, ['en gran medida', 'parcialmente', 'hasta cierto punto', 'en menor grado', 'de manera limitada', 'considerablemente', 'totalmente', 'en poca medida', 'en nada']) ? good('La conclusión indica un grado.') : warn('La conclusión no indica un grado («en gran medida», «parcialmente»…).');
+    has(last, ['siempre que', 'a condicion de que', 'en la medida en que', 'bajo el supuesto']) ? good('La conclusión incluye una condición.') : warn('Agrega una condición a la conclusión («siempre que…»).');
+    has(all, ['corto plazo', 'largo plazo']) ? good('Distinguiste plazos.') : warn('No distinguiste el corto y el largo plazo.');
+  }
+  return fb;
+}
+function cmdHead(T) { return `<div class="eyebrow">Escribir como en el examen</div><h1>${T.name}</h1>${writeTabs(T.route)}`; }
+function renderCmd(k) {
+  const T = CMDT[k];
+  app.innerHTML = cmdHead(T) + `
+    <div class="method"><div><b>Qué pide «${T.name.toLowerCase()}» · ${T.oe}</b><p>${T.def}</p></div>
+      <div><b>Idea clave</b><p>${T.key}</p></div>
+      <div><b>Diferencias</b>${T.vs.map(v => `<p><b>${v[0]}:</b> ${v[1]} <i>${v[2]}</i></p>`).join('')}</div></div>
+    <h2>El paso a paso</h2><ol class="csteps">${T.steps.map(s => `<li><b>${s.n}.</b> ${s.g}</li>`).join('')}</ol>
+    <div class="trap essentials" style="margin:12px 0"><b>Errores frecuentes</b><ul>${T.errs.map(e => `<li>${e}</li>`).join('')}</ul></div>
+    <details class="essentials cex"><summary><b>Ejemplo resuelto</b> · ${T.ex.q} [${T.ex.p}]</summary><ol class="rchain">${T.steps.map((s, j) => `<li><b>${s.n}.</b> ${T.ex.s[j]}</li>`).join('')}</ol></details>
+    <h2 style="margin-top:22px">Practica</h2><p class="lede">Elige una pregunta. Escribes paso a paso, con los conectores a mano y un espacio para dibujar el diagrama.</p>
+    <div class="mlist">${T.bank.map((q, i) => { const w = CMDW[cmdKey(k, i)]; return `<div class="mrow"><span class="code">${i + 1}</span><span class="nm">${q}<span class="ds">[${T.pts} puntos]</span></span><span class="act">${w && w.done ? '<span class="tag ok">Completa</span>' : cmdStarted(k, i) ? '<span class="tag prog">En progreso</span>' : ''}<button class="btn sm primary" type="button" data-go="cmd-${k}-${i}">${cmdStarted(k, i) ? 'Seguir' : 'Escribir'}</button></span></div>`; }).join('')}</div>`;
+}
+function renderCmdWrite(k, i) {
+  const T = CMDT[k], q = T.bank[i], w = cmdState(k, i), n = T.steps.length;
+  if (w.st > n) w.st = n;
+  const st = T.steps[w.st];
+  app.innerHTML = `<button class="crumb" type="button" data-go="${T.route}">← ${T.name}: método y preguntas</button>
+    <div class="eyebrow" style="margin-top:12px">${T.name} · ${T.pts} puntos</div><h2 style="margin:4px 0 8px">${q}</h2>
+    ${stepper([...T.steps.map(s => s.n), 'Revisar'], w.st, [...T.steps.map((s, j) => s.dia ? padUsed(w.dia) : !!(w.s[j] || '').trim()), w.done], true)}
+    <div class="card cwcard"><div class="card-b" id="cwb"></div><div class="card-f"><button class="btn" type="button" id="cwPrev" ${w.st === 0 ? 'disabled' : ''}>← Anterior</button><button class="btn primary" type="button" id="cwNext">${w.st < n - 1 ? 'Siguiente paso →' : w.st === n - 1 ? 'Revisar mi respuesta →' : 'Volver a las preguntas'}</button></div></div>`;
+  app.querySelectorAll('[data-step]').forEach(b => b.onclick = () => { w.st = +b.dataset.step; saveCMDW(); renderCmdWrite(k, i); });
+  $('#cwPrev').onclick = () => { w.st--; saveCMDW(); renderCmdWrite(k, i); };
+  $('#cwNext').onclick = () => { if (w.st >= n) return go(T.route); w.st++; saveCMDW(); window.scrollTo(0, 0); renderCmdWrite(k, i); };
+  const B = $('#cwb');
+  if (w.st === n) {
+    const full = cmdFull(T, w), fb = cmdAuto(k, T, w);
+    B.innerHTML = `<h3 style="margin-top:0">Tu respuesta completa · ${wc(full)} palabras</h3><div class="answer">${esc(full || '(vacía)').replace(/\n/g, '<br>')}</div>
+      ${padUsed(w.dia) ? '<h4>Tu diagrama</h4><div id="cwPadRO"></div>' : ''}
+      <h4>Revisión automática</h4><ul class="autofb">${fb.map(([c, m]) => `<li class="${c}">${m}</li>`).join('')}</ul>
+      <p class="small muted">La revisión automática busca conectores y palabras clave; no evalúa si tu economía es correcta. Para eso, usa la lista de cotejo.</p>
+      <h4>Lista de cotejo</h4>${checklistHtml(T.ck, w.ck, 'cwck')}
+      <div class="row" style="margin-top:12px"><button class="btn primary sm" type="button" id="cwCp">Copiar mi respuesta</button></div>
+      <details class="model"><summary>Ver el ejemplo resuelto del método</summary><p class="small"><b>${T.ex.q}</b></p><ol class="rchain">${T.steps.map((s, j) => `<li><b>${s.n}.</b> ${T.ex.s[j]}</li>`).join('')}</ol></details>`;
+    if (padUsed(w.dia)) sketchPad($('#cwPadRO'), w.dia, null, { readOnly: true });
+    bindChecklist(B, 'cwck', T.ck, w.ck, () => { w.done = T.ck.every((_, j) => w.ck[j]) || w.done; saveCMDW(); });
+    $('#cwCp').onclick = e => copyText(q + '\n\n' + full, e.currentTarget);
+    if (!w.done && full) { w.done = true; saveCMDW(); }
+    return;
+  }
+  const exHtml = `<details class="model"><summary>Ver cómo queda este paso en el ejemplo resuelto</summary><p class="small">${T.ex.s[w.st]}</p></details>`;
+  B.innerHTML = `<p class="q"><b>Paso ${w.st + 1}. ${st.n}.</b> ${st.g}</p>
+    ${st.dia ? `<div id="cwPad"></div><p class="small muted" style="margin-top:10px">Explica en una o dos frases qué muestra el diagrama:</p>` : ''}
+    ${st.grade ? `<div class="gscale" role="group" aria-label="Escala de grado">${T.scale.map(g => `<button class="btn sm" type="button" data-g="${g}">${g}</button>`).join('')}</div>` : ''}
+    ${st.c.length ? `<div class="conn">${st.c.map(c => `<button type="button" class="chip" data-c="${esc(c)}">${c}</button>`).join('')}</div>` : ''}
+    <textarea id="cwt" rows="${st.dia ? 3 : 7}" placeholder="Escribe aquí…">${esc(w.s[w.st] || '')}</textarea><p class="small muted" id="cww"></p>${exHtml}`;
+  const ta = $('#cwt'), cnt = () => { $('#cww').textContent = wc(ta.value) + ' palabras'; };
+  ta.oninput = () => { w.s[w.st] = ta.value; saveCMDW(); cnt(); }; cnt();
+  B.querySelectorAll('[data-c]').forEach(b => b.onclick = () => insertAtCursor(ta, b.dataset.c));
+  B.querySelectorAll('[data-g]').forEach(b => b.onclick = () => insertAtCursor(ta, b.dataset.g.toLowerCase()));
+  if (st.dia) sketchPad($('#cwPad'), w.dia, ops => { w.dia = ops; saveCMDW(); }, { file: 'diagrama-' + k + '-' + (i + 1) });
 }
 
 render();
