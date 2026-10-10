@@ -517,7 +517,7 @@ body.docked{padding-bottom:190px}
 .pst span{font-size:13.5px;color:var(--muted);line-height:1.35}
 .psa{color:var(--muted);font-weight:700}
 .pall{justify-self:start}
-.qgrid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px}
+.qgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
 .qbtn{display:grid;gap:2px;text-align:left;background:var(--sheet);border:1px solid var(--rule);border-radius:8px;padding:10px 12px;color:var(--ink)}
 .qbtn b{font-size:15px}.qbtn span{font-size:13px;color:var(--muted)}
 .qbtn:hover{border-color:var(--navy-2)}
@@ -536,6 +536,12 @@ body.docked{padding-bottom:190px}
 .mcom li.tip{background:var(--gold-soft);border-color:var(--gold)}
 .mcom li span{font-weight:700}
 @media (max-width:860px){.mrowa{grid-template-columns:1fr}}
+/* v16: aviso de Teams y Spotify */
+.mnote{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:center;background:var(--sheet);border:1px solid var(--rule);border-left:4px solid var(--ok);border-radius:var(--r);padding:12px 14px;margin:18px 0 0}
+.mnote .mni{font-size:26px;line-height:1}
+.mnote p{margin:4px 0 0;font-size:14.5px;color:var(--ink-2);line-height:1.45}
+.mnote .btn{text-decoration:none;white-space:nowrap}
+@media (max-width:640px){.mnote{grid-template-columns:auto minmax(0,1fr)}.mnote .btn{grid-column:1/-1;justify-self:start}}
 /* v7: constructor de diagramas */
 .dbcta{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:6px 16px;align-items:center;width:100%;max-width:1100px;text-align:left;background:var(--gold-soft);border:1.5px solid var(--gold);border-radius:var(--r);padding:14px 18px;margin:4px 0 8px;color:var(--ink)}
 .dbcta:hover{filter:brightness(1.03)}
@@ -648,8 +654,6 @@ td.late{color:var(--bad);font-weight:700}td.soon{color:var(--warn-ink);font-weig
   <nav class="nav" aria-label="Secciones">
     <button type="button" data-go="empezar">Inicio</button>
     <button type="button" data-go="inicio">Temas</button>
-    <button type="button" data-go="ppt">PPT</button>
-    <button type="button" data-go="podcast">Podcast</button>
     <button type="button" data-go="labs">Laboratorios</button>
     <button type="button" data-go="escribir">Escribir</button>
     <button type="button" data-go="formulas">Fórmulas</button>
@@ -660,7 +664,6 @@ td.late{color:var(--bad);font-weight:700}td.soon{color:var(--warn-ink);font-weig
 </header>
 <main id="app"></main>
 <footer class="site-foot"><p>© 2026 <b>Prof. Econ. Hugo Rivarola</b> · Economía IB · Taller de práctica. Todos los derechos reservados.</p><p>Material educativo elaborado por el autor para sus estudiantes. No se permite reproducirlo, distribuirlo ni modificarlo, total o parcialmente, sin autorización escrita del autor.</p></footer>
-<div id="dock" class="dock" hidden aria-label="Reproductor de podcast"></div>
 
 <script>
 'use strict';
@@ -1575,9 +1578,7 @@ function render() {
   if (route === 'escribir-conceptos') { setNav('escribir'); return renderDrill(DRILLS.kc); }
   if (route === 'escribir-errores') { setNav('escribir'); return renderDrill(DRILLS.err); }
   if (route === 'reporte') { setNav('repasar'); return renderReport(); }
-  if (route === 'ppt') { setNav('ppt'); return renderPPTHome(); }
-  if (route.startsWith('ppt-') && keyFromTok(route.slice(4))) { setNav('ppt'); return renderPPT(keyFromTok(route.slice(4))); }
-  if (route === 'podcast') { setNav('podcast'); return renderPodHome(); }
+  if (route === 'ppt' || route.startsWith('ppt-') || route === 'podcast') { setNav('empezar'); return renderMediaInfo(); }
   if (route === 'juegos') { setNav('juegos'); return renderGamesHome(); }
   if (route === 'juego-reloj') { setNav('juegos'); return JUEGOS_ACTIVOS.reloj ? renderReloj() : renderGamesHome(); }
   if (route === 'juego-memoria') { setNav('juegos'); return JUEGOS_ACTIVOS.memoria ? renderMemoria() : renderGamesHome(); }
@@ -1719,10 +1720,9 @@ function renderStart() {
       <button class="qbtn" type="button" data-go="examen"><b>Examen rápido</b><span>Preguntas mezcladas</span></button>
       <button class="qbtn" type="button" data-go="tarjetas"><b>Tarjetas</b><span>Términos y conceptos</span></button>
       <button class="qbtn" type="button" data-go="juegos"><b>Juegos</b><span>Aprender jugando</span></button>
-      <button class="qbtn" type="button" data-go="ppt"><b>Presentaciones</b><span>Las de la clase</span></button>
-      <button class="qbtn" type="button" data-go="podcast"><b>Podcast</b><span>Para escuchar</span></button>
     </div>
   </section>
+  ${mediaNote('Escúchalo de camino al colegio y después practica el subtema aquí.')}
   <details class="essentials" style="margin-top:18px"><summary><b>¿Es tu primera vez aquí?</b></summary><ul>
     <li>Si estás empezando un tema, usa <b>Aprender un tema</b>. Si se acerca el examen, usa los caminos de la <b>Prueba 1</b> y la <b>Prueba 2</b>.</li>
     <li>El menú de arriba lleva a todas las secciones: <b>Temas</b> (los ${TOPICS.length} subtemas), <b>Laboratorios</b> (diagramas), <b>Escribir</b> (respuestas de examen y EI), <b>Fórmulas</b>, <b>Juegos</b>, <b>Repasar</b> y el <b>Atlas de diagramas</b>.</li>
@@ -1771,10 +1771,9 @@ function renderHome() {
     <button class="rcard" type="button" data-go="repasar"><span class="rn">4</span><b>Repasa</b><span class="d">${errCount() ? `${errCount()} errores pendientes` : 'Tus errores'}, examen rápido, tarjetas y tu reporte.</span></button>
   </section>
   <section class="extras" aria-label="Más recursos">
-    <button class="xcard" type="button" data-go="ppt"><b>PPT</b><span>Las presentaciones de clase por subtema.</span></button>
-    <button class="xcard" type="button" data-go="podcast"><b>Podcast</b><span>Episodios para escuchar mientras practicas.</span></button>
     <button class="xcard" type="button" data-go="juegos"><b>Juegos</b><span>${Object.values(JUEGOS_ACTIVOS).some(Boolean) ? 'Siete juegos: Contrarreloj, Memoria, ¿Quién quiere ser economista?, Jeopardy, Battle City, Grand Prix y Tetris del Ciclo Económico.' : 'Próximamente: juegos para repasar el curso.'}</span></button>
   </section>
+  ${mediaNote()}
   <div id="temas">${Object.keys(UNITS).map(unitBlock).join('')}</div>
   <p class="foot">Contenidos alineados al Nivel Medio: no incluye utilidad marginal, efectos ingreso y sustitución, multiplicador keynesiano, curva de Phillips ni la condición Marshall-Lerner. Los datos numéricos de los ejercicios son hipotéticos. El progreso se guarda solo en este navegador.</p>`;
 }
@@ -1784,7 +1783,7 @@ const SESS = {}; // estado de sesión por tema
 function renderTopic(t) {
   store.set('last', t.id);
   const S = SESS[t.id] = SESS[t.id] || { tab: 'prac', i: 0, res: {}, inst: {} };
-  const labBtns = t.labs.map(k => `<button class="btn sm" type="button" data-go="lab-${k}">Laboratorio: ${LABS[k].name}</button>`).join('') + EXP.filter(x => x.st === t.id).map(x => `<button class="btn sm" type="button" data-go="exp-${x.id}">Explicar: ${esc(x.short)}</button>`).join('') + EVA.filter(x => x.st === t.id).map(x => `<button class="btn sm" type="button" data-go="eva-${x.id}">Evaluar: ${esc(x.short)}</button>`).join('') + mediaBtns(t);
+  const labBtns = t.labs.map(k => `<button class="btn sm" type="button" data-go="lab-${k}">Laboratorio: ${LABS[k].name}</button>`).join('') + EXP.filter(x => x.st === t.id).map(x => `<button class="btn sm" type="button" data-go="exp-${x.id}">Explicar: ${esc(x.short)}</button>`).join('') + EVA.filter(x => x.st === t.id).map(x => `<button class="btn sm" type="button" data-go="eva-${x.id}">Evaluar: ${esc(x.short)}</button>`).join('');
   app.innerHTML = `
     <button class="crumb" type="button" data-go="inicio">← Todos los temas</button>
     <div class="eyebrow" style="margin-top:12px">Unidad ${t.u} · ${UNITS[t.u]} · Subtema ${t.code || t.id}</div>
@@ -3328,7 +3327,6 @@ function reportText() {
   const ml = Object.values(GAMES.mill || {}); if (ml.length) gr.push('¿Quién quiere ser economista? ' + fmt(Math.max(...ml)) + ' puntos');
   const mm = Object.values(GAMES.memoria || {}); if (mm.length) gr.push('Memoria ' + Math.min(...mm.map(x => x.mv)) + ' jugadas');
   L.push('', `Juegos (mejores marcas): ${gr.length ? gr.join('; ') : 'sin registros'}`);
-  const heard = Object.keys(POD_HEARD).length; if (heard) L.push(`Podcast: ${heard} ${heard > 1 ? 'episodios escuchados' : 'episodio escuchado'}`);
   L.push('', 'Taller de Economía IB · © Prof. Econ. Hugo Rivarola');
   return L.join('\n');
 }
@@ -3514,134 +3512,18 @@ function renderExplain(p) {
 }
 
 
-/* =============== 6 · PPT y Podcast (enlaces del profesor) =============== */
-/* CÓMO AGREGAR UN ENLACE
-   Clave: el subtema ('2.5', '4.2', …) o la unidad completa ('u1' … 'u4'). Se aceptan varios por clave.
-   PPT: Google Slides o archivo en Google Drive (compartido como «Cualquier persona con el enlace»), Canva u OneDrive.
-   Podcast: MP3/M4A subido al sitio (p. ej. 'audio/2-5.mp3'), Google Drive, Spotify, YouTube o SoundCloud.
-   Ejemplo:  '2.5': [{ t: 'Elasticidad precio de la demanda', url: 'https://docs.google.com/presentation/d/XXXX/edit' }],
-             '3.5': [{ t: 'La tasa del BCP en 5 minutos', url: 'audio/3-5.mp3', dur: '6 min', d: 'Qué hace el BCP cuando sube la inflación.' }], */
-const PPT = {
-};
-const POD = {
-};
-
-function mediaKind(url) {
-  const u = String(url || '').trim();
-  let m;
-  if (/\.(mp3|m4a|aac|wav|ogg|oga|opus)(\?|#|$)/i.test(u)) return { k: 'audio', src: u };
-  if ((m = u.match(/docs\.google\.com\/presentation\/d\/e\/([\w-]+)/))) return { k: 'frame', src: `https://docs.google.com/presentation/d/e/${m[1]}/embed?start=false&loop=false`, ratio: 'slides' };
-  if ((m = u.match(/docs\.google\.com\/presentation\/d\/([\w-]+)/))) return { k: 'frame', src: `https://docs.google.com/presentation/d/${m[1]}/embed?start=false&loop=false`, ratio: 'slides' };
-  if ((m = u.match(/drive\.google\.com\/file\/d\/([\w-]+)/) || u.match(/drive\.google\.com\/open\?id=([\w-]+)/))) return { k: 'frame', src: `https://drive.google.com/file/d/${m[1]}/preview`, ratio: 'slides', drive: true };
-  if ((m = u.match(/canva\.com\/design\/([\w-]+)\/([\w-]+)/))) return { k: 'frame', src: `https://www.canva.com/design/${m[1]}/${m[2]}/view?embed`, ratio: 'slides' };
-  if ((m = u.match(/open\.spotify\.com\/(?:intl-\w+\/)?(episode|show)\/(\w+)/))) return { k: 'frame', src: `https://open.spotify.com/embed/${m[1]}/${m[2]}`, ratio: m[1] === 'show' ? 'spotify-show' : 'spotify' };
-  if ((m = u.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([\w-]{6,})/))) return { k: 'frame', src: `https://www.youtube-nocookie.com/embed/${m[1]}`, ratio: 'video' };
-  if (/soundcloud\.com\//.test(u)) return { k: 'frame', src: 'https://w.soundcloud.com/player/?url=' + encodeURIComponent(u) + '&visual=false', ratio: 'sc' };
-  if (/onedrive\.live\.com\/embed|sharepoint\.com\/.*embed/.test(u)) return { k: 'frame', src: u, ratio: 'slides' };
-  return { k: 'link', src: u };
+/* =============== 6 · Presentaciones y podcast: están en Teams y en Spotify (no se alojan en el Taller) =============== */
+const SPOTIFY_SHOW = 'https://open.spotify.com/show/0QjkpklEJ5LUkfBIQJs52M';
+function mediaNote(extra) {
+  return `<aside class="mnote" aria-label="Presentaciones y podcast"><span class="mni" aria-hidden="true">🎧</span><div><b>Presentaciones y podcast de clase</b>
+    <p>Las presentaciones (PPT) y los episodios del podcast están en el equipo de Economía en <b>Microsoft Teams</b>. El podcast también está en <b>Spotify</b>: busca <b>«Economía Faith»</b>.${extra ? ' ' + extra : ''}</p></div>
+    <a class="btn sm" href="${SPOTIFY_SHOW}" target="_blank" rel="noopener">Abrir en Spotify</a></aside>`;
 }
-const mediaList = (OBJ, key) => (OBJ[key] || []).filter(x => x && x.url);
-const mediaCount = OBJ => Object.values(OBJ).reduce((s, a) => s + (a || []).filter(x => x && x.url).length, 0);
-const keyTok = k => k.replace('.', '-');
-const keyFromTok = tok => { const all = [...TOPICS.map(t => t.id), 'u1', 'u2', 'u3', 'u4']; return all.find(k => keyTok(k) === tok); };
-const keyLabel = k => k[0] === 'u' ? `Unidad ${k[1]} completa` : `${tcode(k)} ${TOPICS.find(t => t.id === k).name}`;
-function mediaBtns(t) {
-  const p = mediaList(PPT, t.id).length, a = mediaList(POD, t.id).length;
-  return (p ? `<button class="btn sm" type="button" data-go="ppt-${keyTok(t.id)}">Ver la presentación</button>` : '') +
-    (a ? `<button class="btn sm" type="button" data-go="podcast">Escuchar el podcast</button>` : '');
-}
-function resourceList(OBJ, kind) {
-  return Object.keys(UNITS).map(u => {
-    const keys = ['u' + u, ...TOPICS.filter(t => t.u === +u).map(t => t.id)];
-    const n = keys.reduce((s, k) => s + mediaList(OBJ, k).length, 0);
-    const rows = keys.filter(k => k[0] !== 'u' || mediaList(OBJ, k).length).map(k => {
-      const list = mediaList(OBJ, k);
-      const code = k[0] === 'u' ? 'U' + k[1] : tcode(k);
-      const nm = k[0] === 'u' ? 'Unidad completa' : TOPICS.find(t => t.id === k).name;
-      const act = !list.length ? `<span class="tag">Próximamente</span>` : kind === 'ppt'
-        ? `<button class="btn sm primary" type="button" data-go="ppt-${keyTok(k)}">Ver${list.length > 1 ? ` (${list.length})` : ''}</button>`
-        : list.map((x, i) => podBtn(k, i, x)).join('');
-      const sub = kind === 'pod' && list.length ? list.map(x => `<span class="ds">${esc(x.t || 'Episodio')}${x.dur ? ' · ' + esc(x.dur) : ''}${x.d ? ' — ' + esc(x.d) : ''}</span>`).join('') : '';
-      return `<div class="mrow${list.length ? '' : ' off'}"><span class="code">${code}</span><span class="nm">${nm}${sub}</span><span class="act">${act}</span></div>`;
-    }).join('');
-    return `<div class="unit-h"><h2>Unidad ${u} · ${UNITS[u]}</h2><span>${n ? n + (n > 1 ? (kind === 'ppt' ? ' presentaciones' : ' episodios') : (kind === 'ppt' ? ' presentación' : ' episodio')) : 'sin publicar todavía'}</span></div><div class="mlist">${rows}</div>`;
-  }).join('');
-}
-function renderPPTHome() {
-  const n = mediaCount(PPT);
-  app.innerHTML = `<div class="eyebrow">Presentaciones de clase</div><h1>PPT</h1>
-    <p class="lede">Las presentaciones que vemos en clase, ordenadas por subtema. Ábrelas para repasar antes de practicar.${n ? '' : ' Todavía no hay presentaciones publicadas: tu profesor las irá agregando.'}</p>
-    ${resourceList(PPT, 'ppt')}`;
-}
-function renderPPT(key) {
-  const list = mediaList(PPT, key);
-  const S = SESS['ppt' + key] = SESS['ppt' + key] || { i: 0 };
-  if (S.i >= list.length) S.i = 0;
-  const x = list[S.i];
-  const t = key[0] === 'u' ? null : TOPICS.find(z => z.id === key);
-  const mk = x ? mediaKind(x.url) : null;
-  app.innerHTML = `<button class="crumb" type="button" data-go="ppt">← Todas las presentaciones</button>
-    <div class="eyebrow" style="margin-top:12px">${t ? `Unidad ${t.u} · Subtema ${tcode(t.id)}` : 'Unidad ' + key[1]}</div>
-    <h1>${t ? esc(t.name) : 'Unidad ' + key[1] + ' · ' + UNITS[key[1]]}</h1>
-    ${list.length > 1 ? `<div class="seg" role="group" aria-label="Presentación" style="margin-bottom:12px">${list.map((y, i) => `<button type="button" data-pi="${i}" aria-pressed="${i === S.i}">${esc(y.t || 'Parte ' + (i + 1))}</button>`).join('')}</div>` : ''}
-    ${!x ? `<div class="fb info">Esta presentación todavía no está publicada.</div>` : mk.k === 'frame'
-      ? `<div class="viewer r-${mk.ratio}" id="vw"><iframe src="${esc(mk.src)}" title="${esc(x.t || 'Presentación')}" allowfullscreen loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe></div>`
-      : `<div class="fb info">Esta presentación se abre en otra pestaña.</div>`}
-    <div class="row" style="margin-top:12px">
-      ${x ? `<a class="btn" href="${esc(x.url)}" target="_blank" rel="noopener">Abrir en pestaña nueva</a>` : ''}
-      ${x && mk.k === 'frame' ? `<button class="btn" type="button" id="fs">Pantalla completa</button>` : ''}
-      ${t ? `<button class="btn primary" type="button" data-go="${tid(t.id)}">Practicar ${tcode(t.id)} →</button>` : ''}
-      ${t && mediaList(POD, t.id).length ? `<button class="btn" type="button" data-go="podcast">Escuchar el podcast</button>` : ''}
-    </div>
-    ${x && mk.drive ? `<p class="small muted" style="margin-top:10px">Si no se ve, ábrela en pestaña nueva: el archivo de Drive debe estar compartido como «Cualquier persona con el enlace».</p>` : ''}`;
-  app.querySelectorAll('[data-pi]').forEach(b => b.onclick = () => { S.i = +b.dataset.pi; renderPPT(key); });
-  const fs = $('#fs'); if (fs) fs.onclick = () => { const v = $('#vw'); (v.requestFullscreen || v.webkitRequestFullscreen || (() => { })).call(v); };
-}
-
-/* reproductor fijo: el audio sigue sonando mientras el alumno navega por el taller */
-const POD_HEARD = store.get('podHeard', {});
-let NOW_POD = null;
-const podId = (k, i) => k + '#' + i;
-function podBtn(k, i, x) {
-  const id = podId(k, i), playing = NOW_POD === id;
-  return `<button class="btn sm ${playing ? '' : 'primary'}" type="button" data-pod="${id}">${playing ? 'Sonando' : 'Escuchar'}${mediaList(POD, k).length > 1 ? ' ' + (i + 1) : ''}</button>${POD_HEARD[id] ? '<span class="tag ok">Escuchado</span>' : ''}`;
-}
-function renderPodHome() {
-  const n = mediaCount(POD);
-  app.innerHTML = `<div class="eyebrow">Para escuchar</div><h1>Podcast</h1>
-    <p class="lede">Episodios cortos por subtema. El audio sigue sonando aunque cambies de página, así que puedes escuchar mientras practicas.${n ? '' : ' Todavía no hay episodios publicados: tu profesor los irá agregando.'}</p>
-    ${resourceList(POD, 'pod')}`;
-  bindPodBtns(app);
-}
-function bindPodBtns(root) { root.querySelectorAll('[data-pod]').forEach(b => b.onclick = () => playPod(b.dataset.pod)); }
-function playPod(id) {
-  const [k, i] = id.split('#'), x = mediaList(POD, k)[+i]; if (!x) return;
-  const mk = mediaKind(x.url), dock = $('#dock');
-  NOW_POD = id;
-  const t = k[0] === 'u' ? null : TOPICS.find(z => z.id === k);
-  dock.innerHTML = `<div class="dk-h"><div class="dk-t"><b>${esc(x.t || 'Episodio')}</b><span>${esc(keyLabel(k))}</span></div>
-      <div class="dk-b">${t ? `<button class="btn sm dk-prac" type="button" data-go="${tid(t.id)}">Practicar ${tcode(t.id)}</button>` : ''}
-      <button class="btn sm" type="button" id="dkHeard">${POD_HEARD[id] ? 'Escuchado ✓' : 'Ya lo escuché'}</button>
-      <button class="btn sm dk-x" type="button" id="dkX" aria-label="Cerrar el reproductor" title="Cerrar">×</button></div></div>
-    ${mk.k === 'audio' ? `<div class="dk-p"><audio id="dkA" controls preload="metadata" src="${esc(mk.src)}"></audio>
-        <div class="seg sp" role="group" aria-label="Velocidad">${[0.75, 1, 1.25, 1.5].map(v => `<button type="button" data-sp="${v}" aria-pressed="${v === 1}">${String(v).replace('.', ',')}×</button>`).join('')}</div></div>`
-      : mk.k === 'frame' ? `<div class="dk-f r-${mk.ratio}"><iframe src="${esc(mk.src)}" title="${esc(x.t || 'Podcast')}" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe></div>`
-        : `<p class="small"><a href="${esc(x.url)}" target="_blank" rel="noopener">Abrir el episodio en otra pestaña</a></p>`}`;
-  dock.hidden = false; document.body.classList.add('docked');
-  const A = $('#dkA');
-  if (A) {
-    A.play().catch(() => { });
-    A.addEventListener('ended', () => markHeard(id));
-    dock.querySelectorAll('[data-sp]').forEach(b => b.onclick = () => { A.playbackRate = +b.dataset.sp; dock.querySelectorAll('[data-sp]').forEach(z => z.setAttribute('aria-pressed', z === b)); });
-  }
-  $('#dkHeard').onclick = () => markHeard(id);
-  $('#dkX').onclick = () => { dock.innerHTML = ''; dock.hidden = true; document.body.classList.remove('docked'); NOW_POD = null; if (route === 'podcast') renderPodHome(); };
-  if (route === 'podcast') renderPodHome();
-}
-function markHeard(id) {
-  POD_HEARD[id] = Date.now(); store.set('podHeard', POD_HEARD);
-  const b = $('#dkHeard'); if (b) b.textContent = 'Escuchado ✓';
-  if (route === 'podcast') renderPodHome();
+function renderMediaInfo() {
+  app.innerHTML = `<div class="eyebrow">Economía IB</div><h1>Presentaciones y podcast</h1>
+    <p class="lede">Las presentaciones y el podcast ya no están dentro del Taller, para que la página sea más liviana.</p>
+    ${mediaNote()}
+    <div class="row" style="margin-top:16px"><button class="btn primary" type="button" data-go="empezar">Ir al inicio</button><button class="btn" type="button" data-go="inicio">Ver los temas</button></div>`;
 }
 
 /* =============== 7 · Juegos =============== */
@@ -6576,7 +6458,7 @@ function renderTopicRes(t, B) {
   if (R.ej.length) parts.push(sec('Ejemplos del mundo real', `${R.ej.length} para la Prueba 1 (b) y la Prueba 2 (g)`, `<div class="fgrid">${R.ej.map(ejCard).join('')}</div>`));
   if (R.forms.length) parts.push(sec('Fórmulas', `${R.forms.length} con ejemplo y calculadora`, `<div class="fgrid">${R.forms.map(formCard).join('')}</div>`));
   if (R.calc.length) parts.push(sec('Banco de cálculos · Prueba 2', `${R.calc.length} tipos con números nuevos`, `<div class="rlinks">${R.calc.map(c => `<button class="btn sm" type="button" data-go="calc-${c.k}">${c.n}</button>`).join('')}</div>`));
-  B.innerHTML = parts.length ? parts.join('') : '<p class="muted">Este subtema todavía no tiene recursos conectados.</p>';
+  B.innerHTML = (parts.length ? parts.join('') : '<p class="muted">Este subtema todavía no tiene recursos conectados.</p>') + mediaNote('Busca el episodio y la presentación de este subtema.');
   bindEjCopy(B);
   B.querySelectorAll('[data-fk]').forEach(i => i.oninput = () => formRun(i.dataset.fk));
   R.forms.forEach(F => { if (F.in) formRun(F.k); });
