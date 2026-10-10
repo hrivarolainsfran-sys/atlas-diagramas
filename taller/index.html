@@ -496,6 +496,32 @@ body.docked{padding-bottom:190px}
 .ejmini{background:var(--sheet);border:1px solid var(--rule);border-radius:8px;padding:10px 12px;min-width:0}
 .ejmini .fu{font-weight:700;color:var(--gold)}
 .dstf{display:flex;flex-wrap:wrap;gap:8px;align-items:center;background:var(--gold-soft);border:1px solid var(--gold);border-radius:8px;padding:8px 12px;margin:0 0 12px}
+/* v14: inicio guiado */
+.start-hero{margin-bottom:18px}
+.start-hero h1{margin:4px 0 6px}
+.resume{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:12px}
+.resume .small{width:100%}
+.paths{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.path{background:var(--sheet);border:1px solid var(--rule);border-top:4px solid var(--navy-2);border-radius:var(--r);padding:16px;display:grid;gap:10px;align-content:start}
+.path-p1{border-top-color:var(--gold)}.path-p2{border-top-color:var(--ok)}.path-ei{border-top-color:var(--bad)}
+.pathh{display:flex;gap:12px;align-items:flex-start}
+.pathi{font-size:28px;line-height:1}
+.pathh h2{margin:0;font-size:22px;text-transform:none;letter-spacing:0;color:var(--ink)}
+.pathh p{margin:4px 0 0;color:var(--muted);font-size:14.5px;line-height:1.4;text-transform:none;letter-spacing:0;font-weight:400}
+.psteps{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.pstep{width:100%;display:grid;grid-template-columns:auto minmax(0,1fr) auto auto;gap:10px;align-items:center;text-align:left;background:var(--paper);border:1px solid var(--rule);border-radius:8px;padding:9px 12px;color:var(--ink)}
+.pstep:hover{border-color:var(--navy-2)}
+.psn{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--navy-2);color:#fff;font-weight:700;font-size:14px}
+.pst{display:grid;gap:2px;min-width:0}
+.pst b{font-size:15.5px}
+.pst span{font-size:13.5px;color:var(--muted);line-height:1.35}
+.psa{color:var(--muted);font-weight:700}
+.pall{justify-self:start}
+.qgrid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px}
+.qbtn{display:grid;gap:2px;text-align:left;background:var(--sheet);border:1px solid var(--rule);border-radius:8px;padding:10px 12px;color:var(--ink)}
+.qbtn b{font-size:15px}.qbtn span{font-size:13px;color:var(--muted)}
+.qbtn:hover{border-color:var(--navy-2)}
+@media (max-width:860px){.paths{grid-template-columns:1fr}.qgrid{grid-template-columns:repeat(2,minmax(0,1fr))}.pstep .tag{grid-column:2;justify-self:start}.pstep{grid-template-columns:auto minmax(0,1fr) auto}.pstep .psa{grid-column:3;grid-row:1}}
 /* v7: constructor de diagramas */
 .dbcta{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:6px 16px;align-items:center;width:100%;max-width:1100px;text-align:left;background:var(--gold-soft);border:1.5px solid var(--gold);border-radius:var(--r);padding:14px 18px;margin:4px 0 8px;color:var(--ink)}
 .dbcta:hover{filter:brightness(1.03)}
@@ -604,8 +630,9 @@ td.late{color:var(--bad);font-weight:700}td.soon{color:var(--warn-ink);font-weig
 </head>
 <body>
 <header class="top">
-  <button class="brand" type="button" data-go="inicio"><b>Economía IB</b><span>Taller de práctica</span></button>
+  <button class="brand" type="button" data-go="empezar"><b>Economía IB</b><span>Taller de práctica</span></button>
   <nav class="nav" aria-label="Secciones">
+    <button type="button" data-go="empezar">Inicio</button>
     <button type="button" data-go="inicio">Temas</button>
     <button type="button" data-go="ppt">PPT</button>
     <button type="button" data-go="podcast">Podcast</button>
@@ -1516,10 +1543,11 @@ function setNav(sec) { document.querySelectorAll('.nav button').forEach(b => { c
 const tid = id => 't' + id.replace('.', '-');
 const tcode = id => { const t = TOPICS.find(x => x.id === id); return t && t.code ? t.code : id; };
 function render() {
-  route = location.hash.slice(1) || 'inicio';
+  route = location.hash.slice(1) || 'empezar';
   window.scrollTo(0, 0);
   stopGameTimers();
   updateBadge();
+  if (route === 'empezar') { setNav('empezar'); return renderStart(); }
   if (route.startsWith('t') && TOPICS.some(t => tid(t.id) === route)) { setNav('inicio'); return renderTopic(TOPICS.find(t => tid(t.id) === route)); }
   if (route === 'lab-crear') { setNav('labs'); return labBuild(); }
   if (route.startsWith('lab-') && LABS[route.slice(4)]) { setNav('labs'); return renderLabPage(route.slice(4)); }
@@ -1566,6 +1594,70 @@ function render() {
   if (route.startsWith('exp-') && EXP.some(x => x.id === route.slice(4))) { setNav('escribir'); return renderExplain(EXP.find(x => x.id === route.slice(4))); }
   if (route.startsWith('eva-') && EVA.some(x => x.id === route.slice(4))) { setNav('escribir'); return renderEval(EVA.find(x => x.id === route.slice(4))); }
   setNav('inicio'); renderHome();
+}
+
+/* =============== inicio guiado: ¿qué quieres hacer hoy? =============== */
+function renderStart() {
+  const last = store.get('last', null), lastT = last && TOPICS.find(t => t.id === last);
+  const p2c = P2.find(c => P2S[c.id] && Object.keys(P2S[c.id].ans || {}).length && !P2H.some(h => h.id === c.id));
+  const weak = DEFS.filter(d => DEFST[defKey(d)] && DEFST[defKey(d)].best < 2).length, ec = errCount();
+  const eiN = Object.keys(EI_UNITS).filter(eiStarted).length;
+  const calcT = Object.values(CALC_ST).reduce((a, v) => [a[0] + v.ok, a[1] + v.n], [0, 0]);
+  const resume = [
+    lastT && [tid(lastT.id), `Seguir con ${tcode(lastT.id)} ${esc(lastT.name)}`],
+    P1S.cur && ['escribir-p1', 'Terminar el simulacro de Prueba 1'],
+    p2c && ['p2-' + p2c.id, `Seguir con el caso «${esc(p2c.title)}»`],
+    ec && ['repasar', `Repasar ${ec} ${ec === 1 ? 'error pendiente' : 'errores pendientes'}`],
+    weak && ['escribir-def', `Reforzar ${weak} ${weak === 1 ? 'definición floja' : 'definiciones flojas'}`]
+  ].filter(Boolean).slice(0, 4);
+  const step = (n, go, name, d, tag) => `<li><button type="button" class="pstep" data-go="${go}"><span class="psn">${n}</span><span class="pst"><b>${name}</b><span>${d}</span></span>${tag ? `<span class="tag">${tag}</span>` : ''}<span class="psa" aria-hidden="true">→</span></button></li>`;
+  const path = (k, icon, title, why, steps, cta) => `<article class="path path-${k}"><div class="pathh"><span class="pathi" aria-hidden="true">${icon}</span><div><h2>${title}</h2><p>${why}</p></div></div><ol class="psteps">${steps.join('')}</ol>${cta || ''}</article>`;
+  app.innerHTML = `
+  <section class="start-hero">
+    <div class="eyebrow">Economía IB · Nivel Medio</div>
+    <h1>¿Qué quieres hacer hoy?</h1>
+    <p class="lede">Elige un objetivo y sigue los pasos en orden. No hace falta hacer todo el mismo día: tu avance queda guardado en este dispositivo.</p>
+    ${resume.length ? `<div class="resume"><span class="small muted">Retomar donde quedaste:</span>${resume.map(([g, l], i) => `<button class="btn ${i ? '' : 'primary'} sm" type="button" data-go="${g}">${l}</button>`).join('')}</div>` : ''}
+  </section>
+  <section class="paths">
+    ${path('learn', '📘', 'Aprender un tema', 'Para la clase de esta semana o para ponerte al día.', [
+      step(1, lastT ? tid(lastT.id) : 'inicio', 'Elige el subtema', lastT ? `Seguiste por última vez con ${tcode(lastT.id)}. También puedes elegir otro.` : `${TOPICS.length} subtemas de las cuatro unidades.`),
+      step(2, lastT ? tid(lastT.id) : 'inicio', 'Lee «Lo esencial» y haz la práctica', 'Ejercicios con corrección inmediata y explicación de cada respuesta.'),
+      step(3, lastT ? tid(lastT.id) : 'inicio', 'Abre «Recursos» del subtema', 'Definiciones, ejemplos reales, fórmulas y diagramas del Atlas.'),
+      step(4, 'labs', 'Practica el diagrama', `${Object.keys(LABS).length} laboratorios interactivos y un constructor de diagramas.`)
+    ], `<button class="btn sm pall" type="button" data-go="inicio">Ver todos los temas</button>`)}
+    ${path('p1', '✍️', 'Prepararme para la Prueba 1', 'Ensayo: (a) explicar con diagrama, 10 puntos · (b) evaluar con ejemplos reales, 15 puntos.', [
+      step(1, 'escribir-comandos', 'Entiende qué pide cada pregunta', 'Comandos evaluativos: explicar, analizar, evaluar, discutir…', `${topicDone('cmd')}/${DRILLS.cmd.items.length}`),
+      step(2, 'escribir-explicar', 'Escribe la parte (a)', 'Definiciones, diagrama y cadena causal en 4 pasos.', `${EXP.filter(p => expState(p).done).length}/${EXP.length}`),
+      step(3, 'escribir-evaluar', 'Escribe la parte (b)', 'Pros y contras, plazos, partes interesadas y juicio final.', `${EVA.filter(c => evaState(c).done).length}/${EVA.length}`),
+      step(4, 'escribir-p1', 'Haz un simulacro con reloj', '5 min de lectura y 1 h 15 min; te autocorriges con las bandas.', P1S.hist.length ? `último ${P1S.hist[P1S.hist.length - 1].total}/25` : '')
+    ])}
+    ${path('p2', '📊', 'Prepararme para la Prueba 2', 'Respuesta a datos: definiciones, cálculos, diagramas y una evaluación de 15 puntos.', [
+      step(1, 'escribir-def', 'Aprende las definiciones', 'Parte (a): 2 puntos cada una.', `${Object.keys(DEFST).length}/${DEFS.length}`),
+      step(2, 'escribir-calc', 'Practica los cálculos', 'Los 20 tipos del Nivel Medio, con números nuevos cada vez.', calcT[1] ? `${calcT[0]}/${calcT[1]} bien` : ''),
+      step(3, 'escribir-ej', 'Prepara tus ejemplos reales', 'Para la (g): país, año, dato e impacto.', `${EJ.length} ejemplos`),
+      step(4, 'escribir-p2', 'Haz un caso completo', 'Texto y datos reales, partes (a) a (g), 40 puntos.', P2H.length ? `último ${P2H[P2H.length - 1].total}/40` : `${P2.length} casos`)
+    ], `<button class="btn sm pall" type="button" data-go="formulas">Ver la hoja de fórmulas</button>`)}
+    ${path('ei', '🗂️', 'Preparar la Evaluación Interna', 'Carpeta de tres comentarios sobre noticias reales (30 % de la nota final).', [
+      step(1, 'escribir-conceptos', 'Repasa los conceptos clave', 'Cada comentario se analiza con uno de los nueve conceptos.', `${topicDone('kc')}/${DRILLS.kc.items.length}`),
+      step(2, 'escribir-ei', 'Escribe tu comentario', 'Portada, diagrama, explicación y evaluación, con contador de palabras y criterios A–F.', `${eiN}/3 comentarios`)
+    ])}
+  </section>
+  <section class="quick" aria-label="Repaso rápido">
+    <h2 class="wgroup">¿Tienes solo 10 minutos?<span>repaso rápido</span></h2>
+    <div class="qgrid">
+      <button class="qbtn" type="button" data-go="repasar"><b>Mis errores</b><span>${ec ? `${ec} pendientes` : 'Sin errores pendientes'}</span></button>
+      <button class="qbtn" type="button" data-go="examen"><b>Examen rápido</b><span>Preguntas mezcladas</span></button>
+      <button class="qbtn" type="button" data-go="tarjetas"><b>Tarjetas</b><span>Términos y conceptos</span></button>
+      <button class="qbtn" type="button" data-go="juegos"><b>Juegos</b><span>Aprender jugando</span></button>
+      <button class="qbtn" type="button" data-go="ppt"><b>Presentaciones</b><span>Las de la clase</span></button>
+      <button class="qbtn" type="button" data-go="podcast"><b>Podcast</b><span>Para escuchar</span></button>
+    </div>
+  </section>
+  <details class="essentials" style="margin-top:18px"><summary><b>¿Es tu primera vez aquí?</b></summary><ul>
+    <li>Si estás empezando un tema, usa <b>Aprender un tema</b>. Si se acerca el examen, usa los caminos de la <b>Prueba 1</b> y la <b>Prueba 2</b>.</li>
+    <li>El menú de arriba lleva a todas las secciones: <b>Temas</b> (los ${TOPICS.length} subtemas), <b>Laboratorios</b> (diagramas), <b>Escribir</b> (respuestas de examen y EI), <b>Fórmulas</b>, <b>Juegos</b>, <b>Repasar</b> y el <b>Atlas de diagramas</b>.</li>
+    <li>Tu avance se guarda solo en este navegador. Si borras los datos o cambias de dispositivo, empiezas de cero.</li></ul></details>`;
 }
 
 /* =============== inicio =============== */
