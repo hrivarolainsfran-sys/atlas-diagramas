@@ -1,0 +1,1170 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Tetris educativo de macroeconomía: Unidad 3 de Economía IB.">
+<meta name="author" content="Prof. Econ. Hugo Rivarola">
+<title>Tetris del Ciclo Económico</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700;800&display=swap">
+<style>
+/* Layout: tablero central + panel lateral de cristal; en móvil, una columna con HUD compacto y controles táctiles.
+   Diseño de un solo tema deliberado: cada fase del ciclo económico redefine estas variables. */
+:root{
+  --font-display:'Poppins','Segoe UI',system-ui,sans-serif;
+  --font-body:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --ink:#ffffff;
+  --ink-soft:rgba(255,255,255,.74);
+  --panel:rgba(30,8,48,.34);
+  --panel-line:rgba(255,255,255,.2);
+  --accent:#ffd43b;
+  --accent-ink:#2b1035;
+  --board-shadow:0 24px 60px rgba(40,0,60,.45);
+  --good:#38d97a;
+  --bad:#ff6b6b;
+  --base:#2b1035;
+  color-scheme:dark;
+}
+html,body{height:100%}
+[hidden]{display:none!important}
+body{margin:0;background:var(--base);color:var(--ink);font-family:var(--font-body);overflow:hidden;-webkit-tap-highlight-color:transparent}
+button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+
+/* Fondos que se funden entre fases */
+.bg{position:fixed;inset:0;transition:opacity 1.4s ease;opacity:0;z-index:0}
+.bg.on{opacity:1}
+
+.app{position:relative;z-index:1;height:100%;box-sizing:border-box;display:grid;grid-template-columns:minmax(0,560px) minmax(280px,340px);justify-content:center;gap:28px;padding-block:20px;padding-inline:16px}
+.stage{display:flex;flex-direction:column;gap:12px;min-height:0;min-width:0}
+.board-wrap{flex:1;min-height:0;display:flex;align-items:center;justify-content:center}
+.board-frame{position:relative;border-radius:22px;box-shadow:var(--board-shadow);transition:box-shadow 1s}
+#board{display:block;border-radius:22px;touch-action:none}
+
+/* Panel lateral */
+.panel{display:flex;flex-direction:column;gap:12px;min-height:0;overflow-y:auto;padding-right:4px;scrollbar-width:thin}
+.card{background:var(--panel);border:1px solid var(--panel-line);border-radius:18px;padding:14px 16px;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 8px 24px rgba(0,0,0,.12);transition:background 1s,border-color 1s}
+.eyebrow{font-size:11px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-soft);margin:0 0 6px}
+.brand{font-family:var(--font-display);font-weight:800;font-size:20px;line-height:1.15;margin:0;text-wrap:balance}
+.brand span{color:var(--accent);transition:color 1s}
+.phase-top{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;padding:4px 10px;border-radius:999px;background:var(--accent);color:var(--accent-ink);transition:background 1s,color 1s;white-space:nowrap}
+.chip.ghost{background:rgba(255,255,255,.14);color:var(--ink)}
+.phase-name{font-family:var(--font-display);font-weight:800;font-size:28px;line-height:1.1;margin:8px 0 4px;display:flex;align-items:center;gap:10px}
+.phase-name svg{width:40px;height:26px;flex:none}
+.phase-desc{font-size:13px;line-height:1.5;color:var(--ink-soft);margin:0}
+.progress{margin-top:12px}
+.bar{height:8px;border-radius:99px;background:rgba(255,255,255,.16);overflow:hidden}
+.bar>i{display:block;height:100%;width:0;background:var(--accent);border-radius:99px;transition:width .4s ease,background 1s}
+.progress small{display:block;margin-top:6px;font-size:12px;color:var(--ink-soft)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.stat{background:var(--panel);border:1px solid var(--panel-line);border-radius:14px;padding:10px 12px;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);min-width:0}
+.stat b{display:block;font-family:var(--font-display);font-size:20px;font-weight:700;font-variant-numeric:tabular-nums;overflow:hidden;text-overflow:ellipsis}
+.stat span{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft)}
+.next-row{display:flex;align-items:center;gap:14px}
+#nextCanvas{width:88px;height:88px;flex:none;border-radius:14px;background:rgba(0,0,0,.18)}
+.next-name{font-family:var(--font-display);font-weight:700;font-size:17px;margin:0}
+.next-role{font-size:12px;color:var(--ink-soft);margin:2px 0 0}
+.concept-head{display:flex;align-items:center;gap:12px}
+.sym{width:46px;height:46px;flex:none;border-radius:14px;display:grid;place-items:center;font-family:var(--font-display);font-weight:800;font-size:22px;color:#fff;box-shadow:inset 0 -3px 0 rgba(0,0,0,.18);transition:background .4s}
+.concept-name{font-family:var(--font-display);font-weight:700;font-size:19px;margin:0;line-height:1.2}
+.concept-def{font-size:13.5px;line-height:1.55;margin:10px 0 0;color:var(--ink)}
+.role{font-size:11px;font-weight:600;letter-spacing:.04em;padding:3px 8px;border-radius:99px;background:rgba(255,255,255,.14);display:inline-block;margin-top:4px}
+.gdp-rows{display:grid;gap:7px;margin-top:4px}
+.gdp-row{display:grid;grid-template-columns:22px 1fr 54px;align-items:center;gap:8px;font-size:12px}
+.gdp-row b{font-family:var(--font-display);font-size:13px;text-align:center}
+.gdp-row .bar{height:10px}
+.gdp-row em{font-style:normal;text-align:right;font-variant-numeric:tabular-nums;color:var(--ink-soft)}
+.gdp-total{display:flex;justify-content:space-between;align-items:baseline;margin-top:10px;padding-top:10px;border-top:1px solid var(--panel-line)}
+.gdp-total span{font-size:12px;color:var(--ink-soft)}
+.gdp-total b{font-family:var(--font-display);font-size:20px;font-variant-numeric:tabular-nums}
+.formula{font-size:12px;color:var(--ink-soft);margin:6px 0 0}
+.dets{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.keys{font-size:12px;color:var(--ink-soft);line-height:1.8;margin:0}
+kbd{font-family:var(--font-body);font-size:11px;font-weight:600;padding:2px 6px;border-radius:6px;background:rgba(255,255,255,.16);border:1px solid var(--panel-line)}
+.btn{border:0;cursor:pointer;border-radius:14px;padding:12px 18px;font-weight:700;background:var(--accent);color:var(--accent-ink);box-shadow:0 6px 18px rgba(0,0,0,.2);transition:transform .15s,background 1s,color 1s}
+.btn:hover{transform:translateY(-1px)}
+.btn:active{transform:translateY(1px)}
+.btn.soft{background:rgba(255,255,255,.16);color:var(--ink);box-shadow:none}
+
+/* HUD móvil */
+.mhud,.mconcept{display:none}
+
+/* Controles táctiles */
+.controls{display:none;grid-template-columns:repeat(5,1fr);gap:10px;touch-action:none;user-select:none;-webkit-user-select:none}
+.ctl{height:58px;border-radius:18px;border:1px solid var(--panel-line);background:var(--panel);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);display:grid;place-items:center;cursor:pointer;touch-action:none;transition:transform .08s,background .2s}
+.ctl svg{width:26px;height:26px;fill:none;stroke:var(--ink);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.ctl.on,.ctl:active{transform:scale(.94);background:rgba(255,255,255,.28)}
+.ctl.primary{background:var(--accent)}
+.ctl.primary svg{stroke:var(--accent-ink)}
+@media (pointer:coarse){.controls{display:grid}.keys-card{display:none}}
+
+/* Capas sobre el tablero */
+.overlay{position:absolute;inset:0;border-radius:22px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;text-align:center;padding:24px;box-sizing:border-box;background:rgba(10,4,20,.62);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.overlay h1,.overlay h2{font-family:var(--font-display);font-weight:800;margin:0;line-height:1.1;text-wrap:balance}
+.overlay h1{font-size:clamp(24px,5vw,32px)}
+.overlay h2{font-size:26px}
+.overlay p{margin:0;font-size:14px;line-height:1.55;color:var(--ink-soft);max-width:30ch}
+.overlay .legend{display:grid;grid-template-columns:repeat(2,auto);gap:6px 14px;font-size:12.5px;text-align:left}
+.overlay .legend span{display:flex;align-items:center;gap:6px}
+.overlay .legend i{width:20px;height:20px;border-radius:6px;display:grid;place-items:center;font-style:normal;font-family:var(--font-display);font-weight:800;font-size:11px;color:#fff}
+.final{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;width:100%;max-width:260px}
+.final div{background:rgba(255,255,255,.1);border-radius:12px;padding:8px}
+.final b{display:block;font-family:var(--font-display);font-size:20px;font-variant-numeric:tabular-nums}
+.final span{font-size:11px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.06em}
+
+.toast{position:absolute;left:12px;right:12px;bottom:12px;padding:12px 14px;border-radius:16px;background:rgba(255,255,255,.94);color:#1d1530;box-shadow:0 12px 30px rgba(0,0,0,.3);font-size:13.5px;line-height:1.45;cursor:pointer;animation:toastIn .45s cubic-bezier(.2,.9,.3,1.2)}
+.toast .t-tag{display:flex;justify-content:space-between;gap:8px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#6b5a86;margin-bottom:4px}
+.toast .t-tag b{color:#1d1530}
+.toast .t-time{height:3px;border-radius:3px;background:#e7e1f2;margin-top:8px;overflow:hidden}
+.toast .t-time i{display:block;height:100%;background:#7c5cff;animation:shrink 6s linear forwards}
+@keyframes toastIn{from{transform:translateY(24px) scale(.96);opacity:0}to{transform:none;opacity:1}}
+@keyframes shrink{from{width:100%}to{width:0}}
+
+/* Pregunta rápida */
+.modal{position:fixed;inset:0;z-index:20;display:grid;place-items:center;padding-inline:16px;background:rgba(8,4,18,.55);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
+.quiz{width:100%;max-width:440px;box-sizing:border-box;background:#fbfaff;color:#1d1530;border-radius:24px;padding:22px;box-shadow:0 30px 80px rgba(0,0,0,.45);animation:pop .4s cubic-bezier(.2,.9,.3,1.2)}
+@keyframes pop{from{transform:scale(.9) translateY(10px);opacity:0}to{transform:none;opacity:1}}
+.quiz .q-tag{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:#6b5a86}
+.quiz .q-tag .chip{background:#7c5cff;color:#fff}
+.quiz h3{font-family:var(--font-display);font-size:19px;line-height:1.3;margin:10px 0 14px;text-wrap:balance}
+.opts{display:grid;gap:8px}
+.opt{text-align:left;border:2px solid #e7e1f2;background:#fff;border-radius:14px;padding:11px 14px;font-size:14.5px;line-height:1.35;cursor:pointer;display:flex;gap:10px;align-items:flex-start;transition:border-color .15s,background .15s,transform .1s;color:#1d1530}
+.opt:hover:not(:disabled){border-color:#7c5cff;transform:translateX(2px)}
+.opt kbd{background:#efeaf9;border-color:#e0d8f0;color:#4a3d63;flex:none}
+.opt.ok{border-color:#20b866;background:#e8f9ef}
+.opt.ko{border-color:#f25555;background:#fdecec}
+.opt:disabled{cursor:default}
+.explain{margin-top:14px;padding:12px 14px;border-radius:14px;background:#f2eefc;font-size:13.5px;line-height:1.5}
+.explain b{display:block;margin-bottom:2px}
+.quiz .btn{width:100%;margin-top:14px;background:#7c5cff;color:#fff}
+
+/* Cambio de fase */
+.banner{position:fixed;inset:0;z-index:30;display:grid;place-items:center;padding-inline:16px;pointer-events:auto;cursor:pointer}
+.banner-card{text-align:center;max-width:460px;animation:bannerIn .9s cubic-bezier(.2,.9,.25,1) both}
+.banner-card .lvl{font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft)}
+.banner-card h2{font-family:var(--font-display);font-weight:800;font-size:clamp(44px,12vw,76px);line-height:1;margin:6px 0 10px;color:var(--ink);text-shadow:0 10px 40px rgba(0,0,0,.35)}
+.banner-card p{font-size:15px;line-height:1.55;margin:0 auto;max-width:36ch;color:var(--ink)}
+.banner-card svg{width:120px;height:60px;margin-bottom:6px}
+.banner-card svg path{stroke-dasharray:240;stroke-dashoffset:240;animation:draw 1.2s .3s ease forwards}
+.banner-card small{display:block;margin-top:18px;font-size:12px;color:var(--ink-soft)}
+.banner::before{content:"";position:absolute;inset:0;background:rgba(0,0,0,.35);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);animation:fade .5s both}
+.banner-card{position:relative}
+@keyframes bannerIn{from{opacity:0;transform:translateY(30px) scale(.96)}to{opacity:1;transform:none}}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes fade{from{opacity:0}}
+
+.flash{animation:flash .6s ease}
+@keyframes flash{0%{transform:scale(1)}30%{transform:scale(1.08)}100%{transform:scale(1)}}
+
+@media (max-width:760px){
+  .app{grid-template-columns:minmax(0,1fr);padding-block:10px;gap:0}
+  .panel{display:none}
+  .stage{gap:10px}
+  .mhud{display:flex;align-items:center;gap:10px}
+  .mhud .mphase{flex:1;min-width:0}
+  .mhud .mphase b{display:block;font-family:var(--font-display);font-size:17px;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .mhud .mphase .bar{height:5px;margin-top:5px}
+  .mhud .mscore{text-align:right}
+  .mhud .mscore b{display:block;font-family:var(--font-display);font-size:19px;font-variant-numeric:tabular-nums;line-height:1.1}
+  .mhud .mscore span,.mhud .mphase span{font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft)}
+  #mNext{width:46px;height:46px;border-radius:12px;background:var(--panel);border:1px solid var(--panel-line);flex:none}
+  .icon-btn{width:46px;height:46px;border-radius:12px;border:1px solid var(--panel-line);background:var(--panel);display:grid;place-items:center;cursor:pointer;flex:none}
+  .icon-btn svg{width:20px;height:20px;fill:none;stroke:var(--ink);stroke-width:2.4;stroke-linecap:round}
+  .mconcept{display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:16px;background:var(--panel);border:1px solid var(--panel-line);min-width:0}
+  .mconcept .sym{width:34px;height:34px;border-radius:10px;font-size:17px}
+  .mconcept div{min-width:0}
+  .mconcept b{font-family:var(--font-display);font-size:14px;display:block}
+  .mconcept p{margin:0;font-size:12px;line-height:1.35;color:var(--ink-soft);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .controls{display:grid}
+  .ctl{height:56px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
+</style>
+</head>
+<body>
+
+<div class="bg on" id="bgA"></div>
+<div class="bg" id="bgB"></div>
+
+<main class="app">
+  <section class="stage">
+    <header class="mhud">
+      <div class="mphase"><span id="mLevel">Nivel 1</span><b id="mPhase">Auge</b><div class="bar"><i id="mProg"></i></div></div>
+      <div class="mscore"><span>Puntos</span><b id="mScore">0</b></div>
+      <canvas id="mNext" aria-label="Siguiente pieza"></canvas>
+      <button class="icon-btn" id="mPause" aria-label="Pausar"><svg viewBox="0 0 24 24"><path d="M9 6v12M15 6v12"/></svg></button>
+    </header>
+
+    <div class="board-wrap" id="boardWrap">
+      <div class="board-frame" id="boardFrame">
+        <canvas id="board" aria-label="Tablero de juego"></canvas>
+        <div class="overlay" id="overlay"></div>
+        <div class="toast" id="toast" hidden></div>
+      </div>
+    </div>
+
+    <div class="mconcept" id="mConcept">
+      <div class="sym" id="mSym">C</div>
+      <div><b id="mName">Consumo</b><p id="mDef"></p></div>
+    </div>
+
+    <nav class="controls" aria-label="Controles táctiles">
+      <button class="ctl" data-act="left" aria-label="Mover a la izquierda"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
+      <button class="ctl" data-act="right" aria-label="Mover a la derecha"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
+      <button class="ctl primary" data-act="rotate" aria-label="Rotar"><svg viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.6-5.9"/><path d="M20 4v5h-5"/></svg></button>
+      <button class="ctl" data-act="down" aria-label="Bajar más rápido"><svg viewBox="0 0 24 24"><path d="M12 5v14M6 13l6 6 6-6"/></svg></button>
+      <button class="ctl" data-act="hard" aria-label="Soltar la pieza"><svg viewBox="0 0 24 24"><path d="M6 5l6 6 6-6M6 11l6 6 6-6M5 20h14"/></svg></button>
+    </nav>
+  </section>
+
+  <aside class="panel" aria-label="Panel de juego">
+    <div class="card">
+      <p class="brand">Tetris del <span>Ciclo Económico</span></p>
+    </div>
+
+    <div class="card">
+      <div class="phase-top"><span class="chip" id="levelChip">Nivel 1</span><span class="chip ghost" id="cycleChip">Ciclo 1</span></div>
+      <div class="phase-name"><span id="phaseName">Auge</span><svg id="phaseIcon" viewBox="0 0 40 26"></svg></div>
+      <p class="phase-desc" id="phaseDesc"></p>
+      <div class="progress"><div class="bar"><i id="prog"></i></div><small id="progTxt"></small></div>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><span>Puntos</span><b id="score">0</b></div>
+      <div class="stat"><span>Líneas</span><b id="lines">0</b></div>
+      <div class="stat"><span>Récord</span><b id="best">0</b></div>
+    </div>
+
+    <div class="card">
+      <p class="eyebrow">Siguiente pieza</p>
+      <div class="next-row">
+        <canvas id="nextCanvas"></canvas>
+        <div><p class="next-name" id="nextName">—</p><p class="next-role" id="nextRole"></p></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <p class="eyebrow">Estás construyendo</p>
+      <div class="concept-head">
+        <div class="sym" id="sym">C</div>
+        <div><p class="concept-name" id="cName">Consumo</p><span class="role" id="cRole"></span></div>
+      </div>
+      <p class="concept-def" id="cDef"></p>
+    </div>
+
+    <div class="card">
+      <p class="eyebrow">Tu PIB · método del gasto</p>
+      <div class="gdp-rows" id="gdpRows"></div>
+      <div class="gdp-total"><span>PIB = C + I + G + (X − M)</span><b id="gdpTotal">0</b></div>
+      <p class="formula">Cada pieza colocada suma 20 mil millones a su componente. Las importaciones (M) restan.</p>
+      <div class="dets"><span class="chip ghost" id="detI">Tasa de interés ×0</span><span class="chip ghost" id="detP">Inflación ×0</span></div>
+    </div>
+
+    <div class="card keys-card">
+      <p class="eyebrow">Controles</p>
+      <p class="keys"><kbd>←</kbd> <kbd>→</kbd> mover · <kbd>↑</kbd> rotar · <kbd>Z</kbd> rotar al revés<br><kbd>↓</kbd> bajar · <kbd>Espacio</kbd> soltar · <kbd>P</kbd> pausa</p>
+      <button class="btn soft" id="pauseBtn" style="margin-top:10px;width:100%">Pausar</button>
+    </div>
+  </aside>
+</main>
+
+<div class="modal" id="quizModal" hidden>
+  <div class="quiz" role="dialog" aria-modal="true" aria-labelledby="qText">
+    <div class="q-tag"><span class="chip">Pregunta rápida</span><span id="qUnit"></span></div>
+    <h3 id="qText"></h3>
+    <div class="opts" id="qOpts"></div>
+    <div class="explain" id="qExplain" hidden></div>
+    <button class="btn" id="qNext" hidden>Seguir jugando</button>
+  </div>
+</div>
+
+<div class="banner" id="banner" hidden>
+  <div class="banner-card">
+    <svg id="bIcon" viewBox="0 0 120 60"></svg>
+    <div class="lvl" id="bLevel">Nivel 1</div>
+    <h2 id="bName">Auge</h2>
+    <p id="bDesc"></p>
+    <small>Toca para continuar</small>
+  </div>
+</div>
+
+<script>
+(() => {
+'use strict';
+
+/* =========================================================================
+   CONTENIDO DIDÁCTICO
+   Para añadir unidades nuevas basta con agregar objetos a DATOS y PREGUNTAS.
+   ========================================================================= */
+
+// Cada tetrominó representa un concepto macroeconómico.
+const CONCEPTOS = {
+  I: { sym:'C', nombre:'Consumo', rol:'Componente de la DA',
+       def:'Gasto de los hogares en bienes y servicios finales. En los países más desarrollados es alrededor del 70 % del PIB; por eso es la pieza larga.' },
+  O: { sym:'I', nombre:'Inversión', rol:'Inyección · Componente de la DA',
+       def:'Gasto de las empresas en bienes de capital, como fábricas y maquinaria. Aumenta la capacidad productiva futura.' },
+  T: { sym:'G', nombre:'Gasto público', rol:'Inyección · Componente de la DA',
+       def:'Gasto del gobierno en servicios públicos como sanidad y educación (30–40 % del PIB). Las transferencias, como los subsidios, no cuentan en la DA.' },
+  S: { sym:'X', nombre:'Exportaciones', rol:'Inyección',
+       def:'Bienes y servicios producidos en el país y vendidos en el extranjero. Traen fondos al flujo circular de la renta.' },
+  Z: { sym:'M', nombre:'Importaciones', rol:'Fuga',
+       def:'Bienes y servicios producidos fuera y comprados en el país. Sacan fondos del flujo circular y restan en (X − M).' },
+  J: { sym:'i', nombre:'Tasa de interés', rol:'Determinante de C e I',
+       def:'Coste de pedir prestado y recompensa por ahorrar. Si sube, el consumo y la inversión bajan; si baja, suben.' },
+  L: { sym:'π', nombre:'Inflación', rol:'Nivel de precios',
+       def:'Subida del nivel medio de precios. Si la DA crece cerca del pleno empleo, aparece una brecha inflacionaria.' }
+};
+
+const DATOS = [
+  { u:'3.2(1)', t:'Demanda agregada: DA = C + I + G + (X − M). Si cambia cualquiera de sus componentes, la curva DA se desplaza.' },
+  { u:'3.2(1)', t:'El consumo representa alrededor del 70 % del PIB en los países económicamente más desarrollados.' },
+  { u:'3.2(1)', t:'El gasto público suele situarse entre el 30 % y el 40 % del PIB.' },
+  { u:'3.1(1)', t:'Inyecciones al flujo circular: inversión, gasto público y exportaciones. Fugas: ahorro, impuestos e importaciones.' },
+  { u:'3.1(1)', t:'Renta = producción = gasto. Por eso el PIB se puede medir con tres métodos: ingresos, producción y gasto.' },
+  { u:'3.1(1)', t:'Una recesión se define técnicamente como dos trimestres consecutivos de crecimiento negativo del PIB real.' },
+  { u:'3.1(1)', t:'En los países más desarrollados, la tasa de crecimiento tendencial suele rondar el 2–3 % anual.' },
+  { u:'3.1(1)', t:'INB per cápita = INB ÷ población. Ejemplo del texto: 20,84 billones $ ÷ 328 millones ≈ 63.537 $ por persona.' },
+  { u:'3.1(1)', t:'PIB real = PIB nominal ÷ deflactor × 100. Ejemplo: 1792 ÷ 96 × 100 ≈ 1867.' },
+  { u:'3.1(1)', t:'Pensiones, becas y prestaciones por desempleo son transferencias: no se suman al PIB porque no hay producción detrás.' },
+  { u:'3.1(1)', t:'Valor añadido: si un fabricante compra materiales por 4.000 $ y vende el coche por 10.000 $, añade 6.000 $.' },
+  { u:'3.1(1)', t:'Solo se cuentan los bienes finales en el PIB. Contar también los intermedios produciría doble contabilización.' },
+  { u:'3.1(2)', t:'El IDH combina esperanza de vida, años de escolaridad e ingreso per cápita. Va de 0 a 1: cuanto más cerca de 1, más desarrollo.' },
+  { u:'3.1(2)', t:'El Índice para una Vida Mejor de la OCDE usa 11 criterios, entre ellos vivienda, empleo, salud, seguridad y equilibrio vida-trabajo.' },
+  { u:'3.1(2)', t:'Costa Rica obtiene 44,7 en el Índice del Planeta Feliz, muy por encima de su vecino más rico, Estados Unidos.' },
+  { u:'3.1(2)', t:'La PPA compara el precio de una misma cesta de bienes en distintos países para convertir el INB a una moneda común.' },
+  { u:'3.1(2)', t:'El INB per cápita es un promedio: puede ser alto aunque la renta esté concentrada en unos pocos.' },
+  { u:'3.2(1)', t:'La crisis crediticia de 2008 hundió la confianza del consumidor en EE. UU., redujo el gasto y llevó a la recesión.' },
+  { u:'3.2(1)', t:'La confianza del consumidor es un indicador adelantado: ayuda a prever el crecimiento futuro.' },
+  { u:'3.2(1)', t:'La confianza empresarial se suele medir con el Índice de Gerentes de Compras (PMI).' },
+  { u:'3.2(1)', t:'Una depreciación abarata las exportaciones y encarece las importaciones: suben las exportaciones netas y la DA.' },
+  { u:'3.2(1)', t:'Efecto riqueza: cuando sube el precio de la vivienda, los hogares se sienten más ricos y consumen más.' },
+  { u:'3.2(2)', t:'Si el IVA sube del 20 % al 25 %, aumentan los costes y la oferta agregada a corto plazo (SRAS) se desplaza a la izquierda.' },
+  { u:'3.2(2)', t:'La LRAS es vertical en el ingreso de pleno empleo (YFE): ahí se usan plenamente los recursos de la economía.' },
+  { u:'3.2(2)', t:'Keynes: los salarios son rígidos a la baja (salario mínimo, sindicatos), así que la economía puede quedarse atascada en recesión.' },
+  { u:'3.2(2)', t:'La LRAS se desplaza a la derecha con más trabajadores, mejor formación, más capital, nueva tecnología o nuevos recursos.' },
+  { u:'3.3(1)', t:'Crecimiento a corto plazo: sube la producción real (movimiento dentro de la CPP). A largo plazo: sube la producción potencial (la CPP se desplaza).' },
+  { u:'3.3(1)', t:'Según el texto, los multimillonarios pasaron de 1.011 en 2010 a 2.095 en 2020: el crecimiento puede ampliar la desigualdad.' },
+  { u:'3.3(1)', t:'Coste del crecimiento: si los hogares ganan más, compran más importaciones y puede empeorar el déficit por cuenta corriente.' }
+];
+
+const PREGUNTAS = [
+  { u:'3.2(1)', q:'¿Qué componente de la demanda agregada suele ser el más grande en los países más desarrollados?',
+    o:['Consumo','Inversión','Gasto público','Exportaciones netas'], a:0,
+    e:'El consumo de los hogares representa alrededor del 70 % del PIB.' },
+  { u:'3.2(1)', q:'El banco central baja los tipos de interés. ¿Qué ocurre con la demanda agregada?',
+    o:['Aumenta, porque suben el consumo y la inversión','Disminuye, porque la gente ahorra más','No cambia'], a:0,
+    e:'Pedir prestado sale más barato y ahorrar rinde menos: suben C e I y la curva DA se desplaza a la derecha.' },
+  { u:'3.1(1)', q:'¿Cuál de estos flujos es una fuga del flujo circular de la renta?',
+    o:['El ahorro de los hogares','La inversión','Las exportaciones','El gasto público'], a:0,
+    e:'Las fugas son ahorro, impuestos e importaciones. Inversión, gasto público y exportaciones son inyecciones.' },
+  { u:'3.1(1)', q:'¿Cuál de estos flujos es una inyección al flujo circular?',
+    o:['Los impuestos','Las importaciones','Las exportaciones','El ahorro'], a:2,
+    e:'Las exportaciones traen dinero del extranjero a la economía nacional.' },
+  { u:'3.1(1)', q:'Técnicamente, ¿cuándo hay una recesión?',
+    o:['Cuando la inflación supera el 10 %','Con dos trimestres consecutivos de crecimiento negativo del PIB real','Cuando cae el valor de las exportaciones','Cuando sube el desempleo un mes'], a:1,
+    e:'La definición técnica es dos trimestres seguidos de caída del PIB real.' },
+  { u:'3.1(1)', q:'¿Por qué el PIB solo incluye bienes y servicios finales?',
+    o:['Para evitar la doble contabilización','Porque los intermedios no tienen precio','Porque los intermedios siempre son importados'], a:0,
+    e:'Si se contara el televisor al venderse al minorista y otra vez al consumidor, se contaría dos veces.' },
+  { u:'3.1(1)', q:'Un concesionario compra un coche por 10.000 $ y lo vende por 14.000 $. ¿Cuál es su valor añadido?',
+    o:['14.000 $','10.000 $','4.000 $','24.000 $'], a:2,
+    e:'Valor añadido = precio de venta − coste de los insumos = 14.000 − 10.000 = 4.000 $.' },
+  { u:'3.1(1)', q:'¿Cómo se calcula el INB?',
+    o:['PIB + renta neta de la propiedad del extranjero','PIB − impuestos','PIB + exportaciones','PIB ÷ población'], a:0,
+    e:'INB = PIB + renta neta de la propiedad (intereses, beneficios y alquileres que entran menos los que salen).' },
+  { u:'3.1(1)', q:'El PIB nominal de un país crece un 3 % y la inflación es del 3 %. ¿Cuánto ha crecido de verdad?',
+    o:['Aproximadamente un 6 %','Aproximadamente un 3 %','Aproximadamente un 0 %'], a:2,
+    e:'Ajustado por inflación, el crecimiento real es casi nulo. Por eso usamos el PIB real.' },
+  { u:'3.1(1)', q:'¿Qué pago NO se incluye al medir el PIB por el método de ingresos?',
+    o:['Salarios','Beneficios','Pensiones y becas','Alquileres'], a:2,
+    e:'Las pensiones y becas son transferencias: nadie produjo nada a cambio.' },
+  { u:'3.2(1)', q:'¿Qué tipo de gasto público NO forma parte de la demanda agregada?',
+    o:['Salarios de profesores y médicos','Construcción de carreteras','Subsidios por desempleo'], a:2,
+    e:'Las transferencias como los subsidios no generan producción, así que no se suman a la DA.' },
+  { u:'3.2(1)', q:'La moneda de un país se deprecia. ¿Qué es lo más probable?',
+    o:['Suben las exportaciones netas y la DA','Bajan las exportaciones','Suben las importaciones'], a:0,
+    e:'Las exportaciones se abaratan fuera y las importaciones se encarecen dentro: X − M sube.' },
+  { u:'3.2(1)', q:'Los hogares tienen mucha deuda. ¿Qué pasa con su consumo?',
+    o:['Aumenta','Disminuye','No cambia'], a:1,
+    e:'Destinan más ingresos a pagar deuda e intereses y les queda menos para consumir.' },
+  { u:'3.2(1)', q:'¿Qué índice mide habitualmente la confianza empresarial?',
+    o:['El IDH','El PMI (Índice de Gerentes de Compras)','El Índice del Planeta Feliz'], a:1,
+    e:'El PMI recoge las expectativas de los gerentes sobre ventas y beneficios futuros.' },
+  { u:'3.1(2)', q:'¿Qué tres dimensiones combina el Índice de Desarrollo Humano (IDH)?',
+    o:['Felicidad, clima y seguridad','Salud, educación e ingreso','Exportaciones, inversión y consumo'], a:1,
+    e:'Esperanza de vida, años de escolaridad e ingreso per cápita, en un valor entre 0 y 1.' },
+  { u:'3.1(2)', q:'¿Por qué se usa la paridad del poder adquisitivo (PPA) para comparar países?',
+    o:['Porque los tipos de cambio de mercado cambian cada día y distorsionan la comparación','Porque elimina la inflación','Porque mide la felicidad'], a:0,
+    e:'La PPA compara el coste de una misma cesta de bienes, lo que refleja mejor el nivel de vida real.' },
+  { u:'3.1(2)', q:'¿Cuál es una limitación del INB per cápita para medir el bienestar?',
+    o:['No tiene en cuenta la distribución del ingreso','Es muy difícil de calcular','Solo se publica cada diez años'], a:0,
+    e:'Es un promedio: un país puede tener un INB per cápita alto con mucha desigualdad.' },
+  { u:'3.1(2)', q:'El Índice del Planeta Feliz premia a los países que…',
+    o:['exportan más','tienen menor huella ecológica','tienen más multimillonarios'], a:1,
+    e:'Mide el bienestar sostenible: combina bienestar, esperanza de vida, desigualdad y huella ecológica.' },
+  { u:'3.2(2)', q:'Suben los salarios y el coste de las materias primas. ¿Qué le pasa a la SRAS?',
+    o:['Se desplaza a la derecha','Se desplaza a la izquierda','Se vuelve vertical'], a:1,
+    e:'Aumentan los costes empresariales, así que la oferta agregada a corto plazo disminuye.' },
+  { u:'3.2(2)', q:'Para los monetaristas/neoclásicos, la LRAS es vertical en…',
+    o:['el ingreso de pleno empleo (YFE)','el nivel de precios cero','el punto de máxima inflación'], a:0,
+    e:'A largo plazo, la economía tiende al nivel de producción en el que se usan plenamente los recursos.' },
+  { u:'3.2(2)', q:'Según Keynes, ¿qué pasa si hay una brecha deflacionaria?',
+    o:['La economía se corrige sola rápidamente','La economía puede quedarse atascada; el gobierno debe intervenir','La inflación se dispara'], a:1,
+    e:'Los salarios son rígidos a la baja, así que hace falta una política fiscal o monetaria expansiva.' },
+  { u:'3.2(2)', q:'En la fase 3 de la curva keynesiana (pleno empleo), si sube la DA…',
+    o:['solo sube el PIB real','solo sube el nivel de precios','bajan los precios'], a:1,
+    e:'No queda capacidad ociosa: la producción no puede crecer y lo que sube es la inflación.' },
+  { u:'3.2(2)', q:'¿Cuál de estos factores desplaza la LRAS a la derecha?',
+    o:['Una subida del IVA','Mejor educación y formación de los trabajadores','Una caída de la confianza del consumidor'], a:1,
+    e:'Más productividad laboral aumenta la producción potencial de la economía.' },
+  { u:'3.2(2)', q:'En una brecha inflacionaria, el desempleo está…',
+    o:['por encima de su tasa natural','por debajo de su tasa natural','exactamente en cero'], a:1,
+    e:'El ingreso de equilibrio supera al de pleno empleo, así que falta mano de obra y suben los salarios.' },
+  { u:'3.3(1)', q:'¿Qué representa un desplazamiento hacia fuera de la CPP?',
+    o:['Crecimiento a corto plazo (producción real)','Crecimiento a largo plazo (producción potencial)','Una recesión'], a:1,
+    e:'Moverse dentro de la CPP es crecimiento a corto plazo; desplazar la curva es aumentar el potencial.' },
+  { u:'3.3(1)', q:'¿Cuál es un coste posible del crecimiento económico?',
+    o:['Más externalidades negativas, como la contaminación','Menos empleo','Menos recaudación de impuestos'], a:0,
+    e:'Más producción y consumo pueden aumentar la contaminación y dañar la sostenibilidad.' },
+  { u:'3.3(1)', q:'¿Cómo se calcula la tasa de crecimiento económico?',
+    o:['(PIB real actual − PIB real anterior) ÷ PIB real anterior × 100','PIB nominal ÷ población','PIB real × inflación'], a:0,
+    e:'Es la variación porcentual anual del PIB real.' },
+  { u:'3.1(1)', q:'¿En qué fase del ciclo económico el crecimiento supera la tasa tendencial y baja el desempleo?',
+    o:['Recesión','Auge','Desaceleración'], a:1,
+    e:'En el auge suben los ingresos, baja el desempleo y la inflación tiende a subir.' }
+];
+
+/* =========================================================================
+   FASES DEL CICLO ECONÓMICO (una por nivel, se repiten en ciclos)
+   ========================================================================= */
+const FASES = [
+  { nombre:'Auge',
+    desc:'El crecimiento supera la tasa tendencial: suben los ingresos, baja el desempleo y aumenta la inflación.',
+    bg:'radial-gradient(circle at 15% 12%, rgba(255,230,109,.75) 0, transparent 38%), radial-gradient(circle at 88% 85%, rgba(132,94,247,.8) 0, transparent 45%), linear-gradient(135deg,#ff6b6b 0%,#f0508f 48%,#9b5cf6 100%)',
+    base:'#a83279', board:'rgba(48,10,62,.62)', grid:'dots', gridColor:'rgba(255,255,255,.28)', style:'glossy', symInk:'rgba(60,20,70,.72)',
+    vars:{ '--panel':'rgba(48,10,62,.34)', '--panel-line':'rgba(255,255,255,.24)', '--accent':'#ffe066', '--accent-ink':'#3b0f45', '--ink-soft':'rgba(255,255,255,.8)', '--board-shadow':'0 24px 60px rgba(90,0,80,.45)' },
+    trend:'M4 52 C 30 46, 50 30, 70 20 S 105 8, 116 6',
+    colors:{ I:'#ffd43b', O:'#ff922b', T:'#69db7c', S:'#3bc9db', Z:'#ff6b81', J:'#748ffc', L:'#f783ac' } },
+  { nombre:'Desaceleración',
+    desc:'La economía pasa su máximo: el crecimiento se frena, los ingresos suben más despacio y el desempleo empieza a subir.',
+    bg:'radial-gradient(ellipse at 50% 120%, rgba(255,175,123,.85) 0, transparent 55%), linear-gradient(170deg,#2a1450 0%,#6a2c70 45%,#c0605f 80%,#f2a65a 100%)',
+    base:'#5a2a63', board:'rgba(32,12,44,.66)', grid:'lines', gridColor:'rgba(255,220,200,.09)', style:'flat', symInk:'rgba(40,16,40,.6)',
+    vars:{ '--panel':'rgba(36,14,48,.4)', '--panel-line':'rgba(255,214,190,.22)', '--accent':'#f8b26a', '--accent-ink':'#3a1734', '--ink-soft':'rgba(255,236,224,.74)', '--board-shadow':'0 24px 60px rgba(60,10,40,.5)' },
+    trend:'M4 40 C 30 22, 50 12, 70 14 S 100 26, 116 34',
+    colors:{ I:'#f6bd60', O:'#f28482', T:'#a3c4a8', S:'#f5cac3', Z:'#d47a8f', J:'#b8a1d9', L:'#ffcdb2' } },
+  { nombre:'Recesión',
+    desc:'El PIB real cae durante dos trimestres seguidos: bajan los ingresos, sube el desempleo y la inflación se modera.',
+    bg:'repeating-linear-gradient(135deg, rgba(255,255,255,.025) 0 2px, transparent 2px 14px), radial-gradient(circle at 80% 0%, rgba(116,192,252,.25) 0, transparent 50%), linear-gradient(180deg,#0b1626 0%,#16283d 55%,#24425a 100%)',
+    base:'#13243a', board:'rgba(4,10,20,.74)', grid:'dashed', gridColor:'rgba(160,200,240,.12)', style:'frost', symInk:'rgba(225,240,255,.9)',
+    vars:{ '--panel':'rgba(10,22,38,.55)', '--panel-line':'rgba(160,200,240,.2)', '--accent':'#74c0fc', '--accent-ink':'#0b1626', '--ink-soft':'rgba(214,230,245,.7)', '--board-shadow':'0 24px 60px rgba(0,0,0,.55)' },
+    trend:'M4 10 C 30 12, 50 24, 70 38 S 100 52, 116 54',
+    colors:{ I:'#a5d8ff', O:'#74c0fc', T:'#91a7ff', S:'#99e9f2', Z:'#adb5bd', J:'#b197fc', L:'#e7f5ff' } },
+  { nombre:'Recuperación',
+    desc:'La economía sale de la recesión: el PIB real vuelve a crecer, primero lento y luego más rápido. El desempleo empieza a bajar.',
+    bg:'radial-gradient(circle at 85% 15%, rgba(216,245,162,.6) 0, transparent 42%), radial-gradient(circle at 10% 90%, rgba(56,217,169,.45) 0, transparent 40%), linear-gradient(145deg,#073b3a 0%,#0f7a6c 50%,#4fb286 85%,#a9e5a0 100%)',
+    base:'#0c5a50', board:'rgba(3,36,34,.62)', grid:'cross', gridColor:'rgba(210,255,230,.24)', style:'bubble', symInk:'rgba(10,50,40,.7)',
+    vars:{ '--panel':'rgba(4,44,40,.4)', '--panel-line':'rgba(200,255,225,.22)', '--accent':'#c0eb75', '--accent-ink':'#0a3a2f', '--ink-soft':'rgba(225,255,240,.76)', '--board-shadow':'0 24px 60px rgba(0,40,30,.5)' },
+    trend:'M4 50 C 30 52, 45 46, 62 36 S 98 12, 116 6',
+    colors:{ I:'#b2f2bb', O:'#63e6be', T:'#ffe066', S:'#74c0fc', Z:'#ffa8a8', J:'#d0bfff', L:'#ffd8a8' } }
+];
+
+/* =========================================================================
+   MOTOR DEL JUEGO
+   ========================================================================= */
+const COLS = 10, VIS = 20, HIDDEN = 2, ROWS = VIS + HIDDEN;
+const DAS = 160, ARR = 45, SOFT_MS = 35, LOCK_MS = 500, MAX_RESETS = 15, CLEAR_MS = 260;
+const LINE_PTS = [0, 100, 300, 500, 800];
+
+const SHAPES = {
+  I:[[0,0,0,0],[1,1,1,1],[0,0,0,0],[0,0,0,0]],
+  J:[[1,0,0],[1,1,1],[0,0,0]],
+  L:[[0,0,1],[1,1,1],[0,0,0]],
+  O:[[1,1],[1,1]],
+  S:[[0,1,1],[1,1,0],[0,0,0]],
+  T:[[0,1,0],[1,1,1],[0,0,0]],
+  Z:[[1,1,0],[0,1,1],[0,0,0]]
+};
+const TYPES = Object.keys(SHAPES);
+
+// Tablas de wall kicks SRS (y positiva = arriba; se invierte al aplicar).
+const KICKS = {
+  '0>1':[[0,0],[-1,0],[-1,1],[0,-2],[-1,-2]], '1>0':[[0,0],[1,0],[1,-1],[0,2],[1,2]],
+  '1>2':[[0,0],[1,0],[1,-1],[0,2],[1,2]],     '2>1':[[0,0],[-1,0],[-1,1],[0,-2],[-1,-2]],
+  '2>3':[[0,0],[1,0],[1,1],[0,-2],[1,-2]],    '3>2':[[0,0],[-1,0],[-1,-1],[0,2],[-1,2]],
+  '3>0':[[0,0],[-1,0],[-1,-1],[0,2],[-1,2]],  '0>3':[[0,0],[1,0],[1,1],[0,-2],[1,-2]]
+};
+const KICKS_I = {
+  '0>1':[[0,0],[-2,0],[1,0],[-2,-1],[1,2]],   '1>0':[[0,0],[2,0],[-1,0],[2,1],[-1,-2]],
+  '1>2':[[0,0],[-1,0],[2,0],[-1,2],[2,-1]],   '2>1':[[0,0],[1,0],[-2,0],[1,-2],[-2,1]],
+  '2>3':[[0,0],[2,0],[-1,0],[2,1],[-1,-2]],   '3>2':[[0,0],[-2,0],[1,0],[-2,-1],[1,2]],
+  '3>0':[[0,0],[1,0],[-2,0],[1,-2],[-2,1]],   '0>3':[[0,0],[-1,0],[2,0],[-1,2],[2,-1]]
+};
+
+const rotCW  = m => m[0].map((_, i) => m.map(r => r[i]).reverse());
+const rotCCW = m => m[0].map((_, i) => m.map(r => r[m.length - 1 - i]));
+
+const $ = id => document.getElementById(id);
+const canvas = $('board'), ctx = canvas.getContext('2d');
+const nextC = $('nextCanvas'), nctx = nextC.getContext('2d');
+const mNext = $('mNext'), mctx = mNext.getContext('2d');
+
+let S;            // estado de la partida
+let cell = 30, dpr = 1;
+let queue = [];   // eventos que pausan (cambio de fase, pregunta)
+let clearing = null;
+let dropAcc = 0, lockT = 0, lockResets = 0;
+const held = { left:{on:false,t:0,rep:0}, right:{on:false,t:0,rep:0}, down:{on:false} };
+
+function shuffle(a){ for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+function makeDeck(n){ return shuffle([...Array(n).keys()]); }
+
+function newState(){
+  return {
+    board: Array.from({length:ROWS}, () => Array(COLS).fill(null)),
+    bag: [], cur: null, next: null,
+    score: 0, lines: 0, level: 1, clears: 0,
+    quizOk: 0, quizTotal: 0,
+    pib: { C:0, I:0, G:0, X:0, M:0, i:0, p:0 },
+    factDeck: makeDeck(DATOS.length), quizDeck: makeDeck(PREGUNTAS.length),
+    state: 'menu'
+  };
+}
+
+function nextType(){
+  if (!S.bag.length) S.bag = shuffle(TYPES.slice());
+  return S.bag.pop();
+}
+
+function makePiece(t){
+  const m = SHAPES[t].map(r => r.slice());
+  return { t, m, r:0, x: t === 'O' ? 4 : 3, y: 0, lowest: 0 };
+}
+
+function collide(m, x, y){
+  for (let r = 0; r < m.length; r++) for (let c = 0; c < m[r].length; c++) {
+    if (!m[r][c]) continue;
+    const bx = x + c, by = y + r;
+    if (bx < 0 || bx >= COLS || by >= ROWS) return true;
+    if (by >= 0 && S.board[by][bx]) return true;
+  }
+  return false;
+}
+
+function spawn(){
+  const t = S.next || nextType();
+  S.next = nextType();
+  const p = makePiece(t);
+  if (collide(p.m, p.x, p.y)) { S.cur = null; return gameOver(); }
+  if (!collide(p.m, p.x, p.y + 1)) p.y++;   // aparece ya en la zona visible
+  p.lowest = p.y;
+  S.cur = p; dropAcc = 0; lockT = 0; lockResets = 0;
+  updateConceptUI(); drawNext();
+}
+
+function grounded(){ return collide(S.cur.m, S.cur.x, S.cur.y + 1); }
+
+function onMoved(){
+  // Mover o rotar sobre el suelo reinicia el lock delay (con límite).
+  if (grounded() && lockResets < MAX_RESETS) { lockT = 0; lockResets++; }
+}
+
+function move(dx){
+  const p = S.cur; if (!p) return false;
+  if (collide(p.m, p.x + dx, p.y)) return false;
+  p.x += dx; onMoved(); return true;
+}
+
+function rotate(dir){
+  const p = S.cur; if (!p || p.t === 'O') return;
+  const to = (p.r + (dir > 0 ? 1 : 3)) % 4;
+  const m = dir > 0 ? rotCW(p.m) : rotCCW(p.m);
+  const table = (p.t === 'I' ? KICKS_I : KICKS)[p.r + '>' + to];
+  for (const [kx, ky] of table) {
+    if (!collide(m, p.x + kx, p.y - ky)) {
+      p.m = m; p.x += kx; p.y -= ky; p.r = to;
+      if (p.y > p.lowest) { p.lowest = p.y; lockResets = 0; }
+      onMoved(); return;
+    }
+  }
+}
+
+function stepDown(){
+  const p = S.cur;
+  if (collide(p.m, p.x, p.y + 1)) return false;
+  p.y++;
+  if (p.y > p.lowest) { p.lowest = p.y; lockResets = 0; }
+  return true;
+}
+
+function hardDrop(){
+  if (!S.cur) return;
+  let n = 0; while (stepDown()) n++;
+  addScore(n * 2);
+  lock();
+}
+
+function ghostY(){
+  const p = S.cur; let y = p.y;
+  while (!collide(p.m, p.x, y + 1)) y++;
+  return y;
+}
+
+const PIB_KEY = { I:'C', O:'I', T:'G', S:'X', Z:'M', J:'i', L:'p' };
+
+function lock(){
+  const p = S.cur; if (!p) return;
+  let allHidden = true;
+  p.m.forEach((row, r) => row.forEach((v, c) => {
+    if (!v) return;
+    const by = p.y + r;
+    if (by >= 0) S.board[by][p.x + c] = p.t;
+    if (by >= HIDDEN) allHidden = false;
+  }));
+  S.pib[PIB_KEY[p.t]] += 1;
+  S.cur = null;
+  updatePibUI(PIB_KEY[p.t]);
+  if (allHidden) return gameOver();
+
+  const full = [];
+  for (let r = 0; r < ROWS; r++) if (S.board[r].every(Boolean)) full.push(r);
+  if (full.length) { clearing = { rows: full, t: 0 }; return; }
+  spawn();
+  runQueue();
+}
+
+function finishClear(){
+  const rows = clearing.rows; clearing = null;
+  for (const r of rows) { S.board.splice(r, 1); S.board.unshift(Array(COLS).fill(null)); }
+  const n = rows.length;
+  S.lines += n; S.clears++;
+  addScore(LINE_PTS[n] * S.level);
+  // Alterna: dato clave (no interrumpe) y pregunta rápida (pausa).
+  if (S.clears % 2 === 0) queue.push({ type:'quiz' });
+  else showFact(n);
+  spawn();
+  runQueue();
+}
+
+function threshold(l){ return 600 * (l - 1) * l / 2; }   // 0, 600, 1800, 3600, 6000…
+function gravityMs(){ return Math.max(70, Math.round(850 * Math.pow(0.85, S.level - 1))); }
+
+function addScore(n){
+  if (!n) return;
+  S.score += n;
+  while (S.score >= threshold(S.level + 1)) {
+    S.level++;
+    queue.push({ type:'banner', level:S.level });
+  }
+  updateStatsUI();
+}
+
+function runQueue(){
+  if (S.state === 'over' || S.state === 'menu') return;
+  if (clearing) return;
+  const ev = queue.shift();
+  if (!ev) { S.state = 'play'; return; }
+  S.state = 'modal';
+  releaseAll();
+  if (ev.type === 'banner') showBanner(ev.level, runQueue);
+  else showQuiz(runQueue);
+}
+
+function releaseAll(){
+  held.left.on = held.right.on = held.down.on = false;
+  document.querySelectorAll('.ctl.on').forEach(b => b.classList.remove('on'));
+}
+
+/* ----------------------------- Entrada ----------------------------- */
+function press(a){
+  if (S.state !== 'play') return;
+  if (a === 'left' || a === 'right') {
+    const other = a === 'left' ? 'right' : 'left';
+    held[other].on = false;
+    held[a] = { on:true, t:0, rep:0 };
+    move(a === 'left' ? -1 : 1);
+  } else if (a === 'down') {
+    held.down.on = true;
+    if (S.cur && stepDown()) { addScore(1); dropAcc = 0; }
+  } else if (a === 'rotate') rotate(1);
+  else if (a === 'rotateCCW') rotate(-1);
+  else if (a === 'hard') hardDrop();
+}
+function release(a){ if (held[a]) held[a].on = false; }
+
+function handleHeld(dt){
+  for (const k of ['left', 'right']) {
+    const h = held[k]; if (!h.on) continue;
+    h.t += dt;
+    if (h.t >= DAS) {
+      h.rep += dt;
+      while (h.rep >= ARR) { h.rep -= ARR; if (!move(k === 'left' ? -1 : 1)) { h.rep = 0; break; } }
+    }
+  }
+}
+
+const KEYMAP = { ArrowLeft:'left', ArrowRight:'right', ArrowDown:'down', ArrowUp:'rotate', KeyX:'rotate', KeyZ:'rotateCCW', ControlLeft:'rotateCCW', Space:'hard' };
+document.addEventListener('keydown', e => {
+  if (!$('quizModal').hidden) {
+    const n = parseInt(e.key, 10);
+    const btns = $('qOpts').querySelectorAll('.opt');
+    if (n >= 1 && n <= btns.length && !btns[n-1].disabled) { btns[n-1].click(); e.preventDefault(); }
+    return;
+  }
+  if (!$('banner').hidden && (e.code === 'Space' || e.code === 'Enter')) { closeBanner(); e.preventDefault(); return; }
+  if (e.code === 'KeyP' || e.code === 'Escape') { togglePause(); e.preventDefault(); return; }
+  if ((e.code === 'Enter' || e.code === 'Space') && (S.state === 'menu' || S.state === 'over')) { startGame(); e.preventDefault(); return; }
+  const a = KEYMAP[e.code]; if (!a) return;
+  e.preventDefault();
+  if (e.repeat) return;
+  press(a);
+});
+document.addEventListener('keyup', e => { const a = KEYMAP[e.code]; if (a) release(a); });
+
+document.querySelectorAll('.ctl').forEach(btn => {
+  const a = btn.dataset.act;
+  btn.addEventListener('pointerdown', e => {
+    e.preventDefault();
+    try { btn.setPointerCapture(e.pointerId); } catch (_) {}
+    btn.classList.add('on'); press(a);
+  });
+  const up = () => { btn.classList.remove('on'); release(a); };
+  btn.addEventListener('pointerup', up);
+  btn.addEventListener('pointercancel', up);
+  btn.addEventListener('lostpointercapture', up);
+  btn.addEventListener('contextmenu', e => e.preventDefault());
+});
+
+// Tocar el tablero rota la pieza.
+let tapStart = 0;
+canvas.addEventListener('pointerdown', () => { tapStart = performance.now(); });
+canvas.addEventListener('pointerup', () => { if (performance.now() - tapStart < 250) press('rotate'); });
+
+$('pauseBtn').addEventListener('click', togglePause);
+$('mPause').addEventListener('click', togglePause);
+document.addEventListener('visibilitychange', () => { if (document.hidden && S.state === 'play') togglePause(); });
+
+function togglePause(){
+  if (S.state === 'play') { S.state = 'pause'; releaseAll(); showOverlay('pause'); }
+  else if (S.state === 'pause') { hideOverlay(); S.state = 'play'; }
+  $('pauseBtn').textContent = S.state === 'pause' ? 'Continuar' : 'Pausar';
+}
+
+/* ----------------------------- Bucle ----------------------------- */
+let last = performance.now();
+function frame(t){
+  const dt = Math.min(50, t - last); last = t;
+  if (S.state === 'play') update(dt);
+  draw(t);
+  requestAnimationFrame(frame);
+}
+
+function update(dt){
+  if (clearing) { clearing.t += dt; if (clearing.t >= CLEAR_MS) finishClear(); return; }
+  if (!S.cur) return;
+  handleHeld(dt);
+  if (!S.cur) return;
+  const interval = held.down.on ? Math.min(SOFT_MS, gravityMs()) : gravityMs();
+  if (!grounded()) {
+    lockT = 0;
+    dropAcc += dt;
+    while (dropAcc >= interval) {
+      dropAcc -= interval;
+      if (stepDown()) { if (held.down.on) addScore(1); }
+      else { dropAcc = 0; break; }
+    }
+  } else {
+    dropAcc = 0;
+    lockT += dt;
+    if (lockT >= LOCK_MS) lock();
+  }
+}
+
+/* ----------------------------- Dibujo ----------------------------- */
+function theme(){ return FASES[(S.level - 1) % FASES.length]; }
+
+function rr(c, x, y, w, h, r){
+  r = Math.min(r, w / 2, h / 2);
+  c.beginPath();
+  c.moveTo(x + r, y); c.arcTo(x + w, y, x + w, y + h, r); c.arcTo(x + w, y + h, x, y + h, r);
+  c.arcTo(x, y + h, x, y, r); c.arcTo(x, y, x + w, y, r); c.closePath();
+}
+
+function shade(hex, amt){
+  const n = parseInt(hex.slice(1), 16);
+  let r = n >> 16, g = (n >> 8) & 255, b = n & 255;
+  const t = amt < 0 ? 0 : 255, p = Math.abs(amt);
+  r = Math.round((t - r) * p + r); g = Math.round((t - g) * p + g); b = Math.round((t - b) * p + b);
+  return `rgb(${r},${g},${b})`;
+}
+
+function drawBlock(c, x, y, s, type, th, alpha = 1){
+  const col = th.colors[type];
+  const pad = Math.max(1, s * 0.06);
+  const bx = x + pad, by = y + pad, bs = s - pad * 2;
+  c.save(); c.globalAlpha = alpha;
+  if (th.style === 'glossy') {
+    rr(c, bx, by, bs, bs, s * 0.24); c.fillStyle = col; c.fill();
+    const g = c.createLinearGradient(0, by, 0, by + bs);
+    g.addColorStop(0, 'rgba(255,255,255,.55)'); g.addColorStop(.45, 'rgba(255,255,255,.08)'); g.addColorStop(1, 'rgba(0,0,0,.18)');
+    c.fillStyle = g; c.fill();
+  } else if (th.style === 'flat') {
+    rr(c, bx, by, bs, bs, s * 0.16); c.fillStyle = col; c.fill();
+    c.lineWidth = Math.max(1.5, s * 0.07); c.strokeStyle = 'rgba(0,0,0,.16)';
+    rr(c, bx + c.lineWidth / 2, by + c.lineWidth / 2, bs - c.lineWidth, bs - c.lineWidth, s * 0.13); c.stroke();
+    c.fillStyle = 'rgba(255,255,255,.35)'; rr(c, bx + s * .18, by + s * .12, bs - s * .36, s * .08, s * .04); c.fill();
+  } else if (th.style === 'frost') {
+    rr(c, bx, by, bs, bs, s * 0.14);
+    const g = c.createLinearGradient(bx, by, bx + bs, by + bs);
+    g.addColorStop(0, col + 'aa'); g.addColorStop(1, col + '33');
+    c.fillStyle = g; c.fill();
+    c.lineWidth = Math.max(1.2, s * 0.05); c.strokeStyle = col; c.stroke();
+  } else { // bubble
+    const g = c.createRadialGradient(bx + bs * .32, by + bs * .28, bs * .05, bx + bs / 2, by + bs / 2, bs * .75);
+    g.addColorStop(0, shade(col, .55)); g.addColorStop(.6, col); g.addColorStop(1, shade(col, -.18));
+    rr(c, bx, by, bs, bs, s * 0.38); c.fillStyle = g; c.fill();
+  }
+  if (s >= 16) {
+    c.fillStyle = th.symInk;
+    c.font = `800 ${Math.round(s * 0.42)}px Poppins, system-ui, sans-serif`;
+    c.textAlign = 'center'; c.textBaseline = 'middle';
+    c.fillText(CONCEPTOS[type].sym, x + s / 2, y + s / 2 + s * 0.03);
+  }
+  c.restore();
+}
+
+function drawGrid(th, W, H){
+  ctx.save();
+  ctx.strokeStyle = th.gridColor; ctx.fillStyle = th.gridColor; ctx.lineWidth = 1;
+  if (th.grid === 'dots') {
+    for (let r = 1; r < VIS; r++) for (let c = 1; c < COLS; c++) { ctx.beginPath(); ctx.arc(c * cell, r * cell, Math.max(1.2, cell * .05), 0, Math.PI * 2); ctx.fill(); }
+  } else if (th.grid === 'lines' || th.grid === 'dashed') {
+    if (th.grid === 'dashed') ctx.setLineDash([cell * .18, cell * .14]);
+    ctx.beginPath();
+    for (let c = 1; c < COLS; c++) { ctx.moveTo(c * cell + .5, 0); ctx.lineTo(c * cell + .5, H); }
+    for (let r = 1; r < VIS; r++) { ctx.moveTo(0, r * cell + .5); ctx.lineTo(W, r * cell + .5); }
+    ctx.stroke();
+  } else { // cross
+    const k = cell * .12; ctx.lineWidth = 1.5; ctx.beginPath();
+    for (let r = 1; r < VIS; r++) for (let c = 1; c < COLS; c++) {
+      ctx.moveTo(c * cell - k, r * cell); ctx.lineTo(c * cell + k, r * cell);
+      ctx.moveTo(c * cell, r * cell - k); ctx.lineTo(c * cell, r * cell + k);
+    }
+    ctx.stroke();
+  }
+  ctx.restore();
+}
+
+function draw(){
+  if (!S) return;
+  const th = theme();
+  const W = COLS * cell, H = VIS * cell;
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  ctx.clearRect(0, 0, W, H);
+  ctx.fillStyle = th.board; ctx.fillRect(0, 0, W, H);
+  drawGrid(th, W, H);
+
+  for (let r = HIDDEN; r < ROWS; r++) for (let c = 0; c < COLS; c++) {
+    const t = S.board[r][c]; if (t) drawBlock(ctx, c * cell, (r - HIDDEN) * cell, cell, t, th);
+  }
+
+  if (clearing) {
+    const k = clearing.t / CLEAR_MS;
+    ctx.save();
+    for (const r of clearing.rows) {
+      const y = (r - HIDDEN) * cell;
+      ctx.globalAlpha = 0.9 * (1 - k * 0.6);
+      ctx.fillStyle = '#fff';
+      const w = W * (1 - k);
+      rr(ctx, (W - w) / 2, y + 2, w, cell - 4, cell * .3); ctx.fill();
+    }
+    ctx.restore();
+  }
+
+  const p = S.cur;
+  if (p && (S.state === 'play' || S.state === 'pause' || S.state === 'modal')) {
+    const gy = ghostY();
+    if (gy !== p.y) {
+      ctx.save(); ctx.strokeStyle = th.colors[p.t]; ctx.globalAlpha = .55; ctx.lineWidth = 2; ctx.setLineDash([4, 3]);
+      p.m.forEach((row, r) => row.forEach((v, c) => {
+        if (!v || gy + r < HIDDEN) return;
+        rr(ctx, (p.x + c) * cell + 3, (gy + r - HIDDEN) * cell + 3, cell - 6, cell - 6, cell * .2); ctx.stroke();
+      }));
+      ctx.restore();
+    }
+    // Parpadeo suave mientras corre el lock delay
+    const a = grounded() && S.state === 'play' ? 1 - 0.25 * (lockT / LOCK_MS) : 1;
+    p.m.forEach((row, r) => row.forEach((v, c) => {
+      if (!v || p.y + r < HIDDEN) return;
+      drawBlock(ctx, (p.x + c) * cell, (p.y + r - HIDDEN) * cell, cell, p.t, th, a);
+    }));
+  }
+}
+
+function drawMini(c, cv, t, size){
+  const th = theme();
+  const ratio = window.devicePixelRatio || 1;
+  cv.width = size * ratio; cv.height = size * ratio;
+  c.setTransform(ratio, 0, 0, ratio, 0, 0);
+  c.clearRect(0, 0, size, size);
+  if (!t) return;
+  const m = SHAPES[t].filter(r => r.some(Boolean));
+  const cols = m[0].map((_, i) => m.some(r => r[i]));
+  const first = cols.indexOf(true), lastc = cols.lastIndexOf(true);
+  const w = lastc - first + 1, h = m.length;
+  const s = Math.floor(Math.min((size * .8) / w, (size * .8) / Math.max(h, 2)));
+  const ox = (size - w * s) / 2, oy = (size - h * s) / 2;
+  m.forEach((row, r) => row.forEach((v, c2) => {
+    if (v && c2 >= first && c2 <= lastc) drawBlock(c, ox + (c2 - first) * s, oy + r * s, s, t, th);
+  }));
+}
+function drawNext(){
+  drawMini(nctx, nextC, S.next, 88);
+  drawMini(mctx, mNext, S.next, 46);
+  if (S.next) { $('nextName').textContent = CONCEPTOS[S.next].nombre; $('nextRole').textContent = CONCEPTOS[S.next].rol; }
+}
+
+function fit(){
+  const wrap = $('boardWrap');
+  const w = wrap.clientWidth, h = wrap.clientHeight;
+  cell = Math.max(12, Math.floor(Math.min(w / COLS, h / VIS)));
+  dpr = window.devicePixelRatio || 1;
+  canvas.style.width = cell * COLS + 'px'; canvas.style.height = cell * VIS + 'px';
+  canvas.width = cell * COLS * dpr; canvas.height = cell * VIS * dpr;
+  if (S) draw();
+}
+new ResizeObserver(fit).observe($('boardWrap'));
+
+/* ----------------------------- Interfaz ----------------------------- */
+const fmt = n => n.toLocaleString('es-ES');
+
+function updateStatsUI(){
+  $('score').textContent = fmt(S.score);
+  $('mScore').textContent = fmt(S.score);
+  $('lines').textContent = S.lines;
+  $('best').textContent = fmt(Math.max(best, S.score));
+  const lo = threshold(S.level), hi = threshold(S.level + 1);
+  const pct = Math.min(100, (S.score - lo) / (hi - lo) * 100);
+  $('prog').style.width = pct + '%';
+  $('mProg').style.width = pct + '%';
+  $('progTxt').textContent = `Siguiente fase en ${fmt(hi - S.score)} puntos`;
+}
+
+function trendSvg(th, w, h){
+  return `<path d="${th.trend}" fill="none" stroke="currentColor" stroke-width="${w > 60 ? 5 : 3}" stroke-linecap="round" transform="scale(${w / 120} ${h / 60})" vector-effect="non-scaling-stroke"/>`;
+}
+
+function applyTheme(){
+  const th = theme();
+  const root = document.documentElement;
+  for (const [k, v] of Object.entries(th.vars)) root.style.setProperty(k, v);
+  root.style.setProperty('--base', th.base);
+  // Fundido cruzado entre las dos capas de fondo
+  const a = $('bgA'), b = $('bgB');
+  const showing = a.classList.contains('on') ? a : b, hidden = showing === a ? b : a;
+  if (showing.dataset.phase !== th.nombre) {
+    hidden.style.background = th.bg; hidden.dataset.phase = th.nombre;
+    hidden.classList.add('on'); showing.classList.remove('on');
+  }
+  const cycle = Math.floor((S.level - 1) / FASES.length) + 1;
+  $('levelChip').textContent = `Nivel ${S.level}`;
+  $('cycleChip').textContent = `Ciclo ${cycle}`;
+  $('phaseName').textContent = th.nombre;
+  $('phaseDesc').textContent = th.desc;
+  $('phaseIcon').innerHTML = trendSvg(th, 40, 26);
+  $('phaseIcon').style.color = 'var(--accent)';
+  $('mLevel').textContent = `Nivel ${S.level} · Ciclo ${cycle}`;
+  $('mPhase').textContent = th.nombre;
+  buildPibRows();
+  updateConceptUI(); drawNext(); updateStatsUI(); updatePibUI();
+}
+
+function updateConceptUI(){
+  const t = S.cur ? S.cur.t : (S.next || 'I');
+  const k = CONCEPTOS[t], col = theme().colors[t];
+  for (const [symId, nameId, defId] of [['sym','cName','cDef'], ['mSym','mName','mDef']]) {
+    const el = $(symId);
+    el.textContent = k.sym; el.style.background = col; el.style.color = theme().symInk;
+    $(nameId).textContent = k.nombre; $(defId).textContent = k.def;
+  }
+  $('cRole').textContent = k.rol;
+}
+
+const PIB_ROWS = [['C','I'], ['I','O'], ['G','T'], ['X','S'], ['M','Z']];
+function buildPibRows(){
+  const th = theme();
+  $('gdpRows').innerHTML = PIB_ROWS.map(([k, t]) =>
+    `<div class="gdp-row" id="row${k}"><b style="color:${th.colors[t]}">${k}</b><div class="bar"><i style="background:${th.colors[t]}"></i></div><em>0</em></div>`).join('');
+}
+function updatePibUI(flashKey){
+  const v = k => S.pib[k] * 20;
+  const max = Math.max(1, ...PIB_ROWS.map(([k]) => v(k)));
+  for (const [k] of PIB_ROWS) {
+    const row = $('row' + k); if (!row) continue;
+    row.querySelector('.bar i').style.width = (v(k) / max * 100) + '%';
+    row.querySelector('em').textContent = (k === 'M' && v(k) ? '−' : '') + fmt(v(k));
+    if (flashKey === k) { row.classList.remove('flash'); void row.offsetWidth; row.classList.add('flash'); }
+  }
+  const total = v('C') + v('I') + v('G') + v('X') - v('M');
+  $('gdpTotal').textContent = fmt(total) + ' mm$';
+  $('detI').textContent = `Tasa de interés ×${S.pib.i}`;
+  $('detP').textContent = `Inflación ×${S.pib.p}`;
+}
+
+let toastTimer = 0;
+function showFact(n){
+  const i = S.factDeck.pop(); if (!S.factDeck.length) S.factDeck = makeDeck(DATOS.length);
+  const d = DATOS[i];
+  const label = n === 4 ? '¡Tetris! Dato clave' : (n > 1 ? `${n} líneas · Dato clave` : 'Dato clave');
+  const el = $('toast');
+  el.innerHTML = `<div class="t-tag"><b></b><span></span></div><div class="t-body"></div><div class="t-time"><i></i></div>`;
+  el.querySelector('.t-tag b').textContent = label;
+  el.querySelector('.t-tag span').textContent = 'Unidad ' + d.u;
+  el.querySelector('.t-body').textContent = d.t;
+  el.hidden = false;
+  el.style.animation = 'none'; void el.offsetWidth; el.style.animation = '';
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => { el.hidden = true; }, 6000);
+}
+$('toast').addEventListener('click', () => { $('toast').hidden = true; });
+
+function showQuiz(done){
+  const i = S.quizDeck.pop(); if (!S.quizDeck.length) S.quizDeck = makeDeck(PREGUNTAS.length);
+  const q = PREGUNTAS[i];
+  $('qUnit').textContent = 'Unidad ' + q.u;
+  $('qText').textContent = q.q;
+  $('qExplain').hidden = true; $('qNext').hidden = true;
+  const box = $('qOpts'); box.innerHTML = '';
+  q.o.forEach((txt, k) => {
+    const b = document.createElement('button');
+    b.className = 'opt';
+    b.innerHTML = `<kbd>${k + 1}</kbd><span></span>`;
+    b.querySelector('span').textContent = txt;
+    b.addEventListener('click', () => {
+      const ok = k === q.a;
+      S.quizTotal++; if (ok) S.quizOk++;
+      box.querySelectorAll('.opt').forEach((o, j) => { o.disabled = true; if (j === q.a) o.classList.add('ok'); });
+      if (!ok) b.classList.add('ko');
+      const ex = $('qExplain');
+      const bonus = 100 * S.level;
+      ex.innerHTML = '<b></b><span></span>';
+      ex.querySelector('b').textContent = ok ? `¡Correcto! +${fmt(bonus)} puntos` : 'No exactamente';
+      ex.querySelector('b').style.color = ok ? '#14894b' : '#c43c3c';
+      ex.querySelector('span').textContent = q.e;
+      ex.hidden = false;
+      if (ok) addScore(bonus);
+      $('qNext').hidden = false; $('qNext').focus();
+    });
+    box.appendChild(b);
+  });
+  $('qNext').onclick = () => { $('quizModal').hidden = true; done(); };
+  $('quizModal').hidden = false;
+  setTimeout(() => { const f = box.querySelector('.opt'); if (f) f.focus(); }, 50);
+}
+
+let bannerDone = null, bannerTimer = 0;
+function showBanner(level, done){
+  applyTheme();
+  const th = theme();
+  $('bLevel').textContent = `Nivel ${level} · Fase del ciclo`;
+  $('bName').textContent = th.nombre;
+  $('bDesc').textContent = th.desc;
+  $('bIcon').innerHTML = `<path d="${th.trend}" fill="none" stroke="${th.vars['--accent']}" stroke-width="6" stroke-linecap="round"/>`;
+  const b = $('banner'), card = b.querySelector('.banner-card');
+  card.style.animation = 'none'; void card.offsetWidth; card.style.animation = '';
+  b.hidden = false;
+  bannerDone = done;
+  clearTimeout(bannerTimer);
+  bannerTimer = setTimeout(closeBanner, 3200);
+}
+function closeBanner(){
+  if ($('banner').hidden) return;
+  clearTimeout(bannerTimer);
+  $('banner').hidden = true;
+  const d = bannerDone; bannerDone = null; if (d) d();
+}
+$('banner').addEventListener('click', closeBanner);
+
+function showOverlay(kind){
+  const o = $('overlay'); o.hidden = false;
+  if (kind === 'menu') {
+    o.innerHTML = `
+      <p class="eyebrow">Macroeconomía · Unidad 3</p>
+      <h1>Tetris del Ciclo Económico</h1>
+      <p>Cada pieza es un concepto. Completa líneas para descubrir datos clave y responder preguntas rápidas. Cada nivel es una fase del ciclo.</p>
+      <div class="legend">${Object.entries(CONCEPTOS).map(([t, k]) => `<span><i style="background:${theme().colors[t]};color:${theme().symInk}">${k.sym}</i>${k.nombre}</span>`).join('')}</div>
+      <button class="btn" id="startBtn">Empezar a jugar</button>`;
+    $('startBtn').addEventListener('click', startGame);
+    $('startBtn').focus();
+  } else if (kind === 'pause') {
+    o.innerHTML = `<h2>Pausa</h2><p>La economía está en espera. Nada cambia hasta que vuelvas.</p><button class="btn" id="resumeBtn">Continuar</button>`;
+    $('resumeBtn').addEventListener('click', togglePause);
+    $('resumeBtn').focus();
+  } else if (kind === 'over') {
+    const rec = S.score >= best && S.score > 0;
+    o.innerHTML = `
+      <p class="eyebrow">${rec ? '¡Nuevo récord!' : 'Fin de la partida'}</p>
+      <h2>La economía se desbordó</h2>
+      <div class="final">
+        <div><span>Puntos</span><b>${fmt(S.score)}</b></div>
+        <div><span>Nivel</span><b>${S.level}</b></div>
+        <div><span>Líneas</span><b>${S.lines}</b></div>
+        <div><span>Preguntas</span><b>${S.quizOk}/${S.quizTotal}</b></div>
+      </div>
+      <p>Llegaste a la fase de <strong>${theme().nombre}</strong>.</p>
+      <button class="btn" id="againBtn">Jugar otra vez</button>`;
+    $('againBtn').addEventListener('click', startGame);
+    $('againBtn').focus();
+  }
+}
+function hideOverlay(){ $('overlay').hidden = true; $('overlay').innerHTML = ''; }
+
+let best = 0;
+try { best = parseInt(localStorage.getItem('tetris-macro-best') || '0', 10) || 0; } catch (_) {}
+
+function gameOver(){
+  S.state = 'over'; releaseAll(); queue = [];
+  if (S.score > best) { best = S.score; try { localStorage.setItem('tetris-macro-best', String(best)); } catch (_) {} }
+  updateStatsUI();
+  showOverlay('over');
+}
+
+function startGame(){
+  if (S && S.state !== 'menu' && S.state !== 'over') return;
+  S = newState();
+  queue = []; clearing = null;
+  $('toast').hidden = true;
+  hideOverlay();
+  applyTheme();
+  S.state = 'modal';
+  spawn();
+  queue.push({ type:'banner', level:1 });
+  runQueue();
+}
+
+/* ----------------------------- Arranque ----------------------------- */
+function boot(data){
+  S = newState();
+  if (data && data.S && data.S.board) {
+    // Restaurar partida tras una actualización en vivo
+    Object.assign(S, data.S);
+    applyTheme(); fit();
+    if (S.state === 'over' || S.state === 'menu' || !S.cur) { S.state = 'menu'; showOverlay('menu'); }
+    else { S.state = 'pause'; showOverlay('pause'); }
+  } else {
+    applyTheme(); fit();
+    showOverlay('menu');
+  }
+  requestAnimationFrame(frame);
+}
+
+try { window.claude?.hot?.snapshot?.(() => ({ S: clearing ? null : S })); } catch (_) {}
+window.claude?.hot?.ready ? window.claude.hot.ready(boot) : boot(window.claude?.hot?.data ?? {});
+})();
+</script>
+</body>
+</html>
