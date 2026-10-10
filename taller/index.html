@@ -391,6 +391,51 @@ body.docked{padding-bottom:190px}
   body.docked{padding-bottom:200px}
 }
 @media (max-width:520px){.mm-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.jp-board{gap:4px}.jp-cell{font-size:20px}}
+/* v5: simulacros de Prueba 1 y Prueba 2, envío del reporte */
+.simbar{display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;background:var(--sheet);border:1px solid var(--rule);border-radius:var(--r);padding:10px 14px;margin:0 0 14px;max-width:1100px}
+.simbar.sticky{position:sticky;top:64px;z-index:5;box-shadow:0 4px 12px rgba(20,33,61,.08)}
+.simbar .btn{margin-left:auto}
+.clock{font-family:var(--f-display);font-weight:700;font-size:26px;line-height:1;font-variant-numeric:tabular-nums;color:var(--navy-2)}
+.clock.low{color:var(--bad)}
+.p1qs{display:grid;gap:12px;max-width:900px}
+.p1q{background:var(--sheet);border:1.5px solid var(--rule);border-radius:var(--r);padding:14px 16px}
+.p1q.sel{border-color:var(--navy-2);box-shadow:0 0 0 2px var(--navy-2) inset}
+.p1q p{margin:8px 0}
+.pts{font-family:var(--f-display);font-weight:700;color:var(--muted);white-space:nowrap}
+.p1w{display:grid;gap:18px;max-width:900px}
+.p1part .q{margin-bottom:8px}
+.p1mark{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;align-items:start}
+.p1mark section{background:var(--sheet);border:1px solid var(--rule);border-radius:var(--r);padding:16px;min-width:0}
+.p1mark h3{margin:0 0 4px}.p1mark h4,.p2card h4{margin:14px 0 6px;font-family:var(--f-display);font-size:18px;letter-spacing:.02em}
+.bands{display:grid;gap:6px}
+.band{display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 12px;align-items:center;border:1px solid var(--rule);border-radius:7px;padding:6px 10px;background:var(--paper)}
+.band.on{border-color:var(--navy-2);background:var(--sheet)}
+.band p{margin:0;font-size:13.5px;line-height:1.35;color:var(--ink-2)}
+.bn{display:flex;gap:4px}
+.bnum{min-width:34px;height:34px;border:1.5px solid var(--rule);border-radius:7px;background:var(--sheet);font-family:var(--f-display);font-weight:700;font-size:17px;font-variant-numeric:tabular-nums;color:var(--ink)}
+.bnum:hover{border-color:var(--gold)}
+.bnum.sel{background:var(--navy-2);border-color:var(--navy-2);color:#fff}
+.selfsc{gap:6px;margin-top:8px}
+.p2wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:18px;align-items:start;max-width:1200px}
+.p2side{background:var(--sheet);border:1px solid var(--rule);border-radius:var(--r);padding:12px 16px;position:sticky;top:72px;max-height:calc(100vh - 90px);overflow:auto}
+.p2side summary{cursor:pointer;font-family:var(--f-display);font-size:19px}
+.p2text p{margin:10px 0;font-size:15px;line-height:1.6}
+.p2text .pn{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--paper);border:1px solid var(--rule);font-family:var(--f-display);font-weight:700;font-size:13px;margin-right:8px;vertical-align:1px}
+.dtab{border-collapse:collapse;margin:12px 0;font-size:14.5px;font-variant-numeric:tabular-nums;width:100%}
+.dtab caption{text-align:left;font-weight:700;margin-bottom:4px;font-size:14px}
+.dtab th,.dtab td{border:1px solid var(--rule);padding:5px 10px;text-align:right}
+.dtab th:first-child,.dtab thead th{text-align:left}
+.dtab thead th{background:var(--paper)}
+.src{line-height:1.5}.src a{color:var(--navy-2)}
+.p2card{max-width:none}
+.p2fig{max-width:520px}
+.inp.calc{width:200px;max-width:100%;font-variant-numeric:tabular-nums}
+@media (max-width:860px){
+  .p1mark,.p2wrap{grid-template-columns:1fr}
+  .p2side{position:static;max-height:none}
+  .simbar.sticky{top:96px}
+  .band{grid-template-columns:1fr}
+}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
@@ -1354,6 +1399,9 @@ function render() {
   if (route === 'juego-grandprix') { setNav('juegos'); return JUEGOS_ACTIVOS.grandprix ? renderGrandPrix() : renderGamesHome(); }
   if (route === 'juego-jeopardy') { setNav('juegos'); return JUEGOS_ACTIVOS.jeopardy ? renderJeopardy() : renderGamesHome(); }
   if (route === 'escribir-evaluar') { setNav('escribir'); return renderWrite('eva'); }
+  if (route === 'escribir-p1') { setNav('escribir'); return renderP1(); }
+  if (route === 'escribir-p2') { setNav('escribir'); return renderP2Home(); }
+  if (route.startsWith('p2-') && P2.some(c => c.id === route.slice(3))) { setNav('escribir'); return renderP2(P2.find(c => c.id === route.slice(3))); }
   if (route.startsWith('exp-') && EXP.some(x => x.id === route.slice(4))) { setNav('escribir'); return renderExplain(EXP.find(x => x.id === route.slice(4))); }
   if (route.startsWith('eva-') && EVA.some(x => x.id === route.slice(4))) { setNav('escribir'); return renderEval(EVA.find(x => x.id === route.slice(4))); }
   setNav('inicio'); renderHome();
@@ -2948,6 +2996,9 @@ function reportText() {
   L.push(`- Explicar: ${EXP.filter(p => expState(p).done).length}/${EXP.length} preguntas completas`);
   L.push(`- Evaluar: ${EVA.filter(c => evaState(c).done).length}/${EVA.length} casos completos`);
   L.push(`- Encuentra el error: ${topicDone('err')}/${DRILLS.err.items.length}`);
+  const p1h = P1S.hist, p2h = P2H;
+  L.push(`- Simulacro de Prueba 1: ${p1h.length ? `${p1h.length} ${p1h.length > 1 ? 'hechos' : 'hecho'} · último ${p1h[p1h.length - 1].total}/25 · mejor ${Math.max(...p1h.map(x => x.total))}/25 (autoevaluado)` : 'sin hacer'}`);
+  L.push(`- Prueba 2: ${p2h.length ? `${p2h.length} ${p2h.length > 1 ? 'casos' : 'caso'} · último ${p2h[p2h.length - 1].total}/40 · mejor ${Math.max(...p2h.map(x => x.total))}/40 (autoevaluado)` : 'sin hacer'}`);
   const labs = Object.entries(PROG.labs || {}).filter(([k, v]) => LABS[k] && v.n);
   L.push('', `Laboratorios (aciertos): ${labs.length ? labs.map(([k, v]) => `${LABS[k].name} ${v.ok}/${v.n}`).join('; ') : 'sin registros'}`);
   const gr = [];
@@ -2961,11 +3012,12 @@ function reportText() {
 }
 function renderReport() {
   app.innerHTML = `<div class="eyebrow">Repasar</div><h1>Mi reporte</h1>${repTabs('reporte')}
-    <p class="lede">Genera un resumen de tu práctica para entregarlo a tu profesor. Completa tus datos, copia el texto y pégalo en Classroom o envíalo como te indique.</p>
+    <p class="lede">${formConf() ? 'Completa tu nombre y tu curso y toca <b>Enviar a mi profesor</b>. También puedes copiar el texto.' : 'Genera un resumen de tu práctica para entregarlo a tu profesor. Completa tus datos, copia el texto y pégalo en Classroom o envíalo como te indique.'}</p>
     <div class="essentials repform"><div><label class="lbl2" for="rname">Nombre y apellido</label><input id="rname" class="inp" autocomplete="name" value="${esc(store.get('alumno', ''))}"></div>
       <div><label class="lbl2" for="rcurso">Curso o sección</label><input id="rcurso" class="inp" value="${esc(store.get('curso', ''))}"></div></div>
     <h3 style="margin-top:18px">Vista previa</h3><pre class="answer rep" id="rtxt"></pre>
-    <div class="row" style="margin-top:10px"><button class="btn primary" type="button" id="rcp">Copiar reporte</button><span class="small muted">El reporte se arma con lo que hiciste en este dispositivo.</span></div>`;
+    <div class="row" style="margin-top:10px">${formConf() ? '<button class="btn primary" type="button" id="rsend">Enviar a mi profesor</button>' : ''}<button class="btn ${formConf() ? '' : 'primary'}" type="button" id="rcp">Copiar reporte</button><span class="small muted">El reporte se arma con lo que hiciste en este dispositivo.${store.get('sent', '') ? ' Último envío: ' + esc(store.get('sent', '')) + '.' : ''}</span></div><div id="rsout" style="margin-top:10px"></div>`;
+  const sb = $('#rsend'); if (sb) sb.onclick = () => sendReport(sb, $('#rsout'));
   const upd = () => { $('#rtxt').textContent = reportText(); };
   $('#rname').oninput = e => { store.set('alumno', e.target.value); upd(); };
   $('#rcurso').oninput = e => { store.set('curso', e.target.value); upd(); };
@@ -2974,7 +3026,7 @@ function renderReport() {
 }
 
 /* ---- Escribir: portada, pestañas y ejercicios de base ---- */
-const WTABS = [['escribir-comandos', 'Comandos'], ['escribir-conceptos', 'Conceptos clave'], ['escribir-explicar', 'Explicar · 10 p'], ['escribir-evaluar', 'Evaluar · 15 p'], ['escribir-errores', 'Encuentra el error']];
+const WTABS = [['escribir-comandos', 'Comandos'], ['escribir-conceptos', 'Conceptos clave'], ['escribir-explicar', 'Explicar · 10 p'], ['escribir-evaluar', 'Evaluar · 15 p'], ['escribir-errores', 'Encuentra el error'], ['escribir-p1', 'Simulacro P1'], ['escribir-p2', 'Prueba 2']];
 function writeTabs(cur) {
   return `<div class="seg wtabs" role="group" aria-label="Secciones de Escribir" style="margin-bottom:18px">${WTABS.map(([r, l], i) => `<button type="button" data-go="${r}" aria-pressed="${r === cur}">${i + 1}. ${l}</button>`).join('')}</div>`;
 }
@@ -2985,7 +3037,9 @@ function renderWriteHome() {
     ['escribir-conceptos', 'Conceptos clave', 'Los nueve conceptos del curso aplicados a casos, como en la Evaluación Interna.', pc(DRILLS.kc)],
     ['escribir-explicar', 'Explicar · 10 puntos', 'Respuestas en 4 pasos: primero un ejemplo resuelto, después guiado y luego por tu cuenta.', `${EXP.filter(p => expState(p).done).length}/${EXP.length} completas`],
     ['escribir-evaluar', 'Evaluar · 15 puntos', 'Pros y contras, corto y largo plazo y partes interesadas.', `${EVA.filter(c => evaState(c).done).length}/${EVA.length} completos`],
-    ['escribir-errores', 'Encuentra el error', 'Lee respuestas con errores típicos y corrígelas como un examinador.', pc(DRILLS.err)]
+    ['escribir-errores', 'Encuentra el error', 'Lee respuestas con errores típicos y corrígelas como un examinador.', pc(DRILLS.err)],
+    ['escribir-p1', 'Simulacro de Prueba 1 · 25 p', 'En condiciones de examen: 5 min de lectura y 1 h 15 min. Eliges 1 de 3 preguntas y te autocorriges con bandas.', P1S.hist.length ? `${P1S.hist.length} hechos · último ${P1S.hist[P1S.hist.length - 1].total}/25` : 'Sin empezar'],
+    ['escribir-p2', 'Prueba 2 · 40 p', 'Casos con datos reales de Paraguay: definiciones, cálculos, diagramas y una evaluación de 15 puntos.', P2H.length ? `${P2H.length} terminados · último ${P2H[P2H.length - 1].total}/40` : `${P2.length} casos`]
   ];
   app.innerHTML = `<div class="eyebrow">Escribir como en el examen</div><h1>Escribir</h1>
     <p class="lede">Sigue este orden: primero entiende qué pide la pregunta y qué concepto aplica; después escribe; al final, revisa errores como lo haría un examinador.</p>
@@ -3586,6 +3640,437 @@ function jpQuestion() {
   const rv = $('#jpRev'); if (rv) rv.onclick = () => { JP.open.rev = true; cell.used = true; saveJP(); jpQuestion(); };
   app.querySelectorAll('[data-pt]').forEach(b => b.onclick = () => { JP.teams[+b.dataset.pt].s += +b.dataset.v; saveJP(); jpQuestion(); });
   $('#jpBack').onclick = () => { JP.open = null; saveJP(); renderJeopardy(); };
+}
+
+
+/* =============== 8 · Simulacros: datos =============== */
+/* Prueba 2 (NM): 1 h 45 min, 1 de 2 preguntas, 40 puntos: (a)+(b) 9 p, (c)–(f) 4 × 4 p, (g) 15 p.
+   Datos reales con fuente; los montos marcados con «suponga» son hipotéticos. */
+const P2 = [
+  {
+    id: 'bcp', u: 'Unidad 3', title: 'Inflación y la respuesta del BCP', yrs: '2021–2024',
+    text: [
+      'Después de la pandemia, el Banco Central del Paraguay (BCP) mantenía su tasa de política monetaria (TPM) en 0,75 %. Desde agosto de 2021 empezó a subirla de forma gradual hasta llevarla a <b>8,50 %</b> en septiembre de 2022, frente a 8,25 % del mes anterior.',
+      'La inflación interanual llegó a <b>11,8 %</b> en abril de 2022, la más alta en casi 14 años. El aumento se explicó sobre todo por alimentos y combustibles: subieron varios cortes de carne vacuna, los panificados (por el precio internacional del trigo, afectado por el conflicto entre Rusia y Ucrania) y la nafta, el diésel y el gas, lo que también encareció los pasajes del transporte.',
+      'La meta de inflación del BCP era de 4 % con un rango de ± 2 puntos porcentuales. En agosto de 2022 la inflación interanual bajó a 10,5 %. El año 2023 cerró con una inflación de <b>3,7 %</b> y 2024 con <b>3,8 %</b>, por debajo de la meta. En febrero de 2024 el BCP redujo la TPM a 6,25 % y anunció una meta más baja, de 3,5 %, a partir de 2025.',
+      'Algunos economistas señalan límites de la política monetaria en Paraguay: una parte importante de los créditos y depósitos está en dólares, la informalidad es alta y buena parte de la inflación proviene de precios internacionales que el BCP no controla.'
+    ],
+    tables: [
+      { cap: 'Tabla 1. Tasa de política monetaria (TPM) del BCP', head: ['Fecha', 'TPM (%)'], rows: [['Agosto de 2021', '0,75'], ['Agosto de 2022', '8,25'], ['Septiembre de 2022', '8,50'], ['Febrero de 2024', '6,25']] },
+      { cap: 'Tabla 2. Inflación en Paraguay', head: ['Período', 'Inflación (%)'], rows: [['Abril de 2022 (interanual)', '11,8'], ['Agosto de 2022 (interanual)', '10,5'], ['Año 2023', '3,7'], ['Año 2024', '3,8']] }
+    ],
+    src: [['ABC Color, 22/09/2022: «BCP elevó a 8,50 % su tasa de política monetaria»', 'https://www.abc.com.py/economia/2022/09/22/inflacion-bcp-elevo-a-850-su-tasa-de-politica-monetaria/'], ['La Nación, 03/05/2022: «Inflación anual en abril llegó a 11,8 %»', 'https://www.lanacion.com.py/negocios/2022/05/03/inflacion-anual-en-abril-llego-a-118-la-mas-alta-en-casi-14-anos/'], ['La Nación, 30/12/2024: «La inflación total del 2024 se ubicó en 3,8 %»', 'https://www.lanacion.com.py/negocios/2024/12/30/la-inflacion-total-del-2024-se-ubico-en-38-por-debajo-de-la-meta/'], ['ABC Color, 20/02/2024: «El BCP redujo su TPM a 6,25 %»', 'https://www.abc.com.py/economia/2024/02/20/el-bcp-redujo-su-tasa-de-politica-monetaria-a-625/'], ['ABC Color, 16/12/2024: «BCP redujo su meta luego de 7 años»', 'https://www.abc.com.py/negocios/2024/12/16/inflacion-bcp-estima-que-la-presion-sobre-precios-sera-menor-y-redujo-su-meta-luego-de-7-anos/']],
+    parts: [
+      { k: 'a1', lbl: '(a) (i)', t: 'def', pts: 2, q: 'Defina el término <b>inflación</b> (párrafo 2).', model: 'Aumento sostenido del nivel general de precios de una economía durante un período. Se mide normalmente con el índice de precios al consumidor (IPC).', ck: ['Habla del <b>nivel general</b> de precios, no del precio de un bien', 'Indica que el aumento es <b>sostenido</b> o en un período'] },
+      { k: 'a2', lbl: '(a) (ii)', t: 'def', pts: 2, q: 'Defina el término <b>meta de inflación</b> (párrafo 3).', model: 'Régimen en el que el banco central anuncia una tasa de inflación objetivo, con un rango, y ajusta la tasa de interés para alcanzarla.', ck: ['Menciona que el banco central <b>anuncia un objetivo</b> de inflación', 'Indica que usa la <b>tasa de interés</b> para cumplirlo'] },
+      { k: 'b1', lbl: '(b) (i)', t: 'calc', pts: 2, q: 'Usando la Tabla 1, calcule en cuántos <b>puntos porcentuales</b> aumentó la TPM entre agosto de 2021 y septiembre de 2022.', ans: 7.75, tol: 0.01, unit: 'puntos porcentuales', hint: 'Es una resta entre los dos niveles de la tabla, no una variación porcentual.', sol: '8,50 − 0,75 = <b>7,75 puntos porcentuales</b>.' },
+      { k: 'b2', lbl: '(b) (ii)', t: 'calc', pts: 3, q: 'Suponga que una canasta de bienes costaba Gs. 2.000.000 en abril de 2021. Usando la inflación interanual de abril de 2022, calcule cuánto costaba la misma canasta en abril de 2022 (en guaraníes).', ans: 2236000, tol: 600, unit: 'guaraníes', hint: 'Multiplica el costo inicial por (1 + inflación ÷ 100).', sol: '2.000.000 × (1 + 11,8 ÷ 100) = 2.000.000 × 1,118 = <b>Gs. 2.236.000</b>.' },
+      { k: 'c', lbl: '(c)', t: 'dia', pts: 4, q: 'Usando un diagrama de DA/OA, explique cómo el aumento del precio internacional de los combustibles (párrafo 2) pudo elevar el nivel general de precios en Paraguay.', dia: { m: 'adas', key: 'OACP', dir: -1, why: 'Los combustibles son un costo de producción y de transporte para las empresas.' }, model: 'Los combustibles son un costo de producción y de transporte. Cuando sube su precio internacional, aumentan los costos de las empresas y la OACP se desplaza a la izquierda (de OACP₀ a OACP₁). El nivel general de precios sube de P₀ a P₁ y el PIB real baja de Y₀ a Y₁: es inflación de costos.', ck: ['Identifica los combustibles como un <b>costo</b> de producción', 'La <b>OACP</b> se desplaza a la izquierda', 'Sube el nivel general de precios y baja el PIB real', 'Lo llama <b>inflación de costos</b>'] },
+      { k: 'd', lbl: '(d)', t: 'dia', pts: 4, q: 'Usando un diagrama de DA/OA, explique cómo la suba de la TPM del BCP (párrafo 1) ayuda a reducir la inflación.', dia: { m: 'adas', key: 'DA', dir: -1, why: 'Una tasa más alta encarece el crédito: bajan el consumo y la inversión.' }, model: 'Una TPM más alta encarece el crédito y hace más atractivo ahorrar, así que bajan el consumo (C) y la inversión (I). La DA se desplaza a la izquierda (de DA₀ a DA₁): el nivel general de precios baja o crece menos (de P₀ a P₁) y el PIB real baja de Y₀ a Y₁.', ck: ['La TPM más alta <b>encarece el crédito</b> o premia el ahorro', 'Bajan el <b>consumo y la inversión</b>', 'La <b>DA</b> se desplaza a la izquierda', 'Menor presión sobre el nivel de precios, con menor PIB real'] },
+      { k: 'e', lbl: '(e)', t: 'dia', pts: 4, q: 'Usando un diagrama del mercado del guaraní, explique cómo una TPM más alta puede apreciar el guaraní.', dia: { m: 'fx', key: 'D', dir: 1, why: 'Tasas más altas en guaraníes atraen ahorro e inversión financiera.' }, model: 'Con tasas de interés más altas en guaraníes, invertir en Paraguay se vuelve más atractivo. Para hacerlo, los inversores necesitan comprar guaraníes, así que aumenta la demanda de guaraníes (de D₀ a D₁). El valor del guaraní sube (se aprecia) y eso abarata las importaciones, lo que ayuda a bajar la inflación importada.', ck: ['Tasas más altas atraen <b>inversión financiera</b> o ahorro del exterior', 'Aumenta la <b>demanda de guaraníes</b>', 'El guaraní <b>se aprecia</b>', 'Vincula la apreciación con importaciones más baratas'] },
+      { k: 'f', lbl: '(f)', t: 'dia', pts: 4, q: 'Usando un diagrama de oferta y demanda, explique por qué subió el precio de los panificados en Paraguay (párrafo 2).', dia: { m: 'micro', key: 'O', dir: -1, why: 'El trigo y la harina son insumos del pan.' }, model: 'El trigo y la harina son insumos del pan. Al subir su precio internacional, aumentan los costos de las panaderías y la oferta se desplaza a la izquierda (de O₀ a O₁). Al precio inicial hay exceso de demanda, por lo que el precio sube de P₀ a P₁ y la cantidad baja de Q₀ a Q₁.', ck: ['Identifica el trigo como <b>insumo</b> (costo)', 'La <b>oferta</b> se desplaza a la izquierda', 'Exceso de demanda al precio inicial', 'Sube el precio y baja la cantidad'] },
+      { k: 'g', lbl: '(g)', t: 'eval', pts: 15, q: 'Usando información del texto y sus conocimientos de economía, <b>evalúe</b> la eficacia de la política monetaria del BCP para controlar la inflación en Paraguay.', ind: ['Define política monetaria contractiva y meta de inflación.', 'Explica con un diagrama DA/OA cómo la suba de la TPM reduce la DA.', 'Usa datos del texto: TPM de 0,75 % a 8,50 %; inflación de 11,8 % (abril de 2022) a 3,7 % (2023) y 3,8 % (2024).', '<b>Pro:</b> la inflación volvió a la meta y el régimen de metas ayuda a anclar las expectativas.', '<b>Contra:</b> buena parte de la inflación de 2022 fue de costos e importada (combustibles, trigo); la TPM actúa sobre la demanda, no sobre esos precios.', '<b>Contra:</b> dolarización e informalidad debilitan la transmisión (párrafo 4).', '<b>Corto y largo plazo:</b> menor crecimiento y empleo en el corto plazo a cambio de estabilidad de precios en el largo plazo; la baja de 2023 también pudo deberse a la normalización de precios internacionales.', '<b>Partes interesadas:</b> deudores, ahorristas, empresas, exportadores y hogares de bajos ingresos.', 'Conclusión con un juicio justificado, por ejemplo: eficaz en parte, sobre todo para anclar expectativas.'] }
+    ]
+  },
+  {
+    id: 'pobreza', u: 'Unidad 3', title: 'Pobreza y desigualdad en Paraguay', yrs: '2023–2024',
+    text: [
+      'Según el Instituto Nacional de Estadística (INE), con datos de la Encuesta Permanente de Hogares Continua, la pobreza total bajó de <b>22,3 %</b> de la población en 2023 a <b>20,1 %</b> en 2024, el nivel más bajo desde que se aplica la metodología actual (1997/98). En zonas urbanas pasó de 18,7 % a 16,6 % y en zonas rurales de 28,1 % a 25,9 %.',
+      'La pobreza extrema también bajó: en zonas urbanas, de 2,2 % a 1,9 %, y en zonas rurales, de 8,8 % a 7,9 %.',
+      'El INE estimó que, sin los programas de transferencias del Estado, en 2024 la pobreza total habría sido de 24,0 % y la pobreza extrema de 6,6 %.',
+      'La desigualdad sigue siendo alta. En 2024, el 10 % más rico de la población recibió el <b>35,2 %</b> del ingreso total y el 10 % más pobre, el <b>1,9 %</b>. El ingreso mensual por persona del 10 % más pobre fue de unos Gs. 382.000, frente a unos Gs. 7.214.000 del 10 % más rico.',
+      'Según cifras revisadas del BCP, la economía creció 5,3 % en 2023 y 4,7 % en 2024. En 2024 el principal motor fue el consumo privado, que aumentó 6,1 %, acompañado por un aumento de la inversión de 12,4 %.'
+    ],
+    tables: [
+      { cap: 'Tabla 1. Pobreza monetaria (% de la población)', head: ['', '2023', '2024'], rows: [['Pobreza total, país', '22,3', '20,1'], ['Pobreza total, urbana', '18,7', '16,6'], ['Pobreza total, rural', '28,1', '25,9'], ['Pobreza extrema, urbana', '2,2', '1,9'], ['Pobreza extrema, rural', '8,8', '7,9']] },
+      { cap: 'Tabla 2. Distribución del ingreso, 2024', head: ['Grupo', '% del ingreso total', 'Ingreso mensual por persona'], rows: [['10 % más pobre', '1,9', 'Gs. 382.000'], ['10 % más rico', '35,2', 'Gs. 7.214.000']] }
+    ],
+    src: [['Xinhua, 29/03/2025: «Pobreza total en Paraguay se reduce 2,2 % en 2024, según datos de INE»', 'https://spanish.news.cn/20250329/6e75a57699674056883f87e1b4120191/c.html'], ['MarketData: «Pobreza monetaria en Paraguay: ¿por qué la pobreza extrema baja, pero la desigualdad persiste?»', 'https://marketdata.com.py/laboratorio/pobreza-monetaria-en-paraguay-por-que-la-pobreza-extrema-baja-pero-la-desigualdad-persiste-140683/'], ['INE: Pobreza monetaria EPHC 2024', 'https://www.ine.gov.py/Publicaciones/Biblioteca/documento/271/Pobreza%20Monetaria_%20EPHC%202024_INE.pdf'], ['Última Hora, 03/12/2025: «BCP ajusta estimación y sitúa el crecimiento del 2024 en 4,7»', 'https://www.ultimahora.com/bcp-ajusta-estimacion-y-situa-el-crecimiento-del-2024-en-4-7']],
+    parts: [
+      { k: 'a1', lbl: '(a) (i)', t: 'def', pts: 2, q: 'Defina el término <b>pobreza extrema</b> (párrafo 2).', model: 'Situación de las personas cuyo ingreso no alcanza para cubrir el costo de una canasta básica de alimentos, es decir, sus necesidades mínimas de alimentación.', ck: ['Relaciona el ingreso con un <b>umbral</b> (línea de pobreza)', 'El umbral es la <b>canasta básica de alimentos</b>'] },
+      { k: 'a2', lbl: '(a) (ii)', t: 'def', pts: 2, q: 'Defina el término <b>transferencias</b> del Estado (párrafo 3).', model: 'Pagos del gobierno a personas o familias sin recibir a cambio un bien o un servicio, como pensiones o subsidios monetarios a hogares pobres. Redistribuyen el ingreso.', ck: ['Pago del gobierno <b>sin contrapartida</b> de bienes o servicios', 'Da un ejemplo o menciona que <b>redistribuye</b> el ingreso'] },
+      { k: 'b1', lbl: '(b) (i)', t: 'calc', pts: 2, q: 'Usando la Tabla 2, calcule cuántas veces es mayor el ingreso mensual por persona del 10 % más rico que el del 10 % más pobre.', ans: 18.88, tol: 0.1, unit: 'veces', hint: 'Divide el ingreso del grupo más rico por el del más pobre.', sol: '7.214.000 ÷ 382.000 ≈ <b>18,9 veces</b>.' },
+      { k: 'b2', lbl: '(b) (ii)', t: 'calc', pts: 3, q: 'Usando la Tabla 1, calcule la <b>variación porcentual</b> de la pobreza total del país entre 2023 y 2024.', ans: -9.87, tol: 0.12, abs: true, unit: '%', hint: 'Variación porcentual = (valor final − valor inicial) ÷ valor inicial × 100. No es lo mismo que la resta en puntos porcentuales.', sol: '(20,1 − 22,3) ÷ 22,3 × 100 ≈ <b>−9,9 %</b>. La baja en <b>puntos porcentuales</b> es de 2,2 puntos (la resta); la variación porcentual compara esa baja con el nivel inicial.' },
+      { k: 'c', lbl: '(c)', t: 'paper', pts: 4, q: 'Usando una curva de Lorenz, explique qué indican los datos del párrafo 4 sobre la distribución del ingreso en Paraguay.', link: ['lab-lorenz', 'Practicar en el laboratorio de la curva de Lorenz'], dck: ['Ejes: % acumulado de la población (horizontal) y % acumulado del ingreso (vertical), de 0 a 100', 'Diagonal rotulada como <b>línea de igualdad perfecta</b>', 'Curva de Lorenz <b>bien por debajo</b> de la diagonal', 'Marca que el 10 % más pobre recibe solo 1,9 % del ingreso'], model: 'Si el ingreso estuviera repartido de forma igual, el 10 % más pobre recibiría el 10 % del ingreso. Recibe solo 1,9 %, mientras el 10 % más rico recibe 35,2 %. Por eso la curva de Lorenz queda lejos de la línea de igualdad perfecta: la desigualdad es alta, lo que se reflejaría en un coeficiente de Gini elevado.', ck: ['Compara con la <b>igualdad perfecta</b> (10 % de la población → 10 % del ingreso)', 'Usa los datos: <b>1,9 %</b> y <b>35,2 %</b>', 'Concluye que la desigualdad es alta (curva lejos de la diagonal o Gini alto)'] },
+      { k: 'd', lbl: '(d)', t: 'dia', pts: 4, q: 'Usando un diagrama de DA/OA, explique cómo el aumento del consumo privado (párrafo 5) contribuyó al crecimiento económico.', dia: { m: 'adas', key: 'DA', dir: 1, why: 'El consumo es un componente de la demanda agregada.' }, model: 'El consumo privado es el mayor componente de la DA (C + I + G + X − M). Cuando aumenta, la DA se desplaza a la derecha (de DA₀ a DA₁) y el PIB real sube de Y₀ a Y₁: hay crecimiento económico. El nivel general de precios también puede subir de P₀ a P₁.', ck: ['El consumo es un <b>componente de la DA</b>', 'La <b>DA</b> se desplaza a la derecha', 'Sube el <b>PIB real</b> (crecimiento)', 'Menciona el efecto sobre el nivel de precios'] },
+      { k: 'e', lbl: '(e)', t: 'dia', pts: 4, q: 'Usando un diagrama de DA/OA, explique cómo invertir en la educación y la salud de los hogares pobres puede aumentar el producto potencial de Paraguay a largo plazo.', dia: { m: 'adas', key: 'OALP', dir: 1, why: 'Más educación y salud mejoran la calidad del factor trabajo.' }, model: 'La educación y la salud mejoran la calidad del factor trabajo (capital humano): los trabajadores producen más con los mismos recursos. La OALP se desplaza a la derecha (de OALP₀ a OALP₁) y aumenta el producto potencial. El efecto llega en el largo plazo, porque formar capital humano lleva años.', ck: ['Lo vincula con el <b>capital humano</b> y la productividad', 'La <b>OALP</b> se desplaza a la derecha', 'Aumenta el <b>producto potencial</b>', 'Aclara que es un efecto de <b>largo plazo</b>'] },
+      { k: 'f', lbl: '(f)', t: 'dia', pts: 4, q: 'Usando un diagrama de oferta y demanda, explique cómo un subsidio a los productores de alimentos de la canasta básica afectaría su precio.', dia: { m: 'micro', key: 'O', dir: 1, why: 'El subsidio reduce los costos de producción.' }, model: 'El subsidio es un pago del gobierno a los productores por unidad producida, que reduce sus costos. La oferta se desplaza a la derecha (de O₀ a O₁): el precio baja de P₀ a P₁ y la cantidad sube de Q₀ a Q₁. Beneficia a los hogares pobres, que gastan una gran parte de su ingreso en alimentos.', ck: ['El subsidio <b>reduce los costos</b> de los productores', 'La <b>oferta</b> se desplaza a la derecha', 'Baja el precio y sube la cantidad', 'Lo vincula con los hogares pobres'] },
+      { k: 'g', lbl: '(g)', t: 'eval', pts: 15, q: 'Usando información del texto y sus conocimientos de economía, <b>evalúe</b> el uso de los programas de transferencias para reducir la pobreza y la desigualdad en Paraguay.', ind: ['Define pobreza, desigualdad y transferencias.', 'Explica con la curva de Lorenz cómo las transferencias redistribuyen el ingreso.', 'Usa datos del texto: sin transferencias, la pobreza habría sido 24,0 % en vez de 20,1 % y la extrema 6,6 %.', '<b>Pro:</b> alivio inmediato y focalizado; si exigen asistencia escolar y controles de salud, forman capital humano.', '<b>Contra:</b> costo fiscal y costo de oportunidad; errores de focalización; la informalidad dificulta identificar a quién ayudar.', '<b>Contra:</b> no atacan las causas de fondo (empleo, productividad). El crecimiento de 5,3 % y 4,7 % también explica la baja.', '<b>Corto y largo plazo:</b> alivio hoy; los efectos sobre capital humano tardan años.', '<b>Partes interesadas:</b> hogares pobres, contribuyentes, gobierno y zonas rurales, donde la pobreza (25,9 %) supera a la urbana (16,6 %).', 'La desigualdad sigue alta (35,2 % frente a 1,9 %): conclusión con un juicio justificado.'] }
+    ]
+  },
+  {
+    id: 'soja', u: 'Unidades 2 y 4', title: 'Sequía, soja y el guaraní', yrs: '2021–2024',
+    text: [
+      'La sequía de la zafra 2021/22 redujo la cosecha de soja a <b>4,3 millones de toneladas</b>, cuando al inicio de la campaña se esperaban 10 millones. Las exportaciones de soja cayeron de 6.329.425 toneladas en 2021 a 2.334.309 toneladas en 2022, y Paraguay bajó del 4.º al 6.º lugar entre los exportadores mundiales. Pese a la suba de los precios internacionales, los ingresos por exportaciones del complejo soja cayeron en poco más de US$ 2.000 millones.',
+      'Según cifras revisadas del BCP, el PIB real no creció en 2022 (0,0 %).',
+      'Con la vuelta de las lluvias, las exportaciones totales subieron de US$ 13.866 millones en 2022 a <b>US$ 17.311,7 millones</b> en 2023. Los envíos de soja alcanzaron US$ 3.424 millones, 179 % más que el año anterior. Las importaciones totales llegaron a <b>US$ 15.680 millones</b>.',
+      'En 2024 el guaraní se depreció <b>5,5 %</b> frente al dólar, mucho menos que otras monedas de la región: el real brasileño (23,9 %), el peso chileno (12,1 %), el peso uruguayo (12 %) y el peso argentino (71 %). Según analistas, influyeron las intervenciones del BCP, que vendió dólares cuando la cotización llegó a Gs. 8.000.',
+      'Paraguay tiene un régimen de tipo de cambio flotante administrado: el valor del guaraní lo determina el mercado, pero el BCP interviene para evitar movimientos bruscos.'
+    ],
+    tables: [
+      { cap: 'Tabla 1. Exportaciones de soja (toneladas)', head: ['Año', 'Toneladas'], rows: [['2021', '6.329.425'], ['2022', '2.334.309']] },
+      { cap: 'Tabla 2. Comercio exterior de bienes, 2023 (millones de US$)', head: ['Rubro', 'Valor'], rows: [['Exportaciones totales', '17.311,7'], ['Importaciones totales', '15.680,0'], ['Exportaciones de soja', '3.424,0']] },
+      { cap: 'Tabla 3. Depreciación frente al dólar en 2024 (%)', head: ['Moneda', 'Depreciación'], rows: [['Guaraní', '5,5'], ['Peso uruguayo', '12,0'], ['Peso chileno', '12,1'], ['Real brasileño', '23,9'], ['Peso argentino', '71,0']] }
+    ],
+    src: [['La Nación, 14/01/2023: «Efecto de la sequía: Paraguay perdió dos lugares en el ranking de producción y exportación de soja»', 'https://www.lanacion.com.py/negocios/2023/01/14/efecto-de-la-sequia-paraguay-perdio-dos-lugares-en-el-ranking-de-produccion-y-exportacion-de-soja/'], ['La Nación, 14/01/2024: «Exportaciones alcanzaron cifras sin precedentes en el 2023»', 'https://www.lanacion.com.py/negocios_edicion_impresa/2024/01/14/exportaciones-alcanzaron-cifras-sin-precedentes-en-el-2023/'], ['La Nación, 04/01/2025: «El guaraní fue el menos depreciado»', 'https://www.lanacion.com.py/negocios/2025/01/04/el-guarani-fue-el-menos-depreciado-factores-que-influyeron-para-mantener-su-valor/'], ['Última Hora, 03/12/2025: «BCP ajusta estimación y sitúa el crecimiento del 2024 en 4,7»', 'https://www.ultimahora.com/bcp-ajusta-estimacion-y-situa-el-crecimiento-del-2024-en-4-7']],
+    parts: [
+      { k: 'a1', lbl: '(a) (i)', t: 'def', pts: 2, q: 'Defina el término <b>depreciación</b> (párrafo 4).', model: 'Disminución del valor de una moneda frente a otra en un régimen de tipo de cambio flotante, es decir, cuando lo determina el mercado.', ck: ['<b>Baja el valor</b> de la moneda frente a otra', 'Ocurre por el mercado en un régimen <b>flotante</b>'] },
+      { k: 'a2', lbl: '(a) (ii)', t: 'def', pts: 2, q: 'Defina el término <b>tipo de cambio flotante administrado</b> (párrafo 5).', model: 'Régimen en el que el tipo de cambio lo determinan la oferta y la demanda, pero el banco central interviene comprando o vendiendo divisas para evitar movimientos bruscos.', ck: ['Lo determinan la <b>oferta y la demanda</b>', 'El banco central <b>interviene</b> para moderar los cambios'] },
+      { k: 'b1', lbl: '(b) (i)', t: 'calc', pts: 2, q: 'Usando la Tabla 2, calcule el saldo de la balanza comercial de bienes de Paraguay en 2023, en millones de US$.', ans: 1631.7, tol: 0.6, unit: 'millones de US$', hint: 'Saldo comercial = exportaciones − importaciones.', sol: '17.311,7 − 15.680,0 = <b>US$ 1.631,7 millones</b> (superávit).' },
+      { k: 'b2', lbl: '(b) (ii)', t: 'calc', pts: 3, q: 'Usando la Tabla 1, calcule la variación porcentual del volumen de soja exportado entre 2021 y 2022.', ans: -63.12, tol: 0.12, abs: true, unit: '%', hint: '(valor final − valor inicial) ÷ valor inicial × 100.', sol: '(2.334.309 − 6.329.425) ÷ 6.329.425 × 100 ≈ <b>−63,1 %</b>.' },
+      { k: 'c', lbl: '(c)', t: 'dia', pts: 4, q: 'Usando un diagrama de oferta y demanda, explique cómo la sequía afectó al mercado de la soja (párrafo 1).', dia: { m: 'micro', key: 'O', dir: -1, why: 'La sequía reduce la cosecha.' }, model: 'La sequía redujo la cosecha (4,3 millones de toneladas en vez de los 10 millones esperados): la oferta de soja se desplaza a la izquierda (de O₀ a O₁). Al precio inicial hay exceso de demanda, el precio sube de P₀ a P₁ y la cantidad baja de Q₀ a Q₁.', ck: ['La sequía es un factor que <b>reduce la oferta</b>', 'La <b>oferta</b> se desplaza a la izquierda', 'Sube el precio y baja la cantidad', 'Usa un dato del texto'] },
+      { k: 'd', lbl: '(d)', t: 'dia', pts: 4, q: 'Usando un diagrama del mercado del guaraní, explique cómo la caída de las exportaciones de soja en 2022 pudo presionar hacia la depreciación del guaraní.', dia: { m: 'fx', key: 'D', dir: -1, why: 'Los compradores extranjeros de soja necesitan guaraníes.' }, model: 'Los compradores extranjeros pagan las exportaciones paraguayas con guaraníes, así que las exportaciones generan demanda de guaraníes. Al caer las exportaciones de soja, baja la demanda de guaraníes (de D₀ a D₁) y el valor del guaraní baja: se deprecia.', ck: ['Las exportaciones generan <b>demanda de guaraníes</b>', 'La <b>demanda</b> de guaraníes se desplaza a la izquierda', 'El guaraní <b>se deprecia</b>'] },
+      { k: 'e', lbl: '(e)', t: 'dia', pts: 4, q: 'Usando un diagrama del mercado del guaraní, explique cómo la venta de dólares por parte del BCP (párrafo 4) limita la depreciación del guaraní.', dia: { m: 'fx', key: 'D', dir: 1, why: 'Para vender dólares, el BCP recibe guaraníes a cambio.' }, model: 'Cuando el BCP vende dólares de sus reservas, recibe guaraníes a cambio: está comprando guaraníes. La demanda de guaraníes aumenta (de D₀ a D₁), lo que sostiene su valor. Así el guaraní se deprecia menos de lo que lo haría sin intervención.', ck: ['Vender dólares = <b>comprar guaraníes</b>', 'Aumenta la <b>demanda de guaraníes</b>', 'El guaraní se deprecia <b>menos</b> (o se aprecia)', 'Menciona las <b>reservas</b> del BCP'] },
+      { k: 'f', lbl: '(f)', t: 'dia', pts: 4, q: 'Usando un diagrama de DA/OA, explique cómo la recuperación de las exportaciones en 2023 afectó al PIB real.', dia: { m: 'adas', key: 'DA', dir: 1, why: 'Las exportaciones netas son un componente de la DA.' }, model: 'Las exportaciones netas (X − M) son un componente de la DA. Con el aumento de las exportaciones, la DA se desplaza a la derecha (de DA₀ a DA₁): el PIB real sube de Y₀ a Y₁ y el nivel general de precios puede subir de P₀ a P₁.', ck: ['Las <b>exportaciones netas</b> son parte de la DA', 'La <b>DA</b> se desplaza a la derecha', 'Sube el <b>PIB real</b>', 'Usa un dato del texto'] },
+      { k: 'g', lbl: '(g)', t: 'eval', pts: 15, q: 'Usando información del texto y sus conocimientos de economía, <b>evalúe</b> las consecuencias para la economía paraguaya de depender de las exportaciones agrícolas.', ind: ['Define ventaja comparativa y especialización.', 'Explica la teoría: exportar según la ventaja comparativa genera divisas, empleo y crecimiento.', 'Usa datos: exportaciones de US$ 17.311,7 millones y superávit comercial en 2023; soja −63,1 % y PIB 0,0 % en 2022.', '<b>Pro:</b> fuente de divisas, empleo e ingresos fiscales; Paraguay es un exportador importante a nivel mundial.', '<b>Contra:</b> vulnerabilidad al clima y a los precios internacionales; volatilidad del crecimiento.', '<b>Contra:</b> presión sobre el guaraní e intervenciones del BCP con reservas; posibles costos ambientales.', '<b>Corto y largo plazo:</b> diversificar (industria, maquila, servicios) reduce el riesgo, pero lleva tiempo.', '<b>Partes interesadas:</b> productores, trabajadores rurales, importadores, gobierno y consumidores.', 'Conclusión con un juicio justificado, por ejemplo: beneficiosa, pero conviene diversificar y gestionar el riesgo climático.'] }
+    ]
+  }
+];
+
+/* Prueba 1 (NM): 5 min de lectura + 1 h 15 min, 1 de 3 preguntas, (a) 10 p y (b) 15 p. */
+const P1 = [
+  {
+    id: 1, qs: [
+      { u: 'Unidad 2', a: 'Explique, utilizando un diagrama, las consecuencias de fijar un precio máximo por debajo del precio de equilibrio en el mercado de un alimento básico.', b: 'Utilizando ejemplos del mundo real, evalúe el uso de precios máximos para proteger a los consumidores de bajos ingresos.',
+        ia: ['Define <b>precio máximo</b>: precio fijado por el gobierno por debajo del de equilibrio; no se puede vender más caro.', 'Diagrama de oferta y demanda con ejes rotulados, equilibrio inicial y el precio máximo por debajo de P*.', 'Muestra Qo y Qd al precio máximo y el <b>exceso de demanda</b> (escasez).', 'Explica por qué baja la cantidad ofrecida (menos incentivo a producir) y sube la demandada.', 'Consecuencias: escasez, filas, mercado paralelo, posible baja de calidad e ineficiencia (pérdida de bienestar).'],
+        ib: ['Define precio máximo y relaciona el objetivo con la <b>equidad</b>.', '<b>Pro:</b> abarata el bien para quienes logran comprarlo; alivio inmediato frente a la inflación de alimentos.', '<b>Contra:</b> escasez, mercado paralelo con precios más altos y costos de fiscalización.', '<b>Corto y largo plazo:</b> alivio hoy; con el tiempo la oferta cae más y la escasez empeora.', '<b>Partes interesadas:</b> consumidores de bajos ingresos, productores, comerciantes y gobierno.', 'Ejemplos reales: controles de precios en Argentina o Venezuela y sus problemas de abastecimiento.', 'Alternativas: transferencias focalizadas o subsidios a productores, que no generan escasez.', 'Juicio final justificado: eficaz solo si es temporal y con fiscalización.'] },
+      { u: 'Unidad 3', a: 'Explique, utilizando un diagrama de DA/OA, cómo un aumento de la tasa de interés por parte del banco central puede reducir la inflación.', b: 'Utilizando ejemplos del mundo real, evalúe la eficacia de la política monetaria para lograr una inflación baja y estable.',
+        ia: ['Define <b>inflación</b> y <b>política monetaria contractiva</b>.', 'Tasa más alta: crédito más caro y ahorro más atractivo; bajan el consumo y la inversión.', 'Diagrama DA/OA: DA a la izquierda; el nivel de precios baja o crece menos y el PIB real baja.', 'Canal del tipo de cambio: la moneda tiende a apreciarse y abarata las importaciones.', 'Cadena causal completa, con todos los rótulos (DA₀, DA₁, OACP, P, Y).'],
+        ib: ['Define política monetaria y meta de inflación.', '<b>Pro:</b> el banco central decide rápido y con independencia; las metas anclan expectativas.', 'Ejemplo real: el BCP subió la TPM de 0,75 % a 8,50 % (2021–2022) y la inflación volvió a la meta en 2023.', '<b>Contra:</b> rezagos; poco eficaz frente a la inflación de costos (petróleo, alimentos); menor crecimiento y empleo.', '<b>Contra:</b> dolarización e informalidad debilitan la transmisión en Paraguay.', '<b>Corto y largo plazo</b> claramente distinguidos.', '<b>Partes interesadas:</b> deudores, ahorristas, empresas, exportadores y gobierno.', 'Juicio final: eficaz para la inflación de demanda y con credibilidad; limitada ante shocks de oferta.'] },
+      { u: 'Unidad 4', a: 'Explique, utilizando un diagrama, cómo un arancel afecta a los productores nacionales, a los consumidores y al gobierno.', b: 'Utilizando ejemplos del mundo real, evalúe el uso de aranceles para proteger a las industrias nacientes.',
+        ia: ['Define <b>arancel</b>.', 'Diagrama con oferta y demanda nacionales, precio mundial y precio mundial + arancel.', 'Sube el precio interno; aumenta la producción nacional; baja el consumo; caen las importaciones.', 'El gobierno recauda (arancel × importaciones).', 'Productores ganan, consumidores pierden; hay ineficiencia (pérdida de bienestar).'],
+        ib: ['Define <b>industria naciente</b>.', '<b>Pro:</b> tiempo para ganar economías de escala y experiencia; empleo y diversificación.', '<b>Contra:</b> precios más altos para los consumidores; la protección tiende a volverse permanente; menos incentivo a innovar; represalias.', '<b>Corto y largo plazo:</b> costo seguro hoy frente a un beneficio incierto mañana.', '<b>Partes interesadas:</b> consumidores, productores, trabajadores, gobierno y socios comerciales.', 'Ejemplos reales: arancel externo común del MERCOSUR; sustitución de importaciones en América Latina; Corea del Sur.', 'Juicio final con condiciones: protección temporal, con metas y plazo.'] }
+    ]
+  },
+  {
+    id: 2, qs: [
+      { u: 'Unidad 2', a: 'Explique, utilizando un diagrama, por qué un mercado produce en exceso un bien cuya producción genera una externalidad negativa.', b: 'Utilizando ejemplos del mundo real, evalúe el uso de impuestos indirectos para corregir las externalidades negativas de producción.',
+        ia: ['Define <b>externalidad negativa de producción</b> y costo marginal privado y social.', 'Diagrama: CMgS por encima de CMgP (la oferta); demanda = BMgP = BMgS.', 'El mercado produce Qm, mayor que el óptimo Q*, a un precio menor que P*.', 'Sobreproducción porque las empresas no pagan el costo que imponen a terceros.', 'Señala la pérdida de bienestar: fallo del mercado.'],
+        ib: ['Define impuesto indirecto.', 'Teoría: el impuesto desplaza la oferta a la izquierda y acerca la cantidad al óptimo.', '<b>Pro:</b> usa el mecanismo de precios, recauda e incentiva tecnologías más limpias.', '<b>Contra:</b> difícil medir el costo externo; con demanda inelástica la cantidad baja poco; puede ser regresivo.', '<b>Corto y largo plazo:</b> a largo plazo las empresas cambian de tecnología.', '<b>Partes interesadas:</b> empresas, consumidores, terceros afectados y gobierno.', 'Ejemplos: impuestos al carbono (Suecia) o impuestos selectivos a combustibles.', 'Juicio final, comparando con alternativas (regulación, permisos negociables).'] },
+      { u: 'Unidad 3', a: 'Explique, utilizando un diagrama de DA/OA, cómo un aumento del gasto público puede reducir el desempleo cíclico.', b: 'Utilizando ejemplos del mundo real, evalúe el uso de una política fiscal expansiva para estimular el crecimiento económico.',
+        ia: ['Define <b>desempleo cíclico</b> (por demanda deficiente) y <b>política fiscal expansiva</b>.', 'El gasto público (G) es un componente de la DA.', 'Diagrama DA/OA con brecha recesiva: la DA se desplaza a la derecha y el PIB real se acerca al potencial.', 'Al producir más, las empresas contratan más trabajadores (demanda derivada).', 'Posible aumento del nivel general de precios.'],
+        ib: ['Define política fiscal y crecimiento económico.', '<b>Pro:</b> efecto directo sobre la DA; la inversión en infraestructura también aumenta la OALP.', '<b>Contra:</b> rezagos; déficit y deuda pública; posible desplazamiento de la inversión privada; inflación cerca del pleno empleo.', '<b>Corto y largo plazo</b> distinguidos.', '<b>Partes interesadas:</b> desempleados, empresas, contribuyentes futuros y gobierno.', 'Ejemplos: endeudamiento de Paraguay en 2020 por la pandemia; Ley de Responsabilidad Fiscal (tope de déficit).', 'Juicio final justificado.'] },
+      { u: 'Unidad 4', a: 'Explique, utilizando un diagrama, cómo una disminución de la demanda de las exportaciones de un país puede provocar la depreciación de su moneda.', b: 'Utilizando ejemplos del mundo real, evalúe las consecuencias de una depreciación de la moneda para una economía.',
+        ia: ['Define <b>tipo de cambio flotante</b> y <b>depreciación</b>.', 'Los extranjeros necesitan la moneda nacional para pagar las exportaciones.', 'Menos exportaciones → menor demanda de la moneda.', 'Diagrama del mercado de la moneda: la demanda a la izquierda; baja el valor de la moneda.', 'Ejemplo: sequía de 2022 y caída de las exportaciones de soja.'],
+        ib: ['Define depreciación.', '<b>Pro:</b> exportaciones más competitivas; las importaciones más caras favorecen la producción local; más DA.', '<b>Contra:</b> inflación importada; deudas en dólares más caras; menor poder de compra.', '<b>Corto y largo plazo:</b> los precios suben rápido; el efecto sobre las exportaciones tarda.', '<b>Partes interesadas:</b> exportadores, importadores, consumidores, deudores en dólares y turistas.', 'Ejemplos: real brasileño en 2024 (−23,9 %) frente al guaraní (−5,5 %); peso argentino.', 'Juicio final justificado.'] }
+    ]
+  },
+  {
+    id: 3, qs: [
+      { u: 'Unidad 2', a: 'Explique, utilizando un diagrama, cómo un subsidio afecta a los consumidores, a los productores y al gobierno en el mercado de un bien.', b: 'Utilizando ejemplos del mundo real, evalúe el uso de subsidios para aumentar el consumo de bienes meritorios.',
+        ia: ['Define <b>subsidio</b>.', 'Diagrama: la oferta se desplaza hacia abajo o a la derecha (O → O + subsidio).', 'Consumidores: pagan menos y compran más.', 'Productores: reciben más por unidad (precio pagado + subsidio) y venden más.', 'Gobierno: gasto = subsidio por unidad × cantidad; costo de oportunidad.'],
+        ib: ['Define <b>bien meritorio</b> y subconsumo.', '<b>Pro:</b> baja el precio y acerca el consumo al óptimo social; beneficios externos.', '<b>Contra:</b> costo fiscal y de oportunidad; con demanda inelástica el consumo sube poco; información imperfecta.', '<b>Corto y largo plazo:</b> los beneficios en salud y educación aparecen en el largo plazo.', '<b>Partes interesadas:</b> consumidores, productores, contribuyentes y gobierno.', 'Ejemplos: alimentación escolar (Hambre Cero), vacunas gratuitas, subsidio al pasaje del transporte público.', 'Alternativas: provisión directa, regulación, campañas de información.', 'Juicio final justificado.'] },
+      { u: 'Unidad 3', a: 'Explique, utilizando un diagrama, cómo un sistema de impuestos progresivos puede reducir la desigualdad del ingreso.', b: 'Utilizando ejemplos del mundo real, evalúe el uso de transferencias monetarias condicionadas para reducir la pobreza.',
+        ia: ['Define <b>impuesto progresivo</b> y <b>desigualdad del ingreso</b>.', 'Curva de Lorenz y línea de igualdad perfecta, con ejes rotulados.', 'Quienes ganan más pagan una proporción mayor de su ingreso.', 'La curva de Lorenz se acerca a la diagonal y baja el coeficiente de Gini.', 'Ejemplo: el impuesto a la renta personal (IRP) de Paraguay con tasas crecientes.'],
+        ib: ['Define transferencia condicionada y pobreza.', '<b>Pro:</b> alivio inmediato y focalizado; las condiciones (escuela, salud) forman capital humano.', '<b>Contra:</b> costo fiscal; errores de focalización; posible dependencia; la informalidad dificulta identificar beneficiarios.', '<b>Corto y largo plazo</b> distinguidos.', '<b>Partes interesadas:</b> hogares pobres, contribuyentes, gobierno, escuelas y centros de salud.', 'Ejemplos: Tekoporã (Paraguay), Bolsa Família (Brasil); el INE estimó que sin transferencias la pobreza de 2024 habría sido 24,0 % y no 20,1 %.', 'Juicio final justificado.'] },
+      { u: 'Unidad 4', a: 'Explique, utilizando un diagrama, cómo la inversión en capital humano puede aumentar el crecimiento potencial de una economía.', b: 'Utilizando ejemplos del mundo real, evalúe la inversión extranjera directa (IED) como estrategia para lograr el desarrollo económico.',
+        ia: ['Define <b>capital humano</b> y <b>crecimiento económico potencial</b>.', 'Educación y salud mejoran la calidad del factor trabajo (productividad).', 'Diagrama: la OALP (o la CPP) se desplaza a la derecha.', 'Cadena: más productividad → más producción con los mismos recursos → mayor producto potencial.', 'Aclara que el efecto es de largo plazo.'],
+        ib: ['Define <b>IED</b> y <b>desarrollo económico</b>.', '<b>Pro:</b> capital, tecnología, empleo, capacitación, exportaciones y recaudación.', '<b>Contra:</b> salida de ganancias al exterior; poca transferencia de tecnología; daño ambiental; incentivos fiscales costosos.', '<b>Corto y largo plazo</b> distinguidos.', '<b>Partes interesadas:</b> trabajadores, empresas locales, gobierno, multinacionales y comunidades.', 'Ejemplos: régimen de maquila en Paraguay; proyecto de celulosa Paracel en Concepción.', 'Juicio final justificado.'] }
+    ]
+  }
+];
+
+/* Bandas para autoevaluación, adaptadas de los descriptores de la Prueba 1. No reemplazan la corrección del profesor. */
+const BANDS10 = [
+  [0, 0, 'No responde o no alcanza el nivel siguiente.'],
+  [1, 2, 'Poca comprensión de lo que pide la pregunta. Términos ausentes o mal usados. Diagrama ausente o con errores graves.'],
+  [3, 4, 'Comprensión parcial. Algunos términos bien usados. Diagrama relevante pero con errores o sin explicar.'],
+  [5, 6, 'Comprende la pregunta. Teoría relevante con algunas definiciones. Diagrama correcto pero la explicación es limitada.'],
+  [7, 8, 'Comprensión clara. Términos definidos y bien usados. Diagrama correcto, rotulado y explicado, con errores menores.'],
+  [9, 10, 'Respuesta completa y precisa: términos definidos, diagrama correcto y rotulado, cadena causal lógica de principio a fin.']
+];
+const BANDS15 = [
+  [0, 0, 'No responde o no alcanza el nivel siguiente.'],
+  [1, 3, 'Poca comprensión. Sin ejemplos reales o irrelevantes. No hay evaluación.'],
+  [4, 6, 'Alguna comprensión. Teoría poco explicada. Ejemplos poco desarrollados. Evaluación ausente o solo afirmada.'],
+  [7, 9, 'Comprende la pregunta. Teoría relevante y ejemplos reales. Evaluación presente pero poco fundamentada o desequilibrada.'],
+  [10, 12, 'Teoría explicada con diagrama cuando corresponde. Ejemplos reales aplicados. Evaluación con fundamentos (pros y contras, plazos, partes interesadas) pero conclusión débil.'],
+  [13, 15, 'Respuesta enfocada y precisa. Teoría y diagramas explicados. Ejemplos reales integrados. Evaluación equilibrada con un juicio final justificado.']
+];
+
+
+/* =============== 8 · Simulacros: lógica =============== */
+const wc = s => (String(s || '').trim().match(/\S+/g) || []).length;
+const mmss = ms => { ms = Math.max(0, ms); const s = Math.ceil(ms / 1000), h = Math.floor(s / 3600), m = Math.floor(s % 3600 / 60), x = s % 60; return (h ? h + ':' + String(m).padStart(2, '0') : m) + ':' + String(x).padStart(2, '0'); };
+function bandPicker(id, bands, cur) {
+  return `<div class="bands" id="${id}">${bands.map(([lo, hi, d]) => `<div class="band ${cur !== null && cur !== undefined && cur >= lo && cur <= hi ? 'on' : ''}"><div class="bn">${[...Array(hi - lo + 1)].map((_, j) => `<button type="button" class="bnum ${cur === lo + j ? 'sel' : ''}" data-v="${lo + j}">${lo + j}</button>`).join('')}</div><p>${d}</p></div>`).join('')}</div>`;
+}
+function bindBand(id, cb) { document.querySelectorAll(`#${id} .bnum`).forEach(b => b.onclick = () => cb(+b.dataset.v)); }
+function selfScore(id, max, cur) {
+  return `<div class="row selfsc" id="${id}"><span class="small muted">Tu puntaje:</span>${[...Array(max + 1)].map((_, v) => `<button type="button" class="bnum ${cur === v ? 'sel' : ''}" data-v="${v}">${v}</button>`).join('')}<span class="small muted">de ${max}</span></div>`;
+}
+const SIM_NOTE = '<p class="small muted">Corrección orientativa: los puntajes que eliges tú son una autoevaluación con bandas adaptadas de los criterios del IB. No reemplazan la corrección de tu profesor.</p>';
+
+/* ---------- Prueba 1 con reloj ---------- */
+const P1S = store.get('p1', { cur: null, hist: [] });
+const saveP1 = () => store.set('p1', P1S);
+const P1_READ = 5 * 60000, P1_WRITE = 75 * 60000;
+function renderP1() {
+  stopGameTimers();
+  const C = P1S.cur;
+  if (!C) return p1Setup();
+  if (C.phase === 'read') return p1Read();
+  if (C.phase === 'write') return p1Write();
+  if (C.phase === 'mark') return p1Mark();
+  return p1Done();
+}
+function p1Head(sub) { return `<div class="eyebrow">Escribir como en el examen</div><h1>Simulacro de Prueba 1</h1>${writeTabs('escribir-p1')}${sub || ''}`; }
+function p1Setup() {
+  const S = SESS.p1set = SESS.p1set || { set: 1 + (P1S.hist.length % P1.length), timed: true };
+  const doneSets = new Set(P1S.hist.map(h => h.set));
+  app.innerHTML = p1Head(`
+    <div class="method"><div><b>Condiciones de examen</b><p>5 minutos de lectura y <b>1 h 15 min</b> para escribir. Eliges <b>1 de 3</b> preguntas.</p></div>
+      <div><b>Parte (a) · 10 puntos</b><p>Explicar con diagrama: definiciones, diagrama rotulado y cadena causal.</p></div>
+      <div><b>Parte (b) · 15 puntos</b><p>Evaluar con ejemplos del mundo real: pros y contras, corto y largo plazo, partes interesadas y juicio final.</p></div></div>
+    <div class="essentials gset">
+      <div><span class="lbl2">Simulacro</span><div class="seg" role="group" id="p1Set">${P1.map(s => `<button type="button" data-s="${s.id}" aria-pressed="${S.set === s.id}">Simulacro ${s.id}${doneSets.has(s.id) ? ' ✓' : ''}</button>`).join('')}</div></div>
+      <div><span class="lbl2">Modo</span><div class="seg" role="group" id="p1Mode"><button type="button" data-t="1" aria-pressed="${S.timed}">Con reloj (examen)</button><button type="button" data-t="0" aria-pressed="${!S.timed}">Sin reloj (práctica)</button></div></div>
+      <p class="small muted">Dibuja tus diagramas en papel, como en el examen, y escribe <b>[Diagrama]</b> donde vaya cada uno. Tu texto se guarda solo en este dispositivo mientras escribes.</p>
+      <div class="row"><button class="btn primary" type="button" id="p1Go">Empezar el simulacro</button></div>
+    </div>
+    ${P1S.hist.length ? `<h2 style="margin-top:24px">Tus simulacros</h2><div class="mlist">${P1S.hist.slice().reverse().map(h => `<div class="mrow"><span class="code">${h.total}</span><span class="nm">Simulacro ${h.set} · ${h.u}<span class="ds">${h.d} · (a) ${h.a}/10 · (b) ${h.b}/15 · ${h.w} palabras${h.timed ? '' : ' · sin reloj'}</span></span><span class="act"><span class="tag">/25</span></span></div>`).join('')}</div>` : ''}`);
+  app.querySelectorAll('#p1Set [data-s]').forEach(b => b.onclick = () => { S.set = +b.dataset.s; p1Setup(); });
+  app.querySelectorAll('#p1Mode [data-t]').forEach(b => b.onclick = () => { S.timed = b.dataset.t === '1'; p1Setup(); });
+  $('#p1Go').onclick = () => { const now = Date.now(); P1S.cur = { set: S.set, timed: S.timed, phase: 'read', q: null, readEnd: now + P1_READ, end: null, a: '', b: '', ckA: {}, ckB: {}, scA: null, scB: null }; saveP1(); renderP1(); };
+}
+function p1Questions(C, pickable) {
+  const set = P1.find(s => s.id === C.set);
+  return set.qs.map((q, i) => `<div class="p1q ${C.q === i ? 'sel' : ''}"><div class="row" style="justify-content:space-between"><b>Pregunta ${i + 1}</b><span class="tag">${q.u}</span></div>
+    <p><b>(a)</b> ${q.a} <span class="pts">[10]</span></p><p><b>(b)</b> ${q.b} <span class="pts">[15]</span></p>
+    ${pickable ? `<button class="btn sm ${C.q === i ? 'primary' : ''}" type="button" data-q="${i}">${C.q === i ? 'Elegida' : 'Elegir esta pregunta'}</button>` : ''}</div>`).join('');
+}
+function p1Start() { const C = P1S.cur; C.phase = 'write'; C.end = Date.now() + P1_WRITE; saveP1(); renderP1(); }
+function p1Read() {
+  const C = P1S.cur;
+  app.innerHTML = p1Head(`
+    <div class="simbar"><span><b>Tiempo de lectura</b>${C.timed ? ' · <span id="p1T" class="clock"></span>' : ''}</span><span class="small muted">Lee las tres preguntas y elige una. Todavía no se escribe.</span></div>
+    <div class="p1qs">${p1Questions(C, true)}</div>
+    <div class="row" style="margin-top:12px"><button class="btn primary" type="button" id="p1W" ${C.q === null ? 'disabled' : ''}>Empezar a escribir</button><button class="btn" type="button" id="p1X">Cancelar el simulacro</button></div>`);
+  app.querySelectorAll('[data-q]').forEach(b => b.onclick = () => { C.q = +b.dataset.q; saveP1(); p1Read(); });
+  $('#p1W').onclick = p1Start;
+  $('#p1X').onclick = () => { P1S.cur = null; saveP1(); renderP1(); };
+  if (C.timed) {
+    const tick = () => { const T = $('#p1T'); if (!T) return stopGameTimers(); const left = C.readEnd - Date.now(); T.textContent = mmss(left); if (left <= 0) { stopGameTimers(); if (C.q !== null) p1Start(); else T.textContent = 'terminó: elige una pregunta'; } };
+    tick(); GAME_TIMER = setInterval(tick, 500);
+  }
+}
+function p1Write(expired) {
+  const C = P1S.cur, q = P1.find(s => s.id === C.set).qs[C.q];
+  app.innerHTML = p1Head(`
+    <div class="simbar sticky"><span><b>Pregunta ${C.q + 1}</b> · ${q.u}</span>${C.timed ? `<span class="clock" id="p1T"></span>` : '<span class="small muted">Sin reloj</span>'}<button class="btn sm primary" type="button" id="p1Sub">Entregar</button></div>
+    <div class="p1w">
+      <div class="p1part"><p class="q"><b>(a)</b> ${q.a} <span class="pts">[10]</span></p><textarea id="p1a" rows="12" placeholder="Definiciones, [Diagrama] y cadena causal…">${esc(C.a)}</textarea><p class="small muted" id="p1aw"></p></div>
+      <div class="p1part"><p class="q"><b>(b)</b> ${q.b} <span class="pts">[15]</span></p><textarea id="p1b" rows="16" placeholder="Teoría, ejemplos reales, pros y contras, corto y largo plazo, partes interesadas y juicio final…">${esc(C.b)}</textarea><p class="small muted" id="p1bw"></p></div>
+    </div>`);
+  const cnt = () => { $('#p1aw').textContent = wc(C.a) + ' palabras'; $('#p1bw').textContent = wc(C.b) + ' palabras'; };
+  let tm = null;
+  ['a', 'b'].forEach(k => $('#p1' + k).oninput = e => { C[k] = e.target.value; cnt(); clearTimeout(tm); tm = setTimeout(saveP1, 400); });
+  cnt();
+  const submit = () => { stopGameTimers(); C.phase = 'mark'; C.late = !!expired; saveP1(); window.scrollTo(0, 0); renderP1(); };
+  $('#p1Sub').onclick = () => { saveP1(); submit(); };
+  if (C.timed) {
+    const tick = () => { const T = $('#p1T'); if (!T) return stopGameTimers(); const left = C.end - Date.now(); T.textContent = mmss(left); T.classList.toggle('low', left < 10 * 60000); if (left <= 0) { stopGameTimers(); C.timeUp = true; saveP1(); submit(); } };
+    tick(); GAME_TIMER = setInterval(tick, 500);
+  }
+}
+function p1Mark() {
+  const C = P1S.cur, q = P1.find(s => s.id === C.set).qs[C.q];
+  const ckBox = (items, st, id) => `<div class="cklist" id="${id}">${items.map((c, i) => `<label><input type="checkbox" data-ck="${i}" ${st[i] ? 'checked' : ''}><span>${c}</span></label>`).join('')}</div>`;
+  app.innerHTML = p1Head(`
+    ${C.timeUp ? '<div class="fb info"><b class="h">Se terminó el tiempo</b>Tu respuesta se entregó automáticamente.</div>' : ''}
+    <h2>Autocorrección</h2><p class="lede">Marca lo que <b>sí</b> está en tu respuesta y después elige el puntaje de la banda que mejor la describe.</p>
+    <div class="p1mark">
+      <section><h3>Parte (a) · 10 puntos</h3><p class="small">${q.a}</p>
+        <details class="model"><summary>Ver mi respuesta (${wc(C.a)} palabras)</summary><div class="answer">${esc(C.a || '(vacía)').replace(/\n/g, '<br>')}</div></details>
+        <h4>Contenido esperado</h4>${ckBox(q.ia, C.ckA, 'ckA')}
+        <h4>Banda</h4>${bandPicker('bdA', BANDS10, C.scA)}</section>
+      <section><h3>Parte (b) · 15 puntos</h3><p class="small">${q.b}</p>
+        <details class="model"><summary>Ver mi respuesta (${wc(C.b)} palabras)</summary><div class="answer">${esc(C.b || '(vacía)').replace(/\n/g, '<br>')}</div></details>
+        <h4>Contenido esperado</h4>${ckBox(q.ib, C.ckB, 'ckB')}
+        <h4>Banda</h4>${bandPicker('bdB', BANDS15, C.scB)}</section>
+    </div>
+    ${SIM_NOTE}
+    <div class="row" style="margin-top:12px"><button class="btn primary" type="button" id="p1Save" ${C.scA === null || C.scB === null ? 'disabled' : ''}>Guardar resultado${C.scA !== null && C.scB !== null ? ` · ${C.scA + C.scB}/25` : ''}</button></div>`);
+  [['ckA', C.ckA], ['ckB', C.ckB]].forEach(([id, st]) => app.querySelectorAll(`#${id} input`).forEach(cb => cb.onchange = () => { st[+cb.dataset.ck] = cb.checked; saveP1(); }));
+  bindBand('bdA', v => { C.scA = v; saveP1(); const y = window.scrollY; p1Mark(); window.scrollTo(0, y); });
+  bindBand('bdB', v => { C.scB = v; saveP1(); const y = window.scrollY; p1Mark(); window.scrollTo(0, y); });
+  $('#p1Save').onclick = () => {
+    let d; try { d = new Date().toLocaleDateString('es-PY'); } catch (e) { d = new Date().toISOString().slice(0, 10); }
+    P1S.hist.push({ d, set: C.set, q: C.q + 1, u: q.u, a: C.scA, b: C.scB, total: C.scA + C.scB, w: wc(C.a) + wc(C.b), timed: C.timed });
+    C.phase = 'done'; saveP1(); window.scrollTo(0, 0); renderP1();
+  };
+}
+function p1Done() {
+  const C = P1S.cur, q = P1.find(s => s.id === C.set).qs[C.q], tot = C.scA + C.scB;
+  const txt = `Simulacro de Prueba 1 · Simulacro ${C.set}, pregunta ${C.q + 1}\n\n(a) ${plain(q.a)}\n\n${C.a}\n\n(b) ${plain(q.b)}\n\n${C.b}\n\nAutoevaluación: (a) ${C.scA}/10 · (b) ${C.scB}/15 · Total ${tot}/25`;
+  app.innerHTML = p1Head(`<div class="fb ok"><b class="h">Resultado autoevaluado: ${tot}/25</b>(a) ${C.scA}/10 · (b) ${C.scB}/15. Quedó guardado en tu reporte.</div>
+    <div class="row" style="margin-top:12px"><button class="btn primary" type="button" id="p1Cp">Copiar mis respuestas para entregar</button><button class="btn" type="button" id="p1New">Nuevo simulacro</button></div>
+    <h3 style="margin-top:20px">Para mejorar</h3><div class="row"><button class="btn sm" type="button" data-go="escribir-explicar">Practicar Explicar (parte a)</button><button class="btn sm" type="button" data-go="escribir-evaluar">Practicar Evaluar (parte b)</button></div>`);
+  $('#p1Cp').onclick = e => copyText(txt, e.currentTarget);
+  $('#p1New').onclick = () => { P1S.cur = null; saveP1(); SESS.p1set = null; renderP1(); };
+}
+
+/* ---------- Prueba 2: casos con datos ---------- */
+const P2S = store.get('p2', {});
+const P2H = store.get('p2h', []);
+const saveP2 = () => store.set('p2', P2S);
+const p2St = c => P2S[c.id] = P2S[c.id] || { i: 0, ans: {}, sc: {}, dg: {}, ex: {}, ck: {}, tries: {}, end: null };
+const p2Score = c => { const s = p2St(c); return c.parts.reduce((t, p) => t + (p.t === 'dia' || p.t === 'paper' ? (s.dg[p.k] || 0) + (s.ex[p.k] || 0) : (s.sc[p.k] || 0)), 0); };
+const p2Marked = (c, p) => { const s = p2St(c); return p.t === 'dia' || p.t === 'paper' ? s.dg[p.k] !== undefined && s.ex[p.k] !== undefined : s.sc[p.k] !== undefined; };
+function renderP2Home() {
+  stopGameTimers();
+  app.innerHTML = `<div class="eyebrow">Escribir como en el examen</div><h1>Prueba 2 · Respuesta a datos</h1>${writeTabs('escribir-p2')}
+    <div class="method"><div><b>Cómo es la Prueba 2</b><p>1 h 45 min. Eliges 1 de 2 preguntas basadas en un texto con datos. Total: <b>40 puntos</b>.</p></div>
+      <div><b>(a) y (b) · 9 puntos</b><p>Definiciones y cálculos con los datos del texto. Muestra siempre el procedimiento.</p></div>
+      <div><b>(c) a (f) · 4 × 4 puntos</b><p>Diagrama (2 p) y explicación (2 p) usando el texto. <b>(g) · 15 puntos:</b> evaluar con información del texto.</p></div></div>
+    <p class="lede">Cada caso usa datos reales de Paraguay, con sus fuentes al final del texto.</p>
+    <div class="tiles games">${P2.map((c, i) => { const s = p2St(c), n = c.parts.filter(p => p2Marked(c, p)).length; return `<button class="tile" type="button" data-go="p2-${c.id}"><span class="code">${i + 1}</span><span class="nm">${c.title}</span><span class="ds">${c.u} · ${c.yrs}</span><span class="ft">${n ? `<span class="tag ${n === c.parts.length ? 'ok' : 'prog'}">${n}/${c.parts.length} partes · ${p2Score(c)}/40</span>` : '<span class="tag">Sin empezar</span>'}</span></button>`; }).join('')}</div>
+    ${P2H.length ? `<h2 style="margin-top:24px">Tus casos terminados</h2><div class="mlist">${P2H.slice().reverse().map(h => `<div class="mrow"><span class="code">${h.total}</span><span class="nm">${h.title}<span class="ds">${h.d} · autocorregido</span></span><span class="act"><span class="tag">/40</span></span></div>`).join('')}</div>` : ''}`;
+}
+function p2TextHtml(c) {
+  return `<div class="p2text">${c.text.map((t, i) => `<p><span class="pn">${i + 1}</span>${t}</p>`).join('')}
+    ${c.tables.map(T => `<table class="dtab"><caption>${T.cap}</caption><thead><tr>${T.head.map(h => `<th>${h}</th>`).join('')}</tr></thead><tbody>${T.rows.map(r => `<tr>${r.map((x, j) => j ? `<td>${x}</td>` : `<th scope="row">${x}</th>`).join('')}</tr>`).join('')}</tbody></table>`).join('')}
+    <p class="small muted src"><b>Fuentes:</b> ${c.src.map(([t, u]) => `<a href="${u}" target="_blank" rel="noopener">${t}</a>`).join(' · ')}</p></div>`;
+}
+function renderP2(c) {
+  stopGameTimers();
+  const s = p2St(c), n = c.parts.length;
+  if (s.i > n) s.i = n;
+  const p = c.parts[s.i];
+  app.innerHTML = `<button class="crumb" type="button" data-go="escribir-p2">← Todos los casos</button>
+    <div class="eyebrow" style="margin-top:12px">Prueba 2 · ${c.u} · ${c.yrs}</div><h1>${c.title}</h1>
+    <div class="simbar"><span>Puntaje: <b id="p2Tot">${p2Score(c)}</b>/40</span>${s.end ? `<span class="clock" id="p2T"></span>` : `<button class="btn sm" type="button" id="p2Clock">Activar reloj de examen (1 h 45 min)</button>`}<button class="btn sm" type="button" id="p2Reset">Empezar de nuevo</button></div>
+    <ol class="stepper">${c.parts.map((x, i) => `<li><button type="button" data-step="${i}" class="${i === s.i ? 'cur' : ''} ${p2Marked(c, x) ? 'ok' : ''}"><span class="n">${p2Marked(c, x) ? '✓' : x.pts}</span><span class="t">${x.lbl}</span></button></li>`).join('')}<li><button type="button" data-step="${n}" class="${s.i === n ? 'cur' : ''}"><span class="n">Σ</span><span class="t">Resultado</span></button></li></ol>
+    <div class="p2wrap">
+      <details class="p2side" ${window.innerWidth > 860 || s.i === 0 ? 'open' : ''}><summary><b>Texto y datos</b></summary>${p2TextHtml(c)}</details>
+      <div class="card p2card"><div class="card-b" id="p2b"></div><div class="card-f"><button class="btn" type="button" id="p2Prev" ${s.i === 0 ? 'disabled' : ''}>← Anterior</button><button class="btn primary" type="button" id="p2Next">${s.i < n - 1 ? 'Siguiente →' : s.i === n - 1 ? 'Ver resultado →' : 'Volver a los casos'}</button></div></div>
+    </div>`;
+  app.querySelectorAll('[data-step]').forEach(b => b.onclick = () => { s.i = +b.dataset.step; saveP2(); renderP2(c); });
+  $('#p2Prev').onclick = () => { s.i--; saveP2(); renderP2(c); };
+  $('#p2Next').onclick = () => { if (s.i >= n) return go('escribir-p2'); s.i++; saveP2(); window.scrollTo(0, 0); renderP2(c); };
+  $('#p2Reset').onclick = () => { if (!confirmReset(c)) return; delete P2S[c.id]; saveP2(); renderP2(c); };
+  const ck = $('#p2Clock'); if (ck) ck.onclick = () => { s.end = Date.now() + 105 * 60000; saveP2(); renderP2(c); };
+  if (s.end) { const tick = () => { const T = $('#p2T'); if (!T) return stopGameTimers(); const left = s.end - Date.now(); T.textContent = left > 0 ? mmss(left) : 'Tiempo terminado'; T.classList.toggle('low', left < 15 * 60000); }; tick(); GAME_TIMER = setInterval(tick, 1000); }
+  const B = $('#p2b');
+  const upTot = () => { $('#p2Tot').textContent = p2Score(c); };
+  if (s.i === n) return p2Result(c, B);
+  const head = `<div class="row" style="justify-content:space-between;margin-bottom:6px"><span class="tag">${p.lbl} · ${p.pts} puntos</span></div><p class="q">${p.q}</p>`;
+  if (p.t === 'def') {
+    const shown = s.sc[p.k] !== undefined || s.tries[p.k];
+    B.innerHTML = `${head}<textarea id="p2a" rows="3" placeholder="Escribe tu definición…">${esc(s.ans[p.k] || '')}</textarea>
+      <div class="row" style="margin-top:10px"><button class="btn primary sm" type="button" id="p2Cmp">Comparar con la definición modelo</button></div><div id="p2x"></div>`;
+    $('#p2a').oninput = e => { s.ans[p.k] = e.target.value; saveP2(); };
+    const show = () => {
+      $('#p2x').innerHTML = `<div class="fb info"><b class="h">Definición modelo</b>${p.model}</div><h4>Para 2 puntos tu definición debe</h4><ul class="okl">${p.ck.map(x => `<li>${x}</li>`).join('')}</ul>
+        <p class="small">2 = precisa y completa · 1 = incompleta o vaga · 0 = incorrecta.</p>${selfScore('ssd', 2, s.sc[p.k])}`;
+      app.querySelectorAll('#ssd .bnum').forEach(b => b.onclick = () => { s.sc[p.k] = +b.dataset.v; saveP2(); renderP2(c); });
+    };
+    $('#p2Cmp').onclick = () => { s.tries[p.k] = 1; saveP2(); show(); };
+    if (shown) show();
+  } else if (p.t === 'calc') {
+    const got = s.sc[p.k];
+    B.innerHTML = `${head}<div class="row"><input class="inp calc" id="p2n" inputmode="decimal" placeholder="Tu resultado" value="${esc(s.ans[p.k] || '')}" ${got !== undefined ? 'disabled' : ''}><span class="muted">${p.unit}</span><button class="btn primary sm" type="button" id="p2Chk" ${got !== undefined ? 'disabled' : ''}>Comprobar</button>${got === undefined ? `<button class="btn sm" type="button" id="p2Sol">Ver procedimiento</button>` : ''}</div>
+      <p class="small muted" style="margin-top:6px">Usa coma para decimales. En el examen escribe también el procedimiento: sin él pierdes puntos aunque el resultado sea correcto.</p><div id="p2x"></div>`;
+    const fin = (pts, msg, cls) => { s.sc[p.k] = pts; saveP2(); upTot(); $('#p2x').innerHTML = `<div class="fb ${cls}"><b class="h">${msg}</b>${p.sol}</div>`; $('#p2n').disabled = true; $('#p2Chk').disabled = true; const sb = $('#p2Sol'); if (sb) sb.remove(); app.querySelectorAll('.stepper button')[s.i].classList.add('ok'); };
+    $('#p2n').oninput = e => { s.ans[p.k] = e.target.value; saveP2(); };
+    $('#p2Chk').onclick = () => {
+      let v = parseNum($('#p2n').value); if (isNaN(v)) { $('#p2x').innerHTML = '<div class="fb info">Escribe un número.</div>'; return; }
+      const okv = Math.abs(v - p.ans) <= p.tol || (p.abs && Math.abs(Math.abs(v) - Math.abs(p.ans)) <= p.tol);
+      const st = s.tries[p.k] || 0;
+      if (okv) return fin(st ? Math.floor(p.pts / 2) : p.pts, st ? `Correcto en el segundo intento · ${Math.floor(p.pts / 2)}/${p.pts}` : `Correcto · ${p.pts}/${p.pts}`, 'ok');
+      if (!st) { s.tries[p.k] = 1; saveP2(); $('#p2x').innerHTML = `<div class="fb no"><b class="h">Revisa tu cálculo</b>${p.hint}</div>`; return; }
+      fin(0, `Incorrecto · 0/${p.pts}`, 'no');
+    };
+    const sb = $('#p2Sol'); if (sb) sb.onclick = () => fin(0, `Procedimiento · 0/${p.pts}`, 'info');
+    if (got !== undefined) $('#p2x').innerHTML = `<div class="fb ${got ? 'ok' : 'info'}"><b class="h">${got}/${p.pts}</b>${p.sol}</div>`;
+  } else if (p.t === 'dia' || p.t === 'paper') {
+    B.innerHTML = `${head}<h4>1 · Diagrama <span class="muted">(2 puntos)</span></h4>
+      ${p.t === 'dia' ? `<div class="figure p2fig"><svg id="p2fig" role="img" aria-label="Diagrama"></svg></div><div id="p2dh" style="margin-top:8px"></div>`
+        : `<p>Dibuja el diagrama en papel. Después marca lo que tiene:</p><div class="cklist" id="p2dck">${p.dck.map((x, i) => `<label><input type="checkbox" data-ck="${i}" ${(s.ck[p.k + 'd'] || {})[i] ? 'checked' : ''}><span>${x}</span></label>`).join('')}</div>
+          <div class="row" style="margin-top:8px"><button class="btn sm" type="button" data-go="${p.link[0]}">${p.link[1]}</button></div><p class="small muted" id="p2dpts"></p>`}
+      <h4 style="margin-top:16px">2 · Explicación <span class="muted">(2 puntos)</span></h4>
+      <textarea id="p2a" rows="5" placeholder="Explica la cadena causal usando datos del texto…">${esc(s.ans[p.k] || '')}</textarea>
+      <div class="row" style="margin-top:10px"><button class="btn primary sm" type="button" id="p2Cmp">Comparar con la explicación modelo</button></div><div id="p2x"></div>`;
+    $('#p2a').oninput = e => { s.ans[p.k] = e.target.value; saveP2(); };
+    if (p.t === 'dia') {
+      drawShift($('#p2fig'), $('#p2dh'), p.dia.m, { key: p.dia.key, dir: p.dia.dir, why: p.dia.why }, ok => { if (s.dg[p.k] === undefined) { s.dg[p.k] = ok ? 2 : 0; saveP2(); upTot(); } });
+      if (s.dg[p.k] !== undefined) { const sb = $('#dsol', $('#p2dh')); if (sb) sb.click(); $('#p2dh').insertAdjacentHTML('beforeend', `<p class="small muted">Puntaje del diagrama: ${s.dg[p.k]}/2</p>`); }
+    } else {
+      const cks = s.ck[p.k + 'd'] = s.ck[p.k + 'd'] || {};
+      const upd = () => { const nn = p.dck.filter((_, i) => cks[i]).length; s.dg[p.k] = nn === p.dck.length ? 2 : nn >= 2 ? 1 : 0; $('#p2dpts').textContent = `Puntaje del diagrama: ${s.dg[p.k]}/2 (todos los elementos = 2; al menos dos = 1).`; saveP2(); upTot(); };
+      app.querySelectorAll('#p2dck input').forEach(cb => cb.onchange = () => { cks[+cb.dataset.ck] = cb.checked; upd(); });
+      if (Object.keys(cks).length) upd();
+    }
+    const show = () => {
+      $('#p2x').innerHTML = `<div class="fb info"><b class="h">Explicación modelo</b>${p.model}</div><h4>Una explicación de 2 puntos</h4><ul class="okl">${p.ck.map(x => `<li>${x}</li>`).join('')}</ul>
+        <p class="small">2 = cadena causal completa y vinculada al texto · 1 = incompleta · 0 = incorrecta o ausente.</p>${selfScore('sse', 2, s.ex[p.k])}`;
+      app.querySelectorAll('#sse .bnum').forEach(b => b.onclick = () => { s.ex[p.k] = +b.dataset.v; saveP2(); const y = window.scrollY; renderP2(c); window.scrollTo(0, y); });
+    };
+    $('#p2Cmp').onclick = () => { s.tries[p.k] = 1; saveP2(); show(); };
+    if (s.tries[p.k]) show();
+  } else if (p.t === 'eval') {
+    const cks = s.ck[p.k] = s.ck[p.k] || {};
+    B.innerHTML = `${head}<p class="small muted">Dibuja en papel el diagrama que uses y escribe [Diagrama] donde vaya. Cita datos del texto (por ejemplo, «párrafo 3»).</p>
+      <textarea id="p2a" rows="16" placeholder="Definiciones, teoría con diagrama, datos del texto, pros y contras, corto y largo plazo, partes interesadas y juicio final…">${esc(s.ans[p.k] || '')}</textarea><p class="small muted" id="p2w"></p>
+      <details class="model" ${s.tries[p.k] ? 'open' : ''} id="p2ev"><summary>Autocorregir: contenido esperado y bandas</summary>
+        <h4>Marca lo que sí incluiste</h4><div class="cklist" id="p2eck">${p.ind.map((x, i) => `<label><input type="checkbox" data-ck="${i}" ${cks[i] ? 'checked' : ''}><span>${x}</span></label>`).join('')}</div>
+        <h4>Banda</h4>${bandPicker('bdG', BANDS15, s.sc[p.k] ?? null)}${SIM_NOTE}</details>`;
+    const w = () => { $('#p2w').textContent = wc(s.ans[p.k]) + ' palabras'; };
+    $('#p2a').oninput = e => { s.ans[p.k] = e.target.value; saveP2(); w(); }; w();
+    $('#p2ev').ontoggle = () => { if ($('#p2ev').open) { s.tries[p.k] = 1; saveP2(); } };
+    app.querySelectorAll('#p2eck input').forEach(cb => cb.onchange = () => { cks[+cb.dataset.ck] = cb.checked; saveP2(); });
+    bindBand('bdG', v => { s.sc[p.k] = v; saveP2(); const y = window.scrollY; renderP2(c); window.scrollTo(0, y); });
+  }
+}
+function confirmReset(c) { const s = P2S[c.id]; return !s || !Object.keys(s.ans).length || window.confirm('Se borrarán tus respuestas de este caso. ¿Continuar?'); }
+function p2Result(c, B) {
+  const s = p2St(c), tot = p2Score(c), pend = c.parts.filter(p => !p2Marked(c, p));
+  const row = p => { const v = p.t === 'dia' || p.t === 'paper' ? (s.dg[p.k] ?? '–') + ' + ' + (s.ex[p.k] ?? '–') : (s.sc[p.k] ?? '–'); return `<tr><th scope="row">${p.lbl}</th><td>${v}</td><td>${p.pts}</td></tr>`; };
+  B.innerHTML = `<h2 style="margin-top:0">Resultado: ${tot}/40</h2>
+    <table class="dtab"><thead><tr><th>Parte</th><th>Puntaje</th><th>Máximo</th></tr></thead><tbody>${c.parts.map(row).join('')}</tbody></table>
+    ${pend.length ? `<div class="fb info">Te faltan corregir: ${pend.map(p => p.lbl).join(', ')}. Ve a cada parte y termina la autocorrección.</div>` : '<div class="fb ok"><b class="h">Caso completo</b>Guarda el resultado para que aparezca en tu reporte.</div>'}
+    ${SIM_NOTE}
+    <div class="row" style="margin-top:10px"><button class="btn primary" type="button" id="p2Save" ${pend.length || s.saved === tot ? 'disabled' : ''}>${s.saved === tot ? 'Guardado ✓' : 'Guardar resultado'}</button><button class="btn" type="button" id="p2Cp">Copiar mis respuestas</button></div>`;
+  $('#p2Save').onclick = e => {
+    let d; try { d = new Date().toLocaleDateString('es-PY'); } catch (er) { d = new Date().toISOString().slice(0, 10); }
+    P2H.push({ d, id: c.id, title: c.title, total: tot }); store.set('p2h', P2H); s.saved = tot; saveP2();
+    e.currentTarget.disabled = true; e.currentTarget.textContent = 'Guardado ✓';
+  };
+  $('#p2Cp').onclick = e => copyText(`Prueba 2 · ${c.title}\n\n` + c.parts.map(p => `${p.lbl} ${plain(p.q)}\n${s.ans[p.k] || '(sin respuesta)'}`).join('\n\n') + `\n\nAutoevaluación: ${tot}/40`, e.currentTarget);
+}
+
+/* ---------- Envío del reporte a Google Forms ---------- */
+/* Pegue aquí el «enlace prellenado» del formulario, con las respuestas 1, 2, 3 y 4 en este orden:
+   1 = Nombre y apellido, 2 = Curso, 3 = Resumen, 4 = Reporte completo. */
+const REPORTE_FORM_LINK = '';
+function formConf() {
+  const m = REPORTE_FORM_LINK.match(/^(https?:\/\/[^?]+)\/viewform\?(.*)$/);
+  if (!m) return null;
+  const ent = {}; m[2].split('&').forEach(kv => { const [k, v] = kv.split('='); if (/^entry\.\d+$/.test(k)) ent[decodeURIComponent((v || '').replace(/\+/g, ' ')).trim()] = k; });
+  if (!ent['1'] || !ent['2'] || !ent['3'] || !ent['4']) return null;
+  return { action: m[1] + '/formResponse', nombre: ent['1'], curso: ent['2'], resumen: ent['3'], reporte: ent['4'] };
+}
+function reportSummary() {
+  const done = TOPICS.reduce((s, t) => s + topicDone(t.id), 0);
+  const p1 = P1S.hist[P1S.hist.length - 1], p2 = P2H[P2H.length - 1];
+  return [`Progreso ${Math.round(done / TOTAL_ITEMS * 100)}%`, `Errores pendientes ${errCount()}`, PROG.exam ? `Examen rápido ${PROG.exam.best}/${PROG.exam.of}` : null, p1 ? `Prueba 1 ${p1.total}/25` : null, p2 ? `Prueba 2 ${p2.total}/40` : null].filter(Boolean).join(' · ');
+}
+function sendReport(btn, out) {
+  const F = formConf(); if (!F) return;
+  const name = store.get('alumno', '').trim(), curso = store.get('curso', '').trim();
+  if (!name || !curso) { out.innerHTML = '<div class="fb no">Escribe tu nombre y tu curso antes de enviar.</div>'; return; }
+  if (navigator.onLine === false) { out.innerHTML = '<div class="fb no">No hay conexión a internet. Conéctate e inténtalo de nuevo.</div>'; return; }
+  btn.disabled = true; btn.textContent = 'Enviando…';
+  let fr = document.getElementById('sendFrame');
+  if (!fr) { fr = document.createElement('iframe'); fr.name = fr.id = 'sendFrame'; fr.hidden = true; fr.title = 'Envío del reporte'; document.body.appendChild(fr); }
+  const f = document.createElement('form'); f.method = 'POST'; f.action = F.action; f.target = 'sendFrame'; f.hidden = true;
+  [[F.nombre, name], [F.curso, curso], [F.resumen, reportSummary()], [F.reporte, reportText()]].forEach(([k, v]) => { const i = document.createElement('input'); i.type = 'hidden'; i.name = k; i.value = v; f.appendChild(i); });
+  document.body.appendChild(f);
+  let ok = false;
+  const done = () => { if (ok) return; ok = true; let d; try { d = new Date().toLocaleString('es-PY'); } catch (e) { d = new Date().toISOString(); } store.set('sent', d); btn.textContent = 'Enviado ✓'; out.innerHTML = `<div class="fb ok"><b class="h">Reporte enviado</b>Tu profesor lo recibe en su planilla (${d}). Puedes volver a enviarlo cuando avances.</div>`; setTimeout(() => { btn.disabled = false; btn.textContent = 'Enviar de nuevo'; }, 4000); };
+  fr.onload = () => { let blank = false; try { blank = fr.contentWindow.location.href === 'about:blank'; } catch (e) { } if (!blank) done(); };
+  setTimeout(() => { if (!ok) { btn.disabled = false; btn.textContent = 'Enviar a mi profesor'; out.innerHTML = '<div class="fb no">No se pudo confirmar el envío. Revisa tu conexión e inténtalo de nuevo, o usa «Copiar reporte».</div>'; } }, 15000);
+  f.submit(); setTimeout(() => f.remove(), 1000);
 }
 
 render();
