@@ -542,6 +542,21 @@ body.docked{padding-bottom:190px}
 .mnote p{margin:4px 0 0;font-size:14.5px;color:var(--ink-2);line-height:1.45}
 .mnote .btn{text-decoration:none;white-space:nowrap}
 @media (max-width:640px){.mnote{grid-template-columns:auto minmax(0,1fr)}.mnote .btn{grid-column:1/-1;justify-self:start}}
+/* v17: laboratorios nuevos */
+.sbar{height:12px;border-radius:6px;background:var(--rule);overflow:hidden}
+.sbar i{display:block;height:100%;background:var(--ok);transition:width .2s}
+.fgrid2{display:grid;grid-template-columns:1fr 1fr;gap:4px 14px}
+.fgrid2 .ctl label{text-transform:none;letter-spacing:0;font-size:13.5px}
+.fneg{color:var(--k-s)} .fpos{color:var(--k-new)}
+.fbx{fill:var(--sheet);stroke:var(--ink-2);stroke-width:1.5}
+.fbx.fsm{fill:var(--paper)}
+.fbt{font-size:14px;font-weight:700;fill:var(--ink)} .fbt.sm{font-size:12.5px}
+.fbl{font-size:11.5px;fill:var(--ink-2);font-weight:600;paint-order:stroke;stroke:var(--sheet);stroke-width:3px}
+.farr{fill:none;stroke-linecap:round} .farr.in{stroke:var(--k-d)} .farr.lk{stroke:var(--k-s)} .farr.ij{stroke:var(--k-new)}
+.pvarc{fill:none;stroke:var(--ink-2);stroke-width:2.5} .pvarc.on{stroke:var(--k-new);stroke-width:5} .pvarc.bad{stroke:var(--k-s);stroke-width:4;stroke-dasharray:6 4}
+.pvhit{fill:none;stroke:transparent;stroke-width:22}
+.pvn{fill:var(--gold-soft);stroke:var(--gold)}
+@media (max-width:640px){.fgrid2{grid-template-columns:1fr}}
 /* v7: constructor de diagramas */
 .dbcta{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:6px 16px;align-items:center;width:100%;max-width:1100px;text-align:left;background:var(--gold-soft);border:1.5px solid var(--gold);border-radius:var(--r);padding:14px 18px;margin:4px 0 8px;color:var(--ink)}
 .dbcta:hover{filter:brightness(1.03)}
@@ -871,7 +886,7 @@ const GEN = {
 /* =============== contenidos =============== */
 const TOPICS = [
   {
-    id: '1.1', u: 1, name: 'Introducción a la economía', ds: 'Escasez, factores, costo de oportunidad, sistemas económicos y CPP', labs: ['cpp'],
+    id: '1.1', u: 1, name: 'Introducción a la economía', ds: 'Escasez, factores, costo de oportunidad, sistemas económicos y CPP', labs: ['cpp', 'flow'],
     ess: [
       '<b>Escasez</b>: los recursos son limitados frente a deseos ilimitados. Por eso todos deben <b>elegir</b>.',
       '<b>Costo de oportunidad</b>: la <b>mejor alternativa</b> a la que se renuncia al elegir. Solo la mejor, no la suma de todas.',
@@ -962,7 +977,7 @@ const TOPICS = [
     ]
   },
   {
-    id: '2.3', u: 2, name: 'Equilibrio del mercado competitivo', ds: 'Equilibrio, excesos, funciones del precio, excedentes y eficiencia', labs: ['shifts'],
+    id: '2.3', u: 2, name: 'Equilibrio del mercado competitivo', ds: 'Equilibrio, excesos, funciones del precio, excedentes y eficiencia', labs: ['shifts', 'surplus'],
     ess: [
       '<b>Equilibrio</b>: el precio donde la cantidad demandada es igual a la cantidad ofrecida.',
       'Precio por <b>encima</b> del equilibrio → <b>exceso de oferta</b> → el precio baja. Precio por <b>debajo</b> → <b>exceso de demanda</b> (escasez) → el precio sube.',
@@ -984,7 +999,7 @@ const TOPICS = [
     ]
   },
   {
-    id: '2.5', u: 2, name: 'Elasticidad de la demanda (EPD y YED)', ds: 'Cálculo, interpretación, determinantes, ingreso total y YED', labs: ['ped'],
+    id: '2.5', u: 2, name: 'Elasticidad de la demanda (EPD y YED)', ds: 'Cálculo, interpretación, determinantes, ingreso total y YED', labs: ['ped', 'yed'],
     ess: [
       '<span class="formula">EPD = %ΔQd ÷ %ΔP</span> (se usa en valor absoluto). EPD > 1 elástica; EPD < 1 inelástica; = 1 unitaria; 0 perfectamente inelástica; ∞ perfectamente elástica.',
       'Determinantes de la EPD: <b>número y cercanía de sustitutos</b>, <b>necesidad o lujo</b>, <b>proporción del ingreso</b> que se gasta, <b>tiempo</b> (a largo plazo es más elástica).',
@@ -1005,7 +1020,7 @@ const TOPICS = [
     ]
   },
   {
-    id: '2.6', u: 2, name: 'Elasticidad precio de la oferta (EPO)', ds: 'Cálculo, interpretación y determinantes de la EPO', labs: [],
+    id: '2.6', u: 2, name: 'Elasticidad precio de la oferta (EPO)', ds: 'Cálculo, interpretación y determinantes de la EPO', labs: ['pes'],
     ess: [
       '<span class="formula">EPO = %ΔQo ÷ %ΔP</span>. Es positiva. EPO > 1 elástica; < 1 inelástica; 0 perfectamente inelástica (vertical); ∞ perfectamente elástica (horizontal).',
       'Determinantes: <b>tiempo</b> (corto y largo plazo), <b>capacidad ociosa</b>, <b>inventarios</b>, <b>movilidad de los factores</b> y si el bien es <b>perecedero</b>.',
@@ -1101,6 +1116,17 @@ const LABS = {
   lorenz: { name: 'Curva de Lorenz y Gini', short: 'Gini', topic: '3.4', ds: 'Cambia la distribución del ingreso y observa el coeficiente de Gini.' },
   tariff: { name: 'Arancel', short: 'ARAN', topic: '4.2', ds: 'Precio interno, importaciones, recaudación y pérdida de bienestar.' },
   fx: { name: 'Mercado del guaraní', short: 'TC', topic: '4.5', ds: 'Exportaciones, tasas, remesas e inversión: ¿se aprecia o se deprecia?' },
+  flow: { name: 'Flujo circular del ingreso', short: 'FLUJO', topic: '1.1', ds: 'Ajusta inyecciones y filtraciones y observa si el ingreso nacional crece, cae o se mantiene.' },
+  surplus: { name: 'Excedentes y eficiencia', short: 'EXC', topic: '2.3', ds: 'Mueve el precio: excedente del consumidor y del productor, y pérdida de bienestar fuera del equilibrio.' },
+  yed: { name: 'Elasticidad ingreso de la demanda', short: 'EID', topic: '2.5', ds: 'Bienes de lujo, necesarios e inferiores: cómo se desplaza la demanda cuando cambia el ingreso.' },
+  pes: { name: 'Elasticidad precio de la oferta', short: 'EPO', topic: '2.6', ds: 'Momento, corto y largo plazo: cuánto cambian el precio y la cantidad cuando sube la demanda.' },
+  cycle: { name: 'Ciclo económico', short: 'CICLO', topic: '3.1', ds: 'Recorre el ciclo: fases, brechas, desempleo cíclico y presión sobre los precios.' },
+  gaps: { name: 'Brechas y modelos de OA', short: 'BRECHA', topic: '3.2', ds: 'OA keynesiana y neoclásica: brechas deflacionarias e inflacionarias y cómo cerrarlas.' },
+  trade: { name: 'Libre comercio: exportaciones e importaciones', short: 'COM', topic: '4.1', ds: 'Mueve el precio mundial: quién gana y quién pierde cuando el país exporta o importa.' },
+  quota: { name: 'Cuotas y subvenciones', short: 'CUOTA', topic: '4.2', ds: 'Efectos de una cuota de importación y de una subvención a productores nacionales.' },
+  fixfx: { name: 'Tipo de cambio fijo y controlado', short: 'TC FIJO', topic: '4.5', ds: 'Mantén el tipo fijo con reservas y explora monedas sobrevaluadas y subvaluadas.' },
+  bdp: { name: 'Balanza de pagos', short: 'BdP', topic: '4.6', ds: 'Clasifica transacciones de Paraguay en la cuenta corriente, de capital o financiera.' },
+  poverty: { name: 'Ciclo de la pobreza', short: 'POBREZA', topic: '4.9', ds: 'Elige una política y descubre qué eslabón del ciclo ayuda a romper.' },
   draw: { name: 'Dibuja el desplazamiento', short: 'DIB', topic: '2.3', ds: 'Arrastra la curva que se mueve y marca el nuevo equilibrio: D y O, DA y OA, guaraní.' }
 };
 
@@ -1155,7 +1181,7 @@ const CARDS = [
 
 TOPICS.push(
   {
-    id: '3.1', u: 3, name: 'Medición de la actividad económica', ds: 'Flujo circular, PIB e INB, real y nominal, per cápita, PPA y ciclo económico', labs: [],
+    id: '3.1', u: 3, name: 'Medición de la actividad económica', ds: 'Flujo circular, PIB e INB, real y nominal, per cápita, PPA y ciclo económico', labs: ['flow', 'cycle'],
     ess: [
       '<b>Flujo circular</b>: hogares y empresas intercambian factores e ingresos. <b>Filtraciones</b>: ahorro, impuestos, importaciones. <b>Inyecciones</b>: inversión, gasto público, exportaciones.',
       '<b>PIB</b>: valor de mercado de todos los bienes y servicios <b>finales</b> producidos <b>dentro</b> de un país en un período. Se mide por el gasto, el ingreso o la producción.',
@@ -1179,7 +1205,7 @@ TOPICS.push(
     ]
   },
   {
-    id: '3.2', u: 3, name: 'Demanda y oferta agregadas', ds: 'Componentes de la DA, OACP, OALP, modelos neoclásico y keynesiano, brechas', labs: ['adas'],
+    id: '3.2', u: 3, name: 'Demanda y oferta agregadas', ds: 'Componentes de la DA, OACP, OALP, modelos neoclásico y keynesiano, brechas', labs: ['adas', 'gaps'],
     ess: [
       '<span class="formula">DA = C + I + G + (X − M)</span>. La curva de DA tiene pendiente negativa.',
       'Determinantes: <b>C</b> (confianza, tasas de interés, riqueza, impuestos, endeudamiento); <b>I</b> (tasas, confianza empresarial, tecnología); <b>G</b> (prioridades del gobierno); <b>X − M</b> (ingreso de los socios, tipo de cambio, proteccionismo).',
@@ -1201,7 +1227,7 @@ TOPICS.push(
     ]
   },
   {
-    id: '3.3', u: 3, name: 'Objetivos macroeconómicos', ds: 'Crecimiento, desempleo, inflación y deflación', labs: ['adas'],
+    id: '3.3', u: 3, name: 'Objetivos macroeconómicos', ds: 'Crecimiento, desempleo, inflación y deflación', labs: ['adas', 'gaps', 'cycle'],
     ess: [
       '<b>Crecimiento económico</b>: aumento del PIB real. A corto plazo lo impulsa la DA; a largo plazo, la OALP. Beneficios: ingresos, empleo, recaudación. Costos posibles: desigualdad y daño ambiental.',
       '<b>Desempleo</b>: personas que buscan trabajo y no lo encuentran. Tipos: <b>friccional</b>, <b>estructural</b>, <b>estacional</b> (forman la tasa natural) y <b>cíclico</b> (por falta de DA). También existen subempleo y desempleo oculto.',
@@ -1246,7 +1272,7 @@ TOPICS.push(
     ]
   },
   {
-    id: '3.5', u: 3, name: 'Política monetaria', ds: 'Banco central, tasas de interés, metas de inflación, fortalezas y límites', labs: ['adas'],
+    id: '3.5', u: 3, name: 'Política monetaria', ds: 'Banco central, tasas de interés, metas de inflación, fortalezas y límites', labs: ['adas', 'gaps'],
     ess: [
       'La aplica el <b>banco central</b> (en Paraguay, el BCP) principalmente con la <b>tasa de interés de política monetaria</b> (TPM).',
       'Objetivos: inflación baja y estable (el BCP trabaja con <b>metas de inflación</b>), apoyo al crecimiento y al empleo, estabilidad financiera y del tipo de cambio.',
@@ -1267,7 +1293,7 @@ TOPICS.push(
     ]
   },
   {
-    id: '3.6', u: 3, name: 'Política fiscal', ds: 'Gasto e impuestos, expansiva y contractiva, fortalezas y limitaciones', labs: ['adas'],
+    id: '3.6', u: 3, name: 'Política fiscal', ds: 'Gasto e impuestos, expansiva y contractiva, fortalezas y limitaciones', labs: ['adas', 'gaps'],
     ess: [
       'La define el <b>gobierno</b> (Poder Ejecutivo a través del MEF, con el Presupuesto que aprueba el Congreso) mediante el <b>gasto público</b> y los <b>impuestos</b>.',
       'Ingresos: impuestos directos (sobre la renta) e indirectos (IVA, selectivo, aranceles), ventas de bienes y servicios, ingresos de empresas públicas y binacionales (royalties de Itaipú y Yacyretá).',
@@ -1306,7 +1332,7 @@ TOPICS.push(
     ]
   },
   {
-    id: '4.1', u: 4, name: 'Beneficios del comercio internacional', ds: 'Beneficios del comercio y libre comercio con importaciones y exportaciones', labs: [],
+    id: '4.1', u: 4, name: 'Beneficios del comercio internacional', ds: 'Beneficios del comercio y libre comercio con importaciones y exportaciones', labs: ['trade'],
     ess: [
       'Beneficios: <b>más competencia</b>, <b>precios más bajos</b>, <b>más variedad</b>, <b>acceso a recursos</b>, <b>ingreso de divisas</b>, <b>mercados más grandes</b> y <b>economías de escala</b>, una asignación más eficaz de los recursos y una producción más eficiente.',
       'Libre comercio con <b>importaciones</b>: si el precio mundial es menor que el precio interno de equilibrio, los consumidores compran más a menor precio, la producción nacional baja y la diferencia entre la cantidad demandada y la ofrecida se importa.',
@@ -1325,7 +1351,7 @@ TOPICS.push(
     ]
   },
   {
-    id: '4.2', code: '4.2–4.3', u: 4, name: 'Proteccionismo comercial', ds: 'Aranceles, cuotas, subsidios, barreras administrativas, argumentos', labs: ['tariff'],
+    id: '4.2', code: '4.2–4.3', u: 4, name: 'Proteccionismo comercial', ds: 'Aranceles, cuotas, subsidios, barreras administrativas, argumentos', labs: ['tariff', 'quota'],
     ess: [
       'Herramientas: <b>aranceles</b> (impuestos a las importaciones), <b>cuotas</b> (límites de cantidad), <b>subsidios</b> a productores nacionales y <b>barreras administrativas</b> (trámites, normas técnicas o sanitarias).',
       'Un arancel sube el precio interno, aumenta la producción nacional, reduce el consumo y las importaciones; el gobierno recauda y hay pérdida de bienestar.',
@@ -1365,7 +1391,7 @@ TOPICS.push(
     ]
   },
   {
-    id: '4.5', u: 4, name: 'Tipos de cambio', ds: 'Flotante, fijo y administrado; determinantes; apreciación y depreciación', labs: ['fx'],
+    id: '4.5', u: 4, name: 'Tipos de cambio', ds: 'Flotante, fijo y administrado; determinantes; apreciación y depreciación', labs: ['fx', 'fixfx'],
     ess: [
       '<b>Tipo de cambio</b>: precio de una moneda en términos de otra (por ejemplo, guaraníes por dólar).',
       '<b>Flotante</b>: lo fijan la oferta y la demanda. <b>Fijo</b>: el banco central lo fija y lo defiende con reservas. <b>Administrado</b>: flota, pero el banco central interviene para evitar movimientos bruscos; es el caso del guaraní.',
@@ -1386,7 +1412,7 @@ TOPICS.push(
     ]
   },
   {
-    id: '4.6', u: 4, name: 'Balanza de pagos', ds: 'Cuenta corriente, de capital y financiera; créditos, débitos y saldos', labs: [],
+    id: '4.6', u: 4, name: 'Balanza de pagos', ds: 'Cuenta corriente, de capital y financiera; créditos, débitos y saldos', labs: ['bdp'],
     ess: [
       'Registro de todas las transacciones de un país con el resto del mundo en un período.',
       '<b>Cuenta corriente</b>: bienes, servicios, <b>ingreso primario</b> (salarios, intereses, dividendos) e <b>ingreso secundario</b> (transferencias corrientes, como las remesas).',
@@ -1444,7 +1470,7 @@ TOPICS.push(
     ]
   },
   {
-    id: '4.9', u: 4, name: 'Barreras al desarrollo', ds: 'Trampa de la pobreza, barreras económicas, institucionales y sociales', labs: [],
+    id: '4.9', u: 4, name: 'Barreras al desarrollo', ds: 'Trampa de la pobreza, barreras económicas, institucionales y sociales', labs: ['poverty'],
     ess: [
       '<b>Trampa de la pobreza</b>: bajos ingresos → poco ahorro → poca inversión → baja productividad → bajos ingresos.',
       'Barreras económicas: falta de infraestructura y de capital humano, poco acceso al crédito, informalidad, desigualdad, dependencia de productos primarios, deuda externa, ubicación geográfica.',
@@ -2076,7 +2102,17 @@ const ATLAS_OF = {
   adas: [['da-desplaz', 'Desplazamientos de la DA'], ['oacp-desplaz', 'Desplazamientos de la OACP'], ['oalp-desplaz', 'Desplazamientos de la OALP'], ['equilibrio-macro', 'Equilibrio macroeconómico'], ['politica-monetaria', 'Política monetaria'], ['politica-fiscal', 'Política fiscal'], ['politicas-oferta', 'Políticas de oferta']],
   lorenz: [['lorenz', 'Curva de Lorenz']],
   tariff: [['importaciones', 'Libre comercio con importaciones'], ['arancel', 'Efecto de un arancel']],
-  fx: [['tc-flotante', 'Tipo de cambio flotante']]
+  fx: [['tc-flotante', 'Tipo de cambio flotante']],
+  flow: [['flujo-circular', 'Flujo circular del ingreso']],
+  surplus: [['excedentes', 'Excedente del consumidor y del productor'], ['eficiencia', 'Eficiencia en la asignación']],
+  yed: [['engel', 'Curva de Engel']],
+  pes: [['epo-rel', 'Oferta elástica e inelástica'], ['epo-const', 'EPO constante']],
+  cycle: [['ciclo-economico', 'Ciclo económico']],
+  gaps: [['oa-perspectivas', 'Perspectivas de la OA'], ['brecha-deflacionaria', 'Brecha deflacionaria'], ['equilibrio-macro', 'Equilibrio macroeconómico']],
+  trade: [['exportaciones', 'Libre comercio con exportaciones'], ['importaciones', 'Libre comercio con importaciones']],
+  quota: [['cuota', 'Efecto de una cuota'], ['subvencion-comercio', 'Subvención a productores nacionales']],
+  fixfx: [['tc-fijo', 'Tipo de cambio fijo'], ['tc-controlado', 'Tipo de cambio controlado'], ['tc-sobre-sub', 'Moneda sobrevaluada y subvaluada']],
+  poverty: [['ciclo-pobreza', 'Ciclo de la pobreza']]
 };
 function renderLabPage(k) {
   const L = LABS[k];
@@ -2084,7 +2120,440 @@ function renderLabPage(k) {
     <div class="eyebrow" style="margin-top:12px">Laboratorio · Subtema ${tcode(L.topic)}</div><h1>${L.name}</h1>
     <div class="row" style="margin-bottom:16px"><button class="btn sm" type="button" data-go="${tid(L.topic)}">Ir a la práctica de ${tcode(L.topic)}</button>${(ATLAS_OF[k] || []).map(([id, n]) => `<a class="btn sm" href="${ATLAS}#${id}" style="text-decoration:none">Atlas: ${n}</a>`).join('')}</div>
     <div class="lab"><div class="figure"><svg id="fig" role="img" aria-label="Diagrama del laboratorio"></svg><div class="legend" id="leg"></div></div><div class="panel" id="pan"></div></div>`;
-  ({ cpp: labCPP, shifts: labShifts, ped: labPED, tax: labTax, ceil: labCeil, ext: labExt, adas: labADAS, lorenz: labLorenz, tariff: labTariff, fx: labFX, draw: labDraw })[k]($('#fig'), $('#pan'), $('#leg'));
+  ({ cpp: labCPP, shifts: labShifts, ped: labPED, tax: labTax, ceil: labCeil, ext: labExt, adas: labADAS, lorenz: labLorenz, tariff: labTariff, fx: labFX, draw: labDraw, flow: labFlow, surplus: labSurplus, yed: labYED, pes: labPES, cycle: labCycle, gaps: labGaps, trade: labTrade, quota: labQuota, fixfx: labFixFX, bdp: labBdP, poverty: labPoverty })[k]($('#fig'), $('#pan'), $('#leg'));
+}
+
+/* =============== Laboratorios nuevos (Nivel Medio): excedentes, EPO, EID, ciclo, brechas, flujo circular, comercio, cuotas y subvenciones, tipo fijo y controlado, balanza de pagos, ciclo de la pobreza =============== */
+const LD = { a: 90, b: -0.8 }, LO = { a: 10, b: 0.8 };
+const labStat = k => (PROG.labs[k] = PROG.labs[k] || { ok: 0, n: 0 });
+const roRows = rows => rows.map(r => `<tr><td>${r[0]}</td><td>${r[1]}</td></tr>`).join('');
+const pctStr = v => (v > 0 ? '+' : '') + fmt(v, 1) + ' %';
+
+/* ---- 2.3 Excedentes y eficiencia ---- */
+function labSurplus(svg, pan, leg) {
+  const S = { p: 50 };
+  pan.innerHTML = `
+    <p class="small" style="margin:0">Mueve el precio y observa qué pasa con el excedente del consumidor, el del productor y la pérdida de bienestar. La cantidad que se intercambia es la menor entre la demandada y la ofrecida.</p>
+    <div class="ctl"><label for="sp" id="spl"></label><input type="range" id="sp" min="20" max="80" step="1" value="50"></div>
+    <div class="row"><button class="btn sm" type="button" id="seq">Volver al equilibrio</button></div>
+    <table class="readout" id="ro"></table>
+    <div class="ctl"><span class="lbl">Excedente social (consumidor + productor)</span><div class="sbar"><i id="sbi"></i></div><p class="small muted" id="sbt" style="margin:4px 0 0"></p></div>
+    <div id="note"></div>`;
+  leg.innerHTML = `<span>${sw('--f-con')}Excedente del consumidor</span><span>${sw('--f-pro')}Excedente del productor</span><span>${sw('--f-dwl')}Pérdida de bienestar</span>`;
+  const tri = (q, h) => q * h / 2;
+  function draw() {
+    const p = S.p, qd = qAt(LD, p), qs = qAt(LO, p), qt = Math.min(qd, qs), pd = lineAt(LD, qt), ps = lineAt(LO, qt);
+    const P = Plot(svg, { yl: 'Precio (P)', xl: 'Cantidad (Q)' });
+    P.poly([[0, LD.a], [qt, pd], [qt, p], [0, p]], 'a-con');
+    P.poly([[0, LO.a], [qt, ps], [qt, p], [0, p]], 'a-pro');
+    if (Math.abs(p - 50) > 0.5) P.poly([[qt, pd], [50, 50], [qt, ps]], 'a-dwl');
+    P.line(LD, 'c-d', 'D = BMg'); P.line(LO, 'c-s', 'O = CMg');
+    if (Math.abs(p - 50) > 0.5) { P.hline(p, 'c-gold', p > 50 ? 'Precio por encima del equilibrio' : 'Precio por debajo del equilibrio'); P.guide(qt, p, 'Q₁', 'P₁'); }
+    P.guide(50, 50, 'Q*', 'P*'); P.dot(50, 50, 'E', 8, 4);
+    const csA = tri(qt, LD.a - pd) + qt * (pd - p), psA = tri(qt, ps - LO.a) + qt * (p - ps), max = tri(50, 80);
+    const share = (csA + psA) / max * 100;
+    $('#spl', pan).textContent = `Precio: ${fmt(p)}${p === 50 ? ' (equilibrio)' : ''}`;
+    $('#ro', pan).innerHTML = roRows([['Cantidad intercambiada', p === 50 ? 'Q* (máxima posible)' : 'Q₁ (menor que Q*)'], [sw('--f-con') + 'Excedente del consumidor', p > 50 ? 'baja' : p < 50 ? 'cambia: unos pagan menos, otros no consiguen' : 'área amarilla'], [sw('--f-pro') + 'Excedente del productor', p < 50 ? 'baja' : p > 50 ? 'cambia: cobran más pero venden menos' : 'área verde'], [sw('--f-dwl') + 'Pérdida de bienestar', p === 50 ? 'no hay' : 'triángulo azul']]);
+    $('#sbi', pan).style.width = Math.max(0, Math.min(100, share)) + '%';
+    $('#sbt', pan).textContent = p === 50 ? 'Máximo: en el equilibrio el beneficio marginal es igual al costo marginal (eficiencia asignativa).' : `Alrededor del ${fmt(share)} % del máximo: se dejan de hacer intercambios que beneficiarían a ambas partes.`;
+    $('#note', pan).innerHTML = `<div class="fb info">${p === 50 ? 'En un mercado competitivo en equilibrio, el excedente social (consumidor + productor) es el máximo posible: no se puede mejorar a nadie sin empeorar a otro.' : 'Cualquier precio distinto del de equilibrio reduce la cantidad intercambiada por debajo de Q* y genera pérdida de bienestar: es lo que ocurre con los precios máximos y mínimos (subtema 2.7).'}</div>`;
+    $('#sp', pan).value = p;
+  }
+  $('#sp', pan).oninput = e => { S.p = +e.target.value; draw(); };
+  $('#seq', pan).onclick = () => { S.p = 50; draw(); };
+  draw();
+}
+
+/* ---- 2.6 Elasticidad precio de la oferta ---- */
+function labPES(svg, pan, leg) {
+  const S = { t: 'cp', dq: 20 };
+  const SUP = { mo: { v: 50 }, cp: { a: -100, b: 3 }, lp: { a: 37.5, b: 0.25 } };
+  const NAME = { mo: 'Momento (oferta fija)', cp: 'Corto plazo', lp: 'Largo plazo' };
+  pan.innerHTML = `
+    <p class="small" style="margin:0">Mercado de la soja (datos hipotéticos). Sube la demanda mundial: ¿cuánto cambia el precio y cuánto la cantidad según el plazo?</p>
+    <div class="ctl"><span class="lbl">Plazo</span>${segBtns('pt', [['mo', 'Momento'], ['cp', 'Corto plazo'], ['lp', 'Largo plazo']], S.t)}</div>
+    <div class="ctl"><label for="pd" id="pdl"></label><input type="range" id="pd" min="0" max="30" step="1" value="20"></div>
+    <table class="readout" id="ro"></table><div id="note"></div>`;
+  leg.innerHTML = sdLegend('Demanda', 'Oferta');
+  function draw() {
+    const O = SUP[S.t], D1 = shiftLine(LD, S.dq);
+    const e0 = [50, 50], e1 = O.v !== undefined ? [50, lineAt(D1, 50)] : cross(D1, O);
+    const P = Plot(svg, { yl: 'Precio (US$ por tonelada)', xl: 'Cantidad (millones de t)' });
+    drawCurve(P, O, 'c-s', 'O · ' + NAME[S.t].toLowerCase());
+    P.line(LD, 'c-d old', 'D₀'); if (S.dq > 0) P.line(D1, 'c-new', 'D₁');
+    P.guide(e0[0], e0[1], 'Q₀', 'P₀'); P.dot(e0[0], e0[1], 'E₀', -24, -6);
+    if (S.dq > 0) { P.guide(e1[0], e1[1], O.v !== undefined ? '' : 'Q₁', 'P₁', { qdx: 8 }); P.dot(e1[0], e1[1], 'E₁', 8, -6); }
+    const dP = (e1[1] - e0[1]) / e0[1] * 100, dQ = (e1[0] - e0[0]) / e0[0] * 100, pes = dP ? dQ / dP : 0;
+    $('#pdl', pan).textContent = `Aumento de la demanda: ${S.dq ? 'desplazamiento de ' + S.dq + ' unidades' : 'ninguno'}`;
+    $('#ro', pan).innerHTML = roRows([['Variación del precio', S.dq ? pctStr(dP) : '—'], ['Variación de la cantidad ofrecida', S.dq ? pctStr(dQ) : '—'], ['EPO = %ΔQo ÷ %ΔP', S.dq ? fmt(pes, 2) : '—'], ['Tipo de oferta', S.t === 'mo' ? 'perfectamente inelástica (EPO = 0)' : S.t === 'cp' ? 'inelástica (EPO < 1)' : 'elástica (EPO > 1)']]);
+    $('#note', pan).innerHTML = `<div class="fb info">${S.t === 'mo' ? 'En el momento no se puede producir más: todo el ajuste es por precio.' : S.t === 'cp' ? 'A corto plazo las empresas solo pueden aumentar un poco la producción (tierras, maquinaria y trabajadores ya están ocupados): el precio sube mucho.' : 'A largo plazo se siembran más hectáreas, se compran máquinas y entran nuevas empresas: la cantidad aumenta mucho y el precio poco.'} Otros determinantes de la EPO: capacidad ociosa, existencias almacenadas y movilidad de los factores.</div>`;
+  }
+  bindSeg(pan, 'pt', v => { S.t = v; draw(); });
+  $('#pd', pan).oninput = e => { S.dq = +e.target.value; draw(); };
+  draw();
+}
+
+/* ---- 2.5 Elasticidad ingreso de la demanda ---- */
+function labYED(svg, pan, leg) {
+  const S = { g: 'lujo', dy: 10 };
+  const G = { lujo: [2, 'Viajes al exterior (bien de lujo)', 'EID > 1: la cantidad demandada cambia más que proporcionalmente que el ingreso.'], nec: [0.4, 'Arroz (bien necesario)', '0 < EID < 1: bien normal necesario; la cantidad cambia menos que proporcionalmente.'], inf: [-0.8, 'Pasaje de bus (bien inferior)', 'EID < 0: al subir el ingreso, la gente compra menos y se pasa a una alternativa mejor (moto o auto).'] };
+  pan.innerHTML = `
+    <div class="ctl"><span class="lbl">Bien</span>${segBtns('yg', [['lujo', 'Lujo'], ['nec', 'Necesario'], ['inf', 'Inferior']], S.g)}</div>
+    <div class="ctl"><label for="yd" id="ydl"></label><input type="range" id="yd" min="-20" max="30" step="1" value="10"></div>
+    <table class="readout" id="ro"></table><div id="note"></div>`;
+  leg.innerHTML = sdLegend('Demanda', 'Oferta');
+  function draw() {
+    const [yed, nm, txt] = G[S.g], dQ = yed * S.dy, dq = 50 * dQ / 100, D1 = shiftLine(LD, dq);
+    const P = Plot(svg, { yl: 'Precio', xl: 'Cantidad demandada' });
+    P.line(LD, 'c-d' + (dq ? ' old' : ''), 'D₀'); if (dq) P.line(D1, 'c-new', 'D₁', 'start');
+    P.hline(50, 'c-ink', '');
+    P.guide(50, 50, 'Q₀', 'P₀'); P.dot(50, 50, '', 0, 0);
+    if (dq) { P.guide(50 + dq, 50, 'Q₁', null, { qdx: dq > 0 ? 8 : -8 }); P.dot(50 + dq, 50, '', 0, 0); P.arrow(50 + (dq > 0 ? 2 : -2), 30, 50 + dq + (dq > 0 ? -2 : 2), 30); }
+    P.text(98, 54, 'Precio constante', 'pl', 'end');
+    $('#ydl', pan).textContent = `Variación del ingreso de los hogares: ${S.dy > 0 ? '+' : ''}${S.dy} %`;
+    $('#ro', pan).innerHTML = roRows([['Bien', nm], ['EID del bien', fmt(yed, 1)], ['Variación de la cantidad demandada (a precio constante)', S.dy ? pctStr(dQ) : '0 %'], ['Comprobación: EID = %ΔQd ÷ %ΔY', S.dy ? `${pctStr(dQ)} ÷ ${S.dy > 0 ? '+' : ''}${S.dy} % = ${fmt(yed, 1)}` : '—']]);
+    $('#note', pan).innerHTML = `<div class="fb info">${txt} Un cambio del ingreso <b>desplaza</b> la curva de demanda: no es un movimiento a lo largo de ella.</div>`;
+  }
+  bindSeg(pan, 'yg', v => { S.g = v; draw(); });
+  $('#yd', pan).oninput = e => { S.dy = +e.target.value; draw(); };
+  draw();
+}
+
+/* ---- 3.1 Ciclo económico ---- */
+function labCycle(svg, pan, leg) {
+  const S = { t: 18, target: null };
+  const trend = t => 22 + 0.6 * t, act = t => trend(t) + 11 * Math.sin(2 * Math.PI * (t - 5) / 40), der = t => 0.6 + 11 * 2 * Math.PI / 40 * Math.cos(2 * Math.PI * (t - 5) / 40);
+  const phase = t => {
+    const g = act(t) - trend(t), d = der(t) - 0.6;
+    if (Math.abs(d) < 0.35 && g > 0) return ['pico', 'Pico (auge)', 'La producción está en su punto más alto del ciclo, por encima del potencial.'];
+    if (Math.abs(d) < 0.35 && g < 0) return ['valle', 'Valle (fondo)', 'La producción está en su punto más bajo: desempleo cíclico alto.'];
+    if (d < 0 && g > 0) return ['desac', 'Desaceleración', 'La producción sigue por encima del potencial, pero el crecimiento se frena.'];
+    if (d < 0) return ['rec', 'Recesión (contracción)', 'La producción cae por debajo de la tendencia: aumenta el desempleo cíclico. Si el PIB real baja dos trimestres seguidos, se habla de recesión.'];
+    if (g < 0) return ['recup', 'Recuperación', 'La producción vuelve a crecer, pero sigue por debajo del potencial.'];
+    return ['exp', 'Expansión (auge)', 'La producción crece y supera el potencial: presión inflacionaria.'];
+  };
+  pan.innerHTML = `
+    <div class="ctl"><label for="ct">Tiempo (mueve el punto)</label><input type="range" id="ct" min="2" max="98" step="0.5" value="18"></div>
+    <table class="readout" id="ro"></table><div id="note"></div>
+    <div class="ctl"><span class="lbl">Desafío</span><div class="scen"><div class="mk">Ubica el punto</div><p id="cq"></p></div>
+      <div class="row" style="margin-top:8px"><button class="btn primary sm" type="button" id="cc">Comprobar</button><button class="btn sm" type="button" id="cn">Otro desafío</button></div><div id="cfb"></div></div>`;
+  leg.innerHTML = `<span><span class="sw" style="background:var(--k-d)"></span>PIB real</span><span><span class="sw" style="background:var(--ink)"></span>Tendencia (producción potencial)</span><span>${sw('--f-dwl')}Brecha deflacionaria</span><span>${sw('--f-con')}Brecha inflacionaria</span>`;
+  function draw() {
+    const P = Plot(svg, { yl: 'PIB real', xl: 'Tiempo' });
+    const pts = []; for (let t = 0; t <= 100; t += 1) pts.push([t, act(t)]);
+    for (let i = 0; i < pts.length - 1; i++) { const [t0, a0] = pts[i], [t1, a1] = pts[i + 1]; P.poly([[t0, trend(t0)], [t0, a0], [t1, a1], [t1, trend(t1)]], (a0 + a1) / 2 > (trend(t0) + trend(t1)) / 2 ? 'a-con' : 'a-dwl'); }
+    el('line', { x1: P.X(0), y1: P.Y(trend(0)), x2: P.X(100), y2: P.Y(trend(100)), class: 'cv c-ink' }, P.gC);
+    el('polyline', { points: pts.map(p => P.X(p[0]) + ',' + P.Y(p[1])).join(' '), class: 'cv c-d' }, P.gC);
+    P.text(99, trend(100) + 4, 'Tendencia', 'cl t-ink', 'end');
+    el('line', { x1: P.X(S.t), y1: P.Y(0), x2: P.X(S.t), y2: P.Y(100), class: 'gd' }, P.gG);
+    P.dot(S.t, act(S.t), '', 0, 0);
+    const [, nm, txt] = phase(S.t), g = act(S.t) - trend(S.t);
+    $('#ro', pan).innerHTML = roRows([['Fase', nm], ['PIB real frente al potencial', Math.abs(g) < 1 ? 'casi igual' : g > 0 ? 'por encima (brecha inflacionaria)' : 'por debajo (brecha deflacionaria)'], ['Desempleo cíclico', g < -1 ? 'alto' : g > 1 ? 'muy bajo' : 'bajo'], ['Presión sobre los precios', g > 1 ? 'alta (inflación)' : g < -1 ? 'baja' : 'moderada']]);
+    $('#note', pan).innerHTML = `<div class="fb info">${txt} La <b>tendencia</b> muestra el crecimiento a largo plazo (producción potencial); el ciclo son las fluctuaciones de corto plazo alrededor de ella.</div>`;
+  }
+  const TG = [['rec', 'una recesión'], ['recup', 'una recuperación'], ['exp', 'una expansión por encima del potencial'], ['pico', 'un pico'], ['valle', 'un valle'], ['desac', 'una desaceleración']];
+  function newT() { S.target = pick(TG.filter(x => !S.target || x[0] !== S.target[0])); $('#cq', pan).textContent = `Mueve el punto hasta ${S.target[1]}.`; $('#cfb', pan).innerHTML = ''; }
+  $('#ct', pan).oninput = e => { S.t = +e.target.value; draw(); };
+  $('#cn', pan).onclick = newT;
+  $('#cc', pan).onclick = () => { const ok = phase(S.t)[0] === S.target[0], st = labStat('cycle'); st.n++; if (ok) st.ok++; saveProg(); $('#cfb', pan).innerHTML = `<div class="fb ${ok ? 'ok' : 'no'}"><b class="h">${ok ? 'Correcto' : 'Todavía no'}</b>${ok ? 'Bien ubicado.' : `Ese punto está en: ${phase(S.t)[1].toLowerCase()}.`}</div>`; };
+  newT(); draw();
+}
+
+/* ---- 3.2 Brechas y modelos de OA (keynesiano y neoclásico) ---- */
+function labGaps(svg, pan, leg) {
+  const S = { m: 'key', a: 95 };
+  const YF = 72, PF = 30;
+  const asK = q => q <= 40 ? PF : q >= YF ? 200 : PF + 48 * Math.pow((q - 40) / (YF - 40), 2.4);
+  const SRAS = { a: 6, b: 0.8 }, LRAS = 60;
+  pan.innerHTML = `
+    <div class="ctl"><span class="lbl">Modelo de oferta agregada</span>${segBtns('gm', [['key', 'Keynesiano'], ['neo', 'Neoclásico (monetarista)']], S.m)}</div>
+    <div class="ctl"><label for="ga">Demanda agregada (consumo, inversión, gasto público, exportaciones netas)</label><input type="range" id="ga" min="60" max="160" step="1" value="95"></div>
+    <div class="row"><button class="btn sm" type="button" id="gx">Política expansiva (fiscal o monetaria)</button><button class="btn sm" type="button" id="gc">Política contractiva</button></div>
+    <table class="readout" id="ro"></table><div id="note"></div>`;
+  leg.innerHTML = `<span><span class="sw" style="background:var(--k-d)"></span>DA</span><span><span class="sw" style="background:var(--k-s)"></span>OA</span><span><span class="sw" style="background:var(--ink)"></span>Pleno empleo</span>`;
+  function draw() {
+    const DA = { a: S.a, b: -0.9 }, P = Plot(svg, { yl: 'Nivel general de precios', xl: 'PIB real (Y)' });
+    let e, yp;
+    if (S.m === 'key') {
+      const pts = []; for (let q = 0; q <= YF; q += 0.5) pts.push([q, Math.min(asK(q), 98)]);
+      el('polyline', { points: pts.map(p => P.X(p[0]) + ',' + P.Y(p[1])).join(' ') + ` ${P.X(YF)},${P.Y(99)}`, class: 'cv c-s' }, P.gC);
+      P.text(YF + 2, 95, 'OA keynesiana', 'cl t-s');
+      let lo = 0, hi = YF; for (let i = 0; i < 60; i++) { const m = (lo + hi) / 2; if (lineAt(DA, m) > asK(m)) lo = m; else hi = m; }
+      e = lineAt(DA, YF) > asK(YF - 0.01) ? [YF, lineAt(DA, YF)] : [lo, asK(lo)]; yp = YF;
+      P.vline(YF, 'c-ink', ''); P.text(YF + 1, 4, 'Yfe', 'pl');
+    } else {
+      P.line(SRAS, 'c-s', 'OACP'); P.vline(LRAS, 'c-ink', 'OALP'); e = cross(DA, SRAS); yp = LRAS;
+    }
+    P.line(DA, 'c-d', 'DA');
+    if (e[1] < 100) { P.guide(e[0], e[1], 'Y', 'P'); P.dot(e[0], e[1], 'E', 8, -6); }
+    const gap = e[0] - yp;
+    const zone = gap < -2 ? 'def' : gap > 2 ? 'inf' : 'pe';
+    if (zone !== 'pe') { const y0 = 16; P.arrow(Math.min(e[0], yp) + 0.5, y0, Math.max(e[0], yp) - 0.5, y0); P.text((e[0] + yp) / 2, y0 + 4, zone === 'def' ? 'Brecha deflacionaria' : 'Brecha inflacionaria', 'pl', 'middle'); }
+    const keyHigh = S.m === 'key' && lineAt(DA, YF) > asK(YF - 0.01);
+    $('#ro', pan).innerHTML = roRows([['Situación', zone === 'def' ? 'brecha deflacionaria (recesiva)' : keyHigh ? 'pleno empleo con presión inflacionaria' : zone === 'inf' ? 'brecha inflacionaria' : 'cerca del pleno empleo'], ['Desempleo', zone === 'def' ? 'desempleo cíclico' : zone === 'inf' || keyHigh ? 'por debajo de la tasa natural' : 'tasa natural'], ['Si sube la DA', S.m === 'key' ? (e[0] < 40 ? 'sube el PIB real sin subir los precios (tramo horizontal)' : e[0] < YF - 1 ? 'suben el PIB real y los precios' : 'solo suben los precios') : 'a corto plazo suben PIB y precios; a largo plazo vuelve a Yp con precios más altos']]);
+    $('#note', pan).innerHTML = `<div class="fb info">${S.m === 'key' ? 'Para los keynesianos la economía puede quedarse mucho tiempo en una brecha deflacionaria: hace falta una política de demanda expansiva para salir.' : 'Para los neoclásicos, a largo plazo la economía vuelve sola a la producción potencial (OALP): salarios y precios se ajustan y la OACP se desplaza.'} Políticas: la expansiva cierra brechas deflacionarias; la contractiva, brechas inflacionarias.</div>`;
+    $('#ga', pan).value = S.a;
+  }
+  bindSeg(pan, 'gm', v => { S.m = v; draw(); });
+  $('#ga', pan).oninput = e => { S.a = +e.target.value; draw(); };
+  $('#gx', pan).onclick = () => { S.a = Math.min(160, S.a + 8); draw(); };
+  $('#gc', pan).onclick = () => { S.a = Math.max(60, S.a - 8); draw(); };
+  draw();
+}
+
+/* ---- 1.1 / 3.1 Flujo circular del ingreso ---- */
+function labFlow(svg, pan, leg) {
+  const S = { s: 15, t: 15, m: 15, i: 15, g: 15, x: 15 };
+  const K = [['s', 'Ahorro (S)', 'f'], ['t', 'Impuestos (T)', 'f'], ['m', 'Importaciones (M)', 'f'], ['i', 'Inversión (I)', 'i'], ['g', 'Gasto público (G)', 'i'], ['x', 'Exportaciones (X)', 'i']];
+  pan.innerHTML = `
+    <p class="small" style="margin:0">Ajusta las filtraciones (salen del flujo) y las inyecciones (entran al flujo), en miles de millones de guaraníes por mes (datos hipotéticos).</p>
+    <div class="fgrid2">${K.map(([k, l, t]) => `<div class="ctl"><label for="f${k}">${l} · <span class="${t === 'f' ? 'fneg' : 'fpos'}">${t === 'f' ? 'filtración' : 'inyección'}</span> <b id="v${k}"></b></label><input type="range" id="f${k}" min="0" max="40" step="1" value="${S[k]}"></div>`).join('')}</div>
+    <div class="row"><button class="btn sm" type="button" id="fz">Igualar inyecciones y filtraciones</button><button class="btn sm" type="button" id="fr">Recesión: cae la inversión</button></div>
+    <table class="readout" id="ro"></table><div id="note"></div>`;
+  leg.innerHTML = `<span><span class="sw" style="background:var(--k-d)"></span>Flujo de ingreso y gasto</span><span><span class="sw" style="background:var(--k-s)"></span>Filtraciones</span><span><span class="sw" style="background:var(--k-new)"></span>Inyecciones</span>`;
+  const box = (x, y, w, h, t, cls = '') => { el('rect', { x, y, width: w, height: h, rx: 8, class: 'fbx ' + cls }, svg); const tx = el('text', { x: x + w / 2, y: y + h / 2 + 5, class: 'fbt', 'text-anchor': 'middle' }, svg); tx.textContent = t; };
+  const arr = (x1, y1, x2, y2, cls, w, lab, lx, ly) => { el('line', { x1, y1, x2, y2, class: 'farr ' + cls, 'stroke-width': w, 'marker-end': 'url(#fah' + cls + ')' }, svg); if (lab) { const t = el('text', { x: lx, y: ly, class: 'fbl', 'text-anchor': 'middle' }, svg); t.textContent = lab; } };
+  function draw() {
+    svg.innerHTML = ''; svg.setAttribute('viewBox', '0 0 410 330');
+    const defs = el('defs', {}, svg);
+    [['in', 'var(--k-d)'], ['lk', 'var(--k-s)'], ['ij', 'var(--k-new)']].forEach(([k, c]) => { const m = el('marker', { id: 'fah' + k, viewBox: '0 0 10 10', refX: 8, refY: 5, markerWidth: 5, markerHeight: 5, orient: 'auto' }, defs); el('path', { d: 'M0,0 L10,5 L0,10 z', fill: c }, m); });
+    const W = S.s + S.t + S.m, J = S.i + S.g + S.x, Y = 100 + (J - W) * 2;
+    box(20, 110, 110, 60, 'Hogares'); box(280, 110, 110, 60, 'Empresas');
+    const fw = 2 + Y / 40;
+    arr(278, 125, 133, 125, 'in', fw, 'Ingresos (salarios, rentas, ganancias)', 205, 104);
+    arr(132, 156, 277, 156, 'in', fw, 'Gasto de consumo (C)', 205, 148);
+    box(20, 245, 110, 34, 'Bancos', 'fsm'); box(150, 245, 110, 34, 'Gobierno', 'fsm'); box(280, 245, 110, 34, 'Exterior', 'fsm');
+    [['s', 40, 60, 'S'], ['t', 75, 185, 'T'], ['m', 110, 310, 'M']].forEach(([k, x0, x1, l]) => arr(x0, 172, x1, 243, 'lk', 1 + S[k] / 8, l + ' ' + S[k], x0 + (x1 - x0) * 0.22 - 16, 192));
+    [['i', 100, 300, 'I'], ['g', 230, 335, 'G'], ['x', 365, 370, 'X']].forEach(([k, x0, x1, l]) => arr(x0, 245, x1, 174, 'ij', 1 + S[k] / 8, l + ' ' + S[k], x0 + (x1 - x0) * 0.82 + (k === 'x' ? 22 : 16), 196));
+    const t = el('text', { x: 205, y: 40, class: 'fbt', 'text-anchor': 'middle' }, svg); t.textContent = `Ingreso nacional: ${J > W ? 'aumenta ▲' : J < W ? 'disminuye ▼' : 'estable ='}`;
+    const t2 = el('text', { x: 205, y: 62, class: 'fbl', 'text-anchor': 'middle' }, svg); t2.textContent = `Inyecciones ${J}  ·  Filtraciones ${W}`;
+    K.forEach(([k]) => { $('#v' + k, pan).textContent = S[k]; $('#f' + k, pan).value = S[k]; });
+    $('#ro', pan).innerHTML = roRows([['Inyecciones (I + G + X)', String(J)], ['Filtraciones (S + T + M)', String(W)], ['Resultado', J > W ? 'el ingreso nacional crece' : J < W ? 'el ingreso nacional se reduce' : 'equilibrio: el ingreso no cambia']]);
+    $('#note', pan).innerHTML = `<div class="fb info">${J === W ? 'Cuando las inyecciones igualan a las filtraciones, el ingreso nacional está en equilibrio.' : J > W ? 'Entra más dinero al flujo del que sale: las empresas venden más, producen más y pagan más ingresos.' : 'Sale más dinero del flujo del que entra: las empresas venden menos, producen menos y el ingreso cae.'} Los tres enfoques (ingreso, producción y gasto) miden el mismo flujo.</div>`;
+  }
+  K.forEach(([k]) => { $('#f' + k, pan).oninput = e => { S[k] = +e.target.value; draw(); }; });
+  $('#fz', pan).onclick = () => { const W = S.s + S.t + S.m, J = S.i + S.g + S.x, d = W - J; S.g = Math.max(0, Math.min(40, S.g + d)); draw(); };
+  $('#fr', pan).onclick = () => { S.i = Math.max(0, S.i - 10); draw(); };
+  draw();
+}
+
+/* ---- 4.1 Libre comercio: exportaciones e importaciones ---- */
+function labTrade(svg, pan, leg) {
+  const S = { pw: 68 };
+  pan.innerHTML = `
+    <p class="small" style="margin:0">Un país pequeño se abre al comercio y toma el precio mundial como dado (datos hipotéticos). Mueve el precio mundial por encima o por debajo del precio interno sin comercio (50).</p>
+    <div class="ctl"><label for="tw" id="twl"></label><input type="range" id="tw" min="15" max="85" step="1" value="68"></div>
+    <div class="row"><button class="btn sm" type="button" id="tex">Ejemplo: soja (exporta)</button><button class="btn sm" type="button" id="tim">Ejemplo: celulares (importa)</button></div>
+    <table class="readout" id="ro"></table><div id="note"></div>`;
+  leg.innerHTML = `<span>${sw('--f-con')}Excedente del consumidor</span><span>${sw('--f-pro')}Excedente del productor</span><span>${sw('--f-tr')}Ganancia neta por comerciar</span>`;
+  function draw() {
+    const pw = S.pw, qd = qAt(LD, pw), qs = qAt(LO, pw);
+    const P = Plot(svg, { yl: 'Precio', xl: 'Cantidad' });
+    P.poly([[0, LD.a], [qd, pw], [0, pw]], 'a-con'); P.poly([[0, LO.a], [qs, pw], [0, pw]], 'a-pro');
+    if (Math.abs(pw - 50) > 0.5) P.poly([[qd, pw], [qs, pw], [50, 50]], 'a-tr');
+    P.line(LD, 'c-d', 'D nacional'); P.line(LO, 'c-s', 'O nacional'); P.hline(pw, 'c-ink', 'P mundial');
+    P.dot(50, 50, 'E sin comercio', 6, pw > 50 ? 14 : -8);
+    if (Math.abs(pw - 50) > 0.5) { P.guide(Math.min(qd, qs), pw, pw > 50 ? 'Qd' : 'Qo', null); P.guide(Math.max(qd, qs), pw, pw > 50 ? 'Qo' : 'Qd', null); P.text((qd + qs) / 2, pw + (pw > 50 ? 4 : -7), pw > 50 ? 'Exportaciones' : 'Importaciones', 'pl', 'middle'); }
+    $('#twl', pan).textContent = `Precio mundial: ${pw}`;
+    const ex = pw > 50.5, im = pw < 49.5;
+    $('#ro', pan).innerHTML = roRows([['Comercio', ex ? 'el país exporta (Qo − Qd)' : im ? 'el país importa (Qd − Qo)' : 'no hay comercio'], ['Productores nacionales', ex ? 'ganan: venden más y a mayor precio' : im ? 'pierden: venden menos y más barato' : '—'], ['Consumidores nacionales', ex ? 'pierden: pagan más y compran menos' : im ? 'ganan: pagan menos y compran más' : '—'], ['País en conjunto', ex || im ? 'gana: el triángulo dorado es la ganancia neta' : '—']]);
+    $('#note', pan).innerHTML = `<div class="fb info">${ex ? 'Exportar conviene al país en conjunto, aunque los consumidores locales paguen más: por ejemplo, la soja paraguaya se vende al precio mundial.' : im ? 'Importar conviene al país en conjunto, aunque algunos productores locales pierdan: hay ganadores y perdedores, y por eso surgen pedidos de protección (subtema 4.2).' : 'Mueve el precio mundial.'}</div>`;
+    $('#tw', pan).value = pw;
+  }
+  $('#tw', pan).oninput = e => { S.pw = +e.target.value; draw(); };
+  $('#tex', pan).onclick = () => { S.pw = 70; draw(); };
+  $('#tim', pan).onclick = () => { S.pw = 28; draw(); };
+  draw();
+}
+
+/* ---- 4.2 Cuota de importación y subvención a productores nacionales ---- */
+function labQuota(svg, pan, leg) {
+  const S = { m: 'cuota', q: 25, s: 12 }, Pw = 25;
+  pan.innerHTML = `
+    <div class="ctl"><span class="lbl">Medida de protección</span>${segBtns('qm', [['cuota', 'Cuota de importación'], ['sub', 'Subvención a productores']], S.m)}</div>
+    <div class="ctl"><label for="qv" id="qvl"></label><input type="range" id="qv" min="0" max="62" step="1" value="25"></div>
+    <table class="readout" id="ro"></table><div id="note"></div>`;
+  function draw() {
+    const P = Plot(svg, { yl: 'Precio (miles de Gs.)', xl: 'Cantidad (miles de unidades)' });
+    const qs0 = qAt(LO, Pw), qd0 = qAt(LD, Pw);
+    if (S.m === 'cuota') {
+      const q = S.q, P1 = q >= 62.5 ? Pw : 50 - 0.4 * q, qs1 = qAt(LO, P1), qd1 = qAt(LD, P1), O2 = shiftLine(LO, q);
+      if (P1 > Pw + 0.1) {
+        P.poly([[0, Pw], [qs0, Pw], [qs1, P1], [0, P1]], 'a-pro'); P.rect(qs1, Pw, qd1, P1, 'a-tr');
+        P.poly([[qs0, Pw], [qs1, P1], [qs1, Pw]], 'a-dwl'); P.poly([[qd1, P1], [qd0, Pw], [qd1, Pw]], 'a-dwl');
+      }
+      P.line(LD, 'c-d', 'D nacional'); P.line(LO, 'c-s', 'O nacional'); if (P1 > Pw + 0.1) P.line(O2, 'c-new', 'O + cuota'); P.hline(Pw, 'c-ink', 'P mundial');
+      if (P1 > Pw + 0.1) { P.guide(qs1, P1, 'Q₂', 'Pc'); P.guide(qd1, P1, 'Q₃', null); }
+      P.guide(qs0, Pw, 'Q₁', null); P.guide(qd0, Pw, 'Q₄', null);
+      $('#qvl', pan).textContent = `Cuota: ${q >= 62.5 ? 'no limita (más que las importaciones de libre comercio)' : q + ' mil unidades'}`;
+      $('#ro', pan).innerHTML = roRows([['Precio interno', P1 > Pw + 0.1 ? 'sube por encima del precio mundial' : 'precio mundial'], ['Producción nacional', P1 > Pw + 0.1 ? 'sube: Q₁ → Q₂' : 'Q₁'], ['Consumo', P1 > Pw + 0.1 ? 'baja: Q₄ → Q₃' : 'Q₄'], ['Importaciones', 'limitadas a la cuota (Q₃ − Q₂)'], [sw('--f-tr') + 'Ingreso extra de los importadores con licencia', 'rectángulo dorado'], [sw('--f-dwl') + 'Pérdida de bienestar', 'triángulos azules']]);
+      $('#note', pan).innerHTML = `<div class="fb info">A diferencia del arancel, la cuota no da recaudación al gobierno (salvo que venda las licencias): el rectángulo lo ganan quienes tienen permiso para importar. Cuanto más chica la cuota, más sube el precio.</div>`;
+      leg.innerHTML = `<span>${sw('--f-pro')}Ganancia productores nacionales</span><span>${sw('--f-tr')}Ganancia de los importadores con licencia</span><span>${sw('--f-dwl')}Pérdida de bienestar</span>`;
+    } else {
+      const s = S.s, O2 = { a: LO.a - s, b: LO.b }, qs1 = qAt(O2, Pw);
+      if (s > 0) { P.rect(0, Pw, qs1, Pw + s, 'a-gov'); P.poly([[qs0, Pw], [qs1, Pw + s], [qs1, Pw]], 'a-dwl'); }
+      P.line(LD, 'c-d', 'D nacional'); P.line(LO, 'c-s', 'O nacional'); if (s > 0) P.line(O2, 'c-new', 'O + subvención'); P.hline(Pw, 'c-ink', 'P mundial');
+      P.guide(qs0, Pw, 'Q₁', null); if (s > 0) P.guide(qs1, Pw, 'Q₂', null, { qdx: 6 }); P.guide(qd0, Pw, 'Q₃', null);
+      $('#qvl', pan).textContent = `Subvención por unidad: ${gs(s * 1000)}`;
+      $('#ro', pan).innerHTML = roRows([['Precio para los consumidores', 'no cambia: precio mundial'], ['Producción nacional', s > 0 ? 'sube: Q₁ → Q₂' : 'Q₁'], ['Consumo', 'no cambia: Q₃'], ['Importaciones', s > 0 ? 'bajan: de Q₃ − Q₁ a Q₃ − Q₂' : 'Q₃ − Q₁'], [sw('--f-gov') + 'Costo para el gobierno', 'rectángulo violeta (subvención × Q₂)'], [sw('--f-dwl') + 'Pérdida de bienestar', 'triángulo azul: producción nacional ineficiente']]);
+      $('#note', pan).innerHTML = `<div class="fb info">La subvención protege a los productores sin subir el precio a los consumidores, pero tiene un costo fiscal y un costo de oportunidad, y los socios comerciales pueden considerarla competencia desleal.</div>`;
+      leg.innerHTML = `<span>${sw('--f-gov')}Gasto del gobierno</span><span>${sw('--f-dwl')}Pérdida de bienestar</span>`;
+    }
+  }
+  bindSeg(pan, 'qm', v => { S.m = v; const r = $('#qv', pan); if (v === 'cuota') { r.max = 62; r.value = S.q; } else { r.max = 20; r.value = S.s; } draw(); });
+  $('#qv', pan).oninput = e => { if (S.m === 'cuota') S.q = +e.target.value; else S.s = +e.target.value; draw(); };
+  draw();
+}
+
+/* ---- 4.5 Tipo de cambio fijo y controlado ---- */
+function labFixFX(svg, pan, leg) {
+  const S = { m: 'fijo', shock: 0, inter: false, res: 10000, off: 62 };
+  const SH = [['-1', 'Caen las exportaciones'], ['1', 'Suben las exportaciones'], ['0', 'Sin cambios']];
+  pan.innerHTML = `
+    <div class="ctl"><span class="lbl">Régimen</span>${segBtns('xm', [['fijo', 'Tipo de cambio fijo'], ['ctrl', 'Tipo controlado']], S.m)}</div>
+    <div id="xb"></div><table class="readout" id="ro"></table><div id="note"></div>`;
+  leg.innerHTML = sdLegend('Demanda de guaraníes', 'Oferta de guaraníes');
+  function body() {
+    $('#xb', pan).innerHTML = S.m === 'fijo'
+      ? `<div class="ctl"><span class="lbl">Shock</span>${segBtns('xs', SH, String(S.shock))}</div><div class="row"><button class="btn primary sm" type="button" id="xi">El BCP interviene</button><button class="btn sm" type="button" id="xr">Reiniciar</button></div>`
+      : `<div class="ctl"><label for="xo" id="xol"></label><input type="range" id="xo" min="25" max="75" step="1" value="${S.off}"></div>`;
+    if (S.m === 'fijo') {
+      bindSeg(pan, 'xs', v => { S.shock = +v; S.inter = false; draw(); });
+      $('#xi', pan).onclick = () => { if (!S.shock || S.inter) return; S.inter = true; S.res += S.shock < 0 ? -1800 : 1800; draw(); };
+      $('#xr', pan).onclick = () => { S.shock = 0; S.inter = false; S.res = 10000; body(); draw(); };
+    } else $('#xo', pan).oninput = e => { S.off = +e.target.value; draw(); };
+  }
+  function draw() {
+    const P = Plot(svg, { yl: 'Precio del guaraní (US$ por Gs. 1.000)', xl: 'Cantidad de guaraníes' });
+    if (S.m === 'fijo') {
+      const D1 = shiftLine(LD, 20 * S.shock), O1 = S.inter && S.shock > 0 ? shiftLine(LO, 20) : LO, Dn = S.inter && S.shock < 0 ? LD : D1;
+      P.line(LO, 'c-s' + (O1 !== LO ? ' old' : ''), 'O Gs.'); if (O1 !== LO) P.line(O1, 'c-new', 'O₂ (BCP vende Gs.)');
+      if (S.shock && !(S.inter && S.shock < 0)) P.line(LD, 'c-d old', 'D₀');
+      P.line(D1, S.shock ? (S.inter && S.shock < 0 ? 'c-new old' : 'c-new') : 'c-d', S.shock ? 'D₁' : 'D Gs.');
+      if (S.inter && S.shock < 0) P.line(Dn, 'c-d', 'D₂ = D₀ (BCP compra Gs.)');
+      P.hline(50, 'c-gold', 'Tipo de cambio fijo');
+      const qd = qAt(S.inter && S.shock < 0 ? Dn : D1, 50), qo = qAt(O1, 50);
+      if (Math.abs(qd - qo) > 1) { P.guide(qd, 50, 'Qd', null); P.guide(qo, 50, 'Qo', null); P.text((qd + qo) / 2, 54, qo > qd ? 'Exceso de oferta' : 'Exceso de demanda', 'pl', 'middle'); }
+      const free = cross(D1, LO);
+      if (S.shock && !S.inter) { P.dot(free[0], free[1], 'Sin intervención', 6, S.shock < 0 ? 14 : -8); }
+      $('#ro', pan).innerHTML = roRows([['A tipo fijo', !S.shock || S.inter ? 'equilibrio' : S.shock < 0 ? 'exceso de oferta de guaraníes' : 'exceso de demanda de guaraníes'], ['Qué debe hacer el BCP', !S.shock ? '—' : S.shock < 0 ? 'comprar guaraníes vendiendo dólares (o subir la tasa)' : 'vender guaraníes comprando dólares'], ['Reservas internacionales', `US$ ${fmt(S.res)} millones ${S.res < 10000 ? '▼' : S.res > 10000 ? '▲' : ''}`]]);
+      $('#note', pan).innerHTML = `<div class="fb info">${!S.shock ? 'Elige un shock y luego haz que el BCP intervenga para sostener el tipo de cambio fijo.' : S.shock < 0 ? (S.inter ? 'El BCP compró guaraníes con sus reservas y la demanda volvió a D₀: el tipo fijo se mantiene, pero las reservas bajaron. Si se agotan, tendrá que devaluar.' : 'Sin intervención, el guaraní perdería valor. Pulsa «El BCP interviene».') : (S.inter ? 'El BCP vendió guaraníes y acumuló dólares: el tipo fijo se mantiene y las reservas suben, pero aumenta la cantidad de dinero en la economía (riesgo de inflación).' : 'Sin intervención, el guaraní ganaría valor. Pulsa «El BCP interviene».')} Si el gobierno cambia el tipo fijo, se habla de devaluación (baja) o revalorización (sube).</div>`;
+    } else {
+      const off = S.off, qd = qAt(LD, off), qo = qAt(LO, off);
+      P.line(LD, 'c-d', 'D Gs.'); P.line(LO, 'c-s', 'O Gs.'); P.hline(off, 'c-gold', 'Tipo oficial'); P.guide(50, 50, 'Qe', 'e eq.'); P.dot(50, 50, '', 0, 0);
+      if (Math.abs(off - 50) > 0.5) { P.guide(Math.min(qd, qo), off, off > 50 ? 'Qd' : 'Qo', null); P.guide(Math.max(qd, qo), off, off > 50 ? 'Qo' : 'Qd', null); P.text((qd + qo) / 2, off + (off > 50 ? 4 : -7), off > 50 ? 'Exceso de oferta' : 'Exceso de demanda', 'pl', 'middle'); }
+      $('#xol', pan).textContent = `Tipo de cambio oficial: ${off > 50 ? 'por encima' : off < 50 ? 'por debajo' : 'igual al'} del equilibrio`;
+      $('#ro', pan).innerHTML = roRows([['La moneda está', off > 50.5 ? 'sobrevaluada' : off < 49.5 ? 'subvaluada' : 'en su valor de equilibrio'], ['En el mercado', off > 50.5 ? 'exceso de oferta de guaraníes' : off < 49.5 ? 'exceso de demanda de guaraníes' : 'equilibrio'], ['Para sostenerlo, el banco central', off > 50.5 ? 'compra guaraníes y pierde reservas' : off < 49.5 ? 'vende guaraníes y acumula reservas' : 'no necesita intervenir'], ['Efecto en el comercio', off > 50.5 ? 'importaciones baratas, exportaciones caras' : off < 49.5 ? 'exportaciones más competitivas, importaciones caras' : '—']]);
+      $('#note', pan).innerHTML = `<div class="fb info">Una moneda sobrevaluada abarata las importaciones y baja la inflación, pero perjudica a los exportadores y suele generar un mercado paralelo. Una subvaluada favorece las exportaciones y el empleo, pero encarece las importaciones y puede generar tensiones con los socios comerciales.</div>`;
+    }
+  }
+  bindSeg(pan, 'xm', v => { S.m = v; body(); draw(); });
+  body(); draw();
+}
+
+/* ---- 4.6 Balanza de pagos: clasifica las transacciones ---- */
+const BDP_TX = [
+  ['Paraguay exporta soja a Argentina por US$ 800 millones.', 'cc', 1, 800, 'Exportación de bienes: entra dinero (crédito en la balanza comercial de bienes).'],
+  ['Paraguay importa autos de Japón por US$ 500 millones.', 'cc', -1, 500, 'Importación de bienes: sale dinero (débito).'],
+  ['Turistas brasileños gastan US$ 120 millones en hoteles de Encarnación.', 'cc', 1, 120, 'Exportación de servicios (turismo receptivo): crédito.'],
+  ['Empresas paraguayas pagan US$ 90 millones de fletes a navieras extranjeras.', 'cc', -1, 90, 'Importación de servicios: débito.'],
+  ['Paraguayos que trabajan en España envían US$ 150 millones en remesas.', 'cc', 1, 150, 'Transferencias corrientes (ingreso secundario) recibidas: crédito.'],
+  ['Una empresa extranjera envía a su casa matriz US$ 200 millones de ganancias.', 'cc', -1, 200, 'Ingreso (primario) pagado al exterior: débito.'],
+  ['Una multinacional construye una planta industrial en Paraguay por US$ 400 millones.', 'cf', 1, 400, 'Inversión extranjera directa que entra: crédito en la cuenta financiera.'],
+  ['Inversores paraguayos compran acciones en la bolsa de EE. UU. por US$ 100 millones.', 'cf', -1, 100, 'Inversión de cartera hacia el exterior: débito en la cuenta financiera.'],
+  ['El gobierno recibe un préstamo de US$ 300 millones de un organismo internacional.', 'cf', 1, 300, 'Endeudamiento oficial: entra dinero, crédito en la cuenta financiera.'],
+  ['El BCP compra dólares y aumenta sus reservas en US$ 250 millones.', 'cf', -1, 250, 'Aumento de reservas: es una salida de fondos hacia activos externos, débito en la cuenta financiera.'],
+  ['Un gobierno extranjero dona US$ 60 millones para construir un hospital.', 'ck', 1, 60, 'Transferencia de capital recibida: crédito en la cuenta de capital.'],
+  ['Una empresa paraguaya vende a una extranjera los derechos de una marca por US$ 30 millones.', 'ck', 1, 30, 'Venta de un activo no producido y no financiero: crédito en la cuenta de capital.']
+];
+function labBdP(svg, pan, leg) {
+  const S = { order: shuffle(BDP_TX.map((_, i) => i)), pos: 0, a: {}, done: [], ok: 0 };
+  const ACC = [['cc', 'Cuenta corriente'], ['ck', 'Cuenta de capital'], ['cf', 'Cuenta financiera']], SG = [['1', 'Crédito (+)'], ['-1', 'Débito (−)']];
+  leg.innerHTML = `<span><span class="sw" style="background:var(--k-new)"></span>Saldo positivo</span><span><span class="sw" style="background:var(--k-s)"></span>Saldo negativo</span>`;
+  function chart() {
+    const tot = { cc: 0, ck: 0, cf: 0 }; S.done.forEach(i => { const t = BDP_TX[i]; tot[t[1]] += t[2] * t[3]; });
+    svg.innerHTML = ''; svg.setAttribute('viewBox', '0 0 410 330');
+    const z = 170, k = 0.12;
+    el('line', { x1: 40, y1: z, x2: 390, y2: z, class: 'ax' }, svg);
+    ACC.forEach(([c, n], i) => { const v = tot[c], x = 70 + i * 110, h = Math.max(-140, Math.min(140, v * k));
+      el('rect', { x, y: h >= 0 ? z - h : z, width: 70, height: Math.abs(h) || 1, rx: 3, fill: v >= 0 ? 'var(--k-new)' : 'var(--k-s)', opacity: .8 }, svg);
+      const t = el('text', { x: x + 35, y: h >= 0 ? z - h - 6 : z - h + 16, class: 'fbl', 'text-anchor': 'middle' }, svg); t.textContent = (v > 0 ? '+' : '') + fmt(v);
+      const l = el('text', { x: x + 35, y: 318, class: 'fbl', 'text-anchor': 'middle' }, svg); l.textContent = n; });
+    const t = el('text', { x: 205, y: 22, class: 'fbt', 'text-anchor': 'middle' }, svg); t.textContent = 'Saldos (millones de US$, datos hipotéticos)';
+    return tot;
+  }
+  function load() {
+    const tot = chart();
+    if (S.pos >= S.order.length) {
+      const st = labStat('bdp'); st.n += S.order.length; st.ok += S.ok; saveProg();
+      pan.innerHTML = `<div class="fb ${S.ok >= 10 ? 'ok' : 'info'}"><b class="h">Terminaste: ${S.ok}/${S.order.length} correctas</b>Cuenta corriente: ${fmt(tot.cc)} · cuenta de capital: ${fmt(tot.ck)} · cuenta financiera: ${fmt(tot.cf)}.</div>
+        <p class="small">En la balanza de pagos completa, la suma de las tres cuentas más errores y omisiones es cero: un déficit en una cuenta se compensa con superávits en otras. Aquí solo ves algunas transacciones, por eso la suma no da cero.</p>
+        <button class="btn primary sm" type="button" id="br">Empezar de nuevo</button>`;
+      $('#br', pan).onclick = () => { S.order = shuffle(S.order); S.pos = 0; S.done = []; S.ok = 0; load(); };
+      return;
+    }
+    const tx = BDP_TX[S.order[S.pos]]; S.a = {};
+    pan.innerHTML = `<div class="scen"><div class="mk">Transacción ${S.pos + 1} de ${S.order.length}</div><p>${tx[0]}</p></div>
+      <div class="pick"><div class="ctl"><span class="lbl">¿En qué cuenta se registra?</span>${segBtns('ba', ACC, null)}</div><div class="ctl"><span class="lbl">¿Crédito o débito?</span>${segBtns('bs', SG, null)}</div></div>
+      <div class="row"><button class="btn primary" type="button" id="bc" disabled>Comprobar</button><span class="score">Aciertos: ${S.ok}/${S.pos}</span></div><div id="bf"></div>`;
+    const en = () => { $('#bc', pan).disabled = !(S.a.ba && S.a.bs); };
+    bindSeg(pan, 'ba', v => { S.a.ba = v; en(); }); bindSeg(pan, 'bs', v => { S.a.bs = v; en(); });
+    $('#bc', pan).onclick = () => {
+      const ok = S.a.ba === tx[1] && +S.a.bs === tx[2]; if (ok) S.ok++;
+      S.done.push(S.order[S.pos]); chart();
+      pan.querySelectorAll('.pick button').forEach(b => b.disabled = true);
+      $('#bc', pan).outerHTML = `<button class="btn primary" type="button" id="bn">Siguiente</button>`;
+      $('#bf', pan).innerHTML = `<div class="fb ${ok ? 'ok' : 'no'}"><b class="h">${ok ? 'Correcto' : 'No es así'}</b>${ACC.find(x => x[0] === tx[1])[1]}, ${tx[2] > 0 ? 'crédito' : 'débito'}. ${tx[4]}</div>`;
+      $('#bn', pan).onclick = () => { S.pos++; load(); };
+    };
+  }
+  load();
+}
+
+/* ---- 4.9 Ciclo de la pobreza ---- */
+const POV_N = ['Bajos ingresos', 'Poco ahorro', 'Poca inversión en capital físico y humano', 'Baja productividad'];
+const POV_P = [
+  ['Microcréditos para pequeños emprendedores', [1], 'Dan acceso al crédito a quien no puede ahorrar: financian inversión aunque el ahorro sea bajo.', 'Tasas de interés altas y préstamos pequeños; riesgo de sobreendeudamiento.'],
+  ['Educación y salud gratuitas', [1, 2], 'Aumentan el capital humano aunque las familias no puedan pagarlo.', 'Costo fiscal alto y resultados que tardan años.'],
+  ['Inversión extranjera directa', [1, 2], 'Trae capital y tecnología que el país no puede financiar con su propio ahorro.', 'Las ganancias pueden salir del país y la transferencia de tecnología puede ser limitada.'],
+  ['Transferencias monetarias condicionadas', [3, 0], 'Suben el ingreso de los hogares pobres de inmediato, aunque su productividad todavía sea baja, con la condición de enviar a los hijos a la escuela y a controles de salud.', 'Dependen del presupuesto y de una buena focalización.'],
+  ['Infraestructura (rutas, energía, internet)', [2, 1], 'Eleva la productividad de toda la economía: baja costos de transporte y comunicación.', 'Requiere mucho financiamiento y buena gestión para evitar la corrupción.']
+];
+function labPoverty(svg, pan, leg) {
+  const S = { p: 0, pick: null, order: shuffle(POV_P.map((_, i) => i)) };
+  leg.innerHTML = `<span><span class="sw" style="background:var(--k-s)"></span>Eslabón del ciclo</span><span><span class="sw" style="background:var(--k-new)"></span>Donde actúa la política</span>`;
+  const C = [[205, 60], [340, 165], [205, 270], [70, 165]];
+  function draw(hl, wrong) {
+    svg.innerHTML = ''; svg.setAttribute('viewBox', '0 0 410 330');
+    const defs = el('defs', {}, svg); const m = el('marker', { id: 'pvah', viewBox: '0 0 10 10', refX: 8, refY: 5, markerWidth: 6, markerHeight: 6, orient: 'auto' }, defs); el('path', { d: 'M0,0 L10,5 L0,10 z', fill: 'var(--ink-2)' }, m);
+    C.forEach(([x, y], i) => {
+      const [x2, y2] = C[(i + 1) % 4], mx = (x + x2) / 2, my = (y + y2) / 2, ox = (205 - mx) * -0.25, oy = (165 - my) * -0.25;
+      const cls = 'pvarc' + (hl === i ? ' on' : '') + (wrong === i ? ' bad' : '');
+      const pth = el('path', { d: `M${x + (x2 - x) * 0.22},${y + (y2 - y) * 0.22} Q${mx + ox},${my + oy} ${x + (x2 - x) * 0.78},${y + (y2 - y) * 0.78}`, class: cls, 'marker-end': 'url(#pvah)', 'data-i': i }, svg);
+      pth.style.cursor = 'pointer';
+      const hit = el('path', { d: pth.getAttribute('d'), class: 'pvhit', 'data-i': i }, svg); hit.style.cursor = 'pointer';
+    });
+    C.forEach(([x, y], i) => { const w = 132, h = 46; el('rect', { x: x - w / 2, y: y - h / 2, width: w, height: h, rx: 10, class: 'fbx pvn' }, svg);
+      const words = POV_N[i].split(' '), lines = []; let cur = ''; words.forEach(wd => { if ((cur + ' ' + wd).trim().length > 18) { lines.push(cur.trim()); cur = wd; } else cur += ' ' + wd; }); lines.push(cur.trim());
+      lines.forEach((ln, k) => { const t = el('text', { x, y: y + 5 + (k - (lines.length - 1) / 2) * 15, class: 'fbt sm', 'text-anchor': 'middle' }, svg); t.textContent = ln; }); });
+    svg.querySelectorAll('[data-i]').forEach(e => e.addEventListener('click', () => answer(+e.dataset.i)));
+  }
+  function load() {
+    const pol = POV_P[S.order[S.p]]; S.pick = null;
+    pan.innerHTML = `<p class="small" style="margin:0">El ciclo de la pobreza se repite: bajos ingresos → poco ahorro → poca inversión → baja productividad → bajos ingresos.</p>
+      <div class="scen"><div class="mk">Política ${S.p + 1} de ${POV_P.length}</div><p>${pol[0]}</p></div>
+      <p class="small" style="margin:0"><b>Toca la flecha del ciclo</b> que esta política ayuda a romper.</p><div id="pf"></div>`;
+    draw(null, null);
+  }
+  function answer(i) {
+    if (S.pick !== null) return; S.pick = i;
+    const pol = POV_P[S.order[S.p]], ok = pol[1].includes(i), st = labStat('poverty'); st.n++; if (ok) st.ok++; saveProg();
+    draw(ok ? i : pol[1][0], ok ? null : i);
+    $('#pf', pan).innerHTML = `<div class="fb ${ok ? 'ok' : 'no'}"><b class="h">${ok ? 'Correcto' : 'Mejor en la flecha verde'}</b>Actúa sobre todo entre «${POV_N[ok ? i : pol[1][0]]}» y «${POV_N[((ok ? i : pol[1][0]) + 1) % 4]}»${pol[1].length > 1 ? ` (también puede verse en la flecha «${POV_N[pol[1][1]]} → ${POV_N[(pol[1][1] + 1) % 4]}»)` : ''}. ${pol[2]}<br><b>Límite:</b> ${pol[3]}</div>
+      <div class="row" style="margin-top:8px"><button class="btn primary sm" type="button" id="pn">${S.p + 1 < POV_P.length ? 'Siguiente política' : 'Empezar de nuevo'}</button></div>`;
+    $('#pn', pan).onclick = () => { S.p = (S.p + 1) % POV_P.length; if (!S.p) S.order = shuffle(S.order); load(); };
+  }
+  load();
 }
 
 /* ---- CPP ---- */
