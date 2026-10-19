@@ -1739,9 +1739,10 @@ const LAB_OF = {
   excedentes: 'surplus', eficiencia: 'surplus', engel: 'yed', 'epo-rel': 'pes', 'epo-const': 'pes',
   'flujo-circular': 'flow', 'ciclo-economico': 'cycle', 'oa-perspectivas': 'gaps', 'brecha-deflacionaria': 'gaps',
   exportaciones: 'trade', importaciones: 'trade', cuota: 'quota', 'subvencion-comercio': 'quota',
-  'tc-fijo': 'fixfx', 'tc-controlado': 'fixfx', 'tc-sobre-sub': 'fixfx', 'ciclo-pobreza': 'poverty'
+  'tc-fijo': 'fixfx', 'tc-controlado': 'fixfx', 'tc-sobre-sub': 'fixfx', 'ciclo-pobreza': 'poverty',
+  'nota-bienes-publicos': 'goods', 'matriz-410': 'strat', deflacion: 'prices'
 };
-const LAB_NAME = { cpp: 'Curva de posibilidades de producción', shifts: '¿Qué curva se mueve?', ped: 'EPD e ingreso total', tax: 'Impuestos y subsidios', ceil: 'Precios máximos y mínimos', ext: 'Externalidades', adas: 'Demanda y oferta agregadas', lorenz: 'Curva de Lorenz y Gini', tariff: 'Arancel', fx: 'Mercado del guaraní', flow: 'Flujo circular del ingreso', surplus: 'Excedentes y eficiencia', yed: 'Elasticidad ingreso de la demanda', pes: 'Elasticidad precio de la oferta', cycle: 'Ciclo económico', gaps: 'Brechas y modelos de OA', trade: 'Libre comercio', quota: 'Cuotas y subvenciones', fixfx: 'Tipo de cambio fijo y controlado', bdp: 'Balanza de pagos', poverty: 'Ciclo de la pobreza' };
+const LAB_NAME = { cpp: 'Curva de posibilidades de producción', shifts: '¿Qué curva se mueve?', ped: 'EPD e ingreso total', tax: 'Impuestos y subsidios', ceil: 'Precios máximos y mínimos', ext: 'Externalidades', adas: 'Demanda y oferta agregadas', lorenz: 'Curva de Lorenz y Gini', tariff: 'Arancel', fx: 'Mercado del guaraní', flow: 'Flujo circular del ingreso', surplus: 'Excedentes y eficiencia', yed: 'Elasticidad ingreso de la demanda', pes: 'Elasticidad precio de la oferta', cycle: 'Ciclo económico', gaps: 'Brechas y modelos de OA', trade: 'Libre comercio', quota: 'Cuotas y subvenciones', fixfx: 'Tipo de cambio fijo y controlado', bdp: 'Balanza de pagos', poverty: 'Ciclo de la pobreza', goods: 'Bienes públicos y recursos comunes', real: 'PIB nominal, real e INB', labor: 'Medir el desempleo', prices: 'Inflación e interés real', integ: 'Integración económica', dev: 'Medición del desarrollo', strat: 'Estrategias de desarrollo y ODS' };
 const TALLER_ST = ['1.1', '1.2', '2.1', '2.2', '2.3', '2.5', '2.6', '2.7', '2.8', '2.9', '3.1', '3.2', '3.3', '3.4', '3.5', '3.6', '3.7', '4.1', '4.2', '4.4', '4.5', '4.6', '4.7', '4.8', '4.9', '4.10'];
 const shuf = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
 const plain = s => String(s).replace(/\*\*([^*]+)\*\*/g, '$1').replace(/`([^`]+)`/g, '$1');
@@ -1886,7 +1887,8 @@ function renderFicha(f) {
   const u = UNITS[f.u];
   let h = `<div class="sheet"><div class="eyebrow">${u ? u.n : 'Referencia'} · ${esc(f.st)} ${esc(f.stn)}</div><h1>${ht(f.t)}</h1>`;
   if (f.type === 'page') {
-    h += (f.render ? f.render() : f.html) + navHtml(f) + '</div>';
+    const pl = LAB_OF[f.id] ? `<div class="plinks"><a class="pbtn primary" href="${TALLER}#lab-${LAB_OF[f.id]}">Laboratorio interactivo: ${LAB_NAME[LAB_OF[f.id]]}</a></div>` : '';
+    h += (f.render ? f.render() : f.html) + pl + navHtml(f) + '</div>';
     $('#main').innerHTML = h; return;
   }
   h += `<div class="meta"><span class="chip">Ficha ${esc(f.code)}</span>${f.pr ? `<span class="chip ex">Aparece en: ${esc(f.pr)}</span>` : ''}<button type="button" class="chip go" data-scroll="practicar">Practicar este diagrama ↓</button></div>`;

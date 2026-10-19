@@ -557,6 +557,9 @@ body.docked{padding-bottom:190px}
 .pvhit{fill:none;stroke:transparent;stroke-width:22}
 .pvn{fill:var(--gold-soft);stroke:var(--gold)}
 @media (max-width:640px){.fgrid2{grid-template-columns:1fr}}
+/* v18: laboratorios de cálculo y global */
+.dsel{width:100%;padding:8px 10px;border:1px solid var(--rule);border-radius:7px;background:var(--sheet);color:var(--ink);font:inherit;font-size:14.5px}
+.fbt.big{font-size:34px;font-family:var(--f-display)} .fbt.big2{font-size:22px;font-family:var(--f-display)}
 /* v7: constructor de diagramas */
 .dbcta{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:6px 16px;align-items:center;width:100%;max-width:1100px;text-align:left;background:var(--gold-soft);border:1.5px solid var(--gold);border-radius:var(--r);padding:14px 18px;margin:4px 0 8px;color:var(--ink)}
 .dbcta:hover{filter:brightness(1.03)}
@@ -1059,7 +1062,7 @@ const TOPICS = [
     ]
   },
   {
-    id: '2.8', u: 2, name: 'Fallas de mercado', ds: 'Externalidades, bienes meritorios y perjudiciales, intervención y recursos comunes', labs: ['ext'],
+    id: '2.8', u: 2, name: 'Fallas de mercado', ds: 'Externalidades, bienes meritorios y perjudiciales, intervención y recursos comunes', labs: ['ext', 'goods'],
     ess: [
       '<b>Falla de mercado</b>: el mercado no asigna los recursos de forma eficiente; el beneficio social marginal (BMS) no es igual al costo social marginal (CMS).',
       '<b>Externalidad</b>: efecto sobre un tercero que no participa del intercambio. Negativa (costo externo) o positiva (beneficio externo); de producción o de consumo.',
@@ -1083,7 +1086,7 @@ const TOPICS = [
     ]
   },
   {
-    id: '2.9', u: 2, name: 'Bienes públicos', ds: 'No rivalidad, no exclusión, polizón y provisión', labs: [],
+    id: '2.9', u: 2, name: 'Bienes públicos', ds: 'No rivalidad, no exclusión, polizón y provisión', labs: ['goods'],
     ess: [
       '<b>No rival</b>: que una persona lo use no reduce la cantidad para otros. <b>No excluible</b>: no se puede impedir que alguien lo use aunque no pague.',
       '<b>Bien público</b> = no rival + no excluible (alumbrado público, defensa nacional, un faro).',
@@ -1127,6 +1130,13 @@ const LABS = {
   fixfx: { name: 'Tipo de cambio fijo y controlado', short: 'TC FIJO', topic: '4.5', ds: 'Mantén el tipo fijo con reservas y explora monedas sobrevaluadas y subvaluadas.' },
   bdp: { name: 'Balanza de pagos', short: 'BdP', topic: '4.6', ds: 'Clasifica transacciones de Paraguay en la cuenta corriente, de capital o financiera.' },
   poverty: { name: 'Ciclo de la pobreza', short: 'POBREZA', topic: '4.9', ds: 'Elige una política y descubre qué eslabón del ciclo ayuda a romper.' },
+  goods: { name: 'Bienes públicos y recursos comunes', short: 'BIENES', topic: '2.9', ds: 'Clasifica bienes por rivalidad y exclusión, prueba el problema del polizón y la tragedia de los comunes.' },
+  real: { name: 'PIB nominal, real e INB', short: 'PIB', topic: '3.1', ds: 'Deflactor, crecimiento real, per cápita y del PIB al INB, con el cálculo a la vista.' },
+  labor: { name: 'Medir el desempleo', short: 'DESEMP', topic: '3.3', ds: 'Datos de Paraguay: predice qué pasa con la tasa de desempleo y descubre el desempleo oculto.' },
+  prices: { name: 'Inflación e interés real', short: 'IPC', topic: '3.3', ds: 'Inflación, desinflación y deflación con datos de Paraguay, y quién gana con la tasa de interés real.' },
+  integ: { name: 'Integración económica', short: 'INTEG', topic: '4.4', ds: 'Del acuerdo preferencial a la unión monetaria, y clasificación de acuerdos reales.' },
+  dev: { name: 'Medición del desarrollo', short: 'IDH', topic: '4.8', ds: 'IDH frente a ingreso, pérdida por desigualdad y qué pasa si cambian las ponderaciones.' },
+  strat: { name: 'Estrategias de desarrollo y ODS', short: 'ESTRAT', topic: '4.10', ds: 'Clasifica estrategias reales y relaciona medidas con los Objetivos de Desarrollo Sostenible.' },
   draw: { name: 'Dibuja el desplazamiento', short: 'DIB', topic: '2.3', ds: 'Arrastra la curva que se mueve y marca el nuevo equilibrio: D y O, DA y OA, guaraní.' }
 };
 
@@ -1181,7 +1191,7 @@ const CARDS = [
 
 TOPICS.push(
   {
-    id: '3.1', u: 3, name: 'Medición de la actividad económica', ds: 'Flujo circular, PIB e INB, real y nominal, per cápita, PPA y ciclo económico', labs: ['flow', 'cycle'],
+    id: '3.1', u: 3, name: 'Medición de la actividad económica', ds: 'Flujo circular, PIB e INB, real y nominal, per cápita, PPA y ciclo económico', labs: ['flow', 'cycle', 'real'],
     ess: [
       '<b>Flujo circular</b>: hogares y empresas intercambian factores e ingresos. <b>Filtraciones</b>: ahorro, impuestos, importaciones. <b>Inyecciones</b>: inversión, gasto público, exportaciones.',
       '<b>PIB</b>: valor de mercado de todos los bienes y servicios <b>finales</b> producidos <b>dentro</b> de un país en un período. Se mide por el gasto, el ingreso o la producción.',
@@ -1227,7 +1237,7 @@ TOPICS.push(
     ]
   },
   {
-    id: '3.3', u: 3, name: 'Objetivos macroeconómicos', ds: 'Crecimiento, desempleo, inflación y deflación', labs: ['adas', 'gaps', 'cycle'],
+    id: '3.3', u: 3, name: 'Objetivos macroeconómicos', ds: 'Crecimiento, desempleo, inflación y deflación', labs: ['adas', 'gaps', 'cycle', 'labor', 'prices'],
     ess: [
       '<b>Crecimiento económico</b>: aumento del PIB real. A corto plazo lo impulsa la DA; a largo plazo, la OALP. Beneficios: ingresos, empleo, recaudación. Costos posibles: desigualdad y daño ambiental.',
       '<b>Desempleo</b>: personas que buscan trabajo y no lo encuentran. Tipos: <b>friccional</b>, <b>estructural</b>, <b>estacional</b> (forman la tasa natural) y <b>cíclico</b> (por falta de DA). También existen subempleo y desempleo oculto.',
@@ -1272,7 +1282,7 @@ TOPICS.push(
     ]
   },
   {
-    id: '3.5', u: 3, name: 'Política monetaria', ds: 'Banco central, tasas de interés, metas de inflación, fortalezas y límites', labs: ['adas', 'gaps'],
+    id: '3.5', u: 3, name: 'Política monetaria', ds: 'Banco central, tasas de interés, metas de inflación, fortalezas y límites', labs: ['adas', 'gaps', 'prices'],
     ess: [
       'La aplica el <b>banco central</b> (en Paraguay, el BCP) principalmente con la <b>tasa de interés de política monetaria</b> (TPM).',
       'Objetivos: inflación baja y estable (el BCP trabaja con <b>metas de inflación</b>), apoyo al crecimiento y al empleo, estabilidad financiera y del tipo de cambio.',
@@ -1372,7 +1382,7 @@ TOPICS.push(
     ]
   },
   {
-    id: '4.4', u: 4, name: 'Integración económica', ds: 'Acuerdos preferenciales, bloques comerciales, MERCOSUR, unión monetaria y OMC', labs: [],
+    id: '4.4', u: 4, name: 'Integración económica', ds: 'Acuerdos preferenciales, bloques comerciales, MERCOSUR, unión monetaria y OMC', labs: ['integ'],
     ess: [
       'Acuerdos <b>bilaterales</b>, <b>regionales</b> y <b>multilaterales</b> (OMC).',
       'Niveles de menor a mayor integración: acuerdo comercial preferencial → <b>área de libre comercio</b> (sin aranceles entre miembros, cada uno con su arancel externo) → <b>unión aduanera</b> (+ arancel externo común) → <b>mercado común</b> (+ libre movimiento de trabajo y capital) → <b>unión económica y monetaria</b> (+ moneda y banco central comunes).',
@@ -1432,7 +1442,7 @@ TOPICS.push(
     ]
   },
   {
-    id: '4.7', u: 4, name: 'Desarrollo sostenible', ds: 'Definición, ODS y tensiones entre crecimiento y ambiente', labs: [],
+    id: '4.7', u: 4, name: 'Desarrollo sostenible', ds: 'Definición, ODS y tensiones entre crecimiento y ambiente', labs: ['strat'],
     ess: [
       '<b>Desarrollo sostenible</b>: satisfacer las necesidades del presente sin comprometer la capacidad de las generaciones futuras de satisfacer las suyas.',
       'Los <b>17 Objetivos de Desarrollo Sostenible</b> (ONU, 2015, Agenda 2030): fin de la pobreza, hambre cero, salud, educación, igualdad de género, agua, energía limpia, trabajo decente, acción por el clima, entre otros.',
@@ -1450,7 +1460,7 @@ TOPICS.push(
     ]
   },
   {
-    id: '4.8', u: 4, name: 'Medición del desarrollo', ds: 'Indicadores únicos y compuestos: IDH, IDH-D, IDG, IPM', labs: [],
+    id: '4.8', u: 4, name: 'Medición del desarrollo', ds: 'Indicadores únicos y compuestos: IDH, IDH-D, IDG, IPM', labs: ['dev'],
     ess: [
       '<b>Crecimiento</b> es más producción; <b>desarrollo</b> es mejora del bienestar: salud, educación, nivel de vida y libertad de elegir.',
       'Indicadores únicos: PIB o INB per cápita en PPA, esperanza de vida, mortalidad infantil y materna, años de escolaridad, acceso a agua potable y saneamiento.',
@@ -1491,7 +1501,7 @@ TOPICS.push(
     ]
   },
   {
-    id: '4.10', u: 4, name: 'Estrategias de crecimiento y desarrollo', ds: 'Orientación al mercado e intervención, IED, ayuda, microcrédito, comercio justo', labs: [],
+    id: '4.10', u: 4, name: 'Estrategias de crecimiento y desarrollo', ds: 'Orientación al mercado e intervención, IED, ayuda, microcrédito, comercio justo', labs: ['strat'],
     ess: [
       'Estrategias <b>orientadas al mercado</b>: apertura comercial, atraer inversión extranjera directa, liberalización, fomento de exportaciones.',
       'Estrategias <b>intervencionistas</b>: inversión en capital humano e infraestructura, provisión de servicios básicos, programas sociales, sustitución de importaciones.',
@@ -2112,7 +2122,12 @@ const ATLAS_OF = {
   trade: [['exportaciones', 'Libre comercio con exportaciones'], ['importaciones', 'Libre comercio con importaciones']],
   quota: [['cuota', 'Efecto de una cuota'], ['subvencion-comercio', 'Subvención a productores nacionales']],
   fixfx: [['tc-fijo', 'Tipo de cambio fijo'], ['tc-controlado', 'Tipo de cambio controlado'], ['tc-sobre-sub', 'Moneda sobrevaluada y subvaluada']],
-  poverty: [['ciclo-pobreza', 'Ciclo de la pobreza']]
+  poverty: [['ciclo-pobreza', 'Ciclo de la pobreza']],
+  goods: [['nota-bienes-publicos', 'Bienes públicos y recursos comunes']],
+  real: [['flujo-circular', 'Flujo circular del ingreso'], ['ciclo-economico', 'Ciclo económico']],
+  labor: [['brecha-deflacionaria', 'Brecha deflacionaria y desempleo cíclico'], ['salario-minimo', 'Salario mínimo y desempleo']],
+  prices: [['inflacion-demanda', 'Inflación de demanda'], ['inflacion-costos', 'Inflación de costos'], ['deflacion', 'Deflación'], ['politica-monetaria', 'Política monetaria']],
+  strat: [['matriz-410', 'Matriz de reutilización de diagramas']]
 };
 function renderLabPage(k) {
   const L = LABS[k];
@@ -2120,7 +2135,7 @@ function renderLabPage(k) {
     <div class="eyebrow" style="margin-top:12px">Laboratorio · Subtema ${tcode(L.topic)}</div><h1>${L.name}</h1>
     <div class="row" style="margin-bottom:16px"><button class="btn sm" type="button" data-go="${tid(L.topic)}">Ir a la práctica de ${tcode(L.topic)}</button>${(ATLAS_OF[k] || []).map(([id, n]) => `<a class="btn sm" href="${ATLAS}#${id}" style="text-decoration:none">Atlas: ${n}</a>`).join('')}</div>
     <div class="lab"><div class="figure"><svg id="fig" role="img" aria-label="Diagrama del laboratorio"></svg><div class="legend" id="leg"></div></div><div class="panel" id="pan"></div></div>`;
-  ({ cpp: labCPP, shifts: labShifts, ped: labPED, tax: labTax, ceil: labCeil, ext: labExt, adas: labADAS, lorenz: labLorenz, tariff: labTariff, fx: labFX, draw: labDraw, flow: labFlow, surplus: labSurplus, yed: labYED, pes: labPES, cycle: labCycle, gaps: labGaps, trade: labTrade, quota: labQuota, fixfx: labFixFX, bdp: labBdP, poverty: labPoverty })[k]($('#fig'), $('#pan'), $('#leg'));
+  ({ cpp: labCPP, shifts: labShifts, ped: labPED, tax: labTax, ceil: labCeil, ext: labExt, adas: labADAS, lorenz: labLorenz, tariff: labTariff, fx: labFX, draw: labDraw, flow: labFlow, surplus: labSurplus, yed: labYED, pes: labPES, cycle: labCycle, gaps: labGaps, trade: labTrade, quota: labQuota, fixfx: labFixFX, bdp: labBdP, poverty: labPoverty, goods: labGoods, real: labReal, labor: labLabor, prices: labPrices, integ: labInteg, dev: labDev, strat: labStrat })[k]($('#fig'), $('#pan'), $('#leg'));
 }
 
 /* =============== Laboratorios nuevos (Nivel Medio): excedentes, EPO, EID, ciclo, brechas, flujo circular, comercio, cuotas y subvenciones, tipo fijo y controlado, balanza de pagos, ciclo de la pobreza =============== */
@@ -2554,6 +2569,564 @@ function labPoverty(svg, pan, leg) {
     $('#pn', pan).onclick = () => { S.p = (S.p + 1) % POV_P.length; if (!S.p) S.order = shuffle(S.order); load(); };
   }
   load();
+}
+
+/* =============== Laboratorios v18 (Nivel Medio): bienes públicos y comunes, PIB nominal y real, desempleo, inflación e interés real, integración, medición del desarrollo, estrategias y ODS_N =============== */
+const labHead = (svg, t) => { svg.innerHTML = ''; svg.setAttribute('viewBox', '0 0 410 330'); if (t) { const x = el('text', { x: 205, y: 22, class: 'fbt', 'text-anchor': 'middle' }, svg); x.textContent = t; } };
+const sTxt = (svg, x, y, s, cls = 'fbl', anchor = 'middle') => { const t = el('text', { x, y, class: cls, 'text-anchor': anchor }, svg); t.textContent = s; return t; };
+const calcBtns = ks => `<div class="row" style="margin-top:10px">${ks.map(k => `<button class="btn sm" type="button" data-go="calc-${k}">Practicar: ${calcT(k).n}</button>`).join('')}</div>`;
+const labRec = (k, ok) => { const st = labStat(k); st.n++; if (ok) st.ok++; saveProg(); };
+
+/* ---- 2.8 y 2.9 Bienes públicos y recursos de uso común ---- */
+const GOODS = [
+  ['El alumbrado público de tu calle', 0, 0, 'Nadie puede ser excluido de la luz de la calle y que un vecino la aproveche no reduce la luz para los demás.'],
+  ['La defensa nacional', 0, 0, 'Protege a todos los habitantes a la vez: no se puede excluir a quien no paga y proteger a uno más no reduce la protección de otro.'],
+  ['La señal de una radio o un canal de TV abierta', 0, 0, 'Cualquiera con un receptor la capta y que la escuche una persona más no la agota.'],
+  ['Los fuegos artificiales de Año Nuevo vistos desde la Costanera', 0, 0, 'No se puede impedir que la gente los mire y que mire uno más no le quita nada a otro.'],
+  ['Los peces del río Paraguay', 1, 0, 'Lo que pesca uno ya no lo puede pescar otro (rival), pero es muy difícil impedir que la gente pesque (no excluible).'],
+  ['El agua del Acuífero Guaraní', 1, 0, 'Cada litro que se extrae deja menos para los demás, y controlar todos los pozos es muy difícil.'],
+  ['Los árboles de un bosque del Chaco sin control de acceso', 1, 0, 'La madera que corta uno ya no está para otro, y sin vigilancia nadie puede impedir la tala.'],
+  ['Una chipa comprada en la terminal', 1, 1, 'Si no pagas, no te la dan (excluible), y si la comes vos, no la come otro (rival).'],
+  ['Un celular', 1, 1, 'Hay que pagarlo para tenerlo y, mientras lo usas, otra persona no puede usar el mismo aparato.'],
+  ['Un asiento en un bus de larga distancia', 1, 1, 'Sin pasaje no subes (excluible) y el asiento que ocupas ya no lo puede ocupar otro pasajero (rival).']
+];
+const GOOD_N = { '00': ['pub', 'Bien público'], '10': ['com', 'Recurso de uso común'], '11': ['pri', 'Bien privado'], '01': ['out', 'Fuera del programa'] };
+function labGoods(svg, pan, leg) {
+  const S = { m: 'cls', order: shuffle(GOODS.map((_, i) => i)), pos: 0, ok: 0, a: {}, done: false, others: 60, me: 0, gov: false, fish: null };
+  const top = () => `<div class="ctl"><span class="lbl">Actividad</span>${segBtns('gm', [['cls', 'Clasificar bienes'], ['free', 'El polizón'], ['trag', 'La tragedia de los comunes']], S.m)}</div><div id="gb"></div>`;
+  pan.innerHTML = top();
+  bindSeg(pan, 'gm', v => { S.m = v; run(); });
+
+  function matrix(hl, wrong) {
+    labHead(svg, '¿Es rival? ¿Es excluible?');
+    const X0 = 110, Y0 = 70, W = 140, H = 105;
+    sTxt(svg, X0 + W / 2, Y0 - 10, 'Excluible', 'fbt sm'); sTxt(svg, X0 + W * 1.5, Y0 - 10, 'No excluible', 'fbt sm');
+    sTxt(svg, X0 - 10, Y0 + H / 2 + 4, 'Rival', 'fbt sm', 'end'); sTxt(svg, X0 - 10, Y0 + H * 1.5 + 4, 'No rival', 'fbt sm', 'end');
+    [['11', 0, 0], ['10', 1, 0], ['01', 0, 1], ['00', 1, 1]].forEach(([k, c, r]) => {
+      const x = X0 + c * W, y = Y0 + r * H, out = k === '01';
+      el('rect', { x: x + 3, y: y + 3, width: W - 6, height: H - 6, rx: 8, class: 'fbx' + (out ? ' fsm' : ''), style: hl === k ? 'stroke:var(--k-new);stroke-width:4' : wrong === k ? 'stroke:var(--k-s);stroke-width:4;stroke-dasharray:6 4' : '' }, svg);
+      const nm = GOOD_N[k][1].split(' '), l1 = nm.length > 2 ? nm.slice(0, 2).join(' ') : nm[0], l2 = nm.length > 2 ? nm.slice(2).join(' ') : nm.slice(1).join(' ');
+      sTxt(svg, x + W / 2, y + H / 2 - 2, out ? 'No se evalúa' : l1, out ? 'fbl' : 'fbt sm'); sTxt(svg, x + W / 2, y + H / 2 + 15, out ? 'en el Nivel Medio' : l2, out ? 'fbl' : 'fbt sm');
+    });
+  }
+  function cls() {
+    const B = $('#gb', pan);
+    if (S.pos >= S.order.length) {
+      labRec('goods', S.ok >= 8);
+      matrix(null, null);
+      B.innerHTML = `<div class="fb ${S.ok >= 8 ? 'ok' : 'info'}"><b class="h">Terminaste: ${S.ok}/${S.order.length}</b>Un <b>bien público</b> es no rival y no excluible: aparece el problema del polizón y el mercado no lo ofrece (o lo ofrece de menos). Un <b>recurso de uso común</b> es rival pero no excluible: tiende a sobreexplotarse (tragedia de los comunes).</div><button class="btn primary sm" type="button" id="gr">Empezar de nuevo</button>`;
+      $('#gr', pan).onclick = () => { S.order = shuffle(S.order); S.pos = 0; S.ok = 0; cls(); };
+      return;
+    }
+    const g = GOODS[S.order[S.pos]]; S.a = {};
+    matrix(null, null);
+    B.innerHTML = `<div class="scen"><div class="mk">Bien ${S.pos + 1} de ${S.order.length}</div><p>${g[0]}</p></div>
+      <div class="pick"><div class="ctl"><span class="lbl">¿Es rival? (si lo usa uno, ¿queda menos para otro?)</span>${segBtns('gr1', [['1', 'Sí, es rival'], ['0', 'No es rival']], null)}</div>
+      <div class="ctl"><span class="lbl">¿Es excluible? (¿se puede impedir que lo use quien no paga?)</span>${segBtns('gr2', [['1', 'Sí, es excluible'], ['0', 'No es excluible']], null)}</div></div>
+      <div class="row"><button class="btn primary" type="button" id="gc" disabled>Comprobar</button><span class="score">Aciertos: ${S.ok}/${S.pos}</span></div><div id="gf"></div>`;
+    const en = () => { $('#gc', pan).disabled = !(S.a.r && S.a.e); };
+    bindSeg(B, 'gr1', v => { S.a.r = v; en(); }); bindSeg(B, 'gr2', v => { S.a.e = v; en(); });
+    $('#gc', pan).onclick = () => {
+      const key = `${g[1]}${g[2]}`, mine = `${S.a.r}${S.a.e}`, ok = key === mine; if (ok) S.ok++;
+      matrix(key, ok ? null : mine);
+      B.querySelectorAll('.pick button').forEach(b => b.disabled = true);
+      $('#gc', pan).outerHTML = `<button class="btn primary" type="button" id="gn">Siguiente</button>`;
+      $('#gf', pan).innerHTML = `<div class="fb ${ok ? 'ok' : 'no'}"><b class="h">${ok ? 'Correcto' : 'No es así'}: ${GOOD_N[key][1].toLowerCase()}</b>${g[3]}</div>`;
+      $('#gn', pan).onclick = () => { S.pos++; cls(); };
+    };
+  }
+  /* El polizón: alumbrado de un barrio con 20 vecinos */
+  function free() {
+    const N = 20, COST = 8, FEE = 0.5, VAL = 1, need = COST / FEE;
+    $('#gb', pan).innerHTML = `<p class="small" style="margin:0">Un barrio de 20 vecinos quiere alumbrado público. Cuesta <b>Gs. 8 millones</b>; cada vecino lo valora en <b>Gs. 1 millón</b>. Se pide un aporte voluntario de <b>Gs. 500.000</b>: con 16 aportes se instala. Si no se llega, se devuelve el dinero.</p>
+      <div class="ctl"><label for="go" id="gol"></label><input type="range" id="go" min="0" max="19" step="1" value="${Math.round(S.others * 19 / 100)}"></div>
+      <div class="ctl"><span class="lbl">¿Y tú?</span>${segBtns('gme', [['1', 'Aporto'], ['0', 'No aporto']], String(S.me))}</div>
+      <div class="row"><button class="btn sm" type="button" id="gall">¿Y si todos razonan como tú?</button><button class="btn sm" type="button" id="ggov">${S.gov ? 'Volver al aporte voluntario' : 'Lo provee la municipalidad con impuestos'}</button></div>
+      <table class="readout" id="ro"></table><div id="note"></div>`;
+    const draw = () => {
+      const k = +$('#go', pan).value, payers = S.gov ? N : k + S.me, coll = S.gov ? COST : payers * FEE, built = coll >= COST - 1e-9;
+      const myIf = me => { const p = k + me; return (p * FEE >= COST - 1e-9 ? VAL : 0) - (p * FEE >= COST - 1e-9 ? me * FEE : 0); };
+      const best = myIf(0) >= myIf(1) ? 'no aportar' : 'aportar';
+      const P = Plot(svg, { yl: 'Millones de Gs.', xl: ' ', ymax: 12 });
+      P.rect(14, 0, 38, coll, built ? 'a-pro' : 'a-dwl'); P.rect(58, 0, 82, COST, 'a-tr');
+      P.hline(COST, 'c-s', '');
+      P.text(26, Math.min(coll, 11) + 0.4, fmt(coll, 1), 'pl', 'middle'); P.text(70, COST + 0.4, fmt(COST, 1), 'pl', 'middle');
+      sTxt(svg, P.X(26), P.Y(0) + 18, S.gov ? 'Recaudado con impuestos' : 'Aportes voluntarios'); sTxt(svg, P.X(70), P.Y(0) + 18, 'Costo');
+      sTxt(svg, 230, 40, built ? 'Se instala el alumbrado ✓' : 'No se instala ✗', 'fbt');
+      $('#gol', pan).textContent = `Otros vecinos que aportan: ${k} de 19`;
+      $('#go', pan).disabled = S.gov; B2(S.gov);
+      $('#ro', pan).innerHTML = roRows(S.gov ? [['Impuesto por vecino', 'Gs. 400.000'], ['Beneficio neto de cada vecino', 'Gs. 1.000.000 − 400.000 = Gs. 600.000'], ['Resultado', 'todos ganan, incluso quien no quería pagar']] :
+        [['Aportes reunidos', `${payers} × Gs. 500.000 = Gs. ${fmt(coll * 1e6)}`], ['Tu beneficio neto si aportas', `Gs. ${fmt(myIf(1) * 1e6)}`], ['Tu beneficio neto si no aportas', `Gs. ${fmt(myIf(0) * 1e6)}`], ['Tu mejor opción individual', best]]);
+      $('#note', pan).innerHTML = `<div class="fb ${S.gov ? 'ok' : 'info'}">${S.gov ? 'El gobierno resuelve la falla de mercado con <b>provisión directa</b> financiada con impuestos. También puede <b>subcontratar</b> a una empresa privada para que instale y mantenga el alumbrado: el Estado paga, la empresa produce.' : best === 'no aportar' ? 'Como nadie puede ser excluido de la luz, a cada vecino le conviene no pagar y aprovechar el aporte de los demás: es el <b>problema del polizón</b>. Si todos razonan así, el alumbrado no se instala aunque el beneficio total (Gs. 20 millones) supera al costo (Gs. 8 millones).' : 'Solo en este caso tu aporte decide si se instala o no. Con cualquier otro número de aportes, te conviene no pagar.'}</div>`;
+    };
+    const B2 = gov => { $('#ggov', pan).textContent = gov ? 'Volver al aporte voluntario' : 'Lo provee la municipalidad con impuestos'; };
+    $('#go', pan).oninput = () => { S.others = +$('#go', pan).value / 19 * 100; draw(); };
+    bindSeg(pan, 'gme', v => { S.me = +v; draw(); });
+    $('#gall', pan).onclick = () => { S.gov = false; S.me = 0; $('#go', pan).value = 0; S.others = 0; pan.querySelectorAll('#gme button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.v === '0'))); draw(); };
+    $('#ggov', pan).onclick = () => { S.gov = !S.gov; draw(); };
+    leg.innerHTML = `<span>${sw('--f-pro')}Alcanza para instalarlo</span><span>${sw('--f-dwl')}No alcanza</span><span>${sw('--f-tr')}Costo</span>`;
+    draw();
+  }
+  /* La tragedia de los comunes: pesca en un río con 4 pescadores */
+  function trag() {
+    const K = 100, R = 0.6, YRS = 8;
+    if (!S.fish) S.fish = { mode: 'libre', yr: 0, stock: [80], tot: [], mine: [], c: 4 };
+    const F = S.fish;
+    const others = st => F.mode === 'libre' ? 7 * 3 : 3 * 3;
+    $('#gb', pan).innerHTML = `<p class="small" style="margin:0">Cuatro pescadores comparten un tramo de río (datos hipotéticos). Los peces se reproducen más cuando hay una cantidad intermedia. Tú eres uno de los cuatro: elige cuánto pescar cada año.</p>
+      <div class="ctl"><span class="lbl">Los otros tres pescadores</span>${segBtns('gfm', [['libre', 'Pescan lo que quieren (7 c/u)'], ['acuerdo', 'Respetan una cuota acordada (3 c/u)']], F.mode)}</div>
+      <div class="ctl"><label for="gc2" id="gc2l"></label><input type="range" id="gc2" min="0" max="10" step="1" value="${F.c}"></div>
+      <div class="row"><button class="btn primary sm" type="button" id="gy">Pescar este año</button><button class="btn sm" type="button" id="gz">Reiniciar</button></div>
+      <table class="readout" id="ro"></table><div id="note"></div>`;
+    const draw = () => {
+      const P = Plot(svg, { yl: 'Peces en el río (toneladas)', xl: 'Año' });
+      const X = t => 9 + t * 11;
+      F.tot.forEach((c, t) => P.rect(X(t + 1) - 3.5, 0, X(t + 1) + 3.5, c, 'a-dwl'));
+      el('polyline', { points: F.stock.map((s, t) => P.X(X(t)) + ',' + P.Y(s)).join(' '), class: 'cv c-new' }, P.gC);
+      F.stock.forEach((s, t) => P.dot(X(t), s, '', 0, 0));
+      P.hline(50, 'c-gold', 'Nivel con máxima reproducción');
+      for (let t = 0; t <= YRS; t++) { const tx = el('text', { x: P.X(X(t)), y: P.T + P.H + 16, class: 'tk', 'text-anchor': 'middle' }, P.gT); tx.textContent = t; }
+      $('#gc2l', pan).textContent = `Tu pesca este año: ${F.c} t`;
+      const st = F.stock[F.stock.length - 1], end = F.yr >= YRS || st <= 0.5, sumM = F.mine.reduce((a, b) => a + b, 0);
+      $('#ro', pan).innerHTML = roRows([['Año', `${F.yr} de ${YRS}`], ['Peces en el río', fmt(st, 1) + ' t'], ['Pesca total del último año', F.tot.length ? fmt(F.tot[F.tot.length - 1], 1) + ' t' : '—'], ['Tu pesca acumulada', fmt(sumM, 1) + ' t']]);
+      $('#gy', pan).disabled = end;
+      $('#note', pan).innerHTML = end ? `<div class="fb ${st > 40 ? 'ok' : 'no'}"><b class="h">${st <= 0.5 ? 'El río se quedó sin peces' : st > 40 ? 'El recurso se mantuvo' : 'El recurso quedó muy reducido'}</b>${st > 40 ? 'Con una cuota que respeta la reproducción de los peces, se puede pescar todos los años: es una producción <b>sostenible</b>.' : 'Cada pescador gana pescando más, pero el costo (menos peces para todos en el futuro) lo comparten los cuatro: es la <b>tragedia de los comunes</b>, porque el recurso es rival y no excluible.'} Soluciones del programa: legislación y cuotas, permisos negociables, educación, y el <b>autogobierno colectivo</b> (los propios usuarios acuerdan reglas y las vigilan, como estudió Elinor Ostrom).</div>` : `<div class="fb info">Con unas 50 t en el río, los peces se reproducen unas 15 t por año: si entre los cuatro pescan más que eso, el recurso se achica.</div>`;
+      leg.innerHTML = `<span><span class="sw" style="background:var(--k-new)"></span>Peces en el río</span><span>${sw('--f-dwl')}Pesca total del año</span>`;
+    };
+    bindSeg(pan, 'gfm', v => { F.mode = v; draw(); });
+    $('#gc2', pan).oninput = e => { F.c = +e.target.value; draw(); };
+    $('#gy', pan).onclick = () => {
+      const st = F.stock[F.stock.length - 1], want = F.c + others(st), take = Math.min(want, st), mine = want ? take * F.c / want : 0;
+      const left = st - take, next = Math.min(K, left + R * left * (1 - left / K));
+      F.tot.push(take); F.mine.push(mine); F.stock.push(next); F.yr++;
+      if (F.yr >= YRS || next <= 0.5) labRec('goods', next > 40);
+      draw();
+    };
+    $('#gz', pan).onclick = () => { S.fish = null; trag(); };
+    draw();
+  }
+  function run() {
+    leg.innerHTML = S.m === 'cls' ? `<span><span class="sw" style="background:var(--k-new)"></span>Respuesta correcta</span><span><span class="sw" style="background:var(--k-s)"></span>Tu respuesta</span>` : '';
+    ({ cls, free, trag })[S.m]();
+  }
+  run();
+}
+
+/* ---- 3.1 PIB nominal, real, per cápita e INB ---- */
+function labReal(svg, pan, leg) {
+  const S = { m: 'real', gn: 8, inf: 4, pg: 1.2, yr: 5, y: 45, rec: 2, pag: 5 };
+  const SC = { sano: [8, 4, 1.2, 'Crecimiento real'], ilu: [10, 10, 1.2, 'Ilusión nominal'], est: [5, 8, 1.2, 'Inflación con recesión'], def: [-1, -3, 1.2, 'Deflación'] };
+  pan.innerHTML = `<div class="ctl"><span class="lbl">Cálculo</span>${segBtns('rm', [['real', 'Nominal, real y per cápita'], ['inb', 'Del PIB al INB']], S.m)}</div><div id="rb"></div>`;
+  bindSeg(pan, 'rm', v => { S.m = v; run(); });
+  function real() {
+    $('#rb', pan).innerHTML = `<p class="small" style="margin:0">País hipotético. En 2020 (año base) el PIB nominal es de US$ 40 mil millones, el deflactor vale 100 y viven 7 millones de personas.</p>
+      <div class="ctl"><label for="rg" id="rgl"></label><input type="range" id="rg" min="-5" max="20" step="0.5" value="${S.gn}"></div>
+      <div class="ctl"><label for="ri" id="ril"></label><input type="range" id="ri" min="-5" max="15" step="0.5" value="${S.inf}"></div>
+      <div class="ctl"><label for="rp" id="rpl"></label><input type="range" id="rp" min="0" max="4" step="0.1" value="${S.pg}"></div>
+      <div class="ctl"><span class="lbl">Escenarios</span><div class="row">${Object.entries(SC).map(([k, v]) => `<button class="btn sm" type="button" data-sc="${k}">${v[3]}</button>`).join('')}</div></div>
+      <div class="ctl"><label for="ry" id="ryl"></label><input type="range" id="ry" min="1" max="5" step="1" value="${S.yr}"></div>
+      <table class="readout" id="ro"></table><div id="note"></div>${calcBtns(['real', 'growthr', 'realpc'])}`;
+    leg.innerHTML = `<span><span class="sw" style="background:var(--gold)"></span>PIB nominal</span><span><span class="sw" style="background:var(--k-d)"></span>PIB real (precios de 2020)</span>`;
+    const draw = () => {
+      const T = [0, 1, 2, 3, 4, 5], N = T.map(t => 40 * Math.pow(1 + S.gn / 100, t)), D = T.map(t => 100 * Math.pow(1 + S.inf / 100, t)), Rr = T.map(t => N[t] / D[t] * 100), pop = T.map(t => 7 * Math.pow(1 + S.pg / 100, t)), pc = T.map(t => Rr[t] / pop[t] * 1000);
+      const top = Math.max(60, Math.ceil(Math.max(...N, ...Rr) / 10) * 10 + 10), P = Plot(svg, { yl: 'Miles de millones de US$', xl: 'Año', ymax: top });
+      const X = t => 8 + t * 17;
+      for (let v = 20; v < top; v += 20) { P.text(-1.5, v - top * 0.012, String(v), 'tk', 'end'); el('line', { x1: P.X(0), y1: P.Y(v), x2: P.X(100), y2: P.Y(v), class: 'gd', opacity: .35 }, P.gG); }
+      T.forEach(t => { const tx = el('text', { x: P.X(X(t)), y: P.T + P.H + 16, class: 'tk', 'text-anchor': 'middle' }, P.gT); tx.textContent = 2020 + t; });
+      el('polyline', { points: T.map(t => P.X(X(t)) + ',' + P.Y(N[t])).join(' '), class: 'cv c-gold' }, P.gC);
+      el('polyline', { points: T.map(t => P.X(X(t)) + ',' + P.Y(Rr[t])).join(' '), class: 'cv c-d' }, P.gC);
+      const up = N[5] >= Rr[5];
+      P.text(X(5) - 1, N[5] + (up ? 3 : -6) * top / 100, 'Nominal', 'cl t-gold', 'end'); P.text(X(5) - 1, Rr[5] + (up ? -6 : 3) * top / 100, 'Real', 'cl t-d', 'end');
+      const y = S.yr; el('line', { x1: P.X(X(y)), y1: P.Y(0), x2: P.X(X(y)), y2: P.Y(top), class: 'gd' }, P.gG); P.dot(X(y), N[y], '', 0, 0); P.dot(X(y), Rr[y], '', 0, 0);
+      const gR = (Rr[y] - Rr[y - 1]) / Rr[y - 1] * 100, gP = (pc[y] - pc[y - 1]) / pc[y - 1] * 100;
+      $('#rgl', pan).textContent = `Crecimiento del PIB nominal: ${pctStr(S.gn)} por año`;
+      $('#ril', pan).textContent = `Inflación (variación del deflactor): ${pctStr(S.inf)} por año`;
+      $('#rpl', pan).textContent = `Crecimiento de la población: ${pctStr(S.pg)} por año`;
+      $('#ryl', pan).textContent = `Año que analizas: ${2020 + y}`;
+      $('#ro', pan).innerHTML = roRows([['PIB nominal', 'US$ ' + fmt(N[y], 2) + ' mil millones'], ['Deflactor del PIB', fmt(D[y], 1)], ['PIB real = nominal ÷ deflactor × 100', `${fmt(N[y], 2)} ÷ ${fmt(D[y], 1)} × 100 = ${fmt(Rr[y], 2)}`], [`Crecimiento real ${2020 + y - 1}→${2020 + y}`, `(${fmt(Rr[y], 2)} − ${fmt(Rr[y - 1], 2)}) ÷ ${fmt(Rr[y - 1], 2)} × 100 = ${pctStr(gR)}`], ['PIB real per cápita', `US$ ${fmt(pc[y])} (${pctStr(gP)})`]]);
+      const msg = Math.abs(gR) < 0.05 ? 'El PIB nominal sube solo porque suben los precios: la producción no cambió. Es la <b>ilusión nominal</b>.' : gR < 0 ? (S.gn > 0 ? 'El PIB nominal sube, pero menos que los precios: la producción real <b>cae</b>.' : 'La producción real cae.') : 'La producción real crece: el PIB real sube aunque se descuente la inflación.';
+      $('#note', pan).innerHTML = `<div class="fb info">${msg} Atajo para revisar: crecimiento real ≈ crecimiento nominal − inflación (${pctStr(S.gn)} − ${fmt(S.inf, 1)} ≈ ${pctStr(S.gn - S.inf)}). ${gP < 0 && gR > 0 ? '<br><b>Ojo:</b> el PIB real crece, pero la población crece más rápido, así que el PIB real <b>per cápita</b> baja.' : ''}</div>`;
+    };
+    [['rg', 'gn'], ['ri', 'inf'], ['rp', 'pg'], ['ry', 'yr']].forEach(([id, k]) => { $('#' + id, pan).oninput = e => { S[k] = +e.target.value; draw(); }; });
+    pan.querySelectorAll('[data-sc]').forEach(b => b.onclick = () => { const v = SC[b.dataset.sc]; S.gn = v[0]; S.inf = v[1]; S.pg = v[2]; $('#rg', pan).value = S.gn; $('#ri', pan).value = S.inf; $('#rp', pan).value = S.pg; draw(); });
+    draw();
+  }
+  function inb() {
+    $('#rb', pan).innerHTML = `<p class="small" style="margin:0">El PIB mide lo que se produce <b>dentro</b> del país. El INB mide el ingreso de los <b>residentes</b>: suma los ingresos que reciben del exterior y resta los que se pagan a no residentes.</p>
+      <div class="ctl"><label for="ny" id="nyl"></label><input type="range" id="ny" min="20" max="60" step="1" value="${S.y}"></div>
+      <div class="ctl"><label for="nr" id="nrl"></label><input type="range" id="nr" min="0" max="8" step="0.5" value="${S.rec}"></div>
+      <div class="ctl"><label for="np" id="npl"></label><input type="range" id="np" min="0" max="12" step="0.5" value="${S.pag}"></div>
+      <table class="readout" id="ro"></table><div id="note"></div>${calcBtns(['pib', 'inb'])}`;
+    leg.innerHTML = `<span><span class="sw" style="background:var(--k-d)"></span>PIB e INB</span><span><span class="sw" style="background:var(--k-new)"></span>Ingresos recibidos del exterior</span><span><span class="sw" style="background:var(--k-s)"></span>Ingresos pagados al exterior</span>`;
+    const draw = () => {
+      const N = S.y + S.rec - S.pag, P = Plot(svg, { yl: 'Miles de millones de US$', xl: ' ', ymax: 75 });
+      const bar = (x0, x1, a, b, c) => el('rect', { x: P.X(x0), y: P.Y(Math.max(a, b)), width: P.X(x1) - P.X(x0), height: Math.max(1, Math.abs(P.Y(a) - P.Y(b))), rx: 3, fill: c, opacity: .85 }, P.gF);
+      bar(6, 24, 0, S.y, 'var(--k-d)'); bar(30, 48, S.y, S.y + S.rec, 'var(--k-new)'); bar(54, 72, S.y + S.rec, N, 'var(--k-s)'); bar(78, 96, 0, N, 'var(--k-d)');
+      [[15, S.y, 'PIB', fmt(S.y, 1)], [39, S.y + S.rec, '+ recibidos', '+' + fmt(S.rec, 1)], [63, S.y + S.rec, '− pagados', '−' + fmt(S.pag, 1)], [87, Math.max(N, 0), 'INB', fmt(N, 1)]].forEach(([x, v, l, n]) => { P.text(x, v + 2, n, 'pl', 'middle'); sTxt(svg, P.X(x), P.Y(0) + 18, l); });
+      $('#nyl', pan).textContent = `PIB: US$ ${fmt(S.y)} mil millones`;
+      $('#nrl', pan).textContent = `Ingresos recibidos del exterior (salarios, utilidades e intereses): ${fmt(S.rec, 1)}`;
+      $('#npl', pan).textContent = `Ingresos pagados al exterior (utilidades de empresas extranjeras, intereses de la deuda externa): ${fmt(S.pag, 1)}`;
+      $('#ro', pan).innerHTML = roRows([['INB = PIB + recibidos − pagados', `${fmt(S.y)} + ${fmt(S.rec, 1)} − ${fmt(S.pag, 1)} = ${fmt(N, 1)}`], ['INB frente al PIB', N < S.y ? 'menor' : N > S.y ? 'mayor' : 'igual'], ['INB per cápita (7 millones de habitantes)', `US$ ${fmt(N / 7 * 1000)}`]]);
+      $('#note', pan).innerHTML = `<div class="fb info">${N < S.y ? 'El INB es menor que el PIB: sale más ingreso hacia no residentes del que entra. Pasa en países con mucha inversión extranjera: un caso conocido es Irlanda, donde las multinacionales envían grandes ganancias a sus casas matrices.' : N > S.y ? 'El INB es mayor que el PIB: los residentes reciben del exterior más ingresos de los que pagan.' : 'Los ingresos que entran y salen se compensan.'} Las <b>remesas</b> de emigrantes no entran en este cálculo: en la balanza de pagos son transferencias corrientes.</div>`;
+    };
+    [['ny', 'y'], ['nr', 'rec'], ['np', 'pag']].forEach(([id, k]) => { $('#' + id, pan).oninput = e => { S[k] = +e.target.value; draw(); }; });
+    draw();
+  }
+  function run() { ({ real, inb })[S.m](); }
+  run();
+}
+
+/* ---- 3.3 Medir el desempleo ---- */
+const LAB_SC = {
+  rec: ['Recesión: 120.000 ocupados pierden su empleo y buscan otro', { o: -120, d: 120 }, 'sube', 'Hay menos ocupados y más desocupados: sube el desempleo cíclico.'],
+  des: ['60.000 desocupados se desaniman y dejan de buscar trabajo', { d: -60, f: 60, h: 60 }, 'baja', 'La tasa baja, pero no porque haya más empleo: los <b>trabajadores desalentados</b> salen de la fuerza de trabajo y dejan de contarse. Es desempleo oculto.'],
+  sub: ['80.000 ocupados pasan a trabajar menos horas de las que quisieran', { s: 80 }, 'igual', 'Siguen contándose como ocupados: la tasa no cambia, aunque hay más <b>subocupación</b>.'],
+  jov: ['50.000 jóvenes terminan el colegio y empiezan a buscar su primer empleo', { f: -50, d: 50 }, 'sube', 'Entran a la fuerza de trabajo como desocupados: la tasa sube aunque nadie perdió su empleo (desempleo friccional).'],
+  inf: ['70.000 desocupados consiguen trabajo, pero sin aportes a una caja de jubilación', { d: -70, o: 70, i: 70 }, 'baja', 'Ahora cuentan como ocupados, aunque son <b>informales</b>: la tasa baja, pero el empleo es precario.'],
+  rcp: ['Recuperación: 100.000 desocupados consiguen un empleo formal', { d: -100, o: 100 }, 'baja', 'Más ocupados y menos desocupados: la tasa baja de verdad.']
+};
+function labLabor(svg, pan, leg) {
+  const base = { o: 2906, d: 164, f: 1320, h: 0, s: 96, i: 0 };
+  const S = Object.assign({}, base, { sc: null, pr: null, hist: [], ok: 0, n: 0 });
+  pan.innerHTML = `<p class="small" style="margin:0">Punto de partida: datos aproximados de Paraguay en el tercer trimestre de 2024 (INE), en miles de personas. La población fuera de la fuerza de trabajo está estimada.</p>
+    <div class="ctl"><span class="lbl">1. Elige un cambio</span><select id="lsc" class="dsel"><option value="">— Elige —</option>${Object.entries(LAB_SC).map(([k, v]) => `<option value="${k}">${v[0]}</option>`).join('')}</select></div>
+    <div class="ctl"><span class="lbl">2. ¿Qué pasará con la tasa de desempleo?</span>${segBtns('lpr', [['sube', 'Sube'], ['baja', 'Baja'], ['igual', 'No cambia']], null)}</div>
+    <div class="row"><button class="btn primary sm" type="button" id="lgo" disabled>Aplicar y comprobar</button><button class="btn sm" type="button" id="lrs">Volver al inicio</button><span class="score" id="lsco"></span></div>
+    <div id="lfb"></div><table class="readout" id="ro"></table>${calcBtns(['unemp'])}`;
+  leg.innerHTML = `<span><span class="sw" style="background:var(--k-d)"></span>Ocupados</span><span><span class="sw" style="background:var(--k-s)"></span>Desocupados</span><span><span class="sw" style="background:var(--muted)"></span>Fuera de la fuerza de trabajo</span>`;
+  const rate = s => s.d / (s.o + s.d) * 100;
+  function draw() {
+    labHead(svg, 'Población en edad de trabajar');
+    const tot = S.o + S.d + S.f, x0 = 20, W = 370, k = W / tot, y = 70, h = 54;
+    const seg = (x, w, c, op = .85) => el('rect', { x, y, width: Math.max(0, w), height: h, fill: c, opacity: op }, svg);
+    seg(x0, S.o * k, 'var(--k-d)'); seg(x0 + S.o * k, S.d * k, 'var(--k-s)'); seg(x0 + (S.o + S.d) * k, S.f * k, 'var(--muted)', .45);
+    if (S.h) el('rect', { x: x0 + (S.o + S.d) * k, y, width: S.h * k, height: h, fill: 'none', stroke: 'var(--k-s)', 'stroke-width': 2, 'stroke-dasharray': '4 3' }, svg);
+    if (S.s) el('rect', { x: x0 + (S.o - S.s) * k, y: y + h - 12, width: S.s * k, height: 12, fill: 'var(--gold)', opacity: .9 }, svg);
+    if (S.i) el('rect', { x: x0 + (S.o - S.i - S.s) * k, y, width: S.i * k, height: 10, fill: 'var(--k-new)', opacity: .9 }, svg);
+    const br = (a, b, yy, t) => { el('path', { d: `M${x0 + a * k},${yy - 6} L${x0 + a * k},${yy} L${x0 + b * k},${yy} L${x0 + b * k},${yy - 6}`, class: 'ax', 'stroke-width': 1.2 }, svg); sTxt(svg, x0 + (a + b) / 2 * k, yy + 16, t); };
+    br(0, S.o + S.d, y + h + 16, `Fuerza de trabajo: ${fmt(S.o + S.d)} mil`);
+    sTxt(svg, x0 + S.o * k / 2, y - 8, `Ocupados ${fmt(S.o)}`); sTxt(svg, x0 + (S.o + S.d + S.f / 2) * k, y - 8, `Fuera ${fmt(S.f)}`);
+    sTxt(svg, x0 + (S.o + S.d / 2) * k, y + h + 52, `Desocupados ${fmt(S.d)}`, 'fbl t-s');
+    el('line', { x1: x0 + (S.o + S.d / 2) * k, y1: y + h + 40, x2: x0 + (S.o + S.d / 2) * k, y2: y + h + 2, class: 'gd' }, svg);
+    sTxt(svg, 205, 232, 'Tasa de desempleo', 'fbt'); sTxt(svg, 205, 270, fmt(rate(S), 1) + ' %', 'fbt big');
+    const notes = []; if (S.h) notes.push(`desalentados (borde rojo): ${S.h} mil`); if (S.s) notes.push(`subocupados (franja dorada): ${S.s} mil`); if (S.i) notes.push(`nuevos informales (franja verde): ${S.i} mil`);
+    sTxt(svg, 205, 300, notes.join(' · '));
+    $('#ro', pan).innerHTML = roRows([['Fuerza de trabajo = ocupados + desocupados', `${fmt(S.o)} + ${fmt(S.d)} = ${fmt(S.o + S.d)} mil`], ['Tasa de desempleo = desocupados ÷ fuerza de trabajo × 100', `${fmt(S.d)} ÷ ${fmt(S.o + S.d)} × 100 = ${fmt(rate(S), 1)} %`], ['Desempleo oculto (desalentados)', S.h ? fmt(S.h) + ' mil, no cuentan' : 'no hay'], ['Informalidad', 'en 2024, unos 6 de cada 10 ocupados (INE)']]);
+    $('#lsco', pan).textContent = S.n ? `Predicciones: ${S.ok}/${S.n}` : '';
+  }
+  const en = () => { $('#lgo', pan).disabled = !(S.sc && S.pr); };
+  $('#lsc', pan).onchange = e => { S.sc = e.target.value || null; en(); };
+  bindSeg(pan, 'lpr', v => { S.pr = v; en(); });
+  $('#lgo', pan).onclick = () => {
+    const sc = LAB_SC[S.sc], r0 = rate(S);
+    Object.entries(sc[1]).forEach(([k, v]) => { S[k] = Math.max(0, S[k] + v); });
+    const r1 = rate(S), real = Math.abs(r1 - r0) < 0.05 ? 'igual' : r1 > r0 ? 'sube' : 'baja', ok = S.pr === real;
+    S.n++; if (ok) S.ok++; labRec('labor', ok);
+    $('#lfb', pan).innerHTML = `<div class="fb ${ok ? 'ok' : 'no'}"><b class="h">${ok ? 'Correcto' : 'No es así'}: la tasa ${real === 'igual' ? 'no cambia' : real} (${fmt(r0, 1)} % → ${fmt(r1, 1)} %)</b>${sc[3]}</div>`;
+    S.pr = null; pan.querySelectorAll('#lpr button').forEach(b => b.setAttribute('aria-pressed', 'false')); en();
+    draw();
+  };
+  $('#lrs', pan).onclick = () => { Object.assign(S, base); $('#lfb', pan).innerHTML = `<div class="fb info">Las dificultades para medir el desempleo que pide el programa: trabajadores desalentados, subempleo, informalidad y diferencias de definición entre países.</div>`; draw(); };
+  draw();
+}
+
+/* ---- 3.3 y 3.5 Inflación con el IPC e interés real ---- */
+function labPrices(svg, pan, leg) {
+  const PY = { yrs: [2021, 2022, 2023, 2024, 2025], r: [6.8, 8.1, 3.7, 3.8, 3.1] };
+  const S = { m: 'ipc', src: 'py', r: PY.r.slice(), sel: 2, i: 6, pi: 4, q: null, qa: null };
+  pan.innerHTML = `<div class="ctl"><span class="lbl">Tema</span>${segBtns('pm', [['ipc', 'Inflación con el IPC'], ['real', 'Tasa de interés real']], S.m)}</div><div id="pb"></div>`;
+  bindSeg(pan, 'pm', v => { S.m = v; run(); });
+  const kind = (r, prev) => r < 0 ? ['def', 'Deflación', 'el nivel general de precios baja'] : prev !== null && r < prev ? ['des', 'Desinflación', 'los precios siguen subiendo, pero más despacio'] : ['inf', 'Inflación en aumento o estable', 'los precios suben al mismo ritmo o más rápido'];
+  function ipc() {
+    const yrs = S.src === 'py' ? PY.yrs : [1, 2, 3, 4, 5].map(n => 'Año ' + n);
+    $('#pb', pan).innerHTML = `<div class="ctl"><span class="lbl">Datos</span>${segBtns('ps', [['py', 'Paraguay 2021–2025'], ['hip', 'Crea tu propio caso']], S.src)}</div>
+      ${S.src === 'hip' ? `<div class="fgrid2">${S.r.map((v, k) => `<div class="ctl"><label for="pr${k}">Inflación año ${k + 1}: <b id="pv${k}">${pctStr(v)}</b></label><input type="range" id="pr${k}" min="-4" max="15" step="0.1" value="${v}"></div>`).join('')}</div>` : '<p class="small muted" style="margin:0">Inflación de diciembre a diciembre según el BCP. El índice del gráfico se construyó con esas tasas (2020 = 100); no es el IPC oficial.</p>'}
+      <div class="ctl"><label for="psel" id="psl"></label><input type="range" id="psel" min="1" max="5" step="1" value="${S.sel + 1}"></div>
+      <table class="readout" id="ro"></table>
+      <div class="ctl"><span class="lbl">Desafío</span><div class="scen"><div class="mk">Clasifica el año</div><p id="pq"></p></div>${segBtns('pqa', [['inf', 'Inflación en aumento'], ['des', 'Desinflación'], ['def', 'Deflación']], null)}<div id="pqf"></div></div>
+      ${calcBtns(['infl'])}`;
+    leg.innerHTML = `<span><span class="sw" style="background:var(--k-d)"></span>Índice de precios (año anterior al primero = 100)</span><span><span class="sw" style="background:var(--k-s)"></span>Inflación en aumento</span><span><span class="sw" style="background:var(--gold)"></span>Desinflación</span><span><span class="sw" style="background:var(--k-new)"></span>Deflación</span>`;
+    const draw = () => {
+      const idx = [100]; S.r.forEach(r => idx.push(idx[idx.length - 1] * (1 + r / 100)));
+      const lo = Math.floor(Math.min(...idx) / 5) * 5 - 5, hi = Math.ceil(Math.max(...idx) / 5) * 5 + 5, Yv = v => (v - lo) / (hi - lo) * 100;
+      const P = Plot(svg, { yl: 'Índice de precios', xl: S.src === 'py' ? 'Diciembre de cada año' : 'Año' }), X = t => 8 + t * 17;
+      for (let v = lo + 5; v < hi; v += 5) { P.text(-1.5, Yv(v) - 1.2, String(v), 'tk', 'end'); el('line', { x1: P.X(0), y1: P.Y(Yv(v)), x2: P.X(100), y2: P.Y(Yv(v)), class: 'gd', opacity: .3 }, P.gG); }
+      idx.forEach((_, t) => { const tx = el('text', { x: P.X(X(t)), y: P.T + P.H + 16, class: 'tk', 'text-anchor': 'middle' }, P.gT); tx.textContent = t === 0 ? (S.src === 'py' ? '2020' : 'Base') : String(yrs[t - 1]).replace('Año ', 'A'); });
+      for (let t = 1; t < idx.length; t++) { const k = kind(S.r[t - 1], t > 1 ? S.r[t - 2] : null)[0], c = k === 'def' ? 'c-new' : k === 'des' ? 'c-gold' : 'c-s';
+        el('line', { x1: P.X(X(t - 1)), y1: P.Y(Yv(idx[t - 1])), x2: P.X(X(t)), y2: P.Y(Yv(idx[t])), class: 'cv ' + c, 'stroke-width': t - 1 === S.sel ? 5 : 3 }, P.gC);
+        P.text((X(t - 1) + X(t)) / 2, Math.max(Yv(idx[t - 1]), Yv(idx[t])) + 5, pctStr(S.r[t - 1]), 'pl', 'middle'); }
+      idx.forEach((v, t) => P.dot(X(t), Yv(v), '', 0, 0));
+      const t = S.sel + 1, [, kn, kd] = kind(S.r[S.sel], S.sel ? S.r[S.sel - 1] : null);
+      $('#psl', pan).textContent = `Año que analizas: ${yrs[S.sel]}`;
+      $('#ro', pan).innerHTML = roRows([['Índice al inicio y al final', `${fmt(idx[t - 1], 1)} → ${fmt(idx[t], 1)}`], ['Inflación = (final − inicial) ÷ inicial × 100', `(${fmt(idx[t], 1)} − ${fmt(idx[t - 1], 1)}) ÷ ${fmt(idx[t - 1], 1)} × 100 = ${pctStr((idx[t] - idx[t - 1]) / idx[t - 1] * 100)}`], ['Clasificación', S.sel === 0 && S.r[0] >= 0 ? 'Inflación (no hay año previo para comparar)' : kn], ['Qué significa', kd], ['Variación acumulada desde el inicio', pctStr((idx[idx.length - 1] / 100 - 1) * 100)]]);
+      S.r.forEach((v, k) => { const e = $('#pv' + k, pan); if (e) e.textContent = pctStr(v); });
+    };
+    const newQ = () => { const ks = [1, 2, 3, 4]; S.q = pick(ks); $('#pq', pan).textContent = `${yrs[S.q]}: inflación de ${pctStr(S.r[S.q])}, después de ${pctStr(S.r[S.q - 1])} el año anterior.`; $('#pqf', pan).innerHTML = ''; pan.querySelectorAll('#pqa button').forEach(b => { b.setAttribute('aria-pressed', 'false'); b.disabled = false; }); };
+    bindSeg(pan, 'ps', v => { S.src = v; S.r = v === 'py' ? PY.r.slice() : [2, 5, 3, -1, 1.5]; ipc(); });
+    S.r.forEach((_, k) => { const e = $('#pr' + k, pan); if (e) e.oninput = ev => { S.r[k] = +ev.target.value; draw(); newQ(); }; });
+    $('#psel', pan).oninput = e => { S.sel = +e.target.value - 1; draw(); };
+    bindSeg(pan, 'pqa', v => { const k = kind(S.r[S.q], S.r[S.q - 1]), ok = v === k[0]; labRec('prices', ok); pan.querySelectorAll('#pqa button').forEach(b => b.disabled = true);
+      $('#pqf', pan).innerHTML = `<div class="fb ${ok ? 'ok' : 'no'}"><b class="h">${ok ? 'Correcto' : 'No es así'}: ${k[1].toLowerCase()}</b>${k[2][0].toUpperCase() + k[2].slice(1)}. ${k[0] === 'des' ? 'Desinflación no es deflación: los precios <b>no bajan</b>.' : ''}<div class="row" style="margin-top:8px"><button class="btn sm" type="button" id="pqn">Otro año</button></div></div>`; $('#pqn', pan).onclick = newQ; });
+    draw(); newQ();
+  }
+  function real() {
+    $('#pb', pan).innerHTML = `<p class="small" style="margin:0">Depositas Gs. 10.000.000 a plazo fijo durante un año. ¿Ganas o pierdes poder de compra?</p>
+      <div class="ctl"><label for="pi" id="pil"></label><input type="range" id="pi" min="0" max="20" step="0.25" value="${S.i}"></div>
+      <div class="ctl"><label for="pp" id="ppl"></label><input type="range" id="pp" min="-3" max="15" step="0.25" value="${S.pi}"></div>
+      <div class="row"><button class="btn sm" type="button" id="pa">Inflación alta y tasa baja</button><button class="btn sm" type="button" id="pb2">Tasa alta e inflación baja</button></div>
+      <table class="readout" id="ro"></table><div id="note"></div>${calcBtns(['rreal'])}`;
+    leg.innerHTML = `<span><span class="sw" style="background:var(--k-d)"></span>Tasa nominal</span><span><span class="sw" style="background:var(--gold)"></span>Inflación</span><span><span class="sw" style="background:var(--k-new)"></span>Tasa real positiva</span><span><span class="sw" style="background:var(--k-s)"></span>Tasa real negativa</span>`;
+    const draw = () => {
+      const r = S.i - S.pi, P = Plot(svg, { yl: '%', xl: ' ', ymax: 100 }), z = 45, Yv = v => z + v * 2.6;
+      el('line', { x1: P.X(0), y1: P.Y(z), x2: P.X(100), y2: P.Y(z), class: 'ax', 'stroke-width': 1.2 }, P.gG);
+      const bar = (x0, v, c) => el('rect', { x: P.X(x0), y: P.Y(Math.max(z, Yv(v))), width: P.X(x0 + 20) - P.X(x0), height: Math.max(1, Math.abs(P.Y(Yv(v)) - P.Y(z))), rx: 3, fill: c, opacity: .85 }, P.gF);
+      bar(8, S.i, 'var(--k-d)'); bar(40, S.pi, 'var(--gold)'); bar(72, r, r >= 0 ? 'var(--k-new)' : 'var(--k-s)');
+      [[18, S.i, 'Nominal'], [50, S.pi, 'Inflación'], [82, r, 'Real']].forEach(([x, v, l]) => { P.text(x, v >= 0 ? Yv(v) + 2 : Yv(v) - 5, pctStr(v), 'pl', 'middle'); sTxt(svg, P.X(x), P.Y(0) + 18, l); });
+      const intr = 10e6 * S.i / 100, need = 10e6 * S.pi / 100;
+      $('#pil', pan).textContent = `Tasa de interés nominal del depósito: ${fmt(S.i, 2)} %`;
+      $('#ppl', pan).textContent = `Inflación del año: ${pctStr(S.pi)}`;
+      $('#ro', pan).innerHTML = roRows([['Tasa real = nominal − inflación', `${fmt(S.i, 2)} − ${fmt(S.pi, 2)} = ${pctStr(r)}`], ['Intereses que cobras', gs(intr)], ['Lo que necesitas para comprar lo mismo que hoy', gs(10e6 + need)], ['Resultado en poder de compra', r > 0 ? 'ganas' : r < 0 ? 'pierdes' : 'quedas igual']]);
+      $('#note', pan).innerHTML = `<div class="fb info">${r > 0 ? 'Con tasa real positiva <b>ganan los ahorristas</b> y a los deudores les cuesta más devolver: es lo que busca una política monetaria contractiva.' : r < 0 ? 'Con tasa real negativa <b>pierden los ahorristas</b> y ganan los deudores, que devuelven dinero que vale menos: la inflación redistribuye ingreso.' : 'La tasa nominal compensa justo la inflación.'} En el examen se usa la resta: tasa real ≈ tasa nominal − inflación.</div>`;
+    };
+    $('#pi', pan).oninput = e => { S.i = +e.target.value; draw(); };
+    $('#pp', pan).oninput = e => { S.pi = +e.target.value; draw(); };
+    $('#pa', pan).onclick = () => { S.i = 4; S.pi = 9; $('#pi', pan).value = 4; $('#pp', pan).value = 9; draw(); };
+    $('#pb2', pan).onclick = () => { S.i = 9; S.pi = 3; $('#pi', pan).value = 9; $('#pp', pan).value = 3; draw(); };
+    draw();
+  }
+  function run() { ({ ipc, real })[S.m](); }
+  run();
+}
+
+/* ---- 4.4 Integración económica ---- */
+const INTEG_L = [['acp', 'Acuerdo comercial preferencial'], ['zlc', 'Zona o acuerdo de libre comercio'], ['ua', 'Unión aduanera'], ['mc', 'Mercado común'], ['um', 'Unión monetaria']];
+const INTEG_F = ['Aranceles reducidos para algunos bienes', 'Sin aranceles entre los miembros', 'Arancel externo común', 'Libre circulación de trabajo y capital', 'Moneda y política monetaria comunes'];
+const INTEG_X = [
+  ['Acuerdo MERCOSUR–India (vigente desde 2009): cada parte rebaja aranceles para una lista de productos.', 'acp', 'Solo hay preferencias para algunos productos: es un acuerdo comercial preferencial.'],
+  ['T-MEC (Estados Unidos, México y Canadá, 2020): sin aranceles entre ellos, pero cada país fija sus propios aranceles al resto del mundo.', 'zlc', 'Libre comercio entre miembros sin arancel externo común: zona de libre comercio.'],
+  ['Tratado de libre comercio Chile–Estados Unidos (vigente desde 2004).', 'zlc', 'Acuerdo bilateral de libre comercio: cada país mantiene su política comercial con terceros.'],
+  ['Acuerdo MERCOSUR–Unión Europea (firmado en Asunción en 2026): eliminará aranceles a más del 90 % del comercio entre los bloques.', 'zlc', 'Es un acuerdo de libre comercio entre dos bloques: no crea un arancel externo común entre ellos.'],
+  ['MERCOSUR: libre comercio entre sus miembros y un arancel externo común desde 1995, aunque con excepciones.', 'ua', 'El arancel externo común lo convierte en una unión aduanera (imperfecta, por las excepciones).'],
+  ['Unión Europea: libre circulación de bienes, servicios, capitales y personas.', 'mc', 'Además del arancel externo común, los factores de producción circulan libremente: mercado común (mercado único).'],
+  ['Zona del euro: países de la UE que usan el euro y cuya política monetaria decide el Banco Central Europeo.', 'um', 'Moneda común y un solo banco central: unión monetaria.']
+];
+function labInteg(svg, pan, leg) {
+  const S = { m: 'exp', lv: 2, order: shuffle(INTEG_X.map((_, i) => i)), pos: 0, ok: 0, a: null };
+  pan.innerHTML = `<div class="ctl"><span class="lbl">Actividad</span>${segBtns('im', [['exp', 'Explorar los niveles'], ['cls', 'Clasificar acuerdos reales']], S.m)}</div><div id="ib"></div>`;
+  bindSeg(pan, 'im', v => { S.m = v; run(); });
+  leg.innerHTML = `<span><span class="sw" style="background:var(--k-new)"></span>Tiene esta característica</span><span><span class="sw" style="background:var(--rule)"></span>No la tiene</span>`;
+  function grid(hl, wrong) {
+    labHead(svg, '');
+    const x0 = 150, cw = 50, y0 = 30, rh = 40;
+    INTEG_F.forEach((f, j) => { sTxt(svg, x0 + j * cw + cw / 2, y0 - 8, String(j + 1), 'fbt sm'); sTxt(svg, 10, 252 + j * 15, `${j + 1}. ${f}`, 'fbl', 'start'); });
+    INTEG_L.forEach(([k, n], i) => {
+      const y = y0 + i * rh, on = hl === i, bad = wrong === i;
+      el('rect', { x: 6, y: y + 3, width: x0 - 12, height: rh - 6, rx: 7, class: 'fbx', style: on ? 'stroke:var(--k-new);stroke-width:3.5' : bad ? 'stroke:var(--k-s);stroke-width:3.5;stroke-dasharray:6 4' : '', 'data-l': i }, svg).style.cursor = 'pointer';
+      const w = n.split(' '), l1 = w.slice(0, Math.ceil(w.length / 2)).join(' '), l2 = w.slice(Math.ceil(w.length / 2)).join(' ');
+      const t1 = sTxt(svg, x0 / 2, y + rh / 2 - 1, l1, 'fbt sm'), t2 = sTxt(svg, x0 / 2, y + rh / 2 + 13, l2, 'fbt sm'); [t1, t2].forEach(t => { t.style.pointerEvents = 'none'; });
+      INTEG_F.forEach((_, j) => { const has = i === 0 ? j === 0 : j >= 1 && j <= i; el('rect', { x: x0 + j * cw + 6, y: y + 8, width: cw - 12, height: rh - 16, rx: 5, fill: has ? 'var(--k-new)' : 'var(--rule)', opacity: has ? (hl === null || on ? .9 : .35) : .6 }, svg); if (has) sTxt(svg, x0 + j * cw + cw / 2, y + rh / 2 + 5, '✓', 'fbt sm').style.fill = '#fff'; });
+    });
+    svg.querySelectorAll('[data-l]').forEach(r => r.addEventListener('click', () => { if (S.m === 'exp') { S.lv = +r.dataset.l; exp(); } }));
+  }
+  const INFO = [
+    'Los países se dan preferencias (aranceles más bajos) para algunos productos. Pueden ser <b>bilaterales</b> (dos países), <b>regionales</b> o <b>multilaterales</b>: en la OMC, sus 166 miembros negocian reglas y rebajas de aranceles para todos.',
+    'Eliminan los aranceles entre los miembros, pero cada país mantiene su propio arancel frente al resto del mundo.',
+    'Libre comercio entre miembros más un <b>arancel externo común</b>: todos cobran lo mismo a los productos de afuera.',
+    'Unión aduanera más <b>libre circulación de los factores de producción</b> (trabajo y capital): más oportunidades de empleo y de inversión.',
+    'Los países comparten una <b>moneda</b> y un banco central común: renuncian a su propia política monetaria y a su tipo de cambio.'
+  ];
+  function exp() {
+    grid(S.lv, null);
+    $('#ib', pan).innerHTML = `<p class="small" style="margin:0"><b>Toca un nivel</b> en el diagrama: cada uno incluye todo lo del nivel anterior y agrega algo.</p>
+      <div class="fb info"><b class="h">${INTEG_L[S.lv][1]}</b>${INFO[S.lv]}</div>
+      <p class="small"><b>Ventajas de los bloques comerciales:</b> mercado más grande y economías de escala, más empleo con libre movilidad del trabajo, más poder en las negociaciones multilaterales, estabilidad política y cooperación. <b>Desventajas:</b> pérdida de soberanía y un posible obstáculo para las negociaciones multilaterales en la OMC.</p>`;
+  }
+  function cls() {
+    const B = $('#ib', pan);
+    if (S.pos >= S.order.length) { labRec('integ', S.ok >= 6); grid(null, null); B.innerHTML = `<div class="fb ${S.ok >= 6 ? 'ok' : 'info'}"><b class="h">Terminaste: ${S.ok}/${S.order.length}</b>Pista para el examen: el <b>arancel externo común</b> separa una zona de libre comercio de una unión aduanera, y la <b>libre circulación de factores</b> separa una unión aduanera de un mercado común.</div><button class="btn primary sm" type="button" id="ir">Empezar de nuevo</button>`; $('#ir', pan).onclick = () => { S.order = shuffle(S.order); S.pos = 0; S.ok = 0; cls(); }; return; }
+    const x = INTEG_X[S.order[S.pos]]; S.a = null; grid(null, null);
+    B.innerHTML = `<div class="scen"><div class="mk">Acuerdo ${S.pos + 1} de ${S.order.length}</div><p>${x[0]}</p></div>
+      <div class="opts" id="io">${INTEG_L.map(([k, n], i) => `<button class="opt" type="button" data-k="${k}" data-i="${i}"><span class="l">${i + 1}</span><span>${n}</span></button>`).join('')}</div>
+      <div class="row" style="margin-top:8px"><span class="score">Aciertos: ${S.ok}/${S.pos}</span></div><div id="if"></div>`;
+    B.querySelectorAll('#io .opt').forEach(b => b.onclick = () => {
+      const ok = b.dataset.k === x[1], ci = INTEG_L.findIndex(l => l[0] === x[1]); if (ok) S.ok++;
+      B.querySelectorAll('#io .opt').forEach(o => { o.disabled = true; if (o.dataset.k === x[1]) o.classList.add('right'); });
+      if (!ok) b.classList.add('wrong');
+      grid(ci, ok ? null : +b.dataset.i);
+      $('#if', pan).innerHTML = `<div class="fb ${ok ? 'ok' : 'no'}"><b class="h">${ok ? 'Correcto' : 'No es así'}: ${INTEG_L[ci][1].toLowerCase()}</b>${x[2]}</div><div class="row"><button class="btn primary sm" type="button" id="in">Siguiente</button></div>`;
+      $('#in', pan).onclick = () => { S.pos++; cls(); };
+    });
+  }
+  function run() { ({ exp, cls })[S.m](); }
+  run();
+}
+
+/* ---- 4.8 Medición del desarrollo (datos del Informe sobre Desarrollo Humano 2025, PNUD; valores de 2023) ---- */
+const DEV = [
+  ['Noruega', .970, 83.3, 18.8, 13.1, 112710, .909, 0], ['Estados Unidos', .938, 79.3, 15.9, 13.9, 73650, .832, -7], ['Qatar', .886, 82.4, 13.1, 10.8, 105353, null, -39],
+  ['Chile', .878, 81.2, 16.9, 11.3, 28047, .723, 16], ['Argentina', .865, 77.4, 18.8, 11.2, 25876, .761, 20], ['Uruguay', .862, 78.1, 17.5, 10.5, 28650, .747, 12],
+  ['Kuwait', .852, 80.4, 15.9, 7.6, 56612, null, -29], ['Georgia', .844, 74.5, 16.8, 12.7, 20753, .754, 18], ['Costa Rica', .833, 80.8, 16.3, 8.8, 23417, .678, 6],
+  ['Brasil', .786, 75.8, 15.8, 8.4, 18011, .594, 1], ['Sri Lanka', .776, 77.5, 13.1, 10.8, 12616, .630, 22], ['Paraguay', .756, 73.8, 14.0, 8.9, 15252, .599, -1],
+  ['Bolivia', .733, 68.6, 15.6, 10.0, 9445, .578, 13], ['India', .685, 72.0, 13.0, 6.9, 9047, .475, -7], ['Guinea Ecuatorial', .674, 63.7, 12.5, 8.3, 12762, null, -24], ['Níger', .419, 61.2, 8.3, 1.4, 1590, null, -3]
+];
+const devIdx = d => [(d[2] - 20) / 65, (Math.min(d[3], 18) / 18 + Math.min(d[4], 15) / 15) / 2, (Math.log(Math.min(d[5], 75000)) - Math.log(100)) / (Math.log(75000) - Math.log(100))];
+function labDev(svg, pan, leg) {
+  const S = { m: 'sc', sel: 11, w: [1, 1, 1], q: null };
+  pan.innerHTML = `<div class="ctl"><span class="lbl">Vista</span>${segBtns('dm', [['sc', 'Ingreso frente a IDH'], ['ih', 'IDH y desigualdad'], ['w', 'Cambiar las ponderaciones']], S.m)}</div><div id="db"></div>
+    <p class="small muted" style="margin-top:10px">Datos: PNUD, Informe sobre Desarrollo Humano 2025 (valores de 2023). INB per cápita en dólares PPA de 2021.</p>`;
+  bindSeg(pan, 'dm', v => { S.m = v; run(); });
+  const sel = () => DEV[S.sel];
+  function scatter() {
+    const P = Plot(svg, { yl: 'IDH', xl: 'INB per cápita, PPA (escala logarítmica)' });
+    const X = g => (Math.log10(g) - 3) / (Math.log10(150000) - 3) * 100, Y = h => (h - .35) / .65 * 100;
+    [[1000, ''], [3000, '3.000'], [10000, '10.000'], [30000, '30.000'], [100000, '100.000']].forEach(([g, l]) => { const t = el('text', { x: P.X(X(g)), y: P.T + P.H + 16, class: 'tk', 'text-anchor': 'middle' }, P.gT); t.textContent = l; el('line', { x1: P.X(X(g)), y1: P.Y(0), x2: P.X(X(g)), y2: P.Y(100), class: 'gd', opacity: .3 }, P.gG); });
+    [.4, .6, .8, 1].forEach(h => { P.text(-1.5, Y(h) - 1.2, fmt(h, 1), 'tk', 'end'); el('line', { x1: P.X(0), y1: P.Y(Y(h)), x2: P.X(100), y2: P.Y(Y(h)), class: 'gd', opacity: .3 }, P.gG); });
+    DEV.forEach((d, i) => { const c = el('circle', { cx: P.X(X(d[5])), cy: P.Y(Y(d[1])), r: i === S.sel ? 7 : 5, fill: i === S.sel ? 'var(--gold)' : d[7] >= 10 ? 'var(--k-new)' : d[7] <= -10 ? 'var(--k-s)' : 'var(--k-d)', stroke: 'var(--sheet)', 'stroke-width': 1.5 }, P.gT); c.style.cursor = 'pointer'; c.addEventListener('click', () => pickC(i));
+      if (i === S.sel || d[0] === 'Paraguay') { const t = el('text', { x: P.X(X(d[5])) + (d[5] > 60000 ? -9 : 9), y: P.Y(Y(d[1])) + 4, class: 'pl', 'text-anchor': d[5] > 60000 ? 'end' : 'start' }, P.gT); t.textContent = d[0]; } });
+  }
+  function pickC(i) { if (S.m === 'sc' && S.qOn) { answer(i); return; } S.sel = i; if (S.m === 'sc') sc(); else if (S.m === 'ih') ih(); }
+  const TQ = [['alto', 'un país cuyo IDH es mucho <b>más alto</b> de lo que su ingreso sugeriría', d => d[7] >= 10], ['bajo', 'un país cuyo IDH es mucho <b>más bajo</b> de lo que su ingreso sugeriría', d => d[7] <= -10]];
+  function sc(fb) {
+    scatter(); const d = sel();
+    if (!S.q) S.q = pick(TQ);
+    leg.innerHTML = `<span><span class="sw" style="background:var(--k-new)"></span>IDH más alto que su ingreso</span><span><span class="sw" style="background:var(--k-s)"></span>IDH más bajo que su ingreso</span><span><span class="sw" style="background:var(--gold)"></span>País elegido</span>`;
+    $('#db', pan).innerHTML = `<p class="small" style="margin:0"><b>Toca un punto</b> para ver los datos de ese país.</p>
+      <table class="readout" id="ro"></table><div class="fb info">${d[7] >= 10 ? `${d[0]} logra más desarrollo humano del que su ingreso haría esperar: su posición en el IDH es ${d[7]} lugares mejor que en ingreso per cápita, gracias a la salud y la educación.` : d[7] <= -10 ? `${d[0]} tiene un ingreso alto, pero su IDH está ${-d[7]} lugares por debajo de su posición en ingreso: el ingreso no se convierte del todo en salud y educación.` : `${d[0]} tiene un IDH parecido al que su ingreso haría esperar.`} El IDH muestra que el desarrollo es <b>multidimensional</b>: el ingreso por sí solo no alcanza para medirlo.</div>
+      <div class="ctl"><span class="lbl">Desafío</span><div class="scen"><div class="mk">Encuentra en el gráfico</div><p>Toca ${S.q[1]}.</p></div>
+      <div class="row" style="margin-top:8px">${S.qOn ? '<span class="score">Ahora toca un punto del gráfico</span>' : '<button class="btn primary sm" type="button" id="dqa">Responder</button>'}<button class="btn sm" type="button" id="dqn">Otro desafío</button></div><div id="dqf">${fb || ''}</div></div>`;
+    $('#ro', pan).innerHTML = roRows([['País', d[0]], ['IDH', fmt(d[1], 3)], ['Esperanza de vida', fmt(d[2], 1) + ' años'], ['Años esperados / promedio de escolaridad', `${fmt(d[3], 1)} / ${fmt(d[4], 1)}`], ['INB per cápita (PPA)', 'US$ ' + fmt(d[5])], ['Posición por INB menos posición por IDH', (d[7] > 0 ? '+' : '') + d[7]]]);
+    const a = $('#dqa', pan); if (a) a.onclick = () => { S.qOn = true; sc(); };
+    $('#dqn', pan).onclick = () => { S.q = pick(TQ.filter(t => t[0] !== S.q[0])); S.qOn = false; sc(); };
+  }
+  function answer(i) { const d = DEV[i], ok = S.q[2](d); labRec('dev', ok); S.sel = i; S.qOn = false;
+    sc(`<div class="fb ${ok ? 'ok' : 'no'}"><b class="h">${ok ? 'Correcto' : 'No es el mejor ejemplo'}</b>${d[0]}: diferencia de posiciones ${(d[7] > 0 ? '+' : '') + d[7]}. ${S.q[0] === 'alto' ? 'Los puntos verdes son los mejores ejemplos: Argentina, Sri Lanka o Georgia.' : 'Los puntos rojos son los mejores ejemplos: Qatar, Kuwait o Guinea Ecuatorial.'}</div>`); }
+  function ih() {
+    const L = DEV.filter(d => d[6] !== null);
+    labHead(svg, 'IDH y IDH ajustado por la desigualdad (IDHD)');
+    const x0 = 112, W = 240, y0 = 40, rh = 23, X = v => x0 + v * W;
+    L.forEach((d, i) => { const y = y0 + i * rh, on = DEV.indexOf(d) === S.sel;
+      el('rect', { x: x0, y: y + 3, width: d[1] * W, height: rh - 7, rx: 3, fill: 'var(--k-d)', opacity: .3 }, svg);
+      el('rect', { x: x0, y: y + 3, width: d[6] * W, height: rh - 7, rx: 3, fill: on ? 'var(--gold)' : 'var(--k-d)', opacity: .9 }, svg);
+      const t = sTxt(svg, x0 - 6, y + rh / 2 + 3, d[0], on ? 'fbt sm' : 'fbl', 'end'); t.style.cursor = 'pointer'; t.addEventListener('click', () => pickC(DEV.indexOf(d)));
+      sTxt(svg, X(d[1]) + 4, y + rh / 2 + 3, '−' + fmt((1 - d[6] / d[1]) * 100, 1) + ' %', 'fbl', 'start'); });
+    leg.innerHTML = `<span><span class="sw" style="background:var(--k-d);opacity:.3"></span>IDH</span><span><span class="sw" style="background:var(--k-d)"></span>IDHD</span><span>El porcentaje es la pérdida por desigualdad</span>`;
+    const d = sel(), has = d[6] !== null;
+    $('#db', pan).innerHTML = `<p class="small" style="margin:0"><b>Toca el nombre</b> de un país. El IDHD descuenta la desigualdad en salud, educación e ingreso: si todos tuvieran lo mismo, sería igual al IDH.</p>
+      <table class="readout" id="ro"></table><div class="fb info">${has ? `${d[0]} pierde el ${fmt((1 - d[6] / d[1]) * 100, 1)} % de su IDH por la desigualdad.` : `El informe no publica el IDHD de ${d[0]}.`} Dos países con un IDH parecido pueden tener un IDHD muy distinto: por ejemplo, Paraguay (0,756) y Sri Lanka (0,776) tienen IDH cercanos, pero Paraguay pierde más por desigualdad. El programa también pide conocer el <b>índice de desigualdad de género</b> (IDG) y el <b>índice del planeta feliz</b>.</div>`;
+    $('#ro', pan).innerHTML = roRows([['IDH', fmt(d[1], 3)], ['IDHD', has ? fmt(d[6], 3) : 'sin dato'], ['Pérdida = (IDH − IDHD) ÷ IDH × 100', has ? `(${fmt(d[1], 3)} − ${fmt(d[6], 3)}) ÷ ${fmt(d[1], 3)} × 100 = ${fmt((1 - d[6] / d[1]) * 100, 1)} %` : '—']]);
+  }
+  function wts() {
+    const tot = S.w[0] + S.w[1] + S.w[2], val = d => { const ix = devIdx(d); return Math.exp((S.w[0] * Math.log(ix[0]) + S.w[1] * Math.log(ix[1]) + S.w[2] * Math.log(ix[2])) / tot); };
+    const eq = S.w[0] === S.w[1] && S.w[1] === S.w[2], rows = DEV.map((d, i) => [i, eq ? d[1] : val(d)]).sort((a, b) => b[1] - a[1]), off = DEV.map((d, i) => i);
+    labHead(svg, eq ? 'IDH oficial (pesos iguales)' : 'IDH con tus ponderaciones');
+    rows.forEach(([i, v], r) => { const y = 36 + r * 18, d = DEV[i], ch = i - r;
+      sTxt(svg, 18, y + 12, String(r + 1), 'fbl', 'end'); sTxt(svg, 24, y + 12, d[0], d[0] === 'Paraguay' ? 'fbt sm' : 'fbl', 'start');
+      el('rect', { x: 150, y: y + 2, width: v * 180, height: 12, rx: 3, fill: d[0] === 'Paraguay' ? 'var(--gold)' : 'var(--k-d)', opacity: .85 }, svg);
+      sTxt(svg, 334, y + 12, fmt(v, 3), 'fbl', 'start'); if (!eq && ch) sTxt(svg, 404, y + 12, (ch > 0 ? '▲' : '▼') + Math.abs(ch), 'fbl', 'end').style.fill = ch > 0 ? 'var(--k-new)' : 'var(--k-s)'; });
+    leg.innerHTML = `<span>▲▼ cambio de posición frente al IDH oficial</span>`;
+    if (!$('#dw0', pan)) {
+      $('#db', pan).innerHTML = `<p class="small" style="margin:0">El IDH da el <b>mismo peso</b> a salud, educación e ingreso (media geométrica). ¿Qué pasa con el ranking si alguien decide otra cosa?</p>
+        ${['Salud (esperanza de vida)', 'Educación (escolaridad)', 'Nivel de vida (INB per cápita)'].map((n, k) => `<div class="ctl"><label for="dw${k}">${n}: peso <b id="dv${k}">${fmt(S.w[k], 1)}</b></label><input type="range" id="dw${k}" min="0.5" max="3" step="0.5" value="${S.w[k]}"></div>`).join('')}
+        <div class="row"><button class="btn sm" type="button" id="dwr">Pesos iguales (IDH oficial)</button><button class="btn sm" type="button" id="dwi">Solo importa el ingreso (casi)</button></div>
+        <div class="fb info" id="dwn"></div>`;
+      [0, 1, 2].forEach(k => { $('#dw' + k, pan).oninput = e => { S.w[k] = +e.target.value; wts(); }; });
+      $('#dwr', pan).onclick = () => { S.w = [1, 1, 1]; [0, 1, 2].forEach(k => { $('#dw' + k, pan).value = 1; }); wts(); };
+      $('#dwi', pan).onclick = () => { S.w = [0.5, 0.5, 3]; [0, 1, 2].forEach(k => { $('#dw' + k, pan).value = S.w[k]; }); wts(); };
+    }
+    [0, 1, 2].forEach(k => { $('#dv' + k, pan).textContent = fmt(S.w[k], 1); });
+    const pyR = rows.findIndex(r => DEV[r[0]][0] === 'Paraguay') + 1;
+    $('#dwn', pan).innerHTML = `${eq ? 'Con pesos iguales se obtiene el IDH oficial.' : `Con estos pesos, Paraguay queda en el puesto ${pyR} de 16 (en el IDH oficial, 12 de 16 en esta lista).`} Las ponderaciones son un <b>juicio de valor</b>: es una de las limitaciones de los indicadores compuestos que el programa pide evaluar.`;
+  }
+  function run() { S.qOn = false; ({ sc: () => sc(), ih, w: wts })[S.m](); }
+  run();
+}
+
+/* ---- 4.7 y 4.10 Estrategias de desarrollo y ODS ---- */
+const STRAT_B = [['com', 'Comercio y diversificación'], ['mer', 'Políticas de mercado'], ['int', 'Políticas intervencionistas'], ['ext', 'IED y ayuda externa'], ['ins', 'Cambio institucional e iniciativa social']];
+const STRAT_X = [
+  ['Régimen de maquila de Paraguay (Ley 1064/97): empresas que producen para exportar pagan un impuesto reducido.', 'com', 'Es una estrategia de <b>fomento de las exportaciones</b>; además atrae inversión extranjera.'],
+  ['Corea del Sur, años 60 y 70: el gobierno apoya a las industrias que exportan.', 'com', 'Fomento de las exportaciones: crecer vendiendo al mercado mundial.'],
+  ['América Latina, 1950–1970: aranceles altos para producir en el país lo que antes se importaba.', 'com', '<b>Sustitución de importaciones</b>: proteger a la industria nacional para que crezca.'],
+  ['Malasia pasa de exportar caucho y estaño a exportar productos electrónicos.', 'com', '<b>Diversificación</b>: depender menos de pocos productos primarios.'],
+  ['Chile, fines de los años 70: rebaja todos sus aranceles a una tasa única y baja.', 'mer', '<b>Liberalización del comercio</b>: una política basada en el mercado.'],
+  ['India, 1991: elimina gran parte de las licencias que el Estado exigía para producir e invertir.', 'mer', '<b>Desregulación</b>: menos trabas para que las empresas compitan.'],
+  ['Chile, años 80: vende empresas estatales de electricidad y telecomunicaciones a inversores privados.', 'mer', '<b>Privatización</b>: el mercado reemplaza al Estado como productor.'],
+  ['Tekoporã: transferencias a familias en pobreza con la condición de enviar a los hijos a la escuela y a controles de salud.', 'int', 'Política de <b>redistribución</b> con transferencias monetarias.'],
+  ['Hambre Cero en las escuelas (Paraguay, ley de 2024): almuerzo para los alumnos de las escuelas públicas.', 'int', '<b>Provisión de bienes deseables</b>: mejora la nutrición y la asistencia escolar.'],
+  ['Corredor Bioceánico: nueva ruta que cruza el Chaco para unir Brasil con los puertos de Chile.', 'int', 'Inversión pública en <b>infraestructura</b> de transporte.'],
+  ['BECAL: becas del Estado para que paraguayos hagan posgrados en universidades del exterior.', 'int', '<b>Programa educativo</b>: inversión en capital humano.'],
+  ['Ley 60/90: beneficios fiscales para empresas que invierten en Paraguay, incluidas las extranjeras.', 'ext', 'Busca atraer <b>inversión extranjera directa</b> (también beneficia a inversores nacionales).'],
+  ['Iniciativa para los países pobres muy endeudados: Bolivia recibe alivio de su deuda externa.', 'ext', '<b>Alivio de la carga de la deuda</b>, una forma de ayuda externa.'],
+  ['Préstamo del Banco Mundial para mejorar escuelas y caminos rurales.', 'ext', '<b>Asistencia multilateral</b> para el desarrollo.'],
+  ['Grameen Bank (Bangladesh): microcréditos, sobre todo para mujeres sin acceso a los bancos.', 'ins', '<b>Microfinanciación</b> y fortalecimiento del poder de la mujer.'],
+  ['M-Pesa (Kenia, 2007): pagos y transferencias desde el teléfono celular.', 'ins', '<b>Banca móvil</b>: más acceso a servicios financieros.'],
+  ['Cooperativa Manduvirá (Arroyos y Esteros): pequeños productores con ingenio propio que exportan azúcar orgánica de comercio justo.', 'ins', '<b>Iniciativa social</b>: una cooperativa que mejora el ingreso de sus socios.'],
+  ['Perú, años 90: entrega títulos de propiedad a familias de asentamientos urbanos.', 'ins', '<b>Derechos de propiedad</b>: con un título, la vivienda puede servir de garantía para un crédito.']
+];
+const ODS_N = ['Fin de la pobreza', 'Hambre cero', 'Salud y bienestar', 'Educación de calidad', 'Igualdad de género', 'Agua limpia y saneamiento', 'Energía asequible y no contaminante', 'Trabajo decente y crecimiento económico', 'Industria, innovación e infraestructura', 'Reducción de las desigualdades', 'Ciudades y comunidades sostenibles', 'Producción y consumo responsables', 'Acción por el clima', 'Vida submarina', 'Vida de ecosistemas terrestres', 'Paz, justicia e instituciones sólidas', 'Alianzas para lograr los objetivos'];
+const ODS_X = [
+  ['Itaipú y Yacyretá producen casi toda la electricidad de Paraguay con energía hidroeléctrica.', 7], ['Familias en pobreza extrema reciben transferencias de Tekoporã.', 1],
+  ['Las escuelas públicas sirven un almuerzo diario a sus alumnos.', 2], ['Más vacunas y atención primaria de salud en el interior del país.', 3],
+  ['Más jóvenes terminan la secundaria gracias a becas.', 4], ['Programas para reducir la brecha salarial entre hombres y mujeres.', 5],
+  ['Nuevas redes de agua potable y alcantarillado en el área metropolitana de Asunción.', 6], ['Formalizar a trabajadores para que tengan seguro social y jubilación.', 8],
+  ['Construir el Corredor Bioceánico en el Chaco.', 9], ['Impuestos progresivos para reducir la diferencia de ingresos entre ricos y pobres.', 10],
+  ['Mejorar el transporte público y reducir el tránsito en Asunción.', 11], ['Reducir el desperdicio de alimentos y reciclar envases.', 12],
+  ['Un plan para reducir las emisiones de gases de efecto invernadero.', 13], ['Frenar la deforestación de los bosques del Chaco.', 15],
+  ['Combatir la corrupción en las compras públicas.', 16], ['Países y organismos internacionales cooperan para financiar proyectos de desarrollo.', 17]
+];
+function labStrat(svg, pan, leg) {
+  const S = { m: 'str', order: shuffle(STRAT_X.map((_, i) => i)).slice(0, 10), pos: 0, ok: 0, got: {}, oo: shuffle(ODS_X.map((_, i) => i)).slice(0, 8), op: 0, ook: 0, hl: null, bad: null };
+  pan.innerHTML = `<div class="ctl"><span class="lbl">Actividad</span>${segBtns('sm2', [['str', 'Estrategias de desarrollo (4.10)'], ['ods', 'Objetivos de Desarrollo Sostenible (4.7)']], S.m)}</div><div id="sb"></div>`;
+  bindSeg(pan, 'sm2', v => { S.m = v; run(); });
+  function bins(hl, bad) {
+    labHead(svg, 'Tipos de estrategia');
+    STRAT_B.forEach(([k, n], i) => { const y = 40 + i * 56, c = S.got[k] || 0;
+      el('rect', { x: 10, y, width: 390, height: 48, rx: 9, class: 'fbx', style: hl === k ? 'stroke:var(--k-new);stroke-width:4' : bad === k ? 'stroke:var(--k-s);stroke-width:4;stroke-dasharray:6 4' : '' }, svg);
+      sTxt(svg, 22, y + 29, n, 'fbt sm', 'start');
+      for (let j = 0; j < c; j++) el('circle', { cx: 388 - j * 16, cy: y + 24, r: 6, fill: 'var(--k-new)' }, svg); });
+    leg.innerHTML = `<span><span class="sw" style="background:var(--k-new)"></span>Ejemplos que ubicaste bien</span>`;
+  }
+  function str() {
+    const B = $('#sb', pan);
+    if (S.pos >= S.order.length) { labRec('strat', S.ok >= 8); bins(null, null); B.innerHTML = `<div class="fb ${S.ok >= 8 ? 'ok' : 'info'}"><b class="h">Terminaste: ${S.ok}/${S.order.length}</b>En la Prueba 1 (b) y la Prueba 2 (g) no alcanza con nombrar la estrategia: hay que explicar cómo funciona, usar un diagrama de otra unidad (por ejemplo, DA/OA para la inversión en infraestructura) y evaluar sus puntos fuertes y sus limitaciones en el contexto del país.</div><button class="btn primary sm" type="button" id="sr">Otra ronda</button>`; $('#sr', pan).onclick = () => { S.order = shuffle(STRAT_X.map((_, i) => i)).slice(0, 10); S.pos = 0; S.ok = 0; S.got = {}; str(); }; return; }
+    const x = STRAT_X[S.order[S.pos]]; bins(null, null);
+    B.innerHTML = `<div class="scen"><div class="mk">Ejemplo ${S.pos + 1} de ${S.order.length}</div><p>${x[0]}</p></div>
+      <div class="opts" id="so">${STRAT_B.map(([k, n], i) => `<button class="opt" type="button" data-k="${k}"><span class="l">${i + 1}</span><span>${n}</span></button>`).join('')}</div>
+      <div class="row" style="margin-top:8px"><span class="score">Aciertos: ${S.ok}/${S.pos}</span></div><div id="sf"></div>`;
+    B.querySelectorAll('#so .opt').forEach(b => b.onclick = () => {
+      const ok = b.dataset.k === x[1]; if (ok) { S.ok++; S.got[x[1]] = (S.got[x[1]] || 0) + 1; }
+      B.querySelectorAll('#so .opt').forEach(o => { o.disabled = true; if (o.dataset.k === x[1]) o.classList.add('right'); }); if (!ok) b.classList.add('wrong');
+      bins(x[1], ok ? null : b.dataset.k);
+      $('#sf', pan).innerHTML = `<div class="fb ${ok ? 'ok' : 'no'}"><b class="h">${ok ? 'Correcto' : 'No es así'}: ${STRAT_B.find(s => s[0] === x[1])[1].toLowerCase()}</b>${x[2]}</div><div class="row"><button class="btn primary sm" type="button" id="sn">Siguiente</button></div>`;
+      $('#sn', pan).onclick = () => { S.pos++; str(); };
+    });
+  }
+  function odsGrid(ok, bad) {
+    labHead(svg, 'Los 17 Objetivos de Desarrollo Sostenible');
+    ODS_N.forEach((n, i) => { const c = i % 6, r = Math.floor(i / 6), x = 12 + c * 66, y = 42 + r * 68;
+      el('rect', { x, y, width: 60, height: 60, rx: 8, class: 'fbx', style: ok === i + 1 ? 'fill:var(--ok-bg);stroke:var(--k-new);stroke-width:4' : bad === i + 1 ? 'stroke:var(--k-s);stroke-width:4;stroke-dasharray:6 4' : '' }, svg);
+      sTxt(svg, x + 30, y + 38, String(i + 1), 'fbt big2'); });
+    if (ok) { sTxt(svg, 205, 268, `ODS ${ok}`, 'fbt'); sTxt(svg, 205, 292, ODS_N[ok - 1], 'fbt sm'); }
+    if (bad) sTxt(svg, 205, 318, `Elegiste el ${bad}: ${ODS_N[bad - 1]}`, 'fbl');
+    leg.innerHTML = '';
+  }
+  function ods() {
+    const B = $('#sb', pan);
+    if (S.op >= S.oo.length) { labRec('strat', S.ook >= 6); odsGrid(null, null); B.innerHTML = `<div class="fb ${S.ook >= 6 ? 'ok' : 'info'}"><b class="h">Terminaste: ${S.ook}/${S.oo.length}</b>El <b>desarrollo sostenible</b> satisface las necesidades del presente sin comprometer la capacidad de las generaciones futuras de satisfacer las suyas. Los 17 ODS de las Naciones Unidas tienen como meta el año 2030. Muchas medidas ayudan a más de un objetivo a la vez.</div><button class="btn primary sm" type="button" id="or">Otra ronda</button>`; $('#or', pan).onclick = () => { S.oo = shuffle(ODS_X.map((_, i) => i)).slice(0, 8); S.op = 0; S.ook = 0; ods(); }; return; }
+    const x = ODS_X[S.oo[S.op]], opts = shuffle([x[1], ...shuffle(ODS_N.map((_, i) => i + 1).filter(n => n !== x[1])).slice(0, 3)]); odsGrid(null, null);
+    B.innerHTML = `<div class="scen"><div class="mk">Medida ${S.op + 1} de ${S.oo.length}</div><p>${x[0]}</p></div><p class="small" style="margin:6px 0 0">¿Con qué ODS se relaciona <b>más directamente</b>?</p>
+      <div class="opts" id="oo">${opts.map((n, i) => `<button class="opt" type="button" data-n="${n}"><span class="l">${n}</span><span>${ODS_N[n - 1]}</span></button>`).join('')}</div>
+      <div class="row" style="margin-top:8px"><span class="score">Aciertos: ${S.ook}/${S.op}</span></div><div id="of"></div>`;
+    B.querySelectorAll('#oo .opt').forEach(b => b.onclick = () => {
+      const ok = +b.dataset.n === x[1]; if (ok) S.ook++;
+      B.querySelectorAll('#oo .opt').forEach(o => { o.disabled = true; if (+o.dataset.n === x[1]) o.classList.add('right'); }); if (!ok) b.classList.add('wrong');
+      odsGrid(x[1], ok ? null : +b.dataset.n);
+      $('#of', pan).innerHTML = `<div class="fb ${ok ? 'ok' : 'no'}"><b class="h">${ok ? 'Correcto' : 'Mejor'}: ODS ${x[1]} · ${ODS_N[x[1] - 1]}</b></div><div class="row"><button class="btn primary sm" type="button" id="on">Siguiente</button></div>`;
+      $('#on', pan).onclick = () => { S.op++; ods(); };
+    });
+  }
+  function run() { ({ str, ods })[S.m](); }
+  run();
 }
 
 /* ---- CPP ---- */
