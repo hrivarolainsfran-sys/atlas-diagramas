@@ -1022,7 +1022,7 @@ const MICRO = [
   err: ['Desplazar la oferta en lugar de la demanda.', 'Afirmar que la educación tiene efecto inmediato.', 'No mencionar el costo de las campañas.', 'Olvidar que la información imperfecta es la causa que se corrige.'] }
 ];
 /* ================= MACROECONOMÍA (Unidad 3) ================= */
-const AXM = { y: 'Nivel general de precios', x: 'PIB real (Y)' };
+const AXM = { y: 'Nivel general de precios (NGP)', x: 'PIB real (Y)' };
 const EJM = [['Eje vertical (Y)', 'Nivel general de precios (NGP), medido con un índice (IPC o deflactor del PIB)'], ['Eje horizontal (X)', 'Producción real o PIB real (Y), en guaraníes constantes por año']];
 function clipL(m, b, x0 = 0.2, x1 = 9.7, y0 = 0.6, y1 = 9.4) {
   let xa = x0, xb = x1;
@@ -1090,7 +1090,7 @@ const MACRO = [
     guides: [{ p: [3, 7], yl: 'NGP_1', xl: 'Y_1' }, { p: [7, 3], yl: 'NGP_2', xl: 'Y_2' }], pts: [{ p: [3, 7], t: 'A' }, { p: [7, 3], t: 'B' }] }] },
   cap: 'Al bajar el nivel general de precios, aumenta la cantidad demandada de producción real: movimiento a lo largo de la DA.',
   ejes: EJM,
-  curvas: ['**DA = C + I + G + (X − M)**: gasto total planeado en bienes y servicios finales a cada nivel de precios.', 'Pendiente negativa por: efecto riqueza (el dinero compra más), efecto tasa de interés (menos demanda de dinero, tasas más bajas) y efecto comercio internacional (bienes nacionales más competitivos).', 'Un cambio del NGP provoca un **movimiento a lo largo** de la DA.'],
+  curvas: ['**DA = C + I + G + (X − M)**: gasto total planeado en bienes y servicios finales a cada nivel general de precios.', 'Pendiente negativa por: efecto riqueza (el dinero compra más), efecto tasa de interés (menos demanda de dinero, tasas más bajas) y efecto comercio internacional (bienes nacionales más competitivos).', 'Un cambio del NGP provoca un **movimiento a lo largo** de la DA.'],
   eq: ['A (Y₁, NGP₁) → B (Y₂, NGP₂).'],
   areas: [],
   calc: ['Contribución de cada componente: participación = componente ÷ PIB × 100.'],
@@ -1108,7 +1108,7 @@ const MACRO = [
   areas: [],
   calc: [],
   cad: ['Baja la tasa de interés del BCP.', 'Se abarata el crédito: aumentan el consumo de bienes durables y la inversión.', 'Aumentan C e I.', 'La DA se desplaza a la derecha.'],
-  err: ['Desplazar la DA porque cambió el nivel de precios (eso es movimiento a lo largo).', 'Afirmar que la depreciación desplaza la DA a la izquierda (la desplaza a la derecha si sube X − M).', 'Olvidar la flecha y los subíndices.', 'Mezclar causas de oferta (costos) como si movieran la DA.'] },
+  err: ['Desplazar la DA porque cambió el nivel general de precios (eso es movimiento a lo largo).', 'Afirmar que la depreciación desplaza la DA a la izquierda (la desplaza a la derecha si sube X − M).', 'Olvidar la flecha y los subíndices.', 'Mezclar causas de oferta (costos) como si movieran la DA.'] },
 
 { id: 'oacp', u: 'macro', st: '3.2', stn: 'Demanda agregada y oferta agregada', t: 'Curva de oferta agregada a corto plazo (OACP)',
   pr: 'P2 partes b–d',
@@ -1235,7 +1235,7 @@ const MACRO = [
     (() => { const E1 = kInt(10.5, 0), E2 = kInt(12, 1.5); return { t: 'Keynesiano', ...AXM, paths: [{ pts: KAS(0), k: 'k-oalp', t: 'OA_1', tp: [6.6, 9.6] }, { pts: KAS(1.5), k: 'k-oalp', t: 'OA_2', tp: [9.6, 8.6] }],
       lines: [{ l: DA(10.5), k: 'k-da', t: 'DA_1' }, { l: DA(12), k: 'k-da', t: 'DA_2' }], guides: [{ p: E1, xl: 'Y_1' }, { p: E2, xl: 'Y_2' }], arrows: [{ a: [7.2, 5.6], b: [8.6, 5.6], k: 'k-exp' }], pts: [{ p: E1 }, { p: E2 }] }; })()
   ] },
-  cap: 'Si la capacidad productiva crece al mismo ritmo que la DA, el PIB real aumenta sin presión sobre el nivel de precios: crecimiento sostenible.',
+  cap: 'Si la capacidad productiva crece al mismo ritmo que la DA, el PIB real aumenta sin presión sobre el nivel general de precios: crecimiento sostenible.',
   ejes: EJM,
   curvas: ['**OALP₁ → OALP₂** y **OA₁ → OA₂**: aumento de la producción potencial.', 'DA₁ → DA₂ acompaña el crecimiento de la capacidad.'],
   eq: ['Monetarista: E₁ (5; 5) → E₂ (7; 5): Y_f aumenta, NGP estable.'],
@@ -1303,7 +1303,7 @@ const MACRO = [
       lines: [{ l: DA(10.5), k: 'k-da', t: 'DA_1' }, { l: DA(13), k: 'k-da', t: 'DA_2' }], guides: [{ p: E1, yl: 'NGP_1', xl: 'Y_1' }, { p: E2, yl: 'NGP_2', noX: true }, { p: [8, 0], xl: 'Y_f', noY: true }],
       arrows: [{ a: [2.4, 7.5], b: [4.6, 7.5], k: 'k-exp' }], pts: [{ p: E1 }, { p: E2 }] }; })()
   ] },
-  cap: 'La DA crece más rápido que la capacidad productiva. Cerca o por encima de Y_f, el aumento de la DA se traduce sobre todo en mayor nivel de precios.',
+  cap: 'La DA crece más rápido que la capacidad productiva. Cerca o por encima de Y_f, el aumento de la DA se traduce sobre todo en mayor nivel general de precios.',
   ejes: EJM,
   curvas: ['**DA₁ → DA₂** (derecha): gasto excesivo (crédito barato, gasto público, auge exportador).', 'Movimiento a lo largo de la OACP o hacia el tramo vertical de la OA keynesiana.'],
   eq: ['Monetarista: (5; 5) → (6; 6): NGP sube y Y supera transitoriamente a Y_f.', 'Keynesiano: en el tramo III el PIB casi no crece y el NGP sube mucho.'],
@@ -1334,7 +1334,7 @@ const MACRO = [
     { t: 'Deflación «mala» (por demanda)', ...AXM, lines: [{ l: DA(10), k: 'k-da', t: 'DA_1' }, { l: DA(8), k: 'k-da', t: 'DA_2' }, { l: OACP(0), k: 'k-oacp', t: 'OACP' }],
       guides: [{ p: [5, 5], yl: 'NGP_1', xl: 'Y_1' }, { p: [4, 4], yl: 'NGP_2', xl: 'Y_2' }], arrows: [{ a: [3.7, 6], b: [2.3, 6], k: 'k-con' }], pts: [{ p: [5, 5] }, { p: [4, 4] }] }
   ] },
-  cap: 'Ambas reducen el nivel de precios. La «buena» aumenta la producción (mejoras de productividad); la «mala» la reduce (caída del gasto).',
+  cap: 'Ambas reducen el nivel general de precios. La «buena» aumenta la producción (mejoras de productividad); la «mala» la reduce (caída del gasto).',
   ejes: EJM,
   curvas: ['Buena: **OACP₁ → OACP₂** (derecha) por menores costos o avances tecnológicos.', 'Mala: **DA₁ → DA₂** (izquierda) por caída de confianza y del gasto.'],
   eq: ['Buena: (5; 5) → (6; 4): NGP baja, Y sube.', 'Mala: (5; 5) → (4; 4): NGP baja, Y baja.'],
@@ -1395,7 +1395,7 @@ const MACRO = [
       guides: [{ p: [5, 5], yl: 'NGP_1' }, { p: [4, 4], yl: 'NGP_2', xl: 'Y_2' }, { p: [5, 3], yl: 'NGP_3', xl: 'Y_f' }], arrows: [{ a: [3.7, 6], b: [2.3, 6], k: 'k-con' }, { a: [6.3, 6.6], b: [7.7, 6.6], k: 'k-exp' }],
       pts: [{ p: [5, 5], t: 'E_1', dx: 8, dy: -4 }, { p: [4, 4], t: 'E_2', dx: -26 }, { p: [5, 3], t: 'E_3', dx: 8, dy: 14 }] }
   ] },
-  cap: 'Keynesianos: con capacidad ociosa, la política fiscal expansiva aumenta mucho el PIB real con poca inflación. Monetaristas: a largo plazo la economía vuelve a Y_f y solo cambia el nivel de precios.',
+  cap: 'Keynesianos: con capacidad ociosa, la política fiscal expansiva aumenta mucho el PIB real con poca inflación. Monetaristas: a largo plazo la economía vuelve a Y_f y solo cambia el nivel general de precios.',
   ejes: EJM,
   curvas: ['Expansiva: más gasto público (G) o menos impuestos (T) → **DA a la derecha**.', 'Restrictiva o de austeridad: menos G o más T → **DA a la izquierda**.', 'Monetarista: tras el shock, los salarios se ajustan y la OACP se desplaza (OACP₁ → OACP₂) hasta volver a Y_f.'],
   eq: ['Keynesiano expansiva: Y₁ → Y₂ con NGP casi constante.', 'Monetarista expansiva: E₁ (5; 5) → E₂ (6; 6) → E₃ (5; 7).', 'Monetarista restrictiva: E₁ (5; 5) → E₂ (4; 4) → E₃ (5; 3).'],
@@ -1413,7 +1413,7 @@ const MACRO = [
     (() => { const E1 = kInt(10.5, 0), E2 = kInt(10.5, 1.5); return { t: 'Keynesiano', ...AXM, paths: [{ pts: KAS(0), k: 'k-oalp', t: 'OA_1', tp: [6.6, 9.6] }, { pts: KAS(1.5), k: 'k-oalp', t: 'OA_2', tp: [9.6, 8.6] }], lines: [{ l: DA(10.5), k: 'k-da', t: 'DA' }],
       guides: [{ p: E1, yl: 'NGP_1', xl: 'Y_1' }, { p: E2, yl: 'NGP_2', xl: 'Y_2' }], arrows: [{ a: [7.2, 5.6], b: [8.6, 5.6], k: 'k-exp' }], pts: [{ p: E1 }, { p: E2 }] }; })()
   ] },
-  cap: 'Las políticas del lado de la oferta aumentan la capacidad productiva: más producción potencial con menor presión sobre el nivel de precios.',
+  cap: 'Las políticas del lado de la oferta aumentan la capacidad productiva: más producción potencial con menor presión sobre el nivel general de precios.',
   ejes: EJM,
   curvas: ['**OALP₁ → OALP₂** (y OA keynesiana a la derecha): aumenta la producción potencial.', 'Basadas en el mercado: fomentar la competencia (privatización, desregulación), reformas del mercado laboral, incentivos (menores impuestos a la renta y a las empresas).', 'Intervencionistas: inversión en capital humano (educación, salud), en tecnología, en infraestructura; política industrial.', 'Las intervencionistas también aumentan la DA a corto plazo, porque implican gasto público.'],
   eq: ['Monetarista: E₁ (5; 5) → E₂ (7; 3): más PIB real y menor NGP.'],
