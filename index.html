@@ -1605,6 +1605,25 @@ const GLOBAL = [
   cad: ['Cae la demanda de la moneda.', 'El tipo de cambio tiende a salir de la banda.', 'El banco central vende divisas y compra moneda nacional.', 'La moneda queda dentro de la banda; se reduce la volatilidad a costa de reservas.'],
   err: ['Dibujar la banda sin explicar cuándo se interviene.', 'Afirmar que en un tipo controlado nunca cambia el tipo de cambio.', 'Desplazar la oferta cuando el banco central compra moneda (aumenta la demanda).'] },
 
+{ id: 'tc-sobre-sub', u: 'global', st: '4.5', stn: 'Tipos de cambio', t: 'Tipo de cambio controlado: moneda sobrevaluada y subvaluada',
+  pr: 'P1 parte a · P2 partes c–f',
+  fig: { panels: [
+    { t: 'Moneda sobrevaluada', ...AXFX, lines: [{ l: G.L([1, 9], [9, 1]), k: 'k-d', t: 'D_{Gs}' }, { l: G.L([1, 1], [9, 9]), k: 'k-s', t: 'O_{Gs}' }, { l: G.L([0, 6.5], [9.4, 6.5]), k: 'k-v', dash: true }],
+      guides: [{ p: [5, 5], yl: 'e_e', xl: 'Q_e' }, { p: [0, 6.5], yl: 'e_{of}', noX: true, noY: true }, { p: [3.5, 6.5], xl: 'Q_d', noY: true }, { p: [6.5, 6.5], xl: 'Q_o', noY: true }],
+      spans: [{ a: [3.5, 7.1], b: [6.5, 7.1], t: 'Exceso de oferta' }], pts: [{ p: [5, 5] }] },
+    { t: 'Moneda subvaluada', ...AXFX, lines: [{ l: G.L([1, 9], [9, 1]), k: 'k-d', t: 'D_{Gs}' }, { l: G.L([1, 1], [9, 9]), k: 'k-s', t: 'O_{Gs}' }, { l: G.L([0, 3.5], [9.4, 3.5]), k: 'k-v', dash: true }],
+      guides: [{ p: [5, 5], yl: 'e_e', xl: 'Q_e' }, { p: [0, 3.5], yl: 'e_{of}', noX: true, noY: true }, { p: [3.5, 3.5], xl: 'Q_o', noY: true }, { p: [6.5, 3.5], xl: 'Q_d', noY: true }],
+      spans: [{ a: [3.5, 2.9], b: [6.5, 2.9], t: 'Exceso de demanda', below: true }], pts: [{ p: [5, 5] }] }
+  ] },
+  cap: 'Con un tipo de cambio controlado, el gobierno o el banco central fija la moneda por encima (sobrevaluada) o por debajo (subvaluada) del valor que daría el mercado. Para sostenerlo tiene que intervenir en el mercado de divisas.',
+  ejes: EJFX,
+  curvas: ['**e_e**: tipo de cambio de equilibrio, el que surgiría de la oferta y la demanda.', '**Sobrevaluada** (e_of > e_e): a ese precio se ofrecen más guaraníes de los que se demandan (exceso de oferta). El banco central debe comprar su moneda con reservas, subir la tasa de interés o racionar las divisas.', '**Subvaluada** (e_of < e_e): se demandan más guaraníes de los que se ofrecen (exceso de demanda). El banco central vende su moneda y acumula reservas de divisas.'],
+  eq: ['Panel 1: a e_of, exceso de oferta de la moneda = Q_o − Q_d.', 'Panel 2: a e_of, exceso de demanda de la moneda = Q_d − Q_o.'],
+  areas: [],
+  calc: [],
+  cad: ['El banco central fija el guaraní por encima del equilibrio (moneda sobrevaluada).', 'A ese tipo de cambio se ofrecen más guaraníes de los que se demandan: hay exceso de oferta.', 'Para sostenerlo, el banco central compra guaraníes con sus reservas de divisas o sube la tasa de interés.', 'Las importaciones se abaratan y baja la inflación, pero las exportaciones pierden competitividad y las reservas disminuyen (en el caso subvaluado ocurre lo contrario: exportaciones más competitivas, importaciones más caras y acumulación de reservas).'],
+  err: ['Confundir «sobrevaluada» (precio de la moneda por encima del equilibrio) con «apreciada» (cambio de valor en un régimen flotante).', 'Ubicar mal el exceso: por encima del equilibrio hay exceso de oferta; por debajo, exceso de demanda.', 'Olvidar que el banco central necesita reservas para sostener una moneda sobrevaluada.'] },
+
 /* ---------- 4.9 ---------- */
 { id: 'ciclo-pobreza', u: 'global', st: '4.9', stn: 'Barreras al crecimiento y al desarrollo', t: 'Ciclo de la pobreza (trampa de pobreza)',
   pr: 'P1 partes a–b · P2 parte g',
