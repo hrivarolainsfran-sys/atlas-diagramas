@@ -594,6 +594,7 @@ body.docked{padding-bottom:190px}
 .dfc.on{border-color:var(--gold)} .dft{all:unset;cursor:pointer;display:flex;flex-wrap:wrap;gap:6px;align-items:center} .dft b{font-size:16.5px}
 .dft:focus-visible{outline:2px solid var(--gold);outline-offset:2px} .dfh{flex-basis:100%}
 .dfb{display:none} .dfc.on .dfb{display:block} .dfc.on .dfh{display:none} .dfb p{margin:4px 0}
+.ccq{border-top:1px dashed var(--rule);margin-top:10px;padding-top:10px} .ccq p{margin:4px 0 8px}
 .hoyl{list-style:none;margin:4px 0;padding:0;display:grid;gap:8px} .hoyl label{display:flex;gap:10px;align-items:flex-start;cursor:pointer} .hoyl input{margin-top:5px;flex:none;width:18px;height:18px}
 .pptab{border-collapse:collapse;font-size:14px;min-width:280px} .pptab caption{text-align:left;font-weight:700;font-size:13.5px;color:var(--ink-2);padding:0 0 4px}
 .pptab th,.pptab td{border:1px solid var(--rule);padding:4px 8px;text-align:right} .pptab th[scope=row]{text-align:left;font-weight:600} .pptab thead th{background:var(--paper);text-align:right} .pptab thead th:first-child{text-align:left}
@@ -6802,6 +6803,7 @@ function renderPast() {
   if (SESS.ppw === 'p2') return renderPast2();
   if (SESS.ppw === 'top') return renderTopDia();
   if (SESS.ppw === 'def') return renderDefs();
+  if (SESS.ppw === 'calc') return renderCalcTop();
   if (SESS.ppw === 'hoy') return renderHoy();
   const F = SESS.ppf = SESS.ppf || { ses: 'all', u: 'all', cmd: 'all', st: 'all' };
   const all = ppAll(), live = all.filter(x => !x.p.omit), done = live.filter(x => PP_DONE[x.id]).length;
@@ -6849,7 +6851,7 @@ function renderPast() {
 }
 
 /* =============== Repaso final: diagramas que más salen, definiciones y día del examen =============== */
-const PP_TABS = [['p1', 'Prueba 1'], ['p2', 'Prueba 2'], ['top', 'Diagramas que más salen'], ['def', 'Definiciones'], ['hoy', 'Día del examen']];
+const PP_TABS = [['p1', 'Prueba 1'], ['p2', 'Prueba 2'], ['top', 'Diagramas que más salen'], ['calc', 'Cálculos que más salen'], ['def', 'Definiciones'], ['hoy', 'Día del examen']];
 function ppHead(cur, lede) {
   return `<div class="eyebrow">Repaso final</div><h1>Exámenes anteriores</h1>
     <div class="row" style="margin-bottom:14px">${segBtns('ppw', PP_TABS, cur)}</div>${lede ? `<p class="lede">${lede}</p>` : ''}`;
@@ -6940,6 +6942,113 @@ function renderDefs() {
   $('#dfa').onchange = e => { F.all = e.target.checked; draw(); };
   draw();
 }
+/* Cálculos que más salen en la Prueba 2 (con ejercicios de números nuevos) */
+const rr = (a, b, d = 2) => Number((a + Math.random() * (b - a)).toFixed(d));
+const f2 = n => fmt(n, 2);
+const PAIS = ['Paraguay', 'Bolivia', 'Uruguay', 'Perú', 'Ecuador', 'Colombia'];
+const CALCS = [
+  { k: 'bop', n: 'Cuenta corriente y balanzas comerciales', ids: ['m25-1b (i)', 'm25-1b (ii)', 'm24-1b (ii)', 'n23-2b (ii)', 'n22-2b (ii)'],
+    f: ['Balanza comercial = exportaciones − importaciones', 'Cuenta corriente = balanza de bienes + balanza de servicios + ingreso primario neto + transferencias corrientes netas', 'Si falta un dato, despéjalo: cuenta corriente − (lo que conoces) = lo que falta.'],
+    err: ['Sumar la IED o la inversión de cartera: van en la <b>cuenta financiera</b>, no en la corriente.', 'Olvidar los signos negativos (los pagos al exterior restan).', 'No decir si es superávit o déficit.'],
+    gen() {
+      const p = pick(PAIS), xb = rr(8, 15, 2), mb = rr(8, 16, 2), sv = rr(-2, 3, 2), ip = rr(-3, 1, 2), tr = rr(0.2, 2.5, 2), ca = r2(xb - mb + sv + ip + tr);
+      if (Math.random() < .5) return { q: `${p} (miles de millones de USD): exportaciones de bienes ${f2(xb)}; importaciones de bienes ${f2(mb)}; balanza de servicios ${f2(sv)}; ingreso primario neto ${f2(ip)}; transferencias corrientes netas ${f2(tr)}. Calcula el saldo en cuenta corriente.`, a: ca, u: 'miles de millones de USD',
+        s: [`Balanza de bienes = ${f2(xb)} − ${f2(mb)} = ${f2(r2(xb - mb))}`, `Cuenta corriente = ${f2(r2(xb - mb))} + (${f2(sv)}) + (${f2(ip)}) + ${f2(tr)} = ${f2(ca)}`, ca < 0 ? 'Déficit en cuenta corriente.' : 'Superávit en cuenta corriente.'] };
+      return { q: `${p} (miles de millones de USD): saldo en cuenta corriente ${f2(ca)}; balanza de bienes ${f2(r2(xb - mb))}; ingreso primario neto ${f2(ip)}; transferencias netas ${f2(tr)}. Calcula la balanza comercial de servicios.`, a: sv, u: 'miles de millones de USD',
+        s: [`${f2(ca)} = ${f2(r2(xb - mb))} + S + (${f2(ip)}) + ${f2(tr)}`, `S = ${f2(ca)} − ${f2(r2(xb - mb))} − (${f2(ip)}) − ${f2(tr)} = ${f2(sv)}`] };
+    } },
+  { k: 'pc', n: 'PIB per cápita y cambio porcentual', ids: ['m26-2b (i)', 'm25-2b (ii)', 'n24-1b (i)', 'n24-2b (ii)', 'n25-1b (ii)'],
+    f: ['PIB per cápita = PIB ÷ población', 'Cambio porcentual = (valor nuevo − valor viejo) ÷ valor viejo × 100'],
+    err: ['Mezclar unidades: miles de millones ÷ millones da <b>miles</b> (40 mil millones ÷ 8 millones = 5000).', 'Dividir por el valor nuevo en lugar del viejo.', 'Olvidar el signo % o el «USD».'],
+    gen() {
+      const p = pick(PAIS), y0 = rr(30, 45, 2), y1 = r2(y0 * (1 + rr(-.04, .25, 3))), n0 = rr(5, 8, 2), n1 = r2(n0 * (1 + rr(.02, .08, 3)));
+      const pc0 = r2(y0 / n0 * 1000), pc1 = r2(y1 / n1 * 1000), ch = r2((pc1 - pc0) / pc0 * 100);
+      if (Math.random() < .35) return { q: `El PIB real de ${p} es ${f2(y1)} mil millones de USD y su población, ${f2(n1)} millones. Calcula el PIB real per cápita.`, a: pc1, u: 'USD', tol: 1,
+        s: [`${f2(y1)} mil millones ÷ ${f2(n1)} millones = ${f2(pc1)} USD`] };
+      return { q: `${p}: PIB real ${f2(y0)} mil millones de USD (2015) y ${f2(y1)} mil millones (2024); población ${f2(n0)} millones (2015) y ${f2(n1)} millones (2024). Calcula el cambio porcentual del PIB real per cápita.`, a: ch, u: '%',
+        s: [`2015: ${f2(y0)} mil millones ÷ ${f2(n0)} millones = ${f2(pc0)} USD`, `2024: ${f2(y1)} mil millones ÷ ${f2(n1)} millones = ${f2(pc1)} USD`, `(${f2(pc1)} − ${f2(pc0)}) ÷ ${f2(pc0)} × 100 = ${f2(ch)} %`] };
+    } },
+  { k: 'real', n: 'PIB real y deflactor', ids: ['m25-2b (i)', 'n24-2b (i)', 'n23-2b (i)', 'n25-1b (i)'],
+    f: ['PIB real = PIB nominal ÷ deflactor × 100', 'Deflactor = PIB nominal ÷ PIB real × 100', 'En el año base el deflactor es 100.'],
+    err: ['Multiplicar por el deflactor en lugar de dividir.', 'Olvidar el × 100.', 'Si el deflactor es mayor que 100, el PIB real tiene que dar <b>menor</b> que el nominal: úsalo para controlar.'],
+    gen() {
+      const p = pick(PAIS);
+      if (Math.random() < .6) { const nom = rr(30, 80, 2), d = rr(98, 135, 2), re = r2(nom / d * 100);
+        return { q: `El PIB nominal de ${p} es ${f2(nom)} mil millones de USD y el deflactor del PIB es ${f2(d)} (año base = 100). Calcula el PIB real.`, a: re, u: 'mil millones de USD', s: [`${f2(nom)} ÷ ${f2(d)} × 100 = ${f2(re)} mil millones de USD`] }; }
+      const re = rr(25, 60, 2), nom = r2(re * rr(1.02, 1.35, 3)), d = r2(nom / re * 100);
+      return { q: `En ${p}, el PIB nominal es ${f2(nom)} mil millones de USD y el PIB real (a precios del año base) es ${f2(re)} mil millones. Calcula el deflactor del PIB.`, a: d, u: '', s: [`${f2(nom)} ÷ ${f2(re)} × 100 = ${f2(d)}`, `Los precios subieron ${f2(r2(d - 100))} % desde el año base.`] };
+    } },
+  { k: 'ped', n: 'Elasticidad precio de la demanda (EPD)', ids: ['n25-2b (i)', 'm24-1b (i)', 'n23-1b (i)'],
+    f: ['EPD = %ΔQd ÷ %ΔP', 'Si te dan la EPD: %ΔQd = EPD × %ΔP', 'Ingreso total = P × Q'],
+    err: ['Calcular el %ΔP sobre el precio nuevo.', 'Perder el signo: si el precio baja, la cantidad sube.', 'Con demanda inelástica (|EPD| < 1), bajar el precio <b>baja</b> el ingreso.'],
+    gen() {
+      const p0 = pick([4.4, 10, 12.5, 20, 35, 50]), dn = Math.random() < .7, p1 = r2(p0 * (dn ? 1 - rr(.05, .2, 2) : 1 + rr(.05, .2, 2))), e = -rr(.15, 1.8, 2);
+      const dp = r2((p1 - p0) / p0 * 100), dq = r2(e * dp);
+      if (Math.random() < .5) return { q: `El precio de un bien baja de ${f2(p0)} a ${f2(p1)} USD y la EPD es ${f2(e)}. Calcula el cambio porcentual de la cantidad demandada.`.replace('baja', dn ? 'baja' : 'sube'), a: dq, u: '%',
+        s: [`%ΔP = (${f2(p1)} − ${f2(p0)}) ÷ ${f2(p0)} × 100 = ${f2(dp)} %`, `%ΔQd = ${f2(e)} × ${f2(dp)} % = ${f2(dq)} %`] };
+      const q0 = pick([200, 500, 1000, 1200]), q1 = r2(q0 * (1 + dq / 100)), ti = r2(q1 * p1);
+      return { q: `Se venden ${fmt(q0)} unidades a ${f2(p0)} USD. El precio ${dn ? 'baja' : 'sube'} a ${f2(p1)} USD y la EPD es ${f2(e)}. Calcula el nuevo ingreso total.`, a: ti, u: 'USD', tol: 1,
+        s: [`%ΔP = (${f2(p1)} − ${f2(p0)}) ÷ ${f2(p0)} × 100 = ${f2(dp)} %`, `%ΔQd = ${f2(e)} × ${f2(dp)} % = ${f2(dq)} %`, `Q nueva = ${fmt(q0)} × (1 + ${f2(dq)} ÷ 100) = ${f2(q1)}`, `Ingreso = ${f2(q1)} × ${f2(p1)} = ${f2(ti)} USD (antes: ${f2(r2(q0 * p0))})`] };
+    } },
+  { k: 'yed', n: 'Elasticidad ingreso de la demanda (EID)', ids: ['m26-1b (ii)', 'm24-2b (ii)', 'n22-2b (i)'],
+    f: ['EID = %ΔQd ÷ %ΔY', 'EID > 0: bien normal (0–1 necesidad; > 1 lujo). EID < 0: bien inferior.'],
+    err: ['Invertir la fórmula (%ΔY ÷ %ΔQ).', 'No interpretar el resultado cuando lo piden (normal, inferior, necesidad, lujo).'],
+    gen() {
+      const y0 = pick([3000000, 4000000, 40000, 10440, 2500]), y1 = r2(y0 * (1 + rr(.04, .3, 3))), q0 = pick([250, 120, 80, 1031, 60]), q1 = r2(q0 * (1 + rr(-.1, .35, 3)));
+      const dy = r2((y1 - y0) / y0 * 100), dq = r2((q1 - q0) / q0 * 100), e = r2(dq / dy);
+      return { q: `El ingreso de un hogar pasa de ${fmt(y0)} a ${f2(y1)} y su consumo de un bien pasa de ${fmt(q0)} a ${f2(q1)} unidades. Calcula la EID.`, a: e, u: '',
+        s: [`%ΔY = (${f2(y1)} − ${fmt(y0)}) ÷ ${fmt(y0)} × 100 = ${f2(dy)} %`, `%ΔQd = (${f2(q1)} − ${fmt(q0)}) ÷ ${fmt(q0)} × 100 = ${f2(dq)} %`, `EID = ${f2(dq)} ÷ ${f2(dy)} = ${f2(e)}`, e < 0 ? 'Bien inferior.' : e < 1 ? 'Bien normal y de necesidad.' : 'Bien normal y de lujo.'] };
+    } },
+  { k: 'rate', n: 'Tasa de interés real', ids: ['m26-1b (i)', 'n23-1b (ii)'],
+    f: ['Tasa de interés real ≈ tasa de interés nominal − inflación'],
+    err: ['Restar al revés.', 'Olvidar el signo negativo cuando la inflación es mayor que la tasa nominal.', 'Olvidar el %.'],
+    gen() { const i = rr(0.1, 15, 2), pi = rr(1, 14, 2), r = r2(i - pi);
+      return { q: `La tasa de interés del banco central de ${pick(PAIS)} es ${f2(i)} % y la inflación es ${f2(pi)} %. Calcula la tasa de interés real.`, a: r, u: '%', s: [`${f2(i)} − ${f2(pi)} = ${f2(r)} %`] }; } },
+  { k: 'fx', n: 'Conversión de monedas', ids: ['m25-2b (iii)', 'n22-1b (ii)'],
+    f: ['Si el tipo de cambio está en «moneda local por USD»: precio en USD = precio local ÷ tipo de cambio.', 'Si está en «USD por moneda local»: precio en USD = precio local × tipo de cambio.'],
+    err: ['Multiplicar cuando hay que dividir: mira bien las unidades del tipo de cambio.', 'Responder sin decir si la moneda se apreció o se depreció cuando lo piden.'],
+    gen() { const loc = pick([['PYG', 7450, 7900], ['BOB', 6.9, 7.1], ['UYU', 38, 42], ['PEN', 3.6, 3.9]]), e = rr(loc[1], loc[2], 2), pr = pick([150000, 400, 2500, 80, 12000]), usd = r2(pr / e);
+      return { q: `Un producto cuesta ${fmt(pr)} ${loc[0]}. El tipo de cambio es ${f2(e)} ${loc[0]} por USD. Calcula el precio en USD.`, a: usd, u: 'USD', s: [`${fmt(pr)} ÷ ${f2(e)} = ${f2(usd)} USD`] }; } },
+  { k: 'unemp', n: 'Tasa de desempleo', ids: ['n22-1b (i)'],
+    f: ['Tasa de desempleo = desempleados ÷ fuerza laboral × 100', 'Fuerza laboral = ocupados + desempleados'],
+    err: ['Dividir por la población total en lugar de la fuerza laboral.', 'Sumar los desempleados dos veces cuando ya te dan la fuerza laboral.'],
+    gen() { const pop = rr(6, 9, 2), lf = r2(pop * rr(.45, .6, 3)), u = r2(lf * rr(.04, .12, 3)), t = r2(u / lf * 100);
+      return { q: `Población: ${f2(pop)} millones. Fuerza laboral: ${f2(lf)} millones. Desempleados: ${f2(u)} millones. Calcula la tasa de desempleo.`, a: t, u: '%', s: [`${f2(u)} ÷ ${f2(lf)} × 100 = ${f2(t)} %`, 'La población total no se usa.'] }; } },
+  { k: 'comp', n: 'Componentes del PIB (método del gasto)', ids: ['m24-2b (i)'],
+    f: ['PIB = C + I + G + (X − M)'],
+    err: ['Sumar las importaciones en lugar de restarlas.'],
+    gen() { const I = rr(3000, 4500, 0), G = rr(3000, 4500, 0), X = rr(4000, 6000, 0), M = rr(5000, 8000, 0), C = rr(11000, 16000, 0), Y = C + I + G + X - M;
+      return { q: `PIB ${fmt(Y)}; inversión ${fmt(I)}; gasto público ${fmt(G)}; exportaciones ${fmt(X)}; importaciones ${fmt(M)} (miles de millones). Calcula el consumo.`, a: C, u: 'miles de millones', tol: 0.5, s: [`${fmt(Y)} = C + ${fmt(I)} + ${fmt(G)} + (${fmt(X)} − ${fmt(M)})`, `C = ${fmt(Y)} − ${fmt(I + G + X - M)} = ${fmt(C)}`] }; } }
+];
+function renderCalcTop() {
+  const all = pp2Parts(), byId = {}; all.forEach(x => { byId[`${x.s.id}-${x.c.n}${x.p.k}`] = x; });
+  const total = CALCS.reduce((n, c) => n + c.ids.length, 0);
+  app.innerHTML = ppHead('calc', `La parte (b) de la Prueba 2 vale 5 puntos y siempre pide los mismos cálculos. Entre 2022 y 2026 salieron ${total} veces estos ${CALCS.length} tipos: aquí tienes la fórmula, un ejemplo de examen y ejercicios nuevos cada vez que tocas «Otro ejercicio».`) +
+    `<div class="fb info" style="max-width:1000px"><b class="h">Cómo se corrige</b>Un punto por el procedimiento (fórmula con los números) y otro por el resultado correcto <b>con unidades</b>. El resultado solo, sin procedimiento, vale 1. Redondea a dos decimales.</div>` +
+    CALCS.map((c, i) => { const ex = c.ids.map(id => byId[id]).filter(Boolean);
+      return `<div class="tdcard" id="cc-${c.k}"><div class="ppqh"><span class="ppn">${i + 1}</span><b style="font-size:19px">${c.n}</b><span class="tag prog">Salió ${ex.length} ${ex.length === 1 ? 'vez' : 'veces'}</span></div>
+        <div class="tdgrid"><div><p class="small"><b>Fórmula</b></p><ul>${c.f.map(x => `<li><span class="formula" style="font-size:15px">${x}</span></li>`).join('')}</ul></div>
+          <div><div class="fb no" style="margin-top:0"><b class="h">Errores que restan</b><ul style="margin:4px 0;padding-left:18px">${c.err.map(x => `<li>${x}</li>`).join('')}</ul></div></div></div>
+        ${ex[0] ? `<details class="ppd"><summary>Ejemplo de examen: ${ex[0].s.ses}</summary><p class="small"><b>${ex[0].p.q}</b></p><ol class="ppchain">${ex[0].p.steps.map(x => `<li>${x}</li>`).join('')}</ol>${ex.length > 1 ? `<p class="small muted">También salió en: ${ex.slice(1).map(x => `${x.s.ses} (pregunta ${x.c.n}, ${x.p.k})`).join(' · ')}</p>` : ''}</details>` : ''}
+        <div class="ccx" data-k="${c.k}"></div></div>`; }).join('');
+  ppBindTabs();
+  app.querySelectorAll('.ccx').forEach(box => { const c = CALCS.find(x => x.k === box.dataset.k); let E;
+    const nw = () => { E = c.gen();
+      box.innerHTML = `<div class="ccq"><p><b>Practica:</b> ${E.q}</p>
+        <div class="row" style="gap:8px;align-items:center"><input class="dsel cci" type="text" inputmode="decimal" placeholder="Tu resultado" style="max-width:170px"><span class="small">${E.u}</span>
+        <button type="button" class="btn sm primary ccc">Comprobar</button><button type="button" class="btn sm ccs">Ver solución</button><button type="button" class="btn sm ccn">Otro ejercicio</button></div><div class="ccf"></div></div>`;
+      const fb = $('.ccf', box), sol = () => `<ol class="ppchain">${E.s.map(x => `<li>${x}</li>`).join('')}</ol>`;
+      $('.ccc', box).onclick = () => { const v = parseNum($('.cci', box).value); const tol = E.tol || Math.max(0.011, Math.abs(E.a) * 0.0005);
+        if (isNaN(v)) { fb.innerHTML = '<div class="fb info">Escribe un número (usa coma para los decimales).</div>'; return; }
+        fb.innerHTML = Math.abs(v - E.a) <= tol ? `<div class="fb ok"><b class="h">¡Correcto!</b>${f2(E.a)} ${E.u}. En el examen escribe también el procedimiento y la unidad.</div>`
+          : `<div class="fb no"><b class="h">Todavía no</b>Revisa el procedimiento:</div>${sol()}`; };
+      $('.ccs', box).onclick = () => { fb.innerHTML = sol(); };
+      $('.ccn', box).onclick = nw;
+      $('.cci', box).onkeydown = e => { if (e.key === 'Enter') $('.ccc', box).click(); };
+    };
+    nw(); });
+}
+
 const HOY_K = store.get('hoy', {});
 const HOY = [
   { h: 'La noche anterior', it: ['Repasa solo los 6 diagramas que más salen y las definiciones que marcaste como pendientes. No empieces temas nuevos.', 'Prepara bolígrafo azul o negro, lápiz, goma, regla y la calculadora (solo para la Prueba 2), con pilas.', 'Duerme bien: rinde más que una hora extra de estudio.'] },
