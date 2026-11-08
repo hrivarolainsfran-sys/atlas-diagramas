@@ -557,6 +557,28 @@ body.docked{padding-bottom:190px}
 .pvhit{fill:none;stroke:transparent;stroke-width:22}
 .pvn{fill:var(--gold-soft);stroke:var(--gold)}
 @media (max-width:640px){.fgrid2{grid-template-columns:1fr}}
+/* v19: exámenes anteriores */
+.ppgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:1000px}
+.ppcmds{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:8px;max-width:1100px}
+.ppcmd{text-align:left;background:var(--sheet);border:1.5px solid var(--rule);border-radius:var(--r);padding:10px 12px;color:var(--ink);display:grid;gap:4px}
+.ppcmd:hover{border-color:var(--gold)} .ppcmd b{font-family:var(--f-display);font-size:18px} .ppcmd span{font-size:13.5px;color:var(--ink-2)}
+.ppfil{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0 6px;max-width:1000px} .ppfil label{display:grid;gap:4px;font-size:13px;font-weight:700;color:var(--ink-2);flex:1;min-width:200px}
+.ppq{background:var(--sheet);border:1.5px solid var(--rule);border-radius:var(--r);padding:12px 16px;margin:10px 0;max-width:1000px}
+.ppqh{display:flex;gap:10px;align-items:center;margin-bottom:6px}
+.ppp{border-top:1px solid var(--rule);padding:10px 0 4px} .ppp:first-of-type{border-top:0}
+.ppp.omit{opacity:.7} .ppk{font-family:var(--f-display);font-weight:700;font-size:18px}
+.ppqt{font-size:17px;font-weight:600;margin:6px 0}
+.ppd summary{cursor:pointer;font-weight:700;color:var(--navy-2);padding:4px 0}
+.ppg{padding:6px 0 4px}
+.ppsteps{list-style:none;margin:6px 0;padding:0;display:grid;gap:10px}
+.ppsteps>li{border-left:3px solid var(--gold);padding:2px 0 2px 12px}
+.pph{font-weight:700;display:flex;gap:8px;align-items:center}
+.ppn{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:50%;background:var(--navy-2);color:#fff;font-size:13px;flex:none}
+.ppb p,.ppb ul,.ppb ol{margin:4px 0} .ppb ul,.ppb ol{padding-left:20px}
+.ppchain li::marker{font-weight:700;color:var(--gold)}
+.ppconc{background:var(--gold-soft);border-radius:6px;padding:8px 10px;font-weight:600}
+.ppdone{display:inline-flex;gap:6px;align-items:center;font-size:14px;margin-top:4px;cursor:pointer}
+@media (max-width:700px){.ppgrid{grid-template-columns:1fr}}
 /* v18: laboratorios de cálculo y global */
 .tgls{display:flex;flex-wrap:wrap;gap:6px}
 .tgl{border:1.5px solid var(--rule);background:var(--paper);border-radius:999px;padding:6px 12px;font-size:13.5px;line-height:1.3;color:var(--ink);text-align:left}
@@ -682,6 +704,7 @@ td.late{color:var(--bad);font-weight:700}td.soon{color:var(--warn-ink);font-weig
     <button type="button" data-go="escribir">Escribir</button>
     <button type="button" data-go="formulas">Fórmulas</button>
     <button type="button" data-go="juegos">Juegos</button>
+    <button type="button" data-go="anteriores">Exámenes</button>
     <button type="button" data-go="repasar">Repasar<span class="badge" id="errBadge" hidden>0</span></button>
     <a href="https://hrivarolainsfran-sys.github.io/atlas-diagramas/">Atlas de diagramas</a>
   </nav>
@@ -1611,6 +1634,7 @@ function render() {
   if (route === 'lab-crear') { setNav('labs'); return labBuild(); }
   if (route.startsWith('lab-') && LABS[route.slice(4)]) { setNav('labs'); return renderLabPage(route.slice(4)); }
   if (route === 'labs') { setNav('labs'); return renderLabs(); }
+  if (route === 'anteriores') { setNav('anteriores'); return renderPast(); }
   if (route === 'examen') { setNav('repasar'); return renderExam(); }
   if (route === 'tarjetas') { setNav('repasar'); return renderCards(); }
   if (route === 'repasar') { setNav('repasar'); return renderReview(); }
@@ -5834,6 +5858,783 @@ function sketchPad(host, ops, onChange, opts = {}) {
 }
 const padUsed = ops => (ops || []).some(o => o.t === 'p' || o.t === 'a' || (o.t === 'l' && !(o.w === 2.5 && o.c === 'k' && (o.a[0] === .1 || o.a[1] === .9))));
 
+
+/* =============== Exámenes anteriores · Prueba 1 (NM). Enunciados redactados con palabras propias y guías del Prof. Econ. Hugo Rivarola a partir de lo que piden los esquemas de calificación. No reproduce material del IB. =============== */
+const PP1 = [
+{ id: 'm26', ses: 'Mayo 2026', ord: 2026.5, nuevo: true, ms: true, qs: [
+  { n: 1, u: 2, parts: [
+    { k: 'a', st: '2.7', cmd: 'exp', q: 'Explique por qué un gobierno podría fijar un precio mínimo.',
+      def: [['Precio mínimo', 'Precio fijado por el gobierno por encima del precio de equilibrio; es ilegal vender por debajo de él.']],
+      cau: 'El gobierno quiere subir el ingreso de un grupo (productores agrícolas o trabajadores) o reducir el consumo de un bien de demérito.',
+      dia: 'Oferta y demanda con el precio mínimo (Pmín) por encima de P*: Qd baja, Qo sube y aparece un excedente (Qo − Qd). Para el salario mínimo, mercado laboral: el excedente es desempleo.',
+      cad: ['Con un precio mínimo para un producto agrícola, los productores reciben un precio más alto y aumenta su ingreso, sobre todo si el gobierno compra el excedente (programa de sostén de precios).', 'Con un salario mínimo, los trabajadores de bajos ingresos ganan más y aumenta el incentivo a buscar empleo (participación en la fuerza de trabajo).', 'Con un precio mínimo para el alcohol, el precio más alto reduce la cantidad consumida de un bien de demérito.'],
+      ej: 'Salario mínimo en Paraguay, que se reajusta cada año; precio mínimo por unidad de alcohol en Escocia (desde 2018); compra de excedentes agrícolas de la Unión Europea.',
+      req: 'Basta con explicar bien los motivos (ingreso de productores, salario mínimo, bienes de demérito) con un diagrama del precio mínimo por encima del equilibrio.',
+      err: 'Dibujar el precio mínimo por debajo del equilibrio: así no tiene efecto.' },
+    { k: 'b', st: '2.8', cmd: 'dis', q: 'Utilizando ejemplos reales, discuta si los impuestos al carbono son la forma más eficaz de reducir la contaminación de las empresas.',
+      def: [['Impuesto al carbono', 'Impuesto por tonelada de CO₂ emitida (o por el contenido de carbono del combustible).'], ['Externalidad negativa de producción', 'Costo que la producción impone a terceros y que no paga el productor: el costo marginal social (CMgS) supera al privado (CMgP).']],
+      dia: 'Externalidad negativa de producción: CMgS por encima de CMgP; el mercado produce Qm > Q*. El impuesto desplaza CMgP hacia CMgS, sube el precio y baja la cantidad hacia Q*: se reduce la pérdida de bienestar.',
+      teo: 'El impuesto internaliza el costo externo: la empresa paga por cada tonelada emitida, así que contamina menos.',
+      pro: ['Internaliza el costo externo y lleva la producción hacia el óptimo social.', 'Da un incentivo permanente a usar energías más limpias y más eficientes.', 'Genera recaudación que se puede invertir en energías renovables o compensar a hogares pobres.', 'Es flexible: la tasa se puede ajustar según el daño.'],
+      con: ['Es muy difícil medir en dinero el costo externo: la tasa puede quedar corta o excesiva.', 'Sube los costos y reduce las ganancias y la inversión; puede trasladarse a precios.', 'Es regresivo: pesa más en los hogares de bajos ingresos.', 'Si la demanda es inelástica, baja poco la cantidad.'],
+      mat: ['Alternativas que hay que comparar (si no, el esquema limita la nota): permisos negociables, legislación y regulación, subsidios a energías limpias, educación.', 'Plazo: a corto plazo las empresas pagan y contaminan casi igual; a largo plazo cambian de tecnología.'],
+      ej: ['Suecia aplica impuesto al carbono desde 1991 y es de los más altos del mundo.', 'La Unión Europea usa permisos negociables (sistema de comercio de emisiones, desde 2005).', 'Canadá eliminó en 2025 la parte del impuesto que pagaban los consumidores, tras fuertes críticas por su costo para los hogares.'],
+      concl: 'El impuesto al carbono es muy eficaz cuando se puede estimar bien el daño y se combina con otras medidas; no es «la» forma más eficaz en todos los casos: la regulación sirve mejor para contaminantes muy peligrosos y los permisos dan más certeza sobre la cantidad total emitida.',
+      req: 'Si solo hablas del impuesto al carbono sin otras políticas, el esquema limita la nota a 9/15.' }
+  ] },
+  { n: 2, u: 3, parts: [
+    { k: 'a', st: '3.6', cmd: 'exp', q: 'Explique dos objetivos de la política fiscal.', same: 'n22-2a' },
+    { k: 'b', st: '3.3', cmd: 'dis', q: 'Utilizando ejemplos reales, discuta si el crecimiento económico siempre provoca inflación.',
+      def: [['Crecimiento económico', 'Aumento del PIB real a lo largo del tiempo.'], ['Inflación', 'Aumento sostenido del nivel general de precios.']],
+      dia: 'DA/OA: (1) la DA se desplaza a la derecha → sube el PIB real y el NGP (inflación de demanda); (2) la OALP (y la OACP) se desplazan a la derecha → sube el PIB real y el NGP no sube o baja.',
+      teo: 'Depende de qué lado viene el crecimiento: de la demanda o de la oferta.',
+      pro: ['Si el crecimiento se debe a un aumento de la DA cerca del pleno empleo, aparece inflación de demanda.', 'Con poca capacidad ociosa (tramo vertical de la OA keynesiana), más gasto solo sube los precios.'],
+      con: ['Si el crecimiento viene de más capacidad productiva (tecnología, educación, inversión), la OALP se desplaza y el NGP puede bajar.', 'Si bajan los costos (por ejemplo, insumos importados más baratos), la OACP se desplaza a la derecha: más PIB real con menos inflación.', 'Con mucha capacidad ociosa (tramo horizontal keynesiano), la DA puede crecer sin subir los precios.'],
+      mat: ['Depende de la capacidad ociosa de la economía y de la política monetaria.', 'Corto plazo: crecimiento por demanda; largo plazo: crecimiento por oferta.'],
+      ej: ['Paraguay 2023: la economía se recuperó tras la sequía de 2022 y la inflación bajó de 8,1 % (2022) a 3,7 % (2023): crecimiento por oferta.', 'Estados Unidos 2021–2022: fuerte estímulo de demanda y la inflación llegó a cerca de 9 % en 2022.'],
+      concl: 'El crecimiento no siempre provoca inflación: la provoca cuando es de demanda y la economía está cerca del pleno empleo; el crecimiento de oferta es compatible con inflación baja.' }
+  ] },
+  { n: 3, u: 4, parts: [
+    { k: 'a', st: '4.9', cmd: 'exp', q: 'Explique cómo depender de la producción primaria puede ser un obstáculo para el desarrollo económico.',
+      def: [['Sector primario', 'Agricultura, ganadería, minería, pesca y silvicultura.'], ['Desarrollo económico', 'Aumento sostenido del bienestar: ingreso, salud, educación, menos pobreza y más equidad.']],
+      cau: 'El país concentra su producción y sus exportaciones en pocos productos primarios.',
+      dia: 'Oferta y demanda con demanda y oferta inelásticas: un desplazamiento (sequía o caída de la demanda mundial) provoca un cambio grande del precio. También sirve el ciclo de la pobreza.',
+      cad: ['Los productos primarios tienen demanda y oferta inelásticas, por eso sus precios son muy volátiles.', 'Por consiguiente, el ingreso de los productores, las exportaciones y la recaudación suben y bajan mucho.', 'Esto desalienta la inversión, deja empleos de bajos salarios y reduce el gasto en salud y educación.', 'Como resultado, el bienestar no mejora de forma sostenida: se frena el desarrollo (falta de diversificación).'],
+      ej: 'Paraguay: la sequía de 2021/22 redujo fuerte la cosecha de soja y el PIB no creció en 2022. Venezuela depende del petróleo y sufrió una crisis profunda cuando cayó su precio desde 2014.',
+      req: 'Ligar la volatilidad de precios con el ingreso, la inversión, el empleo y la recaudación, y estos con el desarrollo (no solo con el crecimiento).',
+      err: 'Explicar solo que «los precios bajan» sin explicar la volatilidad ni el efecto sobre el desarrollo.' },
+    { k: 'b', st: '4.10', cmd: 'eva', q: 'Utilizando ejemplos reales, evalúe la eficacia de la sustitución de importaciones para promover el crecimiento en los países menos desarrollados.',
+      def: [['Sustitución de importaciones', 'Estrategia que protege a la industria nacional (aranceles, cuotas) para producir en el país lo que antes se importaba.'], ['Crecimiento económico', 'Aumento del PIB real.']],
+      dia: 'Arancel: sube el precio interno, aumenta la producción nacional y caen las importaciones. También DA/OA (más producción interna).',
+      teo: 'Al encarecer las importaciones, la demanda se dirige a productores nacionales, que crecen y generan empleo.',
+      pro: ['Protege a industrias nacientes hasta que ganan eficiencia.', 'Crea empleo industrial y diversifica la economía.', 'Puede generar economías de escala y ahorrar divisas.'],
+      con: ['Sin competencia, las empresas son ineficientes: costos altos, baja calidad y precios altos.', 'Los consumidores pierden opciones y pagan más.', 'Puede haber represalias de otros países y dependencia de la protección del gobierno.', 'El mercado interno de un país pobre es chico: no alcanza para economías de escala.'],
+      mat: ['Alternativa: fomento de exportaciones (Corea del Sur, Taiwán).', 'Corto plazo: más empleo; largo plazo: ineficiencia si la protección no termina.', 'Partes interesadas: productores ganan; consumidores y exportadores pierden.'],
+      ej: ['América Latina 1950–1970 (Argentina, Brasil): la industria creció, pero quedó poco competitiva y con problemas de balanza de pagos.', 'India antes de 1991; después de liberalizar, su crecimiento se aceleró.', 'Corea del Sur combinó protección temporal con metas de exportación.'],
+      concl: 'La sustitución de importaciones puede iniciar la industrialización, pero es eficaz solo si la protección es temporal y exige eficiencia; a largo plazo, el fomento de exportaciones ha dado mejores resultados.' }
+  ] }
+] },
+
+{ id: 'n25', ses: 'Noviembre 2025', ord: 2025.9, nuevo: true, ms: true, qs: [
+  { n: 1, u: 2, parts: [
+    { k: 'a', st: '2.2', cmd: 'exp', q: 'Explique dos factores distintos del precio que podrían aumentar la oferta de mercado de un bien.',
+      def: [['Oferta de mercado', 'Cantidad total que todos los productores están dispuestos a vender a cada precio.']],
+      cau: 'Cambia un determinante distinto del precio: por ejemplo, baja el costo de un insumo o mejora la tecnología.',
+      dia: 'Oferta y demanda: O₀ → O₁ a la derecha; el precio baja de P₀ a P₁ y la cantidad sube de Q₀ a Q₁.',
+      cad: ['Factor 1, costo de los factores: si baja el precio del fertilizante, producir cada unidad cuesta menos.', 'Por consiguiente, a cada precio es rentable ofrecer más: la oferta se desplaza a la derecha.', 'Factor 2, tecnología: la siembra directa o mejores semillas producen más con los mismos recursos; la oferta también se desplaza a la derecha.', 'Otros válidos: subsidios, baja de un impuesto indirecto, más empresas, expectativas, precios de bienes relacionados.'],
+      ej: 'La tecnología agrícola (siembra directa, semillas mejoradas) aumentó mucho la oferta de soja de Paraguay en las últimas décadas.',
+      req: 'Si explicas un solo factor, máximo 6/10.',
+      err: 'Decir que «sube el precio y entonces sube la oferta»: eso es un movimiento a lo largo de la curva, no un desplazamiento.' },
+    { k: 'b', st: '2.7', cmd: 'eva', q: 'Utilizando ejemplos reales, evalúe si dar subvenciones es siempre beneficioso.', same: 'm24-1b', note: 'La pregunta es parecida a la de mayo 2024, pero aquí se evalúa si «siempre» es beneficioso: el esquema premia hablar de productores, consumidores y gobierno, del costo de oportunidad y de la palabra «siempre».' }
+  ] },
+  { n: 2, u: 3, parts: [
+    { k: 'a', st: '3.2', cmd: 'exp', q: 'Explique dos determinantes del consumo que podrían hacer que disminuya.',
+      def: [['Consumo (C)', 'Gasto de los hogares en bienes y servicios; es el mayor componente de la demanda agregada.']],
+      cau: 'Por ejemplo, el banco central sube la tasa de interés o cae la confianza de los consumidores.',
+      dia: 'DA/OA: la DA se desplaza a la izquierda (DA₀ → DA₁); bajan el PIB real (Y₀ → Y₁) y el NGP (NGP₀ → NGP₁).',
+      cad: ['Determinante 1, tasa de interés: si sube, el crédito es más caro y ahorrar rinde más; los hogares compran menos bienes durables a crédito.', 'Determinante 2, confianza del consumidor: si los hogares temen perder el empleo, ahorran más y gastan menos.', 'Por consiguiente, baja C, la DA se desplaza a la izquierda y caen el PIB real y el NGP.', 'Otros válidos: riqueza, impuestos a la renta, endeudamiento de los hogares, expectativas de precios.'],
+      ej: 'El BCP subió su tasa de 0,75 % (2021) a 8,50 % (2022) para frenar la inflación y el crédito al consumo se desaceleró. En 2020, la caída de la confianza por la pandemia redujo el consumo en casi todo el mundo.',
+      req: 'Si explicas un solo determinante, máximo 6/10.',
+      err: 'Mover la DA por un cambio del nivel de precios (eso es movimiento a lo largo).' },
+    { k: 'b', st: '3.7', cmd: 'eva', q: 'Utilizando ejemplos reales, evalúe la eficacia de las políticas de oferta para reducir el desempleo.',
+      def: [['Políticas de oferta', 'Políticas que aumentan la capacidad productiva: de mercado (desregulación, menos impuestos, reformas laborales) e intervencionistas (educación, salud, infraestructura, I+D).'], ['Desempleo', 'Personas que buscan trabajo y no lo encuentran.']],
+      dia: 'DA/OA con la OALP a la derecha; y/o mercado laboral (capacitación que vuelve a emplear a trabajadores con desempleo estructural).',
+      teo: 'Capacitación, información y reformas reducen el desempleo estructural y friccional y aumentan el producto potencial.',
+      pro: ['Atacan el desempleo estructural y friccional, que la política de demanda no resuelve.', 'Intervencionistas: apoyan directamente sectores clave (capacitación técnica).', 'De mercado: mejor asignación de recursos y sin costo para el presupuesto.', 'Aumentan el crecimiento a largo plazo sin inflación.'],
+      con: ['No sirven contra el desempleo cíclico: hace falta más DA (fiscal o monetaria).', 'Tardan años en dar resultado.', 'Intervencionistas: cuestan mucho al Estado.', 'De mercado: problemas de equidad (menos protección al trabajador), intereses creados e impacto ambiental.'],
+      mat: ['Depende del tipo de desempleo.', 'Corto plazo vs. largo plazo.'],
+      ej: ['Alemania, reformas Hartz (2003–2005): el desempleo bajó en los años siguientes, aunque creció el empleo precario.', 'Paraguay: programas de formación técnica (SNPP) y becas BECAL para mejorar el capital humano.'],
+      concl: 'Son eficaces contra el desempleo estructural a largo plazo, siempre que se acompañen con políticas de demanda cuando el desempleo es cíclico.' }
+  ] },
+  { n: 3, u: 4, parts: [
+    { k: 'a', st: '4.1', cmd: 'exp', q: 'Explique dos posibles beneficios del comercio internacional.',
+      def: [['Comercio internacional', 'Intercambio de bienes y servicios entre países.']],
+      cau: 'El país se abre al comercio y su precio interno se iguala al precio mundial.',
+      dia: 'Libre comercio con importaciones: precio mundial (Pm) por debajo del precio interno; los consumidores compran más a menor precio y las importaciones cubren la diferencia.',
+      cad: ['Beneficio 1, precios más bajos y más variedad: al importar a Pm, baja el precio y sube el excedente del consumidor.', 'Beneficio 2, mercados más grandes y economías de escala: los exportadores venden a más compradores y bajan sus costos medios.', 'Otros válidos: más competencia, acceso a recursos, más divisas, asignación más eficiente.'],
+      ej: 'Paraguay exporta soja, carne y energía e importa autos, maquinaria y combustibles que no produce.',
+      req: 'Si explicas un solo beneficio, máximo 6/10.',
+      err: 'Explicar la ventaja comparativa con cálculos: eso es solo del Nivel Superior.' },
+    { k: 'b', st: '4.2', cmd: 'dis', q: 'Utilizando ejemplos reales, discuta las ventajas y desventajas de que un país proteja su mercado contra las importaciones.',
+      def: [['Protección comercial', 'Medidas que limitan las importaciones: aranceles, cuotas, subvenciones a productores nacionales y barreras administrativas.']],
+      dia: 'Arancel (o cuota o subvención): sube el precio interno, aumenta la producción nacional, bajan las importaciones; recaudación del gobierno y pérdida de bienestar.',
+      teo: 'Analiza consumidores, productores, gobierno y sociedad.',
+      pro: ['Protege industrias nacientes y empleos.', 'Seguridad nacional, salud y seguridad, normas ambientales.', 'Evita el dumping y genera recaudación (arancel).'],
+      con: ['Mala asignación de recursos y pérdida de bienestar.', 'Precios más altos y menos variedad para los consumidores.', 'Represalias de otros países.', 'Encarece insumos y quita competitividad a los exportadores.'],
+      mat: ['El efecto depende de la medida y de su duración.', 'Partes interesadas: ganan productores protegidos y gobierno; pierden consumidores y exportadores.'],
+      ej: ['Estados Unidos aplicó en 2018 aranceles de 25 % al acero: ayudó a las acerías, pero subió costos a los fabricantes de autos; hubo represalias.', 'El arancel externo común del MERCOSUR protege, por ejemplo, la industria automotriz con aranceles de hasta 35 %.'],
+      concl: 'La protección puede justificarse en casos concretos y temporales, pero sus costos suelen superar a sus beneficios si se vuelve permanente.' }
+  ] }
+] },
+
+{ id: 'm25', ses: 'Mayo 2025', ord: 2025.5, nuevo: true, ms: true, qs: [
+  { n: 1, u: 1, parts: [
+    { k: 'a', st: '1.1', cmd: 'exp', q: 'Utilizando una curva de posibilidades de producción, explique la escasez y el costo de oportunidad.',
+      def: [['Escasez', 'Recursos limitados frente a necesidades y deseos ilimitados.'], ['Costo de oportunidad', 'Lo que se deja de producir o consumir en la mejor alternativa sacrificada.'], ['CPP', 'Combinaciones máximas de dos bienes que se pueden producir con todos los recursos y la tecnología dados.']],
+      cau: 'Los recursos son limitados, así que la sociedad tiene que elegir qué producir.',
+      dia: 'CPP rotulada: puntos sobre la curva (eficientes), dentro (recursos ociosos) y fuera (inalcanzables). Movimiento de A a B: más de un bien a costa del otro.',
+      cad: ['Supuestos: recursos fijos y plenamente empleados, tecnología constante.', 'Los puntos fuera de la curva no se alcanzan: eso muestra la escasez.', 'Sobre la curva, producir más de un bien obliga a producir menos del otro: ese sacrificio es el costo de oportunidad.', 'Matiz: dentro de la curva hay recursos ociosos; se puede producir más de ambos sin costo de oportunidad.'],
+      ej: 'Paraguay: más presupuesto para salud implica menos para infraestructura si los recursos están plenamente empleados.',
+      req: 'Si explicas un solo concepto, máximo 6/10.',
+      err: 'No rotular los ejes con los dos bienes o no mostrar el movimiento entre dos puntos.' },
+    { k: 'b', st: '2.8', cmd: 'eva', q: 'Utilizando ejemplos reales, evalúe si las subvenciones son la forma más eficaz de aumentar el consumo de atención médica.',
+      def: [['Subvención', 'Pago del gobierno a productores que baja sus costos.'], ['Bien preferente (meritorio)', 'Bien que se subconsume en el mercado libre; tiene externalidades positivas, como la atención médica.']],
+      dia: 'Externalidad positiva de consumo (BMgS > BMgP) y subvención: la oferta (CMgP) se desplaza a la derecha, baja el precio y sube la cantidad hacia Q*.',
+      teo: 'La subvención baja el precio de la atención médica y aumenta su consumo.',
+      pro: ['Baja el precio y aumenta el acceso de los hogares de bajos ingresos.', 'Beneficia a consumidores y productores.', 'Acerca el consumo al óptimo social.'],
+      con: ['Costo de oportunidad: el dinero sale de otros gastos públicos.', 'Puede generar ineficiencia en los proveedores.', 'Si falta información, la gente no consume aunque sea barato.'],
+      mat: ['Otras políticas que hay que comparar: provisión directa (hospitales públicos), educación y campañas, legislación (vacunación obligatoria).', 'Palabra clave: «la más eficaz».'],
+      ej: ['Paraguay: los servicios en hospitales públicos del Ministerio de Salud son gratuitos (provisión directa).', 'Estados Unidos: subsidios para seguros de salud de la Ley de Cuidado de Salud Asequible (desde 2014).'],
+      concl: 'Las subvenciones aumentan el consumo, pero no siempre son la forma más eficaz: la provisión directa llega mejor a los más pobres y la educación ataca la falta de información.',
+      req: 'Si no comparas con otras políticas, máximo 12/15.' }
+  ] },
+  { n: 2, u: 3, parts: [
+    { k: 'a', st: '3.1', cmd: 'exp', q: 'Explique cómo una suba de la tasa de interés podría afectar el tamaño del flujo circular del ingreso.',
+      def: [['Flujo circular del ingreso', 'Modelo del ingreso y el gasto entre hogares, empresas, gobierno, bancos y exterior.'], ['Inyecciones y filtraciones', 'Inyecciones (I, G, X) entran al flujo; filtraciones (S, T, M) salen.']],
+      cau: 'El banco central sube la tasa de interés.',
+      dia: 'Flujo circular con inyecciones y filtraciones; flechas del ahorro (más grande) y de la inversión (más chica).',
+      cad: ['Ahorrar rinde más: aumenta el ahorro (una filtración).', 'Pedir prestado cuesta más: baja la inversión de las empresas (una inyección) y el consumo a crédito.', 'Por consiguiente, las filtraciones superan a las inyecciones.', 'Como resultado, el flujo circular se achica: baja el ingreso nacional.'],
+      ej: 'Paraguay 2022: el BCP subió la tasa de política monetaria hasta 8,50 %.',
+      req: 'Usar el vocabulario del modelo: inyecciones, filtraciones y sus supuestos.',
+      err: 'Responder con un diagrama DA/OA sin el flujo circular.' },
+    { k: 'b', st: '3.1', cmd: 'dis', q: 'Utilizando ejemplos reales, discuta la utilidad del PIB real per cápita para comparar el bienestar económico entre países.',
+      def: [['PIB real per cápita', 'PIB ajustado por inflación dividido por la población: ingreso promedio por habitante.'], ['Bienestar económico', 'Prosperidad y calidad de vida de la población.']],
+      dia: 'No es obligatorio; sirven la CPP, Lorenz o una externalidad negativa para mostrar lo que el PIB no capta.',
+      teo: 'Un PIB per cápita más alto suele implicar más empleo, más consumo y más recaudación para servicios públicos.',
+      pro: ['Es fácil de calcular y comparar; usa datos disponibles en casi todos los países.', 'Está muy relacionado con el acceso a bienes y servicios.', 'En PPA corrige las diferencias de costo de vida.'],
+      con: ['No muestra la distribución del ingreso.', 'No incluye la producción no comercializada ni la economía informal.', 'Ignora externalidades negativas y el agotamiento de recursos.', 'No mide salud, educación ni calidad de vida.'],
+      mat: ['Alternativas: IDH, índice del planeta feliz, índice para una vida mejor de la OCDE, índice de la felicidad.'],
+      ej: ['Qatar tiene un ingreso per cápita muy alto, pero su IDH queda 39 puestos por debajo de su posición en ingreso; Costa Rica logra mucho más con menos ingreso (PNUD, 2025).', 'Paraguay: alrededor de 6 de cada 10 ocupados son informales, y esa actividad se mide mal.'],
+      concl: 'Es un punto de partida útil para comparar, pero insuficiente: debe complementarse con indicadores compuestos.' }
+  ] },
+  { n: 3, u: 4, parts: [
+    { k: 'a', st: '4.2', cmd: 'exp', q: 'Explique dos razones de la protección comercial.',
+      def: [['Protección comercial', 'Medidas que limitan las importaciones para proteger a productores nacionales.']],
+      cau: 'Un país enfrenta competencia de importaciones que considera perjudicial.',
+      dia: 'Arancel o cuota: sube el precio interno, aumenta la producción nacional y caen las importaciones.',
+      cad: ['Razón 1, industria naciente: una industria nueva no puede competir hasta ganar escala; la protección le da tiempo.', 'Razón 2, antidumping: si un país vende por debajo del costo, el arancel protege a los productores locales de una competencia desleal.', 'Otras válidas: empleo, recaudación, seguridad nacional, salud, ambiente, balanza de pagos, diversificación.'],
+      ej: 'La Unión Europea aplicó en 2013 derechos antidumping a paneles solares chinos.',
+      req: 'Si explicas una sola razón, máximo 6/10.',
+      err: 'Enumerar razones sin explicar el mecanismo.' },
+    { k: 'b', st: '4.4', cmd: 'eva', q: 'Utilizando ejemplos reales, evalúe las consecuencias de los bloques comerciales.',
+      def: [['Bloque comercial', 'Grupo de países que reduce o elimina barreras entre sí: zona de libre comercio, unión aduanera, mercado común o unión monetaria.']],
+      dia: 'DA/OA (más exportaciones e inversión → DA y OALP) o diagramas de comercio.',
+      teo: 'Los beneficios y costos dependen del grado de integración.',
+      pro: ['Mercado más grande y economías de escala.', 'Más empleo y crecimiento por la libre movilidad de trabajo y capital (mercado común).', 'Más poder en negociaciones multilaterales.', 'Más inversión extranjera, transferencia de tecnología, precios más bajos y más estabilidad política.'],
+      con: ['Desempleo en sectores que no resisten la competencia y más desigualdad.', 'Pérdida de soberanía.', 'Problemas de balanza de pagos.', 'Obstaculizan las negociaciones multilaterales en la OMC.'],
+      mat: ['Partes interesadas: exportadores ganan; industrias protegidas pierden.', 'Corto plazo: ajustes y desempleo; largo plazo: eficiencia.'],
+      ej: ['MERCOSUR: Paraguay accede a mercados vecinos, pero debe aplicar el arancel externo común.', 'Acuerdo MERCOSUR–UE (firmado en Asunción en 2026): oportunidades para carne y azúcar orgánica, pero más competencia para la industria.', 'Brexit (2020): el Reino Unido recuperó soberanía comercial, pero el comercio con la UE se encareció.'],
+      concl: 'Los bloques suelen traer beneficios netos, pero se reparten de forma desigual: hacen falta políticas para los sectores perdedores.' }
+  ] }
+] },
+{ id: 'n24', ses: 'Noviembre 2024', ord: 2024.9, nuevo: true, ms: true, qs: [
+  { n: 1, u: 2, parts: [
+    { k: 'a', st: '2.3', cmd: 'exp', q: 'Explique por qué una disminución de la oferta suele subir el precio, mientras que una suba del precio suele aumentar la cantidad producida.',
+      def: [['Oferta', 'Cantidad que los productores están dispuestos a vender a cada precio.'], ['Ley de la oferta', 'A mayor precio, mayor cantidad ofrecida (ceteris paribus).']],
+      cau: 'Parte 1: un determinante distinto del precio (por ejemplo, una sequía) reduce la oferta. Parte 2: sube la demanda y con ella el precio.',
+      dia: 'Dos diagramas: (1) O₀ → O₁ a la izquierda, escasez al precio inicial y suba de P₀ a P₁; (2) D₀ → D₁ a la derecha, el precio sube y hay un movimiento a lo largo de la oferta (Q₀ → Q₁).',
+      cad: ['Parte 1: con menos oferta, al precio inicial hay escasez (exceso de demanda); los compradores compiten y el precio sube hasta el nuevo equilibrio.', 'Parte 2: si sube el precio, producir es más rentable y cubre costos marginales crecientes: los productores ofrecen más (movimiento a lo largo de la curva de oferta).', 'Clave: desplazamiento de la curva (parte 1) frente a movimiento a lo largo de la curva (parte 2).'],
+      ej: 'Sequía 2021/22 en Paraguay: menos oferta de soja y precios internos más altos; con precios altos de la carne, los ganaderos aumentan la faena.',
+      req: 'Si explicas una sola de las dos partes, máximo 6/10.',
+      err: 'Confundir desplazamiento con movimiento a lo largo de la curva.' },
+    { k: 'b', st: '2.7', cmd: 'eva', q: 'Utilizando ejemplos reales, evalúe si los precios máximos fijados por el gobierno siempre tienen efectos negativos sobre los mercados y las partes interesadas.',
+      def: [['Precio máximo', 'Precio fijado por el gobierno por debajo del equilibrio; es ilegal vender más caro.'], ['Partes interesadas', 'Consumidores, productores, gobierno y otros afectados.']],
+      dia: 'Precio máximo por debajo de P*: Qd > Qo, escasez; pérdida de bienestar; parte del excedente pasa del productor al consumidor.',
+      teo: 'Busca proteger a los consumidores, pero genera escasez.',
+      pro: ['Escasez, colas, racionamiento sin precio y mercados negros.', 'Pérdida de bienestar y mala asignación de recursos.', 'Menos ganancias: los productores reducen calidad o salen del mercado.'],
+      con: ['Quienes consiguen el bien pagan menos: suben su excedente.', 'Ayuda a los hogares de bajos ingresos con bienes esenciales.', 'Puede aumentar el consumo de un bien preferente (externalidad positiva).', 'Puede ser popular para el gobierno en el corto plazo.'],
+      mat: ['El efecto depende de cuánto se fija por debajo del equilibrio y de las elasticidades.', 'Si se combina con subsidios a productores o con provisión directa, se reduce la escasez.', 'Palabra clave: «siempre».'],
+      ej: ['Venezuela: los controles de precios generaron escasez generalizada de alimentos en la década de 2010.', 'Argentina: el programa «Precios Cuidados» (desde 2014) con resultados limitados.', 'Berlín congeló alquileres en 2020; el tribunal lo anuló en 2021 y la oferta de alquiler había caído.'],
+      concl: 'No siempre son negativos: algunos consumidores ganan, pero sin medidas complementarias suelen predominar la escasez y los mercados negros.' }
+  ] },
+  { n: 2, u: 3, parts: [
+    { k: 'a', st: '3.7', cmd: 'exp', q: 'Explique cómo las políticas de oferta pueden tener efectos tanto de oferta como de demanda sobre el PIB.',
+      def: [['Políticas de oferta', 'Políticas que aumentan la capacidad productiva (de mercado o intervencionistas).'], ['PIB', 'Valor de la producción final de un país en un año.']],
+      cau: 'El gobierno invierte en educación e infraestructura o baja impuestos.',
+      dia: 'DA/OA: la OALP se desplaza a la derecha (efecto de oferta) y la DA también (efecto de demanda).',
+      cad: ['Efecto de oferta: más capital humano y físico aumentan la productividad; la OALP se desplaza a la derecha y sube el PIB de pleno empleo.', 'Efecto de demanda: el gasto público en escuelas y rutas es G, y una baja de impuestos sube C o I; la DA se desplaza a la derecha a corto plazo.', 'Como resultado, sube el PIB real a corto plazo (DA) y a largo plazo (OALP).'],
+      ej: 'Paraguay: el Corredor Bioceánico es gasto público hoy (DA) y baja costos de transporte mañana (OALP).',
+      req: 'Si explicas solo el efecto de oferta o solo el de demanda, máximo 6/10.',
+      err: 'Mostrar solo la OALP.' },
+    { k: 'b', st: '3.7', cmd: 'eva', q: 'Utilizando ejemplos reales, evalúe si los beneficios de las políticas de oferta siempre superan sus limitaciones.',
+      def: [['Políticas de oferta de mercado', 'Desregulación, privatización, liberalización, menos impuestos, reformas laborales.'], ['Políticas de oferta intervencionistas', 'Educación, salud, I+D, infraestructura, política industrial.']],
+      dia: 'DA/OA con la OALP a la derecha (más PIB potencial, menos presión sobre el NGP); CPP hacia afuera; Lorenz si hablas de equidad.',
+      teo: 'Aumentan la capacidad productiva de forma sostenida.',
+      pro: ['Crecimiento a largo plazo sin inflación.', 'Más competencia y eficiencia; mercados más flexibles y menos desempleo.', 'Más competitividad internacional e incentivos a innovar.', 'Intervencionistas: apoyo directo a sectores clave. De mercado: no cuestan al presupuesto.'],
+      con: ['No resuelven el desempleo cíclico.', 'Rezagos de años.', 'De mercado: desigualdad, impacto ambiental, intereses creados.', 'Intervencionistas: costo fiscal alto.'],
+      mat: ['Corto plazo vs. largo plazo.', 'Palabra clave: «siempre».'],
+      ej: ['Corea del Sur: la inversión en educación sostuvo décadas de crecimiento.', 'Reino Unido en los 80: privatizaciones y desregulación con más eficiencia, pero más desigualdad.', 'Paraguay: Ley 60/90 y régimen de maquila para atraer inversión.'],
+      concl: 'A largo plazo los beneficios suelen ser mayores, pero no siempre: depende del diseño, de la equidad y del tiempo disponible.' }
+  ] },
+  { n: 3, u: 4, parts: [
+    { k: 'a', st: '4.9', cmd: 'exp', q: 'Explique cómo depender de la producción primaria puede ser un obstáculo para el crecimiento económico.',
+      def: [['Sector primario', 'Agricultura, ganadería, minería, pesca y silvicultura.'], ['Crecimiento económico', 'Aumento del PIB real.']],
+      cau: 'El país depende de pocos productos primarios.',
+      dia: 'Oferta y demanda inelásticas: un desplazamiento provoca grandes cambios de precio. También DA/OA.',
+      cad: ['Demanda y oferta inelásticas (EPD y EPO bajas): los precios fluctúan mucho.', 'Por consiguiente, el ingreso de los productores, la inversión, el empleo, las exportaciones y la recaudación son inestables.', 'Además, los productos primarios tienen baja elasticidad ingreso: al crecer la economía mundial, su demanda crece poco.', 'Clima y sobreespecialización hacen el PIB muy volátil: el crecimiento se frena.'],
+      ej: 'Paraguay: la sequía de 2021/22 redujo fuerte la cosecha de soja y el PIB no creció en 2022.',
+      req: 'Explicar la volatilidad de precios y sus efectos en el crecimiento.',
+      err: 'Hablar de desarrollo en lugar de crecimiento: aquí la pregunta es sobre crecimiento.' },
+    { k: 'b', st: '4.10', cmd: 'eva', q: 'Utilizando ejemplos reales, evalúe si el crecimiento y el desarrollo se logran mejor con la intervención del gobierno.',
+      def: [['Crecimiento económico', 'Aumento del PIB real.'], ['Desarrollo económico', 'Aumento sostenido del bienestar: ingreso, salud, educación, menos pobreza.'], ['Intervención gubernamental', 'Acción del Estado en la economía (provisión, redistribución, regulación).']],
+      dia: 'DA/OA, CPP, salario mínimo o Lorenz.',
+      teo: 'El Estado provee bienes preferentes e infraestructura y redistribuye el ingreso.',
+      pro: ['Provee educación, salud e infraestructura que el mercado no ofrece lo suficiente.', 'Redistribución (impuestos, transferencias, salario mínimo) mejora la equidad y el desarrollo.', 'Estrategias comerciales e industriales pueden impulsar sectores.'],
+      con: ['Costo fiscal, ineficiencia, corrupción y desincentivos.', 'Las políticas de mercado (liberalización, privatización, desregulación) también impulsan el crecimiento.', 'Lo clave es el equilibrio entre Estado y mercado.'],
+      mat: ['Distinguir crecimiento de desarrollo (si solo tratas uno, máximo 9/15).', 'Palabra clave: «mejor» (si no comparas con otras políticas, máximo 12/15).'],
+      ej: ['Tekoporã y Hambre Cero en las escuelas (Paraguay): intervención para el desarrollo.', 'India 1991: la liberalización aceleró el crecimiento.', 'Corea del Sur: combinó intervención estatal con apertura exportadora.'],
+      concl: 'La intervención es clave para el desarrollo (salud, educación, equidad), pero el crecimiento sostenido suele requerir también mercados competitivos: lo mejor es una combinación.' }
+  ] }
+] },
+
+{ id: 'm24', ses: 'Mayo 2024', ord: 2024.5, nuevo: true, ms: true, qs: [
+  { n: 1, u: 2, parts: [
+    { k: 'a', st: '2.1', cmd: 'exp', q: 'Explique cómo una baja del precio del tren podría afectar el precio y la producción de sus sustitutos y complementarios.',
+      def: [['Bienes sustitutos', 'Bienes que satisfacen la misma necesidad (tren y bus).'], ['Bienes complementarios', 'Bienes que se consumen juntos (tren y comida en la estación).']],
+      cau: 'Baja el precio del viaje en tren.',
+      dia: 'Dos diagramas: (1) sustituto (bus): D se desplaza a la izquierda, bajan precio y cantidad; (2) complementario (comida en la estación): D a la derecha, suben precio y cantidad.',
+      cad: ['Baja el precio del tren: sube la cantidad demandada de viajes en tren (movimiento a lo largo).', 'Sustitutos: la gente deja el bus o el auto; la demanda de esos servicios baja y caen su precio y su producción.', 'Complementarios: más pasajeros compran comida en las estaciones; la demanda sube y aumentan su precio y su producción.'],
+      ej: 'Alemania (2023): el pasaje mensual de 49 € para trenes y transporte regional aumentó los viajes en tren.',
+      req: 'Si tratas solo sustitutos o solo complementarios, máximo 6/10.',
+      err: 'Desplazar la demanda del tren: su precio cambió, así que es un movimiento a lo largo.' },
+    { k: 'b', st: '2.7', cmd: 'eva', q: 'Utilizando ejemplos reales, evalúe la idea de que el gobierno nunca debería dar subvenciones a las empresas.',
+      def: [['Subvención', 'Pago del gobierno a productores por unidad producida que baja sus costos.']],
+      dia: 'Oferta y demanda con subvención: O se desplaza a la derecha, el consumidor paga menos, el productor recibe más, costo para el gobierno y pérdida de bienestar.',
+      teo: 'A favor de la afirmación (los costos de las subvenciones) y en contra (cuándo se justifican).',
+      pro: ['Mala asignación de recursos y pérdida de bienestar.', 'Costo de oportunidad del gasto público.', 'Las empresas se vuelven ineficientes y dependientes.', 'Perjudica a productores extranjeros (comercio desleal).'],
+      con: ['Corrige externalidades positivas (energías limpias, vacunas).', 'Sostiene el ingreso de productores pequeños.', 'Baja precios para hogares de bajos ingresos.', 'Apoya industrias clave o expuestas a importaciones.'],
+      mat: ['Partes interesadas: consumidores, productores, gobierno y contribuyentes, productores extranjeros.', 'Palabra clave: «nunca».'],
+      ej: ['Estados Unidos: créditos fiscales para autos eléctricos (Ley de Reducción de la Inflación, 2022).', 'Unión Europea: subvenciones agrícolas de la Política Agrícola Común.', 'Paraguay: subsidio al pasaje del transporte público del área metropolitana de Asunción.'],
+      concl: 'La afirmación es demasiado fuerte: las subvenciones se justifican con externalidades positivas o fines de equidad, siempre que sean focalizadas y temporales.' }
+  ] },
+  { n: 2, u: 3, parts: [
+    { k: 'a', st: '3.3', cmd: 'exp', q: 'Explique la diferencia entre desempleo cíclico (por insuficiencia de demanda) y desempleo estructural.',
+      def: [['Desempleo cíclico', 'Desempleo causado por una caída de la DA en una recesión.'], ['Desempleo estructural', 'Desempleo por cambios de largo plazo en la demanda o la tecnología: las habilidades o la ubicación de los trabajadores ya no coinciden con los empleos.']],
+      cau: 'Cíclico: cae la DA. Estructural: cambia la estructura de la economía (automatización, cierre de una industria).',
+      dia: 'Cíclico: DA/OA con la DA a la izquierda y brecha deflacionaria. Estructural: mercado laboral de un sector con la demanda de trabajo a la izquierda.',
+      cad: ['Cíclico: baja la DA → las empresas venden menos → producen menos → despiden; aparece una brecha deflacionaria.', 'Estructural: cae la demanda de cierto tipo de trabajo, aunque la economía crezca; los trabajadores no tienen las habilidades que piden los nuevos empleos.', 'Diferencia: uno es temporal y de toda la economía; el otro es de largo plazo y de un sector o una región.'],
+      ej: 'Cíclico: Paraguay 2020 (pandemia). Estructural: cajeros reemplazados por cajas de autoservicio.',
+      req: 'Si explicas un solo tipo, máximo 6/10.',
+      err: 'Explicar los tipos sin diagramas.' },
+    { k: 'b', st: '3.6', cmd: 'eva', q: 'Utilizando ejemplos reales, evalúe si la política fiscal es la forma más eficaz de reducir el desempleo.',
+      def: [['Política fiscal', 'Uso del gasto público y los impuestos para influir en la economía.'], ['Desempleo', 'Personas que buscan trabajo y no lo encuentran.']],
+      dia: 'DA/OA: política fiscal expansiva desplaza la DA a la derecha y cierra la brecha deflacionaria; sube el PIB real y baja el desempleo cíclico.',
+      teo: 'Más G o menos T suben la DA y la demanda de trabajo.',
+      pro: ['Muy eficaz en recesiones profundas.', 'Puede dirigirse a sectores o regiones con desempleo.', 'Actúa directamente sobre la DA.'],
+      con: ['No resuelve el desempleo estructural ni friccional.', 'Rezagos de aprobación y ejecución.', 'Déficit y deuda sostenibles; presión política.', 'Puede generar inflación cerca del pleno empleo.'],
+      mat: ['Comparar con política monetaria y de oferta (si no lo haces, máximo 12/15).', 'Depende del tipo de desempleo.', 'Palabra clave: «más eficaz».'],
+      ej: ['Paraguay 2020: Ley de Emergencia y el subsidio Pytyvõ sostuvieron el ingreso de trabajadores informales.', 'Estados Unidos 2009: plan de estímulo de unos US$ 800.000 millones.', 'Paraguay: la Ley de Responsabilidad Fiscal limita el déficit a 1,5 % del PIB en tiempos normales.'],
+      concl: 'Es la más eficaz contra el desempleo cíclico en una recesión profunda, pero no contra el estructural: allí son mejores las políticas de oferta.' }
+  ] },
+  { n: 3, u: 4, parts: [
+    { k: 'a', st: '4.9', cmd: 'exp', q: 'Explique cómo la fuga de capitales y la baja inversión en capital humano pueden frenar el crecimiento económico.',
+      def: [['Fuga de capitales', 'Salida masiva de dinero y activos de un país por desconfianza o inestabilidad.'], ['Capital humano', 'Conocimientos, habilidades y salud de las personas.']],
+      cau: 'Inestabilidad que provoca salida de capitales; poco gasto en educación y salud.',
+      dia: 'DA/OA (menos I y OALP que no crece), CPP que no se expande o ciclo de la pobreza.',
+      cad: ['Fuga de capitales: se pierde financiamiento interno, se deprecia la moneda y sube la deuda; baja la inversión y el crecimiento.', 'Bajo capital humano: trabajadores con poca educación y salud son menos productivos; la OALP crece poco.', 'Como resultado, el PIB potencial y el empleo de calidad crecen lentamente.'],
+      ej: 'Argentina sufre fugas de capitales recurrentes que presionan el tipo de cambio. En Paraguay, BECAL busca elevar el capital humano con becas de posgrado.',
+      req: 'Si explicas un solo obstáculo, máximo 6/10.',
+      err: 'Definir capital humano como «máquinas».' },
+    { k: 'b', st: '4.8', cmd: 'eva', q: 'Utilizando ejemplos reales, evalúe si el nivel del PIB real es la mejor medida del desarrollo económico.',
+      def: [['PIB real', 'Valor de la producción ajustado por inflación.'], ['Desarrollo económico', 'Mejora sostenida y multidimensional del bienestar.']],
+      dia: 'DA/OA o CPP para el crecimiento.',
+      teo: 'Más PIB real significa más producción, empleo, ingreso y consumo.',
+      pro: ['Refleja producción, ingresos y gasto: se relaciona con el nivel de vida.', 'Datos disponibles y comparables en el tiempo.'],
+      con: ['Debe ser per cápita y en PPA para comparar países.', 'El desarrollo es multidimensional: salud, educación, desigualdad, ambiente.', 'Indicadores compuestos más completos: IDH, IDHD, IDG, índice del planeta feliz.'],
+      mat: ['Palabra clave: «mejor» (si no consideras otras medidas, máximo 12/15).'],
+      ej: ['Qatar y Kuwait: ingreso muy alto, pero IDH 39 y 29 puestos por debajo de su posición en ingreso (PNUD, 2025).', 'Paraguay: IDH 0,756, pero pierde 20,8 % por desigualdad (IDHD 0,599).'],
+      concl: 'El PIB real no es la mejor medida: es necesario, pero el desarrollo se mide mejor combinando indicadores.' }
+  ] }
+] },
+
+{ id: 'n23', ses: 'Noviembre 2023', ord: 2023.9, nuevo: true, ms: true, onlyMs: true, qs: [
+  { n: 1, u: 2, parts: [
+    { k: 'a', st: '2.5', cmd: 'exp', q: 'Explique cómo la disponibilidad de sustitutos y el hecho de que un bien sea de primera necesidad afectan su elasticidad precio de la demanda.',
+      def: [['EPD', 'Sensibilidad de la cantidad demandada ante cambios del precio: %ΔQd ÷ %ΔP.']],
+      cau: 'Cambia el precio de un bien con muchos sustitutos o de un bien necesario.',
+      dia: 'Dos curvas de demanda: una plana (elástica) y una empinada (inelástica), con el mismo cambio de precio.',
+      cad: ['Muchos sustitutos cercanos: si sube el precio, la gente se cambia a otra marca; la cantidad cae mucho (demanda elástica).', 'Bienes necesarios: se siguen comprando aunque suba el precio; la cantidad cae poco (demanda inelástica).'],
+      ej: 'Una marca de gaseosa (elástica) frente a la sal o los medicamentos (inelástica).',
+      req: 'Si explicas solo sustitutos o solo necesidad, máximo 6/10.',
+      err: 'Confundir pendiente con elasticidad sin aclarar.' },
+    { k: 'b', st: '2.5', cmd: 'exa', q: 'Utilizando ejemplos reales, examine la importancia de la EPD para las empresas y para los gobiernos.',
+      def: [['EPD', 'Sensibilidad de la cantidad demandada ante cambios del precio.'], ['Ingreso total', 'Precio × cantidad.']],
+      dia: 'Demanda inelástica y elástica con cambios de ingreso total; impuesto indirecto con recaudación según la EPD.',
+      teo: 'Empresas: con demanda inelástica, subir el precio sube el ingreso total; con elástica, bajarlo. Gobierno: gravar bienes inelásticos recauda más; y reduce el consumo de bienes de demérito si la demanda es suficientemente elástica.',
+      pro: ['Las empresas fijan precios para maximizar el ingreso.', 'El gobierno decide qué gravar y predice la recaudación.', 'Ayuda a diseñar impuestos sobre bienes de demérito.'],
+      con: ['La EPD es difícil de medir y cambia con el tiempo.', 'Otros factores (ingreso, gustos) cambian a la vez.', 'Con demanda inelástica, un impuesto recauda pero reduce poco el consumo de bienes de demérito.'],
+      mat: ['Si tratas solo empresas o solo gobiernos, máximo 9/15.'],
+      ej: ['Paraguay: el impuesto selectivo al consumo de cigarrillos recauda bastante porque la demanda es inelástica, pero el consumo baja poco.', 'Aerolíneas: precios bajos para turistas (elásticos) y altos para viajeros de negocios (inelásticos).'],
+      concl: 'La EPD es muy útil para decisiones de precios e impuestos, pero hay que usarla con cautela porque se mide con error y cambia.' }
+  ] },
+  { n: 2, u: 3, parts: [
+    { k: 'a', st: '3.2', cmd: 'exp', q: 'Explique los efectos de una mejora tecnológica y de un aumento de trabajadores calificados sobre la producción de pleno empleo (potencial).',
+      def: [['Producción potencial', 'PIB real que se alcanza con pleno empleo de los recursos.']],
+      cau: 'Mejora la tecnología y aumenta la cantidad de trabajadores calificados.',
+      dia: 'DA/OA con la OALP a la derecha (Yf₀ → Yf₁) o CPP hacia afuera.',
+      cad: ['La tecnología mejora la calidad del capital: con los mismos recursos se produce más.', 'Más trabajadores calificados aumentan la cantidad y calidad del trabajo.', 'Por consiguiente, la OALP se desplaza a la derecha y sube la producción de pleno empleo.'],
+      ej: 'Corea del Sur combinó inversión en educación y tecnología durante décadas.',
+      req: 'Si explicas solo uno de los dos factores, máximo 6/10.',
+      err: 'Mover solo la DA.' },
+    { k: 'b', st: '3.3', cmd: 'eva', q: 'Utilizando ejemplos reales, evalúe si el crecimiento económico siempre mejora el nivel de vida de un país.',
+      def: [['Crecimiento económico', 'Aumento del PIB real.'], ['Nivel de vida', 'Bienestar material y calidad de vida de la población.']],
+      dia: 'CPP hacia afuera o DA/OA.',
+      teo: 'Más ingresos y empleo; más recaudación para salud, educación e infraestructura.',
+      pro: ['Más ingreso y consumo.', 'Más empleo.', 'Más recaudación para servicios públicos.'],
+      con: ['Costos ambientales.', 'Puede aumentar la desigualdad.', 'Depende de cuánto invierta el gobierno en bienes preferentes.', 'Factores no monetarios: tiempo libre, delito, vida comunitaria.'],
+      mat: ['Palabra clave: «siempre».'],
+      ej: ['China redujo masivamente la pobreza extrema, pero con contaminación grave.', 'Paraguay: crecimiento alto en la década de 2010, con desigualdad todavía elevada.'],
+      concl: 'El crecimiento suele mejorar el nivel de vida, pero no siempre: depende de su distribución y de su costo ambiental.' }
+  ] },
+  { n: 3, u: 4, parts: [
+    { k: 'a', st: '4.2', cmd: 'exp', q: 'Explique cómo un país podría usar la protección comercial para evitar el dumping y proteger una industria naciente.',
+      def: [['Dumping', 'Vender en el exterior por debajo del costo o del precio del mercado de origen.'], ['Industria naciente', 'Industria nueva que todavía no tiene escala para competir.']],
+      cau: 'Llegan importaciones muy baratas o el país quiere desarrollar una industria nueva.',
+      dia: 'Arancel o cuota: sube el precio interno, aumenta la producción nacional y caen las importaciones.',
+      cad: ['Industria naciente: la protección le da tiempo para crecer, alcanzar economías de escala y competir.', 'Dumping: un arancel antidumping eleva el precio de las importaciones desleales y protege a los productores locales.'],
+      ej: 'Unión Europea: derechos antidumping a paneles solares chinos (2013).',
+      req: 'Si explicas solo dumping o solo industria naciente, máximo 6/10.',
+      err: 'No explicar qué es el dumping.' },
+    { k: 'b', st: '4.2', cmd: 'eva', q: 'Utilizando ejemplos reales, evalúe los efectos de que un país aplique un arancel a un bien.',
+      def: [['Arancel', 'Impuesto sobre los bienes importados.']],
+      dia: 'Arancel: Pm → Pm + t; baja la cantidad demandada, sube la producción nacional, caen las importaciones; recaudación y pérdidas de bienestar.',
+      teo: 'Efectos sobre consumidores, productores, gobierno y bienestar.',
+      pro: ['Productores nacionales: venden más a mayor precio.', 'Gobierno: recauda.', 'Protege empleos.'],
+      con: ['Consumidores: pagan más y compran menos.', 'Pérdida de bienestar (ineficiencia).', 'Represalias que dañan a los exportadores.', 'Insumos más caros: inflación de costos.'],
+      mat: ['Partes interesadas: ganan productores protegidos y gobierno; pierden consumidores y exportadores.'],
+      ej: ['Estados Unidos 2018: aranceles al acero y al aluminio y represalias de China y la Unión Europea.'],
+      concl: 'El arancel beneficia a algunos grupos, pero suele reducir el bienestar total.' }
+  ] }
+] },
+
+{ id: 'n22', ses: 'Noviembre 2022', ord: 2022.9, nuevo: true, ms: true, qs: [
+  { n: 1, u: 2, parts: [
+    { k: 'a', st: '2.7', cmd: 'exp', q: 'Explique dos formas de intervención del gobierno en los mercados.',
+      def: [['Intervención gubernamental', 'Acción del Estado para cambiar los resultados del mercado.']],
+      cau: 'El gobierno quiere cambiar precio, cantidad o ingreso en un mercado.',
+      dia: 'Dos diagramas, uno por intervención: precio máximo, precio mínimo, impuesto indirecto o subvención.',
+      cad: ['Impuesto indirecto: sube el costo, la oferta se desplaza a la izquierda; sube el precio y baja la cantidad; el gobierno recauda.', 'Subvención: baja el costo, la oferta se desplaza a la derecha; baja el precio y sube la cantidad.', 'También valen: precios máximos y mínimos, provisión directa, regulación y legislación.'],
+      ej: 'Paraguay: impuesto selectivo al consumo del tabaco y subsidio al transporte público.',
+      req: 'Si explicas una sola forma, máximo 6/10.',
+      err: 'Explicar dos variantes de lo mismo (por ejemplo, dos impuestos).' },
+    { k: 'b', st: '2.9', cmd: 'dis', q: 'Utilizando ejemplos reales, discuta si los gobiernos deben intervenir cuando el mercado no provee bienes públicos.',
+      def: [['Bien público', 'Bien no rival y no excluible.'], ['Problema del polizón', 'Nadie paga si puede usar el bien igual; el mercado no lo provee.']],
+      dia: 'No hace falta diagrama.',
+      teo: 'Como nadie puede ser excluido, las empresas no cobran y no lo producen: falla de mercado.',
+      pro: ['Sin el Estado, no hay alumbrado, defensa ni faros.', 'La provisión pública se financia con impuestos.', 'El Estado puede subcontratar a empresas privadas.'],
+      con: ['Cuánto proveer y cuál es difícil de decidir.', 'Costo de oportunidad del gasto público.', 'Ineficiencia y corrupción.', 'Algunos bienes pueden volverse excluibles (peajes) y los provee el sector privado.'],
+      mat: ['Provisión directa frente a subcontratación.'],
+      ej: ['Alumbrado público municipal y defensa nacional en Paraguay.', 'Duplicación de las rutas PY02 y PY07: primera alianza público-privada de Paraguay.'],
+      concl: 'El gobierno debe intervenir, pero eligiendo bien qué proveer, cuánto y si lo produce directamente o lo subcontrata.' }
+  ] },
+  { n: 2, u: 3, parts: [
+    { k: 'a', st: '3.6', cmd: 'exp', q: 'Explique dos objetivos de la política fiscal.',
+      def: [['Política fiscal', 'Uso del gasto público y los impuestos por parte del gobierno para influir en la economía.']],
+      cau: 'El gobierno cambia el gasto público o los impuestos.',
+      dia: 'DA/OA para el empleo o la inflación; Lorenz para la equidad; ciclo económico para la estabilidad.',
+      cad: ['Objetivo 1, desempleo bajo: en una recesión, más G o menos T desplazan la DA a la derecha; sube el PIB real y baja el desempleo cíclico.', 'Objetivo 2, distribución más equitativa: impuestos progresivos y transferencias acercan la curva de Lorenz a la igualdad.', 'Otros válidos: inflación baja y estable, menos fluctuaciones del ciclo, crecimiento a largo plazo, equilibrio externo.'],
+      ej: 'Paraguay 2020: Ley de Emergencia y Pytyvõ. Tekoporã como transferencia para la equidad.',
+      req: 'Si explicas un solo objetivo, máximo 6/10.',
+      err: 'Explicar instrumentos sin decir qué objetivo buscan.' },
+    { k: 'b', st: '3.6', cmd: 'eva', q: 'Utilizando ejemplos reales, evalúe el uso de la política fiscal para cerrar una brecha deflacionaria.',
+      def: [['Brecha deflacionaria', 'El PIB real de equilibrio está por debajo del pleno empleo.'], ['Política fiscal expansiva', 'Más gasto público o menos impuestos para subir la DA.']],
+      dia: 'DA/OA con brecha deflacionaria: la DA se desplaza a la derecha hasta Yf.',
+      teo: 'Más DA sube el PIB real y cierra la brecha.',
+      pro: ['Puede dirigirse a sectores específicos.', 'Eficaz en recesiones profundas.'],
+      con: ['Presión política y rezagos.', 'Deuda sostenible.', 'Depende de la forma de la OA y de dónde está la economía.', 'Puede generar inflación cerca de Yf.'],
+      mat: ['Mencionar política monetaria o de oferta como alternativas, pero el foco es la fiscal.'],
+      ej: ['Paraguay 2020: gasto de emergencia.', 'Estados Unidos 2009 y 2020.'],
+      concl: 'Es eficaz en recesiones profundas, siempre que haya espacio fiscal.' }
+  ] },
+  { n: 3, u: 4, parts: [
+    { k: 'a', st: '4.5', cmd: 'exp', q: 'Explique dos factores que podrían provocar la apreciación de una moneda.',
+      def: [['Apreciación', 'Aumento del valor de una moneda en un sistema de tipo de cambio flotante.']],
+      cau: 'Sube la demanda de la moneda o baja su oferta.',
+      dia: 'Mercado de divisas: D de guaraníes a la derecha; el precio del guaraní sube.',
+      cad: ['Factor 1, más exportaciones: los compradores extranjeros necesitan guaraníes; sube la demanda y la moneda se aprecia.', 'Factor 2, tasas de interés más altas: entran inversiones de cartera; sube la demanda de la moneda.', 'Otros: IED, remesas, especulación, inflación relativa más baja, intervención del banco central.'],
+      ej: 'El franco suizo se apreció con fuerza en 2015 cuando el banco central suizo abandonó su tope.',
+      req: 'Si explicas un solo factor, o solo dices «sube la demanda» sin la causa, máximo 6/10.',
+      err: 'No explicar la causa del aumento de la demanda.' },
+    { k: 'b', st: '4.5', cmd: 'dis', q: 'Utilizando ejemplos reales, discuta las consecuencias de la apreciación de una moneda.',
+      def: [['Apreciación', 'Aumento del valor de una moneda.']],
+      dia: 'DA/OA: (X − M) baja → DA a la izquierda; insumos importados más baratos → OACP a la derecha.',
+      teo: 'Efectos sobre inflación, crecimiento, desempleo, cuenta corriente y nivel de vida.',
+      pro: ['Importaciones más baratas: baja la inflación.', 'Mejor nivel de vida: los consumidores compran más con su moneda.'],
+      con: ['Exportaciones menos competitivas: baja el crecimiento.', 'Puede subir el desempleo en sectores exportadores.', 'Empeora la cuenta corriente.'],
+      mat: ['Depende del tamaño de la apreciación y de los sectores afectados.'],
+      ej: ['Suiza 2015: exportadores y turismo perjudicados; inflación bajó.'],
+      concl: 'Las consecuencias son mixtas: buenas para la inflación y los consumidores, malas para los exportadores.' }
+  ] }
+] },
+{ id: 'n21', ses: 'Noviembre 2021', ord: 2021.9, nuevo: false, ms: true, qs: [
+  { n: 1, u: 2, parts: [
+    { k: 'a', st: '2.5', cmd: 'exp', q: 'Explique cómo una caída del ingreso podría afectar la demanda de bienes normales y de bienes inferiores.',
+      def: [['Bien normal', 'Su demanda sube cuando sube el ingreso (EID positiva).'], ['Bien inferior', 'Su demanda baja cuando sube el ingreso (EID negativa).']],
+      cau: 'Cae el ingreso de los hogares.',
+      dia: 'Dos diagramas: bien normal, D a la izquierda; bien inferior, D a la derecha.',
+      cad: ['Bien normal (comer en restaurantes): con menos ingreso, se compra menos a cada precio; la demanda se desplaza a la izquierda.', 'Bien inferior (bus en lugar de auto, marcas económicas): con menos ingreso, la gente se pasa a ellos; la demanda se desplaza a la derecha.'],
+      ej: 'Paraguay 2020: con la caída del ingreso por la pandemia, subió la demanda de marcas económicas.',
+      req: 'Si tratas solo uno de los dos tipos de bien, máximo 6/10.',
+      err: 'Mover a lo largo de la curva en vez de desplazarla.' },
+    { k: 'b', st: '2.5', cmd: 'dis', omit: 'Fuera del programa NM actual: la importancia de la EID para productores primarios y manufactureros es contenido solo del Nivel Superior.', q: 'Importancia de la EID para productores de bienes primarios y manufacturados.' }
+  ] },
+  { n: 2, u: 2, parts: [
+    { k: 'a', st: '2.7', cmd: 'exp', q: 'Explique el impacto de un precio mínimo en un mercado agrícola sobre los consumidores, los productores y el gobierno.',
+      def: [['Precio mínimo', 'Precio fijado por encima del equilibrio.']],
+      cau: 'El gobierno fija un precio mínimo para un producto agrícola y compra el excedente.',
+      dia: 'Precio mínimo por encima de P*; excedente (Qo − Qd) que compra el gobierno (rectángulo de gasto).',
+      cad: ['Consumidores: pagan más y compran menos.', 'Productores: reciben un precio más alto, producen más y suben sus ingresos.', 'Gobierno: compra y almacena el excedente; costo de oportunidad del gasto.'],
+      ej: 'Unión Europea: las compras de excedentes generaron las «montañas de manteca» en los años 80.',
+      req: 'Las tres partes interesadas: con una, máximo 6/10; con dos, máximo 8/10.',
+      err: 'Olvidar al gobierno.' },
+    { k: 'b', st: '2.7', cmd: 'eva', q: 'Evalúe la idea de que un precio máximo no es una política eficaz para proteger a los consumidores de bajos ingresos.',
+      def: [['Precio máximo', 'Precio fijado por debajo del equilibrio.']],
+      dia: 'Precio máximo en el mercado de un bien necesario: escasez.',
+      teo: 'El precio baja, pero aparece escasez.',
+      pro: ['Escasez, colas, mercados negros y corrupción: muchos pobres no consiguen el bien.', 'Baja la calidad y la oferta a largo plazo.'],
+      con: ['Quienes consiguen el bien ganan mucho.', 'Con un buen sistema de racionamiento (cupos) puede llegar a los pobres.'],
+      mat: ['Alternativas: subsidios focalizados o transferencias.'],
+      ej: ['Venezuela: escasez con controles de precios.'],
+      concl: 'Suele ser poco eficaz por sí solo; funciona mejor con racionamiento o con transferencias focalizadas.' }
+  ] },
+  { n: 3, u: 3, parts: [
+    { k: 'a', st: '3.2', cmd: 'exp', q: 'Explique cómo, en el modelo keynesiano de DA/OA, una economía puede estar en equilibrio por debajo del pleno empleo.',
+      def: [['Equilibrio macroeconómico', 'DA = OA.'], ['Pleno empleo', 'Producción con desempleo solo en su tasa natural.']],
+      cau: 'Cae la DA (por ejemplo, baja la confianza).',
+      dia: 'OA keynesiana con tramo horizontal: DA corta en el tramo horizontal o creciente, Ye < Yf (brecha deflacionaria).',
+      cad: ['Cae la DA y la economía produce menos.', 'Salarios y precios son rígidos a la baja: no se ajustan para volver a Yf.', 'Por consiguiente, la economía queda en equilibrio con desempleo cíclico.'],
+      ej: 'La Gran Depresión de los años 30 y la crisis de 2008–2009.',
+      req: 'Mostrar la OA keynesiana y la brecha.',
+      err: 'Usar el modelo neoclásico.' },
+    { k: 'b', st: '3.6', cmd: 'eva', q: 'Evalúe la idea de que la política fiscal es la mejor forma de reducir el desempleo.', same: 'm24-2b' }
+  ] },
+  { n: 4, u: 3, parts: [
+    { k: 'a', st: '3.4', cmd: 'exp', q: 'Explique cómo el crecimiento económico podría reducir la pobreza absoluta.',
+      def: [['Crecimiento económico', 'Aumento del PIB real.'], ['Pobreza absoluta', 'Ingreso insuficiente para cubrir necesidades básicas (línea internacional de alrededor de US$ 2–3 por día).']],
+      cau: 'Aumenta el PIB real.',
+      dia: 'DA/OA o CPP hacia afuera.',
+      cad: ['Más producción: más empleo y salarios.', 'Sube el ingreso de los hogares pobres.', 'Más recaudación para programas sociales.', 'Como resultado, menos personas bajo la línea de pobreza.'],
+      ej: 'China redujo la pobreza extrema en cientos de millones de personas.',
+      req: 'Ligar crecimiento con ingreso y pobreza absoluta.',
+      err: 'Confundir pobreza absoluta con relativa.' },
+    { k: 'b', st: '3.4', cmd: 'eva', q: 'Evalúe la idea de que un impuesto progresivo a la renta es la mejor forma de aumentar la equidad.',
+      def: [['Impuesto progresivo', 'La tasa promedio sube con el ingreso.'], ['Equidad', 'Justicia en la distribución.']],
+      dia: 'Curva de Lorenz que se acerca a la línea de igualdad.',
+      teo: 'Los ricos pagan más; se financian educación y salud.',
+      pro: ['Reduce la desigualdad de ingresos.', 'Financia servicios que mejoran oportunidades.'],
+      con: ['Evasión y menos incentivo a trabajar o invertir.', 'Alternativas: transferencias, educación, salario mínimo.'],
+      mat: ['Si no comparas con otras políticas, máximo 12/15.'],
+      ej: ['Países nórdicos: impuestos muy progresivos y baja desigualdad.', 'Paraguay: impuesto a la renta personal con tasas de 8 % a 10 %.'],
+      concl: 'Es un instrumento importante, pero no necesariamente el mejor: combinado con transferencias y educación es más eficaz.' }
+  ] }
+] },
+
+{ id: 'm21', ses: 'Mayo 2021', ord: 2021.5, nuevo: false, ms: false, qs: [
+  { n: 1, u: 2, parts: [
+    { k: 'a', st: '2.5', cmd: 'exp', q: 'Explique por qué la EPD de los bienes de primera necesidad suele ser baja y la de los bienes manufacturados suele ser alta.',
+      def: [['EPD', 'Sensibilidad de la cantidad demandada ante cambios del precio.']],
+      cau: 'Cambia el precio de un bien necesario y de uno manufacturado.',
+      dia: 'Dos curvas de demanda: inelástica (necesario) y elástica (manufacturado).',
+      cad: ['Necesidad: pocos sustitutos; la cantidad cambia poco (EPD < 1).', 'Manufacturados: muchas marcas y sustitutos; la cantidad cambia mucho (EPD > 1).'],
+      ej: 'Arroz frente a celulares de distintas marcas.',
+      req: 'Usa los determinantes del NM (sustitutos, necesidad, proporción del ingreso, tiempo).',
+      err: 'Confundir EPD con EPO.' },
+    { k: 'b', st: '2.5', cmd: 'dis', adapt: 'Adaptada: se quitó la elasticidad cruzada (EPCD), que ya no está en el programa.', q: 'Discuta la importancia de la EPD para las decisiones de una empresa.',
+      def: [['EPD', 'Sensibilidad de la cantidad demandada ante cambios del precio.'], ['Ingreso total', 'P × Q.']],
+      dia: 'Demanda elástica e inelástica con ingreso total.',
+      teo: 'La empresa decide si subir o bajar el precio según la EPD.',
+      pro: ['Con demanda inelástica, subir el precio sube el ingreso total.', 'Con demanda elástica, bajar el precio sube el ingreso total.'],
+      con: ['La EPD es difícil de medir y cambia con el tiempo.', 'Otros factores cambian a la vez (ingreso, competencia).'],
+      ej: ['Aerolíneas y precios diferenciados.'],
+      concl: 'Es muy útil, pero debe usarse con cautela.' }
+  ] },
+  { n: 2, u: 2, parts: [
+    { k: 'a', st: '2.8', cmd: 'exp', q: 'Explique el concepto de externalidad positiva de consumo.',
+      def: [['Externalidad positiva de consumo', 'Beneficio para terceros que genera el consumo de un bien: BMgS > BMgP.']],
+      cau: 'Una persona consume un bien con beneficios para otros (vacuna, educación).',
+      dia: 'BMgS por encima de BMgP; Qm < Q*; pérdida de bienestar.',
+      cad: ['Los consumidores solo consideran su beneficio privado.', 'Se consume menos que el óptimo social: subconsumo.', 'Pérdida de bienestar: falla de mercado.'],
+      ej: 'Vacunación: protege también a quienes no se vacunan.',
+      req: 'Diagrama correcto de consumo.',
+      err: 'Dibujar la externalidad en la oferta.' },
+    { k: 'b', st: '2.8', cmd: 'dis', q: 'Discuta si los permisos negociables son más eficaces que los impuestos para reducir la contaminación.',
+      def: [['Permisos negociables', 'Derechos de emisión limitados que se compran y venden.'], ['Impuesto pigouviano', 'Impuesto igual al costo externo.']],
+      dia: 'Externalidad negativa de producción con impuesto o con permisos.',
+      teo: 'Ambos internalizan el costo.',
+      pro: ['Permisos: fijan la cantidad total de emisiones con certeza.', 'Las empresas que contaminan menos venden permisos: incentivo.'],
+      con: ['Impuesto: fija el precio, más simple y recauda.', 'Permisos: precio volátil y riesgo de entregar demasiados.'],
+      ej: ['Sistema de comercio de emisiones de la UE (desde 2005).', 'Impuesto al carbono de Suecia (desde 1991).'],
+      concl: 'Depende del objetivo: los permisos aseguran la cantidad; el impuesto, el precio.' }
+  ] },
+  { n: 3, u: 3, parts: [
+    { k: 'a', st: '3.3', cmd: 'exp', q: 'Explique por qué puede producirse desempleo cíclico (por insuficiencia de demanda).',
+      def: [['Desempleo cíclico', 'Desempleo por caída de la DA.']],
+      cau: 'Cae la DA.',
+      dia: 'DA/OA con brecha deflacionaria.',
+      cad: ['Cae la DA.', 'Las empresas venden y producen menos.', 'Necesitan menos trabajadores.', 'Sube el desempleo cíclico.'],
+      ej: 'Paraguay 2020, pandemia.',
+      req: 'Brecha deflacionaria en el diagrama.',
+      err: 'Confundir con desempleo estructural.' },
+    { k: 'b', st: '3.7', cmd: 'eva', q: 'Evalúe la eficacia de las políticas de oferta intervencionistas para reducir el desempleo.', same: 'n25-2b' }
+  ] },
+  { n: 4, u: 3, parts: [
+    { k: 'a', st: '3.5', cmd: 'exp', q: 'Explique cómo una política monetaria expansiva podría cerrar una brecha deflacionaria.',
+      def: [['Política monetaria expansiva', 'El banco central baja la tasa de interés.'], ['Brecha deflacionaria', 'Y < Yf.']],
+      cau: 'Baja la tasa de política monetaria.',
+      dia: 'DA/OA: DA a la derecha hasta Yf.',
+      cad: ['El crédito se abarata.', 'Suben C e I.', 'La DA se desplaza a la derecha.', 'Sube el PIB real y se cierra la brecha.'],
+      ej: 'BCP 2020: bajó la tasa a 0,75 %.',
+      req: 'Mecanismo completo de transmisión.',
+      err: 'Saltear eslabones.' },
+    { k: 'b', st: '3.5', cmd: 'eva', q: 'Evalúe la eficacia de la política monetaria para reducir la inflación.',
+      def: [['Política monetaria contractiva', 'El banco central sube la tasa de interés.'], ['Inflación', 'Aumento sostenido del NGP.']],
+      dia: 'DA/OA: DA a la izquierda; baja el NGP.',
+      teo: 'Más tasa: menos crédito, menos C e I, menos DA.',
+      pro: ['Eficaz contra la inflación de demanda.', 'Flexible y fácil de revertir; ancla expectativas.'],
+      con: ['Poco eficaz contra la inflación de costos.', 'Rezagos.', 'Costo en producción y empleo.'],
+      ej: ['BCP 2021–2023: la tasa subió hasta 8,50 % y la inflación bajó a 3,7 % en 2023.'],
+      concl: 'Es eficaz contra la inflación de demanda, menos contra la de costos.' }
+  ] }
+] },
+{ id: 'n20', ses: 'Noviembre 2020', ord: 2020.9, nuevo: false, ms: true, qs: [
+  { n: 1, u: 2, parts: [
+    { k: 'a', st: '2.8', cmd: 'exp', q: 'Explique cómo la producción que contamina provoca una falla de mercado.',
+      def: [['Falla de mercado', 'El mercado no asigna los recursos de forma eficiente.'], ['Externalidad negativa de producción', 'Costo para terceros de la producción: CMgS > CMgP.']],
+      cau: 'Una fábrica contamina un río al producir.',
+      dia: 'CMgS por encima de CMgP; Qm > Q*; triángulo de pérdida de bienestar.',
+      cad: ['La empresa solo considera su costo privado.', 'Produce más que el óptimo social (sobreproducción).', 'Se asignan demasiados recursos: pérdida de bienestar.'],
+      ej: 'Curtiembres que vierten residuos al río Paraguay.',
+      req: 'Si dibujas una externalidad de consumo, máximo nivel 2.',
+      err: 'Usar el diagrama de consumo.' },
+    { k: 'b', st: '2.8', cmd: 'dis', q: 'Discuta si la regulación es la forma más eficaz de enfrentar las externalidades negativas de consumo.',
+      def: [['Regulación', 'Normas obligatorias del gobierno (prohibiciones, límites).'], ['Externalidad negativa de consumo', 'Costo para terceros del consumo: BMgS < BMgP.']],
+      dia: 'Regulación: BMgP se desplaza hacia BMgS; la cantidad baja hacia Q*.',
+      teo: 'La regulación reduce el consumo directamente.',
+      pro: ['Efecto directo y rápido.', 'Útil cuando el daño es grave.'],
+      con: ['Cuesta controlar su cumplimiento.', 'Puede crear mercados negros.', 'Un impuesto también recauda para tratar las consecuencias.'],
+      mat: ['Para el nivel más alto hay que considerar otra política.'],
+      ej: ['Paraguay: prohibición de fumar en lugares cerrados (ley de control del tabaco de 2015).'],
+      concl: 'Es eficaz si se controla bien; combinada con impuestos y educación es mejor.' }
+  ] },
+  { n: 2, u: 2, parts: [
+    { k: 'a', st: '2.7', cmd: 'exp', q: 'Explique el impacto de un precio mínimo sobre los resultados del mercado.', same: 'n21-2a' },
+    { k: 'b', st: '2.7', cmd: 'dis', q: 'Discuta las consecuencias de un precio máximo para las distintas partes interesadas.', same: 'n24-1b' }
+  ] },
+  { n: 3, u: 3, parts: [
+    { k: 'a', st: '3.2', cmd: 'exp', q: 'Explique cómo una caída de la confianza empresarial puede afectar el PIB real de una economía que produce por debajo del pleno empleo.',
+      def: [['Confianza empresarial', 'Optimismo de las empresas sobre el futuro.'], ['PIB real', 'PIB ajustado por inflación.']],
+      cau: 'Las empresas se vuelven pesimistas.',
+      dia: 'DA/OA: DA a la izquierda; baja el PIB real.',
+      cad: ['Las empresas invierten menos (baja I).', 'Baja la DA.', 'Baja el PIB real y sube el desempleo.'],
+      ej: '2020: la pandemia hundió la confianza y la inversión.',
+      req: 'Ligar confianza con inversión.',
+      err: 'Mover la OA.' },
+    { k: 'b', st: '3.3', cmd: 'eva', q: 'Evalúe la idea de que una caída de la DA siempre es deflacionaria.',
+      def: [['DA', 'Gasto total planeado en la economía.'], ['Deflación', 'Caída sostenida del NGP.']],
+      dia: 'Neoclásico: DA a la izquierda baja el NGP. Keynesiano: en el tramo horizontal, no baja.',
+      teo: 'Depende del modelo y del tramo de la OA.',
+      pro: ['Modelo neoclásico: menos DA, menos NGP y menos PIB real.'],
+      con: ['Keynesiano: salarios y precios rígidos a la baja; cae el PIB real pero no el NGP.', 'Puede ser solo desinflación, no deflación.'],
+      ej: ['Japón: deflación persistente en los años 90 y 2000.'],
+      concl: 'No siempre: depende del modelo y de cuánta capacidad ociosa haya.' }
+  ] },
+  { n: 4, u: 3, parts: [
+    { k: 'a', st: '3.4', cmd: 'exp', q: 'Explique cómo se usa el gasto público para promover la equidad en la distribución del ingreso.',
+      def: [['Gasto público', 'Gasto del gobierno en bienes, servicios y transferencias.'], ['Equidad', 'Justicia en la distribución.']],
+      cau: 'El gobierno gasta en programas para los pobres.',
+      dia: 'Dos curvas de Lorenz: la nueva más cerca de la igualdad.',
+      cad: ['Transferencias: suben el ingreso de los pobres.', 'Educación y salud gratuitas: mejoran oportunidades.', 'La desigualdad baja.'],
+      ej: 'Tekoporã y pensión para adultos mayores en Paraguay.',
+      req: 'Curva de Lorenz.',
+      err: 'Hablar solo de impuestos.' },
+    { k: 'b', st: '3.4', cmd: 'eva', q: 'Evalúe el impacto sobre la eficiencia de usar impuestos para promover la equidad.',
+      def: [['Eficiencia en la asignación', 'Recursos asignados donde más valor generan.'], ['Impuesto progresivo', 'La tasa sube con el ingreso.']],
+      dia: 'No es obligatorio.',
+      teo: 'Equidad frente a eficiencia.',
+      pro: ['Más equidad con financiamiento de servicios.'],
+      con: ['Menos incentivo a trabajar e invertir; menos IED.', 'Costos más altos para las empresas.'],
+      ej: ['Países nórdicos: impuestos altos con alta productividad.'],
+      concl: 'Hay un conflicto entre equidad y eficiencia, pero no siempre es grande: depende del diseño.' }
+  ] }
+] },
+{ id: 'n19', ses: 'Noviembre 2019', ord: 2019.9, nuevo: false, ms: false, qs: [
+  { n: 1, u: 2, parts: [
+    { k: 'a', st: '2.5', cmd: 'exp', q: 'Explique dos motivos por los que la demanda de productos manufacturados puede ser elástica al precio.', same: 'm21-1a' },
+    { k: 'b', st: '2.5', cmd: 'eva', omit: 'Fuera del programa actual: la elasticidad precio cruzada (EPCD) ya no se estudia.', q: 'Importancia de la EPCD para una empresa.' }
+  ] },
+  { n: 2, u: 2, parts: [
+    { k: 'a', st: '2.3', cmd: 'exp', q: 'Explique por qué la mejor asignación de recursos se logra cuando se maximizan el excedente del consumidor y el del productor.',
+      def: [['Excedente del consumidor', 'Diferencia entre lo que el consumidor está dispuesto a pagar y lo que paga.'], ['Excedente del productor', 'Diferencia entre el precio que recibe y el mínimo que aceptaría.'], ['Eficiencia en la asignación', 'BMg = CMg: el excedente social es máximo.']],
+      cau: 'El mercado competitivo llega al equilibrio.',
+      dia: 'Oferta y demanda con las dos áreas de excedente; en el equilibrio BMg = CMg.',
+      cad: ['En el equilibrio, la demanda refleja el beneficio marginal y la oferta el costo marginal.', 'Se producen todas las unidades cuyo beneficio supera su costo.', 'Como resultado, el excedente social es máximo: no hay pérdida de bienestar.'],
+      ej: 'Cualquier mercado competitivo sin externalidades, como el de frutas en un mercado municipal.',
+      req: 'Mostrar las áreas y la condición BMg = CMg.',
+      err: 'No explicar por qué otra cantidad reduce el excedente.' },
+    { k: 'b', st: '2.9', cmd: 'dis', q: 'Discuta las implicaciones de que el gobierno provea directamente bienes públicos.', same: 'n22-1b' }
+  ] },
+  { n: 3, u: 3, parts: [
+    { k: 'a', st: '3.5', cmd: 'exp', q: 'Explique por qué una baja de las tasas de interés podría aumentar la demanda agregada.', same: 'm21-4a' },
+    { k: 'b', st: '3.5', cmd: 'eva', q: 'Evalúe la idea de que la política monetaria expansiva es la forma más eficaz de lograr crecimiento económico.',
+      def: [['Política monetaria expansiva', 'Baja de la tasa de interés del banco central.'], ['Crecimiento económico', 'Aumento del PIB real.']],
+      dia: 'DA/OA: DA a la derecha; sube el PIB real.',
+      teo: 'Crédito más barato: más C e I.',
+      pro: ['Gradual, flexible y fácil de revertir.', 'Actúa más rápido que la política fiscal.'],
+      con: ['Con tasas cerca de cero queda poco margen.', 'Si la confianza es baja, el crédito no responde.', 'Solo crecimiento de corto plazo; el largo plazo requiere políticas de oferta.', 'Riesgo de inflación.'],
+      ej: ['BCP 2020: tasa en 0,75 %.'],
+      concl: 'Es útil para el crecimiento de corto plazo, pero no la más eficaz para el largo plazo.' }
+  ] },
+  { n: 4, u: 3, parts: [
+    { k: 'a', st: '3.3', cmd: 'exp', q: 'Explique, con una CPP, un aumento de la producción efectiva de una economía.',
+      def: [['Producción efectiva', 'Lo que la economía realmente produce.'], ['CPP', 'Máxima producción posible con los recursos dados.']],
+      cau: 'Se emplean recursos que estaban ociosos.',
+      dia: 'CPP con un punto dentro de la curva que se mueve hacia la curva.',
+      cad: ['Hay recursos ociosos: la economía produce dentro de la CPP.', 'Si sube la DA, se emplean esos recursos.', 'La economía se mueve hacia la curva: crecimiento efectivo.'],
+      ej: 'Recuperación después de una recesión.',
+      req: 'Diferenciar movimiento hacia la curva (efectivo) de desplazamiento de la curva (potencial).',
+      err: 'Desplazar la CPP.' },
+    { k: 'b', st: '3.3', cmd: 'dis', q: 'Discuta si el crecimiento económico siempre mejora el nivel de vida.', same: 'n23-2b' }
+  ] }
+] },
+
+{ id: 'm19', ses: 'Mayo 2019', ord: 2019.5, nuevo: false, ms: true, onlyMs: true, qs: [
+  { n: 1, u: 2, parts: [
+    { k: 'a', st: '2.3', cmd: 'exp', q: 'Explique los conceptos de excedente del consumidor y excedente del productor.', same: 'n19-2a' },
+    { k: 'b', st: '2.3', cmd: 'exa', q: 'Examine si la mejor asignación de recursos para la sociedad ocurre donde el beneficio marginal privado es igual al costo marginal privado.',
+      def: [['Beneficio marginal privado (BMgP)', 'Beneficio para el consumidor de una unidad más.'], ['Costo marginal privado (CMgP)', 'Costo para el productor de una unidad más.']],
+      dia: 'Equilibrio con BMgP = CMgP y excedente social máximo; luego una externalidad que separa BMgS de BMgP o CMgS de CMgP.',
+      teo: 'Sin externalidades, BMgP = CMgP es óptimo.',
+      pro: ['Sin externalidades, maximiza el excedente social.'],
+      con: ['Con externalidades, el óptimo es BMgS = CMgS: el mercado sobreproduce o subproduce.', 'Bienes de demérito y preferentes también generan fallas.'],
+      ej: ['Tabaco (sobreconsumo) y educación (subconsumo).'],
+      concl: 'Solo es cierto sin externalidades: el criterio correcto es BMgS = CMgS.',
+      req: 'Si solo evalúas sin explicar la idea, máximo nivel 2.' }
+  ] },
+  { n: 2, u: 2, parts: [
+    { k: 'a', st: '2.7', cmd: 'exp', q: 'Explique por qué un gobierno podría fijar un precio máximo a alimentos básicos o alquileres.',
+      def: [['Precio máximo', 'Precio fijado por debajo del equilibrio.']],
+      cau: 'El gobierno quiere que los hogares pobres accedan a bienes esenciales.',
+      dia: 'Precio máximo por debajo de P*.',
+      cad: ['Equidad: los bienes esenciales son más accesibles.', 'Poder de mercado o razones políticas.'],
+      ej: 'Berlín 2020: congelamiento de alquileres.',
+      req: 'Motivos con diagrama.',
+      err: 'Dibujarlo por encima del equilibrio.' },
+    { k: 'b', st: '2.8', cmd: 'eva', q: 'Evalúe si la provisión directa es la forma más eficaz de aumentar el consumo de bienes preferentes.',
+      def: [['Bien preferente (meritorio)', 'Bien que se subconsume.'], ['Provisión directa', 'El Estado produce y ofrece el bien, a menudo gratis.']],
+      dia: 'BMgS > BMgP o subvención.',
+      teo: 'Al ser gratis, el consumo sube.',
+      pro: ['Acceso universal; llega a los más pobres.'],
+      con: ['Costo fiscal y posible baja calidad.', 'Alternativas: subvenciones, legislación, publicidad.'],
+      mat: ['Si no consideras alternativas, máximo nivel 3.'],
+      ej: ['Educación pública gratuita y Hambre Cero en las escuelas en Paraguay.'],
+      concl: 'Es muy eficaz para el acceso, pero cara; se complementa con otras políticas.' }
+  ] },
+  { n: 3, u: 3, parts: [
+    { k: 'a', st: '3.2', cmd: 'exp', q: 'Explique cómo afectan la DA una apreciación de la moneda y una caída del ingreso de los socios comerciales.',
+      def: [['DA', 'C + I + G + (X − M).']],
+      cau: 'Se aprecia la moneda y entran en recesión los socios comerciales.',
+      dia: 'DA a la izquierda.',
+      cad: ['Apreciación: exportaciones más caras e importaciones más baratas; baja (X − M).', 'Menos ingreso de los socios: compran menos exportaciones; baja X.', 'La DA se desplaza a la izquierda.'],
+      ej: 'Paraguay: la recesión de Brasil de 2015–2016 redujo exportaciones.',
+      req: 'Si tratas un solo factor, máximo nivel 2.',
+      err: 'Decir que la apreciación sube la DA.' },
+    { k: 'b', st: '3.6', cmd: 'hqp', q: '¿Hasta qué punto la política fiscal expansiva es la mejor política para reducir el desempleo?', same: 'm24-2b' }
+  ] },
+  { n: 4, u: 3, parts: [
+    { k: 'a', st: '3.3', cmd: 'exp', q: 'Explique el papel de una mayor productividad en el crecimiento económico.',
+      def: [['Productividad', 'Producción por trabajador o por hora.']],
+      cau: 'Mejoran la tecnología, la capacitación o el capital.',
+      dia: 'OACP y/o OALP a la derecha, o CPP hacia afuera.',
+      cad: ['Baja el costo por unidad: OACP a la derecha (corto plazo).', 'Aumenta la capacidad productiva: OALP a la derecha (largo plazo).', 'Sube el PIB real.'],
+      ej: 'Corea del Sur.',
+      req: 'Definición precisa de productividad (si no, máximo nivel 2).',
+      err: 'Confundir productividad con producción total.' },
+    { k: 'b', st: '3.3', cmd: 'dis', q: 'Discuta si el crecimiento económico solo se logra a costa de otros objetivos, como la inflación baja y la equidad.',
+      def: [['Crecimiento económico', 'Aumento del PIB real.'], ['Equidad', 'Distribución justa del ingreso.']],
+      dia: 'DA/OA (DA o OALP a la derecha).',
+      teo: 'El crecimiento de demanda puede generar inflación y desigualdad.',
+      pro: ['Crecimiento de demanda: inflación.', 'Puede aumentar la desigualdad.'],
+      con: ['Crecimiento de oferta: sin inflación.', 'Políticas redistributivas pueden acompañarlo.'],
+      mat: ['Al menos dos objetivos.', 'Palabra clave: «solo».'],
+      ej: ['Paraguay 2023: crecimiento con inflación en baja.'],
+      concl: 'No necesariamente: depende del tipo de crecimiento y de las políticas que lo acompañen.' }
+  ] }
+] }
+];
+
+const PP_CMD = {
+  exp: { n: 'Explique', pts: 10, r: 'escribir-explicar', how: 'Definir → Causa inicial → Diagrama → Cadena causal → Ejemplo real (DET-CAU-DIA-APL-ENL).' },
+  eva: { n: 'Evalúe', pts: 15, r: 'escribir-evaluar', how: 'Definir → Teoría con diagrama → Efectos y argumentos → Caso real → Evaluar con 2 o 3 dimensiones de CLASPP → Conclusión justificada.' },
+  dis: { n: 'Discuta', pts: 15, r: 'escribir-discutir', how: 'Definir → Diagrama → Posturas → A favor → En contra (mismo esfuerzo) → Factores y matices → Conclusión equilibrada.' },
+  hqp: { n: '¿Hasta qué punto?', pts: 15, r: 'escribir-hqp', how: 'Afirmación → Definir → Teoría con diagrama → Tesis → Antítesis → Condiciones y plazos → Conclusión con grado, plazo y condición.' },
+  exa: { n: 'Examine', pts: 15, r: 'escribir-discutir', how: 'Como «Discuta», revisando los supuestos y las relaciones que hay detrás de la afirmación (término usado en el programa anterior).' }
+};
+const ppAll = () => { const out = []; PP1.forEach(s => s.qs.forEach(q => q.parts.forEach(p => out.push({ s, q, p, id: `${s.id}-${q.n}${p.k}` })))); return out; };
+const ppFind = id => ppAll().find(x => x.id === id);
+const PP_DONE = store.get('pp1done', {});
+function ppResolve(p) { if (!p.same) return p; const t = ppFind(p.same); return t ? Object.assign({}, t.p, { q: p.q, cmd: p.cmd, st: p.st, same: p.same, note: p.note, k: p.k }) : p; }
+function ppGuide(p0) {
+  const p = ppResolve(p0);
+  if (p.omit) return `<div class="fb no"><b class="h">No se practica</b>${p.omit}</div>`;
+  const li = a => (a && a.length) ? `<ul>${a.map(x => `<li>${x}</li>`).join('')}</ul>` : '';
+  const defs = (p.def || []).map(([t, d]) => `<li><b>${t}:</b> ${d}</li>`).join('');
+  const ej = Array.isArray(p.ej) ? li(p.ej) : p.ej ? `<p>${p.ej}</p>` : '';
+  let st;
+  if (p.cmd === 'exp') st = [['Definir', `<ul>${defs}</ul>`], ['Causa inicial', `<p>${p.cau || ''}</p>`], ['Diagrama', `<p>${p.dia}</p>`], ['Cadena causal', `<ol class="ppchain">${(p.cad || []).map(x => `<li>${x}</li>`).join('')}</ol>`], ['Enlazar con un ejemplo real', ej]];
+  else if (p.cmd === 'eva') st = [['Definir', `<ul>${defs}</ul>`], ['Teoría con diagrama', `<p>${p.dia}</p>${p.teo ? `<p>${p.teo}</p>` : ''}`], ['Efectos y argumentos a favor', li(p.pro)], ['Aplicar a un caso real', ej], ['Evaluar (CLASPP): límites y contraargumentos', li(p.con) + (p.mat ? `<p class="small"><b>Matices:</b></p>${li(p.mat)}` : '')], ['Conclusión justificada', `<p class="ppconc">${p.concl}</p>`]];
+  else if (p.cmd === 'hqp') st = [['Identificar la afirmación', `<p>${p.teo ? p.teo + ' ' : ''}Hay que medir <b>en qué grado</b> se cumple.</p>`], ['Definir', `<ul>${defs}</ul>`], ['Teoría con diagrama', `<p>${p.dia}</p>`], ['Tesis (a favor)', li(p.pro) + ej], ['Antítesis (en contra)', li(p.con)], ['Condiciones y plazos', li(p.mat) || '<p>¿Bajo qué condiciones se cumple? ¿Qué cambia entre el corto y el largo plazo?</p>'], ['Conclusión con grado', `<p class="ppconc">${p.concl}</p><p class="small muted">Usa la escala: en nada · en poca medida · parcialmente · en gran medida · totalmente; agrega un plazo y una condición («siempre que…»).</p>`]];
+  else st = [['Definir', `<ul>${defs}</ul>`], ['Diagrama', `<p>${p.dia}</p>`], [p.cmd === 'exa' ? 'La afirmación y sus supuestos' : 'La idea central y las posturas', `<p>${p.teo || ''}</p>`], ['Primera postura (a favor)', li(p.pro)], ['Postura opuesta (en contra)', li(p.con)], ['Factores, matices y ejemplos', li(p.mat) + ej], ['Conclusión equilibrada', `<p class="ppconc">${p.concl}</p>`]];
+  const sameNote = p.same ? (() => { const t = ppFind(p.same); return t ? `<p class="small muted">Esta pregunta es igual o muy parecida a la de ${t.s.ses}, pregunta ${t.q.n} (${t.p.k}): la guía es la misma.</p>` : ''; })() : '';
+  return `${p.adapt ? `<div class="fb info">${p.adapt}</div>` : ''}${sameNote}${p.note ? `<p class="small">${p.note}</p>` : ''}
+    <ol class="ppsteps">${st.map(([h, b], i) => `<li><div class="pph"><span class="ppn">${i + 1}</span>${h}</div><div class="ppb">${b}</div></li>`).join('')}</ol>
+    ${p.req ? `<div class="fb ok"><b class="h">Para la nota máxima</b>${p.req}</div>` : ''}${p.err ? `<div class="fb no"><b class="h">Error frecuente</b>${p.err}</div>` : ''}`;
+}
+function renderPast() {
+  const F = SESS.ppf = SESS.ppf || { ses: 'all', u: 'all', cmd: 'all', st: 'all' };
+  const all = ppAll(), live = all.filter(x => !x.p.omit), done = live.filter(x => PP_DONE[x.id]).length;
+  const cnt = {}; live.forEach(x => { cnt[x.p.st] = (cnt[x.p.st] || 0) + 1; });
+  const top = Object.entries(cnt).sort((a, b) => b[1] - a[1]).slice(0, 10);
+  const opt = (v, l, cur) => `<option value="${v}"${v === cur ? ' selected' : ''}>${l}</option>`;
+  const sesL = s => `${s.ses} · ${s.nuevo ? 'programa actual' : 'programa anterior'}`;
+  app.innerHTML = `<div class="eyebrow">Repaso final</div><h1>Exámenes anteriores</h1>
+    <div class="row" style="margin-bottom:14px">${segBtns('ppw', [['p1', 'Prueba 1'], ['p2', 'Prueba 2 (próximamente)']], 'p1')}</div>
+    <p class="lede">Preguntas de la Prueba 1 de diez convocatorias (2019–2026), con una respuesta guía para cada parte, en el formato de clase según el término de instrucción.</p>
+    <div class="ppgrid">
+      <div class="fb info" style="margin:0"><b class="h">Cómo practicar</b><ol style="margin:4px 0 0;padding-left:20px"><li>Elige una pregunta y escríbela <b>sin mirar la guía</b>: unos 25 minutos la (a) y 45 la (b).</li><li>Abre la respuesta guía y compara paso por paso.</li><li>Lee «Para la nota máxima»: ahí está lo que el examinador exige.</li><li>Marca la pregunta como practicada.</li></ol></div>
+      <div class="fb" style="margin:0;border:1px solid var(--rule);background:var(--sheet)"><b class="h">La Prueba 1 hoy (NM)</b>1 hora 15 minutos · sin calculadora · eliges <b>una</b> de tres preguntas · (a) 10 puntos + (b) 15 puntos. En la (b) siempre usa ejemplos reales. Hasta 2021 había dos secciones (micro y macro): esas preguntas siguen sirviendo para practicar.</div>
+    </div>
+    <p class="small muted" style="margin:10px 0 0">Los enunciados están redactados con nuestras palabras. Los exámenes originales y los esquemas de calificación del IB los entrega el profesor por Teams.</p>
+    <h2 class="wgroup" style="margin-top:22px">Términos de instrucción</h2>
+    <div class="ppcmds">${['exp', 'eva', 'dis', 'hqp', 'exa'].map(k => `<button type="button" class="ppcmd" data-go="${PP_CMD[k].r}"><b>${PP_CMD[k].n}</b><span>${PP_CMD[k].how}</span></button>`).join('')}</div>
+    <h2 class="wgroup" style="margin-top:22px">Lo que más se pregunta</h2>
+    <div class="tgls">${top.map(([st, n]) => `<button type="button" class="tgl" data-st="${st}" aria-pressed="${F.st === st}">${tcode(st)} ${esc((TOPICS.find(t => t.id === st) || { name: '' }).name)} · ${n}</button>`).join('')}${F.st !== 'all' ? '<button type="button" class="tgl" data-st="all">Ver todos</button>' : ''}</div>
+    <div class="ppfil">
+      <label>Convocatoria<select id="pfs" class="dsel">${opt('all', 'Todas', F.ses)}${PP1.map(s => opt(s.id, sesL(s), F.ses)).join('')}</select></label>
+      <label>Unidad<select id="pfu" class="dsel">${opt('all', 'Todas', F.u)}${[1, 2, 3, 4].map(u => opt(String(u), `Unidad ${u} · ${UNITS[u]}`, F.u)).join('')}</select></label>
+      <label>Término<select id="pfc" class="dsel">${opt('all', 'Todos', F.cmd)}${Object.entries(PP_CMD).map(([k, c]) => opt(k, c.n, F.cmd)).join('')}</select></label>
+    </div>
+    <p class="small"><b>Practicadas: ${done} de ${live.length}</b></p>
+    <div id="pplist"></div>`;
+  bindSeg(app, 'ppw', v => { if (v === 'p2') $('#pplist').innerHTML = '<div class="fb info"><b class="h">Prueba 2</b>Se agrega en la próxima actualización, con el mismo formato.</div>'; else list(); });
+  app.querySelectorAll('[data-st]').forEach(b => b.onclick = () => { F.st = b.dataset.st === F.st ? 'all' : b.dataset.st; renderPast(); });
+  [['pfs', 'ses'], ['pfu', 'u'], ['pfc', 'cmd']].forEach(([id, k]) => { $('#' + id).onchange = e => { F[k] = e.target.value; list(); }; });
+  function list() {
+    const ok = x => (F.ses === 'all' || x.s.id === F.ses) && (F.u === 'all' || x.p.st[0] === F.u) && (F.cmd === 'all' || x.p.cmd === F.cmd) && (F.st === 'all' || x.p.st === F.st);
+    const html = PP1.slice().sort((a, b) => b.ord - a.ord).map(s => {
+      const qs = s.qs.map(q => { const ps = q.parts.map(p => ({ s, q, p, id: `${s.id}-${q.n}${p.k}` })).filter(ok); if (!ps.length) return '';
+        return `<div class="ppq"><div class="ppqh"><b>Pregunta ${q.n}</b><span class="tag">Unidad ${q.u}</span></div>${ps.map(x => { const c = PP_CMD[x.p.cmd]; const d = !!PP_DONE[x.id];
+          return `<div class="ppp${x.p.omit ? ' omit' : ''}"><div class="row" style="gap:6px"><span class="ppk">(${x.p.k})</span><span class="tag prog">${c.n}</span><span class="tag">${x.p.k === 'a' ? 10 : 15} puntos</span><span class="tag">Subtema ${tcode(x.p.st)}</span></div>
+            <p class="ppqt">${x.p.q}</p>
+            <details class="ppd" data-id="${x.id}"><summary>${x.p.omit ? 'Ver por qué no se practica' : 'Ver respuesta guía'}</summary><div class="ppg">${ppGuide(x.p)}</div></details>
+            ${x.p.omit ? '' : `<label class="ppdone"><input type="checkbox" data-done="${x.id}"${d ? ' checked' : ''}> La practiqué</label>`}</div>`; }).join('')}</div>`; }).join('');
+      if (!qs.trim()) return '';
+      return `<div class="unit-h"><h2>${s.ses}</h2><span>${s.nuevo ? 'Programa actual' : 'Programa anterior'}${s.onlyMs ? ' · enunciados tomados del esquema de calificación' : ''}${s.ms ? '' : ' · sin esquema de calificación: guía elaborada por el profesor'}</span></div>${qs}`;
+    }).join('');
+    $('#pplist').innerHTML = html || '<p class="muted">No hay preguntas con esos filtros.</p>';
+    app.querySelectorAll('[data-done]').forEach(c => c.onchange = () => { if (c.checked) PP_DONE[c.dataset.done] = 1; else delete PP_DONE[c.dataset.done]; store.set('pp1done', PP_DONE); });
+  }
+  list();
+}
 
 /* =============== 10 · Términos de instrucción: Analizar, Discutir, ¿Hasta qué punto? =============== */
 /* Método tomado de las guías del Prof. Rivarola. Ejemplos adaptados al Nivel Medio y con datos verificados. */
