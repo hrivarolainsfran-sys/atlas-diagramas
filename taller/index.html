@@ -6467,7 +6467,7 @@ const PP1 = [
       concl: 'Hay un conflicto entre equidad y eficiencia, pero no siempre es grande: depende del diseño.' }
   ] }
 ] },
-{ id: 'n19', ses: 'Noviembre 2019', ord: 2019.9, nuevo: false, ms: false, qs: [
+{ id: 'n19', ses: 'Noviembre 2019', ord: 2019.9, nuevo: false, ms: true, qs: [
   { n: 1, u: 2, parts: [
     { k: 'a', st: '2.5', cmd: 'exp', q: 'Explique dos motivos por los que la demanda de productos manufacturados puede ser elástica al precio.', same: 'm21-1a' },
     { k: 'b', st: '2.5', cmd: 'eva', omit: 'Fuera del programa actual: la elasticidad precio cruzada (EPCD) ya no se estudia.', q: 'Importancia de la EPCD para una empresa.' }
@@ -6568,6 +6568,195 @@ const PP1 = [
       mat: ['Al menos dos objetivos.', 'Palabra clave: «solo».'],
       ej: ['Paraguay 2023: crecimiento con inflación en baja.'],
       concl: 'No necesariamente: depende del tipo de crecimiento y de las políticas que lo acompañen.' }
+  ] }
+] },
+{ id: 'n23b', ses: 'Noviembre 2023 (otra versión)', ord: 2023.89, nuevo: true, ms: false, qs: [
+  { n: 1, u: 2, parts: [
+    { k: 'a', st: '2.5', cmd: 'exp', q: 'Explique la diferencia entre la elasticidad precio de la demanda y la elasticidad ingreso de la demanda.',
+      def: [['Elasticidad precio de la demanda (EPD)', 'Sensibilidad de la cantidad demandada ante un cambio del precio del propio bien: %ΔQd ÷ %ΔP.'], ['Elasticidad ingreso de la demanda (EID)', 'Sensibilidad de la cantidad demandada ante un cambio del ingreso: %ΔQd ÷ %ΔY.']],
+      cau: 'Cambia el precio del bien (EPD) o cambia el ingreso de los consumidores (EID).',
+      dia: 'Dos diagramas: EPD como movimiento a lo largo de una demanda elástica e inelástica; EID como desplazamiento de la demanda (o curva de Engel).',
+      cad: ['La EPD mide un movimiento a lo largo de la curva de demanda; es negativa y se interpreta en valor absoluto (elástica > 1, inelástica < 1).', 'Depende de los sustitutos, de si es necesidad o lujo, del peso en el presupuesto y del tiempo.', 'La EID mide un desplazamiento de la curva: positiva en bienes normales (necesidad 0–1, lujo > 1) y negativa en bienes inferiores.', 'Por eso la EPD sirve a las empresas para fijar precios y la EID para prever ventas cuando la economía crece o cae.'],
+      ej: 'La nafta en Paraguay tiene demanda inelástica al precio; los viajes al exterior tienen EID alta (lujo) y caen mucho en una recesión.',
+      req: 'Las dos fórmulas, el signo de cada una y la diferencia «movimiento vs. desplazamiento», con diagramas.',
+      err: 'Explicar las dos elasticidades por separado sin decir en qué se diferencian.' },
+    { k: 'b', st: '2.5', cmd: 'eva', q: 'Utilizando ejemplos reales, evalúe la idea de que conocer la EPD puede ser útil para las empresas que quieren aumentar su ingreso total.',
+      def: [['EPD', '%ΔQd ÷ %ΔP.'], ['Ingreso total', 'Precio × cantidad vendida.']],
+      dia: 'Demanda inelástica (subir el precio aumenta el ingreso: el rectángulo ganado es mayor que el perdido) y demanda elástica (bajar el precio aumenta el ingreso).',
+      teo: 'Si la demanda es inelástica conviene subir el precio; si es elástica conviene bajarlo.',
+      pro: ['Permite elegir la dirección correcta del cambio de precio.', 'Sirve para la discriminación de precios: tarifas de avión, horarios de cine, descuentos a estudiantes.', 'Permite prever cuánto del impuesto se puede trasladar al consumidor.'],
+      con: ['La EPD es difícil de estimar y cambia con el tiempo (más elástica a largo plazo).', 'La reacción de los competidores puede anular el efecto.', 'Subir precios puede dañar la imagen y la fidelidad de los clientes.', 'Más ingreso no es más ganancia: también importan los costos.', 'Otros factores (ingreso, gustos) mueven la demanda al mismo tiempo.'],
+      ej: ['Aerolíneas y plataformas de streaming ajustan precios según el tipo de cliente.', 'Las tabacaleras suben precios porque la demanda de cigarrillos es inelástica.'],
+      concl: 'Conocer la EPD es útil para orientar las decisiones de precio, pero solo como estimación: la empresa debe combinarla con los costos, la competencia y el largo plazo.' }
+  ] },
+  { n: 2, u: 3, parts: [
+    { k: 'a', st: '3.2', cmd: 'exp', q: 'Explique cómo un aumento de la confianza del consumidor y una suba de las tasas de interés podrían afectar el equilibrio macroeconómico de corto plazo.',
+      def: [['Demanda agregada', 'Gasto total planeado en bienes y servicios finales: C + I + G + (X − M).'], ['Equilibrio de corto plazo', 'Donde la DA corta la OACP.'], ['Confianza del consumidor', 'Optimismo de los hogares sobre su ingreso futuro.']],
+      cau: 'Dos cambios con efectos opuestos sobre la DA.',
+      dia: 'DA/OA con la DA a la derecha (confianza) y a la izquierda (tasas más altas).',
+      cad: ['Más confianza: los hogares gastan más y ahorran menos; sube C y la DA se desplaza a la derecha (sube el PIB real y el NGP).', 'Tasas más altas: endeudarse cuesta más y ahorrar rinde más; bajan C e I y la DA se desplaza a la izquierda.', 'El efecto final depende de cuál es más fuerte: la DA puede subir, bajar o quedar igual.'],
+      ej: 'En 2022–2023 muchos bancos centrales (incluido el BCP) subieron las tasas cuando el consumo se recuperaba después de la pandemia.',
+      req: 'Explicar los dos cambios por separado y concluir que el efecto neto es incierto.',
+      err: 'Explicar solo uno de los dos cambios (máximo 6/10).' },
+    { k: 'b', st: '3.3', cmd: 'eva', q: 'Utilizando ejemplos reales, evalúe la idea de que el crecimiento económico siempre conduce a un mayor bienestar económico.', same: 'n23-2b' }
+  ] },
+  { n: 3, u: 4, parts: [
+    { k: 'a', st: '4.2', cmd: 'exp', q: 'Explique cómo un país podría usar la protección comercial para recaudar ingresos para el Estado y proteger el empleo en una industria.',
+      def: [['Protección comercial', 'Medidas del gobierno que limitan las importaciones.'], ['Arancel', 'Impuesto sobre los bienes importados.']],
+      cau: 'El gobierno aplica un arancel.',
+      dia: 'Diagrama de arancel: Pm sube a Pm + arancel; rectángulo de recaudación; la producción nacional sube de Q₁ a Q₃.',
+      cad: ['El arancel sube el precio de las importaciones.', 'Se importa menos (Q₃–Q₄) y el gobierno cobra arancel × importaciones: recaudación.', 'Al precio más alto los productores nacionales venden más (Q₁ → Q₃) y contratan más trabajadores: se protege el empleo.'],
+      ej: 'Paraguay aplica el Arancel Externo Común del Mercosur; EE. UU. puso aranceles al acero en 2018 para proteger empleos.',
+      req: 'Un diagrama con la recaudación y la mayor producción nacional, y las dos razones explicadas.',
+      err: 'Explicar una sola razón (máximo 6/10).' },
+    { k: 'b', st: '4.2', cmd: 'eva', q: 'Utilizando ejemplos reales, evalúe la decisión de un país de aplicar protección comercial a los bienes importados.', same: 'n23-3b', note: 'Esta pregunta es más amplia: además del arancel, puedes evaluar cuotas, subsidios a productores y barreras administrativas.' }
+  ] }
+] },
+{ id: 'm21b', ses: 'Mayo 2021 (TZ1)', ord: 2021.49, nuevo: false, ms: true, onlyMs: true, qs: [
+  { n: 1, u: 2, parts: [
+    { k: 'a', st: '2.3', cmd: 'exp', q: 'Explique cómo el mecanismo de precios reasigna los recursos cuando disminuye la oferta de un bien.',
+      def: [['Mecanismo de precios', 'Sistema en el que los precios, por la oferta y la demanda, deciden qué y cuánto se produce.'], ['Asignación de recursos', 'Cómo se distribuyen los factores de producción entre usos.']],
+      cau: 'Baja la oferta (por ejemplo, una sequía).',
+      dia: 'Oferta a la izquierda: al precio inicial hay exceso de demanda; el precio sube hasta el nuevo equilibrio.',
+      cad: ['Al precio inicial hay exceso de demanda (escasez).', 'El precio sube: es una señal de escasez.', 'Incentivo: a los productores les conviene producir más o entrar al mercado.', 'Racionamiento: los consumidores compran menos y pasan a sustitutos más baratos; los recursos se reasignan.'],
+      ej: 'La sequía de 2021–2022 redujo la cosecha de soja en Paraguay; en 2022 la guerra en Ucrania encareció el aceite de girasol y muchos pasaron a otros aceites.',
+      req: 'Las tres funciones del precio (señal, incentivo, racionamiento) con el diagrama.',
+      err: 'Solo describir el diagrama sin explicar cómo se mueven los recursos.' },
+    { k: 'b', st: '2.8', cmd: 'eva', q: 'Evalúe la idea de que los impuestos al carbono son la mejor forma de enfrentar la amenaza a la sostenibilidad causada por el uso de combustibles fósiles.',
+      def: [['Sostenibilidad', 'Satisfacer las necesidades de hoy sin comprometer las de las generaciones futuras.'], ['Impuesto al carbono', 'Impuesto por tonelada de CO₂ emitida (impuesto pigouviano).']],
+      dia: 'Externalidad negativa de producción con el impuesto que lleva la oferta hasta el CMgS y la cantidad de Qm a Q*.',
+      teo: 'Quemar combustibles fósiles genera costos externos; el impuesto hace que quien contamina pague.',
+      pro: ['Internaliza la externalidad y reduce la cantidad hacia el óptimo social.', 'Da incentivos permanentes a usar tecnología limpia.', 'Recauda fondos para energía limpia o para compensar a los hogares pobres.'],
+      con: ['Es difícil medir el valor exacto de la externalidad.', 'Si la demanda es inelástica, baja poco la cantidad.', 'Es regresivo: afecta más a los hogares pobres.', 'Las empresas pueden mudarse a países sin el impuesto.', 'Hay otras políticas: permisos negociables (fijan un tope de emisiones), subsidios a renovables, regulaciones y acuerdos internacionales.'],
+      ej: ['Suecia tiene uno de los impuestos al carbono más altos del mundo desde 1991.', 'El mercado de permisos de emisión de la UE.'],
+      concl: 'Es una herramienta eficaz pero no la mejor por sí sola: funciona mejor combinada con permisos, subsidios a energía limpia y acuerdos internacionales.',
+      req: 'Comparar con otras políticas; sin eso, máximo 12/15.' }
+  ] },
+  { n: 2, u: 2, parts: [
+    { k: 'a', st: '2.7', cmd: 'exp', q: 'Explique dos razones por las que un gobierno podría aplicar impuestos indirectos.',
+      def: [['Impuesto indirecto', 'Impuesto sobre el gasto en bienes y servicios (IVA o impuestos específicos).']],
+      cau: 'El gobierno grava un bien.',
+      dia: 'Impuesto indirecto: la oferta sube, el precio aumenta, la cantidad baja y aparece la recaudación.',
+      cad: ['Razón 1 – recaudar: el área del impuesto (impuesto × Q₁) financia gasto público.', 'Razón 2 – reducir el consumo de bienes perjudiciales o externalidades negativas: el precio sube y la cantidad baja.', 'Otras: proteger la producción nacional o redistribuir gravando bienes de lujo.'],
+      ej: 'En Paraguay, el Impuesto Selectivo al Consumo grava cigarrillos, bebidas alcohólicas y combustibles; el IVA es la mayor fuente de recaudación.',
+      req: 'Dos razones bien explicadas con diagrama; con una sola, máximo 6/10.',
+      err: 'Confundir impuesto indirecto con impuesto a la renta.' },
+    { k: 'b', st: '2.7', cmd: 'dis', q: 'Discuta la idea de que los precios mínimos son más eficaces que los subsidios para ayudar a los productores agrícolas.',
+      def: [['Precio mínimo', 'Precio fijado por encima del equilibrio.'], ['Subsidio', 'Pago del gobierno a los productores por unidad producida.']],
+      dia: 'Precio mínimo con excedente que compra el gobierno; subsidio con la oferta hacia abajo y el gasto público.',
+      teo: 'Las dos medidas suben el ingreso de los productores, pero con costos distintos.',
+      pro: ['(Precio mínimo) Garantiza un precio estable y conocido.', 'El gobierno puede guardar el excedente como reserva.'],
+      con: ['(Precio mínimo) Genera excedentes: almacenarlos o destruirlos cuesta mucho.', 'Los consumidores pagan más y compran menos.', 'Ineficiencia: se producen bienes que nadie quiere comprar.', '(Subsidio) Baja el precio para el consumidor y no deja excedentes.', 'El subsidio también tiene costo de oportunidad y puede generar ineficiencia y conflictos en la OMC.'],
+      mat: ['Depende de la elasticidad de la demanda y de la oferta.', 'Depende de si el objetivo es ayudar a los productores, a los consumidores o a ambos.'],
+      ej: ['La Política Agrícola Común de la UE generó «montañas de mantequilla» con precios mínimos.', 'India garantiza precios mínimos de compra para el trigo y el arroz.', 'EE. UU. subsidia a sus agricultores con la Farm Bill.'],
+      concl: 'En general el subsidio es más eficaz porque ayuda al productor sin crear excedentes ni subir el precio al consumidor, aunque su costo fiscal puede ser alto.',
+      req: 'Responder «más eficaz»: sin esa comparación, máximo 12/15.' }
+  ] },
+  { n: 3, u: 3, parts: [
+    { k: 'a', st: '3.1', cmd: 'exp', q: 'Explique cómo una baja de la tasa de interés probablemente afecte el tamaño del flujo circular del ingreso.', same: 'm25-2a', note: 'Aquí la tasa baja: se invierte el sentido (menos ahorro, más inversión, el flujo crece).' },
+    { k: 'b', st: '3.6', cmd: 'eva', q: 'Evalúe la eficacia de la política fiscal para lograr crecimiento económico de largo plazo.',
+      def: [['Política fiscal', 'Uso del gasto público y los impuestos.'], ['Crecimiento de largo plazo', 'Aumento de la producción potencial.']],
+      dia: 'OALP (o CPP) desplazándose a la derecha.',
+      teo: 'El gasto en infraestructura, I+D y capital humano y los incentivos tributarios a la inversión aumentan la capacidad productiva.',
+      pro: ['Infraestructura, educación y salud elevan la productividad.', 'Desgravaciones a la inversión aumentan el stock de capital.', 'Además sube la DA en el corto plazo.'],
+      con: ['Rezagos largos: las obras tardan años.', 'Se financia con déficit y deuda; puede desplazar la inversión privada.', 'Riesgo de gasto ineficiente o corrupción.', 'Las políticas de oferta de mercado o la política monetaria pueden ser alternativas.'],
+      ej: ['Corea del Sur invirtió en educación e I+D durante décadas.', 'Paraguay amplió rutas asfaltadas y el puente de la Bioceánica.'],
+      concl: 'La política fiscal puede impulsar el crecimiento de largo plazo si el gasto es productivo y sostenible; su eficacia depende de la calidad del gasto y de la deuda.' }
+  ] },
+  { n: 4, u: 3, parts: [
+    { k: 'a', st: '3.2', cmd: 'exp', q: 'Explique cómo probablemente afecten la demanda agregada un aumento de la riqueza de los consumidores y un aumento de la confianza empresarial.',
+      def: [['Demanda agregada', 'C + I + G + (X − M).'], ['Riqueza', 'Valor de los activos (propiedades, acciones, ahorros).'], ['Confianza empresarial', 'Optimismo de las empresas sobre ventas y ganancias futuras.']],
+      cau: 'Suben los precios de las propiedades o acciones y las empresas esperan vender más.',
+      dia: 'DA/OA con la DA a la derecha.',
+      cad: ['Efecto riqueza: los hogares se sienten más ricos o pueden pedir más crédito con sus activos como garantía; sube C.', 'Más confianza empresarial: las empresas esperan más ventas y ganancias; sube I.', 'Al subir C e I, la DA se desplaza a la derecha: sube el PIB real.'],
+      ej: 'El auge de la bolsa de EE. UU. en 2021 impulsó el consumo de los hogares.',
+      req: 'Explicar los dos factores; con uno solo, máximo 6/10.',
+      err: 'Mover la OACP en lugar de la DA.' },
+    { k: 'b', st: '3.5', cmd: 'eva', q: 'Evalúe la eficacia de la política monetaria para reducir la tasa de desempleo.',
+      def: [['Política monetaria', 'Cambios en la tasa de interés o la oferta monetaria realizados por el banco central.'], ['Tasa de desempleo', 'Desempleados ÷ fuerza laboral × 100.']],
+      dia: 'DA a la derecha por una política monetaria expansiva; sube el PIB real y baja el desempleo cíclico.',
+      teo: 'Tasas más bajas: más consumo, inversión y exportaciones netas.',
+      pro: ['Se puede aplicar rápido y en pasos pequeños.', 'Pocas restricciones políticas: el banco central es independiente.', 'Eficaz contra el desempleo cíclico.'],
+      con: ['No sirve contra el desempleo estructural ni friccional (tasa natural).', 'Rezagos de varios meses.', 'Con tasas cerca de cero y poca confianza, pierde fuerza en una recesión.', 'Conflicto con la inflación.', 'Las políticas de oferta pueden ser más eficaces para el desempleo estructural.'],
+      ej: ['La Reserva Federal bajó la tasa a 0–0,25 % en 2020.', 'El BCP bajó la tasa a 0,75 % en 2020.'],
+      concl: 'Es eficaz contra el desempleo cíclico en el corto plazo, pero no contra el estructural; debe combinarse con políticas de oferta.' }
+  ] }
+] },
+{ id: 'm19b', ses: 'Mayo 2019 (otra versión)', ord: 2019.49, nuevo: false, ms: false, qs: [
+  { n: 1, u: 2, parts: [
+    { k: 'a', st: '2.2', cmd: 'exp', q: 'Explique dos factores que podrían desplazar la curva de oferta de una empresa hacia la izquierda.',
+      def: [['Oferta', 'Cantidad que los productores están dispuestos y pueden vender a cada precio.']],
+      cau: 'Sube un costo o cae la productividad.',
+      dia: 'Oferta de O₀ a O₁ hacia la izquierda: sube el precio y baja la cantidad.',
+      cad: ['Factor 1 – más costos de producción (salarios, materias primas, energía): a cada precio se ofrece menos.', 'Factor 2 – un impuesto indirecto o el fin de un subsidio: sube el costo por unidad.', 'Otros: clima adverso, menos empresas en el mercado, tecnología que falla.', 'La oferta se desplaza a la izquierda: sube el precio de equilibrio y baja la cantidad.'],
+      ej: 'La suba del gasoil encarece el transporte de mercaderías; una sequía reduce la oferta de soja.',
+      req: 'Dos factores bien explicados con el diagrama.',
+      err: 'Mencionar el precio del propio bien como factor (eso es un movimiento a lo largo de la curva).' },
+    { k: 'b', st: '2.7', cmd: 'dis', q: 'Discuta la idea de que dar subsidios a bienes como los productos agrícolas siempre beneficiará a las partes interesadas.',
+      def: [['Subsidio', 'Pago del gobierno a los productores por unidad.'], ['Partes interesadas', 'Consumidores, productores, gobierno, contribuyentes, productores extranjeros.']],
+      dia: 'Subsidio: la oferta baja, el consumidor paga Pc, el productor recibe Pp; gasto público y pérdida de bienestar.',
+      teo: 'El subsidio baja costos y precios, pero tiene costos para otros.',
+      pro: ['Consumidores: precio más bajo y más cantidad.', 'Productores: más ingreso y producción; ingresos más estables.', 'Puede asegurar el abastecimiento de alimentos.'],
+      con: ['Contribuyentes: pagan el subsidio; costo de oportunidad del gasto.', 'Sobreproducción e ineficiencia: pérdida de bienestar.', 'Productores extranjeros (a menudo de países en desarrollo) pierden mercado.', 'Puede beneficiar más a las grandes empresas agrícolas.'],
+      mat: ['«Siempre» es demasiado fuerte: depende de cada parte interesada.'],
+      ej: ['Los subsidios agrícolas de EE. UU. y la UE perjudican a exportadores de países en desarrollo.'],
+      concl: 'No siempre beneficia a todos: consumidores y productores nacionales ganan, pero contribuyentes y productores extranjeros pierden y la sociedad tiene una pérdida de bienestar.' }
+  ] },
+  { n: 2, u: 2, parts: [
+    { k: 'a', st: '2.8', cmd: 'exp', q: 'Explique por qué podría haber una provisión insuficiente de transporte público (buses y trenes) en una economía de mercado.',
+      def: [['Externalidad positiva', 'Beneficio que recibe un tercero ajeno a la transacción.'], ['Falla de mercado', 'Cuando el mercado no asigna los recursos de forma eficiente.']],
+      cau: 'Usar transporte público genera beneficios para la sociedad que el usuario no considera.',
+      dia: 'Externalidad positiva de consumo: BMgS > BMgP; el mercado produce Qm < Q*.',
+      cad: ['Menos autos: menos congestión, menos contaminación y menos accidentes.', 'El usuario decide solo por su beneficio privado: la demanda privada es menor que el beneficio social.', 'El mercado produce menos que el óptimo social: subasignación y pérdida de bienestar.', 'Además, la inversión inicial es muy alta y poco rentable para empresas privadas.'],
+      ej: 'Las grandes ciudades subsidian el transporte público; en Asunción el pasaje del colectivo está subsidiado.',
+      req: 'El diagrama de externalidad positiva con Qm y Q* y la pérdida de bienestar.',
+      err: 'Decir que el transporte público es un bien público (sí es excluible).' },
+    { k: 'b', st: '2.8', cmd: 'dis', q: 'Discuta la idea de que un impuesto indirecto a la nafta es la forma más eficaz de reducir la falla de mercado causada por los automóviles.',
+      def: [['Impuesto indirecto', 'Impuesto sobre el gasto en un bien.'], ['Falla de mercado', 'Asignación ineficiente de recursos.']],
+      dia: 'Externalidad negativa de consumo con el impuesto que acerca la cantidad a Q*.',
+      teo: 'Los autos generan contaminación y congestión (externalidad negativa).',
+      pro: ['Internaliza el costo externo: quien maneja más paga más.', 'Es fácil de cobrar y recauda fondos para el transporte público.'],
+      con: ['La demanda de nafta es inelástica: baja poco el consumo.', 'Es regresivo: afecta más a los pobres.', 'Es difícil medir la externalidad.', 'Alternativas: peajes por congestión, regulaciones de emisiones, subsidios al transporte público y a autos eléctricos, campañas de concientización.'],
+      mat: ['Más eficaz combinado con transporte público de calidad.'],
+      ej: ['Londres y Singapur cobran peajes por congestión.', 'Noruega subsidió autos eléctricos.'],
+      concl: 'El impuesto ayuda, pero por la demanda inelástica no es la forma más eficaz por sí solo; funciona mejor con alternativas de transporte.' }
+  ] },
+  { n: 3, u: 3, parts: [
+    { k: 'a', st: '3.7', cmd: 'exp', q: 'Explique cómo un aumento de la inversión pública en educación y formación puede afectar tanto la demanda agregada como la oferta agregada.',
+      def: [['Demanda agregada', 'C + I + G + (X − M).'], ['Oferta agregada de largo plazo', 'Producción potencial de la economía.']],
+      cau: 'El gobierno gasta más en escuelas, docentes y capacitación.',
+      dia: 'DA/OA con la DA a la derecha (corto plazo) y la OALP a la derecha (largo plazo).',
+      cad: ['Corto plazo: el gasto público (G) es parte de la DA: la DA se desplaza a la derecha.', 'Largo plazo: trabajadores más calificados y productivos: mejora el capital humano.', 'La OALP se desplaza a la derecha: sube la producción potencial sin presión inflacionaria.'],
+      ej: 'Corea del Sur y Finlandia invirtieron mucho en educación; Paraguay financia becas de posgrado con el programa Becal.',
+      req: 'Los dos efectos con su plazo (DA corto plazo, OALP largo plazo).',
+      err: 'Explicar solo el efecto sobre la oferta.' },
+    { k: 'b', st: '3.7', cmd: 'eva', q: 'Evalúe la idea de que las políticas de oferta son la mejor forma de reducir las presiones inflacionarias.',
+      def: [['Políticas de oferta', 'Medidas que aumentan la capacidad productiva.'], ['Presiones inflacionarias', 'Tendencia al alza del nivel general de precios.']],
+      dia: 'DA/OA: la OALP (u OACP) a la derecha baja el NGP y sube el PIB real.',
+      teo: 'Más capacidad productiva baja costos y precios sin reducir la producción.',
+      pro: ['Bajan la inflación y además suben la producción y el empleo.', 'Atacan la inflación de costos (productividad, competencia).'],
+      con: ['Rezagos muy largos: no sirven para una inflación actual.', 'Costosas y con resultados inciertos.', 'Las políticas de mercado pueden aumentar la desigualdad.', 'Si la inflación es de demanda, es más rápida una política monetaria contractiva (o fiscal).'],
+      ej: ['En 2022 los bancos centrales subieron las tasas porque necesitaban resultados rápidos.'],
+      concl: 'Son la mejor solución a largo plazo, pero ante presiones inflacionarias inmediatas la política monetaria es más eficaz.' }
+  ] },
+  { n: 4, u: 3, parts: [
+    { k: 'a', st: '3.3', cmd: 'exp', q: 'Explique las fases del ciclo económico.',
+      def: [['Ciclo económico', 'Fluctuaciones del PIB real alrededor de su tendencia de largo plazo.']],
+      cau: 'Cambios en la DA (confianza, crédito, shocks).',
+      dia: 'Ciclo económico: PIB real oscilando alrededor de la línea de tendencia, con auge, recesión, fondo y recuperación.',
+      cad: ['Expansión/recuperación: sube el PIB real y baja el desempleo.', 'Auge (pico): la economía produce sobre la tendencia; brecha inflacionaria.', 'Contracción/recesión: el PIB real cae (dos trimestres seguidos) y sube el desempleo.', 'Fondo: punto más bajo; brecha deflacionaria; luego empieza la recuperación.'],
+      ej: 'Paraguay: caída en 2020 (pandemia) y recuperación en 2021.',
+      req: 'Las cuatro fases con el diagrama y la línea de tendencia.',
+      err: 'Olvidar la línea de tendencia (crecimiento potencial).' },
+    { k: 'b', st: '3.2', cmd: 'dis', q: 'Discuta la idea de que las economías siempre vuelven al nivel de producción de pleno empleo en el largo plazo.',
+      def: [['Pleno empleo', 'Solo existe desempleo natural.'], ['Largo plazo', 'Período en que salarios y precios se ajustan.']],
+      dia: 'Modelo neoclásico (OALP vertical y ajuste de la OACP) frente al keynesiano (OA plana con recursos ociosos).',
+      teo: 'Neoclásicos: ajuste automático; Keynes: la economía puede quedar atrapada con desempleo.',
+      pro: ['(Neoclásico) Con desempleo, bajan los salarios y los costos: la OACP se desplaza a la derecha hasta Yp.', 'Los mercados flexibles se autorregulan.'],
+      con: ['(Keynes) Salarios rígidos a la baja: contratos, sindicatos, salario mínimo.', 'La baja confianza y el ahorro pueden mantener baja la DA.', '«A largo plazo todos estaremos muertos»: el ajuste puede tardar años.', 'Histéresis: el desempleo largo destruye capacidades.'],
+      mat: ['Depende de la flexibilidad de los mercados y de la duración.'],
+      ej: ['La Gran Depresión (1929) y la crisis de 2008 mostraron recuperaciones muy lentas sin intervención.'],
+      concl: 'En teoría la economía tiende al pleno empleo, pero no siempre ni rápido: por eso los gobiernos usan políticas de demanda.' }
   ] }
 ] }
 ];
@@ -7016,7 +7205,10 @@ const PP1_FIG = {
   'm21-1a': ['pedEI'], 'm21-1b': ['pedEI'], 'm21-2a': ['extpos'], 'm21-2b': ['pigou'], 'm21-3a': ['gapDef'], 'm21-4a': ['daShift'], 'm21-4b': ['daLeft'],
   'n20-1a': ['extneg'], 'n20-1b': ['extnegcFix'], 'n20-3a': ['daLeft'], 'n20-3b': ['daLeft', 'keynes'], 'n20-4a': ['lorenzEq'],
   'n19-2a': ['surplus'], 'n19-3b': ['daShift'], 'n19-4a': ['ppcMove'],
-  'm19-1b': ['surplus', 'extneg'], 'm19-2a': ['ceil'], 'm19-2b': ['subext'], 'm19-3a': ['daLeft'], 'm19-4a': ['oaInc', 'growthLR'], 'm19-4b': ['daShift', 'growthLR']
+  'm19-1b': ['surplus', 'extneg'], 'm19-2a': ['ceil'], 'm19-2b': ['subext'], 'm19-3a': ['daLeft'], 'm19-4a': ['oaInc', 'growthLR'], 'm19-4b': ['daShift', 'growthLR'],
+  'n23b-1a': ['pedEI'], 'n23b-1b': ['pedEI'], 'n23b-2a': ['daShift', 'daLeft'], 'n23b-3a': ['tariff'],
+  'm21b-1a': ['shiftS'], 'm21b-1b': ['pigou'], 'm21b-2a': ['tax'], 'm21b-2b': ['floorBuy', 'sub'], 'm21b-3a': ['flow'], 'm21b-3b': ['growthLR', 'ppcOut'], 'm21b-4a': ['daShift'], 'm21b-4b': ['daShift'],
+  'm19b-1a': ['shiftS'], 'm19b-1b': ['sub'], 'm19b-2a': ['extpos'], 'm19b-2b': ['extnegc'], 'm19b-3a': ['daShift', 'growthLR'], 'm19b-3b': ['growthLR'], 'm19b-4a': ['cycle'], 'm19b-4b': ['keynes']
 };
 
 const PP2 = [
@@ -7066,7 +7258,6 @@ const PP2 = [
         concl: 'La depreciación impulsó las exportaciones y parte del crecimiento, pero a costa de más inflación de costos; con desempleo e inflación en alza, el efecto neto parece más negativo para la inflación que positivo para el crecimiento.' }
     ] }
 ] },
-
 { id: 'n25', ses: 'Noviembre 2025', ord: 2025.9, nuevo: true, ms: true, cs: [
   { n: 1, ti: 'Argentina: inflación, reformas y depreciación del peso', ctx: 'Los textos describen la economía argentina: exportaciones agrícolas, pocas reservas internacionales, un peso sobrevaluado e inflación muy alta que reduce los salarios reales. El nuevo gobierno privatiza, elimina subsidios al transporte, devalúa el peso, introduce aranceles a las computadoras portátiles, cambia el mínimo no imponible del impuesto a la renta y negocia con el FMI. Expertos recomiendan mejorar la educación.',
     tabs: [{ cap: 'Tabla 3 · Datos económicos de Argentina', head: ['', '2013', '2022'], rows: [['PIB real (miles de millones de USD)', '593,86', '598,31'], ['PIB nominal (miles de millones de USD)', '526,32', '631,31'], ['Comercio neto (millones de USD)', '−694', '5440'], ['Inflación (%)', '10,9', '94,8'], ['Desempleo (%)', '7,1', '6,8'], ['Exportaciones (% del PIB)', '10,7', '16,3'], ['Deuda pública (% del PIB)', '40,1', '89,5'], ['Presupuesto del gobierno (% del PIB)', '−1,9', '−4,2']] }],
@@ -7110,7 +7301,6 @@ const PP2 = [
         concl: 'Las estrategias pueden aumentar el crecimiento si combinan apertura con diversificación (turismo, procesamiento local); depender de minerales mantiene el crecimiento volátil e insostenible.' }
     ] }
 ] },
-
 { id: 'm25', ses: 'Mayo 2025', ord: 2025.5, nuevo: true, ms: true, cs: [
   { n: 1, ti: 'Kenia: crecimiento alto, inflación, pobreza y cambio climático', ctx: 'Los textos describen a Kenia: crecimiento alto y diversificación hacia la industria y el turismo, aranceles y precios máximos a alimentos básicos, inflación sobre todo de costos y una política monetaria contractiva, depreciación del chelín, un fondo de microcréditos (Hustler Fund), pobreza rural persistente, empleo informal y planes contra el cambio climático (impuesto al carbono, asociaciones público-privadas).',
     tabs: [{ cap: 'Tabla 1 · Balanza de pagos de Kenia, 2023 (miles de millones de USD)', head: ['', 'Valor'], rows: [['Exportaciones de bienes', '8,66'], ['Importaciones de bienes', '20,90'], ['Balanza de bienes', '?'], ['Balanza de servicios', '?'], ['Ingreso primario', '−2,67'], ['Transferencias corrientes', '6,98'], ['Saldo en cuenta corriente', '−6,32']] },
@@ -7154,7 +7344,6 @@ const PP2 = [
         concl: 'La estrategia de Bután es sólida para el desarrollo sostenible (salud, ambiente, equidad), pero limitada por la dependencia de la India y la falta de empleo: debe diversificar y fomentar el emprendimiento.' }
     ] }
 ] },
-
 { id: 'n24', ses: 'Noviembre 2024', ord: 2024.9, nuevo: true, ms: true, cs: [
   { n: 1, ti: 'India y el acuerdo comercial con el Reino Unido', ctx: 'Los textos describen la negociación de un acuerdo de libre comercio entre la India y el Reino Unido: rebaja gradual de aranceles (por ejemplo, al vino británico), más visas de trabajo, privatizaciones en salud y educación, reglas de propiedad intelectual sobre medicamentos, más emisiones por el transporte del comercio y una política monetaria más estricta en la India. La participación laboral femenina en la India es muy baja (23 %).',
     tabs: [{ cap: 'Tabla 4 · Datos económicos de la India', head: ['', '2017', '2021'], rows: [['PIB real (billones de USD)', '2,43', '2,73'], ['Población (miles de millones)', '1,35', '1,41'], ['Desempleo (%)', '7,7', '7,9'], ['Saldo en cuenta corriente (miles de millones de USD)', '−30,14', '−33,42']] }],
@@ -7197,10 +7386,10 @@ const PP2 = [
         concl: 'La intervención está logrando objetivos de equidad, pobreza y desarrollo humano, pero con costos fiscales y ambientales: el subsidio a la gasolina contradice el objetivo de reducir emisiones.' }
     ] }
 ] },
-
-{ id: 'm24', ses: 'Mayo 2024', ord: 2024.5, nuevo: true, ms: true, noTxt: true, cs: [
-  { n: 1, ti: 'Reino Unido: libra, comercio después del Brexit y emisiones netas cero', ctx: 'El caso trata sobre el Reino Unido: inflación, más gasto en infraestructura, exportaciones farmacéuticas (EPD = −0,6), la caída de la libra entre 2011 y 2022 (Figura 1), nuevos acuerdos de libre comercio con Australia y Nueva Zelanda tras salir de la UE, y la estrategia de emisiones netas cero (bienes “verdes”, impuesto al carbono sobre el plástico).',
-    tabs: [{ cap: 'Datos de la Tabla 2 que se usan en el cálculo (Reino Unido, 2011, miles de millones de £)', head: ['Componente', 'Valor'], rows: [['Saldo en cuenta corriente', '−32'], ['Balanza comercial de bienes', '−103'], ['Ingreso primario neto', '+6'], ['Ingreso secundario neto', '−21']] }],
+{ id: 'm24', ses: 'Mayo 2024', ord: 2024.5, nuevo: true, ms: true, cs: [
+  { n: 1, ti: 'Reino Unido: libra, comercio después del Brexit y emisiones netas cero', ctx: 'A comienzos de 2022 el Reino Unido había salido de una recesión profunda, pero la inflación subía por la energía cara, la escasez de trabajadores y el alto gasto público. El banco central subió las tasas de interés varias veces (meta: 2 %) y el FMI recomendó más gasto en infraestructura, capacitación e innovación. El déficit en cuenta corriente creció por más importaciones de manufacturas y combustibles. La libra perdió valor desde 2014 (Figura 1: de 1,61 USD en 2011 a cerca de 1,20 en 2022) y aun así la cuota británica en el comercio mundial bajó: muchas exportaciones usan insumos importados y los servicios (banca, seguros) tienen demanda inelástica. EPD de largo plazo: fármacos −0,6, maquinaria −1,1; de corto plazo, −0,15 en promedio. El ingreso extranjero pesa más: la EID de los fármacos es 2,6 y la de los zapatos −0,07. Tras el Brexit (2020) el Reino Unido firmó acuerdos de libre comercio con Australia y Nueva Zelanda que eliminarán casi todos los aranceles: el PIB subiría solo 0,11 % por año y los agricultores temen perder competitividad. La estrategia de cero emisiones netas para 2050 incluye impuestos al carbono sobre productos como los envases de plástico e incentivos a exportar bienes “verdes”.',
+    tabs: [{ cap: 'Tabla 1 · Datos económicos del Reino Unido', head: ['', '2011', '2021'], rows: [['PIB real per cápita (GBP)', '27 996', '30 246'], ['Desempleo (%)', '8,0', '4,5'], ['Inflación (%)', '3,9', '2,5'], ['Tipo de cambio (USD por GBP)', '1,61', '1,37']] },
+      { cap: 'Tabla 2 · Balanza de pagos del Reino Unido (miles de millones de GBP)', head: ['', '2011', '2021'], rows: [['Balanza comercial de bienes', '−103', '−156'], ['Balanza comercial de servicios', '(calcular)', '127'], ['Ingreso', '6', '−12'], ['Transferencias corrientes', '−21', '−19'], ['Saldo en cuenta corriente', '−32', '−60'], ['IED', '34', '58'], ['Inversión de cartera', '−10', '−25'], ['Reservas', '−5', '18']] }],
     parts: [
       { k: 'a (i)', t: 'def', pts: 2, q: 'Defina inflación.', ans: 'Aumento sostenido del nivel general de precios.', ck: ['aumento persistente o sostenido', 'del nivel general de precios'] },
       { k: 'a (ii)', t: 'def', pts: 2, q: 'Defina inversión extranjera directa (IED).', ans: 'Inversión de largo plazo de una empresa multinacional en activos productivos (fábricas, maquinaria) de otro país, con al menos 10 % de propiedad.', ck: ['dos de: largo plazo / multinacional / ≥ 10 % / capital físico en otro país'] },
@@ -7213,17 +7402,19 @@ const PP2 = [
       { k: 'g', t: 'dis', pts: 15, q: 'Con la información del texto y sus conocimientos, discuta los efectos probables de la tendencia del tipo de cambio de 2011 a 2022 (depreciación de la libra) sobre la balanza de pagos y la economía del Reino Unido.',
         def: [['Depreciación', 'Caída del valor de una moneda en un sistema de tipo de cambio flotante.'], ['Balanza de pagos', 'Registro de todas las transacciones de un país con el resto del mundo.']],
         fig: [{ k: 'fxDownS', ti: 'Depreciación de la libra', rep: { 'D': 'D GBP', 'O₁': 'O GBP₁', 'O₂': 'O GBP₂' } }, 'daShift'],
-        pro: ['Exportaciones más baratas e importaciones más caras: en teoría baja el déficit comercial y en cuenta corriente.', 'Más competitividad: atrae IED y compra de activos británicos (inversión de cartera) que financian inversión.', 'Más exportaciones netas: sube la DA, el PIB real y el empleo (el desempleo bajó).', 'Nuevos acuerdos comerciales abren mercados para exportaciones más baratas.', 'Puede impulsar las exportaciones de bienes “verdes”.'],
-        con: ['Según los datos, los déficits se ampliaron: la depreciación no los corrigió.', 'Exportaciones como las farmacéuticas son inelásticas (EPD −0,6): el precio pesa poco.', 'La cuota de mercado británica cae; el Brexit limita los beneficios.', 'Importaciones más caras (petróleo, insumos): inflación de costos.', 'Defender la libra agotaría reservas, que ya son bajas.'],
+        pro: ['Exportaciones más baratas e importaciones más caras: en teoría baja el déficit comercial y en cuenta corriente.', 'Más competitividad: atrae IED y compra de activos británicos (inversión de cartera) que financian inversión.', 'Más exportaciones netas: sube la DA, el PIB real y el empleo (el desempleo bajó de 8,0 % a 4,5 %).', 'Nuevos acuerdos comerciales abren mercados para exportaciones más baratas.', 'Puede impulsar las exportaciones de bienes “verdes”.'],
+        con: ['Según la Tabla 2, el déficit comercial de bienes (−103 → −156) y el de cuenta corriente (−32 → −60) se ampliaron: la depreciación no los corrigió.', 'Exportaciones como las farmacéuticas son inelásticas (EPD −0,6): el precio pesa poco.', 'La cuota de mercado británica cae; el Brexit limita los beneficios.', 'Importaciones más caras (petróleo, insumos): inflación de costos.', 'Defender la libra agotaría reservas, que ya son bajas.'],
         mat: ['Condición Marshall-Lerner: la balanza mejora solo si la demanda de exportaciones e importaciones es elástica.', 'Corto plazo (curva J) vs. largo plazo.', 'El ingreso de los socios comerciales y la calidad pesan más que el precio.'],
         concl: 'La depreciación ayudó algo al empleo y a la llegada de inversión, pero no corrigió los déficits y sumó inflación; su efecto depende de la elasticidad de las exportaciones y del acceso a mercados después del Brexit.' }
     ] },
-  { n: 2, ti: 'Filipinas: energía, comercio de alimentos y pobreza', ctx: 'El caso trata sobre Filipinas: una gran economía informal, trabajadores en agricultura y pesca, precios mundiales de energía en alza, eliminación de la cuota a la importación de carne de cerdo (ASEAN), un arancel al arroz importado, precios mínimos de los choferes privados de buses, impuestos al tabaco para financiar la salud, transferencias condicionadas, infraestructura y asistencia oficial para el desarrollo.',
-    tabs: [{ cap: 'Datos de la Tabla 5 que se usan en el cálculo (Filipinas, 2022, miles de millones de ₱)', head: ['Componente', 'Valor'], rows: [['PIB', '19 700'], ['Gasto público (G)', '3780'], ['Inversión (I)', '3700'], ['Exportaciones (X)', '5400'], ['Importaciones (M)', '7780']] }],
+  { n: 2, ti: 'Filipinas: energía, comercio de alimentos y pobreza', ctx: 'Filipinas crecería cerca de 5 % anual en la década de 2020, impulsada por el consumo, la urbanización y las remesas; crecen los servicios (turismo, seguros). Más del 70 % de la fuerza laboral trabaja en la economía informal con bajos salarios; los desastres naturales golpean a agricultores y pescadores, y hay pesca ilegal y deforestación. Faltan infraestructura, salud y educación en zonas rurales; los alimentos son el 60 % del gasto de los hogares pobres (28 % en los ricos). El déficit fiscal es persistente; la energía cara y la depreciación del peso subieron la inflación y el banco central llevó la tasa de 2 % (2021) a 5,5 % (2022). Dentro de la ASEAN se eliminó la cuota a la carne de cerdo importada, pero se puso un arancel del 35 % al arroz cuya recaudación subsidia equipos, semillas y capacitación de arroceros. Para eliminar la pobreza extrema en 2040 se subieron impuestos al tabaco, alcohol y cigarrillos electrónicos para financiar salud; hay transferencias condicionadas a madres (escuela y controles de salud) que cuestan solo 0,4 % del PIB y cubren a casi 20 millones de personas; los choferes de buses rurales reciben subsidio al combustible y piden subir su precio mínimo, que ya está por encima del equilibrio. La AOD (préstamos y donaciones) financia infraestructura y capacitación en agroempresas, construcción, TI, turismo y empresas de mujeres.',
+    tabs: [{ cap: 'Tabla 3 · Datos económicos de Filipinas', head: ['', '2012', '2021'], rows: [['PIB real per cápita (PHP)', '127 000', '163 000'], ['INB real per cápita (PHP)', '141 000', '168 000'], ['Inflación (%)', '3,0', '3,9'], ['Desempleo (%)', '3,5', '2,4'], ['Tipo de cambio (PHP por USD)', '42,23', '49,25']] },
+      { cap: 'Tabla 4 · Desarrollo de Filipinas', head: ['', '2012', '2021'], rows: [['Población (millones)', '97', '111'], ['Pobreza absoluta (%)', '10,9', '3,0 (estimación)'], ['Coeficiente de Gini', '0,465', '0,441'], ['IDH', '0,644', '0,699'], ['Posición en el IDH (de 191)', '111', '116']] },
+      { cap: 'Tabla 5 · Ingreso nacional de Filipinas 2022 (miles de millones de PHP, estimación)', head: ['', '2022'], rows: [['Consumo', '(calcular)'], ['Inversión', '3780'], ['Gasto público', '3700'], ['Exportaciones', '5400'], ['Importaciones', '7780'], ['PIB', '19 700']] }],
     parts: [
       { k: 'a (i)', t: 'def', pts: 2, q: 'Defina economía informal.', ans: 'Actividad económica que no está registrada oficialmente ni incluida en el PIB, no está regulada y no paga impuestos.', ck: ['dos de: no registrada / fuera del PIB / no regulada / no paga impuestos'] },
       { k: 'a (ii)', t: 'def', pts: 2, q: 'Defina depreciación.', ans: 'Caída del valor de una moneda frente a otra en un sistema de tipo de cambio flotante, por las fuerzas de oferta y demanda.', ck: ['baja el valor de la moneda', 'tipo flotante / fuerzas del mercado'] },
-      { k: 'b (i)', t: 'calc', pts: 2, q: 'Con la Tabla 5, calcule el consumo en 2022.', steps: ['PIB = C + I + G + (X − M)', '19 700 = C + 3700 + 3780 + (5400 − 7780)', 'C = 19 700 − 5100 = 14 600 miles de millones de ₱'] },
+      { k: 'b (i)', t: 'calc', pts: 2, q: 'Con la Tabla 5, calcule el consumo en 2022.', steps: ['PIB = C + I + G + (X − M)', '19 700 = C + 3780 + 3700 + (5400 − 7780)', 'C = 19 700 − 5100 = 14 600 miles de millones de ₱'] },
       { k: 'b (ii)', t: 'calc', pts: 2, q: 'Un hogar pobre pasa de 40 000 ₱ a 42 000 ₱ de ingreso, y su consumo de arroz de 250 kg a 256 kg. Calcule la EID del arroz.', steps: ['%ΔY = 2000 ÷ 40 000 × 100 = 5 %', '%ΔQ = 6 ÷ 250 × 100 = 2,4 %', 'EID = 2,4 ÷ 5 = 0,48'] },
       { k: 'b (iii)', t: 'id', pts: 1, q: 'Identifique si el arroz es un bien normal o inferior.', ans: 'Normal (EID positiva; además es una necesidad porque 0 < EID < 1).' },
       { k: 'c', t: 'dia', pts: 4, q: 'Con un diagrama DA/OA, explique el efecto probable de precios mundiales de energía más altos sobre el PIB real de Filipinas.', fig: ['oaDec'], exp: ['La energía es un insumo: suben los costos de producción.', 'La OACP se desplaza a la izquierda (OACP₀ → OACP₁).', 'Baja el PIB real (Y₀ → Y₁) y sube el NGP.'] },
@@ -7233,16 +7424,16 @@ const PP2 = [
       { k: 'g', t: 'eva', pts: 15, q: 'Con la información del texto y sus conocimientos, evalúe las políticas que usa Filipinas para reducir la pobreza y la desigualdad del ingreso.',
         def: [['Pobreza', 'No poder cubrir las necesidades básicas (absoluta) o estar muy por debajo del ingreso medio (relativa).'], ['Desigualdad del ingreso', 'Distribución desigual del ingreso entre personas u hogares.']],
         fig: [{ k: 'pov', note: 'Transferencias condicionadas', at: 2 }, 'lorenzEq'],
-        pro: ['Transferencias condicionadas: suben los ingresos y la escolarización; mejor capital humano; baja el Gini.', 'Más gasto en salud y educación (financiado con impuestos al tabaco): sube el IDH.', 'Pasar trabajadores de agricultura, pesca e informalidad a sectores en crecimiento: mejores salarios.', 'Quitar la cuota del cerdo: alimentos más baratos para los pobres.', 'Infraestructura: empleo y conexión de los pobres con oportunidades.', 'AOD con capacitación para mujeres y turismo.', 'La pobreza y el Gini bajaron y el IDH mejoró.'],
-        con: ['El déficit fiscal sube y hay que endeudarse; los préstamos de la AOD se devuelven.', 'La población crece más de 14 % en menos de 10 años: el gasto debe subir aún más.', 'El arancel al arroz encarece un alimento básico: regresivo.', 'Los impuestos al tabaco son regresivos.', 'Subir el precio mínimo de los buses perjudica a los pobres, que más usan el bus.', 'Mucha gente sigue en la economía informal; el alza de alimentos y combustible reduce el ingreso real.'],
+        pro: ['Transferencias condicionadas: suben los ingresos y la escolarización; mejor capital humano; baja el Gini.', 'Más gasto en salud y educación (financiado con impuestos al tabaco): sube el IDH.', 'Pasar trabajadores de agricultura, pesca e informalidad a sectores en crecimiento: mejores salarios.', 'Quitar la cuota del cerdo: alimentos más baratos para los pobres.', 'Infraestructura: empleo y conexión de los pobres con oportunidades.', 'AOD con capacitación para mujeres y turismo.', 'La pobreza absoluta bajó de 10,9 % a 3,0 %, el Gini de 0,465 a 0,441 y el IDH subió de 0,644 a 0,699.'],
+        con: ['El déficit fiscal sube y hay que endeudarse; los préstamos de la AOD se devuelven.', 'La población pasó de 97 a 111 millones (+14 %): el gasto debe subir aún más; Filipinas bajó en la posición del IDH (111 → 116).', 'El arancel al arroz encarece un alimento básico: regresivo.', 'Los impuestos al tabaco son regresivos.', 'Subir el precio mínimo de los buses perjudica a los pobres, que más usan el bus.', 'Mucha gente sigue en la economía informal; el alza de alimentos y combustible reduce el ingreso real.'],
         mat: ['Separa pobreza y desigualdad: no todas las políticas ayudan a ambas.', 'Corto plazo (transferencias) vs. largo plazo (educación e infraestructura).'],
         concl: 'Las políticas de gasto (transferencias, salud, educación) son las más eficaces; las de comercio y precios tienen efectos mixtos y algunas son regresivas, y el crecimiento de la población limita el avance.' }
     ] }
 ] },
-
-{ id: 'n23', ses: 'Noviembre 2023', ord: 2023.9, nuevo: true, ms: true, noTxt: true, cs: [
-  { n: 1, ti: 'Polonia: inflación, zloty y transición energética', ctx: 'El caso trata sobre Polonia: tipo de cambio flotante del zloty, escasez de trabajadores que presiona los salarios, inflación más alta que la de la UE en 2021, suba de la tasa de interés del banco central, fuerte dependencia del carbón, impuestos al carbono y a los autos, y transporte público más barato en la capital (EPD = −0,38).',
-    tabs: [{ cap: 'Datos de la Tabla 1 que se usan en el cálculo (Polonia, 2020)', head: ['Indicador', 'Valor'], rows: [['Tasa de interés del banco central (%)', '0,10'], ['Inflación (%)', '3,37']] }],
+{ id: 'n23', ses: 'Noviembre 2023', ord: 2023.9, nuevo: true, ms: true, cs: [
+  { n: 1, ti: 'Polonia: inflación, zloty y transición energética', ctx: 'Polonia creció mucho desde que entró a la UE (2004), pero el envejecimiento de la población subirá el gasto en salud y jubilaciones y generará escasez de trabajadores. La meta de inflación es 2,5 %, pero en 2021 la inflación fue 7,4 % (UE: 4,9 %) y en 2022 el banco central subió la tasa al 2,75 %. El esloti tiene tipo de cambio flotante con intervenciones ocasionales; las exportaciones son de tecnología baja y media. Faltan trabajadores calificados, infraestructura digital y gasto privado en I+D, por lo que la tecnología verde se importa. Más del 90 % de la electricidad sale de combustibles fósiles (UE: 68 %) y el carbón genera cerca del 80 %; la mortalidad por contaminación del aire es 38 por 100 000 habitantes (UE: 20). Hay subsidios para calderas limpias y renovables, el carbón baja de a poco y en 2033 funcionará la primera central nuclear, pero las emisiones totales suben. Los impuestos al carbono son bajos, con exenciones para agricultores y hogares pobres. Con más ingreso, la gente deja el transporte público por el auto; el boleto en la capital cuesta 4,40 eslotis y la EPD es −0,38.',
+    tabs: [{ cap: 'Tabla 1 · Datos económicos de Polonia', head: ['', '2010', '2020'], rows: [['PIB per cápita (USD, PPA)', '23 996', '32 355'], ['Gasto en I+D (% del PIB)', '0,7', '1,2'], ['Inflación (%)', '2,58', '3,37'], ['Tasa de interés del banco central (%)', '3,50', '0,10'], ['Desempleo (%)', '9,64', '3,16'], ['Balanza comercial de bienes y servicios (miles de millones de USD)', '−10,97', '40,42']] },
+      { cap: 'Tabla 2 · Desarrollo de Polonia', head: ['', '2010', '2020'], rows: [['Población (millones)', '38,04', '37,95'], ['Coeficiente de Gini', '0,332', '0,302 (2018)'], ['IDH', '0,840', '0,880'], ['Esperanza de vida (años)', '76,3', '78,7'], ['Emisiones de CO₂ per cápita (toneladas)', '8,7', '9,1'], ['Combustibles fósiles (% de la producción de energía)', '92,5', '90,3']] }],
     parts: [
       { k: 'a (i)', t: 'def', pts: 2, q: 'Defina tipo de cambio flotante.', ans: 'Tipo de cambio que se determina por la oferta y la demanda de la moneda en el mercado, sin intervención del gobierno.', ck: ['fuerzas del mercado', 'sin intervención'] },
       { k: 'a (ii)', t: 'def', pts: 2, q: 'Defina impuestos al carbono.', ans: 'Impuestos sobre las emisiones de carbono (o el contenido de carbono de los combustibles) para reducir los costos externos; son impuestos pigouvianos.', ck: ['sobre emisiones de carbono', 'para reducir costos externos / proteger el ambiente'] },
@@ -7255,19 +7446,21 @@ const PP2 = [
       { k: 'g', t: 'dis', pts: 15, q: 'Con la información del texto y sus conocimientos, discuta si existe un conflicto entre el crecimiento económico y la sostenibilidad ambiental en Polonia.',
         def: [['Crecimiento económico', 'Aumento del PIB real.'], ['Sostenibilidad', 'Satisfacer las necesidades de hoy sin comprometer las de las generaciones futuras.']],
         fig: ['extneg', 'ppcOut'],
-        pro: ['(No hay conflicto) Con más ingreso, la gente se preocupa más por el ambiente.', 'Superávit comercial creciente: permite importar tecnología limpia.', 'Población en descenso: menos presión sobre los recursos.', 'Gini bajo: hay margen para impuestos al carbono.', 'Más I+D y capacitación mejoran a la vez crecimiento y ambiente.', 'Programas de renovables; transporte público mejor y más barato.'],
-        con: ['(Hay conflicto) Más ingreso → más autos y más electricidad.', 'Las emisiones de CO₂ per cápita subieron.', 'Fuerte dependencia del carbón; muchas muertes por contaminación del aire.', 'Especialización en tecnología baja y media; poca I+D.', 'Los impuestos al carbono afectan más a los hogares pobres.', 'El auto es un bien de lujo y la EPD del transporte público es baja (−0,38): cuesta cambiar hábitos.', 'Límites presupuestarios para proyectos ambientales.'],
+        pro: ['(No hay conflicto) Con más ingreso, la gente se preocupa más por el ambiente.', 'La balanza comercial pasó de −10,97 a +40,42 mil millones de USD: permite importar tecnología limpia.', 'Población en descenso: menos presión sobre los recursos.', 'Gini bajo: hay margen para impuestos al carbono.', 'Más I+D y capacitación mejoran a la vez crecimiento y ambiente.', 'Programas de renovables; transporte público mejor y más barato.'],
+        con: ['(Hay conflicto) Más ingreso → más autos y más electricidad.', 'Las emisiones de CO₂ per cápita subieron (8,7 → 9,1 t).', 'Fuerte dependencia del carbón; muchas muertes por contaminación del aire.', 'Especialización en tecnología baja y media; poca I+D.', 'Los impuestos al carbono afectan más a los hogares pobres.', 'El auto es un bien de lujo y la EPD del transporte público es baja (−0,38): cuesta cambiar hábitos.', 'Límites presupuestarios para proyectos ambientales.'],
         mat: ['Corto plazo (costos de la transición) vs. largo plazo (crecimiento verde).', 'Depende de la tecnología y de las políticas.'],
         concl: 'Hoy hay conflicto porque el crecimiento polaco depende del carbón, pero puede reducirse a largo plazo con renovables, I+D e impuestos al carbono que compensen a los hogares pobres.' }
     ] },
-  { n: 2, ti: 'Senegal: petróleo, arroz y desigualdad', ctx: 'El caso trata sobre Senegal: descubrimiento de petróleo y gas, franco CFA de África Occidental, un arancel al arroz importado, uso excesivo del agua por los arroceros, pobreza multidimensional, desigualdad entre zonas rurales y urbanas, baja recaudación y una gran economía informal.',
-    tabs: [{ cap: 'Datos que se usan en los cálculos (Tablas 3 y 5)', head: ['Indicador', 'Valor'], rows: [['PIB nominal 2020 (miles de millones de USD)', '24,64'], ['Deflactor del PIB 2020', '106,11'], ['Componentes de la cuenta corriente 2018 (millones de USD)', '5077 · −8747 · 444 · −1045 · 2059']] }],
+  { n: 2, ti: 'Senegal: petróleo, arroz y desigualdad', ctx: 'Senegal (África Occidental) vive de la minería y los combustibles, la construcción, la pesca y el turismo; minerales y combustibles son el 25 % de las exportaciones. En 2019 se descubrió petróleo y gas submarino: importar maquinaria amplió el déficit en cuenta corriente, y desde 2022 subirían las exportaciones, aunque habrá que pagar intereses y ganancias a extranjeros. Estas industrias crean poco empleo y aportan solo 5 % de la recaudación por las exenciones a las multinacionales. Senegal importa mucho arroz (el nacional es más caro) y en 2015 puso un arancel del 10 %. Los arroceros usan el agua de ríos y napas de forma no sostenible. Según el IPM, el 28 % vive en pobreza extrema; la pobreza y el desempleo bajaron, pero la brecha urbano-rural sigue (el salario mínimo no agrícola, 317 francos CFA por hora, es casi 50 % mayor que el agrícola). La escuela es gratuita hasta los 16 años, pero por costos ocultos la matrícula secundaria es menor al 40 %, y las niñas terminan menos la secundaria. La recaudación es 15 % del PIB (economías parecidas: más de 20 %); el FMI recomienda subir impuestos de forma equitativa y gastar en infraestructura, salud, educación y transferencias (unos 200 USD por agricultor subieron la producción). Los impuestos indirectos frenan poco el crecimiento pero aumentan la desigualdad; subir el impuesto a las ganancias de las empresas reduciría la brecha sin afectar mucho la producción.',
+    tabs: [{ cap: 'Tabla 3 · Datos económicos de Senegal', head: ['', '2010', '2020'], rows: [['PIB per cápita (USD, PPA)', '2797', '3320'], ['PIB nominal (miles de millones de USD)', '17,81', '24,64'], ['Deflactor (2014 = 100)', '93,56', '106,11'], ['Desempleo (%)', '10,34', '7,10'], ['Balanza comercial de bienes (miles de millones de USD)', '−1,92', '−3,60']] },
+      { cap: 'Tabla 4 · Desarrollo de Senegal', head: ['', '2010', '2019'], rows: [['Población (millones)', '12,68', '16,30'], ['Pobreza urbana (% bajo la línea nacional)', '22,5', '19,8'], ['Pobreza rural (% bajo la línea nacional)', '59,0', '54,0'], ['Finalización de secundaria, hombres (%)', '33', '34'], ['Finalización de secundaria, mujeres (%)', '41', '28'], ['Coeficiente de Gini', '0,403', '0,350'], ['IDH', '0,468', '0,512']] },
+      { cap: 'Tabla 5 · Balanza de pagos de Senegal 2018 (millones de USD)', head: ['', '2018'], rows: [['Exportaciones de bienes y servicios', '5077'], ['Importaciones de bienes y servicios', '8747'], ['Entradas de ingresos', '444'], ['Pagos de ingresos', '1045'], ['Transferencias corrientes (netas)', '2059']] }],
     parts: [
       { k: 'a (i)', t: 'def', pts: 2, q: 'Defina recursos de uso común.', ans: 'Recursos no excluibles pero rivales (por ejemplo, peces, agua, bosques).', ck: ['no excluibles', 'rivales'] },
       { k: 'a (ii)', t: 'def', pts: 2, q: 'Defina Índice de Pobreza Multidimensional (IPM).', ans: 'Índice compuesto que mide la intensidad de la pobreza con privaciones distintas del ingreso: educación, salud y nivel de vida.', ck: ['índice compuesto', 'educación, salud y nivel de vida'] },
       { k: 'b (i)', t: 'calc', pts: 2, q: 'Con la Tabla 3, calcule el PIB real de Senegal en 2020.', steps: ['PIB real = PIB nominal ÷ deflactor × 100', '24,64 ÷ 106,11 × 100 = 23,22 mil millones de USD'] },
-      { k: 'b (ii)', t: 'calc', pts: 2, q: 'Con la Tabla 5, calcule el saldo en cuenta corriente de Senegal en 2018.', steps: ['Suma de los componentes de la cuenta corriente:', '5077 − 8747 + 444 − 1045 + 2059 = −2212 millones de USD (déficit)'] },
-      { k: 'b (iii)', t: 'id', pts: 1, q: 'Identifique si la balanza comercial de bienes y servicios es superavitaria o deficitaria.', ans: 'Deficitaria.' },
+      { k: 'b (ii)', t: 'calc', pts: 2, q: 'Con la Tabla 5, calcule el saldo en cuenta corriente de Senegal en 2018.', steps: ['Cuenta corriente = X − M + entradas de ingresos − pagos de ingresos + transferencias', '5077 − 8747 + 444 − 1045 + 2059 = −2212 millones de USD (déficit)'] },
+      { k: 'b (iii)', t: 'id', pts: 1, q: 'Identifique si la balanza comercial de bienes y servicios es superavitaria o deficitaria.', ans: 'Deficitaria: importaciones (8747) > exportaciones (5077).' },
       { k: 'c', t: 'dia', pts: 4, q: 'Con un diagrama de CPP, explique cómo el descubrimiento de petróleo afectó las posibilidades de producción de Senegal.', fig: [{ k: 'ppcOut', ti: 'CPP de Senegal', yl: 'Bienes de capital', xl: 'Bienes de consumo' }], exp: ['El petróleo es un recurso natural nuevo: aumenta la cantidad de factores de producción.', 'La CPP se desplaza hacia afuera (CPP₀ → CPP₁): sube la producción potencial.'], tip: 'Los ejes deben nombrar dos bienes («Bien X», «Bien Y»): solo «X» e «Y» no alcanza.' },
       { k: 'd', t: 'dia', pts: 4, q: 'Con un diagrama del tipo de cambio, explique cómo el cambio de la balanza comercial de bienes entre 2010 y 2020 pudo afectar al franco CFA.', fig: [{ k: 'fxDownS', ti: 'Mercado del franco CFA (XOF)', rep: { 'D': 'D XOF', 'O₁': 'O XOF₁', 'O₂': 'O XOF₂' }, yl: 'Precio del XOF (USD por XOF)', xl: 'Cantidad de XOF' }], exp: ['El déficit comercial se amplió: más importaciones.', 'Para pagarlas se venden francos: sube la oferta (O₁ → O₂).', 'El tipo de cambio baja: depreciación.'] },
       { k: 'e', t: 'dia', pts: 4, q: 'Con un diagrama de comercio internacional, explique el efecto probable del arancel al arroz importado sobre el excedente del productor senegalés.', fig: [{ k: 'tariff', ti: 'Mercado del arroz en Senegal' }], exp: ['El arancel sube el precio interno (Pm → Pm + arancel).', 'Los productores nacionales venden más (Q₁ → Q₃) a un precio mayor.', 'Sube el excedente del productor (área entre los dos precios hasta la curva Od).'] },
@@ -7281,7 +7474,6 @@ const PP2 = [
         concl: 'La combinación más eficaz es financiar educación y servicios básicos con impuestos progresivos y a los recursos naturales; el salario mínimo y los precios máximos tienen costos mayores en un país con tanta informalidad.' }
     ] }
 ] },
-
 { id: 'n22', ses: 'Noviembre 2022', ord: 2022.9, nuevo: true, ms: true, cs: [
   { n: 1, ti: 'Bangladesh: las mujeres y el sector de la confección', ctx: 'Bangladesh crece rápido (5,6 % en 2010 → 8,1 % en 2019). Baja la pobreza absoluta pero sube la desigualdad; más del 80 % de las mujeres que trabajan lo hace en la economía informal. La industria de la confección emplea a casi 4 millones de personas, en su mayoría mujeres, y representa más del 84 % de las exportaciones. Tras un accidente en 2013 subió el salario mínimo y hay más inspecciones. La demanda extranjera cayó en los últimos años y hubo despidos. Estados Unidos aplica un arancel del 15 % a la ropa bangladesí; en 2026 el país perderá el acceso preferencial a Europa y China. Bangladesh busca atraer IED china y producir “ropa verde”.',
     tabs: [{ cap: 'Tabla 1 · Datos económicos de Bangladesh', head: ['', '2010', '2019'], rows: [['INB real per cápita (USD)', '844', '1348'], ['Población (millones)', '147,6', '163,0'], ['Fuerza laboral (millones)', '57,1', '70,1'], ['Desempleados (millones)', '1,93', '2,96'], ['IED, entradas netas (miles de millones de USD)', '1,23', '1,91'], ['Exportaciones (miles de millones de USD)', '18,5', '46,4'], ['Importaciones (miles de millones de USD)', '25,1', '64,9'], ['Tipo de cambio (BDT por USD)', '69,6', '84,5']] },
@@ -7327,7 +7519,6 @@ const PP2 = [
         concl: 'Las políticas han sido más eficaces para el desarrollo (IDH, Gini) que para el crecimiento, que casi se detuvo en 2019; el éxito futuro depende de las políticas de oferta y de diversificar exportaciones.' }
     ] }
 ] },
-
 ];
 
 const PP2_T = { def: 'Definición', calc: 'Cálculo', id: 'Identificar', sketch: 'Diagrama breve', dia: 'Diagrama + explicación', exp: 'Explicación', dis: 'Discuta', eva: 'Evalúe' };
