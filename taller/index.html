@@ -586,6 +586,15 @@ body.docked{padding-bottom:190px}
 .exfig figcaption{font-size:13px;font-weight:700;color:var(--ink-2);text-align:center;padding:2px 4px}
 .ppctx{margin:4px 0 8px} .ppctx summary{cursor:pointer;font-weight:700;color:var(--navy-2);padding:4px 0} .ppctx p{margin:6px 0}
 .tblwrap{overflow-x:auto;margin:8px 0}
+.tdcard{background:var(--sheet);border:1.5px solid var(--rule);border-radius:var(--r);padding:12px 16px;margin:12px 0;max-width:1000px;min-width:0}
+.tdgrid{display:grid;grid-template-columns:1fr 1fr;gap:16px} .tdgrid>div{min-width:0} .tdgrid ul,.tdgrid ol{padding-left:20px;margin:4px 0}
+@media (max-width:760px){.tdgrid{grid-template-columns:1fr}}
+.dfgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(260px,100%),1fr));gap:10px;max-width:1100px}
+.dfc{background:var(--sheet);border:1.5px solid var(--rule);border-radius:var(--r);padding:10px 12px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.dfc.on{border-color:var(--gold)} .dft{all:unset;cursor:pointer;display:flex;flex-wrap:wrap;gap:6px;align-items:center} .dft b{font-size:16.5px}
+.dft:focus-visible{outline:2px solid var(--gold);outline-offset:2px} .dfh{flex-basis:100%}
+.dfb{display:none} .dfc.on .dfb{display:block} .dfc.on .dfh{display:none} .dfb p{margin:4px 0}
+.hoyl{list-style:none;margin:4px 0;padding:0;display:grid;gap:8px} .hoyl label{display:flex;gap:10px;align-items:flex-start;cursor:pointer} .hoyl input{margin-top:5px;flex:none;width:18px;height:18px}
 .pptab{border-collapse:collapse;font-size:14px;min-width:280px} .pptab caption{text-align:left;font-weight:700;font-size:13.5px;color:var(--ink-2);padding:0 0 4px}
 .pptab th,.pptab td{border:1px solid var(--rule);padding:4px 8px;text-align:right} .pptab th[scope=row]{text-align:left;font-weight:600} .pptab thead th{background:var(--paper);text-align:right} .pptab thead th:first-child{text-align:left}
 @media (max-width:700px){.ppgrid{grid-template-columns:1fr}}
@@ -6791,14 +6800,16 @@ function ppGuide(p0, id) {
 }
 function renderPast() {
   if (SESS.ppw === 'p2') return renderPast2();
+  if (SESS.ppw === 'top') return renderTopDia();
+  if (SESS.ppw === 'def') return renderDefs();
+  if (SESS.ppw === 'hoy') return renderHoy();
   const F = SESS.ppf = SESS.ppf || { ses: 'all', u: 'all', cmd: 'all', st: 'all' };
   const all = ppAll(), live = all.filter(x => !x.p.omit), done = live.filter(x => PP_DONE[x.id]).length;
   const cnt = {}; live.forEach(x => { cnt[x.p.st] = (cnt[x.p.st] || 0) + 1; });
   const top = Object.entries(cnt).sort((a, b) => b[1] - a[1]).slice(0, 10);
   const opt = (v, l, cur) => `<option value="${v}"${v === cur ? ' selected' : ''}>${l}</option>`;
   const sesL = s => `${s.ses} · ${s.nuevo ? 'programa actual' : 'programa anterior'}`;
-  app.innerHTML = `<div class="eyebrow">Repaso final</div><h1>Exámenes anteriores</h1>
-    <div class="row" style="margin-bottom:14px">${segBtns('ppw', [['p1', 'Prueba 1'], ['p2', 'Prueba 2']], 'p1')}</div>
+  app.innerHTML = `${ppHead('p1')}
     <p class="lede">Preguntas de la Prueba 1 de diez convocatorias (2019–2026), con una respuesta guía para cada parte, en el formato de clase según el término de instrucción.</p>
     <div class="ppgrid">
       <div class="fb info" style="margin:0"><b class="h">Cómo practicar</b><ol style="margin:4px 0 0;padding-left:20px"><li>Elige una pregunta y escríbela <b>sin mirar la guía</b>: unos 25 minutos la (a) y 45 la (b).</li><li>Abre la respuesta guía y compara paso por paso.</li><li>Lee «Para la nota máxima»: ahí está lo que el examinador exige.</li><li>Marca la pregunta como practicada.</li></ol></div>
@@ -6816,7 +6827,7 @@ function renderPast() {
     </div>
     <p class="small"><b>Practicadas: ${done} de ${live.length}</b></p>
     <div id="pplist"></div>`;
-  bindSeg(app, 'ppw', v => { SESS.ppw = v; renderPast(); });
+  ppBindTabs();
   app.querySelectorAll('[data-st]').forEach(b => b.onclick = () => { F.st = b.dataset.st === F.st ? 'all' : b.dataset.st; renderPast(); });
   [['pfs', 'ses'], ['pfu', 'u'], ['pfc', 'cmd']].forEach(([id, k]) => { $('#' + id).onchange = e => { F[k] = e.target.value; list(); }; });
   function list() {
@@ -6835,6 +6846,120 @@ function renderPast() {
     app.querySelectorAll('[data-done]').forEach(c => c.onchange = () => { if (c.checked) PP_DONE[c.dataset.done] = 1; else delete PP_DONE[c.dataset.done]; store.set('pp1done', PP_DONE); });
   }
   list();
+}
+
+/* =============== Repaso final: diagramas que más salen, definiciones y día del examen =============== */
+const PP_TABS = [['p1', 'Prueba 1'], ['p2', 'Prueba 2'], ['top', 'Diagramas que más salen'], ['def', 'Definiciones'], ['hoy', 'Día del examen']];
+function ppHead(cur, lede) {
+  return `<div class="eyebrow">Repaso final</div><h1>Exámenes anteriores</h1>
+    <div class="row" style="margin-bottom:14px">${segBtns('ppw', PP_TABS, cur)}</div>${lede ? `<p class="lede">${lede}</p>` : ''}`;
+}
+function ppBindTabs() { bindSeg(app, 'ppw', v => { SESS.ppw = v; renderPast(); window.scrollTo(0, 0); }); }
+const pp2Parts = () => { const o = []; PP2.forEach(s => s.cs.forEach(c => c.parts.forEach(p => o.push({ s, c, p })))); return o; };
+const figKey = f => typeof f === 'string' ? f : f.k;
+const TOPD = [
+  { n: 'Tipo de cambio', keys: ['fxUp', 'fxDownS', 'fxDownD', 'fxUpS', 'fxFixG'], figs: ['fxUp', 'fxDownS'],
+    when: ['Cambian las exportaciones o las importaciones.', 'Sube o baja la tasa de interés (entra o sale inversión de cartera).', 'El banco central compra o vende su moneda con reservas.', 'Llega IED, remesas o hay especulación.'],
+    chain: ['Pregúntate quién compra y quién vende la moneda: exportaciones, entradas de capital y compras del banco central = <b>demanda</b>; importaciones y salidas de capital = <b>oferta</b>.', 'Desplaza la curva que corresponde (D o O de esa moneda).', 'Lee el nuevo tipo de cambio: sube = <b>apreciación</b>; baja = <b>depreciación</b>.'],
+    lab: ['Eje Y: precio de la moneda en otra moneda (por ejemplo, USD por PHP).', 'Eje X: cantidad de esa moneda.', 'D y O con el nombre de la moneda; e₁ y e₂ marcados.'],
+    err: 'Rotular el eje Y solo como «P» o al revés (PHP por USD): el diagrama queda invertido y la explicación no coincide.' },
+  { n: 'DA a la derecha o a la izquierda', keys: ['daShift', 'daLeft', 'gapClose'], figs: ['daShift', 'daLeft'],
+    when: ['Política fiscal (gasto público, impuestos) o monetaria (tasas de interés).', 'Cambian las exportaciones netas, la confianza o la riqueza.'],
+    chain: ['Di qué componente de C + I + G + (X − M) cambia y por qué.', 'La DA se desplaza a la derecha (sube) o a la izquierda (baja).', 'Cambian el PIB real (crecimiento, empleo) y el NGP (inflación).'],
+    lab: ['Eje Y: nivel general de precios (NGP).', 'Eje X: PIB real.', 'DA₀ y DA₁, OACP, NGP₀/NGP₁ y Y₀/Y₁.'],
+    err: 'Poner «P» y «Q» en los ejes: en macro son NGP y PIB real.' },
+  { n: 'OACP a la izquierda o a la derecha', keys: ['oaDec', 'oaInc'], figs: ['oaDec', 'oaInc'],
+    when: ['Suben o bajan los costos: energía, petróleo, salarios, insumos importados.', 'Sequías e inundaciones; un peso débil que encarece importaciones; privatizaciones más eficientes.'],
+    chain: ['Cambian los costos de producción.', 'La OACP se desplaza (izquierda si suben los costos).', 'Sube el NGP (inflación de costos) y baja el PIB real, o al revés.'],
+    lab: ['NGP y PIB real en los ejes.', 'OACP₀ y OACP₁, DA, NGP₀/NGP₁ y Y₀/Y₁.'],
+    err: 'Mover la DA cuando lo que cambia son los costos.' },
+  { n: 'Crecimiento potencial: OALP o CPP', keys: ['growthLR', 'ppcOut', 'ppcIn'], figs: ['growthLR', 'ppcOut'],
+    when: ['Infraestructura, educación, capacitación, tecnología, más trabajadores (por ejemplo, más mujeres en la fuerza laboral).', 'Desastres o daños a la infraestructura (CPP hacia adentro).'],
+    chain: ['Aumenta (o baja) la cantidad o la calidad de los factores de producción.', 'La OALP se desplaza a la derecha (la CPP hacia afuera).', 'Sube la producción potencial.'],
+    lab: ['OALP₀ y OALP₁ verticales; Yp₀ y Yp₁.', 'En la CPP: dos bienes con nombre («Bien X», «Bien Y» o «Bienes agrícolas», etc.).'],
+    err: 'En la CPP rotular los ejes solo con «X» e «Y»: el esquema no lo acepta.' },
+  { n: 'Arancel, cuota y libre comercio', keys: ['tariff', 'tariffCut', 'quota', 'tradeSub'], figs: ['tariff', 'tariffCut'],
+    when: ['Se pone o se quita un arancel o una cuota.', 'Acuerdos de libre comercio; subsidio a productores nacionales.'],
+    chain: ['Cambia el precio interno (Pm ↔ Pm + arancel).', 'Cambian la producción nacional y el consumo.', 'Cambian las importaciones, la recaudación y los excedentes.'],
+    lab: ['La línea del precio mundial rotulada como Pm (o Sm).', 'Od y Dd.', 'Q₁ a Q₄ y la zona de importaciones.'],
+    err: 'No rotular la línea del precio mundial: sin ese rótulo no hay 4 sobre 4.' },
+  { n: 'Externalidades', keys: ['extneg', 'extpos', 'pigou', 'subext', 'extnegMore'], figs: ['extneg', 'extpos'],
+    when: ['Contaminación, combustibles fósiles, carbón, deforestación, uso del agua (negativa).', 'Salud y educación (positiva).'],
+    chain: ['Explica quién sufre o recibe el efecto externo.', 'CMgS ≠ CMgP (producción) o BMgS ≠ BMgP (consumo).', 'Qm ≠ Q*: sobreasignación o subasignación y pérdida de bienestar.'],
+    lab: ['Qm y Q* (no Q₁ y Q₂).', 'CMgP, CMgS, BMgP, BMgS según el caso.', 'El triángulo de pérdida de bienestar.'],
+    err: 'Marcar Q₁ y Q₂ en lugar de Qm (mercado) y Q* (óptimo social).' }
+];
+function renderTopDia() {
+  const all = pp2Parts();
+  const hits = keys => all.filter(x => (x.p.t === 'dia' || x.p.t === 'sketch') && (x.p.fig || []).some(f => keys.includes(figKey(f))));
+  app.innerHTML = ppHead('top', 'Contamos los diagramas que pidieron las 12 convocatorias de la Prueba 2 (2019–2026). Estos seis grupos son la gran mayoría: si los dominas, tienes cubiertas casi todas las partes (c)–(f).') +
+    TOPD.map((g, i) => { const h = hits(g.keys);
+      return `<div class="tdcard"><div class="ppqh"><span class="ppn">${i + 1}</span><b style="font-size:19px">${g.n}</b><span class="tag prog">Salió ${h.length} veces</span></div>
+        ${exFigs(g.figs)}
+        <div class="tdgrid">
+          <div><p class="small"><b>Cuándo usarlo</b></p><ul>${g.when.map(x => `<li>${x}</li>`).join('')}</ul>
+            <p class="small"><b>Explicación en 3 pasos</b></p><ol class="ppchain">${g.chain.map(x => `<li>${x}</li>`).join('')}</ol></div>
+          <div><p class="small"><b>Rótulos que no pueden faltar</b></p><ul>${g.lab.map(x => `<li>${x}</li>`).join('')}</ul>
+            <div class="fb no" style="margin-top:8px"><b class="h">Error que baja la nota a 3 de 4</b>${g.err}</div></div>
+        </div>
+        <details class="ppd"><summary>Ver dónde salió (${h.length})</summary><ul class="small">${h.map(x => `<li><b>${x.s.ses}</b>, pregunta ${x.c.n} (${x.p.k}): ${x.p.q}</li>`).join('')}</ul></details></div>`; }).join('') +
+    `<div class="tdcard"><div class="ppqh"><b style="font-size:19px">También salieron</b></div><p class="small">Curva de Lorenz (desigualdad), círculo de la pobreza (desarrollo) y precios máximos y mínimos.</p>${exFigs(['lorenz2', 'pov', 'ceil'])}</div>`;
+  ppBindTabs();
+}
+const P2DEF_K = store.get('p2def', {});
+function pp2Defs() {
+  const m = new Map();
+  pp2Parts().filter(x => x.p.t === 'def').forEach(x => {
+    const front = x.p.q.replace(/^Defina\s+/i, '').replace(/\.$/, '');
+    const key = front.toLowerCase();
+    if (!m.has(key)) m.set(key, { front: front.charAt(0).toUpperCase() + front.slice(1), ans: x.p.ans, ck: x.p.ck || [], ses: [] });
+    m.get(key).ses.push(x.s.ses);
+  });
+  return [...m.values()].sort((a, b) => b.ses.length - a.ses.length || a.front.localeCompare(b.front, 'es'));
+}
+function renderDefs() {
+  const D = pp2Defs(), F = SESS.dff = SESS.dff || { q: '', only: false, all: false };
+  app.innerHTML = ppHead('def', `Las ${D.length} definiciones que pidió la Prueba 2 entre 2019 y 2026. Valen 4 de los 40 puntos: son los puntos más fáciles del examen.`) +
+    `<div class="fb info" style="max-width:1000px"><b class="h">Cómo estudiarlas</b>Lee el término, di la definición en voz alta y después toca la tarjeta. Para los 2 puntos hacen falta las ideas de «El examinador busca». Marca «La sé» y vuelve a repasar las que faltan.</div>
+    <div class="ppfil"><label>Buscar<input id="dfq" class="dsel" type="search" value="${esc(F.q)}" placeholder="Por ejemplo: arancel"></label></div>
+    <div class="row" style="gap:14px;margin:6px 0 10px"><label class="ppdone"><input type="checkbox" id="dfo"${F.only ? ' checked' : ''}> Solo las que me faltan</label><label class="ppdone"><input type="checkbox" id="dfa"${F.all ? ' checked' : ''}> Mostrar todas las respuestas</label><span class="small" id="dfn"></span></div>
+    <div class="dfgrid" id="dfg"></div>`;
+  ppBindTabs();
+  function draw() {
+    const q = F.q.trim().toLowerCase();
+    const L = D.filter(d => (!q || (d.front + ' ' + d.ans).toLowerCase().includes(q)) && (!F.only || !P2DEF_K[d.front]));
+    $('#dfn').textContent = `Sé ${D.filter(d => P2DEF_K[d.front]).length} de ${D.length}`;
+    $('#dfg').innerHTML = L.map((d, i) => `<div class="dfc${F.all ? ' on' : ''}" data-i="${i}"><button type="button" class="dft"><b>${esc(d.front)}</b>${d.ses.length > 1 ? `<span class="tag prog">${d.ses.length} veces</span>` : ''}<span class="small muted dfh">Toca para ver la respuesta</span></button>
+      <div class="dfb"><p>${d.ans}</p>${d.ck.length ? `<p class="small"><b>El examinador busca:</b> ${d.ck.join(' · ')}</p>` : ''}<p class="small muted">${d.ses.join(' · ')}</p></div>
+      <label class="ppdone"><input type="checkbox" data-k="${esc(d.front)}"${P2DEF_K[d.front] ? ' checked' : ''}> La sé</label></div>`).join('') || '<p class="muted">No hay definiciones con esa búsqueda.</p>';
+    app.querySelectorAll('.dft').forEach(b => b.onclick = () => b.parentElement.classList.toggle('on'));
+    app.querySelectorAll('[data-k]').forEach(c => c.onchange = () => { if (c.checked) P2DEF_K[c.dataset.k] = 1; else delete P2DEF_K[c.dataset.k]; store.set('p2def', P2DEF_K); $('#dfn').textContent = `Sé ${D.filter(d => P2DEF_K[d.front]).length} de ${D.length}`; });
+  }
+  $('#dfq').oninput = e => { F.q = e.target.value; draw(); };
+  $('#dfo').onchange = e => { F.only = e.target.checked; draw(); };
+  $('#dfa').onchange = e => { F.all = e.target.checked; draw(); };
+  draw();
+}
+const HOY_K = store.get('hoy', {});
+const HOY = [
+  { h: 'La noche anterior', it: ['Repasa solo los 6 diagramas que más salen y las definiciones que marcaste como pendientes. No empieces temas nuevos.', 'Prepara bolígrafo azul o negro, lápiz, goma, regla y la calculadora (solo para la Prueba 2), con pilas.', 'Duerme bien: rinde más que una hora extra de estudio.'] },
+  { h: 'Prueba 1 · 1 h 15 min · sin calculadora · 25 puntos', it: ['5 minutos para elegir: toma la pregunta en la que puedes hacer bien la (a) <b>y</b> la (b), con un diagrama que dominas y ejemplos reales que conoces.', '(a) 10 puntos: unos 25 minutos. Formato Explique: definir, causa, diagrama, cadena causal, ejemplo.', '(b) 15 puntos: unos 45 minutos. Sigue el formato del término (Evalúe, Discuta, ¿Hasta qué punto?) y usa <b>ejemplos reales</b> con país, año y dato.', 'Deja 2–3 minutos para revisar rótulos y la conclusión.'] },
+  { h: 'Prueba 2 · 1 h 45 min · con calculadora · 40 puntos', it: ['10 minutos de lectura. Para elegir, mira primero las partes (c)–(f): elige el caso en el que sabes dibujar los cuatro diagramas.', '(a) definiciones, 4 puntos: unos 5 minutos.', '(b) cálculos, 5 puntos: unos 10 minutos.', '(c)–(f) diagrama + explicación, 4 puntos cada una: unos 8 minutos cada una.', '(g) 15 puntos: 35–40 minutos. Es casi el 40 % de la nota: no la dejes para los últimos 10 minutos.'] },
+  { h: 'En los diagramas', it: ['Ejes rotulados: en micro P y Q; en macro NGP y PIB real; en tipo de cambio, el precio de la moneda y su cantidad.', 'Todas las curvas con nombre, la curva inicial y la nueva, y una flecha que muestre el desplazamiento.', 'Equilibrio inicial y final marcados (P₀/P₁, NGP₀/NGP₁, e₁/e₂).', 'En externalidades, Qm y Q*; en comercio, la línea Pm rotulada.', 'Explica el diagrama en palabras y con un dato del texto: un dibujo sin explicación no llega a 4.'] },
+  { h: 'En los cálculos', it: ['Escribe la fórmula, reemplaza con los números y da el resultado.', 'Redondea a dos decimales salvo que pidan otra cosa.', 'Pon las unidades (%, USD, miles de millones). Sin procedimiento o sin unidades, pierdes un punto.'] },
+  { h: 'En la (g) de la Prueba 2', it: ['Define los términos clave.', 'Incluye al menos un diagrama (puedes reutilizar los de (c)–(f) nombrándolos).', 'Usa datos del texto y las tablas en cada argumento y cítalos (Texto A, párrafo 2; Tabla 1).', 'Da argumentos a favor y en contra con el mismo esfuerzo y termina con una conclusión justificada.'] },
+  { h: 'Errores que más puntos restan', it: ['Definiciones vagas o con el mismo término («inflación es cuando hay inflación»).', 'Confundir movimiento a lo largo de la curva con desplazamiento de la curva.', 'Describir sin evaluar en Evalúe, Discuta o ¿Hasta qué punto?', 'Responder en general sin usar el caso ni datos.', 'Quedarse sin tiempo para la última pregunta.'] }
+];
+function renderHoy() {
+  const total = HOY.reduce((n, g) => n + g.it.length, 0);
+  app.innerHTML = ppHead('hoy', 'Lista para el día del examen. Márcala la noche anterior y vuelve a leerla antes de entrar.') +
+    `<p class="small"><b id="hoyn"></b></p>` +
+    HOY.map((g, gi) => `<div class="tdcard"><div class="ppqh"><b style="font-size:18px">${g.h}</b></div><ul class="hoyl">${g.it.map((t, i) => `<li><label><input type="checkbox" data-h="${gi}-${i}"${HOY_K[gi + '-' + i] ? ' checked' : ''}><span>${t}</span></label></li>`).join('')}</ul></div>`).join('') +
+    `<div class="fb ok" style="max-width:1000px"><b class="h">¡Éxitos!</b>Confía en lo que practicaste. Lee bien el término de instrucción de cada pregunta y responde exactamente lo que pide. — Prof. Econ. Hugo Rivarola</div>`;
+  ppBindTabs();
+  const upd = () => { $('#hoyn').textContent = `Marcaste ${Object.keys(HOY_K).length} de ${total}`; };
+  app.querySelectorAll('[data-h]').forEach(c => c.onchange = () => { if (c.checked) HOY_K[c.dataset.h] = 1; else delete HOY_K[c.dataset.h]; store.set('hoy', HOY_K); upd(); });
+  upd();
 }
 
 /* =============== 10 · Términos de instrucción: Analizar, Discutir, ¿Hasta qué punto? =============== */
@@ -7847,8 +7972,7 @@ function renderPast2() {
   const all = []; PP2.forEach(s => s.cs.forEach(c => c.parts.forEach(p => all.push({ s, c, p, id: `${s.id}-${c.n}${p.k}` }))));
   const done = all.filter(x => PP2_DONE[x.id]).length;
   const opt = (v, l, cur) => `<option value="${v}"${v === cur ? ' selected' : ''}>${l}</option>`;
-  app.innerHTML = `<div class="eyebrow">Repaso final</div><h1>Exámenes anteriores</h1>
-    <div class="row" style="margin-bottom:14px">${segBtns('ppw', [['p1', 'Prueba 1'], ['p2', 'Prueba 2']], 'p2')}</div>
+  app.innerHTML = `${ppHead('p2')}
     <p class="lede">Casos de la Prueba 2 de 2019 a 2026, con respuesta guía para cada parte y <b>los diagramas dibujados</b>, tal como tienes que hacerlos en el examen.</p>
     <div class="ppgrid">
       <div class="fb info" style="margin:0"><b class="h">Cómo practicar</b><ol style="margin:4px 0 0;padding-left:20px"><li>Lee el contexto y las tablas.</li><li>Responde con lápiz, <b>dibujando cada diagrama</b>, sin mirar la guía.</li><li>Compara tu diagrama con el dibujado: ejes, rótulos, desplazamiento y equilibrio.</li><li>Marca la parte como practicada.</li></ol></div>
@@ -7861,7 +7985,7 @@ function renderPast2() {
     </div>
     <p class="small"><b>Practicadas: ${done} de ${all.length}</b></p>
     <div id="pplist"></div>`;
-  bindSeg(app, 'ppw', v => { SESS.ppw = v; renderPast(); });
+  ppBindTabs();
   [['p2s', 'ses'], ['p2t', 'ty']].forEach(([id, k]) => { $('#' + id).onchange = e => { F[k] = e.target.value; list(); }; });
   function list() {
     const html = PP2.slice().sort((a, b) => b.ord - a.ord).filter(s => F.ses === 'all' || s.id === F.ses).map(s => {
