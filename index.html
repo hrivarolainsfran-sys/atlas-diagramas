@@ -1536,6 +1536,26 @@ const GLOBAL = [
   cad: ['El gobierno subvenciona a los productores nacionales.', 'Baja su costo y pueden competir al precio mundial.', 'Aumenta la producción nacional y caen las importaciones.', 'El costo fiscal tiene costo de oportunidad y puede violar normas de la OMC.'],
   err: ['Hacer que suba el precio al consumidor (no cambia).', 'Desplazar la demanda.', 'No sombrear el costo completo de la subvención.', 'Olvidar la reacción de los socios comerciales en la evaluación.'] },
 
+{ id: 'subvencion-exportacion', u: 'global', st: '4.2', stn: 'Tipos de protección comercial', t: 'Efecto de una subvención a la exportación',
+  pr: 'P1 partes a–b · P2 partes c–f',
+  fig: { panels: [{ ...AXG,
+    areas: [{ pts: [[0, 6], [0, 7.2], [2.25, 7.2], [3.75, 6]], c: 'f-ep', t: 'a', at: [1.4, 6.55], n: 'a: excedente que los consumidores pierden y ganan los productores' },
+      { pts: [[2.25, 7.2], [3.75, 6], [3.75, 7.2]], c: 'f-dwl', t: 'b', at: [3.3, 6.85], n: 'b y d: pérdida de bienestar' },
+      { pts: [[3.75, 6], [3.75, 7.2], [6.25, 7.2], [6.25, 6]], c: 'f-gov', t: 'c', n: 'c: parte del costo de la subvención que reciben los productores' },
+      { pts: [[6.25, 6], [6.25, 7.2], [7.75, 7.2]], c: 'f-dwl', t: 'd', at: [6.7, 6.85], n: 'b y d: pérdida de bienestar' }],
+    lines: [{ l: DD, k: 'k-d', t: 'D_{nac}' }, { l: SD, k: 'k-s', t: 'O_{nac}' }, { l: G.L([0, 6], [9.6, 6]), k: 'k-n', thin: true }, { l: G.L([0, 7.2], [9.6, 7.2]), k: 'k-exp', thin: true }],
+    guides: [{ p: [0, 6], yl: 'P_m', noX: true, noY: true }, { p: [0, 7.2], yl: 'P_m + s', noX: true, noY: true }, { p: [2.25, 7.2], xl: 'Q_1', noY: true }, { p: [3.75, 6], xl: 'Q_2', noY: true }, { p: [6.25, 6], xl: 'Q_3', noY: true }, { p: [7.75, 7.2], xl: 'Q_4', noY: true }],
+    arrows: [{ a: [9, 6.1], b: [9, 7.05], k: 'k-exp' }],
+    spans: [{ a: [3.75, 2.2], b: [6.25, 2.2], t: 'Exportaciones antes', below: true }, { a: [2.25, 1.2], b: [7.75, 1.2], t: 'Exportaciones con subvención', below: true }] }] },
+  cap: 'El gobierno paga s por cada unidad exportada. Los productores reciben P_m + s por exportar, así que tampoco venden en el país por menos: el precio interno sube a P_m + s. La producción sube (Q₃ → Q₄), el consumo interno baja (Q₂ → Q₁) y las exportaciones crecen de Q₃ − Q₂ a Q₄ − Q₁.',
+  ejes: EJG,
+  curvas: ['D_nac y O_nac no se desplazan.', 'La recta de precio que enfrentan los productores sube en s: **P_m → P_m + s**.', 'El precio mundial P_m no cambia si el país es pequeño (tomador de precios).'],
+  eq: ['Sin subvención: consumo Q₂, producción Q₃, exportaciones Q₃ − Q₂.', 'Con subvención: consumo Q₁, producción Q₄, exportaciones Q₄ − Q₁.'],
+  areas: ['Pérdida del excedente del consumidor = **a + b**.', 'Ganancia del excedente del productor = **a + b + c**.', '**Costo para el gobierno** = s × exportaciones nuevas = **b + c + d**.', 'Pérdida irrecuperable de bienestar = **b + d** (b: menor consumo interno; d: producción ineficiente).'],
+  calc: ['Costo de la subvención = s × (Q₄ − Q₁).'],
+  cad: ['El gobierno paga una subvención por cada unidad exportada.', 'Exportar se vuelve más rentable: los productores producen más y venden menos en el país.', 'Sube el precio interno, bajan el consumo nacional y crecen las exportaciones.', 'El Estado paga b + c + d; el país pierde b + d de bienestar, los socios pueden acusar dumping y la OMC prohíbe la mayoría de estas subvenciones.'],
+  err: ['Confundirla con la subvención a la producción (esa no cambia el precio interno ni el consumo).', 'Bajar el precio interno: con subvención a la exportación, el precio interno sube.', 'Sombrear solo las exportaciones antiguas como costo del gobierno (es s × las exportaciones nuevas).', 'Olvidar las represalias y la OMC al evaluar.'] },
+
 /* ---------- 4.5 ---------- */
 { id: 'tc-flotante', u: 'global', st: '4.5', stn: 'Tipos de cambio', t: 'Tipo de cambio flotante: determinación y cambios',
   pr: 'P1 parte a · P2 partes c–f',
@@ -1645,7 +1665,7 @@ const GLOBAL = [
 /* ================= Páginas complementarias ================= */
 const MX_ROWS = [
   ['Sustitución de importaciones', ['arancel', 'cuota', 'subvencion-comercio']],
-  ['Fomento de las exportaciones', ['exportaciones', 'tc-da-oa', 'da-aumento-y']],
+  ['Fomento de las exportaciones', ['exportaciones', 'subvencion-exportacion', 'tc-da-oa', 'da-aumento-y']],
   ['Integración económica y liberalización del comercio', ['importaciones', 'arancel']],
   ['Diversificación', ['cpp-crecimiento', 'oalp-desplaz']],
   ['Privatización y desregulación (políticas basadas en el mercado)', ['politicas-oferta', 'salario-minimo-reforma']],
