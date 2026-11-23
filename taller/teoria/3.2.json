@@ -1,0 +1,281 @@
+{
+ "id": "3.2",
+ "titulo": "Demanda y oferta agregadas",
+ "intro": "Así como un mercado tiene oferta y demanda, toda la economía de un país también: la <b>demanda agregada (DA)</b> es el gasto total en bienes y servicios, y la <b>oferta agregada (OA)</b> es la producción total. Su cruce determina el <b>PIB real</b> y el <b>nivel general de precios (NGP)</b>.",
+ "objetivos": [
+  "Definir la DA y sus componentes, y explicar sus determinantes.",
+  "Distinguir la OA de corto plazo (OACP) y la de largo plazo (OALP).",
+  "Explicar los determinantes de la OACP y de la OALP.",
+  "Analizar el equilibrio macroeconómico de corto y largo plazo, y las brechas."
+ ],
+ "secciones": [
+  {
+   "h": "1. La demanda agregada",
+   "p": [
+    "La <b>DA</b> es el gasto total planeado en los bienes y servicios de un país, a cada nivel general de precios: <b>DA = C + I + G + (X − M)</b>.",
+    "Tiene pendiente negativa: si sube el NGP, cae el poder de compra (efecto riqueza), suben las tasas de interés y los productos nacionales se vuelven menos competitivos frente a los importados.",
+    "Se <b>desplaza</b> cuando cambia algún componente por un factor distinto del NGP: confianza de consumidores y empresas, tasas de interés, ingreso, impuestos, gasto público, tipo de cambio, crecimiento de los socios comerciales."
+   ],
+   "dia": [
+    "da"
+   ]
+  },
+  {
+   "h": "2. La oferta agregada de corto plazo (OACP)",
+   "p": [
+    "La <b>OACP</b> es la producción total que las empresas están dispuestas a ofrecer a cada NGP, en el corto plazo, cuando los costos de los factores (salarios, alquileres) están fijos. Tiene pendiente positiva: si suben los precios y los costos no cambian, producir más es rentable.",
+    "Se <b>desplaza</b> cuando cambian los costos de producción: salarios, precio del petróleo y otras materias primas, impuestos indirectos o subsidios, tipo de cambio (insumos importados), shocks de oferta (sequías)."
+   ]
+  },
+  {
+   "h": "3. La oferta agregada de largo plazo (OALP)",
+   "p": [
+    "En el modelo <b>neoclásico</b>, la <b>OALP es vertical</b> en el <b>PIB de pleno empleo (Yfe)</b>, que depende de la cantidad y calidad de los factores de producción, no del NGP. En el largo plazo los salarios se ajustan y la economía vuelve a Yfe.",
+    "En el modelo <b>keynesiano</b>, la OA tiene tres tramos: horizontal (mucha capacidad ociosa: más DA aumenta el PIB sin subir precios), creciente y vertical (pleno empleo).",
+    "La OALP se desplaza a la derecha con más y mejores recursos: inversión en capital, educación, tecnología, infraestructura, instituciones. Es el <b>crecimiento económico de largo plazo</b>."
+   ]
+  },
+  {
+   "h": "4. Equilibrio y brechas",
+   "p": [
+    "El <b>equilibrio de corto plazo</b> está donde DA = OACP. Si ese PIB real está por debajo de Yfe, hay una <b>brecha deflacionaria</b> (recesiva) con desempleo; si está por encima, una <b>brecha inflacionaria</b>.",
+    "En el modelo neoclásico, las brechas se cierran solas en el largo plazo por el ajuste de los salarios. En el keynesiano, la economía puede quedar atrapada en una brecha deflacionaria, por eso el gobierno debe intervenir."
+   ],
+   "dia": [
+    "oacp"
+   ]
+  }
+ ],
+ "ejemplo": {
+  "t": "Ejemplo de Paraguay: el precio del combustible y la OACP",
+  "p": [
+   "Paraguay importa todo el combustible que consume. Cuando sube el precio internacional del petróleo, sube el costo de transportar y producir en casi todos los sectores: la <b>OACP se desplaza a la izquierda</b>.",
+   "Resultado: <b>sube el NGP</b> (inflación de costos) y <b>baja el PIB real</b>. Es lo que muchos países vivieron en 2022. Es un problema difícil, porque las políticas de demanda no atacan la causa.",
+   "En cambio, la construcción de rutas, la mejor educación técnica o la inversión en maquinaria desplazan la <b>OALP a la derecha</b>: aumentan la capacidad productiva del país."
+  ],
+  "dia": "oacp",
+  "link": [
+   "lab-adas",
+   "Practicar con el simulador de DA y OA"
+  ]
+ },
+ "errores": [
+  "Usar «precio» y «cantidad» en los ejes: en macro son <b>NGP</b> y <b>PIB real</b>.",
+  "Desplazar la DA cuando cambia el NGP: es un movimiento a lo largo de la curva.",
+  "Confundir los factores de la OACP (costos) con los de la OALP (cantidad y calidad de los recursos)."
+ ],
+ "check": [
+  {
+   "q": "¿Qué desplaza la DA a la derecha?",
+   "o": [
+    "Un aumento del precio del petróleo",
+    "Una baja de las tasas de interés",
+    "Una suba del NGP",
+    "Un aumento de los salarios"
+   ],
+   "a": 1,
+   "e": "Tasas más bajas aumentan el consumo y la inversión."
+  },
+  {
+   "q": "Una sequía en Paraguay desplaza…",
+   "o": [
+    "La DA a la derecha",
+    "La OACP a la izquierda",
+    "La OALP a la derecha",
+    "Nada"
+   ],
+   "a": 1,
+   "e": "Es un shock negativo de oferta que sube los costos y reduce la producción."
+  },
+  {
+   "q": "En el modelo neoclásico, la OALP es…",
+   "o": [
+    "Horizontal",
+    "Vertical en el PIB de pleno empleo",
+    "Con pendiente negativa",
+    "Igual a la DA"
+   ],
+   "a": 1,
+   "e": "El producto potencial depende de los recursos, no del NGP."
+  },
+  {
+   "q": "Si el equilibrio está a la izquierda de Yfe, hay…",
+   "o": [
+    "Brecha inflacionaria",
+    "Brecha deflacionaria y desempleo",
+    "Pleno empleo",
+    "Hiperinflación"
+   ],
+   "a": 1,
+   "e": "Se produce menos que el potencial y hay desempleo cíclico."
+  }
+ ],
+ "kc": {
+  "t": "Concepto clave: interdependencia",
+  "p": "La DA de Paraguay depende de lo que pasa en Brasil, Argentina y China: si sus economías crecen, compran más productos paraguayos. Pregunta para pensar: ¿cómo afecta a la DA de Paraguay una devaluación en Argentina?"
+ },
+ "atlas": [
+  [
+   "da-desplaz",
+   "Desplazamientos de la DA"
+  ],
+  [
+   "oacp-desplaz",
+   "Desplazamientos de la OACP"
+  ],
+  [
+   "oalp-desplaz",
+   "Desplazamientos de la OALP"
+  ],
+  [
+   "equilibrio-macro",
+   "Equilibrio macroeconómico"
+  ],
+  [
+   "oa-perspectivas",
+   "Perspectivas de la OA"
+  ]
+ ],
+ "labs": [
+  "adas",
+  "gaps"
+ ],
+ "dias": {
+  "da": {
+   "t": "Aumento de la demanda agregada",
+   "x": "PIB real",
+   "y": "NGP",
+   "l": [
+    {
+     "a": [
+      1,
+      2
+     ],
+     "b": [
+      9.4,
+      8.3
+     ],
+     "c": "s",
+     "t": "OACP"
+    },
+    {
+     "a": [
+      0.5,
+      7.75
+     ],
+     "b": [
+      7.75,
+      0.5
+     ],
+     "c": "d",
+     "t": "DA₁"
+    },
+    {
+     "a": [
+      2,
+      9.75
+     ],
+     "b": [
+      9.5,
+      2.25
+     ],
+     "c": "d",
+     "t": "DA₂"
+    }
+   ],
+   "pt": [
+    {
+     "p": [
+      4,
+      4.25
+     ],
+     "lx": "Y₁",
+     "ly": "P₁"
+    },
+    {
+     "p": [
+      6,
+      5.75
+     ],
+     "lx": "Y₂",
+     "ly": "P₂"
+    }
+   ],
+   "ar": [
+    [
+     [
+      2.6,
+      4.9
+     ],
+     [
+      3.9,
+      6.1
+     ]
+    ]
+   ]
+  },
+  "oacp": {
+   "t": "Disminución de la OACP (shock de costos)",
+   "x": "PIB real",
+   "y": "NGP",
+   "l": [
+    {
+     "a": [
+      1,
+      2
+     ],
+     "b": [
+      9.4,
+      8.3
+     ],
+     "c": "s",
+     "t": "OACP₁"
+    },
+    {
+     "a": [
+      0.2,
+      3.85
+     ],
+     "b": [
+      7.4,
+      9.25
+     ],
+     "c": "s",
+     "t": "OACP₂"
+    },
+    {
+     "a": [
+      2,
+      9.75
+     ],
+     "b": [
+      9.5,
+      2.25
+     ],
+     "c": "d",
+     "t": "DA"
+    }
+   ],
+   "pt": [
+    {
+     "p": [
+      6,
+      5.75
+     ],
+     "lx": "Y₁",
+     "ly": "P₁",
+     "lxa": "start"
+    },
+    {
+     "p": [
+      4.6,
+      7.15
+     ],
+     "lx": "Y₂",
+     "ly": "P₂",
+     "lxa": "end"
+    }
+   ]
+  }
+ }
+}

@@ -1,0 +1,69 @@
+{
+ "id": "3.7",
+ "titulo": "Políticas de oferta",
+ "intro": "Las políticas monetaria y fiscal mueven la demanda. Pero para que un país crezca durante décadas sin inflación hay que aumentar lo que <b>puede producir</b>: mejores trabajadores, más infraestructura, mercados que funcionen mejor. Esas son las <b>políticas de oferta</b>.",
+ "objetivos": [
+  "Explicar el objetivo de las políticas de oferta: desplazar la OALP a la derecha.",
+  "Distinguir políticas de oferta intervencionistas y orientadas al mercado.",
+  "Explicar ejemplos de cada tipo.",
+  "Evaluar sus ventajas, costos y plazos."
+ ],
+ "secciones": [
+  {
+   "h": "1. El objetivo",
+   "p": [
+    "Las <b>políticas de oferta</b> buscan aumentar la <b>capacidad productiva</b> de la economía: más cantidad o mejor calidad de los factores de producción, y mercados más eficientes. En el diagrama, desplazan la <b>OALP a la derecha</b> (Yfe₁ → Yfe₂).",
+    "Así se logra <b>crecimiento de largo plazo</b> sin presión inflacionaria, menos desempleo estructural y más competitividad internacional."
+   ],
+   "dia": ["oalp"]
+  },
+  {
+   "h": "2. Políticas intervencionistas",
+   "p": [
+    "El gobierno interviene directamente para mejorar los factores de producción:",
+    "<b>Inversión en capital humano:</b> educación, formación técnica, salud (más productividad del trabajo).<br><b>Inversión en infraestructura:</b> rutas, puertos, energía, internet (bajan los costos de producir y transportar).<br><b>Investigación y desarrollo y tecnología:</b> subsidios e incentivos a la innovación.<br><b>Política industrial:</b> apoyo a sectores con potencial (incentivos fiscales, zonas francas, regímenes especiales)."
+   ]
+  },
+  {
+   "h": "3. Políticas orientadas al mercado",
+   "p": [
+    "Buscan que los mercados funcionen con más libertad y competencia:",
+    "<b>Mercado laboral:</b> reducir rigideces, reformar las contrataciones, revisar el salario mínimo, debilitar el poder sindical (políticas discutidas por sus efectos sobre la equidad).<br><b>Incentivos:</b> bajar impuestos a la renta y a las empresas para estimular el trabajo y la inversión.<br><b>Competencia:</b> <b>desregulación</b> (menos trámites y barreras de entrada), <b>privatización</b> de empresas públicas, <b>leyes de competencia</b> contra monopolios, liberalización del comercio."
+   ]
+  },
+  {
+   "h": "4. Evaluación",
+   "p": [
+    "<b>Ventajas:</b> crecimiento sin inflación; menos desempleo estructural; más competitividad; algunas (educación, infraestructura) también aumentan la DA en el corto plazo.",
+    "<b>Limitaciones:</b> <b>tardan mucho</b> en dar resultados (una reforma educativa, años o décadas); las intervencionistas tienen un alto <b>costo fiscal</b> y un costo de oportunidad; las orientadas al mercado pueden aumentar la <b>desigualdad</b> y la inseguridad laboral, y encuentran resistencia política; las privatizaciones pueden crear monopolios privados si no se regulan."
+   ]
+  }
+ ],
+ "ejemplo": {
+  "t": "Ejemplo de Paraguay: el régimen de maquila",
+  "p": [
+   "Paraguay tiene un <b>régimen de maquila</b>: las empresas que importan insumos, los transforman en el país y exportan pagan un impuesto muy bajo sobre el valor agregado. Es una política de oferta de tipo <b>intervencionista</b> (política industrial con incentivos fiscales).",
+   "Junto con la <b>energía eléctrica</b> abundante y relativamente barata, y la mano de obra joven, atrajo fábricas de autopartes, textiles y otros productos, sobre todo para exportar a Brasil. Aumenta el empleo formal y la capacidad productiva: la <b>OALP se desplaza a la derecha</b>.",
+   "Para evaluar: ¿cuántos de esos empleos son de calidad y transfieren conocimiento? ¿Qué pasa si cambian las condiciones en Brasil? ¿Cuánto deja de recaudar el Estado por el incentivo? Y para sostener el crecimiento, ¿alcanza sin mejorar la educación técnica y la infraestructura?"
+  ],
+  "dia": "oalp",
+  "link": ["lab-adas", "Practicar con el simulador de DA y OA"]
+ },
+ "errores": [
+  "Desplazar la DA en lugar de la OALP: las políticas de oferta aumentan la capacidad productiva.",
+  "Olvidar los plazos largos en la evaluación.",
+  "Confundir una política de oferta intervencionista con la política fiscal de demanda: la inversión en educación es ambas cosas, pero su objetivo de largo plazo es la oferta."
+ ],
+ "check": [
+  {"q": "Una política de oferta exitosa desplaza…", "o": ["La DA a la derecha", "La OALP a la derecha", "La OACP a la izquierda", "La DA a la izquierda"], "a": 1, "e": "Aumenta la capacidad productiva del país."},
+  {"q": "¿Cuál es una política de oferta orientada al mercado?", "o": ["Construir escuelas técnicas", "Desregular un sector y reducir trámites", "Subir el gasto en hospitales", "Bajar la tasa de interés"], "a": 1, "e": "Busca más competencia y libertad de los mercados."},
+  {"q": "¿Cuál es una limitación de las políticas de oferta intervencionistas?", "o": ["Actúan muy rápido", "Tienen un alto costo fiscal y tardan en dar resultados", "Generan inflación de demanda siempre", "No afectan la producción"], "a": 1, "e": "Requieren inversión pública y años para madurar."},
+  {"q": "Invertir en formación técnica reduce principalmente el desempleo…", "o": ["Cíclico", "Estructural", "Estacional", "Friccional"], "a": 1, "e": "Ayuda a que las habilidades de los trabajadores coincidan con las que piden las empresas."}
+ ],
+ "kc": { "t": "Concepto clave: cambio", "p": "Las políticas de oferta buscan cambiar la estructura de la economía: de qué vive un país y cuán productivos son sus trabajadores. Pregunta para pensar: ¿qué debería cambiar en Paraguay para depender menos de la soja, la carne y la energía?" },
+ "atlas": [["politicas-oferta", "Políticas de oferta"], ["oalp-desplaz", "Desplazamientos de la OALP"]],
+ "labs": ["adas", "gaps"],
+ "dias": {
+  "oalp": { "t": "Política de oferta: la OALP se desplaza", "x": "PIB real", "y": "NGP", "l": [{ "a": [5, 0.4], "b": [5, 9.4], "c": "k", "t": "OALP₁" }, { "a": [7, 0.4], "b": [7, 9.4], "c": "k", "t": "OALP₂" }, { "a": [1.2, 9.5], "b": [9.8, 0.9], "c": "d", "t": "DA" }], "pt": [{ "p": [5, 5.7], "lx": "Yfe₁", "ly": "P₁" }, { "p": [7, 3.7], "lx": "Yfe₂", "ly": "P₂" }], "ar": [[[5.3, 8], [6.7, 8]]] }
+ }
+}

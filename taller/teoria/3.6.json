@@ -1,0 +1,85 @@
+{
+ "id": "3.6",
+ "titulo": "Política fiscal",
+ "intro": "Cada año el gobierno presenta el Presupuesto General de la Nación: cuánto va a gastar en salud, rutas y salarios, y cuánto va a cobrar en impuestos. Esas decisiones no solo financian al Estado: también mueven toda la economía. Eso es la <b>política fiscal</b>.",
+ "objetivos": [
+  "Explicar las fuentes de ingresos y los tipos de gasto del gobierno.",
+  "Explicar el presupuesto del gobierno: superávit, déficit y deuda pública.",
+  "Analizar la política fiscal expansiva y contractiva con el diagrama de DA y OA, y el efecto multiplicador.",
+  "Explicar los estabilizadores automáticos.",
+  "Evaluar las fortalezas y limitaciones de la política fiscal."
+ ],
+ "secciones": [
+  {
+   "h": "1. Ingresos y gastos del gobierno",
+   "p": [
+    "<b>Ingresos:</b> impuestos <b>directos</b> (sobre la renta y la riqueza: impuesto a la renta de empresas y personas) e <b>indirectos</b> (sobre el gasto: IVA, impuesto selectivo al consumo), además de ingresos de empresas públicas y, en Paraguay, las <b>compensaciones y royalties de las binacionales</b> Itaipú y Yacyretá.",
+    "<b>Gastos:</b> <b>corrientes</b> (salarios de docentes, médicos y policías; medicamentos), de <b>capital</b> (rutas, hospitales, escuelas: aumentan la capacidad productiva) y <b>transferencias</b> (pensiones, programas sociales)."
+   ]
+  },
+  {
+   "h": "2. El presupuesto, el déficit y la deuda",
+   "p": [
+    "Si los ingresos superan a los gastos hay <b>superávit fiscal</b>; si los gastos superan a los ingresos, <b>déficit fiscal</b>, que se financia con <b>deuda pública</b> (préstamos y bonos).",
+    "La deuda no es mala en sí misma si financia inversiones que aumentan la producción futura. El problema es cuando crece más rápido que la economía: los intereses consumen recursos que podrían ir a salud o educación.",
+    "Paraguay tiene una <b>Ley de Responsabilidad Fiscal</b> que fija un tope al déficit (como regla general, 1,5 % del PIB), aunque en la pandemia se suspendió temporalmente."
+   ]
+  },
+  {
+   "h": "3. Política fiscal expansiva y contractiva",
+   "p": [
+    "<b>Expansiva:</b> más gasto público o menos impuestos. Aumenta G o el ingreso disponible (y así C e I): la <b>DA se desplaza a la derecha</b>. Sirve para salir de una recesión y reducir el desempleo cíclico.",
+    "<b>Contractiva:</b> menos gasto o más impuestos: la <b>DA se desplaza a la izquierda</b>. Sirve para frenar la inflación de demanda o reducir el déficit."
+   ],
+   "dia": ["expansiva"]
+  },
+  {
+   "h": "4. El efecto multiplicador",
+   "p": [
+    "Un aumento del gasto público genera ingresos para quienes lo reciben; ellos gastan una parte, lo que genera nuevos ingresos para otros, y así sucesivamente. El aumento final del PIB real es <b>mayor</b> que el aumento inicial del gasto.",
+    "Cuanto mayor es la parte del ingreso adicional que se gasta en productos nacionales, mayor es el multiplicador. Las filtraciones (ahorro, impuestos, importaciones) lo reducen. En una economía muy abierta como la paraguaya, donde mucho se importa, el multiplicador es menor."
+   ],
+   "caja": { "t": "Fórmula (en el NM se explica sin calcular)", "html": "Multiplicador = 1 ÷ (1 − propensión marginal a consumir bienes nacionales)" }
+  },
+  {
+   "h": "5. Estabilizadores automáticos",
+   "p": [
+    "Algunos gastos e ingresos se ajustan solos según el ciclo: en una recesión caen los ingresos y la recaudación por impuestos progresivos baja, y aumentan las transferencias sociales; en un auge, ocurre lo contrario. Suavizan el ciclo sin que el gobierno tenga que decidir nada."
+   ]
+  },
+  {
+   "h": "6. Evaluación",
+   "p": [
+    "<b>Fortalezas:</b> puede apuntar a sectores o regiones concretas; la inversión pública en infraestructura y educación aumenta además la OALP; es eficaz en recesiones profundas, cuando la política monetaria pierde fuerza; el multiplicador amplía su efecto.",
+    "<b>Limitaciones:</b> <b>rezagos</b> (aprobar un presupuesto y ejecutar obras lleva tiempo); <b>déficit y deuda</b>; posible <b>efecto desplazamiento</b> (crowding out: el gobierno se endeuda, suben las tasas y cae la inversión privada); <b>presiones políticas</b> (es fácil subir el gasto antes de elecciones y difícil bajarlo); posible inflación si la economía está cerca del pleno empleo; y ejecución ineficiente o con corrupción."
+   ]
+  }
+ ],
+ "ejemplo": {
+  "t": "Ejemplo de Paraguay: la política fiscal en la pandemia",
+  "p": [
+   "En 2020, con la economía paralizada por la pandemia, el gobierno paraguayo aplicó una política fiscal <b>expansiva</b>: aprobó una ley de emergencia con más gasto en salud, transferencias a trabajadores informales (el programa Pytyvõ) y apoyo a empresas, financiado con deuda. Se suspendió temporalmente el tope de déficit de la Ley de Responsabilidad Fiscal.",
+   "Con la teoría: más G y más transferencias sostienen el consumo y <b>desplazan la DA a la derecha</b>, evitando una caída mayor del PIB real y del empleo.",
+   "El costo: aumentaron el <b>déficit</b> y la <b>deuda pública</b>, y en los años siguientes el gobierno tuvo que <b>converger</b> de nuevo al tope del déficit con una política más contractiva. Para evaluar: ¿valió la pena endeudarse para proteger el empleo?"
+  ],
+  "dia": "expansiva",
+  "link": ["lab-adas", "Practicar con el simulador de DA y OA"]
+ },
+ "errores": [
+  "Confundir la política fiscal (gobierno: gasto e impuestos) con la monetaria (banco central: tasas).",
+  "Olvidar el efecto multiplicador o los rezagos en la evaluación.",
+  "Decir que todo déficit es malo: depende de en qué se gasta y de la situación de la economía."
+ ],
+ "check": [
+  {"q": "¿Cuál es una política fiscal expansiva?", "o": ["Subir la TPM", "Bajar el impuesto a la renta", "Reducir el gasto en obras", "Vender bonos del banco central"], "a": 1, "e": "Menos impuestos aumentan el ingreso disponible y la DA."},
+  {"q": "El efecto multiplicador significa que…", "o": ["El PIB aumenta más que el gasto inicial", "La deuda se multiplica", "Los precios suben más que el PIB", "El gasto público no tiene efecto"], "a": 0, "e": "El gasto se convierte en ingreso de otros, que vuelven a gastar."},
+  {"q": "El efecto desplazamiento (crowding out) ocurre cuando…", "o": ["El gasto público reduce la inversión privada al subir las tasas", "Las exportaciones desplazan a las importaciones", "Los impuestos suben", "El banco central baja la tasa"], "a": 0, "e": "El Estado compite por el ahorro disponible."},
+  {"q": "En una recesión, los estabilizadores automáticos hacen que…", "o": ["La recaudación suba", "La recaudación baje y las transferencias suban", "El gobierno cierre el presupuesto", "La DA caiga más"], "a": 1, "e": "Suavizan la caída sin nuevas decisiones."}
+ ],
+ "kc": { "t": "Concepto clave: intervención", "p": "La política fiscal es la herramienta más directa del Estado para influir en la economía, pero cada guaraní gastado tiene un costo de oportunidad y alguien lo paga hoy o mañana. Pregunta para pensar: ¿es más útil para Paraguay gastar en transferencias o en infraestructura durante una recesión?" },
+ "atlas": [["politica-fiscal", "Política fiscal"], ["da-desplaz", "Desplazamientos de la DA"], ["brecha-deflacionaria", "Brecha deflacionaria"]],
+ "labs": ["adas", "gaps"],
+ "dias": {
+  "expansiva": { "t": "Política fiscal expansiva", "x": "PIB real", "y": "NGP", "l": [{ "a": [6, 0.4], "b": [6, 9.6], "c": "k", "t": "OALP" }, { "a": [1, 2], "b": [9.4, 8.3], "c": "s", "t": "OACP" }, { "a": [0.5, 7.75], "b": [7.75, 0.5], "c": "d", "t": "DA₁" }, { "a": [2, 9.75], "b": [9.5, 2.25], "c": "d", "t": "DA₂" }], "pt": [{ "p": [4, 4.25], "lx": "Y₁", "ly": "P₁" }, { "p": [6, 5.75], "lx": "Yfe", "ly": "P₂" }], "ar": [[[2.6, 4.9], [3.9, 6.1]]] }
+ }
+}

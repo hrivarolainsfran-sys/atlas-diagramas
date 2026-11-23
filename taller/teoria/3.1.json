@@ -1,0 +1,259 @@
+{
+ "id": "3.1",
+ "titulo": "Medición de la actividad económica",
+ "intro": "Cuando las noticias dicen que «la economía paraguaya creció 4 %», ¿qué se midió exactamente? Este subtema explica cómo se mide la producción de un país con el <b>PIB</b>, qué diferencia hay entre valores nominales y reales, y qué no muestra el PIB.",
+ "objetivos": [
+  "Explicar el flujo circular del ingreso con filtraciones e inyecciones.",
+  "Explicar los tres métodos para medir el PIB.",
+  "Distinguir PIB e INB, nominal y real, total y per cápita.",
+  "Describir el ciclo económico.",
+  "Evaluar las limitaciones del PIB como medida del bienestar."
+ ],
+ "secciones": [
+  {
+   "h": "1. El flujo circular con filtraciones e inyecciones",
+   "p": [
+    "Los hogares reciben ingresos de las empresas por los factores de producción y los gastan en bienes y servicios. Pero no todo el ingreso vuelve a las empresas:",
+    "<b>Filtraciones</b> (salen del flujo): <b>ahorro (S)</b>, <b>impuestos (T)</b> e <b>importaciones (M)</b>.<br><b>Inyecciones</b> (entran al flujo): <b>inversión (I)</b>, <b>gasto público (G)</b> y <b>exportaciones (X)</b>.",
+    "Si las inyecciones son mayores que las filtraciones, el ingreso nacional crece; si son menores, disminuye."
+   ]
+  },
+  {
+   "h": "2. El PIB y sus tres métodos",
+   "p": [
+    "El <b>producto interno bruto (PIB)</b> es el valor de todos los bienes y servicios <b>finales</b> producidos dentro de un país en un período (normalmente un año).",
+    "Se puede medir de tres formas que, en teoría, dan el mismo resultado:<br><b>Método del gasto:</b> PIB = C + I + G + (X − M).<br><b>Método del ingreso:</b> suma de salarios, renta, intereses y beneficios.<br><b>Método de la producción:</b> suma del valor agregado de cada sector (agricultura, industria, servicios).",
+    "Solo se cuentan bienes <b>finales</b> (o el valor agregado) para no contar dos veces el trigo que ya está en el pan."
+   ],
+   "caja": {
+    "t": "Fórmula del gasto",
+    "html": "PIB = C + I + G + (X − M)"
+   }
+  },
+  {
+   "h": "3. PIB e INB; nominal y real; per cápita",
+   "p": [
+    "El <b>ingreso nacional bruto (INB)</b> = PIB + ingresos que los residentes reciben del exterior − ingresos que los extranjeros envían fuera del país. En Paraguay importa, por ejemplo, por las utilidades de empresas extranjeras y las remesas.",
+    "El <b>PIB nominal</b> se mide a precios de cada año; el <b>PIB real</b> descuenta la inflación (a precios de un año base). Solo el PIB real muestra si se produce <b>más</b>, y no solo si los precios subieron.",
+    "El <b>PIB per cápita</b> divide el PIB entre la población: sirve para comparar el nivel de vida promedio entre países. Para comparar mejor se usa la <b>paridad del poder adquisitivo (PPA)</b>, que ajusta por el costo de vida."
+   ],
+   "caja": {
+    "t": "PIB real",
+    "html": "PIB real = PIB nominal ÷ índice de precios × 100"
+   }
+  },
+  {
+   "h": "4. El ciclo económico",
+   "p": [
+    "El PIB real no crece en línea recta: alterna fases de <b>expansión</b> (auge), <b>pico</b>, <b>contracción</b> (recesión: el PIB real cae durante dos trimestres seguidos) y <b>fondo</b>. La <b>tendencia de largo plazo</b> muestra el crecimiento promedio.",
+    "Cuando el PIB real está por encima de su potencial hay una brecha inflacionaria; por debajo, una brecha deflacionaria (recesiva), con desempleo."
+   ],
+   "dia": [
+    "ciclo"
+   ]
+  },
+  {
+   "h": "5. Limitaciones del PIB",
+   "p": [
+    "<b>Economía informal:</b> en Paraguay buena parte del trabajo es informal y no se registra completo.",
+    "<b>Producción no de mercado:</b> el trabajo doméstico o el voluntariado no se cuentan.",
+    "<b>Distribución:</b> el PIB per cápita es un promedio y no muestra la desigualdad.",
+    "<b>Calidad de vida y ambiente:</b> no mide el tiempo libre, la salud ni la degradación ambiental; la deforestación puede aumentar el PIB mientras destruye recursos.",
+    "Por eso se usan también otras medidas: el <b>Índice de Desarrollo Humano</b>, el Índice de Felicidad o el Índice de Progreso Social (lo verás en 4.8)."
+   ]
+  }
+ ],
+ "ejemplo": {
+  "t": "Ejemplo de Paraguay: el PIB y la sequía",
+  "p": [
+   "La economía paraguaya depende mucho de la agricultura y de la energía de las represas. En años de <b>sequía</b>, cae la producción de soja y la generación hidroeléctrica, y el <b>PIB real</b> crece menos o incluso cae: el ciclo económico de Paraguay está muy ligado al clima.",
+   "Si en ese mismo año los precios suben, el <b>PIB nominal</b> puede crecer aunque se produzca menos. Por eso, para saber si la economía realmente creció, hay que mirar el PIB <b>real</b>.",
+   "Para evaluar: ¿qué dice el PIB per cápita sobre el bienestar de una familia rural del Chaco, si la mayor parte de la producción se concentra en pocas actividades?"
+  ],
+  "dia": "ciclo",
+  "link": [
+   "lab-real",
+   "Practicar PIB nominal, real e INB"
+  ]
+ },
+ "errores": [
+  "Comparar PIB nominal de dos años sin descontar la inflación.",
+  "Sumar bienes intermedios y finales (doble contabilidad).",
+  "Usar el PIB per cápita como si midiera la distribución del ingreso."
+ ],
+ "check": [
+  {
+   "q": "¿Cuál es una inyección en el flujo circular?",
+   "o": [
+    "El ahorro",
+    "Los impuestos",
+    "Las exportaciones",
+    "Las importaciones"
+   ],
+   "a": 2,
+   "e": "Las inyecciones son la inversión, el gasto público y las exportaciones."
+  },
+  {
+   "q": "El PIB nominal sube 8 % y los precios suben 5 %. El PIB real sube aproximadamente…",
+   "o": [
+    "13 %",
+    "8 %",
+    "3 %",
+    "−3 %"
+   ],
+   "a": 2,
+   "e": "PIB real ≈ 8 − 5 = 3 %."
+  },
+  {
+   "q": "Una recesión es…",
+   "o": [
+    "Un año con inflación alta",
+    "Una caída del PIB real durante dos trimestres seguidos",
+    "Un aumento del desempleo de un mes",
+    "Un déficit fiscal"
+   ],
+   "a": 1,
+   "e": "Es la definición convencional de recesión."
+  },
+  {
+   "q": "¿Cuál es una limitación del PIB?",
+   "o": [
+    "Mide la producción final",
+    "No refleja la economía informal ni la distribución",
+    "Se calcula por tres métodos",
+    "Se expresa en moneda"
+   ],
+   "a": 1,
+   "e": "Deja afuera actividades no registradas y no muestra cómo se reparte el ingreso."
+  }
+ ],
+ "kc": {
+  "t": "Concepto clave: bienestar económico",
+  "p": "Más PIB no siempre significa más bienestar: importa cómo se reparte, qué se produce y a qué costo ambiental. Pregunta para pensar: si el PIB de Paraguay creciera por talar más bosques, ¿estaría el país mejor?"
+ },
+ "atlas": [
+  [
+   "flujo-circular",
+   "Flujo circular del ingreso"
+  ],
+  [
+   "ciclo-economico",
+   "Ciclo económico"
+  ]
+ ],
+ "labs": [
+  "real",
+  "cycle",
+  "flow"
+ ],
+ "dias": {
+  "ciclo": {
+   "t": "El ciclo económico",
+   "x": "Tiempo",
+   "y": "PIB real",
+   "l": [
+    {
+     "a": [
+      0.3,
+      2.2
+     ],
+     "b": [
+      10,
+      7.6
+     ],
+     "c": "k",
+     "dash": true,
+     "t": "Tendencia"
+    },
+    {
+     "poly": [
+      [
+       0.3,
+       2.4
+      ],
+      [
+       1.3,
+       3.6
+      ],
+      [
+       2.2,
+       4.3
+      ],
+      [
+       3,
+       3.9
+      ],
+      [
+       3.8,
+       3.2
+      ],
+      [
+       4.6,
+       3.5
+      ],
+      [
+       5.6,
+       5.2
+      ],
+      [
+       6.6,
+       6.4
+      ],
+      [
+       7.4,
+       6.1
+      ],
+      [
+       8.2,
+       5.6
+      ],
+      [
+       9.2,
+       6.6
+      ],
+      [
+       10,
+       8
+      ]
+     ],
+     "c": "d",
+     "t": "PIB real",
+     "lp": [
+      8.6,
+      4.9
+     ]
+    }
+   ],
+   "n": [
+    {
+     "p": [
+      1.6,
+      4.8
+     ],
+     "t": "pico"
+    },
+    {
+     "p": [
+      3.2,
+      2.5
+     ],
+     "t": "fondo"
+    },
+    {
+     "p": [
+      4.7,
+      6
+     ],
+     "t": "expansión"
+    },
+    {
+     "p": [
+      6.8,
+      4.6
+     ],
+     "t": "recesión"
+    }
+   ]
+  }
+ }
+}

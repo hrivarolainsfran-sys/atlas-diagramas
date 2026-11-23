@@ -1,0 +1,349 @@
+{
+ "id": "2.7",
+ "titulo": "El gobierno en los mercados",
+ "intro": "El precio del combustible en Paraguay no lo fija solo el mercado: hay impuestos, y a veces subsidios a través de Petropar. El salario mínimo tampoco es un precio libre. Este subtema analiza <b>por qué y cómo interviene el gobierno</b> en los mercados y quién gana y quién pierde con cada medida.",
+ "objetivos": [
+  "Explicar por qué intervienen los gobiernos en los mercados.",
+  "Analizar con diagramas los impuestos indirectos (específicos y ad valorem) y su incidencia.",
+  "Analizar los subsidios.",
+  "Analizar los precios máximos y mínimos, y sus consecuencias para las partes interesadas."
+ ],
+ "secciones": [
+  {
+   "h": "1. Por qué interviene el gobierno",
+   "p": [
+    "Para <b>recaudar</b> ingresos (impuestos), para <b>apoyar</b> a ciertos productores (subsidios), para <b>proteger</b> a consumidores de bajos ingresos (precios máximos) o a productores y trabajadores (precios mínimos, salario mínimo), y para <b>corregir fallas de mercado</b> (impuestos al tabaco, subsidios a las vacunas, que verás en 2.8)."
+   ]
+  },
+  {
+   "h": "2. Impuestos indirectos",
+   "p": [
+    "Un <b>impuesto indirecto</b> grava el gasto en bienes y servicios. Puede ser <b>específico</b> (un monto fijo por unidad, por ejemplo Gs. por litro) o <b>ad valorem</b> (un porcentaje del precio, como el IVA del 10 %).",
+    "El impuesto es un costo para el productor: la oferta se desplaza <b>hacia arriba</b> (O₁ → O₁ + impuesto). La distancia vertical entre las curvas es el impuesto por unidad. Con un impuesto ad valorem, las curvas se separan cada vez más.",
+    "Resultado: el <b>precio que paga el consumidor sube</b> (Pc), el <b>precio que recibe el productor baja</b> (Pp), la <b>cantidad baja</b> (Q₁ → Q₂) y el gobierno <b>recauda</b> el rectángulo violeta. Aparece una <b>pérdida de bienestar</b> (triángulo gris), porque se dejan de producir unidades que valían más de lo que costaban."
+   ],
+   "dia": [
+    "impuesto"
+   ]
+  },
+  {
+   "h": "3. Incidencia del impuesto",
+   "p": [
+    "La <b>incidencia</b> es quién soporta realmente el impuesto. Depende de las elasticidades: el lado <b>más inelástico</b> paga la mayor parte.",
+    "Si la demanda es inelástica (combustible, tabaco), el consumidor paga la mayor parte: el precio sube casi tanto como el impuesto. Si la demanda es elástica, la mayor parte la soporta el productor."
+   ]
+  },
+  {
+   "h": "4. Subsidios",
+   "p": [
+    "Un <b>subsidio</b> es un pago del gobierno al productor que baja su costo: la oferta se desplaza <b>hacia abajo</b> (a la derecha).",
+    "El precio para el consumidor baja, el productor recibe más por unidad (precio de mercado + subsidio), la cantidad aumenta y el gobierno <b>gasta</b> (subsidio × cantidad). Tiene un <b>costo de oportunidad</b> para el presupuesto y puede generar sobreproducción e ineficiencia."
+   ]
+  },
+  {
+   "h": "5. Precios máximos y mínimos",
+   "p": [
+    "Un <b>precio máximo</b> se fija <b>por debajo</b> del equilibrio para que un bien sea accesible (alquileres, alimentos básicos). Genera <b>escasez</b> (Qd > Qo), filas, mercado negro y racionamiento por otros medios; los productores reciben menos y algunos dejan el mercado.",
+    "Un <b>precio mínimo</b> se fija <b>por encima</b> del equilibrio para proteger a productores o trabajadores. Genera <b>excedente</b> (Qo > Qd): en productos agrícolas, el gobierno puede tener que comprarlo; en el mercado laboral, el <b>salario mínimo</b> puede generar desempleo e informalidad si es muy alto."
+   ],
+   "dia": [
+    "maximo"
+   ]
+  }
+ ],
+ "ejemplo": {
+  "t": "Ejemplo de Paraguay: el impuesto selectivo a los combustibles",
+  "p": [
+   "En Paraguay, los combustibles pagan IVA y el <b>impuesto selectivo al consumo (ISC)</b>. La demanda de combustible es <b>inelástica</b>: sin él no hay transporte ni producción.",
+   "Por eso, un aumento del impuesto se traslada en gran parte al <b>precio en el surtidor</b>: la cantidad baja poco y el Estado recauda mucho. Los más afectados son los transportistas, los productores y los hogares que gastan una gran parte de su ingreso en transporte.",
+   "Cuando el precio internacional del petróleo sube mucho, el gobierno enfrenta una disyuntiva: bajar el impuesto o subsidiar a través de Petropar (menos recaudación o más gasto) o mantenerlo (más inflación). Es una decisión de <b>equidad</b> y de <b>sostenibilidad fiscal</b>."
+  ],
+  "dia": "impuesto",
+  "link": [
+   "lab-tax",
+   "Practicar con el laboratorio de impuestos y subsidios"
+  ]
+ },
+ "errores": [
+  "Desplazar la demanda cuando el impuesto lo paga el productor: se desplaza la <b>oferta</b>.",
+  "Dibujar el precio máximo por encima del equilibrio (no tendría efecto).",
+  "Olvidar el rectángulo de recaudación y el triángulo de pérdida de bienestar."
+ ],
+ "check": [
+  {
+   "q": "Un impuesto específico sobre un bien de demanda inelástica lo paga principalmente…",
+   "o": [
+    "El productor",
+    "El consumidor",
+    "El gobierno",
+    "Por partes iguales siempre"
+   ],
+   "a": 1,
+   "e": "El lado más inelástico soporta la mayor parte del impuesto."
+  },
+  {
+   "q": "Un precio máximo por debajo del equilibrio genera…",
+   "o": [
+    "Excedente",
+    "Escasez",
+    "Más producción",
+    "Ningún efecto"
+   ],
+   "a": 1,
+   "e": "A un precio bajo, se demanda más y se ofrece menos."
+  },
+  {
+   "q": "¿Qué pasa con la oferta cuando el gobierno da un subsidio?",
+   "o": [
+    "Se desplaza hacia arriba",
+    "Se desplaza hacia abajo (a la derecha)",
+    "No cambia",
+    "Se vuelve vertical"
+   ],
+   "a": 1,
+   "e": "El subsidio baja el costo de producir."
+  },
+  {
+   "q": "Un salario mínimo muy por encima del equilibrio puede…",
+   "o": [
+    "Aumentar el empleo formal",
+    "Generar desempleo o más informalidad",
+    "Bajar los salarios",
+    "Eliminar la pobreza"
+   ],
+   "a": 1,
+   "e": "La cantidad ofrecida de trabajo supera a la demandada a ese salario."
+  }
+ ],
+ "kc": {
+  "t": "Concepto clave: intervención",
+  "p": "Toda intervención busca un objetivo (recaudar, proteger, corregir) pero tiene consecuencias no buscadas: escasez, mercado negro, gasto público. Pregunta para pensar: ¿es mejor subsidiar el pasaje del transporte público o dar una transferencia directa a las familias que lo necesitan?"
+ },
+ "atlas": [
+  [
+   "impuesto-especifico",
+   "Impuesto específico"
+  ],
+  [
+   "impuesto-advalorem",
+   "Impuesto ad valorem"
+  ],
+  [
+   "subvencion",
+   "Subsidio"
+  ],
+  [
+   "incidencia",
+   "Incidencia según la EPD"
+  ],
+  [
+   "precio-max",
+   "Precio máximo"
+  ],
+  [
+   "precio-min",
+   "Precio mínimo"
+  ],
+  [
+   "salario-minimo",
+   "Salario mínimo"
+  ]
+ ],
+ "labs": [
+  "tax",
+  "ceil"
+ ],
+ "dias": {
+  "impuesto": {
+   "t": "Impuesto específico",
+   "x": "Cantidad",
+   "y": "Precio",
+   "area": [
+    {
+     "p": [
+      [
+       3.89,
+       6.11
+      ],
+      [
+       3.89,
+       4.11
+      ],
+      [
+       5,
+       5
+      ]
+     ],
+     "c": "dwl"
+    }
+   ],
+   "rect": [
+    {
+     "x": [
+      0,
+      3.89
+     ],
+     "y": [
+      4.11,
+      6.11
+     ],
+     "c": "gov"
+    }
+   ],
+   "l": [
+    {
+     "a": [
+      0,
+      10
+     ],
+     "b": [
+      9.5,
+      0.5
+     ],
+     "c": "d",
+     "t": "D"
+    },
+    {
+     "a": [
+      0,
+      1
+     ],
+     "b": [
+      10,
+      9
+     ],
+     "c": "s",
+     "t": "O₁"
+    },
+    {
+     "a": [
+      0,
+      3
+     ],
+     "b": [
+      8.4,
+      9.72
+     ],
+     "c": "s",
+     "t": "O₁ + impuesto"
+    }
+   ],
+   "pt": [
+    {
+     "p": [
+      3.89,
+      6.11
+     ],
+     "ly": "Pc",
+     "lx": "Q₂",
+     "lxa": "end"
+    },
+    {
+     "p": [
+      3.89,
+      4.11
+     ],
+     "ly": "Pp"
+    },
+    {
+     "p": [
+      5,
+      5
+     ],
+     "lx": "Q₁",
+     "ly": "P₁",
+     "lxa": "start"
+    }
+   ],
+   "n": [
+    {
+     "p": [
+      0.4,
+      5.2
+     ],
+     "t": "recaudación"
+    }
+   ]
+  },
+  "maximo": {
+   "t": "Precio máximo: escasez",
+   "x": "Cantidad",
+   "y": "Precio",
+   "l": [
+    {
+     "a": [
+      0,
+      10
+     ],
+     "b": [
+      9.5,
+      0.5
+     ],
+     "c": "d",
+     "t": "D"
+    },
+    {
+     "a": [
+      0,
+      1
+     ],
+     "b": [
+      10,
+      9
+     ],
+     "c": "s",
+     "t": "O"
+    },
+    {
+     "a": [
+      0,
+      3
+     ],
+     "b": [
+      9,
+      3
+     ],
+     "c": "k",
+     "dash": true,
+     "t": "Pmáx",
+     "lp": [
+      9.1,
+      3.1
+     ]
+    }
+   ],
+   "pt": [
+    {
+     "p": [
+      2.5,
+      3
+     ],
+     "lx": "Qo"
+    },
+    {
+     "p": [
+      7,
+      3
+     ],
+     "lx": "Qd"
+    },
+    {
+     "p": [
+      5,
+      5
+     ],
+     "ly": "Pe"
+    }
+   ],
+   "n": [
+    {
+     "p": [
+      3.6,
+      2.3
+     ],
+     "t": "escasez"
+    }
+   ]
+  }
+ }
+}

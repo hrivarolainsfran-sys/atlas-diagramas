@@ -1,0 +1,70 @@
+{
+ "id": "1.2",
+ "titulo": "¿Cómo abordan los economistas el mundo?",
+ "intro": "Los economistas no tienen laboratorios como los químicos: no pueden subir el precio de la carne en un país «de prueba». Por eso trabajan con <b>modelos</b>, <b>supuestos</b> y <b>datos</b>. Este subtema explica cómo piensan, qué limitaciones tienen sus modelos y cómo cambió la economía a lo largo de la historia.",
+ "objetivos": [
+  "Explicar el uso de modelos y del supuesto ceteris paribus.",
+  "Distinguir el razonamiento positivo y el normativo en la economía.",
+  "Describir los aportes de algunas escuelas de pensamiento económico.",
+  "Reconocer los nueve conceptos clave del curso."
+ ],
+ "secciones": [
+  {
+   "h": "1. Modelos y supuestos",
+   "p": [
+    "Un <b>modelo económico</b> es una representación simplificada de la realidad: un diagrama, una ecuación o un razonamiento que deja de lado detalles para mostrar lo importante. La CPP o el diagrama de oferta y demanda son modelos.",
+    "Todo modelo se basa en <b>supuestos</b>. El más usado es <b>ceteris paribus</b> («lo demás constante»): analizamos el efecto de una sola variable suponiendo que las demás no cambian. Así, al estudiar qué pasa con la demanda de carne cuando sube su precio, suponemos que el ingreso de las familias no cambia.",
+    "Los modelos se ponen a prueba con <b>datos</b> reales. Si sus predicciones no se cumplen, se corrigen. Por eso la economía es una ciencia social: sus conclusiones son provisionales."
+   ],
+   "caja": { "t": "En el examen", "html": "Cuando uses un diagrama, nombra el supuesto: «ceteris paribus, un aumento del ingreso desplaza la demanda hacia la derecha»." }
+  },
+  {
+   "h": "2. Pensamiento positivo y normativo",
+   "p": [
+    "Las afirmaciones <b>positivas</b> describen lo que es o lo que pasaría, y se pueden comprobar: «una suba del impuesto al combustible reduce la cantidad consumida».",
+    "Las afirmaciones <b>normativas</b> dicen lo que debería ser y dependen de valores: «el combustible debería ser más barato para los transportistas».",
+    "Los economistas usan el análisis positivo para informar decisiones que, al final, son normativas. En la evaluación de tus respuestas vas a combinar ambas: primero explicas con teoría (positivo) y después emites un juicio justificado (normativo)."
+   ]
+  },
+  {
+   "h": "3. Cómo cambió el pensamiento económico",
+   "p": [
+    "<b>Adam Smith (1776)</b> sostuvo que, en mercados libres, la búsqueda del interés propio guiada por los precios (la «mano invisible») lleva a una asignación eficiente de los recursos.",
+    "<b>Karl Marx</b> criticó el capitalismo por la desigualdad entre los dueños del capital y los trabajadores.",
+    "<b>John Maynard Keynes</b>, tras la Gran Depresión de 1929, mostró que la economía puede quedarse estancada con mucho desempleo y que el gobierno debe aumentar su gasto para reactivar la demanda.",
+    "Los <b>monetaristas y neoclásicos</b> (como Milton Friedman) volvieron a defender los mercados libres y el control de la inflación con la cantidad de dinero.",
+    "La <b>economía del comportamiento</b> muestra que las personas no siempre deciden de forma racional: tienen sesgos, siguen hábitos y se dejan influir por cómo se presentan las opciones."
+   ]
+  },
+  {
+   "h": "4. Los nueve conceptos clave del curso",
+   "p": [
+    "Todo el programa se organiza alrededor de nueve conceptos que vas a usar en la Evaluación Interna: <b>escasez</b>, <b>elección</b>, <b>eficiencia</b>, <b>equidad</b>, <b>bienestar económico</b>, <b>sostenibilidad</b>, <b>cambio</b>, <b>interdependencia</b> e <b>intervención</b>.",
+    "Son «lentes» para mirar cualquier noticia económica. Un aumento del precio del combustible, por ejemplo, se puede analizar desde la <b>escasez</b> (petróleo), la <b>equidad</b> (afecta más a los pobres) o la <b>intervención</b> (subsidios de Petropar)."
+   ]
+  }
+ ],
+ "ejemplo": {
+  "t": "Ejemplo de Paraguay: el precio del pasaje y el ceteris paribus",
+  "p": [
+   "Supongamos que sube el pasaje del ómnibus en Asunción y, al mismo tiempo, baja el precio de las motos. Si cae la cantidad de pasajeros, ¿fue por el pasaje o por las motos?",
+   "Con el supuesto <b>ceteris paribus</b>, el economista separa los efectos: primero analiza la suba del pasaje dejando todo lo demás igual (un movimiento a lo largo de la demanda) y después el abaratamiento de las motos (un desplazamiento de la demanda de ómnibus, porque la moto es un sustituto).",
+   "En la realidad, los dos cambios ocurren juntos. Por eso los modelos ayudan a pensar con orden, pero los datos son necesarios para saber cuál efecto pesó más."
+  ]
+ },
+ "errores": [
+  "Creer que un modelo es falso porque simplifica: todo modelo simplifica a propósito.",
+  "Olvidar el supuesto ceteris paribus al explicar un diagrama.",
+  "Dar opiniones sin justificarlas con teoría y evidencia en la parte de evaluación."
+ ],
+ "check": [
+  {"q": "¿Qué significa ceteris paribus?", "o": ["Que todo cambia a la vez", "Que lo demás se mantiene constante", "Que el mercado es libre", "Que el gobierno no interviene"], "a": 1, "e": "Permite aislar el efecto de una variable suponiendo que las demás no cambian."},
+  {"q": "¿Qué economista defendió el aumento del gasto público para salir de una depresión?", "o": ["Adam Smith", "John Maynard Keynes", "Milton Friedman", "Karl Marx"], "a": 1, "e": "Keynes sostuvo que, con mucho desempleo, el gobierno debe aumentar la demanda."},
+  {"q": "«El Estado debería subsidiar el pasaje estudiantil» es una afirmación…", "o": ["Positiva", "Normativa", "Macroeconómica", "Falsa"], "a": 1, "e": "Expresa un juicio de valor («debería»)."},
+  {"q": "¿Cuál NO es uno de los nueve conceptos clave del curso?", "o": ["Equidad", "Sostenibilidad", "Rentabilidad", "Interdependencia"], "a": 2, "e": "Los nueve son escasez, elección, eficiencia, equidad, bienestar económico, sostenibilidad, cambio, interdependencia e intervención."}
+ ],
+ "kc": { "t": "Concepto clave: cambio", "p": "Las ideas económicas cambian cuando cambia la realidad: la Gran Depresión dio lugar a Keynes y la inflación de los años 70 a los monetaristas. Pregunta para pensar: ¿qué hechos recientes (la pandemia, el cambio climático) están cambiando hoy la forma de pensar la economía?" },
+ "atlas": [],
+ "labs": ["flow"],
+ "dias": {}
+}

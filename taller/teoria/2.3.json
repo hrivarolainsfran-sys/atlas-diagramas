@@ -1,0 +1,77 @@
+{
+ "id": "2.3",
+ "titulo": "Equilibrio del mercado competitivo",
+ "intro": "En el Mercado 4 nadie fija el precio de los tomates por decreto, y aun así los precios se ajustan solos: bajan cuando sobra y suben cuando falta. Este subtema explica cómo la oferta y la demanda llegan a un <b>equilibrio</b> y por qué ese resultado puede ser eficiente.",
+ "objetivos": [
+  "Explicar el equilibrio de mercado y los desequilibrios (excedente y escasez).",
+  "Analizar los cambios del equilibrio cuando se desplazan la demanda o la oferta.",
+  "Explicar las funciones del mecanismo de precios: señal, incentivo y racionamiento.",
+  "Definir el excedente del consumidor y del productor, y la eficiencia en la asignación."
+ ],
+ "secciones": [
+  {
+   "h": "1. El equilibrio y los desequilibrios",
+   "p": [
+    "El <b>equilibrio</b> está donde se cortan la demanda y la oferta: a ese precio (Pe) la cantidad demandada es igual a la cantidad ofrecida (Qe). No hay presión para que el precio cambie.",
+    "Si el precio está <b>por encima</b> del equilibrio, hay un <b>excedente</b> (exceso de oferta): los vendedores no pueden vender todo y bajan el precio hasta Pe.",
+    "Si el precio está <b>por debajo</b>, hay <b>escasez</b> (exceso de demanda): faltan productos, los compradores compiten y el precio sube hasta Pe."
+   ],
+   "dia": ["desequilibrio"]
+  },
+  {
+   "h": "2. Cambios del equilibrio",
+   "p": [
+    "<b>Aumenta la demanda</b> (D a la derecha): suben el precio y la cantidad de equilibrio.",
+    "<b>Disminuye la demanda</b>: bajan el precio y la cantidad.",
+    "<b>Aumenta la oferta</b> (O a la derecha): baja el precio y sube la cantidad.",
+    "<b>Disminuye la oferta</b>: sube el precio y baja la cantidad.",
+    "Para explicarlo en el examen, sigue siempre cuatro pasos: <b>qué curva se mueve y por qué</b>, hacia dónde, qué desequilibrio aparece al precio inicial y cómo se llega al nuevo equilibrio (P₁ → P₂, Q₁ → Q₂)."
+   ]
+  },
+  {
+   "h": "3. Las funciones del mecanismo de precios",
+   "p": [
+    "<b>Señal:</b> el precio informa. Si sube el precio del maíz, comunica a los productores que hay más demanda.",
+    "<b>Incentivo:</b> el precio motiva. Un precio más alto incentiva a producir más y a buscar formas más baratas de hacerlo.",
+    "<b>Racionamiento:</b> el precio reparte lo escaso. Si un bien escasea, el precio sube y lo compran quienes más lo valoran (o quienes pueden pagarlo).",
+    "Así, sin un planificador central, el mercado decide qué, cómo y para quién producir: es la «mano invisible» de Adam Smith."
+   ]
+  },
+  {
+   "h": "4. Excedentes y eficiencia",
+   "p": [
+    "El <b>excedente del consumidor</b> es la diferencia entre lo que los consumidores estarían dispuestos a pagar y lo que pagan: el área <b>debajo de la demanda y encima del precio</b> (amarillo).",
+    "El <b>excedente del productor</b> es la diferencia entre el precio que reciben los productores y el mínimo que estarían dispuestos a aceptar: el área <b>encima de la oferta y debajo del precio</b> (verde).",
+    "En el equilibrio competitivo, la suma de ambos (el <b>bienestar social</b>) es máxima. Se logra la <b>eficiencia en la asignación</b>: el beneficio marginal social es igual al costo marginal social (BMgS = CMgS)."
+   ],
+   "dia": ["excedentes"]
+  }
+ ],
+ "ejemplo": {
+  "t": "Ejemplo de Paraguay: el tomate en invierno",
+  "p": [
+   "En los meses de frío, las heladas reducen la producción de tomate en Paraguay y parte se importa. La <b>oferta se desplaza a la izquierda</b>.",
+   "Al precio anterior aparece <b>escasez</b>: los comerciantes del Mercado de Abasto no alcanzan a cubrir los pedidos y el precio sube. El precio alto <b>raciona</b> el tomate (algunas familias compran menos) y es una <b>señal e incentivo</b> para que más productores usen invernaderos.",
+   "Cuando llega la nueva cosecha, la oferta vuelve a aumentar y el precio baja. Es el mecanismo de precios en acción, sin que nadie lo decrete."
+  ],
+  "link": ["lab-shifts", "Practicar con «¿Qué curva se mueve?»"]
+ },
+ "errores": [
+  "Mover las dos curvas cuando la noticia afecta solo a una.",
+  "Explicar el nuevo equilibrio sin el paso intermedio del desequilibrio (escasez o excedente).",
+  "Confundir el excedente del productor (un área) con el excedente de oferta (una cantidad que sobra)."
+ ],
+ "check": [
+  {"q": "El precio está por encima del equilibrio. ¿Qué ocurre?", "o": ["Escasez y el precio sube", "Excedente de oferta y el precio baja", "Equilibrio", "La demanda se desplaza"], "a": 1, "e": "Se ofrece más de lo que se demanda; los vendedores bajan el precio."},
+  {"q": "Aumenta la demanda de un bien y la oferta no cambia. El nuevo equilibrio tiene…", "o": ["Precio y cantidad más altos", "Precio más bajo y cantidad más alta", "Precio más alto y cantidad más baja", "Igual precio y más cantidad"], "a": 0, "e": "Al desplazarse la demanda a la derecha, suben P y Q."},
+  {"q": "¿Qué función del precio describe «un precio alto motiva a producir más»?", "o": ["Señal", "Incentivo", "Racionamiento", "Equilibrio"], "a": 1, "e": "El incentivo es la motivación a cambiar el comportamiento."},
+  {"q": "El excedente del consumidor es el área…", "o": ["Encima de la oferta y debajo del precio", "Debajo de la demanda y encima del precio", "Entre las dos curvas a la derecha del equilibrio", "Debajo de la oferta"], "a": 1, "e": "Es la diferencia entre lo que estarían dispuestos a pagar y lo que pagan."}
+ ],
+ "kc": { "t": "Concepto clave: eficiencia", "p": "En un mercado competitivo, el equilibrio maximiza el bienestar: se produce justo la cantidad en la que lo que vale la última unidad para los consumidores es igual a lo que cuesta producirla. Pregunta para pensar: ¿un resultado eficiente es siempre justo? ¿Qué pasa con quien no puede pagar el precio de equilibrio de un alimento básico?" },
+ "atlas": [["equilibrio", "Equilibrio y desequilibrios"], ["equilibrio-cambio", "Cambio del equilibrio"], ["excedentes", "Excedente del consumidor y del productor"], ["eficiencia", "Eficiencia en la asignación"]],
+ "labs": ["shifts", "surplus", "draw"],
+ "dias": {
+  "desequilibrio": { "t": "Precio por encima del equilibrio: excedente", "x": "Cantidad", "y": "Precio", "l": [{ "a": [0.3, 9.7], "b": [9.5, 0.5], "c": "d", "t": "D" }, { "a": [0.3, 1.24], "b": [10, 9], "c": "s", "t": "O" }, { "a": [0, 7], "b": [9, 7], "c": "k", "dash": true, "t": "P₁", "lp": [9.1, 7.1] }], "pt": [{ "p": [3, 7], "lx": "Qd" }, { "p": [7.5, 7], "lx": "Qo" }, { "p": [5, 5], "t": "E", "ly": "Pe" }], "n": [{ "p": [3.6, 7.5], "t": "excedente" }] },
+  "excedentes": { "t": "Excedente del consumidor y del productor", "x": "Cantidad", "y": "Precio", "area": [{ "p": [[0, 10], [0, 5], [5, 5]], "c": "cs" }, { "p": [[0, 1], [0, 5], [5, 5]], "c": "ps" }], "l": [{ "a": [0, 10], "b": [9.5, 0.5], "c": "d", "t": "D = BMgS" }, { "a": [0, 1], "b": [10, 9], "c": "s", "t": "O = CMgS" }], "pt": [{ "p": [5, 5], "lx": "Qe", "ly": "Pe" }], "n": [{ "p": [0.6, 6.2], "t": "exc. consumidor" }, { "p": [0.6, 3.7], "t": "exc. productor" }] }
+ }
+}

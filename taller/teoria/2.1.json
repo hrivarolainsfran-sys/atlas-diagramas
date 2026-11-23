@@ -1,0 +1,74 @@
+{
+ "id": "2.1",
+ "titulo": "Teoría de la demanda",
+ "intro": "¿Por qué compramos más chipa cuando está en oferta? ¿Por qué se venden más ventiladores en diciembre? La <b>demanda</b> explica cómo deciden los consumidores cuánto comprar y qué hace cambiar esa decisión.",
+ "objetivos": [
+  "Definir la demanda y explicar la ley de la demanda.",
+  "Distinguir un movimiento a lo largo de la curva de demanda y un desplazamiento de la curva.",
+  "Explicar los determinantes de la demanda (factores distintos del precio).",
+  "Relacionar la demanda individual con la demanda de mercado."
+ ],
+ "secciones": [
+  {
+   "h": "1. Qué es la demanda",
+   "p": [
+    "La <b>demanda</b> es la cantidad de un bien que los consumidores están <b>dispuestos y en condiciones</b> de comprar a cada precio, en un período determinado. No alcanza con querer el bien: hay que poder pagarlo.",
+    "La <b>demanda de mercado</b> es la suma de las demandas individuales de todos los consumidores a cada precio."
+   ]
+  },
+  {
+   "h": "2. La ley de la demanda",
+   "p": [
+    "<b>Ceteris paribus, cuando sube el precio de un bien, baja la cantidad demandada</b>, y viceversa. Por eso la curva de demanda tiene pendiente negativa.",
+    "Hay tres razones: el <b>efecto ingreso</b> (si sube el precio, con el mismo dinero alcanza para menos), el <b>efecto sustitución</b> (el bien se vuelve más caro que sus sustitutos) y la <b>utilidad marginal decreciente</b> (cada unidad adicional da menos satisfacción, así que solo se compra más si el precio baja)."
+   ]
+  },
+  {
+   "h": "3. Movimiento a lo largo de la curva y desplazamiento",
+   "p": [
+    "Si cambia el <b>precio del propio bien</b>, nos movemos <b>a lo largo</b> de la curva: cambia la <b>cantidad demandada</b> (de A a B).",
+    "Si cambia <b>otro factor</b> (ingreso, gustos, precio de otros bienes), la <b>curva entera se desplaza</b>: cambia la <b>demanda</b>. A la derecha (D₁ → D₂) si aumenta; a la izquierda si disminuye."
+   ],
+   "dia": ["mov", "desp"],
+   "caja": { "t": "Vocabulario exacto", "html": "Cambio de precio → «cambia la <b>cantidad demandada</b>». Cambio de otro factor → «cambia la <b>demanda</b>» (se desplaza la curva)." }
+  },
+  {
+   "h": "4. Determinantes de la demanda",
+   "p": [
+    "<b>Ingreso:</b> si sube el ingreso, aumenta la demanda de los bienes normales y disminuye la de los bienes inferiores.",
+    "<b>Precio de bienes relacionados:</b> si sube el precio de un <b>sustituto</b> (la carne vacuna), aumenta la demanda del otro (el pollo). Si sube el precio de un <b>complementario</b> (el combustible), disminuye la demanda del otro (los autos).",
+    "<b>Gustos y preferencias:</b> modas, publicidad, información sobre la salud.",
+    "<b>Número de consumidores:</b> crecimiento de la población, turismo (más demanda de hoteles en Encarnación en temporada de playa).",
+    "<b>Expectativas:</b> si se espera que el precio suba la semana próxima, la demanda de hoy aumenta.",
+    "<b>Estacionalidad y clima:</b> más demanda de helados y ventiladores en verano."
+   ]
+  }
+ ],
+ "ejemplo": {
+  "t": "Ejemplo de Paraguay: la carne vacuna y el pollo",
+  "p": [
+   "Cuando sube el precio de la carne vacuna en los supermercados, muchas familias compran menos carne (<b>movimiento a lo largo</b> de su curva de demanda) y más pollo.",
+   "Para el mercado del pollo, el cambio no está en su propio precio, sino en el de un <b>sustituto</b>: la curva de demanda de pollo se <b>desplaza a la derecha</b>. Si la oferta de pollo no cambia, su precio de equilibrio también sube.",
+   "En una respuesta de examen, conviene dibujar <b>los dos mercados</b> y explicar por qué en uno hay movimiento y en el otro desplazamiento."
+  ],
+  "dia": "desp"
+ },
+ "errores": [
+  "Decir «sube el precio y se desplaza la demanda»: un cambio del propio precio es un <b>movimiento</b> a lo largo de la curva.",
+  "Desplazar la demanda hacia arriba en lugar de a la derecha: piensa en cantidades, a la derecha es «más demanda a cada precio».",
+  "Confundir sustitutos con complementarios."
+ ],
+ "check": [
+  {"q": "Baja el precio de las entradas de cine. ¿Qué pasa en el mercado de las entradas?", "o": ["La demanda se desplaza a la derecha", "Aumenta la cantidad demandada (movimiento a lo largo de la curva)", "La demanda se desplaza a la izquierda", "No cambia nada"], "a": 1, "e": "Es un cambio del propio precio: movimiento a lo largo de la curva."},
+  {"q": "Sube el precio del combustible. ¿Qué pasa con la demanda de autos?", "o": ["Aumenta, porque son sustitutos", "Disminuye, porque son complementarios", "No cambia", "Aumenta la cantidad demandada"], "a": 1, "e": "Autos y combustible se usan juntos: son complementarios."},
+  {"q": "¿Cuál de estos factores desplaza la demanda de helados a la derecha?", "o": ["Baja el precio de los helados", "Llega una ola de calor", "Sube el costo de la leche", "Aumentan los impuestos a las heladerías"], "a": 1, "e": "El clima cambia los gustos y desplaza la curva; los costos afectan la oferta."},
+  {"q": "Aumenta el ingreso de las familias y cae la demanda de un bien. Ese bien es…", "o": ["Normal", "Inferior", "De lujo", "Complementario"], "a": 1, "e": "La demanda de un bien inferior disminuye cuando sube el ingreso."}
+ ],
+ "kc": { "t": "Concepto clave: elección", "p": "Cada curva de demanda resume millones de elecciones de los consumidores, que comparan precios, gustos e ingresos. Pregunta para pensar: ¿siempre elegimos de forma racional, o la publicidad y los hábitos también deciden por nosotros?" },
+ "atlas": [["demanda-mov", "Movimiento y desplazamiento de D"]],
+ "labs": ["shifts", "draw"],
+ "dias": {
+  "mov": { "t": "Movimiento a lo largo de la demanda", "x": "Cantidad", "y": "Precio", "l": [{ "a": [0.8, 9.2], "b": [9.2, 0.8], "c": "d", "t": "D" }], "pt": [{ "p": [4, 6], "lx": "Q₁", "ly": "P₁", "t": "A" }, { "p": [6, 4], "lx": "Q₂", "ly": "P₂", "t": "B" }], "ar": [[[4.4, 5.9], [5.7, 4.6]]] },
+  "desp": { "t": "Desplazamiento de la demanda", "x": "Cantidad", "y": "Precio", "l": [{ "a": [0.8, 9.2], "b": [9.2, 0.8], "c": "d", "t": "D₁" }, { "a": [3, 9.2], "b": [9.6, 2.6], "c": "d", "t": "D₂" }], "pt": [{ "p": [4, 6], "lx": "Q₁", "ly": "P" }, { "p": [6.2, 6], "lx": "Q₂" }], "ar": [[[4.5, 6.6], [5.9, 6.6]]] }
+ }
+}

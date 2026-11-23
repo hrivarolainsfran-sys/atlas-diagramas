@@ -1,0 +1,61 @@
+{
+ "id": "2.9",
+ "titulo": "Bienes públicos",
+ "intro": "Nadie vende entradas para usar el alumbrado de la calle ni para estar protegido por la defensa nacional. Si una empresa quisiera cobrar por eso, la gente lo usaría igual sin pagar. Por eso hay bienes que el mercado <b>no produce</b> aunque la sociedad los necesite: los <b>bienes públicos</b>.",
+ "objetivos": [
+  "Definir los bienes públicos con las características de no rivalidad y no exclusión.",
+  "Distinguir bienes públicos, privados, de uso común y de club.",
+  "Explicar el problema del polizón (free rider) y por qué el mercado falla.",
+  "Evaluar las formas de provisión de bienes públicos."
+ ],
+ "secciones": [
+  {
+   "h": "1. Rivalidad y exclusión",
+   "p": [
+    "Un bien es <b>rival</b> si su consumo por una persona reduce lo que queda para otra (una empanada). Es <b>no rival</b> si muchos pueden usarlo a la vez sin reducirlo (una señal de radio).",
+    "Un bien es <b>excluible</b> si se puede impedir que lo use quien no paga (un partido en un estadio con entrada). Es <b>no excluible</b> si no se puede (los fuegos artificiales de Año Nuevo vistos desde la calle).",
+    "Combinando las dos características se obtienen cuatro tipos de bienes:"
+   ],
+   "caja": { "t": "Clasificación de los bienes", "html": "<b>Privados</b>: rivales y excluibles (ropa, comida).<br><b>Públicos puros</b>: no rivales y no excluibles (defensa, alumbrado público, faros).<br><b>De uso común</b>: rivales y no excluibles (peces, bosques), vistos en 2.8.<br><b>De club</b>: no rivales y excluibles (televisión por cable, una ruta con peaje sin congestión)." }
+  },
+  {
+   "h": "2. El problema del polizón",
+   "p": [
+    "Como un bien público es no excluible, cada persona puede beneficiarse sin pagar: es un <b>polizón</b> (free rider). Si todos piensan así, nadie paga, y ninguna empresa privada tiene incentivo para producirlo.",
+    "El resultado es una <b>falla de mercado</b> extrema: el mercado no lo produce o lo produce muy poco, aunque su beneficio social sea grande. Es un caso de <b>mercado inexistente</b>."
+   ]
+  },
+  {
+   "h": "3. Cómo se proveen",
+   "p": [
+    "<b>Provisión directa del Estado</b>, financiada con impuestos: defensa, alumbrado, señalización vial, control de inundaciones.",
+    "<b>Contratación de empresas privadas</b> por el Estado (el Estado paga, la empresa construye o mantiene).",
+    "<b>Alianzas público-privadas (APP)</b> para infraestructura: en Paraguay se usaron para ampliar rutas como la Ruta 2 y 7.",
+    "Para evaluar: el Estado debe decidir <b>cuánto</b> producir sin señales de precio, con presupuesto limitado (costo de oportunidad) y con riesgo de ineficiencia o corrupción."
+   ]
+  }
+ ],
+ "ejemplo": {
+  "t": "Ejemplo de Paraguay: las defensas contra inundaciones en Asunción",
+  "p": [
+   "Cuando el río Paraguay crece, los barrios ribereños de Asunción se inundan. Una <b>defensa costera</b> protege a todos los que viven detrás de ella, paguen o no: es <b>no excluible</b>. Y proteger a una familia más no reduce la protección de las demás: es <b>no rival</b>.",
+   "Ninguna empresa podría cobrarles a los vecinos uno por uno: muchos actuarían como <b>polizones</b>. Por eso estas obras las financia y decide el Estado, con impuestos o préstamos internacionales.",
+   "Para evaluar: ¿quién decide qué barrios se protegen primero? ¿Es equitativo que todo el país pague por una obra que beneficia a una zona?"
+  ]
+ },
+ "errores": [
+  "Llamar «bien público» a cualquier bien que provee el Estado: la educación pública es rival y excluible, así que es un bien meritorio, no un bien público.",
+  "Confundir bienes públicos (no rivales) con recursos comunes (rivales).",
+  "Olvidar explicar el problema del polizón como causa de la falla de mercado."
+ ],
+ "check": [
+  {"q": "Un bien público es…", "o": ["Rival y excluible", "No rival y no excluible", "Rival y no excluible", "No rival y excluible"], "a": 1, "e": "Las dos características juntas generan el problema del polizón."},
+  {"q": "¿Cuál es un bien público puro?", "o": ["Un colectivo", "El alumbrado de una calle", "Una consulta médica", "Un libro"], "a": 1, "e": "Nadie puede ser excluido y el uso de uno no reduce el de otro."},
+  {"q": "El problema del polizón significa que…", "o": ["Las personas usan el bien sin pagar, y el mercado no lo produce", "Los bienes se agotan", "El Estado cobra demasiado", "Hay demasiados productores"], "a": 0, "e": "Sin forma de cobrar, no hay incentivo privado para producir."},
+  {"q": "La televisión por cable es un bien…", "o": ["Público", "De club", "De uso común", "Privado puro"], "a": 1, "e": "Es excluible (se paga la suscripción) y no rival."}
+ ],
+ "kc": { "t": "Concepto clave: intervención", "p": "Sin intervención del Estado, muchos bienes que todos necesitamos no existirían. Pero el Estado tiene que decidir cuánto producir sin precios que lo guíen. Pregunta para pensar: ¿qué bienes públicos le faltan a tu barrio o a tu ciudad, y cómo deberían financiarse?" },
+ "atlas": [["nota-bienes-publicos", "Bienes públicos y recursos comunes"]],
+ "labs": ["goods"],
+ "dias": {}
+}

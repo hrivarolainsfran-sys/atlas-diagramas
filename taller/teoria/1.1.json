@@ -1,0 +1,281 @@
+{
+ "id": "1.1",
+ "titulo": "Introducción a la economía",
+ "intro": "Cada día elegimos: qué comprar con la mesada, cuánto tiempo estudiar, si ir en ómnibus o en moto. Las familias, las empresas y el gobierno también eligen, porque <b>no alcanza para todo</b>. La economía estudia cómo se toman esas decisiones y qué consecuencias tienen.",
+ "objetivos": [
+  "Explicar la escasez, la elección y el costo de oportunidad.",
+  "Distinguir microeconomía y macroeconomía, y economía positiva y normativa.",
+  "Identificar los factores de producción y sus recompensas.",
+  "Usar la curva de posibilidades de producción (CPP) para mostrar escasez, elección, costo de oportunidad, eficiencia y crecimiento.",
+  "Describir el flujo circular del ingreso y los sistemas económicos."
+ ],
+ "secciones": [
+  {
+   "h": "1. Escasez, elección y costo de oportunidad",
+   "p": [
+    "La <b>escasez</b> es el problema económico básico: los recursos son <b>limitados</b> y las necesidades y deseos de las personas son <b>ilimitados</b>. Como no se puede tener todo, hay que <b>elegir</b>.",
+    "Toda elección tiene un <b>costo de oportunidad</b>: el valor de la <b>mejor alternativa</b> a la que se renuncia. Si el Estado usa un terreno para construir un hospital, el costo de oportunidad es, por ejemplo, la escuela que se podría haber construido allí.",
+    "Las tres preguntas económicas que toda sociedad debe responder son: <b>¿qué producir?, ¿cómo producir? y ¿para quién producir?</b>"
+   ],
+   "caja": {
+    "t": "Clave",
+    "html": "El costo de oportunidad no es todo lo que se deja de lado, sino solo la <b>siguiente mejor alternativa</b>."
+   }
+  },
+  {
+   "h": "2. Los factores de producción",
+   "p": [
+    "Para producir bienes y servicios se usan cuatro factores, cada uno con su recompensa:",
+    "<b>Tierra</b> (recursos naturales: suelo, agua, ríos para la energía de Itaipú) → <b>renta</b>.<br><b>Trabajo</b> (el esfuerzo físico y mental de las personas) → <b>salarios</b>.<br><b>Capital</b> (bienes hechos para producir otros bienes: tractores, computadoras, silos) → <b>interés</b>.<br><b>Capacidad empresarial</b> (organizar los otros factores y asumir riesgos) → <b>beneficio</b>."
+   ]
+  },
+  {
+   "h": "3. La curva de posibilidades de producción (CPP)",
+   "p": [
+    "La <b>CPP</b> muestra las combinaciones máximas de dos bienes que una economía puede producir usando <b>todos</b> sus recursos de forma <b>eficiente</b> y con una tecnología dada.",
+    "<b>Puntos sobre la curva (A, B):</b> producción eficiente. <b>Punto dentro (C):</b> recursos desempleados o mal usados. <b>Punto fuera (D):</b> inalcanzable con los recursos actuales.",
+    "Pasar de A a B significa producir más de un bien y menos del otro: lo que se deja de producir es el <b>costo de oportunidad</b>. Si la CPP es curva hacia afuera, el costo de oportunidad es <b>creciente</b>, porque los recursos no sirven igual para producir los dos bienes.",
+    "La CPP se <b>desplaza hacia afuera</b> (crecimiento económico) cuando aumentan la cantidad o la calidad de los factores: más capital, mejor educación, nueva tecnología."
+   ],
+   "dia": [
+    "cpp"
+   ]
+  },
+  {
+   "h": "4. Microeconomía y macroeconomía; positiva y normativa",
+   "p": [
+    "La <b>microeconomía</b> estudia a los consumidores, las empresas y los mercados individuales (el precio de la carne, el mercado del pan). La <b>macroeconomía</b> estudia la economía en su conjunto (inflación, desempleo, crecimiento del PIB).",
+    "La <b>economía positiva</b> describe y se puede comprobar con datos: «si sube el salario mínimo, algunas empresas contratan menos». La <b>economía normativa</b> expresa juicios de valor: «el salario mínimo debería subir»."
+   ]
+  },
+  {
+   "h": "5. El flujo circular del ingreso",
+   "p": [
+    "Los hogares ofrecen factores de producción a las empresas y reciben ingresos (salarios, renta, interés, beneficio). Con ese ingreso compran bienes y servicios a las empresas, que así obtienen ingresos para volver a pagar a los factores. El dinero circula en sentido contrario a los bienes y los factores."
+   ],
+   "flujo": [
+    "Los hogares ofrecen trabajo, tierra, capital y capacidad empresarial",
+    "Las empresas pagan salarios, renta, interés y beneficios",
+    "Los hogares gastan su ingreso en bienes y servicios",
+    "Las empresas venden y vuelven a contratar factores"
+   ],
+   "p2": [
+    "En una economía real hay <b>filtraciones</b> (ahorro, impuestos, importaciones) que salen del flujo e <b>inyecciones</b> (inversión, gasto público, exportaciones) que entran. Si las inyecciones superan a las filtraciones, la economía crece."
+   ]
+  },
+  {
+   "h": "6. Sistemas económicos",
+   "p": [
+    "<b>Economía de libre mercado:</b> las decisiones las toman los consumidores y las empresas a través de los precios. Es eficiente, pero puede generar desigualdad y no produce algunos bienes necesarios.",
+    "<b>Economía planificada:</b> el Estado decide qué, cómo y para quién producir. Puede reducir la desigualdad, pero suele ser ineficiente y con poca variedad.",
+    "<b>Economía mixta:</b> combina mercado y Estado. Es la de casi todos los países, incluido Paraguay: la mayoría de los bienes los produce el sector privado, y el Estado provee salud, educación y regula los mercados."
+   ]
+  }
+ ],
+ "ejemplo": {
+  "t": "Ejemplo de Paraguay: soja o ganado en el Chaco",
+  "p": [
+   "Un productor del Chaco tiene una cantidad fija de tierra. Puede dedicarla a la ganadería o a la agricultura: es un problema de <b>escasez y elección</b>.",
+   "Si destina más hectáreas a la soja, produce menos carne: el ganado que deja de criar es su <b>costo de oportunidad</b>. Como no toda la tierra sirve igual para los dos usos, ese costo es <b>creciente</b>: los primeros campos que pasa a soja son los más aptos y los siguientes rinden cada vez menos.",
+   "Si el país invierte en riego, caminos y mejores semillas, la <b>CPP se desplaza hacia afuera</b>: se puede producir más de ambos bienes. Pero esa inversión también tiene un costo de oportunidad: los recursos que se dejan de usar en otra cosa."
+  ],
+  "dia": "cpp",
+  "link": [
+   "lab-cpp",
+   "Practicar con el laboratorio de la CPP"
+  ]
+ },
+ "errores": [
+  "Definir el costo de oportunidad como «el precio que se paga»: es la <b>mejor alternativa</b> a la que se renuncia.",
+  "Ubicar el desempleo <b>fuera</b> de la CPP: el desempleo es un punto <b>dentro</b> de la curva.",
+  "Confundir economía positiva (comprobable) con normativa (juicio de valor)."
+ ],
+ "check": [
+  {
+   "q": "Una estudiante elige estudiar en vez de trabajar por la tarde, donde ganaría Gs. 80.000. ¿Cuál es su costo de oportunidad?",
+   "o": [
+    "Las horas de estudio",
+    "Los Gs. 80.000 que deja de ganar",
+    "El costo de los libros",
+    "No tiene costo de oportunidad"
+   ],
+   "a": 1,
+   "e": "El costo de oportunidad es la mejor alternativa a la que renuncia: el ingreso del trabajo."
+  },
+  {
+   "q": "Un punto dentro de la CPP indica…",
+   "o": [
+    "Producción eficiente",
+    "Recursos desempleados o mal usados",
+    "Crecimiento económico",
+    "Una combinación imposible"
+   ],
+   "a": 1,
+   "e": "Dentro de la curva la economía podría producir más de ambos bienes con los mismos recursos."
+  },
+  {
+   "q": "¿Cuál de estas afirmaciones es normativa?",
+   "o": [
+    "La inflación de Paraguay fue menor en 2024 que en 2022",
+    "Si baja la tasa de interés, aumenta la inversión",
+    "El gobierno debería gastar más en educación",
+    "El PIB mide la producción de un país"
+   ],
+   "a": 2,
+   "e": "«Debería» expresa un juicio de valor: no se puede comprobar con datos."
+  },
+  {
+   "q": "¿Qué desplaza la CPP hacia afuera?",
+   "o": [
+    "Un aumento del desempleo",
+    "Mejor tecnología y más capital",
+    "Producir más de un solo bien",
+    "Una sequía"
+   ],
+   "a": 1,
+   "e": "Más y mejores factores de producción, o mejor tecnología, aumentan la capacidad productiva."
+  }
+ ],
+ "kc": {
+  "t": "Concepto clave: escasez",
+  "p": "La escasez obliga a elegir en todos los niveles: una familia que decide entre ahorrar o comprar, un municipio que decide entre asfaltar o construir una plaza, un país que decide cómo usar el dinero de Itaipú. Pregunta para pensar: ¿qué costo de oportunidad tiene para Paraguay usar su energía para atraer industrias en lugar de exportarla?"
+ },
+ "atlas": [
+  [
+   "cpp",
+   "CPP"
+  ],
+  [
+   "cpp-costo",
+   "CPP: costo creciente y constante"
+  ],
+  [
+   "cpp-crecimiento",
+   "CPP y crecimiento"
+  ],
+  [
+   "flujo-circular",
+   "Flujo circular del ingreso"
+  ]
+ ],
+ "labs": [
+  "cpp",
+  "flow"
+ ],
+ "dias": {
+  "cpp": {
+   "t": "Curva de posibilidades de producción",
+   "x": "Carne",
+   "y": "Soja",
+   "l": [
+    {
+     "poly": [
+      [
+       0.3,
+       8
+      ],
+      [
+       2.5,
+       7.6
+      ],
+      [
+       4.5,
+       6.6
+      ],
+      [
+       6,
+       5.2
+      ],
+      [
+       7.2,
+       3.4
+      ],
+      [
+       7.9,
+       1.6
+      ],
+      [
+       8.1,
+       0.3
+      ]
+     ],
+     "c": "d",
+     "t": "CPP₁",
+     "lp": [
+      6.3,
+      2.0
+     ]
+    },
+    {
+     "poly": [
+      [
+       0.3,
+       9.4
+      ],
+      [
+       3,
+       8.9
+      ],
+      [
+       5.4,
+       7.6
+      ],
+      [
+       7.2,
+       5.6
+      ],
+      [
+       8.5,
+       3.4
+      ],
+      [
+       9.3,
+       1.2
+      ],
+      [
+       9.5,
+       0.3
+      ]
+     ],
+     "c": "d",
+     "dash": true,
+     "t": "CPP₂",
+     "lp": [
+      8.5,
+      4.8
+     ]
+    }
+   ],
+   "pt": [
+    {
+     "p": [
+      2.5,
+      7.6
+     ],
+     "t": "A"
+    },
+    {
+     "p": [
+      6,
+      5.2
+     ],
+     "t": "B"
+    },
+    {
+     "p": [
+      3,
+      3.5
+     ],
+     "t": "C"
+    },
+    {
+     "p": [
+      8.6,
+      7.6
+     ],
+     "t": "D"
+    }
+   ]
+  }
+ }
+}

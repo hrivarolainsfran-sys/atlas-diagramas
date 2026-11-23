@@ -1,0 +1,73 @@
+{
+ "id": "2.2",
+ "titulo": "Teoría de la oferta",
+ "intro": "Cuando el precio de la soja sube en Chicago, los productores paraguayos siembran más. Cuando una sequía arruina la cosecha, hay menos para vender. La <b>oferta</b> explica cuánto deciden producir y vender las empresas, y qué la hace cambiar.",
+ "objetivos": [
+  "Definir la oferta y explicar la ley de la oferta.",
+  "Distinguir un movimiento a lo largo de la curva de oferta y un desplazamiento.",
+  "Explicar los determinantes de la oferta.",
+  "Relacionar la oferta individual con la oferta de mercado."
+ ],
+ "secciones": [
+  {
+   "h": "1. Qué es la oferta",
+   "p": [
+    "La <b>oferta</b> es la cantidad de un bien que los productores están <b>dispuestos y en condiciones</b> de vender a cada precio, en un período determinado.",
+    "La <b>oferta de mercado</b> es la suma de las ofertas de todas las empresas a cada precio."
+   ]
+  },
+  {
+   "h": "2. La ley de la oferta",
+   "p": [
+    "<b>Ceteris paribus, cuando sube el precio de un bien, aumenta la cantidad ofrecida</b>. Por eso la curva de oferta tiene pendiente positiva.",
+    "Las razones: un precio más alto hace más <b>rentable</b> producir ese bien, atrae a <b>nuevos productores</b> y permite cubrir los <b>costos marginales crecientes</b> de producir unidades adicionales (más horas extra, tierras menos aptas)."
+   ]
+  },
+  {
+   "h": "3. Movimiento y desplazamiento de la oferta",
+   "p": [
+    "Un cambio en el <b>precio del propio bien</b> produce un <b>movimiento a lo largo</b> de la curva: cambia la <b>cantidad ofrecida</b>.",
+    "Un cambio en <b>otro factor</b> desplaza la curva entera: cambia la <b>oferta</b>. A la derecha (O₁ → O₂) si aumenta; a la izquierda si disminuye. Una oferta que se desplaza a la izquierda también se ve «más arriba»: a cada cantidad, los productores piden un precio mayor porque producir les cuesta más."
+   ],
+   "dia": ["desp"]
+  },
+  {
+   "h": "4. Determinantes de la oferta",
+   "p": [
+    "<b>Costos de producción:</b> si sube el precio de los insumos (combustible, fertilizantes, salarios), la oferta se desplaza a la izquierda.",
+    "<b>Tecnología:</b> una mejora tecnológica baja los costos y desplaza la oferta a la derecha (siembra directa, maquinaria de precisión).",
+    "<b>Precio de otros bienes que se podrían producir:</b> si sube el precio del maíz, algunos productores dejan la soja por el maíz (bienes en competencia).",
+    "<b>Número de productores:</b> más empresas en el mercado → más oferta.",
+    "<b>Expectativas de los productores:</b> si esperan precios más altos, pueden guardar la producción.",
+    "<b>Impuestos y subsidios:</b> un impuesto indirecto desplaza la oferta a la izquierda; un subsidio, a la derecha.",
+    "<b>Shocks de la naturaleza:</b> sequías, inundaciones o plagas reducen la oferta agrícola."
+   ]
+  }
+ ],
+ "ejemplo": {
+  "t": "Ejemplo de Paraguay: la sequía y la soja",
+  "p": [
+   "Paraguay es uno de los grandes exportadores de soja del mundo. En la campaña 2021–2022, una fuerte <b>sequía</b> redujo mucho la cosecha.",
+   "En el diagrama, la sequía <b>desplaza la oferta de soja a la izquierda</b> (O₁ → O₂): a cada precio, los productores tienen menos para vender. No es un movimiento a lo largo de la curva, porque la causa no es el precio sino un factor natural.",
+   "Para evaluar: como el precio de la soja se fija sobre todo en el mercado mundial, la caída de la oferta paraguaya no subió mucho el precio y los productores perdieron ingresos. La sequía también afectó la navegación por los ríos y el transporte de la producción."
+  ],
+  "dia": "desp"
+ },
+ "errores": [
+  "Mover la oferta cuando cambia algo de los consumidores (ingreso, gustos): eso afecta a la <b>demanda</b>.",
+  "Decir que una suba de costos «sube la oferta»: la oferta <b>disminuye</b> (se desplaza a la izquierda).",
+  "Confundir cantidad ofrecida (movimiento) con oferta (desplazamiento)."
+ ],
+ "check": [
+  {"q": "Sube el precio del gasoil. ¿Qué pasa con la oferta de pan?", "o": ["Se desplaza a la derecha", "Se desplaza a la izquierda", "Aumenta la cantidad ofrecida", "No cambia"], "a": 1, "e": "El gasoil es un costo (transporte, hornos): sube el costo y la oferta disminuye."},
+  {"q": "Una nueva semilla resistente a la sequía…", "o": ["Desplaza la oferta de soja a la derecha", "Desplaza la demanda de soja", "Mueve el punto a lo largo de la oferta", "Desplaza la oferta a la izquierda"], "a": 0, "e": "Es una mejora tecnológica: más producción a cada precio."},
+  {"q": "Sube el precio de la soja. ¿Qué pasa en el mercado de la soja?", "o": ["La oferta se desplaza a la derecha", "Aumenta la cantidad ofrecida", "La oferta se desplaza a la izquierda", "Baja la cantidad ofrecida"], "a": 1, "e": "Cambia el propio precio: es un movimiento a lo largo de la curva de oferta."},
+  {"q": "El gobierno da un subsidio a los productores de leche. La oferta de leche…", "o": ["Se desplaza a la derecha", "Se desplaza a la izquierda", "No cambia", "Se vuelve vertical"], "a": 0, "e": "El subsidio baja el costo de producir: aumenta la oferta."}
+ ],
+ "kc": { "t": "Concepto clave: cambio", "p": "La oferta cambia con la tecnología, el clima y los costos. Paraguay pasó en pocas décadas de una agricultura familiar a ser gran exportador de soja gracias a la tecnología. Pregunta para pensar: ¿qué pasará con la oferta agrícola si las sequías se vuelven más frecuentes por el cambio climático?" },
+ "atlas": [["oferta-mov", "Movimiento y desplazamiento de O"]],
+ "labs": ["shifts", "draw"],
+ "dias": {
+  "desp": { "t": "Disminución de la oferta", "x": "Cantidad", "y": "Precio", "l": [{ "a": [1, 1], "b": [9, 9], "c": "s", "t": "O₁" }, { "a": [0.6, 3], "b": [7, 9.4], "c": "s", "t": "O₂" }], "pt": [{ "p": [6, 6], "lx": "Q₁", "ly": "P" }, { "p": [3.6, 6], "lx": "Q₂" }], "ar": [[[5.6, 6.8], [4.1, 6.8]]] }
+ }
+}

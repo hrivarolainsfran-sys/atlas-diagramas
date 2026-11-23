@@ -1,0 +1,75 @@
+{
+ "id": "2.6",
+ "titulo": "Elasticidad precio de la oferta (EPO)",
+ "intro": "Si mañana sube mucho el precio del mango, ¿pueden los productores ofrecer más de inmediato? No: un árbol tarda años en dar frutos. En cambio, una fábrica de remeras puede sumar un turno. La <b>elasticidad precio de la oferta</b> mide qué tan rápido y cuánto pueden reaccionar los productores.",
+ "objetivos": [
+  "Definir y calcular la elasticidad precio de la oferta (EPO).",
+  "Interpretar los valores y los casos extremos.",
+  "Explicar los determinantes de la EPO.",
+  "Explicar por qué la oferta de productos primarios suele ser más inelástica que la de manufacturas."
+ ],
+ "secciones": [
+  {
+   "h": "1. Definición y cálculo",
+   "p": [
+    "La <b>elasticidad precio de la oferta (EPO)</b> mide la sensibilidad de la cantidad ofrecida ante un cambio en el precio del bien.",
+    "Como la oferta tiene pendiente positiva, la EPO es <b>positiva</b>. Ejemplo: el precio de los muebles sube 10 % y la cantidad ofrecida sube 15 % → EPO = 15 ÷ 10 = <b>1,5</b>."
+   ],
+   "caja": { "t": "Fórmula", "html": "EPO = %ΔQo ÷ %ΔP" }
+  },
+  {
+   "h": "2. Interpretación",
+   "p": [
+    "<b>Oferta elástica (EPO > 1):</b> la cantidad ofrecida cambia en mayor proporción que el precio. Los productores pueden aumentar la producción con facilidad.",
+    "<b>Oferta inelástica (EPO < 1):</b> la cantidad ofrecida cambia en menor proporción. Producir más es difícil o lento.",
+    "<b>Unitaria (EPO = 1):</b> cambian en la misma proporción. Cualquier oferta lineal que nace en el origen tiene EPO = 1.",
+    "<b>Perfectamente inelástica (EPO = 0):</b> oferta vertical, cantidad fija (las entradas de un estadio para un partido). <b>Perfectamente elástica (EPO = ∞):</b> oferta horizontal."
+   ],
+   "dia": ["elastica", "inelastica"]
+  },
+  {
+   "h": "3. Determinantes de la EPO",
+   "p": [
+    "<b>Tiempo:</b> es el más importante. En el corto plazo la oferta es inelástica; en el largo plazo las empresas pueden ampliar fábricas, plantar más o entrar al mercado, y la oferta es más elástica.",
+    "<b>Capacidad ociosa:</b> si las empresas tienen máquinas y trabajadores sin usar, pueden producir más rápido.",
+    "<b>Existencias (stock):</b> si el bien se puede almacenar, se responde a un aumento del precio sacando mercadería del depósito.",
+    "<b>Movilidad de los factores:</b> si es fácil pasar trabajadores y máquinas de un producto a otro, la oferta es más elástica.",
+    "<b>Tiempo de producción:</b> el ganado o los árboles frutales tardan años; un producto industrial, días."
+   ]
+  },
+  {
+   "h": "4. Productos primarios y manufacturas",
+   "p": [
+    "La oferta de los <b>productos primarios</b> (soja, carne, café) suele ser <b>inelástica</b> a corto plazo: dependen del ciclo de cultivo, del clima y no se pueden aumentar rápido. Además, su demanda también es inelástica.",
+    "Por eso, cuando cambia la demanda mundial, sus precios <b>varían mucho</b>, y los países que dependen de exportarlos tienen ingresos inestables. Las manufacturas tienen una oferta más elástica y precios más estables."
+   ]
+  }
+ ],
+ "ejemplo": {
+  "t": "Ejemplo de Paraguay: el ganado y el precio de la carne",
+  "p": [
+   "Cuando sube el precio internacional de la carne, los frigoríficos paraguayos quieren exportar más. Pero criar un novillo hasta el peso de faena lleva años: la oferta de ganado es muy <b>inelástica a corto plazo</b>.",
+   "A corto plazo, el aumento del precio produce poco aumento de la cantidad, y a veces los productores retienen vientres para criar más, lo que reduce aún más la oferta inmediata.",
+   "A largo plazo, con más tiempo para ampliar los rodeos, la oferta se vuelve <b>más elástica</b>. Esta diferencia ayuda a entender por qué los precios de la carne suben y bajan tanto."
+  ],
+  "dia": "inelastica"
+ },
+ "errores": [
+  "Escribir la EPO con signo negativo: la oferta tiene pendiente positiva.",
+  "Olvidar el tiempo como determinante principal.",
+  "Confundir la EPO con la EPD en el diagrama."
+ ],
+ "check": [
+  {"q": "El precio sube 20 % y la cantidad ofrecida sube 10 %. La oferta es…", "o": ["Elástica (1,5)", "Inelástica (0,5)", "Unitaria", "Perfectamente elástica"], "a": 1, "e": "EPO = 10 ÷ 20 = 0,5 < 1."},
+  {"q": "¿Qué hace más elástica la oferta?", "o": ["Que el producto tarde años en producirse", "Tener capacidad ociosa y existencias", "Un período muy corto", "Factores de producción poco móviles"], "a": 1, "e": "Con capacidad ociosa y stock, se puede ofrecer más rápido."},
+  {"q": "¿Por qué varían tanto los precios de los productos primarios?", "o": ["Porque su oferta y su demanda son inelásticas", "Porque su oferta es perfectamente elástica", "Porque no tienen demanda", "Porque el gobierno los fija"], "a": 0, "e": "Con curvas inelásticas, un cambio en la demanda o la oferta produce grandes cambios de precio."},
+  {"q": "Las entradas de un partido en un estadio lleno tienen una oferta…", "o": ["Perfectamente elástica", "Perfectamente inelástica", "Unitaria", "Elástica"], "a": 1, "e": "La cantidad está fija por la capacidad del estadio."}
+ ],
+ "kc": { "t": "Concepto clave: cambio", "p": "La elasticidad de la oferta depende del tiempo: con más tiempo, las empresas se adaptan. Pregunta para pensar: ¿cómo puede un país hacer más elástica la oferta de sus productos para aprovechar los buenos precios internacionales?" },
+ "atlas": [["epo-rel", "Oferta elástica e inelástica"], ["epo-const", "EPO constante"]],
+ "labs": ["pes"],
+ "dias": {
+  "elastica": { "t": "Oferta relativamente elástica", "x": "Cantidad", "y": "Precio", "l": [{ "a": [0.8, 2.32], "b": [9.5, 5.8], "c": "s", "t": "O" }], "pt": [{ "p": [5, 4], "lx": "Q₁", "ly": "P₁" }, { "p": [7.5, 5], "lx": "Q₂", "ly": "P₂" }], "n": [{ "p": [5.3, 2.4], "t": "ΔQ grande" }] },
+  "inelastica": { "t": "Oferta relativamente inelástica", "x": "Cantidad", "y": "Precio", "l": [{ "a": [4, 1], "b": [6.5, 8.5], "c": "s", "t": "O" }], "pt": [{ "p": [5, 4], "lx": "Q₁", "ly": "P₁", "lxa": "end" }, { "p": [5.33, 5], "lx": "Q₂", "ly": "P₂", "lxa": "start" }], "n": [{ "p": [6.3, 2.4], "t": "ΔQ pequeña" }] }
+ }
+}

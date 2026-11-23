@@ -1,0 +1,274 @@
+{
+ "id": "3.3",
+ "titulo": "Objetivos macroeconómicos: crecimiento, desempleo e inflación",
+ "intro": "Todo gobierno quiere lo mismo: que la economía crezca, que haya trabajo y que los precios sean estables. Pero estos objetivos a veces chocan entre sí. Este subtema explica cómo se miden, qué los causa y qué costos tiene no alcanzarlos.",
+ "objetivos": [
+  "Explicar el crecimiento económico y sus consecuencias.",
+  "Medir el desempleo, distinguir sus tipos y explicar sus costos.",
+  "Medir la inflación con el IPC, distinguir inflación de demanda y de costos, y explicar sus costos.",
+  "Explicar la deflación y sus riesgos."
+ ],
+ "secciones": [
+  {
+   "h": "1. Crecimiento económico",
+   "p": [
+    "El <b>crecimiento económico</b> es el aumento del <b>PIB real</b> en el tiempo. A corto plazo depende de la DA (usar mejor la capacidad ociosa); a largo plazo, de que crezca la capacidad productiva (OALP a la derecha).",
+    "Consecuencias positivas: más ingreso, empleo y recaudación. Posibles costos: inflación si la DA crece muy rápido, más desigualdad si los beneficios se concentran, y daño ambiental si no es sostenible."
+   ]
+  },
+  {
+   "h": "2. Desempleo: medición y tipos",
+   "p": [
+    "Una persona está <b>desempleada</b> si no tiene trabajo, está buscando activamente y está disponible para trabajar. La <b>tasa de desempleo</b> = desempleados ÷ fuerza de trabajo × 100.",
+    "La medición tiene problemas: no cuenta a los <b>desalentados</b> (dejaron de buscar), oculta el <b>subempleo</b> (trabajar menos horas de las que se quiere) y en países como Paraguay mucha gente tiene empleos <b>informales</b> precarios.",
+    "Tipos: <b>friccional</b> (entre un trabajo y otro), <b>estructural</b> (las habilidades no coinciden con las que piden las empresas; por cambios tecnológicos o de sectores), <b>estacional</b> (zafra, turismo) y <b>cíclico</b> o de demanda insuficiente (por una recesión). La <b>tasa natural de desempleo</b> = friccional + estructural + estacional."
+   ],
+   "caja": {
+    "t": "Fórmula",
+    "html": "Tasa de desempleo = desempleados ÷ (ocupados + desempleados) × 100"
+   }
+  },
+  {
+   "h": "3. Costos del desempleo",
+   "p": [
+    "<b>Económicos:</b> producción perdida (la economía está dentro de su CPP), menos recaudación y más gasto social, pérdida de habilidades de los desempleados.",
+    "<b>Personales y sociales:</b> menos ingreso, más pobreza y desigualdad, problemas de salud, delincuencia y migración."
+   ]
+  },
+  {
+   "h": "4. Inflación: medición y causas",
+   "p": [
+    "La <b>inflación</b> es el aumento sostenido del <b>nivel general de precios</b>. Se mide con el <b>índice de precios al consumidor (IPC)</b>, que sigue el costo de una canasta de bienes que compra un hogar típico. En Paraguay lo calcula el Banco Central del Paraguay.",
+    "<b>Inflación de demanda:</b> la DA crece más rápido que la capacidad de producción (DA a la derecha cerca del pleno empleo).",
+    "<b>Inflación de costos:</b> suben los costos de producción (petróleo, salarios, tipo de cambio): la OACP se desplaza a la izquierda; suben los precios y baja el PIB real."
+   ],
+   "dia": [
+    "demanda",
+    "costos"
+   ]
+  },
+  {
+   "h": "5. Costos de la inflación y de la deflación",
+   "p": [
+    "La <b>inflación</b> reduce el <b>poder adquisitivo</b>, sobre todo de quienes tienen ingresos fijos; genera <b>incertidumbre</b> que frena la inversión; redistribuye de ahorristas a deudores; resta <b>competitividad</b> a las exportaciones y obliga a cambiar precios constantemente.",
+    "La <b>deflación</b> (caída sostenida del NGP) también es peligrosa si viene de una caída de la DA: los consumidores postergan compras esperando precios más bajos, las empresas venden menos, despiden trabajadores y el valor real de las deudas aumenta. Se puede caer en una espiral deflacionaria.",
+    "Por eso los bancos centrales no buscan inflación cero, sino <b>baja y estable</b>: en Paraguay, la meta del BCP es del 3,5 % ±2 desde 2025."
+   ]
+  }
+ ],
+ "ejemplo": {
+  "t": "Ejemplo de Paraguay: la informalidad y el desempleo",
+  "p": [
+   "En Paraguay la tasa de desempleo abierto suele ser moderada, pero eso no significa que todos tengan un buen trabajo: una gran parte de los ocupados trabaja en la <b>informalidad</b>, sin seguro social ni contrato, y muchos están <b>subempleados</b>.",
+   "Por eso, para evaluar el mercado laboral paraguayo, la tasa de desempleo no alcanza: hay que mirar también la informalidad, el subempleo y los ingresos.",
+   "Para evaluar: ¿qué tipo de desempleo reduce mejor la capacitación técnica? (estructural) ¿Y una baja de la tasa de interés? (cíclico)."
+  ],
+  "link": [
+   "lab-labor",
+   "Practicar cómo se mide el desempleo"
+  ]
+ },
+ "errores": [
+  "Decir que la inflación es «que suban los precios» de un bien: es un aumento <b>sostenido</b> del nivel <b>general</b>.",
+  "Confundir el desempleo estructural con el cíclico.",
+  "Afirmar que la deflación siempre es buena para los consumidores."
+ ],
+ "check": [
+  {
+   "q": "Un trabajador pierde su empleo porque su fábrica se automatizó y no sabe usar las nuevas máquinas. Es desempleo…",
+   "o": [
+    "Friccional",
+    "Estructural",
+    "Estacional",
+    "Cíclico"
+   ],
+   "a": 1,
+   "e": "Sus habilidades ya no coinciden con las que se piden."
+  },
+  {
+   "q": "La inflación de costos se muestra en el diagrama como…",
+   "o": [
+    "La DA a la derecha",
+    "La OACP a la izquierda",
+    "La OALP a la derecha",
+    "La DA a la izquierda"
+   ],
+   "a": 1,
+   "e": "Suben los costos y la OACP se desplaza a la izquierda."
+  },
+  {
+   "q": "¿Quién pierde más con una inflación inesperada?",
+   "o": [
+    "Los deudores",
+    "Las personas con ingresos fijos y los ahorristas",
+    "Los exportadores",
+    "El gobierno endeudado"
+   ],
+   "a": 1,
+   "e": "Su ingreso o su ahorro compra menos."
+  },
+  {
+   "q": "Hay 900 ocupados y 100 desempleados. La tasa de desempleo es…",
+   "o": [
+    "11,1 %",
+    "10 %",
+    "9 %",
+    "100 %"
+   ],
+   "a": 1,
+   "e": "100 ÷ (900 + 100) × 100 = 10 %."
+  }
+ ],
+ "kc": {
+  "t": "Concepto clave: bienestar económico",
+  "p": "Detrás de cada número macroeconómico hay personas: un punto más de inflación es menos comida en la mesa de una familia con ingresos fijos; un punto más de desempleo, miles de hogares con menos ingresos. Pregunta para pensar: ¿qué objetivo debería priorizar un gobierno si no puede lograr los dos: bajar la inflación o bajar el desempleo?"
+ },
+ "atlas": [
+  [
+   "inflacion-demanda",
+   "Inflación de demanda"
+  ],
+  [
+   "inflacion-costos",
+   "Inflación de costos"
+  ],
+  [
+   "deflacion",
+   "Deflación"
+  ],
+  [
+   "brecha-deflacionaria",
+   "Brecha deflacionaria y desempleo cíclico"
+  ]
+ ],
+ "labs": [
+  "labor",
+  "prices"
+ ],
+ "dias": {
+  "demanda": {
+   "t": "Inflación de demanda",
+   "x": "PIB real",
+   "y": "NGP",
+   "l": [
+    {
+     "a": [
+      1,
+      2
+     ],
+     "b": [
+      9.4,
+      8.3
+     ],
+     "c": "s",
+     "t": "OACP"
+    },
+    {
+     "a": [
+      2,
+      9.75
+     ],
+     "b": [
+      9.5,
+      2.25
+     ],
+     "c": "d",
+     "t": "DA₁"
+    },
+    {
+     "a": [
+      4,
+      10
+     ],
+     "b": [
+      10,
+      4
+     ],
+     "c": "d",
+     "t": "DA₂"
+    }
+   ],
+   "pt": [
+    {
+     "p": [
+      6,
+      5.75
+     ],
+     "lx": "Y₁",
+     "ly": "P₁"
+    },
+    {
+     "p": [
+      7.29,
+      6.71
+     ],
+     "lx": "Y₂",
+     "ly": "P₂"
+    }
+   ]
+  },
+  "costos": {
+   "t": "Inflación de costos",
+   "x": "PIB real",
+   "y": "NGP",
+   "l": [
+    {
+     "a": [
+      1,
+      2
+     ],
+     "b": [
+      9.4,
+      8.3
+     ],
+     "c": "s",
+     "t": "OACP₁"
+    },
+    {
+     "a": [
+      0.2,
+      3.85
+     ],
+     "b": [
+      7.4,
+      9.25
+     ],
+     "c": "s",
+     "t": "OACP₂"
+    },
+    {
+     "a": [
+      2,
+      9.75
+     ],
+     "b": [
+      9.5,
+      2.25
+     ],
+     "c": "d",
+     "t": "DA"
+    }
+   ],
+   "pt": [
+    {
+     "p": [
+      6,
+      5.75
+     ],
+     "lx": "Y₁",
+     "ly": "P₁",
+     "lxa": "start"
+    },
+    {
+     "p": [
+      4.6,
+      7.15
+     ],
+     "lx": "Y₂",
+     "ly": "P₂",
+     "lxa": "end"
+    }
+   ]
+  }
+ }
+}

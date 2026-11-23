@@ -1,0 +1,242 @@
+{
+ "id": "3.4",
+ "titulo": "Desigualdad y pobreza",
+ "intro": "Dos países pueden tener el mismo PIB per cápita y vidas muy distintas: en uno el ingreso se reparte de forma pareja; en el otro, unos pocos concentran casi todo. Este subtema explica cómo se miden la <b>desigualdad</b> y la <b>pobreza</b>, por qué existen y qué puede hacer el gobierno.",
+ "objetivos": [
+  "Distinguir igualdad y equidad.",
+  "Medir la desigualdad con la curva de Lorenz y el coeficiente de Gini.",
+  "Distinguir pobreza absoluta y relativa, y sus medidas.",
+  "Explicar las causas y consecuencias de la desigualdad y la pobreza.",
+  "Evaluar las políticas para reducirlas: impuestos, transferencias y gasto social."
+ ],
+ "secciones": [
+  {
+   "h": "1. Igualdad y equidad",
+   "p": [
+    "La <b>igualdad</b> es que todos reciban lo mismo. La <b>equidad</b> es la <b>justicia</b> en la distribución: dar a cada uno según sus necesidades o según lo que aporta. Un sistema puede ser desigual pero considerarse equitativo si la diferencia de ingresos premia el esfuerzo y todos tienen las mismas oportunidades.",
+    "La equidad es un concepto <b>normativo</b>: depende de valores."
+   ]
+  },
+  {
+   "h": "2. Curva de Lorenz y coeficiente de Gini",
+   "p": [
+    "La <b>curva de Lorenz</b> muestra qué porcentaje del ingreso total recibe cada porcentaje acumulado de la población, ordenada de más pobre a más rica. La diagonal es la <b>línea de igualdad perfecta</b>.",
+    "Cuanto más se aleja la curva de la diagonal, mayor es la desigualdad.",
+    "El <b>coeficiente de Gini</b> = área entre la diagonal y la curva (A) ÷ área total bajo la diagonal (A + B). Va de 0 (igualdad perfecta) a 1 (desigualdad máxima). Paraguay, como gran parte de América Latina, tiene un Gini alto en la comparación mundial."
+   ],
+   "dia": [
+    "lorenz"
+   ],
+   "caja": {
+    "t": "Fórmula",
+    "html": "Gini = A ÷ (A + B)"
+   }
+  },
+  {
+   "h": "3. Pobreza absoluta y relativa",
+   "p": [
+    "<b>Pobreza absoluta:</b> no alcanzar un nivel mínimo de ingreso para cubrir necesidades básicas. Se mide con una <b>línea de pobreza</b> (en Paraguay, el INE calcula la pobreza total y la pobreza extrema según el costo de una canasta básica; el Banco Mundial usa líneas internacionales en dólares por día).",
+    "<b>Pobreza relativa:</b> tener mucho menos que el resto de la sociedad, por ejemplo menos del 50 % o 60 % del ingreso mediano.",
+    "Medidas multidimensionales, como el <b>Índice de Pobreza Multidimensional (IPM)</b>, consideran también salud, educación y nivel de vida."
+   ]
+  },
+  {
+   "h": "4. Causas y consecuencias",
+   "p": [
+    "<b>Causas:</b> desigualdad de oportunidades (educación, salud), diferencias de riqueza heredada y de acceso a la tierra, informalidad laboral, discriminación, sistemas tributarios que se apoyan mucho en impuestos al consumo, diferencias entre zonas urbanas y rurales.",
+    "<b>Consecuencias:</b> menor crecimiento a largo plazo (talento desaprovechado), problemas sociales, menor movilidad social y la <b>trampa de la pobreza</b>: bajos ingresos → poca educación y salud → baja productividad → bajos ingresos."
+   ]
+  },
+  {
+   "h": "5. Políticas para reducir la desigualdad y la pobreza",
+   "p": [
+    "<b>Impuestos progresivos:</b> la tasa aumenta con el ingreso (el impuesto a la renta personal). Los <b>regresivos</b> pesan más en los pobres (los impuestos al consumo como el IVA, en proporción al ingreso). Los <b>proporcionales</b> cobran la misma tasa a todos.",
+    "<b>Transferencias:</b> pagos a los hogares pobres, condicionados (por ejemplo, a que los hijos vayan a la escuela y al control médico) o no condicionados, y pensiones.",
+    "<b>Gasto en bienes meritorios:</b> educación y salud públicas, alimentación escolar. <b>Salario mínimo</b> y políticas de empleo formal.",
+    "Para evaluar: eficacia, costo fiscal, incentivos al trabajo, problemas de focalización y corrupción, y efectos en el largo plazo."
+   ]
+  }
+ ],
+ "ejemplo": {
+  "t": "Ejemplo de Paraguay: Tekoporã y el sistema tributario",
+  "p": [
+   "<b>Tekoporã</b> es un programa de <b>transferencias monetarias condicionadas</b>: las familias en pobreza reciben un pago a cambio de cumplir con la asistencia escolar y los controles de salud de sus hijos. Busca aliviar la pobreza hoy y romper la trampa de la pobreza a largo plazo.",
+   "Del lado de los ingresos, el Estado paraguayo recauda una gran parte de sus impuestos con el <b>IVA</b>, un impuesto al consumo. Como los hogares pobres consumen casi todo su ingreso, el IVA pesa más sobre ellos en proporción: el sistema tiende a ser <b>regresivo</b>. Paraguay tiene un impuesto a la renta personal (IRP), que es progresivo, pero recauda mucho menos que el IVA.",
+   "Para evaluar: ¿las transferencias llegan a quienes más lo necesitan? ¿Alcanzan si no mejoran la calidad de la educación y el empleo formal?"
+  ],
+  "link": [
+   "lab-lorenz",
+   "Practicar con la curva de Lorenz y el Gini"
+  ]
+ },
+ "errores": [
+  "Decir que un Gini de 0 es desigualdad total: 0 es igualdad perfecta.",
+  "Confundir igualdad (todos igual) con equidad (justicia).",
+  "Llamar progresivo al IVA: en proporción al ingreso, pesa más en los hogares pobres."
+ ],
+ "check": [
+  {
+   "q": "Si la curva de Lorenz se acerca a la diagonal, la desigualdad…",
+   "o": [
+    "Aumenta",
+    "Disminuye",
+    "No cambia",
+    "Se vuelve absoluta"
+   ],
+   "a": 1,
+   "e": "La diagonal representa la igualdad perfecta."
+  },
+  {
+   "q": "Un impuesto cuya tasa aumenta cuando aumenta el ingreso es…",
+   "o": [
+    "Regresivo",
+    "Proporcional",
+    "Progresivo",
+    "Indirecto"
+   ],
+   "a": 2,
+   "e": "Quienes ganan más pagan un porcentaje mayor."
+  },
+  {
+   "q": "Tener menos del 60 % del ingreso mediano del país es una medida de pobreza…",
+   "o": [
+    "Absoluta",
+    "Relativa",
+    "Extrema",
+    "Multidimensional"
+   ],
+   "a": 1,
+   "e": "Compara con el resto de la sociedad."
+  },
+  {
+   "q": "¿Qué busca una transferencia condicionada como Tekoporã a largo plazo?",
+   "o": [
+    "Aumentar el IVA",
+    "Romper la trampa de la pobreza con educación y salud",
+    "Subir el salario mínimo",
+    "Bajar el PIB"
+   ],
+   "a": 1,
+   "e": "Condiciona el pago a la escuela y la salud de los niños."
+  }
+ ],
+ "kc": {
+  "t": "Concepto clave: equidad",
+  "p": "Qué distribución es «justa» no lo dice la teoría, sino los valores de cada sociedad. Lo que sí muestra la economía son los costos y beneficios de cada política. Pregunta para pensar: ¿es más justo cobrar más impuestos a quienes más ganan o mantener impuestos bajos para atraer inversión?"
+ },
+ "atlas": [
+  [
+   "lorenz",
+   "Curva de Lorenz"
+  ]
+ ],
+ "labs": [
+  "lorenz"
+ ],
+ "dias": {
+  "lorenz": {
+   "t": "Curva de Lorenz",
+   "x": "% acumulado de la población",
+   "y": "% acumulado del ingreso",
+   "area": [
+    {
+     "p": [
+      [
+       0,
+       0
+      ],
+      [
+       10,
+       10
+      ],
+      [
+       8,
+       5.2
+      ],
+      [
+       6,
+       2.9
+      ],
+      [
+       4,
+       1.4
+      ],
+      [
+       2,
+       0.5
+      ]
+     ],
+     "c": "gov"
+    }
+   ],
+   "l": [
+    {
+     "a": [
+      0,
+      0
+     ],
+     "b": [
+      10,
+      10
+     ],
+     "c": "k",
+     "t": "Igualdad perfecta",
+     "lp": [
+      0.5,
+      5.6
+     ]
+    },
+    {
+     "poly": [
+      [
+       0,
+       0
+      ],
+      [
+       2,
+       0.5
+      ],
+      [
+       4,
+       1.4
+      ],
+      [
+       6,
+       2.9
+      ],
+      [
+       8,
+       5.2
+      ],
+      [
+       10,
+       10
+      ]
+     ],
+     "c": "d",
+     "t": "Curva de Lorenz",
+     "lp": [
+      7.3,
+      2.4
+     ]
+    }
+   ],
+   "n": [
+    {
+     "p": [
+      5.6,
+      5.1
+     ],
+     "t": "A"
+    },
+    {
+     "p": [
+      8.9,
+      1.0
+     ],
+     "t": "B"
+    }
+   ]
+  }
+ }
+}

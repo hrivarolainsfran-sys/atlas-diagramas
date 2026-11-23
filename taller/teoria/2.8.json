@@ -1,0 +1,90 @@
+{
+ "id": "2.8",
+ "titulo": "Fallas de mercado: externalidades, bienes meritorios y recursos comunes",
+ "intro": "Una fábrica que tira desechos al arroyo no paga el daño que causa río abajo. Quien se vacuna protege también a sus vecinos, pero nadie le paga por eso. Cuando los precios no reflejan todos los costos y beneficios, el mercado produce <b>demasiado</b> de algunas cosas y <b>muy poco</b> de otras: es una <b>falla de mercado</b>.",
+ "objetivos": [
+  "Definir falla de mercado y explicar la diferencia entre costos y beneficios privados y sociales.",
+  "Analizar con diagramas las externalidades negativas y positivas de producción y de consumo.",
+  "Explicar los bienes meritorios y perjudiciales.",
+  "Analizar los recursos de uso común y la sostenibilidad.",
+  "Evaluar las políticas del gobierno para corregir estas fallas."
+ ],
+ "secciones": [
+  {
+   "h": "1. Falla de mercado y externalidades",
+   "p": [
+    "Hay <b>falla de mercado</b> cuando el mercado no logra la <b>eficiencia en la asignación</b>: produce una cantidad distinta de la socialmente óptima (donde BMgS = CMgS) y se pierde bienestar.",
+    "Una <b>externalidad</b> es un costo o beneficio que recae sobre <b>terceros</b> que no participan en la compra o venta. Si es un costo, es <b>negativa</b>; si es un beneficio, <b>positiva</b>.",
+    "Por eso distinguimos lo <b>privado</b> (lo que tienen en cuenta comprador y vendedor: CMgP, BMgP) de lo <b>social</b> (privado + externalidad: CMgS, BMgS)."
+   ]
+  },
+  {
+   "h": "2. Externalidad negativa de producción",
+   "p": [
+    "Una curtiembre o una fábrica que contamina tiene un <b>costo marginal social (CMgS)</b> mayor que su costo privado (CMgP): la curva CMgS está por encima.",
+    "El mercado produce donde BMgS = CMgP (Qm), que es <b>más</b> que el óptimo social (Q*). El triángulo gris es la <b>pérdida de bienestar</b>: unidades cuyo costo para la sociedad supera su beneficio.",
+    "Ejemplos: contaminación de cursos de agua, humo de quemas, emisiones de gases de efecto invernadero."
+   ],
+   "dia": ["neg"]
+  },
+  {
+   "h": "3. Externalidad positiva de consumo",
+   "p": [
+    "La educación o las vacunas benefician también a otros: el <b>beneficio marginal social (BMgS)</b> está por encima del privado (BMgP).",
+    "El mercado consume Qm, <b>menos</b> que el óptimo Q*: se <b>subconsume</b>. También hay pérdida de bienestar.",
+    "Hay además <b>externalidades negativas de consumo</b> (el humo del cigarrillo para los demás: se sobreconsume) y <b>positivas de producción</b> (una empresa que capacita a sus trabajadores, que luego aportan a otras: se subproduce)."
+   ],
+   "dia": ["pos"]
+  },
+  {
+   "h": "4. Bienes meritorios y perjudiciales",
+   "p": [
+    "Los <b>bienes meritorios</b> (educación, salud, vacunas) son más beneficiosos de lo que las personas perciben, por falta de información o visión de corto plazo: se <b>subconsumen</b>.",
+    "Los <b>bienes perjudiciales</b> (tabaco, alcohol, comida chatarra en exceso) son más dañinos de lo que se percibe: se <b>sobreconsumen</b>. Suelen tener también externalidades negativas."
+   ]
+  },
+  {
+   "h": "5. Recursos de uso común y sostenibilidad",
+   "p": [
+    "Los <b>recursos de uso común</b> (peces de un río, bosques, pasturas abiertas) son <b>no excluibles</b> (no se puede impedir el acceso) pero <b>rivales</b> (lo que uno usa, otro ya no puede usar).",
+    "Cada usuario tiene incentivos para usar lo más posible antes de que lo usen otros: es la <b>tragedia de los bienes comunes</b>. El resultado es la sobreexplotación y un uso <b>no sostenible</b>, que perjudica a las generaciones futuras."
+   ]
+  },
+  {
+   "h": "6. Cómo puede intervenir el gobierno",
+   "p": [
+    "<b>Impuestos pigouvianos</b> sobre la contaminación o los bienes perjudiciales: hacen que el costo privado incluya el daño. <b>Subsidios</b> a la educación, la salud o las energías limpias.",
+    "<b>Regulación y legislación:</b> prohibiciones, límites de emisión, edad mínima para comprar alcohol. <b>Permisos de contaminación negociables</b> (cap and trade). <b>Campañas de información y «nudges»</b> de la economía del comportamiento. <b>Provisión directa</b> (vacunación gratuita).",
+    "Para evaluar: ¿es fácil medir el daño para fijar el impuesto correcto? ¿Cuánto cuesta controlar? ¿Quién paga? ¿Funciona sin cooperación internacional?"
+   ]
+  }
+ ],
+ "ejemplo": {
+  "t": "Ejemplo de Paraguay: la deforestación del Chaco",
+  "p": [
+   "Al desmontar el bosque para habilitar pasturas, el productor obtiene un beneficio privado. Pero la sociedad pierde biodiversidad, aumentan las emisiones de carbono y se alteran el clima y el agua de la región: es una <b>externalidad negativa de producción</b>.",
+   "Como el productor no paga ese costo, el mercado tiende a desmontar <b>más</b> de lo socialmente óptimo. El bosque, además, funciona como un recurso común cuyos beneficios ambientales no tienen precio.",
+   "Políticas posibles: límites legales al cambio de uso del suelo (Paraguay tiene una ley de deforestación cero en la Región Oriental), exigencia de reservas de bosque en el Chaco, pagos por servicios ambientales y control satelital. Para evaluar: ¿alcanza la regulación si el control es débil?"
+  ],
+  "dia": "neg",
+  "link": ["lab-ext", "Practicar con el laboratorio de externalidades"]
+ },
+ "errores": [
+  "Dibujar la pérdida de bienestar en el lado equivocado del óptimo.",
+  "Confundir externalidad de producción (se separan las curvas de costo) con externalidad de consumo (se separan las curvas de beneficio).",
+  "Proponer políticas sin evaluar su costo y su eficacia."
+ ],
+ "check": [
+  {"q": "En una externalidad negativa de producción, el mercado produce…", "o": ["Menos que el óptimo social", "Más que el óptimo social", "Exactamente el óptimo", "Nada"], "a": 1, "e": "El costo social es mayor que el privado y no se tiene en cuenta: se sobreproduce."},
+  {"q": "¿Cuál es un ejemplo de externalidad positiva de consumo?", "o": ["Fumar en un lugar cerrado", "Vacunarse contra la gripe", "Una fábrica que contamina", "Comprar ropa de moda"], "a": 1, "e": "Quien se vacuna reduce el contagio para los demás."},
+  {"q": "Los peces del río Paraguay son un recurso…", "o": ["Excluible y no rival", "No excluible y rival", "Excluible y rival", "Público puro"], "a": 1, "e": "No se puede impedir que la gente pesque, pero lo que pesca uno ya no está para otro."},
+  {"q": "Un impuesto pigouviano busca…", "o": ["Recaudar sin cambiar el comportamiento", "Que el costo privado incluya el costo externo", "Bajar el precio del bien", "Aumentar la producción"], "a": 1, "e": "«Internaliza» la externalidad y acerca la producción al óptimo."}
+ ],
+ "kc": { "t": "Concepto clave: sostenibilidad", "p": "Las externalidades y los recursos comunes muestran que el mercado no siempre cuida el futuro: lo que hoy parece barato puede tener un costo enorme para las próximas generaciones. Pregunta para pensar: ¿quién debería pagar por conservar los bosques del Chaco: los productores, el Estado paraguayo o el mundo?" },
+ "atlas": [["ext-neg-prod", "Externalidad negativa de producción"], ["ext-pos-cons", "Externalidad positiva de consumo"], ["ext-neg-cons", "Externalidad negativa de consumo"], ["ext-pos-prod", "Externalidad positiva de producción"], ["impuesto-pigou", "Impuesto pigouviano"]],
+ "labs": ["ext"],
+ "dias": {
+  "neg": { "t": "Externalidad negativa de producción", "x": "Cantidad", "y": "Precio, costos y beneficios", "area": [{ "p": [[3.89, 6.11], [5, 7], [5, 5]], "c": "dwl" }], "l": [{ "a": [0, 10], "b": [9.5, 0.5], "c": "d", "t": "BMgP = BMgS" }, { "a": [0, 1], "b": [10, 9], "c": "s", "t": "CMgP" }, { "a": [0, 3], "b": [8.4, 9.72], "c": "s", "t": "CMgS" }], "pt": [{ "p": [3.89, 6.11], "lx": "Q*", "lxa": "end" }, { "p": [5, 5], "lx": "Qm", "lxa": "start" }], "n": [{ "p": [5.3, 6.6], "t": "pérdida de bienestar" }] },
+  "pos": { "t": "Externalidad positiva de consumo", "x": "Cantidad", "y": "Precio, costos y beneficios", "area": [{ "p": [[5, 5], [5, 7], [6.11, 5.89]], "c": "dwl" }], "l": [{ "a": [0, 10], "b": [9.5, 0.5], "c": "d", "t": "BMgP" }, { "a": [2, 10], "b": [10, 2], "c": "d", "dash": true, "t": "BMgS" }, { "a": [0, 1], "b": [10, 9], "c": "s", "t": "CMgP = CMgS" }], "pt": [{ "p": [5, 5], "lx": "Qm", "lxa": "end" }, { "p": [6.11, 5.89], "lx": "Q*", "lxa": "start" }] }
+ }
+}
