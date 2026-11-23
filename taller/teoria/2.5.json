@@ -1,0 +1,653 @@
+{
+ "id": "2.5",
+ "titulo": "Elasticidad de la demanda (EPD y EID)",
+ "intro": "Cuando sube el precio de un bien, la gente compra menos. Pero ¿cuánto menos? No es lo mismo un aumento del pasaje de ómnibus que un aumento del precio de una marca de gaseosa. La elasticidad mide justamente eso: <b>cuánto reacciona la cantidad demandada</b> cuando cambia el precio o el ingreso.",
+ "objetivos": [
+  "Definir y calcular la elasticidad precio de la demanda (EPD) y la elasticidad ingreso de la demanda (EID).",
+  "Interpretar los valores: demanda elástica, inelástica, unitaria y los casos extremos.",
+  "Explicar los determinantes de la EPD.",
+  "Relacionar la EPD con el ingreso total de una empresa y con los impuestos del gobierno.",
+  "Distinguir bienes normales (de primera necesidad y de lujo) y bienes inferiores con la EID."
+ ],
+ "secciones": [
+  {
+   "h": "1. Qué es la elasticidad precio de la demanda",
+   "p": [
+    "La <b>elasticidad precio de la demanda (EPD)</b> mide la sensibilidad de la cantidad demandada de un bien ante un cambio en su precio, manteniendo todo lo demás constante (<i>ceteris paribus</i>).",
+    "Se calcula comparando dos variaciones <b>porcentuales</b>, no las cantidades absolutas. Así podemos comparar bienes que se miden en unidades distintas (litros, kilos, pasajes)."
+   ],
+   "caja": {
+    "t": "Fórmula",
+    "html": "EPD = %ΔQd ÷ %ΔP<br><span class=\"small\">Variación porcentual = (valor nuevo − valor inicial) ÷ valor inicial × 100</span>"
+   }
+  },
+  {
+   "h": "2. Cómo se calcula: un ejemplo paso a paso",
+   "p": [
+    "Supongamos que una plataforma de streaming sube su abono mensual de Gs. 50.000 a Gs. 60.000 y sus suscriptores en Paraguay bajan de 200.000 a 150.000.",
+    "<b>Paso 1 · %ΔP</b> = (60.000 − 50.000) ÷ 50.000 × 100 = <b>+20 %</b>.<br><b>Paso 2 · %ΔQd</b> = (150.000 − 200.000) ÷ 200.000 × 100 = <b>−25 %</b>.<br><b>Paso 3 · EPD</b> = −25 % ÷ +20 % = <b>−1,25</b>.",
+    "La EPD casi siempre es <b>negativa</b> por la ley de la demanda: si el precio sube, la cantidad baja. Por eso se suele trabajar con su <b>valor absoluto</b>: |EPD| = 1,25. Interpretación: por cada 1 % que sube el precio, la cantidad demandada baja 1,25 %."
+   ],
+   "caja": {
+    "t": "Cómo escribirlo en el examen",
+    "html": "Muestra siempre la fórmula, los dos porcentajes y el resultado con dos decimales. Después interpreta el número con una frase: «la demanda es elástica porque |EPD| > 1»."
+   }
+  },
+  {
+   "h": "3. Cómo se interpreta el valor",
+   "p": [
+    "<b>Demanda elástica (|EPD| > 1):</b> la cantidad cambia en mayor proporción que el precio. Ejemplo: una marca de gaseosa, porque hay muchas otras en la góndola.",
+    "<b>Demanda inelástica (|EPD| < 1):</b> la cantidad cambia en menor proporción que el precio. Ejemplo: la electricidad de la ANDE o el combustible a corto plazo: aunque suban, se siguen usando.",
+    "<b>Demanda unitaria (|EPD| = 1):</b> la cantidad cambia en la misma proporción que el precio.",
+    "En el diagrama, una demanda <b>relativamente plana</b> suele representar una demanda elástica y una <b>relativamente empinada</b>, una inelástica. Ante la misma suba de precio (P₁ → P₂), la cantidad cae mucho en la primera y poco en la segunda."
+   ],
+   "dia": [
+    "elastica",
+    "inelastica"
+   ]
+  },
+  {
+   "h": "4. Los casos extremos y la elasticidad a lo largo de la curva",
+   "p": [
+    "<b>Perfectamente elástica (EPD = ∞):</b> curva horizontal. A ese precio se compra cualquier cantidad; si sube aunque sea un poco, la cantidad cae a cero. Es un caso teórico (competencia perfecta).",
+    "<b>Perfectamente inelástica (EPD = 0):</b> curva vertical. Se compra la misma cantidad a cualquier precio. También es teórico; se aproxima, por ejemplo, a un medicamento sin sustituto.",
+    "<b>Unitaria:</b> la curva es una hipérbola: el gasto (P × Q) es igual en todos sus puntos.",
+    "<b>Ojo:</b> en una demanda que es una <b>línea recta</b>, la EPD <b>no es constante</b>. Es elástica en la parte alta (precios altos), unitaria en el punto medio e inelástica en la parte baja. La pendiente es la misma, pero los porcentajes cambian porque se calculan sobre bases distintas."
+   ],
+   "dia": [
+    "extremos",
+    "lineal"
+   ]
+  },
+  {
+   "h": "5. Determinantes de la EPD",
+   "p": [
+    "<b>Número y cercanía de los sustitutos.</b> Cuantos más sustitutos cercanos, más elástica. Una marca de yerba tiene muchos sustitutos (otras marcas); «la yerba» en general tiene pocos.",
+    "<b>Necesidad o lujo.</b> Los bienes necesarios (electricidad, transporte para ir a trabajar) tienen demanda más inelástica que los de lujo (un viaje de vacaciones).",
+    "<b>Proporción del ingreso que se gasta en el bien.</b> Si el bien pesa poco en el presupuesto (un chicle), un aumento casi no se nota: más inelástica. Si pesa mucho (el alquiler, un auto), más elástica.",
+    "<b>Tiempo.</b> A corto plazo la demanda es más inelástica porque cuesta cambiar de hábitos. A largo plazo es más elástica: si el combustible sigue caro, la gente compra autos más eficientes o cambia de medio de transporte.",
+    "<b>Hábito o adicción.</b> Los bienes adictivos, como el tabaco, tienen demanda muy inelástica."
+   ]
+  },
+  {
+   "h": "6. EPD e ingreso total",
+   "p": [
+    "El <b>ingreso total (IT)</b> de una empresa es lo que recibe por sus ventas: <b>IT = P × Q</b>. Es el rectángulo bajo el punto de equilibrio en el diagrama.",
+    "<b>Demanda inelástica:</b> si la empresa <b>sube</b> el precio, el ingreso total <b>aumenta</b>. Lo que gana por cobrar más (área verde) es mayor que lo que pierde por vender menos (área roja).",
+    "<b>Demanda elástica:</b> si la empresa <b>sube</b> el precio, el ingreso total <b>disminuye</b>, porque pierde muchos clientes. Le conviene más <b>bajar</b> el precio.",
+    "<b>Demanda unitaria:</b> el ingreso total no cambia. En una demanda lineal, el ingreso total es máximo en el punto medio, donde |EPD| = 1."
+   ],
+   "dia": [
+    "it-inelastica",
+    "it-elastica"
+   ],
+   "caja": {
+    "t": "Regla rápida",
+    "html": "Inelástica: precio e ingreso total se mueven en la <b>misma</b> dirección.<br>Elástica: precio e ingreso total se mueven en dirección <b>opuesta</b>."
+   }
+  },
+  {
+   "h": "7. Por qué le importa al gobierno",
+   "p": [
+    "Los gobiernos ponen impuestos indirectos sobre bienes de demanda inelástica (combustibles, tabaco, bebidas alcohólicas) porque la cantidad vendida baja poco y la <b>recaudación es alta y estable</b>.",
+    "Pero hay una tensión: si el objetivo del impuesto es <b>reducir el consumo</b> (por ejemplo, del tabaco por salud), una demanda muy inelástica hace que el consumo baje poco. Y como estos bienes pesan más en el presupuesto de los hogares pobres, el impuesto puede ser <b>regresivo</b>."
+   ]
+  },
+  {
+   "h": "8. Elasticidad ingreso de la demanda (EID)",
+   "p": [
+    "La <b>elasticidad ingreso de la demanda (EID)</b> mide la sensibilidad de la cantidad demandada ante un cambio en el <b>ingreso</b> de los consumidores. Aquí el <b>signo importa</b>.",
+    "<b>Bien normal (EID > 0):</b> si sube el ingreso, se compra más. La demanda se desplaza a la derecha.<br>— <b>De primera necesidad (0 < EID < 1):</b> la cantidad sube menos que el ingreso. Ejemplo: alimentos básicos, electricidad.<br>— <b>De lujo (EID > 1):</b> la cantidad sube más que el ingreso. Ejemplo: viajes al exterior, restaurantes caros.",
+    "<b>Bien inferior (EID < 0):</b> si sube el ingreso, se compra menos, porque la gente lo reemplaza por algo que prefiere. Ejemplo posible: el transporte en ómnibus cuando las familias pueden comprar una moto o un auto. Que un bien sea inferior depende del país y del nivel de ingreso.",
+    "La EID ayuda a las empresas a prever qué pasará con sus ventas cuando la economía crece o entra en recesión: en una recesión caen más las ventas de bienes de lujo."
+   ],
+   "dia": [
+    "eid"
+   ],
+   "caja": {
+    "t": "Fórmula",
+    "html": "EID = %ΔQd ÷ %ΔY<br><span class=\"small\">Ejemplo: el ingreso sube 5 % y la cantidad de viajes al exterior sube 8 % → EID = 8 ÷ 5 = +1,6 (bien de lujo).</span>"
+   }
+  }
+ ],
+ "ejemplo": {
+  "t": "Ejemplo de Paraguay: el impuesto a los cigarrillos",
+  "p": [
+   "En Paraguay se debatió varias veces subir el impuesto selectivo al consumo de los cigarrillos. ¿Qué predice la teoría?",
+   "<b>1. La demanda es inelástica.</b> El tabaco genera adicción y, para quien fuma, tiene pocos sustitutos. Entonces |EPD| < 1.",
+   "<b>2. El precio sube y la cantidad baja poco.</b> En el diagrama, la oferta se desplaza hacia arriba por el impuesto; con una demanda empinada, el precio que paga el consumidor sube bastante y la cantidad cae relativamente poco.",
+   "<b>3. Consecuencias.</b> El Estado recauda más, pero el consumo baja menos de lo que se busca por salud. A largo plazo la demanda se vuelve más elástica (la gente deja de fumar o no empieza), sobre todo entre los jóvenes, que gastan una proporción mayor de su ingreso en cigarrillos.",
+   "<b>Para evaluar:</b> ¿es más eficaz subir el impuesto o combinarlo con campañas y prohibiciones de publicidad? En el Taller tienes el caso completo de Prueba 2 «El impuesto al tabaco en Paraguay»."
+  ],
+  "dia": "it-inelastica",
+  "link": [
+   "p2-tabaco",
+   "Practicar el caso de Prueba 2"
+  ]
+ },
+ "errores": [
+  "Confundir la <b>pendiente</b> con la elasticidad: en una demanda lineal la pendiente es constante, pero la EPD cambia a lo largo de la curva.",
+  "Calcular con cambios absolutos (Gs. o unidades) en lugar de <b>porcentajes</b>.",
+  "Olvidar que en la EID el <b>signo</b> sí importa: negativo significa bien inferior.",
+  "Decir que una demanda inelástica «no cambia»: sí cambia, pero en menor proporción que el precio."
+ ],
+ "check": [
+  {
+   "q": "El precio de un bien sube 10 % y la cantidad demandada baja 4 %. ¿Cómo es la demanda?",
+   "o": [
+    "Elástica, |EPD| = 2,5",
+    "Inelástica, |EPD| = 0,4",
+    "Unitaria, |EPD| = 1",
+    "Perfectamente inelástica"
+   ],
+   "a": 1,
+   "e": "|EPD| = 4 ÷ 10 = 0,4. Es menor que 1, así que la demanda es inelástica."
+  },
+  {
+   "q": "Una empresa con demanda elástica sube su precio. ¿Qué pasa con su ingreso total?",
+   "o": [
+    "Aumenta",
+    "Disminuye",
+    "No cambia",
+    "Depende de la oferta"
+   ],
+   "a": 1,
+   "e": "Con demanda elástica, la cantidad cae en mayor proporción que lo que sube el precio, así que el ingreso total (P × Q) disminuye."
+  },
+  {
+   "q": "¿Cuál de estos bienes probablemente tiene la demanda más inelástica?",
+   "o": [
+    "Una marca de galletitas",
+    "Un viaje de vacaciones al exterior",
+    "La electricidad del hogar",
+    "Un televisor nuevo"
+   ],
+   "a": 2,
+   "e": "La electricidad es una necesidad con pocos sustitutos y se sigue usando aunque suba la tarifa."
+  },
+  {
+   "q": "El ingreso de las familias sube 4 % y la demanda de un bien baja 2 %. ¿Qué tipo de bien es?",
+   "o": [
+    "Normal de lujo",
+    "Normal de primera necesidad",
+    "Inferior",
+    "Con demanda perfectamente elástica"
+   ],
+   "a": 2,
+   "e": "EID = −2 ÷ 4 = −0,5. Una EID negativa indica un bien inferior."
+  }
+ ],
+ "kc": {
+  "t": "Concepto clave: equidad",
+  "p": "Muchos bienes de demanda inelástica (energía, transporte, alimentos básicos) pesan más en el presupuesto de los hogares de menores ingresos. Cuando su precio sube, por un impuesto o por el mercado, esos hogares casi no pueden reducir la cantidad y pierden más poder adquisitivo. Pregunta para pensar: ¿es justo gravar con más impuestos los bienes de demanda inelástica?"
+ },
+ "atlas": [
+  [
+   "epd-rel",
+   "Demanda elástica e inelástica"
+  ],
+  [
+   "epd-it",
+   "EPD e ingreso total"
+  ],
+  [
+   "epd-const",
+   "EPD a lo largo de la demanda"
+  ],
+  [
+   "engel",
+   "Curva de Engel y EID"
+  ]
+ ],
+ "labs": [
+  "ped",
+  "yed"
+ ],
+ "dias": {
+  "elastica": {
+   "t": "Demanda relativamente elástica",
+   "x": "Cantidad",
+   "y": "Precio",
+   "l": [
+    {
+     "a": [
+      1,
+      8
+     ],
+     "b": [
+      9,
+      4
+     ],
+     "c": "d",
+     "t": "D"
+    }
+   ],
+   "pt": [
+    {
+     "p": [
+      5,
+      6
+     ],
+     "lx": "Q₂",
+     "ly": "P₂"
+    },
+    {
+     "p": [
+      7,
+      5
+     ],
+     "lx": "Q₁",
+     "ly": "P₁"
+    }
+   ],
+   "ar": [
+    [
+     [
+      6.6,
+      5.4
+     ],
+     [
+      5.4,
+      5.9
+     ]
+    ]
+   ],
+   "n": [
+    {
+     "p": [
+      5.6,
+      2.2
+     ],
+     "t": "ΔQ grande"
+    }
+   ]
+  },
+  "inelastica": {
+   "t": "Demanda relativamente inelástica",
+   "x": "Cantidad",
+   "y": "Precio",
+   "l": [
+    {
+     "a": [
+      3.5,
+      9
+     ],
+     "b": [
+      6.5,
+      1
+     ],
+     "c": "d",
+     "t": "D"
+    }
+   ],
+   "pt": [
+    {
+     "p": [
+      4.625,
+      6
+     ],
+     "lx": "Q₂",
+     "ly": "P₂",
+     "lxa": "end"
+    },
+    {
+     "p": [
+      5,
+      5
+     ],
+     "lx": "Q₁",
+     "ly": "P₁",
+     "lxa": "start"
+    }
+   ],
+   "n": [
+    {
+     "p": [
+      6.2,
+      2.2
+     ],
+     "t": "ΔQ pequeña"
+    }
+   ]
+  },
+  "extremos": {
+   "t": "Casos extremos y demanda unitaria",
+   "x": "Cantidad",
+   "y": "Precio",
+   "l": [
+    {
+     "a": [
+      0.5,
+      8.5
+     ],
+     "b": [
+      9.6,
+      8.5
+     ],
+     "c": "d",
+     "t": "Perfectamente elástica (EPD = ∞)",
+     "lp": [
+      0.6,
+      9.1
+     ]
+    },
+    {
+     "a": [
+      8.4,
+      0.4
+     ],
+     "b": [
+      8.4,
+      7.6
+     ],
+     "c": "d",
+     "dash": true,
+     "t": "EPD = 0",
+     "lp": [
+      8.6,
+      4
+     ]
+    },
+    {
+     "poly": [
+      [
+       1.8,
+       7.4
+      ],
+      [
+       2.2,
+       6.1
+      ],
+      [
+       3,
+       4.5
+      ],
+      [
+       4,
+       3.4
+      ],
+      [
+       5,
+       2.7
+      ],
+      [
+       6,
+       2.25
+      ],
+      [
+       7,
+       1.9
+      ]
+     ],
+     "c": "d",
+     "t": "|EPD| = 1",
+     "lp": [
+      3.6,
+      4.6
+     ]
+    }
+   ]
+  },
+  "lineal": {
+   "t": "La EPD cambia a lo largo de una demanda lineal",
+   "x": "Cantidad",
+   "y": "Precio",
+   "l": [
+    {
+     "a": [
+      0.3,
+      9.5
+     ],
+     "b": [
+      9.5,
+      0.3
+     ],
+     "c": "d",
+     "t": "D"
+    }
+   ],
+   "pt": [
+    {
+     "p": [
+      4.9,
+      4.9
+     ],
+     "t": "|EPD| = 1"
+    }
+   ],
+   "n": [
+    {
+     "p": [
+      2.4,
+      8.8
+     ],
+     "t": "|EPD| > 1 elástica"
+    },
+    {
+     "p": [
+      7.2,
+      3.4
+     ],
+     "t": "|EPD| < 1 inelástica"
+    }
+   ]
+  },
+  "it-inelastica": {
+   "t": "Demanda inelástica: sube P y sube el ingreso total",
+   "x": "Cantidad",
+   "y": "Precio",
+   "l": [
+    {
+     "a": [
+      3.72,
+      9.5
+     ],
+     "b": [
+      7.24,
+      1
+     ],
+     "c": "d",
+     "t": "D"
+    }
+   ],
+   "rect": [
+    {
+     "x": [
+      0,
+      5.17
+     ],
+     "y": [
+      4,
+      6
+     ],
+     "c": "gain"
+    },
+    {
+     "x": [
+      5.17,
+      6
+     ],
+     "y": [
+      0,
+      4
+     ],
+     "c": "loss"
+    }
+   ],
+   "pt": [
+    {
+     "p": [
+      5.17,
+      6
+     ],
+     "lx": "Q₂",
+     "ly": "P₂",
+     "lxa": "end"
+    },
+    {
+     "p": [
+      6,
+      4
+     ],
+     "lx": "Q₁",
+     "ly": "P₁",
+     "lxa": "start"
+    }
+   ],
+   "n": [
+    {
+     "p": [
+      1.5,
+      5.3
+     ],
+     "t": "+ gana"
+    },
+    {
+     "p": [
+      7.2,
+      1.6
+     ],
+     "t": "− pierde"
+    }
+   ]
+  },
+  "it-elastica": {
+   "t": "Demanda elástica: sube P y baja el ingreso total",
+   "x": "Cantidad",
+   "y": "Precio",
+   "l": [
+    {
+     "a": [
+      1,
+      8
+     ],
+     "b": [
+      9.5,
+      3.75
+     ],
+     "c": "d",
+     "t": "D"
+    }
+   ],
+   "rect": [
+    {
+     "x": [
+      0,
+      5
+     ],
+     "y": [
+      5,
+      6
+     ],
+     "c": "gain"
+    },
+    {
+     "x": [
+      5,
+      7
+     ],
+     "y": [
+      0,
+      5
+     ],
+     "c": "loss"
+    }
+   ],
+   "pt": [
+    {
+     "p": [
+      5,
+      6
+     ],
+     "lx": "Q₂",
+     "ly": "P₂"
+    },
+    {
+     "p": [
+      7,
+      5
+     ],
+     "lx": "Q₁",
+     "ly": "P₁"
+    }
+   ],
+   "n": [
+    {
+     "p": [
+      1.4,
+      6.6
+     ],
+     "t": "+ gana"
+    },
+    {
+     "p": [
+      7.4,
+      1.6
+     ],
+     "t": "− pierde"
+    }
+   ]
+  },
+  "eid": {
+   "t": "Bien normal: sube el ingreso y la demanda se desplaza",
+   "x": "Cantidad",
+   "y": "Precio",
+   "l": [
+    {
+     "a": [
+      1,
+      8
+     ],
+     "b": [
+      7,
+      2
+     ],
+     "c": "d",
+     "t": "D₁"
+    },
+    {
+     "a": [
+      3,
+      8
+     ],
+     "b": [
+      9,
+      2
+     ],
+     "c": "d",
+     "t": "D₂"
+    }
+   ],
+   "pt": [
+    {
+     "p": [
+      4,
+      5
+     ],
+     "lx": "Q₁",
+     "ly": "P"
+    },
+    {
+     "p": [
+      6,
+      5
+     ],
+     "lx": "Q₂"
+    }
+   ],
+   "ar": [
+    [
+     [
+      4.4,
+      6.4
+     ],
+     [
+      5.8,
+      6.4
+     ]
+    ]
+   ]
+  }
+ },
+ "fuentes": []
+}

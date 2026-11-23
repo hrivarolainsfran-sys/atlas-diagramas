@@ -830,6 +830,37 @@ details.sres summary{cursor:pointer}details.sres p{margin:6px 0 0;font-size:15px
 .prow.mine{border-color:var(--navy-2)}
 .pbar.g i{background:var(--gold)}.pbar.o i{background:var(--ok)}
 @media (max-width:560px){.prow{grid-template-columns:1fr}}
+:root{--teo-d:#1F5FBF;--teo-s:#C0392B}
+:root[data-theme="dark"]{--teo-d:#7DB0FF;--teo-s:#FF8A7A}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--teo-d:#7DB0FF;--teo-s:#FF8A7A}}
+/* v19: teoría por subtema */
+.teo{max-width:820px}
+.teointro{font-size:18px;line-height:1.6;margin:0 0 14px}
+.teobox{background:var(--sheet);border:1px solid var(--rule);border-radius:12px;padding:14px 18px;margin:0 0 18px}.teobox ul{margin:6px 0 0;padding-left:20px}.teobox p{margin:6px 0 0}
+.teokc{border-color:var(--gold);background:var(--gold-soft)}
+.teosec{margin:0 0 22px}.teosec h3{font-family:var(--f-display);font-size:24px;letter-spacing:0;text-transform:none;margin:0 0 8px;color:var(--ink)}
+.teosec p{line-height:1.65;margin:0 0 10px}
+.teocaja{border-left:0;background:var(--paper);border:1px solid var(--rule);border-radius:10px;padding:10px 14px;margin:10px 0}.teocaja b{display:block;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.teodias{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),400px));gap:12px;margin:12px 0}
+.teodia svg text{font-family:var(--f-body)}
+.teodia{margin:0;background:var(--sheet);border:1px solid var(--rule);border-radius:12px;padding:8px 8px 6px;color:var(--ink)}
+.teodia svg{width:100%;height:auto;display:block;font-family:var(--f-body)}.teodia figcaption{font-size:13px;color:var(--muted);text-align:center;margin-top:2px}
+.teoflow{list-style:none;counter-reset:f;margin:8px 0 12px;padding:0;display:grid;gap:6px}
+.teoflow li{counter-increment:f;display:flex;gap:10px;align-items:center;background:var(--sheet);border:1px solid var(--rule);border-radius:9px;padding:8px 12px}
+.teoflow li::before{content:counter(f);display:inline-grid;place-items:center;width:24px;height:24px;border-radius:50%;background:var(--navy-2);color:#fff;font-weight:700;font-size:13px;flex:none}
+.teoej{background:var(--ok-bg);border:1px solid var(--ok);border-radius:12px;padding:14px 18px}
+.teoerr{margin:0;padding-left:20px}.teoerr li{margin-bottom:6px}
+.teonl{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:10px;margin:8px 0}
+.teon{display:grid;gap:4px;background:var(--sheet);border:1px solid var(--rule);border-radius:10px;padding:12px 14px;color:var(--ink);text-decoration:none}.teon:hover{border-color:var(--navy-2)}
+.teonc{color:var(--navy-2);font-weight:700}
+.teoq{background:var(--sheet);border:1px solid var(--rule);border-radius:10px;padding:12px 14px;margin-bottom:10px}.teoq p{margin:0 0 8px}
+.teoopts{display:grid;gap:6px}.teoopts .opt.right{background:var(--ok-bg);border-color:var(--ok)}.teoopts .opt.wrong{background:var(--bad-bg);border-color:var(--bad)}
+.teoidx{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:8px;margin:10px 0}
+.teoit{display:grid;gap:2px;text-align:left;background:var(--sheet);border:1px solid var(--rule);border-radius:10px;padding:10px 12px;color:var(--ink)}.teoit.off{opacity:.6}
+.teounit{border-top:3px solid var(--navy-2);padding-top:10px;margin-top:20px}
+:root[data-theme="dark"] .teonc{color:var(--gold)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .teonc{color:var(--gold)}}
+@media print{.top,.site-foot,.noprint,.ttabs,.crumb,.mnote,details.essentials{display:none!important}body{background:#fff!important}main{padding:0}.teodia,.teoq,.teon,.teobox,.teoej{break-inside:avoid}.teounit{break-before:page}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
@@ -1793,6 +1824,7 @@ function render() {
   updateBadge();
   if (route === 'empezar') { setNav('empezar'); return renderStart(); }
   if (route === 'estudiar') { setNav('estudiar'); return renderStudy(); }
+  if (/^teoria-u[1-4]$/.test(route)) { setNav('estudiar'); return renderTeoUnit(route.slice(-1)); }
   if (route === 'prueba1' || route === 'escribir') { setNav('prueba1'); return renderSecHub('p1'); }
   if (route === 'prueba2') { setNav('prueba2'); return renderSecHub('p2'); }
   if (route === 'anteriores-p1' || route === 'anteriores-p2') { SESS.ppw = route.slice(-2); setNav('anteriores'); return renderPast(); }
@@ -2049,7 +2081,7 @@ function renderHome() {
   const lastT = last && TOPICS.find(t => t.id === last);
   const unitBlock = u => {
     const ts = TOPICS.filter(t => t.u === +u), ls = Object.keys(LABS).filter(k => LABS[k].topic[0] === u);
-    return `<div class="unit-h"><h2>Unidad ${u} · ${UNITS[u]}</h2><span>${ts.length} subtemas${ls.length ? ' · ' + ls.length + (ls.length > 1 ? ' laboratorios' : ' laboratorio') : ''}</span></div>
+    return `<div class="unit-h"><h2>Unidad ${u} · ${UNITS[u]}</h2><span>${ts.length} subtemas${ls.length ? ' · ' + ls.length + (ls.length > 1 ? ' laboratorios' : ' laboratorio') : ''}${ts.some(t => TEO_IDS.includes(t.id)) ? ` · <button class="linkb" type="button" data-go="teoria-u${u}">Teoría de la unidad</button>` : ''}</span></div>
       <div class="tiles">${ts.map(tileTopic).join('')}${ls.map(tileLab).join('')}</div>`;
   };
   app.innerHTML = `
@@ -2087,10 +2119,10 @@ function renderHome() {
 const SESS = {}; // estado de sesión por tema
 function renderTopic(t) {
   store.set('last', t.id);
-  const S = SESS[t.id] = SESS[t.id] || { tab: 'prac', i: 0, res: {}, inst: {} };
+  const S = SESS[t.id] = SESS[t.id] || { tab: TEO_IDS.includes(t.id) ? 'teo' : 'prac', i: 0, res: {}, inst: {} };
   if (S.tab === 'rec') S.tab = 'dia';
   const R0 = topicRes(t.id), nEx = topicExamQs(t.id).length, nDia = t.labs.length + R0.atl.length + EXP.filter(x => x.st === t.id).length + EVA.filter(x => x.st === t.id).length;
-  const TT = [['ess', 'Lo esencial'], ['prac', 'Práctica', t.items.length], ['dia', 'Diagramas', nDia], ['def', 'Definiciones', R0.defs.length], ['ej', 'Ejemplos', R0.ej.length], ['calc', 'Fórmulas y cálculos', R0.forms.length + R0.calc.length], ['exam', 'Preguntas de examen', nEx]];
+  const TT = [...(TEO_IDS.includes(t.id) ? [['teo', 'Teoría']] : []), ['ess', 'Lo esencial'], ['prac', 'Práctica', t.items.length], ['dia', 'Diagramas', nDia], ['def', 'Definiciones', R0.defs.length], ['ej', 'Ejemplos', R0.ej.length], ['calc', 'Fórmulas y cálculos', R0.forms.length + R0.calc.length], ['exam', 'Preguntas de examen', nEx]];
   app.innerHTML = `
     <button class="crumb" type="button" data-go="inicio">← Todos los temas</button>
     <div class="eyebrow" style="margin-top:12px">Unidad ${t.u} · ${UNITS[t.u]} · Subtema ${t.code || t.id}</div>
@@ -2100,6 +2132,7 @@ function renderTopic(t) {
     </div>
     <div id="tbody"></div>`;
   app.querySelectorAll('[data-tt]').forEach(b => b.onclick = () => { S.tab = b.dataset.tt; renderTopic(t); });
+  if (S.tab === 'teo') return renderTopicTeo(t, $('#tbody'));
   if (S.tab === 'dia') return renderTopicDia(t, $('#tbody'));
   if (S.tab === 'exam') return renderTopicExam(t, $('#tbody'));
   if (['def', 'ej', 'calc'].includes(S.tab)) return renderTopicRes(t, $('#tbody'), S.tab);
@@ -9519,10 +9552,114 @@ window.addEventListener('fbx', () => {
   if (r.startsWith('profesor') || /^(escribir-ei|ei-[234]|empezar)$/.test(r)) { const y = window.scrollY; render(); window.scrollTo(0, y); }
 });
 
+/* =============== Teoría por subtema (archivos en teoria/<id>.json, se cargan solo al abrirlos) =============== */
+const TEO_IDS = ['2.5', '3.5'];
+const TEO = {};
+const teoLoad = id => TEO[id] ? Promise.resolve(TEO[id]) : fetch(`teoria/${id}.json`, { cache: 'no-cache' }).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }).then(d => (TEO[id] = d));
+const NEWS_SITE = 'https://hrivarolainsfran-sys.github.io/economia-noticias/';
+let NEWS_P = null;
+const newsLoad = () => NEWS_P || (NEWS_P = Promise.all([
+  fetch(NEWS_SITE + 'datos.json', { cache: 'no-cache' }).then(r => r.ok ? r.json() : {}).catch(() => null),
+  fetch(NEWS_SITE + 'archivo.json', { cache: 'no-cache' }).then(r => r.ok ? r.json() : []).catch(() => [])
+]).then(([d, a]) => {
+  if (!d) { NEWS_P = null; return null; }
+  const seen = new Set(), L = [];
+  (d.noticias || []).forEach(n => { if (!seen.has(n.id)) { seen.add(n.id); L.push({ ...n, href: NEWS_SITE + '#n-' + n.id, own: true }); } });
+  (Array.isArray(a) ? a : []).forEach(n => { if (n && n.id && !seen.has(n.id)) { seen.add(n.id); L.push({ ...n, href: n.url, own: false }); } });
+  return L.sort((x, y) => String(y.fecha).localeCompare(String(x.fecha)));
+}));
+const TCOL = { d: 'var(--teo-d)', s: 'var(--teo-s)', k: 'currentColor' };
+function teoSVG(D) {
+  const X = x => 50 + x * 27, Y = y => 228 - y * 20.5, f = n => Math.round(n * 10) / 10;
+  const out = [];
+  (D.rect || []).forEach(r => out.push(`<rect x="${f(X(r.x[0]))}" y="${f(Y(r.y[1]))}" width="${f(X(r.x[1]) - X(r.x[0]))}" height="${f(Y(r.y[0]) - Y(r.y[1]))}" fill="${r.c === 'gain' ? 'rgba(28,122,56,.28)' : 'rgba(192,57,43,.26)'}"></rect>`));
+  out.push(`<path d="M${X(0)} ${Y(10.3)}V${Y(0)}H${X(10.6)}" fill="none" stroke="currentColor" stroke-width="2"></path>`);
+  out.push(`<text x="${X(0) - 6}" y="${Y(10.3) - 8}" font-size="12" font-weight="700" fill="currentColor">${esc(D.y)}</text><text x="${X(10.6)}" y="${Y(0) + 30}" font-size="12" font-weight="700" fill="currentColor" text-anchor="end">${esc(D.x)}</text>`);
+  (D.pt || []).forEach(p => {
+    const [x, y] = p.p;
+    if (p.lx || p.ly) out.push(`<path d="M${f(X(0))} ${f(Y(y))}H${f(X(x))}V${f(Y(0))}" fill="none" stroke="currentColor" stroke-width="1.2" stroke-dasharray="4 4" opacity=".7"></path>`);
+    if (p.lx) out.push(`<text x="${f(X(x)) + (p.lxa === 'end' ? -2 : p.lxa === 'start' ? 2 : 0)}" y="${Y(0) + 15}" font-size="12" fill="currentColor" text-anchor="${p.lxa || 'middle'}">${esc(p.lx)}</text>`);
+    if (p.ly) out.push(`<text x="${X(0) - 5}" y="${f(Y(y)) + 4}" font-size="12" fill="currentColor" text-anchor="end">${esc(p.ly)}</text>`);
+  });
+  (D.l || []).forEach(l => {
+    const col = TCOL[l.c] || 'currentColor';
+    const dash = l.dash ? ' stroke-dasharray="7 5"' : '';
+    if (l.poly) { out.push(`<polyline points="${l.poly.map(([x, y]) => f(X(x)) + ',' + f(Y(y))).join(' ')}" fill="none" style="stroke:${col}" stroke-width="3" stroke-linejoin="round"${dash}></polyline>`); const [x, y] = l.lp || l.poly[l.poly.length - 1]; out.push(`<text x="${f(X(x)) + (l.lp ? 0 : 6)}" y="${f(Y(y)) + 4}" font-size="12" font-weight="700" style="fill:${col}">${esc(l.t)}</text>`); return; }
+    out.push(`<line x1="${f(X(l.a[0]))}" y1="${f(Y(l.a[1]))}" x2="${f(X(l.b[0]))}" y2="${f(Y(l.b[1]))}" style="stroke:${col}" stroke-width="3" stroke-linecap="round"${dash}></line>`);
+    const vert = Math.abs(l.a[0] - l.b[0]) < .01, top = l.a[1] > l.b[1] ? l.a : l.b, end = vert ? top : l.b;
+    if (l.lp) out.push(`<text x="${f(X(l.lp[0]))}" y="${f(Y(l.lp[1]))}" font-size="12" font-weight="700" style="fill:${col}">${esc(l.t)}</text>`);
+    else out.push(`<text x="${f(X(end[0])) + (vert ? -4 : 5)}" y="${f(Y(end[1])) + (vert ? -6 : 4)}" font-size="12" font-weight="700" style="fill:${col}" text-anchor="${vert ? 'middle' : 'start'}">${esc(l.t)}</text>`);
+  });
+  (D.ar || []).forEach(([a, b]) => out.push(`<line x1="${f(X(a[0]))}" y1="${f(Y(a[1]))}" x2="${f(X(b[0]))}" y2="${f(Y(b[1]))}" stroke="currentColor" stroke-width="2" marker-end="url(#teoArr)"></line>`));
+  (D.pt || []).forEach(p => { out.push(`<circle cx="${f(X(p.p[0]))}" cy="${f(Y(p.p[1]))}" r="4.5" fill="currentColor"></circle>`); if (p.t) out.push(`<text x="${f(X(p.p[0])) + 8}" y="${f(Y(p.p[1])) - 8}" font-size="12" font-weight="700" fill="currentColor">${esc(p.t)}</text>`); });
+  (D.n || []).forEach(n => out.push(`<text x="${f(X(n.p[0]))}" y="${f(Y(n.p[1]))}" font-size="12" fill="currentColor" font-style="italic">${esc(n.t)}</text>`));
+  return `<figure class="teodia"><svg viewBox="0 0 380 270" role="img" aria-label="${esc(D.t)}"><defs><marker id="teoArr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="currentColor"></path></marker></defs>${out.join('')}</svg><figcaption>${esc(D.t)}</figcaption></figure>`;
+}
+function teoHtml(d, t) {
+  const dias = ks => (ks || []).length ? `<div class="teodias">${[].concat(ks).map(k => d.dias[k] ? teoSVG(d.dias[k]) : '').join('')}</div>` : '';
+  const P = arr => (arr || []).map(x => `<p>${x}</p>`).join('');
+  return `<article class="teo">
+    <p class="teointro">${d.intro}</p>
+    <div class="teobox"><b>Qué vas a aprender</b><ul>${d.objetivos.map(o => `<li>${o}</li>`).join('')}</ul></div>
+    ${d.secciones.map(s => `<section class="teosec"><h3>${s.h}</h3>${P(s.p)}${s.flujo ? `<ol class="teoflow">${s.flujo.map(x => `<li>${x}</li>`).join('')}</ol>` : ''}${P(s.p2)}${dias(s.dia)}${s.caja ? `<div class="teocaja"><b>${s.caja.t}</b><div>${s.caja.html}</div></div>` : ''}</section>`).join('')}
+    <section class="teosec teoej"><h3>${d.ejemplo.t}</h3>${P(d.ejemplo.p)}${dias(d.ejemplo.dia)}
+      ${d.ejemplo.link ? `<p><button class="btn sm noprint" type="button" data-go="${d.ejemplo.link[0]}">${d.ejemplo.link[1]} →</button></p>` : ''}
+      ${(d.ejemplo.fuentes || []).length ? `<p class="small muted">Fuentes: ${d.ejemplo.fuentes.map(([n, u]) => `<a href="${u}" target="_blank" rel="noopener">${n}</a>`).join(' · ')}</p>` : ''}</section>
+    <section class="teosec"><h3>Noticias reales de este tema</h3><div class="teonews" data-tema="${d.id}"><p class="small muted">Cargando noticias de Economía en las Noticias…</p></div></section>
+    <section class="teosec"><h3>Errores frecuentes</h3><ul class="teoerr">${d.errores.map(e => `<li>${e}</li>`).join('')}</ul></section>
+    <div class="teobox teokc"><b>${d.kc.t}</b><p>${d.kc.p}</p></div>
+    <section class="teosec"><h3>Comprueba lo que entendiste</h3><div class="teochk">${d.check.map((c, i) => `<div class="teoq" data-q="${i}"><p><b>${i + 1}.</b> ${c.q}</p><div class="teoopts">${c.o.map((o, j) => `<button type="button" class="opt" data-o="${j}">${o}</button>`).join('')}</div><div class="teofb" aria-live="polite"></div></div>`).join('')}</div></section>
+    <section class="teosec noprint"><h3>Para seguir</h3><div class="rlinks">${(d.labs || []).filter(k => LABS[k]).map(k => `<button class="btn sm" type="button" data-go="lab-${k}">Laboratorio: ${LABS[k].name}</button>`).join('')}${(d.atlas || []).map(([id, n]) => `<a class="btn sm" href="${ATLAS}#${id}" target="_blank" rel="noopener">Atlas: ${n} ↗</a>`).join('')}</div></section>
+    <p class="small muted teocred">Economía IB · Prof. Econ. Hugo Rivarola</p>
+  </article>`;
+}
+function bindTeo(root) {
+  root.querySelectorAll('.teoq').forEach(q => {
+    const id = q.closest('.teo').querySelector('.teonews').dataset.tema, c = TEO[id].check[+q.dataset.q];
+    q.querySelectorAll('[data-o]').forEach(b => b.onclick = () => {
+      const ok = +b.dataset.o === c.a;
+      q.querySelectorAll('[data-o]').forEach(x => { x.classList.remove('right', 'wrong'); if (+x.dataset.o === c.a && ok) x.classList.add('right'); });
+      b.classList.add(ok ? 'right' : 'wrong');
+      q.querySelector('.teofb').innerHTML = `<div class="fb ${ok ? 'ok' : 'no'}" style="margin:8px 0 0"><b class="h">${ok ? 'Correcto' : 'Todavía no'}</b>${c.e}</div>`;
+    });
+  });
+  root.querySelectorAll('.teonews').forEach(box => {
+    const tema = box.dataset.tema, more = `<p><a class="btn sm" href="${NEWS_SITE}#tema-${tema.replace('.', '-')}" target="_blank" rel="noopener">Ver el tema en Economía en las Noticias ↗</a></p>`;
+    newsLoad().then(L => {
+      if (!L) { box.innerHTML = `<p class="small muted">No se pudieron cargar las noticias ahora. Puedes verlas directamente en Economía en las Noticias.</p>${more}`; return; }
+      const ns = L.filter(n => n.tema === tema).slice(0, 6);
+      box.innerHTML = ns.length ? `<p class="small muted">Noticias de Paraguay clasificadas en el subtema ${tema}. Léelas e identifica qué parte de la teoría ilustran.</p><div class="teonl">${ns.map(n => `<a class="teon" href="${esc(n.href)}" target="_blank" rel="noopener"><span class="small muted">${esc(n.medio || '')} · ${fdate(n.fecha)}</span><b>${esc(n.titulo)}</b><span class="small">${esc(String(n.resumen || '').split(/\.\s/)[0].replace(/\.$/, ''))}.</span><span class="small teonc">${n.own ? 'Ver el análisis con diagrama ↗' : 'Leer en el medio original ↗'}</span></a>`).join('')}</div>${more}` : `<p class="small muted">Todavía no hay noticias recientes clasificadas en este subtema. La actualización diaria de Economía en las Noticias las agregará cuando aparezcan.</p>${more}`;
+    });
+  });
+}
+function renderTopicTeo(t, B) {
+  B.innerHTML = '<p class="muted">Cargando la teoría…</p>';
+  teoLoad(t.id).then(d => {
+    B.innerHTML = `<div class="row noprint" style="justify-content:flex-end;margin:-4px 0 6px"><button class="btn sm" type="button" id="teoPrint">Imprimir o guardar en PDF</button></div>${teoHtml(d, t)}`;
+    $('#teoPrint').onclick = () => window.print();
+    bindTeo(B);
+  }).catch(() => { B.innerHTML = '<div class="fb no">No se pudo cargar la teoría. Revisa tu conexión y vuelve a intentarlo.</div>'; });
+}
+/* Teoría de toda una unidad, para leer seguida o imprimir */
+function renderTeoUnit(u) {
+  const ts = TOPICS.filter(t => t.u === +u), av = ts.filter(t => TEO_IDS.includes(t.id));
+  app.innerHTML = `<button class="crumb noprint" type="button" data-go="inicio">← Todos los temas</button>
+    <div class="eyebrow" style="margin-top:12px">Unidad ${u} · ${UNITS[u]}</div><h1>Teoría de la unidad ${u}</h1>
+    <div class="teoidx noprint">${ts.map(t => `<button type="button" class="teoit${TEO_IDS.includes(t.id) ? '' : ' off'}" ${TEO_IDS.includes(t.id) ? `data-go="${tid(t.id)}"` : 'disabled'}><b>${tcode(t.id)}</b> ${esc(t.name)}<span class="small muted">${TEO_IDS.includes(t.id) ? 'Teoría disponible' : 'Próximamente'}</span></button>`).join('')}</div>
+    ${av.length ? `<div class="row noprint" style="margin:14px 0"><button class="btn primary" type="button" id="teoPrintU">Imprimir o guardar en PDF toda la teoría disponible</button></div><div id="teoU"><p class="muted">Cargando…</p></div>` : '<p class="muted">La teoría de esta unidad todavía no está disponible.</p>'}`;
+  if (!av.length) return;
+  $('#teoPrintU').onclick = () => window.print();
+  Promise.all(av.map(t => teoLoad(t.id).then(d => [t, d]).catch(() => [t, null]))).then(L => {
+    const box = $('#teoU'); if (!box) return;
+    box.innerHTML = L.map(([t, d]) => d ? `<section class="teounit"><h2>${tcode(t.id)} ${esc(t.name)}</h2>${teoHtml(d, t)}</section>` : `<div class="fb no">No se pudo cargar ${tcode(t.id)}.</div>`).join('');
+    bindTeo(box);
+  });
+}
+
 /* =============== Estructura por componentes del IB: Prueba 1, Prueba 2 y Evaluación Interna =============== */
 function navOf(r) {
   if (r === 'empezar') return 'empezar';
-  if (/^(inicio|labs|lab-|formulas|estudiar)$|^lab-|^t\d/.test(r)) return 'estudiar';
+  if (/^(inicio|labs|lab-|formulas|estudiar)$|^lab-|^t\d|^teoria-u/.test(r)) return 'estudiar';
   if (/^(escribir-ei|escribir-conceptos)$|^ei-/.test(r)) return 'escribir-ei';
   if (r === 'anteriores') return ['p2', 'def', 'calc'].includes(SESS.ppw) ? 'prueba2' : 'prueba1';
   if (/^(prueba2|escribir-p2|escribir-def|escribir-calc|escribir-ej|anteriores-p2)$|^p2-|^calc-/.test(r)) return 'prueba2';

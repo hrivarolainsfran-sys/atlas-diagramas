@@ -1,0 +1,97 @@
+{
+  "id": "3.5",
+  "titulo": "Política monetaria",
+  "intro": "Cuando la inflación se dispara o la economía se frena, todos miran al Banco Central del Paraguay (BCP). Con una sola herramienta, la <b>tasa de interés</b>, el banco central puede enfriar o reactivar toda la economía. Este tema explica cómo lo hace, por qué funciona y cuáles son sus límites.",
+  "objetivos": [
+    "Explicar los objetivos de la política monetaria y el papel del banco central.",
+    "Distinguir la tasa de interés nominal y la real, y calcular la tasa real.",
+    "Explicar el mecanismo de transmisión de la política monetaria expansiva y contractiva con el diagrama de DA y OA.",
+    "Evaluar las fortalezas y las limitaciones de la política monetaria."
+  ],
+  "secciones": [
+    {
+      "h": "1. Qué es la política monetaria",
+      "p": [
+        "La <b>política monetaria</b> es el uso que hace el banco central de las <b>tasas de interés</b> y de la <b>oferta monetaria</b> para influir en la demanda agregada (DA) y alcanzar los objetivos macroeconómicos.",
+        "Junto con la política fiscal, es una política de <b>gestión de la demanda</b>: actúa sobre la DA, en particular sobre el consumo (C) y la inversión (I).",
+        "Sus objetivos son los de la macroeconomía: <b>estabilidad de precios</b> (inflación baja y estable), <b>bajo desempleo</b>, <b>crecimiento económico</b> sostenible y una situación externa equilibrada."
+      ]
+    },
+    {
+      "h": "2. El banco central y sus herramientas",
+      "p": [
+        "En Paraguay la política monetaria la conduce el <b>Banco Central del Paraguay (BCP)</b>, que trabaja con un esquema de <b>metas de inflación</b>: anuncia una meta y ajusta la tasa de interés para que la inflación se acerque a ella. Desde 2025 la meta es del <b>3,5 %</b>, con un rango de tolerancia de ±2 puntos (antes era del 4 %).",
+        "Su herramienta principal es la <b>tasa de política monetaria (TPM)</b>: la tasa de referencia a la que el BCP presta o toma fondos de los bancos. Cuando la TPM cambia, los bancos trasladan ese cambio a las tasas de sus préstamos y depósitos.",
+        "Otras herramientas: las <b>operaciones de mercado abierto</b> (compra y venta de títulos, como las letras de regulación monetaria, para retirar o inyectar dinero), el <b>encaje legal</b> (el porcentaje de los depósitos que los bancos deben guardar sin prestar) y, en casos excepcionales, la <b>flexibilización cuantitativa</b>.",
+        "Muchos países, entre ellos Paraguay, tienen un banco central <b>independiente</b> del gobierno, para que las decisiones no respondan a presiones políticas de corto plazo (por ejemplo, bajar las tasas antes de una elección)."
+      ]
+    },
+    {
+      "h": "3. Tasa de interés nominal y real",
+      "p": [
+        "La <b>tasa nominal</b> es la que anuncia el banco. La <b>tasa real</b> descuenta la inflación y muestra el rendimiento o el costo verdadero del dinero.",
+        "Si un depósito paga 6 % y la inflación es 4 %, la tasa real es 6 − 4 = <b>2 %</b>: el ahorro gana poder de compra. Si la inflación fuera 8 %, la tasa real sería −2 %: el ahorro <b>pierde</b> poder de compra aunque el banco pague intereses."
+      ],
+      "caja": { "t": "Fórmula", "html": "Tasa de interés real ≈ tasa de interés nominal − tasa de inflación" }
+    },
+    {
+      "h": "4. Política monetaria contractiva (para bajar la inflación)",
+      "p": [
+        "Cuando la inflación supera la meta, el banco central <b>sube la TPM</b>. El efecto pasa por una cadena de pasos, llamada <b>mecanismo de transmisión</b>:"
+      ],
+      "flujo": ["El BCP sube la TPM", "Los bancos suben las tasas de préstamos y depósitos", "Endeudarse es más caro y ahorrar rinde más", "Bajan el consumo (C) y la inversión (I)", "La DA se desplaza a la izquierda (DA₁ → DA₂)", "Baja la presión sobre los precios: cae la inflación"],
+      "p2": [
+        "En el diagrama, la economía empieza con una <b>brecha inflacionaria</b>: el PIB real (Y₁) está por encima del pleno empleo (Yfe) y el nivel general de precios (NGP) es alto. Al desplazarse la DA a la izquierda, el PIB real vuelve a Yfe y el NGP baja de P₁ a P₂ (en la práctica, sube más despacio)."
+      ],
+      "dia": ["contractiva"]
+    },
+    {
+      "h": "5. Política monetaria expansiva (para reactivar la economía)",
+      "p": [
+        "Cuando la economía está en recesión y el desempleo sube, el banco central <b>baja la TPM</b>. La cadena funciona al revés:"
+      ],
+      "flujo": ["El BCP baja la TPM", "Los bancos bajan las tasas", "Endeudarse es más barato y ahorrar rinde menos", "Suben el consumo (C) y la inversión (I)", "La DA se desplaza a la derecha (DA₁ → DA₂)", "Sube el PIB real y baja el desempleo"],
+      "p2": [
+        "En el diagrama, la economía parte de una <b>brecha deflacionaria</b> (recesiva): el PIB real (Y₁) está por debajo de Yfe. Al aumentar la DA, el PIB real se acerca a Yfe y baja el desempleo cíclico, con algo de aumento del NGP."
+      ],
+      "dia": ["expansiva"]
+    },
+    {
+      "h": "6. Evaluación: fortalezas y limitaciones",
+      "p": [
+        "<b>Fortalezas</b><br>— <b>Rapidez de decisión:</b> el banco central puede cambiar la TPM en su reunión mensual, sin pasar por el Congreso, como pasa con el presupuesto.<br>— <b>Gradualidad:</b> se puede ajustar en pasos pequeños (0,25 puntos) según cómo evolucionan los datos.<br>— <b>Independencia:</b> reduce el riesgo de decisiones con fines políticos y da credibilidad a la meta de inflación.<br>— No aumenta la deuda pública, a diferencia de la política fiscal expansiva.",
+        "<b>Limitaciones</b><br>— <b>Rezagos:</b> el efecto completo de un cambio de tasa puede tardar entre 12 y 24 meses en sentirse; el banco puede pasarse o quedarse corto.<br>— <b>Costo en crecimiento y empleo:</b> subir mucho la tasa para bajar la inflación puede frenar la economía y aumentar el desempleo.<br>— <b>Confianza:</b> en una recesión, aunque las tasas bajen, las empresas y las familias pueden no querer endeudarse (expectativas pesimistas).<br>— <b>Tasas cerca de cero:</b> si ya son muy bajas, queda poco margen para bajarlas más.<br>— <b>Inflación de costos:</b> si la inflación viene de la oferta (combustible, sequía), subir la tasa baja la DA pero no ataca la causa, y agrava la caída del PIB.<br>— <b>Transmisión incompleta:</b> los bancos pueden no trasladar del todo el cambio de la TPM; además, en una economía con mucha informalidad y crédito en dólares, parte de la economía reacciona menos a la tasa del BCP.<br>— <b>Tipo de cambio:</b> subir la tasa atrae capitales y puede <b>apreciar</b> el guaraní, lo que perjudica a los exportadores."
+      ]
+    }
+  ],
+  "ejemplo": {
+    "t": "Ejemplo de Paraguay: la inflación de 2021–2022",
+    "p": [
+      "Tras la pandemia, la inflación en Paraguay subió con fuerza por la suba internacional del petróleo y los alimentos, la sequía y la recuperación de la demanda. En abril de 2022 llegó al <b>11,8 % interanual</b>, el nivel más alto en unos catorce años, muy por encima de la meta del BCP (4 % en ese momento).",
+      "<b>Respuesta del BCP:</b> aplicó una política monetaria <b>contractiva</b>. Subió la TPM en varias reuniones seguidas hasta llevarla a <b>8,50 %</b> a mediados de 2022, su nivel más alto en más de diez años.",
+      "<b>Con la teoría:</b> la suba de la TPM encarece el crédito, frena el consumo y la inversión y desplaza la DA a la izquierda. La inflación empezó a bajar en la segunda mitad de 2022 y siguió bajando en 2023, lo que permitió al BCP empezar a <b>bajar</b> la tasa.",
+      "<b>Para evaluar:</b> buena parte de esa inflación venía de la <b>oferta</b> (petróleo, sequía), algo que la tasa de interés no puede corregir. ¿Cuánto de la baja de la inflación se debió a la política monetaria y cuánto a que bajaron los precios internacionales? Esa es la discusión que conviene plantear en una respuesta de 15 puntos."
+    ],
+    "dia": "contractiva",
+    "fuentes": [["Bloomberg: Paraguay sube la tasa a 8,5 % (2022)", "https://www.bnnbloomberg.ca/paraguay-raises-benchmark-interest-rate-to-11-year-high-of-8-5-1.1822537.amp.html"], ["ABC Color: el BCP reduce su meta de inflación a 3,5 % (2024)", "https://www.abc.com.py/negocios/2024/12/16/inflacion-bcp-estima-que-la-presion-sobre-precios-sera-menor-y-redujo-su-meta-luego-de-7-anos/"]]
+  },
+  "errores": [
+    "Decir que el banco central «baja los precios»: lo que hace es reducir la DA para que los precios suban <b>más despacio</b>.",
+    "Mover la OA en lugar de la DA: la política monetaria actúa sobre la <b>demanda agregada</b>.",
+    "Confundir la política monetaria (banco central, tasas) con la fiscal (gobierno, gasto e impuestos).",
+    "Olvidar los rezagos: el efecto de un cambio de tasa no es inmediato."
+  ],
+  "check": [
+    { "q": "La inflación está por encima de la meta. ¿Qué haría el BCP?", "o": ["Bajar la TPM", "Subir la TPM", "Aumentar el gasto público", "Subir los aranceles"], "a": 1, "e": "Una política contractiva sube la TPM para encarecer el crédito, reducir C e I y bajar la DA." },
+    { "q": "Un plazo fijo paga 7 % y la inflación es 9 %. ¿Cuál es la tasa de interés real?", "o": ["+16 %", "+2 %", "−2 %", "−16 %"], "a": 2, "e": "Tasa real ≈ 7 − 9 = −2 %: el ahorro pierde poder de compra." },
+    { "q": "En el diagrama de DA y OA, una baja de la TPM…", "o": ["desplaza la OACP a la derecha", "desplaza la DA a la derecha", "desplaza la DA a la izquierda", "desplaza la OALP a la izquierda"], "a": 1, "e": "Tasas más bajas aumentan el consumo y la inversión, que son componentes de la DA." },
+    { "q": "¿Cuál es una limitación de la política monetaria contractiva?", "o": ["Necesita aprobación del Congreso", "Puede reducir el crecimiento y aumentar el desempleo", "Aumenta la deuda pública", "Desplaza la OALP a la derecha"], "a": 1, "e": "Al reducir la DA, también cae la producción y puede subir el desempleo cíclico." }
+  ],
+  "kc": { "t": "Concepto clave: interdependencia", "p": "Un cambio en la TPM no se queda en los préstamos: mueve el consumo, la inversión, el tipo de cambio, el precio de los bonos y hasta las exportaciones. Toda la macroeconomía está conectada, y algunas consecuencias de una decisión del BCP son buscadas y otras no. Pregunta para pensar: si el BCP sube la tasa y el guaraní se aprecia, ¿quién gana y quién pierde en Paraguay?" },
+  "atlas": [["politica-monetaria", "Política monetaria en el diagrama DA y OA"], ["brecha-deflacionaria", "Brecha deflacionaria"]],
+  "labs": ["adas"],
+  "dias": {
+    "contractiva": { "t": "Política monetaria contractiva", "x": "PIB real", "y": "NGP", "l": [{ "a": [6, 0.4], "b": [6, 9.6], "c": "k", "t": "OALP" }, { "a": [1, 2], "b": [9.4, 8.3], "c": "s", "t": "OACP" }, { "a": [5.5, 9.75], "b": [9.75, 5.5], "c": "d", "t": "DA₁" }, { "a": [2, 9.75], "b": [9.5, 2.25], "c": "d", "t": "DA₂" }], "pt": [{ "p": [8, 7.25], "lx": "Y₁", "ly": "P₁" }, { "p": [6, 5.75], "lx": "Yfe", "ly": "P₂" }], "ar": [[[8.6, 8.4], [7.0, 6.9]]] },
+    "expansiva": { "t": "Política monetaria expansiva", "x": "PIB real", "y": "NGP", "l": [{ "a": [6, 0.4], "b": [6, 9.6], "c": "k", "t": "OALP" }, { "a": [1, 2], "b": [9.4, 8.3], "c": "s", "t": "OACP" }, { "a": [0.5, 7.75], "b": [7.75, 0.5], "c": "d", "t": "DA₁" }, { "a": [2, 9.75], "b": [9.5, 2.25], "c": "d", "t": "DA₂" }], "pt": [{ "p": [4, 4.25], "lx": "Y₁", "ly": "P₁" }, { "p": [6, 5.75], "lx": "Yfe", "ly": "P₂" }], "ar": [[[2.6, 4.9], [3.9, 6.1]]] }
+  }
+}
