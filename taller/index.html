@@ -792,6 +792,16 @@ td.late{color:var(--bad);font-weight:700}td.soon{color:var(--warn-ink);font-weig
 :root[data-theme="dark"] .pc-learn .pci,:root[data-theme="dark"] .pc-p1 .pci,:root[data-theme="dark"] .stile .ico{color:var(--gold)}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .pc-learn .pci,:root:not([data-theme="light"]) .pc-p1 .pci,:root:not([data-theme="light"]) .stile .ico{color:var(--gold)}}
 @media (max-width:480px){.hct{font-size:23px}}
+/* v17: PD1 / PD2 */
+.pdpick{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin:12px 0 4px}
+.pdl{font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.pdopts{display:flex;flex-wrap:wrap;gap:6px}
+.pdopts button{display:grid;gap:0;text-align:left;border:1.5px solid var(--rule);background:var(--sheet);color:var(--ink);border-radius:10px;padding:6px 12px;min-height:44px}
+.pdopts button b{font-size:15px}.pdopts button span{font-size:12px;color:var(--muted)}
+.pdopts button[aria-pressed="true"]{border-color:var(--navy-2);background:var(--navy-2);color:#fff}.pdopts button[aria-pressed="true"] span{color:rgba(255,255,255,.85)}
+.pdpick.big{background:var(--gold-soft);border:1px solid var(--gold);border-radius:12px;padding:12px 14px}
+.pdpick.big .pdl{color:var(--ink);font-size:15px;letter-spacing:0;text-transform:none}
+.pdnote{width:100%}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
@@ -1709,6 +1719,28 @@ CARDS.push(
   [4, 'Sustitución de importaciones', 'Estrategia de producir localmente lo que antes se importaba, con protección.']
 );
 
+
+/* =============== PD1 / PD2 =============== */
+const PD_U = { '1': [1, 2], '2': [3, 4] };
+const pdCur = () => { const v = String(store.get('pd', '') || ''); return PD_U[v] ? v : ''; };
+const pdUnits = () => PD_U[pdCur()] || [1, 2, 3, 4];
+const unitOf = v => { const m = String(v ?? '').match(/\d/); return m ? +m[0] : 0; };
+const inPD = v => /^Unidad/.test(String(v)) ? (String(v).match(/\d/g) || []).some(d => pdUnits().includes(+d)) : pdUnits().includes(unitOf(v));
+const pdShort = () => pdCur() ? 'PD' + pdCur() : 'Todas';
+const pdDef = () => pdCur() ? 'pd' : 'all';
+const pdOpt = () => pdCur() ? [['pd', pdShort()]] : [];
+const uMatch = (U, u) => U === 'all' || (U === 'pd' ? inPD(u) : unitOf(u) === +U);
+function pdPick(big) {
+  const c = pdCur(), raw = String(store.get('pd', '') || ''), opts = [['1', 'PD1', 'Unidades 1 y 2'], ['2', 'PD2', 'Unidades 3 y 4'], ['todo', 'Todo', 'Las cuatro unidades']];
+  return `<div class="pdpick${big && !raw ? ' big' : ''}"><span class="pdl">${!raw && big ? '¿En qué curso estás?' : 'Tu curso'}</span><div class="pdopts" role="group" aria-label="Curso">${opts.map(([v, n, d]) => `<button type="button" data-pd="${v}" aria-pressed="${raw === v}"><b>${n}</b><span>${d}</span></button>`).join('')}</div>${c === '2' ? '<span class="small muted pdnote">En los exámenes finales entran las cuatro unidades: elige «Todo» para repasar también las Unidades 1 y 2.</span>' : ''}</div>`;
+}
+document.addEventListener('click', e => {
+  const b = e.target.closest('[data-pd]'); if (!b) return;
+  store.set('pd', b.dataset.pd);
+  SESS.calcU = SESS.dU = SESS.eU = null; FC.f = pdCur() ? 'pd' : 0; FC.order = null; EX.pdApplied = false;
+  const y = window.scrollY; render(); window.scrollTo(0, y);
+});
+
 /* =============== progreso =============== */
 const PROG = store.get('prog', { t: {}, labs: {}, exam: null, known: [] });
 const saveProg = () => store.set('prog', PROG);
@@ -1866,7 +1898,7 @@ function renderStart() {
     ec && ['repasar', `Repasar ${ec} ${ec === 1 ? 'error pendiente' : 'errores pendientes'}`, 'De tus últimas prácticas'],
     weak && ['escribir-def', `Reforzar ${weak} ${weak === 1 ? 'definición floja' : 'definiciones flojas'}`, 'Prueba 2 · parte (a)']
   ].filter(Boolean);
-  const main = resume[0] || ['inicio', 'Elige un tema para empezar', `${TOPICS.length} subtemas de las cuatro unidades`];
+  const main = resume[0] || ['inicio', 'Elige un tema para empezar', pdCur() ? `Subtemas de las Unidades ${pdUnits().join(' y ')}` : `${TOPICS.length} subtemas de las cuatro unidades`];
   /* Avisos: devoluciones nuevas y plazos cercanos */
   const alerts = [];
   if (FBX() && !isTeacher() && EIR.st === 'ok') {
@@ -1880,10 +1912,11 @@ function renderStart() {
   }
   /* Avance de cada camino */
   const pct = (a, b) => b ? Math.round(a / b * 100) : 0;
-  const tStarted = TOPICS.filter(t => topicDone(t.id) > 0).length;
+  const TP = TOPICS.filter(t => inPD(t.u)), tStarted = TP.filter(t => topicDone(t.id) > 0).length;
   const p1Done = topicDone('cmd') + EXP.filter(x => expState(x).done).length + EVA.filter(c => evaState(c).done).length + Math.min(P1S.hist.length, P1.length);
   const p1Tot = DRILLS.cmd.items.length + EXP.length + EVA.length + P1.length;
-  const p2Done = Object.keys(DEFST).length + new Set(P2H.map(h => h.id)).size, p2Tot = DEFS.length + P2.length;
+  const DP = DEFS.filter(d => inPD(d[0])), PP = P2.filter(c => inPD(c.u));
+  const p2Done = DP.filter(d => DEFST[defKey(d)]).length + new Set(P2H.filter(h => PP.some(c => c.id === h.id)).map(h => h.id)).size, p2Tot = DP.length + PP.length;
   const step = (n, go, nm, d, tag) => `<li><button type="button" class="pstep" data-go="${go}"><span class="psn">${n}</span><span class="pst"><b>${nm}</b><span>${d}</span></span>${tag ? `<span class="tag">${tag}</span>` : ''}<span class="psa" aria-hidden="true">→</span></button></li>`;
   const card = (k, title, sub, prog, meta, cta, ctaGo, steps, extra = '') => `<article class="pcard pc-${k}">
       <div class="pch"><span class="pci">${ico(k)}</span><div><h2>${title}</h2><p>${sub}</p></div></div>
@@ -1905,13 +1938,14 @@ function renderStart() {
       <div class="eyebrow">Economía IB · Nivel Medio</div>
       <h1>${name ? `Hola, ${esc(name)}. ¿Qué hacemos hoy?` : '¿Qué quieres hacer hoy?'}</h1>
       <p class="lede">Elige un objetivo y sigue los pasos en orden. ${FBX() ? 'Tu avance se guarda en la nube con tu cuenta del colegio.' : 'Tu avance queda guardado en este dispositivo; <b>entra con tu correo del colegio</b> (arriba) para guardarlo en la nube.'}</p>
+      ${pdPick(true)}
     </div>
     <button class="hcont" type="button" data-go="${main[0]}"><span class="hcl">${resume.length ? 'Continúa donde quedaste' : 'Para empezar'}</span><span class="hct">${main[1]}</span><span class="hcs">${main[2]}</span><span class="hcg">${resume.length ? 'Seguir' : 'Ver temas'} →</span></button>
   </section>
   ${resume.length > 1 ? `<div class="hmore"><span class="small muted">También pendiente:</span>${resume.slice(1, 4).map(([g, l]) => `<button class="linkb" type="button" data-go="${g}">${l}</button>`).join('')}</div>` : ''}
   ${alerts.length ? `<section class="halerts" aria-label="Avisos">${alerts.slice(0, 4).map(([cl, ic, g, t, d]) => `<button class="halert ${cl}" type="button" data-go="${g}">${ico(ic)}<span><b>${t}</b><span>${d}</span></span></button>`).join('')}</section>` : ''}
   <section class="pcards">
-    ${card('learn', 'Aprender un tema', `${TOPICS.length} subtemas de las cuatro unidades`, pct(tStarted, TOPICS.length), `${tStarted} de ${TOPICS.length} subtemas empezados`, 'Elegir subtema', 'inicio', [
+    ${card('learn', 'Aprender un tema', pdCur() ? `${TP.length} subtemas de las Unidades ${pdUnits().join(' y ')}` : `${TOPICS.length} subtemas de las cuatro unidades`, pct(tStarted, TP.length), `${tStarted} de ${TP.length} subtemas empezados`, 'Elegir subtema', 'inicio', [
       step(1, lastT ? tid(lastT.id) : 'inicio', 'Elige el subtema', lastT ? `Seguiste por última vez con ${tcode(lastT.id)}.` : 'Para la clase de esta semana o para ponerte al día.'),
       step(2, lastT ? tid(lastT.id) : 'inicio', 'Lee «Lo esencial» y haz la práctica', 'Ejercicios con corrección inmediata y explicación de cada respuesta.'),
       step(3, lastT ? tid(lastT.id) : 'inicio', 'Abre «Recursos» del subtema', 'Definiciones, ejemplos reales, fórmulas y diagramas del Atlas.'),
@@ -1922,7 +1956,7 @@ function renderStart() {
       step(3, 'escribir-evaluar', 'Escribe la parte (b)', 'Pros y contras, plazos, partes interesadas y juicio final.'),
       step(4, 'escribir-p1', 'Haz un simulacro con reloj', '5 min de lectura y 1 h 15 min; te autocorriges con las bandas.'),
       step(5, 'p1-modelo', 'Mira respuestas modelo por nivel', 'La misma pregunta respondida en tres niveles.')])}
-    ${card('p2', 'Prueba 2 · Datos', 'Definiciones, cálculos, diagramas y evaluación', pct(p2Done, p2Tot), `Definiciones ${Object.keys(DEFST).length}/${DEFS.length} · ${calcT[1] ? `Cálculos ${calcT[0]}/${calcT[1]} bien` : 'Cálculos sin empezar'} · Casos ${new Set(P2H.map(h => h.id)).size}/${P2.length}`, 'Practicar', 'escribir-def', [
+    ${card('p2', 'Prueba 2 · Datos', 'Definiciones, cálculos, diagramas y evaluación', pct(p2Done, p2Tot), `Definiciones ${DP.filter(d => DEFST[defKey(d)]).length}/${DP.length} · ${calcT[1] ? `Cálculos ${calcT[0]}/${calcT[1]} bien` : 'Cálculos sin empezar'} · Casos ${new Set(P2H.filter(h => PP.some(c => c.id === h.id)).map(h => h.id)).size}/${PP.length}`, 'Practicar', 'escribir-def', [
       step(1, 'escribir-def', 'Aprende las definiciones', 'Parte (a): 2 puntos cada una.'),
       step(2, 'escribir-calc', 'Practica los cálculos', 'Los tipos del Nivel Medio, con números nuevos cada vez.'),
       step(3, 'escribir-ej', 'Prepara tus ejemplos reales', `Para la (g): país, año, dato e impacto. ${EJ.length} ejemplos.`),
@@ -1952,12 +1986,12 @@ function renderStart() {
 }
 /* Estudiar: temas, laboratorios, fórmulas y Atlas */
 function renderStudy() {
-  const tStarted = TOPICS.filter(t => topicDone(t.id) > 0).length;
+  const TP = TOPICS.filter(t => inPD(t.u)), tStarted = TP.filter(t => topicDone(t.id) > 0).length;
   const tile = (k, go, t, d, ext) => `<${ext ? `a href="${go}" target="_blank" rel="noopener"` : `button type="button" data-go="${go}"`} class="stile">${ico(k)}<span><b>${t}${ext ? ' ↗' : ''}</b><span>${d}</span></span></${ext ? 'a' : 'button'}>`;
   app.innerHTML = `<div class="eyebrow">Economía IB · Nivel Medio</div><h1>Estudiar</h1>
-    <p class="lede">Todo el contenido del curso: la teoría de cada subtema, los diagramas para practicar y las fórmulas.</p>
+    <p class="lede">Todo el contenido del curso: la teoría de cada subtema, los diagramas para practicar y las fórmulas.</p>${pdPick()}
     <div class="stiles">
-      ${tile('learn', 'inicio', 'Temas', `${TOPICS.length} subtemas de las cuatro unidades · ${tStarted} empezados`)}
+      ${tile('learn', 'inicio', 'Temas', `${TP.length} subtemas${pdCur() ? ` de ${pdShort()}` : ' de las cuatro unidades'} · ${tStarted} empezados`)}
       ${tile('lab', 'labs', 'Laboratorios', `${Object.keys(LABS).length} diagramas interactivos y un constructor de diagramas`)}
       ${tile('fx', 'formulas', 'Fórmulas', 'Hoja de fórmulas del Nivel Medio con ejemplos')}
       ${tile('map', 'https://hrivarolainsfran-sys.github.io/atlas-diagramas/', 'Atlas de diagramas', 'Todos los diagramas del curso explicados', true)}
@@ -1987,7 +2021,7 @@ function renderHome() {
   <section class="hero">
     <div>
       <div class="eyebrow">Economía IB</div>
-      <h1>Practica las cuatro unidades del curso</h1>
+      <h1>${pdCur() ? `Practica las Unidades ${pdUnits().join(' y ')} · ${pdShort()}` : 'Practica las cuatro unidades del curso'}</h1>
       <p class="lede">Sigue la ruta en orden: aprende cada subtema, practica sus diagramas, escribe respuestas como en el examen y repasa tus errores.</p>
       <div class="row">
         ${lastT ? `<button class="btn primary" type="button" data-go="${tid(lastT.id)}">Seguir con ${tcode(lastT.id)} ${esc(lastT.name)}</button>` : `<button class="btn primary" type="button" data-go="t1-1">Empezar por 1.1</button>`}
@@ -1999,6 +2033,7 @@ function renderHome() {
       <div class="small muted">${done} de ${TOTAL_ITEMS} ejercicios resueltos${PROG.exam ? ` · Mejor examen: ${PROG.exam.best}/${PROG.exam.of}` : ''}</div>
     </div>
   </section>
+  ${pdPick()}
   <section class="route" aria-label="Cómo usar el taller">
     <button class="rcard" type="button" data-scroll="temas"><span class="rn">1</span><b>Aprende</b><span class="d">Lo esencial y ejercicios con corrección inmediata en los ${TOPICS.length} subtemas.</span></button>
     <button class="rcard" type="button" data-go="labs"><span class="rn">2</span><b>Diagramas</b><span class="d">${Object.keys(LABS).length} laboratorios y un constructor para crear tus propios diagramas.</span></button>
@@ -2009,7 +2044,7 @@ function renderHome() {
     <button class="xcard" type="button" data-go="juegos"><b>Juegos</b><span>${Object.values(JUEGOS_ACTIVOS).some(Boolean) ? 'Siete juegos: Contrarreloj, Memoria, ¿Quién quiere ser economista?, Jeopardy, Battle City, Grand Prix y Tetris del Ciclo Económico.' : 'Próximamente: juegos para repasar el curso.'}</span></button>
   </section>
   ${mediaNote()}
-  <div id="temas">${Object.keys(UNITS).map(unitBlock).join('')}</div>
+  <div id="temas">${Object.keys(UNITS).filter(inPD).map(unitBlock).join('')}</div>
   <p class="foot">Contenidos alineados al Nivel Medio: no incluye utilidad marginal, efectos ingreso y sustitución, multiplicador keynesiano, curva de Phillips ni la condición Marshall-Lerner. Los datos numéricos de los ejercicios son hipotéticos. El progreso se guarda solo en este navegador.</p>`;
 }
 
@@ -2298,7 +2333,8 @@ const sw = cls => `<span class="sw" style="background:var(${cls})"></span>`;
 function renderLabs() {
   app.innerHTML = `<div class="eyebrow">Diagramas interactivos</div><h1>Laboratorios</h1><p class="lede">Cada laboratorio usa los códigos de color del curso: demanda en azul, oferta en rojo, incidencia del consumidor en amarillo, del productor en verde y pérdida de bienestar en azul claro.</p>
   <button class="dbcta" type="button" data-go="lab-crear"><span class="code">+</span><span><b>Crea tu propio diagrama</b><span class="ds">Plantillas de todos los diagramas del curso, elementos que puedes mover y editar, y descarga como imagen.</span></span><span class="btn primary sm">Abrir</span></button>
-  ${Object.keys(UNITS).map(u => { const ls = Object.keys(LABS).filter(k => LABS[k].topic[0] === u); return ls.length ? `<div class="unit-h"><h2>Unidad ${u} · ${UNITS[u]}</h2></div><div class="tiles">${ls.map(tileLab).join('')}</div>` : ''; }).join('')}`;
+  ${pdPick()}
+  ${Object.keys(UNITS).filter(inPD).map(u => { const ls = Object.keys(LABS).filter(k => LABS[k].topic[0] === u); return ls.length ? `<div class="unit-h"><h2>Unidad ${u} · ${UNITS[u]}</h2></div><div class="tiles">${ls.map(tileLab).join('')}</div>` : ''; }).join('')}`;
 }
 const ATLAS = 'https://hrivarolainsfran-sys.github.io/atlas-diagramas/';
 const ATLAS_OF = {
@@ -3985,6 +4021,7 @@ function labExt(svg, pan, leg) {
 /* =============== examen rápido =============== */
 const EX = { sel: TOPICS.map(t => t.id), qs: null, i: 0, ans: [], n: 10 };
 function renderExam() {
+  if (!EX.pdApplied) { EX.pdApplied = true; if (pdCur()) EX.sel = TOPICS.filter(t => inPD(t.u)).map(t => t.id); }
   if (EX.qs && EX.i < EX.qs.length) return examQ();
   if (EX.qs && EX.i >= EX.qs.length) return examResult();
   app.innerHTML = `<div class="eyebrow">Repasar</div><h1>Examen rápido</h1>${repTabs('examen')}
@@ -4042,15 +4079,15 @@ function examResult() {
 }
 
 /* =============== tarjetas =============== */
-const FC = { f: 0, order: null, i: 0, flip: false };
+const FC = { f: String(store.get('pd', '') || '') in { '1': 1, '2': 1 } ? 'pd' : 0, order: null, i: 0, flip: false };
 function renderCards() {
-  const list = CARDS.map((c, k) => k).filter(k => !FC.f || CARDS[k][0] === FC.f);
+  const list = CARDS.map((c, k) => k).filter(k => !FC.f || (FC.f === 'pd' ? inPD(CARDS[k][0]) : CARDS[k][0] === FC.f));
   if (!FC.order || FC.order.some(k => !list.includes(k)) || FC.order.length !== list.length) { FC.order = list; FC.i = 0; }
   const k = FC.order[FC.i], c = CARDS[k];
   const known = PROG.known.filter(x => list.includes(x)).length;
   app.innerHTML = `<div class="eyebrow">Repasar</div><h1>Tarjetas</h1>${repTabs('tarjetas')}
     <p class="lede">Lee el concepto, intenta definirlo en voz alta y luego da vuelta la tarjeta.</p>
-    <div class="row" style="margin-bottom:14px">${segBtns('ff', [['0', 'Todas'], ['1', 'Unidad 1'], ['2', 'Unidad 2'], ['3', 'Unidad 3'], ['4', 'Unidad 4']], String(FC.f))}<button class="btn sm" type="button" id="mix">Mezclar</button><span class="muted small">Ya las sé: ${known} de ${list.length}</span></div>
+    <div class="row" style="margin-bottom:14px">${segBtns('ff', [['0', 'Todas'], ...pdOpt(), ['1', 'Unidad 1'], ['2', 'Unidad 2'], ['3', 'Unidad 3'], ['4', 'Unidad 4']], String(FC.f))}<button class="btn sm" type="button" id="mix">Mezclar</button><span class="muted small">Ya las sé: ${known} de ${list.length}</span></div>
     <button class="flash" type="button" id="card" aria-live="polite">
       <span class="cue">${FC.flip ? 'Definición' : 'Unidad ' + c[0] + ' · Toca para ver la definición'}</span>
       <span class="term">${c[1]}</span>${FC.flip ? `<span class="def">${c[2]}</span>` : ''}
@@ -4059,7 +4096,7 @@ function renderCards() {
       <span class="muted small" style="font-variant-numeric:tabular-nums">${FC.i + 1} / ${FC.order.length}${PROG.known.includes(k) ? ' · ✓ la sé' : ''}</span>
       <div class="row"><button class="btn sm" type="button" id="pv">← Anterior</button><button class="btn sm" type="button" id="rv">Repasar más</button><button class="btn sm primary" type="button" id="kn">La sé →</button></div>
     </div>`;
-  bindSeg(app, 'ff', v => { FC.f = +v; FC.order = null; FC.flip = false; renderCards(); });
+  bindSeg(app, 'ff', v => { FC.f = v === 'pd' ? 'pd' : +v; FC.order = null; FC.flip = false; renderCards(); });
   $('#card').onclick = () => { FC.flip = !FC.flip; renderCards(); };
   $('#mix').onclick = () => { FC.order = shuffle(FC.order); FC.i = 0; FC.flip = false; renderCards(); };
   const nxt = () => { FC.i = (FC.i + 1) % FC.order.length; FC.flip = false; renderCards(); };
@@ -5801,7 +5838,8 @@ function renderP2Home() {
       <div><b>(a) y (b) · 9 puntos</b><p>Definiciones y cálculos con los datos del texto. Muestra siempre el procedimiento.</p></div>
       <div><b>(c) a (f) · 4 × 4 puntos</b><p>Diagrama (2 p) y explicación (2 p) usando el texto. <b>(g) · 15 puntos:</b> evaluar con información del texto.</p></div></div>
     <p class="lede">Cada caso usa datos reales de Paraguay, con sus fuentes al final del texto. Hay dos casos por unidad: elige primero los de la unidad que estás estudiando.</p>
-    <div class="tiles games">${P2.map((c, i) => { const s = p2St(c), n = c.parts.filter(p => p2Marked(c, p)).length; return `<button class="tile" type="button" data-go="p2-${c.id}"><span class="code">${i + 1}</span><span class="nm">${c.title}</span><span class="ds">${c.u} · ${c.yrs}</span><span class="ft">${n ? `<span class="tag ${n === c.parts.length ? 'ok' : 'prog'}">${n}/${c.parts.length} partes · ${p2Score(c)}/40</span>` : '<span class="tag">Sin empezar</span>'}</span></button>`; }).join('')}</div>
+    ${pdCur() ? `<p class="small muted">Se muestran primero los casos de ${pdShort()} (Unidades ${pdUnits().join(' y ')}).</p>` : ''}
+    <div class="tiles games">${P2.map((c, i) => [c, i]).sort((a, b) => inPD(b[0].u) - inPD(a[0].u)).map(([c, i]) => { const s = p2St(c), n = c.parts.filter(p => p2Marked(c, p)).length; return `<button class="tile" type="button" data-go="p2-${c.id}"><span class="code">${i + 1}</span><span class="nm">${c.title}</span><span class="ds">${c.u} · ${c.yrs}</span><span class="ft">${n ? `<span class="tag ${n === c.parts.length ? 'ok' : 'prog'}">${n}/${c.parts.length} partes · ${p2Score(c)}/40</span>` : '<span class="tag">Sin empezar</span>'}</span></button>`; }).join('')}</div>
     ${P2H.length ? `<h2 style="margin-top:24px">Tus casos terminados</h2><div class="mlist">${P2H.slice().reverse().map(h => `<div class="mrow"><span class="code">${h.total}</span><span class="nm">${h.title}<span class="ds">${h.d} · autocorregido</span></span><span class="act"><span class="tag">/40</span></span></div>`).join('')}</div>` : ''}`;
 }
 function p2TextHtml(c) {
@@ -9100,8 +9138,8 @@ function profGate() {
 }
 function renderProf() {
   if (!profGate()) return;
-  const pend = [];
-  const rows = PROF.users.map(x => {
+  const pend = [], PF = SESS.pfPD = SESS.pfPD || 'all', pdOf = x => { const v = String(pj(x, 'pd', '') || ''); return v === '1' || v === '2' ? v : ''; };
+  const rows = PROF.users.filter(x => PF === 'all' || pdOf(x) === PF).map(x => {
     const E = pj(x, 'ei', { s: {} }), cells = Object.keys(EI_UNITS).map(u => {
       const w = (E.s || {})[u], R = profR(x.uid, u), [t, cl] = stgTag(R);
       if (stageOf(R) === 'wait') pend.push([x, u, R.last.n]);
@@ -9109,12 +9147,12 @@ function renderProf() {
       const sc = R.rounds.map(r => fbScore(r.fb)).filter(v => v !== null);
       return `<td>${w && (w.title || blocks) ? `<span class="small">${wordsOf(w)} pal. · ${blocks}/${EI_BLOCKS.length} bloques${w.kc ? ' · ' + KC[w.kc] : ''}</span><br>` : '<span class="small muted">Sin empezar</span><br>'}<span class="tag ${cl}">${t}</span>${sc.length ? `<div class="small">Puntajes: ${sc.join(' → ')}</div>` : ''}</td>`;
     }).join('');
-    return `<tr><th scope="row"><button class="linkb" type="button" data-go="profesor-${x.uid}">${esc(profName(x))}</button><div class="small muted">${esc(x.email || '')}${pj(x, 'curso', '') ? ' · ' + esc(pj(x, 'curso', '')) : ''}</div></th>${cells}<td class="small">${fdate(x.updated)}</td></tr>`;
+    return `<tr><th scope="row"><button class="linkb" type="button" data-go="profesor-${x.uid}">${esc(profName(x))}</button><div class="small muted">${esc(x.email || '')}${pdOf(x) ? ' · PD' + pdOf(x) : ''}${pj(x, 'curso', '') ? ' · ' + esc(pj(x, 'curso', '')) : ''}</div></th>${cells}<td class="small">${fdate(x.updated)}</td></tr>`;
   }).join('');
   const F = (PROF.curso || {}).fechas || {};
   app.innerHTML = `<div class="eyebrow">Solo para el profesor</div><h1>Panel del profesor</h1>
     <p class="lede">Avance de la Evaluación Interna de cada alumno que entró con su cuenta. Toca un nombre para ver sus entregas, dar devoluciones y descargar su informe.</p>
-    <div class="row" style="margin-bottom:10px"><button class="btn" type="button" id="pfR">Actualizar</button><button class="btn primary" type="button" id="pfCsv">Descargar seguimiento (Excel)</button><span class="small muted">${PROF.users.length} ${PROF.users.length === 1 ? 'alumno' : 'alumnos'}</span></div>
+    <div class="row" style="margin-bottom:10px"><button class="btn" type="button" id="pfR">Actualizar</button><button class="btn primary" type="button" id="pfCsv">Descargar seguimiento (Excel)</button><div class="seg" role="group" aria-label="Curso">${[['all', 'Todos'], ['1', 'PD1'], ['2', 'PD2']].map(([v, l]) => `<button type="button" data-pfpd="${v}" aria-pressed="${PF === v}">${l}</button>`).join('')}</div><span class="small muted">${PROF.users.length} ${PROF.users.length === 1 ? 'alumno' : 'alumnos'}</span></div>
     ${pend.length ? `<div class="fb no"><b class="h">Borradores por devolver: ${pend.length}</b>${pend.map(([x, u, n]) => `<button class="linkb" type="button" data-go="profesor-${x.uid}">${esc(profName(x))} · ${EI_UNITS[u]} · borrador ${n}</button>`).join(' · ')}</div>` : '<div class="fb ok">No hay borradores pendientes de devolución.</div>'}
     <div class="tscroll"><table class="dtab plan pftab"><thead><tr><th>Alumno</th>${Object.values(EI_UNITS).map(n => `<th>${n}</th>`).join('')}<th>Última actividad</th></tr></thead><tbody>${rows || `<tr><td colspan="5">Todavía no hay alumnos con cuenta.</td></tr>`}</tbody></table></div>
     ${profSummaryHtml()}
@@ -9124,6 +9162,7 @@ function renderProf() {
     <div class="row" style="margin-top:8px"><button class="btn primary" type="button" id="pfSave">Guardar fechas</button><span id="pfMsg" class="small"></span></div>`;
   $('#pfR').onclick = () => { PROF.st = 'idle'; render(); };
   $('#pfCsv').onclick = profCsv; bindSummary();
+  app.querySelectorAll('[data-pfpd]').forEach(b => b.onclick = () => { SESS.pfPD = b.dataset.pfpd; renderProf(); });
   $('#pfSave').onclick = async e => {
     const fechas = {}; app.querySelectorAll('.pff').forEach(i => { (fechas[i.dataset.u] = fechas[i.dataset.u] || ['', '', '', ''])[+i.dataset.i] = i.value; });
     e.currentTarget.disabled = true;
@@ -9136,7 +9175,7 @@ function renderProf() {
 function profRows(only) {
   const out = [], dd = (a, b) => a && b ? Math.round((b - a) / 864e5) : '';
   PROF.users.filter(x => !only || x.uid === only).forEach(x => {
-    const E = pj(x, 'ei', { s: {} }), base = [profName(x), x.email || '', pj(x, 'curso', '')];
+    const E = pj(x, 'ei', { s: {} }), pdv = String(pj(x, 'pd', '') || ''), base = [profName(x), x.email || '', [pdv === '1' || pdv === '2' ? 'PD' + pdv : '', pj(x, 'curso', '')].filter(Boolean).join(' · ')];
     Object.entries(EI_UNITS).forEach(([u, un]) => {
       const w = (E.s || {})[u] || {}, R = profR(x.uid, u), head = [...base, un, w.kc ? KC[w.kc] : '', w.title || '', w.source || ''];
       if (!R.rounds.length && !R.f) { out.push([...head, 'Sin entregas', '', wordsOf(w) || '', '', '', '', ...EI_CRIT.map(() => ''), '', '']); return; }
@@ -9589,13 +9628,13 @@ function calcEss() {
     <div class="tscroll"><table class="dtab"><tbody>${CALC_FORM.map(([a, b]) => `<tr><th scope="row">${a}</th><td><span class="formula">${b}</span></td></tr>`).join('')}</tbody></table></div><div class="row" style="margin-top:8px"><button class="btn sm" type="button" data-go="formulas">Ver todas las fórmulas con ejemplos y calculadora →</button></div></details>`;
 }
 function renderCalcHome() {
-  const U = SESS.calcU = SESS.calcU || 'all', list = CALC_T.filter(t => U === 'all' || t.u === +U);
+  const U = SESS.calcU = SESS.calcU || pdDef(), list = CALC_T.filter(t => uMatch(U, t.u));
   const tot = CALC_T.reduce((a, t) => { const s = CALC_ST[t.k]; if (s) { a.n += s.n; a.ok += s.ok; } return a; }, { n: 0, ok: 0 });
   const last = CALC_SER[CALC_SER.length - 1];
   app.innerHTML = `<div class="eyebrow">Escribir como en el examen</div><h1>Banco de cálculos · Prueba 2</h1>${writeTabs('escribir-calc')}
     <p class="lede">Cada ejercicio se genera con números nuevos. Practica un tipo hasta resolverlo a la primera y después haz una serie de 10 como en el examen.</p>
     ${calcEss()}
-    <div class="row" style="margin:16px 0 10px;justify-content:space-between"><div class="seg" role="group" aria-label="Filtrar por unidad">${[['all', 'Todas'], ['2', 'Unidad 2'], ['3', 'Unidad 3'], ['4', 'Unidad 4']].map(([v, l]) => `<button type="button" data-cu="${v}" aria-pressed="${U === v}">${l}</button>`).join('')}</div>
+    <div class="row" style="margin:16px 0 10px;justify-content:space-between"><div class="seg" role="group" aria-label="Filtrar por unidad">${[['all', 'Todas'], ...pdOpt(), ['2', 'Unidad 2'], ['3', 'Unidad 3'], ['4', 'Unidad 4']].map(([v, l]) => `<button type="button" data-cu="${v}" aria-pressed="${U === v}">${l}</button>`).join('')}</div>
       <span class="small muted">${tot.n ? `${tot.ok}/${tot.n} correctos a la primera` : 'Todavía no practicaste'}${last ? ` · última serie ${last.ok}/${last.n}` : ''}</span></div>
     <div class="essentials" style="display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap"><div><b>Serie de 10 ejercicios</b><div class="small muted">Un intento por ejercicio, sin pistas, con la solución al final de cada uno. ${U === 'all' ? 'Mezcla las tres unidades.' : 'Solo la Unidad ' + U + '.'}</div></div><button class="btn primary" type="button" id="cSer">Empezar la serie</button></div>
     <div class="tiles" style="margin-top:14px">${list.map(t => `<button class="tile" type="button" data-go="calc-${t.k}"><span class="code">U${t.u}</span><span class="nm">${t.n}</span><span class="ds">${t.ds}</span><span class="ft">${calcTag(t.k)}</span></button>`).join('')}</div>`;
@@ -9946,9 +9985,9 @@ function defHL(d) { // resalta en la definición modelo las palabras clave
 }
 const defTag = d => { const s = DEFST[defKey(d)]; return s ? `${s.best}/2` : ''; };
 function renderDefHome() {
-  const U = SESS.dU = SESS.dU || 'all', M = SESS.dM = SESS.dM || 'prac';
+  const U = SESS.dU = SESS.dU || pdDef(), M = SESS.dM = SESS.dM || 'prac';
   const DS = SESS.dSt, DSS = DS ? stsOf(DS) : null;
-  const list = DEFS.filter(d => DSS ? defSts(d).some(x => DSS.includes(x)) : (U === 'all' || d[0] === +U));
+  const list = DEFS.filter(d => DSS ? defSts(d).some(x => DSS.includes(x)) : uMatch(U, d[0]));
   const done = DEFS.filter(d => DEFST[defKey(d)]), full = done.filter(d => DEFST[defKey(d)].best === 2).length;
   const weak = DEFS.filter(d => DEFST[defKey(d)] && DEFST[defKey(d)].best < 2);
   app.innerHTML = `<div class="eyebrow">Escribir como en el examen</div><h1>Definiciones · Prueba 2 (a)</h1>${writeTabs('escribir-def')}
@@ -9958,7 +9997,7 @@ function renderDefHome() {
       <li>No uses la misma palabra para definirla («inflación es cuando hay inflación»). Una o dos oraciones bastan.</li>
       <li>No hace falta ejemplo ni diagrama en la parte (a), pero un ejemplo corto no resta.</li>
       <li>La corrección automática es aproximada: busca ideas clave, no evalúa la redacción. Compara siempre con el modelo.</li></ul></details>
-    <div class="row" style="margin:16px 0 10px;justify-content:space-between"><div class="seg" role="group" aria-label="Unidad">${[['all', 'Todas'], ['1', 'U1'], ['2', 'U2'], ['3', 'U3'], ['4', 'U4']].map(([v, l]) => `<button type="button" data-du="${v}" aria-pressed="${!DS && U === v}">${l}</button>`).join('')}</div>
+    <div class="row" style="margin:16px 0 10px;justify-content:space-between"><div class="seg" role="group" aria-label="Unidad">${[['all', 'Todas'], ...pdOpt(), ['1', 'U1'], ['2', 'U2'], ['3', 'U3'], ['4', 'U4']].map(([v, l]) => `<button type="button" data-du="${v}" aria-pressed="${!DS && U === v}">${l}</button>`).join('')}</div>
       <span class="small muted">${done.length}/${DEFS.length} practicadas · ${full} con 2/2</span></div>
     ${DS ? `<div class="dstf"><span>Solo el subtema <b>${tcode(DS)}</b> · ${list.length} términos</span><button class="btn sm" type="button" id="dStX">Quitar filtro</button><button class="btn sm" type="button" data-go="${tid(DS)}">Volver al subtema</button></div>` : ''}
     <div class="seg" role="group" aria-label="Modo" style="margin-bottom:14px">${[['prac', 'Practicar'], ['serie', 'Serie de 10'], ['fail', `Repasar las flojas (${weak.length})`], ['list', 'Estudiar la lista']].map(([v, l]) => `<button type="button" data-dm="${v}" aria-pressed="${M === v}">${l}</button>`).join('')}</div>
@@ -10296,8 +10335,8 @@ function ejCard(x) {
     <div class="row" style="margin-top:8px"><button class="btn sm" type="button" data-ejc="${esc(x.t)}">Copiar como ejemplo</button></div></article>`;
 }
 function renderEjemplos() {
-  const U = SESS.eU = SESS.eU || 'all', Q = SESS.eQ || '', PY = !!SESS.ePY;
-  const nq = normTxt(Q), list = EJ.filter(x => (U === 'all' || x.st[0] === U) && (!PY || x.py) && (!nq || normTxt([x.st, x.t, x.w, x.h, x.d.join(' '), x.k, EJ_ST[x.st]].join(' ')).includes(nq)));
+  const U = SESS.eU = SESS.eU || pdDef(), Q = SESS.eQ || '', PY = !!SESS.ePY;
+  const nq = normTxt(Q), list = EJ.filter(x => uMatch(U, x.st) && (!PY || x.py) && (!nq || normTxt([x.st, x.t, x.w, x.h, x.d.join(' '), x.k, EJ_ST[x.st]].join(' ')).includes(nq)));
   const by = {}; list.forEach(x => (by[x.st] = by[x.st] || []).push(x));
   app.innerHTML = `<div class="eyebrow">Escribir como en el examen</div><h1>Ejemplos del mundo real</h1>${writeTabs('escribir-ej')}
     <p class="lede">Para llegar a las bandas altas de la Prueba 1 (b) y la Prueba 2 (g) necesitas un ejemplo real <b>desarrollado</b>: país, año, un dato y por qué ilustra la teoría. Aquí tienes ${EJ.length} ejemplos ordenados por subtema, con su diagrama y un punto para evaluar.</p>
@@ -10307,7 +10346,7 @@ function renderEjemplos() {
       <li>No lo nombres solamente: explica por qué muestra la teoría («Esto ocurrió porque…»).</li>
       <li>Con un ejemplo bien desarrollado alcanza; dos ejemplos superficiales valen menos que uno explicado.</li></ul></details>
     <div class="fctl"><input class="inp" id="eq" type="search" placeholder="Buscar: arancel, inflación, Paraguay…" value="${esc(Q)}" aria-label="Buscar ejemplo">
-      <div class="seg" role="group" aria-label="Unidad">${[['all', 'Todas'], ['2', 'U2'], ['3', 'U3'], ['4', 'U4']].map(([v, l]) => `<button type="button" data-eu="${v}" aria-pressed="${U === v}">${l}</button>`).join('')}</div>
+      <div class="seg" role="group" aria-label="Unidad">${[['all', 'Todas'], ...pdOpt(), ['2', 'U2'], ['3', 'U3'], ['4', 'U4']].map(([v, l]) => `<button type="button" data-eu="${v}" aria-pressed="${U === v}">${l}</button>`).join('')}</div>
       <button type="button" class="btn sm" id="epy" aria-pressed="${PY}">${PY ? '✓ ' : ''}Solo Paraguay</button></div>
     <div id="elist">${list.length ? Object.keys(by).sort((a, b) => a.localeCompare(b, 'es', { numeric: true })).map(st => `<h2 class="wgroup">${st} · ${EJ_ST[st] || ''}</h2><div class="fgrid">${by[st].map(ejCard).join('')}</div>`).join('') : '<p class="muted">No hay ejemplos con esa búsqueda.</p>'}</div>
     <p class="small muted" style="margin-top:18px">Basado en la <i>Guía de ejemplos del mundo real</i> del Prof. Econ. Hugo Rivarola. Datos revisados con sus fuentes en octubre de 2026; si encuentras un dato desactualizado, avísale a tu profesor.</p>`;
