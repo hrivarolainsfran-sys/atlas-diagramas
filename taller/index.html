@@ -8382,7 +8382,7 @@ function renderEIHome() {
     <div class="method"><div><b>La carpeta · 30 % de la nota (NM)</b><p>Tres comentarios de hasta <b>800 palabras</b> sobre artículos de prensa: uno de <b>Microeconomía</b>, uno de <b>Macroeconomía</b> y uno de <b>Economía global</b>. Total: 45 puntos.</p></div>
       <div><b>Requisitos</b><p>Artículo de <b>menos de un año</b> al momento de escribir; una <b>fuente distinta</b> por comentario; un <b>concepto clave distinto</b> en cada uno; periódico, revista o sitio de noticias (no televisión ni radio).</p></div>
       <div><b>No cuentan en las 800 palabras</b><p>Diagramas, sus rótulos (hasta 5 palabras) y títulos (hasta 10), tablas de datos, fórmulas y cálculos, citas bibliográficas y referencias. <b>Sí cuentan</b> las definiciones y las citas textuales.</p></div></div>
-    <div class="row eiacts"><button class="btn primary" type="button" data-go="ei-articulo">¿Sirve mi artículo? Valídalo antes de escribir</button><button class="btn" type="button" data-go="ei-modelos">Ver comentarios modelo anotados</button><button class="btn" type="button" data-go="ei-alumnos">Ver carpetas reales de alumnos</button><button class="btn" type="button" data-go="ei-calibrar">Corrige como examinador</button><a class="btn" href="${EI_NEWS}" target="_blank" rel="noopener">Buscar artículos en Economía en las Noticias ↗</a></div>
+    ${eiFromMsg()}<div class="row eiacts"><button class="btn primary" type="button" data-go="ei-articulo">¿Sirve mi artículo? Valídalo antes de escribir</button><button class="btn" type="button" data-go="ei-modelos">Ver comentarios modelo anotados</button><button class="btn" type="button" data-go="ei-alumnos">Ver carpetas reales de alumnos</button><button class="btn" type="button" data-go="ei-calibrar">Corrige como examinador</button><a class="btn" href="${EI_NEWS}" target="_blank" rel="noopener">Buscar artículos en Economía en las Noticias ↗</a></div>
     <h2>Criterios de cada comentario · 14 puntos</h2>
     <div class="eicrit">${EI_CRIT.map(([k, n, m]) => `<div><b>${k}</b><span>${n}</span><i>${m} p</i></div>`).join('')}<div><b>F</b><span>Requisitos de la carpeta</span><i>3 p</i></div></div>
     <h2 style="margin-top:22px">Qué se espera para cada punto</h2>
@@ -8669,7 +8669,7 @@ function renderEIArticle() {
   }).join('');
   if (A.dia === 'ninguno') A.dia = 'Otro';
   const answered = VQ.filter(q => A[q.k]).length, V = vVerdict(A);
-  app.innerHTML = `<button class="crumb" type="button" data-go="escribir-ei">← Mi carpeta</button><div class="eyebrow" style="margin-top:12px">Evaluación Interna</div><h1>¿Sirve mi artículo?</h1>${eiNewsBox()}
+  app.innerHTML = `<button class="crumb" type="button" data-go="escribir-ei">← Mi carpeta</button><div class="eyebrow" style="margin-top:12px">Evaluación Interna</div><h1>¿Sirve mi artículo?</h1>${A.art ? eiFromBox(A.art) : eiNewsBox()}
     <p class="lede">Responde estas preguntas antes de empezar a escribir. Un mal artículo no se salva con buena redacción.</p>
     <div class="vwrap"><div class="vqs">${qs}</div>
       <aside class="vres ${answered ? V.light : ''}"><div class="light"><i class="r"></i><i class="y"></i><i class="g"></i></div>
@@ -8683,7 +8683,7 @@ function renderEIArticle() {
   app.querySelectorAll('[data-q]').forEach(b => b.onclick = () => { A[b.dataset.q] = b.dataset.val; if (b.dataset.q === 'unit') A.dia = ''; const y = window.scrollY; renderEIArticle(); window.scrollTo(0, y); });
   const di = app.querySelector('[data-v="date"]'); if (di) di.onchange = () => { A.date = di.value; const y = window.scrollY; renderEIArticle(); window.scrollTo(0, y); };
   $('#vReset').onclick = () => { SESS.vArt = {}; renderEIArticle(); };
-  const us = $('#vUse'); if (us) us.onclick = () => { const w = eiSlot(A.unit); if (!w.pub) w.pub = A.date; if (!w.kc) w.kc = A.kc; w.st = 0; saveEI(); go('ei-' + A.unit); };
+  const us = $('#vUse'); if (us) us.onclick = () => { const w = eiSlot(A.unit); if (A.art) Object.assign(w, { title: A.art.title, source: A.art.source, url: A.art.url, pub: A.date || w.pub, acc: today() }); if (!w.pub) w.pub = A.date; if (!w.kc) w.kc = A.kc; w.st = 0; saveEI(); go('ei-' + A.unit); };
 }
 
 /* Comentarios modelo anotados (práctica: artículos de más de un año, no sirven para la carpeta) */
@@ -8789,6 +8789,8 @@ function renderEIStudent(id) {
 
 /* ---------- EI: banco de artículos, calibración, fragmentos modelo y calendario ---------- */
 const EI_NEWS = 'https://hrivarolainsfran-sys.github.io/economia-noticias/#ia';
+const eiFromBox = a => `<div class="fb info" style="max-width:1000px"><b class="h">Artículo traído de Economía en las Noticias</b><a href="${esc(a.url)}" target="_blank" rel="noopener"><b>${esc(a.title)}</b> ↗</a>${a.source ? ' · ' + esc(a.source) : ''}<br>Ya completamos la fecha, la fuente, el tipo de artículo, la unidad y el concepto clave sugerido. Abre el artículo original, comprueba su título y su fecha, y responde tú el resto: el cambio concreto, el diagrama, los datos, si permite evaluar y su extensión.</div>`;
+const eiFromMsg = () => { const n = SESS.eiFrom; delete SESS.eiFrom; return n ? `<div class="fb info" style="max-width:1000px;margin-bottom:12px"><b class="h">${n === 1 ? 'Se cargó 1 artículo' : `Se cargaron ${n} artículos`} desde Economía en las Noticias</b>Ya están la fuente, el enlace, la fecha de publicación y el concepto clave en la portada de cada comentario. Abre cada artículo en su medio original y corrige el título (Economía en las Noticias usa títulos propios) y la fecha si no coinciden. Revisa también la fecha de redacción.</div>` : ''; };
 const eiNewsBox = () => `<div class="fb info" style="max-width:1000px"><b class="h">¿Buscas artículo?</b>En <a href="${EI_NEWS}" target="_blank" rel="noopener"><b>Economía en las Noticias</b></a> tienes noticias económicas actuales, con su fuente original. Elige una, ábrela en el medio original y después valídala aquí.</div>`;
 /* 1 · Corrige como examinador */
 const EI_CAL = store.get('eiCal', {});
@@ -9944,6 +9946,28 @@ function ejDrawer(root, o) {
   bindEjCopy(/^(afterend|beforebegin)$/.test(o.pos || '') ? root.parentNode : root);
 }
 
+/* Artículos que llegan desde Economía en las Noticias (?art=…) */
+function eiImport() {
+  let P;
+  try { const q = new URLSearchParams(location.search).get('art'); if (!q) return; P = JSON.parse(decodeURIComponent(escape(atob(q.replace(/-/g, '+').replace(/_/g, '/'))))); }
+  catch (e) { return; }
+  finally { if (location.search) history.replaceState(null, '', location.pathname + location.hash); }
+  const L = (Array.isArray(P && P.a) ? P.a : []).filter(a => a && EI_UNITS[a.n] && a.t).slice(0, 3);
+  if (!L.length) return;
+  const goTo = r => history.replaceState(null, '', location.pathname + '#' + r);
+  if (P.x === 'val') { const a = L[0]; SESS.vArt = { date: a.p || '', src: 'news', type: 'econ', unit: String(a.n), kc: KC[a.k] ? a.k : '', art: { title: String(a.t), source: String(a.m || ''), url: String(a.u || '') } }; return goTo('ei-articulo'); }
+  const repl = L.filter(a => eiStarted(a.n) && EIS.s[a.n].title !== a.t);
+  if (repl.length && !confirm(`Ya tienes empezado el comentario de la Unidad ${repl.map(a => a.n).join(' y ')}. ¿Cambiar su artículo por el nuevo? Lo que ya escribiste se conserva.`)) return goTo('escribir-ei');
+  L.forEach(a => {
+    const w = eiSlot(a.n);
+    Object.assign(w, { title: String(a.t), source: String(a.m || ''), url: String(a.u || ''), pub: a.p || '', acc: today(), st: 0 });
+    const used = Object.keys(EI_UNITS).some(x => x !== String(a.n) && !L.some(b => String(b.n) === x) && (EIS.s[x] || {}).kc === a.k);
+    if (KC[a.k] && !used) w.kc = a.k;
+  });
+  saveEI(); SESS.eiFrom = L.length;
+  goTo(L.length === 1 ? 'ei-' + L[0].n : 'escribir-ei');
+}
+eiImport();
 render();
 </script>
 
