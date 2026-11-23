@@ -9,7 +9,7 @@
 <title>Taller de Economía IB</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Barlow+Condensed:wght@500;600;700&family=STIX+Two+Text:ital,wght@0,500;1,500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=STIX+Two+Text:ital,wght@0,500;1,500&display=swap">
 <style>
 /* Layout: barra superior azul marino + una sola columna de trabajo sobre papel milimetrado; las fichas de práctica son la única superficie con borde fuerte */
 :root{
@@ -18,7 +18,9 @@
   --ok:#1C7A38; --ok-bg:#E4F3E8; --bad:#B42318; --bad-bg:#FCE9E7; --warn-bg:#FFF4E5; --warn-bd:#E2A13B; --warn-ink:#6A3F00;
   --k-d:#1F4E9E; --k-s:#C0392B; --k-soc:#6B3FA0; --k-new:#1E8E3E;
   --f-con:rgba(240,186,30,.50); --f-pro:rgba(39,174,96,.36); --f-dwl:rgba(47,128,237,.40); --f-gov:rgba(142,68,173,.16); --f-tr:rgba(184,134,43,.26);
-  --f-display:"Barlow Condensed","Arial Narrow",Arial,sans-serif;
+  --f-display:"Plus Jakarta Sans","Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --yellow:#F6C320; --yellow-h:#FFD447; --yellow-ink:#14213D; --gridl:#E7ECF4;
+  --sh:0 1px 2px rgba(20,33,61,.05),0 6px 18px rgba(20,33,61,.06); --sh-h:0 2px 4px rgba(20,33,61,.07),0 10px 26px rgba(20,33,61,.10);
   --f-body:"Atkinson Hyperlegible","Segoe UI",Roboto,Helvetica,Arial,sans-serif;
   --f-math:"STIX Two Text",Cambria,"Times New Roman",serif;
   --r:8px;
@@ -27,6 +29,7 @@
   --paper:#0E1524; --sheet:#141D30; --grid:#1C283F; --ink:#E7EDF7; --ink-2:#B9C4D8; --muted:#8C99B1; --rule:#2A3853;
   --navy:#1A2B4F; --navy-2:#2B4A86; --navy-ink:#FFFFFF; --gold:#E0B25A; --gold-soft:#3A2F17;
   --ok:#5FD38A; --ok-bg:#163423; --bad:#FF8A80; --bad-bg:#3A1A1A; --warn-bg:#33240C; --warn-bd:#C98A2A; --warn-ink:#FFDDA6;
+  --gridl:#152036; --sh:0 1px 2px rgba(0,0,0,.25),0 6px 18px rgba(0,0,0,.22); --sh-h:0 2px 4px rgba(0,0,0,.3),0 10px 26px rgba(0,0,0,.32);
   --k-d:#7EA9F2; --k-s:#F28B7F; --k-soc:#C39BF0; --k-new:#5FD38A;
   --f-con:rgba(240,186,30,.38); --f-pro:rgba(60,200,120,.30); --f-dwl:rgba(90,160,255,.38); --f-gov:rgba(180,120,230,.20); --f-tr:rgba(224,178,90,.24);
   color-scheme:dark;
@@ -35,6 +38,7 @@
   --paper:#0E1524; --sheet:#141D30; --grid:#1C283F; --ink:#E7EDF7; --ink-2:#B9C4D8; --muted:#8C99B1; --rule:#2A3853;
   --navy:#1A2B4F; --navy-2:#2B4A86; --navy-ink:#FFFFFF; --gold:#E0B25A; --gold-soft:#3A2F17;
   --ok:#5FD38A; --ok-bg:#163423; --bad:#FF8A80; --bad-bg:#3A1A1A; --warn-bg:#33240C; --warn-bd:#C98A2A; --warn-ink:#FFDDA6;
+  --gridl:#152036; --sh:0 1px 2px rgba(0,0,0,.25),0 6px 18px rgba(0,0,0,.22); --sh-h:0 2px 4px rgba(0,0,0,.3),0 10px 26px rgba(0,0,0,.32);
   --k-d:#7EA9F2; --k-s:#F28B7F; --k-soc:#C39BF0; --k-new:#5FD38A;
   --f-con:rgba(240,186,30,.38); --f-pro:rgba(60,200,120,.30); --f-dwl:rgba(90,160,255,.38); --f-gov:rgba(180,120,230,.20); --f-tr:rgba(224,178,90,.24);
   color-scheme:dark;
@@ -866,13 +870,155 @@ details.sres summary{cursor:pointer}details.sres p{margin:6px 0 0;font-size:15px
 .pfteo td{text-align:center}.pflow{background:var(--bad-bg);color:var(--bad);font-weight:700}.pfhigh{color:var(--ok);font-weight:700}
 .pfrep{background:var(--sheet);border:1px solid var(--rule);border-left:4px solid var(--bad);border-radius:10px;padding:10px 14px;margin:8px 0;max-width:1000px}.pfrep.done{border-left-color:var(--ok);opacity:.85}.pfrep p{margin:6px 0 8px}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+/* ===== Diseño 2026-11: tipografía Plus Jakarta Sans, tarjetas con sombra suave, acento amarillo ===== */
+body{background-image:linear-gradient(var(--gridl) 1px,transparent 1px),linear-gradient(90deg,var(--gridl) 1px,transparent 1px)}
+h1{font-weight:800;font-size:clamp(28px,4.2vw,44px);line-height:1.08;letter-spacing:-.02em}
+h2{font-weight:800;font-size:23px;line-height:1.18;letter-spacing:-.01em}
+h3{font-weight:700;font-size:17px;letter-spacing:0}
+.eyebrow{font-weight:800;font-size:13px;letter-spacing:.1em;color:var(--gold)}
+.lede{font-size:17px}
+/* barra superior */
+.top{padding-block:9px;box-shadow:0 2px 10px rgba(10,20,45,.18)}
+.brand{flex-direction:row;align-items:center;gap:12px}
+.blogo{width:30px;height:30px;fill:var(--yellow);flex:none}
+.brand .btx{display:flex;flex-direction:column;line-height:1.05;padding-left:12px;border-left:1px solid rgba(255,255,255,.28);font-size:inherit;letter-spacing:0;text-transform:none;opacity:1}
+.brand .btx b{font-family:var(--f-display);font-weight:800;font-size:20px;letter-spacing:-.01em}
+.brand .btx>span{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;opacity:.82;margin-top:2px}
+.nav{gap:2px;align-items:center}
+.nav button,.nav a{font-weight:700;font-size:15px;letter-spacing:0;padding:8px 13px;border-radius:9px}
+.nav button[aria-current="page"]{box-shadow:0 1px 3px rgba(0,0,0,.15)}
+.acct{background:transparent;border:1px solid transparent;padding:4px 10px 4px 4px;gap:8px;font-size:15px}
+.acct:hover{background:rgba(255,255,255,.12)}
+.acct:not([data-st]),.acct[data-st="off"],.acct[data-st=""]{border-color:rgba(255,255,255,.35)}
+.acav{position:relative;width:28px;height:28px;flex:none;display:grid;place-items:center}
+.acav svg{width:28px;height:28px}
+.acav .acdot{position:absolute;right:-1px;bottom:-1px;width:10px;height:10px;border:2px solid var(--navy)}
+.acchev{width:16px;height:16px;flex:none;opacity:.85}
+@media (min-width:861px){.acct{margin-left:10px;position:relative}.acct::before{content:"";position:absolute;left:-11px;top:6px;bottom:6px;width:1px;background:rgba(255,255,255,.28)}}
+/* botones */
+.btn{border-radius:9px;font-family:var(--f-display);font-weight:700;font-size:14.5px;padding:9px 16px;display:inline-flex;align-items:center;gap:8px;justify-content:center;transition:background .15s,border-color .15s,box-shadow .15s}
+.btn.sm{padding:6px 12px;font-size:13.5px}
+.btn .ico{width:17px;height:17px;flex:none}
+.btn.primary{background:var(--navy);border-color:var(--navy)}
+.btn.primary:hover{filter:none;background:var(--navy-2);border-color:var(--navy-2)}
+:root[data-theme="dark"] .btn.primary{background:var(--navy-2);border-color:var(--navy-2)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .btn.primary{background:var(--navy-2);border-color:var(--navy-2)}}
+.btn.accent{background:var(--yellow);border-color:var(--yellow);color:var(--yellow-ink)}
+.btn.accent:hover{background:var(--yellow-h);border-color:var(--yellow-h)}
+.linkb{text-underline-offset:3px}
+/* superficies */
+.tile,.stile,.meter,.essentials,.qbtn,.pcard,.halert,.mnote,.eichip,.pstep{box-shadow:var(--sh)}
+.tile,.meter,.essentials{border-radius:14px}
+.tile:hover,.stile:hover,.qbtn:hover,.pstep:hover{border-color:var(--navy-2);box-shadow:var(--sh-h)}
+.tile .code{font-size:24px;font-weight:800;letter-spacing:-.02em}
+.tile.lab{grid-template-columns:minmax(0,1fr)}.tile.lab .code{font-size:13px;letter-spacing:.08em;grid-row:auto;min-width:0}
+.meter .num{font-size:34px;font-weight:800}
+.card{border-radius:14px;box-shadow:var(--sh)}
+.card-h .k{font-size:15px;font-weight:700;letter-spacing:0}
+.seg{border-radius:11px;padding:4px;box-shadow:var(--sh)}
+.seg button{border-radius:8px;font-family:var(--f-display);font-size:14px}
+.seg button[aria-pressed="true"]{background:var(--navy)}
+.unit-h{border-bottom-width:1.5px}
+.wgroup{font-weight:800;font-size:20px;border-bottom-width:1.5px}
+.stile{border-radius:16px;padding:22px}
+.stile b{font-size:20px;font-weight:800;letter-spacing:-.01em}
+.stile .ico{width:30px;height:30px}
+.bin h4{font-size:14px;letter-spacing:.06em}
+.fb b.h{font-size:16px;letter-spacing:0}
+.flash .term{font-size:clamp(24px,4.4vw,34px);font-weight:800;letter-spacing:-.01em}
+.score{font-size:16px;font-weight:700}
+.opt .l{font-size:14px}
+/* inicio */
+.hhero{gap:22px;margin-bottom:22px}
+.hhero-t h1{margin:6px 0 8px}
+.hnote{display:block;font-size:14.5px;color:var(--muted);margin-top:4px}
+.hcont{border-radius:18px;padding:24px 28px;gap:6px;box-shadow:0 10px 30px rgba(20,33,61,.22);background:var(--navy)}
+.hcont:hover{background:var(--navy);box-shadow:0 14px 34px rgba(20,33,61,.3)}
+.hcl{color:var(--yellow);font-size:13px;font-weight:800;letter-spacing:.1em}
+.hct{font-size:30px;font-weight:800;letter-spacing:-.02em;line-height:1.12}
+.hcs{font-size:16px}
+.hcg{align-self:flex-start;margin-top:auto;display:inline-flex;align-items:center;gap:10px;background:var(--yellow);color:var(--yellow-ink);border-radius:10px;padding:11px 20px;font-family:var(--f-display);font-weight:800;font-size:16px}
+.hcont:hover .hcg{background:var(--yellow-h)}
+.hcg .ico{width:19px;height:19px}
+.hcont .hcg{margin-top:14px}
+.pdpick{margin:16px 0 4px}
+.pdopts{display:inline-flex;flex-wrap:wrap;gap:4px;background:var(--sheet);border:1px solid var(--rule);border-radius:12px;padding:4px;box-shadow:var(--sh)}
+.pdopts button{display:inline-flex;align-items:center;border:0;border-radius:9px;padding:8px 16px;min-height:40px;background:transparent;font-family:var(--f-display)}
+.pdopts button b{font-size:15px;font-weight:800}.pdopts button span{font-size:15px;color:inherit;font-weight:600;white-space:pre}
+.pdopts button:hover{background:var(--paper)}
+.pdopts button[aria-pressed="true"]{background:var(--navy);color:#fff}.pdopts button[aria-pressed="true"] span{color:#fff}
+.pdpick.big{background:none;border:0;padding:0}
+.pdpick.big .pdl{color:var(--gold);font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;width:100%}
+.pdpick.big .pdopts{box-shadow:0 0 0 2px var(--gold),var(--sh)}
+.pcards{gap:20px}
+.pcard{border-radius:16px;padding:22px 24px;gap:14px;transition:box-shadow .15s}
+.pcard:hover{box-shadow:var(--sh-h)}
+.pch{gap:0;align-items:flex-start}
+.pci{width:62px;height:62px;border-radius:14px;margin-right:18px;position:relative}
+.pci .ico{width:30px;height:30px}
+.pch>div{padding-left:18px;border-left:1px solid var(--rule);min-height:62px}
+.pch h2{font-size:26px;font-weight:800;letter-spacing:-.02em}
+.pch p{font-size:15.5px;color:var(--ink-2)}
+.pcard>.pbar,.pcard>.pmeta,.pcard>.eichips,.pcard>.pcf{margin-left:98px}
+.pbar{height:7px;border:0;background:var(--gridl)}
+:root[data-theme="dark"] .pbar{background:var(--rule)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .pbar{background:var(--rule)}}
+.pmeta{font-size:14.5px;color:var(--ink-2)}
+.pcf{display:flex;flex-wrap:wrap;align-items:center;gap:10px 22px}
+.psteps-d{display:contents}
+.psteps-d summary{list-style:none;color:var(--navy-2);text-decoration:underline;text-underline-offset:4px;font-family:var(--f-display);font-size:15px;font-weight:700}
+.psteps-d summary::-webkit-details-marker{display:none}
+.psteps-d[open] summary{color:var(--ink-2)}
+.psteps-d .psteps{flex-basis:100%;margin-top:4px}
+:root[data-theme="dark"] .psteps-d summary{color:var(--k-d)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .psteps-d summary{color:var(--k-d)}}
+.eichips{gap:10px}
+.eichip{border-radius:10px;padding:8px 6px}
+.eichip b{font-family:var(--f-display);font-size:14px;font-weight:800}
+.hsec{font-size:26px;font-weight:800;letter-spacing:-.02em;margin:30px 0 12px}
+.quick{margin-top:6px}
+.qgrid{gap:14px}
+.qbtn{display:flex;align-items:center;gap:0;border-radius:14px;padding:14px 16px}
+.qbtn>.ico:first-child{width:30px;height:30px;color:var(--ink);flex:none;margin-right:14px}
+.qbtn .qt{display:grid;gap:2px;flex:1;min-width:0;padding-left:14px;border-left:1px solid var(--rule)}
+.qbtn .qt b{font-family:var(--f-display);font-size:16px;font-weight:800}
+.qbtn .qt{color:var(--ink);font-size:inherit}
+.qbtn .qt>span{font-size:13.5px;color:var(--ink-2)}
+.qbtn .qa{width:18px;height:18px;flex:none;margin-left:8px;color:var(--ink-2)}
+.mnote{border-left:5px solid var(--yellow);border-radius:14px;padding:16px 20px;margin-top:22px;gap:18px}
+.mnote .mni{display:grid;place-items:center;padding-right:18px;border-right:1px solid var(--rule);color:var(--ink)}
+.mnote .mni .ico{width:36px;height:36px}
+.mnote>div>b{font-family:var(--f-display);font-size:19px;font-weight:800}
+@media (max-width:1100px){.qgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:640px){
+  .pcard{padding:18px}
+  .pci{width:48px;height:48px;margin-right:14px}.pci .ico{width:24px;height:24px}
+  .pch>div{padding-left:14px;min-height:48px}
+  .pch h2{font-size:22px}
+  .pcard>.pbar,.pcard>.pmeta,.pcard>.eichips,.pcard>.pcf{margin-left:0}
+  .hct{font-size:25px}.hcont{padding:20px}
+  .qgrid{grid-template-columns:1fr}
+  .brand .btx b{font-size:18px}.blogo{width:26px;height:26px}
+  .pdopts button{padding:8px 11px}.pdopts button b,.pdopts button span{font-size:14px}
+}
+@media (max-width:420px){.pdopts button span{display:none}}
+.wsub{box-shadow:none}
+.wsub button{border-radius:9px}
+.wsub button[aria-pressed="true"]{background:var(--navy);color:#fff;border-color:var(--navy)}
+:root[data-theme="dark"] .wsub button[aria-pressed="true"],:root[data-theme="dark"] .seg button[aria-pressed="true"],:root[data-theme="dark"] .pdopts button[aria-pressed="true"]{background:var(--navy-2);border-color:var(--navy-2)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .wsub button[aria-pressed="true"],:root:not([data-theme="light"]) .seg button[aria-pressed="true"],:root:not([data-theme="light"]) .pdopts button[aria-pressed="true"]{background:var(--navy-2);border-color:var(--navy-2)}}
+.rcard{border-radius:14px;padding:16px;box-shadow:var(--sh)}
+.rcard:hover{border-color:var(--navy-2);box-shadow:var(--sh-h)}
+.rcard .rn{font-size:22px;font-weight:800}
+.rcard b{font-size:16.5px;font-weight:800;letter-spacing:-.01em;line-height:1.25}
 </style>
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
 <header class="top">
-  <button class="brand" type="button" data-go="empezar"><b>Economía IB</b><span>Taller de práctica</span></button>
-  <button class="acct" type="button" id="acctBtn" aria-haspopup="dialog"><span class="acdot" aria-hidden="true"></span><span id="acctLbl">Entrar</span></button>
+  <button class="brand" type="button" data-go="empezar"><svg class="blogo" viewBox="0 0 32 32" aria-hidden="true"><rect x="3" y="18" width="7" height="10" rx="1.5"/><rect x="12.5" y="12" width="7" height="16" rx="1.5"/><rect x="22" y="4" width="7" height="24" rx="1.5"/></svg><span class="btx"><b>Economía IB</b><span>Taller de práctica</span></span></button>
+  <button class="acct" type="button" id="acctBtn" aria-haspopup="dialog"><span class="acav" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="10" r="3.2"/><path d="M6.2 18.6a7 7 0 0 1 11.6 0"/></svg><span class="acdot"></span></span><span id="acctLbl">Entrar</span><svg class="acchev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
   <nav class="nav" aria-label="Secciones">
     <button type="button" data-go="empezar">Inicio</button>
     <button type="button" data-go="estudiar">Estudiar</button>
@@ -1796,7 +1942,7 @@ const pdOpt = () => pdCur() ? [['pd', pdShort()]] : [];
 const uMatch = (U, u) => U === 'all' || (U === 'pd' ? inPD(u) : unitOf(u) === +U);
 function pdPick(big) {
   const c = pdCur(), raw = String(store.get('pd', '') || ''), opts = [['1', 'PD1', 'Unidades 1 y 2'], ['2', 'PD2', 'Unidades 3 y 4'], ['todo', 'Todo', 'Las cuatro unidades']];
-  return `<div class="pdpick${big && !raw ? ' big' : ''}"><span class="pdl">${!raw && big ? '¿En qué curso estás?' : 'Tu curso'}</span><div class="pdopts" role="group" aria-label="Curso">${opts.map(([v, n, d]) => `<button type="button" data-pd="${v}" aria-pressed="${raw === v}"><b>${n}</b><span>${d}</span></button>`).join('')}</div>${c === '2' ? '<span class="small muted pdnote">En los exámenes finales entran las cuatro unidades: elige «Todo» para repasar también las Unidades 1 y 2.</span>' : ''}</div>`;
+  return `<div class="pdpick${big && !raw ? ' big' : ''}"><span class="pdl">${!raw && big ? '¿En qué curso estás?' : 'Tu curso'}</span><div class="pdopts" role="group" aria-label="Curso">${opts.map(([v, n, d]) => `<button type="button" data-pd="${v}" aria-pressed="${raw === v}"><b>${n}</b>${v === 'todo' ? '' : `<span> · ${d}</span>`}</button>`).join('')}</div>${c === '2' ? '<span class="small muted pdnote">En los exámenes finales entran las cuatro unidades: elige «Todo» para repasar también las Unidades 1 y 2.</span>' : ''}</div>`;
 }
 document.addEventListener('click', e => {
   const b = e.target.closest('[data-pd]'); if (!b) return;
@@ -1950,7 +2096,13 @@ const ICO = {
   lab: '<path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-5-9V3"></path><path d="M7 15h10"></path>',
   fx: '<path d="M4 7h4l3 10 3-14h6"></path><path d="M14 13l5 5M19 13l-5 5"></path>',
   map: '<path d="M3 6l6-3 6 3 6-3v15l-6 3-6-3-6 3z"></path><path d="M9 3v15M15 6v15"></path>',
-  search: '<circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path>'
+  search: '<circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path>',
+  err: '<circle cx="12" cy="12" r="9"></circle><circle cx="12" cy="12" r="5"></circle><circle cx="12" cy="12" r="1.2"></circle><path d="M15.5 8.5L21 3"></path>',
+  timer: '<circle cx="12" cy="14" r="8"></circle><path d="M12 10v4l2.5 2M9.5 2h5M12 2v4"></path>',
+  cards: '<rect x="3" y="7" width="13" height="14" rx="2"></rect><path d="M8 7V5a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-3"></path>',
+  game: '<path d="M6 8h12a4 4 0 0 1 4 4v1a4 4 0 0 1-7 2.6L14 15h-4l-1 .6A4 4 0 0 1 2 13v-1a4 4 0 0 1 4-4z"></path><path d="M7 10.5v4M5 12.5h4"></path><circle cx="16" cy="11.5" r=".6"></circle><circle cx="18" cy="13.5" r=".6"></circle>',
+  head: '<path d="M3 17v-4a9 9 0 0 1 18 0v4"></path><path d="M21 18a2 2 0 0 1-2 2h-1v-6h3zM3 18a2 2 0 0 0 2 2h1v-6H3z"></path>',
+  arrow: '<path d="M5 12h14M13 6l6 6-6 6"></path>'
 };
 const ico = (k, cls = '') => `<svg class="ico ${cls}" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICO[k]}</svg>`;
 function renderStart() {
@@ -1992,7 +2144,7 @@ function renderStart() {
       <div class="pch"><span class="pci">${ico(k)}</span><div><h2>${title}</h2><p>${sub}</p></div></div>
       ${prog !== null ? `<div class="pbar" role="img" aria-label="Avance ${prog} %"><i style="width:${prog}%"></i></div>` : ''}
       <p class="pmeta">${meta}</p>${extra}
-      <div class="pcf"><button class="btn primary sm" type="button" data-go="${ctaGo}">${cta} →</button>${steps ? `<details class="psteps-d"><summary>Ver los pasos</summary><ol class="psteps">${steps.join('')}</ol></details>` : ''}</div></article>`;
+      <div class="pcf"><button class="btn primary" type="button" data-go="${ctaGo}">${cta} ${ico('arrow')}</button>${steps ? `<details class="psteps-d"><summary>Ver los pasos</summary><ol class="psteps">${steps.join('')}</ol></details>` : ''}</div></article>`;
   const eiChip = u => {
     const S = FBX() && EIR.st === 'ok' ? eiStage(u) : null;
     let t, cl;
@@ -2005,12 +2157,12 @@ function renderStart() {
   app.innerHTML = `
   <section class="hhero">
     <div class="hhero-t">
-      <div class="eyebrow">Economía IB · Nivel Medio</div>
-      <h1>${name ? `Hola, ${esc(name)}. ¿Qué hacemos hoy?` : '¿Qué quieres hacer hoy?'}</h1>
-      <p class="lede">Elige un objetivo y sigue los pasos en orden. ${FBX() ? 'Tu avance se guarda en la nube con tu cuenta del colegio.' : 'Tu avance queda guardado en este dispositivo; <b>entra con tu correo del colegio</b> (arriba) para guardarlo en la nube.'}</p>
+      <div class="eyebrow">Tu espacio de aprendizaje</div>
+      <h1>${name ? `Hola, ${esc(name)}. ¿Qué vas a aprender hoy?` : '¿Qué vas a aprender hoy?'}</h1>
+      <p class="lede">Avanza a tu ritmo, practica y prepárate para tus evaluaciones. ${FBX() ? 'Tu avance se guarda en la nube con tu cuenta del colegio.' : '<span class="hnote">Para guardar tu avance en la nube, <b>entra con tu correo del colegio</b> (arriba a la derecha).</span>'}</p>
       ${pdPick(true)}
     </div>
-    <button class="hcont" type="button" data-go="${main[0]}"><span class="hcl">${resume.length ? 'Continúa donde quedaste' : 'Para empezar'}</span><span class="hct">${main[1]}</span><span class="hcs">${main[2]}</span><span class="hcg">${resume.length ? 'Seguir' : 'Ver temas'} →</span></button>
+    <button class="hcont" type="button" data-go="${main[0]}"><span class="hcl">${resume.length ? 'Continúa donde quedaste' : 'Para empezar'}</span><span class="hct">${main[1]}</span><span class="hcs">${main[2]}</span><span class="hcg">${resume.length ? (lastT && main[0] === tid(lastT.id) ? 'Continuar tema' : 'Continuar') : 'Ver temas'} ${ico('arrow')}</span></button>
   </section>
   ${resume.length > 1 ? `<div class="hmore"><span class="small muted">También pendiente:</span>${resume.slice(1, 4).map(([g, l]) => `<button class="linkb" type="button" data-go="${g}">${l}</button>`).join('')}</div>` : ''}
   ${alerts.length ? `<section class="halerts" aria-label="Avisos">${alerts.slice(0, 4).map(([cl, ic, g, t, d]) => `<button class="halert ${cl}" type="button" data-go="${g}">${ico(ic)}<span><b>${t}</b><span>${d}</span></span></button>`).join('')}</section>` : ''}
@@ -2039,12 +2191,12 @@ function renderStart() {
       `<div class="eichips">${Object.keys(EI_UNITS).map(eiChip).join('')}</div>`)}
   </section>
   <section class="quick" aria-label="Repaso rápido">
-    <h2 class="wgroup">¿Tienes solo 10 minutos?<span>repaso rápido</span></h2>
+    <h2 class="hsec">¿Tienes 10 minutos?</h2>
     <div class="qgrid">
-      <button class="qbtn" type="button" data-go="repasar"><b>Mis errores</b><span>${ec ? `${ec} pendientes` : 'Sin errores pendientes'}</span></button>
-      <button class="qbtn" type="button" data-go="examen"><b>Examen rápido</b><span>Preguntas mezcladas</span></button>
-      <button class="qbtn" type="button" data-go="tarjetas"><b>Tarjetas</b><span>Términos y conceptos</span></button>
-      <button class="qbtn" type="button" data-go="juegos"><b>Juegos</b><span>Aprender jugando</span></button>
+      <button class="qbtn" type="button" data-go="repasar">${ico('err')}<span class="qt"><b>Mis errores</b><span>${ec ? `${ec} pendientes` : 'Sin errores pendientes'}</span></span>${ico('arrow', 'qa')}</button>
+      <button class="qbtn" type="button" data-go="examen">${ico('timer')}<span class="qt"><b>Examen rápido</b><span>Preguntas mezcladas</span></span>${ico('arrow', 'qa')}</button>
+      <button class="qbtn" type="button" data-go="tarjetas">${ico('cards')}<span class="qt"><b>Tarjetas</b><span>Términos y conceptos</span></span>${ico('arrow', 'qa')}</button>
+      <button class="qbtn" type="button" data-go="juegos">${ico('game')}<span class="qt"><b>Juegos</b><span>Aprender jugando</span></span>${ico('arrow', 'qa')}</button>
     </div>
   </section>
   ${mediaNote('Escúchalo de camino al colegio y después practica el subtema aquí.')}
@@ -5023,9 +5175,9 @@ function renderExplain(p) {
 /* =============== 6 · Presentaciones y podcast: están en Teams y en Spotify (no se alojan en el Taller) =============== */
 const SPOTIFY_SHOW = 'https://open.spotify.com/show/0QjkpklEJ5LUkfBIQJs52M';
 function mediaNote(extra) {
-  return `<aside class="mnote" aria-label="Presentaciones y podcast"><span class="mni" aria-hidden="true">🎧</span><div><b>Presentaciones y podcast de clase</b>
+  return `<aside class="mnote" aria-label="Presentaciones y podcast"><span class="mni" aria-hidden="true">${ico('head')}</span><div><b>Presentaciones y podcast de clase</b>
     <p>Las presentaciones (PPT) y los episodios del podcast están en el equipo de Economía en <b>Microsoft Teams</b>. El podcast también está en <b>Spotify</b>: busca <b>«Economía Faith»</b>.${extra ? ' ' + extra : ''}</p></div>
-    <a class="btn sm" href="${SPOTIFY_SHOW}" target="_blank" rel="noopener">Abrir en Spotify</a></aside>`;
+    <a class="btn accent" href="${SPOTIFY_SHOW}" target="_blank" rel="noopener">Escuchar podcast ${ico('arrow')}</a></aside>`;
 }
 function renderMediaInfo() {
   app.innerHTML = `<div class="eyebrow">Economía IB</div><h1>Presentaciones y podcast</h1>
