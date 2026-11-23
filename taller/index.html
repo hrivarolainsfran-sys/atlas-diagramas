@@ -10082,7 +10082,7 @@ function view(mode, note = '', kind = 'info') {
   if (mode === 'login' || mode === 'signup') {
     const su = mode === 'signup';
     dlg.innerHTML = `${close}<form data-f="${mode}" novalidate><h2 id="acT">${su ? 'Crear cuenta' : 'Entrar'}</h2>
-      <p class="small">${su ? 'Usa tu correo del colegio. Te enviaremos un enlace para verificarlo.' : 'Entra con tu correo del colegio y tu progreso se guarda en la nube: lo recuperas en cualquier dispositivo.'}</p>
+      <p class="small">${su ? 'Usa tu correo del colegio y crea una contraseña solo para el Taller (no uses la de tu correo). Te enviaremos un enlace para verificarlo; en Outlook suele llegar a «Correo no deseado».' : 'Entra con tu correo del colegio y tu progreso se guarda en la nube: lo recuperas en cualquier dispositivo.'}</p>
       <label>Correo del colegio<input class="inp" name="em" type="email" autocomplete="email" placeholder="nombre${DOMAIN}" required></label>
       <label>Contraseña${su ? ' (mínimo 6 caracteres)' : ''}<input class="inp" name="pw" type="password" autocomplete="${su ? 'new-password' : 'current-password'}" minlength="6" required></label>
       ${su ? '<label>Repite la contraseña<input class="inp" name="pw2" type="password" autocomplete="new-password" minlength="6" required></label>' : ''}
@@ -10097,7 +10097,8 @@ function view(mode, note = '', kind = 'info') {
     const stTxt = { unv: 'Tu correo todavía no está verificado: tu progreso solo se guarda en este dispositivo.', sync: 'Guardando en la nube…', ok: `Todo guardado en la nube${last ? ' (' + new Date(last).toLocaleTimeString('es-PY', { hour: '2-digit', minute: '2-digit' }) + ')' : ''}.`, err: msg || 'No se pudo guardar en la nube.', offline: 'Sin conexión: tu progreso queda en este dispositivo y se sube cuando vuelvas a tener internet.' }[st] || '';
     dlg.innerHTML = `${close}<div class="acbody"><h2 id="acT">Tu cuenta</h2><p><b>${e(user.email)}</b></p>
       <div class="fb ${st === 'ok' ? 'ok' : st === 'unv' || st === 'err' ? 'no' : 'info'}" role="status">${stTxt}</div>${box}
-      ${st === 'unv' ? `<p class="small">Abre el enlace que te enviamos a <b>${e(user.email)}</b> (revisa también la carpeta de spam) y después toca «Ya lo verifiqué».</p>
+      ${st === 'unv' ? `<p class="small">Abre el enlace que te enviamos a <b>${e(user.email)}</b> y después toca «Ya lo verifiqué».</p>
+        <div class="fb info"><b>¿No lo ves?</b> En Outlook suele llegar a <b>«Correo no deseado»</b>. Ábrelo desde ahí y márcalo como <b>«No es correo no deseado»</b> para que los próximos correos del Taller lleguen a tu bandeja de entrada.</div>
         <div class="acrow"><button class="btn primary" type="button" data-a="verified">Ya lo verifiqué</button><button class="btn" type="button" data-a="resend">Reenviar el correo</button></div>`
         : '<div class="acrow"><button class="btn" type="button" data-a="syncnow">Sincronizar ahora</button></div>'}
       <label style="display:flex;gap:8px;align-items:flex-start;font-weight:400"><input type="checkbox" id="acWipe" checked style="margin-top:4px"> Al salir, borrar mi progreso de este dispositivo (recomendado en computadoras compartidas)</label>
@@ -10148,14 +10149,14 @@ dlg.addEventListener('submit', async ev => {
   if (!okMail(em)) return view(kind, `Usa tu correo del colegio (termina en <b>${DOMAIN}</b>).`, 'no');
   sb.disabled = true;
   try {
-    if (kind === 'reset') { await A.sendPasswordResetEmail(auth, em); view('login', 'Si existe una cuenta con ese correo, te llegará un enlace para crear una contraseña nueva. Revisa también la carpeta de spam.', 'ok'); return; }
+    if (kind === 'reset') { await A.sendPasswordResetEmail(auth, em); view('login', 'Si existe una cuenta con ese correo, te llegará un enlace para crear una contraseña nueva. Si no lo ves, búscalo en «Correo no deseado» de Outlook.', 'ok'); return; }
     const pw = f.pw.value;
     if (pw.length < 6) return view(kind, 'La contraseña debe tener al menos 6 caracteres.', 'no');
     if (kind === 'signup') {
       if (pw !== f.pw2.value) return view(kind, 'Las contraseñas no coinciden.', 'no');
       const c = await A.createUserWithEmailAndPassword(auth, em, pw); user = c.user;
       await A.sendEmailVerification(user); st = 'unv'; setBtn();
-      view('acct', `Cuenta creada. Te enviamos un correo a <b>${e(em)}</b> para verificarla.`, 'ok');
+      view('acct', `Cuenta creada. Te enviamos un correo a <b>${e(em)}</b> para verificarla: búscalo también en «Correo no deseado».`, 'ok');
     } else {
       const c = await A.signInWithEmailAndPassword(auth, em, pw); user = c.user;
       await onUser(); view('acct');
