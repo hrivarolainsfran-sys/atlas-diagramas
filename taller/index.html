@@ -840,7 +840,7 @@ details.sres summary{cursor:pointer}details.sres p{margin:6px 0 0;font-size:15px
 .teokc{border-color:var(--gold);background:var(--gold-soft)}
 .teosec{margin:0 0 22px}.teosec h3{font-family:var(--f-display);font-size:24px;letter-spacing:0;text-transform:none;margin:0 0 8px;color:var(--ink)}
 .teosec p{line-height:1.65;margin:0 0 10px}
-.teocaja{border-left:0;background:var(--paper);border:1px solid var(--rule);border-radius:10px;padding:10px 14px;margin:10px 0}.teocaja b{display:block;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.teocaja{border-left:0;background:var(--paper);border:1px solid var(--rule);border-radius:10px;padding:10px 14px;margin:10px 0}.teocaja>b:first-child{display:block;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
 .teodias{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),400px));gap:12px;margin:12px 0}
 .teodia svg text{font-family:var(--f-body)}
 .teodia{margin:0;background:var(--sheet);border:1px solid var(--rule);border-radius:12px;padding:8px 8px 6px;color:var(--ink)}
@@ -861,6 +861,10 @@ details.sres summary{cursor:pointer}details.sres p{margin:6px 0 0;font-size:15px
 :root[data-theme="dark"] .teonc{color:var(--gold)}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .teonc{color:var(--gold)}}
 @media print{.top,.site-foot,.noprint,.ttabs,.crumb,.mnote,details.essentials{display:none!important}body{background:#fff!important}main{padding:0}.teodia,.teoq,.teon,.teobox,.teoej{break-inside:avoid}.teounit{break-before:page}}
+.teorepw{margin:4px 0 0}.teorep{font-weight:400;color:var(--muted)}
+.teorepf{display:grid;gap:8px;background:var(--sheet);border:1px solid var(--rule);border-radius:10px;padding:10px 12px;max-width:620px}.teorepf label{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.teorepf textarea{width:100%;font:inherit;border:1.5px solid var(--ink-2);border-radius:8px;padding:8px;background:var(--sheet);color:var(--ink)}
+.pfteo td{text-align:center}.pflow{background:var(--bad-bg);color:var(--bad);font-weight:700}.pfhigh{color:var(--ok);font-weight:700}
+.pfrep{background:var(--sheet);border:1px solid var(--rule);border-left:4px solid var(--bad);border-radius:10px;padding:10px 14px;margin:8px 0;max-width:1000px}.pfrep.done{border-left-color:var(--ok);opacity:.85}.pfrep p{margin:6px 0 8px}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
@@ -9184,9 +9188,9 @@ const profName = x => pj(x, 'alumno', '') || (x.email || '').split('@')[0];
 async function profLoad() {
   const X = FBX(); if (!X) return; PROF.st = 'loading';
   try {
-    const [u, s, f, c] = await Promise.all([X.students(), X.allSubs(), X.allFb(), X.getConfig()]);
+    const [u, s, f, c, rp] = await Promise.all([X.students(), X.allSubs(), X.allFb(), X.getConfig(), X.allReports().catch(() => [])]);
     PROF.users = u.filter(x => (x.email || '').toLowerCase() !== TEACHER_MAIL).sort((a, b) => profName(a).localeCompare(profName(b), 'es'));
-    PROF.subs = s; PROF.fb = f; PROF.curso = c; PROF.logs = {}; PROF.st = 'ok';
+    PROF.subs = s; PROF.fb = f; PROF.curso = c; PROF.reps = rp.sort((a, b) => (b.at || 0) - (a.at || 0)); PROF.logs = {}; PROF.st = 'ok';
   } catch (e) { PROF.st = 'err'; PROF.err = e.code || e.message; }
   if (location.hash.startsWith('#profesor')) { const y = window.scrollY; render(); window.scrollTo(0, y); }
 }
@@ -9222,12 +9226,14 @@ function renderProf() {
     ${pend.length ? `<div class="fb no"><b class="h">Borradores por devolver: ${pend.length}</b>${pend.map(([x, u, n]) => `<button class="linkb" type="button" data-go="profesor-${x.uid}">${esc(profName(x))} · ${EI_UNITS[u]} · borrador ${n}</button>`).join(' · ')}</div>` : '<div class="fb ok">No hay borradores pendientes de devolución.</div>'}
     <div class="tscroll"><table class="dtab plan pftab"><thead><tr><th>Alumno</th>${Object.values(EI_UNITS).map(n => `<th>${n}</th>`).join('')}<th>Tiempo (7 días)</th><th>Última actividad</th></tr></thead><tbody>${rows || `<tr><td colspan="6">Todavía no hay alumnos con cuenta.</td></tr>`}</tbody></table></div>
     ${profSummaryHtml()}
+    ${profTeoHtml(PROF.users.filter(x => PF === 'all' || pdOf(x) === PF))}
+    ${profRepHtml()}
     <h2 style="margin-top:24px">Fechas del curso</h2>
     <p class="small muted" style="max-width:1000px;margin-top:-4px">Los plazos que pongas aquí aparecen en el calendario de todos los alumnos, con aviso cuando faltan 7 días o menos. La fecha de «Versión final» es también la fecha límite del planificador.</p>
     <div class="tscroll"><table class="dtab plan"><thead><tr><th>Comentario</th>${EI_STAGES.map(s => `<th>${s}</th>`).join('')}</tr></thead><tbody>${Object.entries(EI_UNITS).map(([u, n]) => `<tr><th scope="row">U${u} · ${n}</th>${EI_STAGES.map((s, i) => `<td><input type="date" class="inp pff" data-u="${u}" data-i="${i}" value="${esc((F[u] || [])[i] || '')}" aria-label="${n}: ${s}"></td>`).join('')}</tr>`).join('')}</tbody></table></div>
     <div class="row" style="margin-top:8px"><button class="btn primary" type="button" id="pfSave">Guardar fechas</button><span id="pfMsg" class="small"></span></div>`;
   $('#pfR').onclick = () => { PROF.st = 'idle'; render(); };
-  $('#pfCsv').onclick = profCsv; $('#pfTime').onclick = profTimeCsv; bindSummary();
+  $('#pfCsv').onclick = profCsv; $('#pfTime').onclick = profTimeCsv; bindSummary(); bindProfTeo(PROF.users.filter(x => PF === 'all' || pdOf(x) === PF));
   app.querySelectorAll('[data-pfpd]').forEach(b => b.onclick = () => { SESS.pfPD = b.dataset.pfpd; renderProf(); });
   $('#pfSave').onclick = async e => {
     const fechas = {}; app.querySelectorAll('.pff').forEach(i => { (fechas[i.dataset.u] = fechas[i.dataset.u] || ['', '', '', ''])[+i.dataset.i] = i.value; });
@@ -9475,8 +9481,8 @@ function bindSummary() {
   $('#pfBak').onclick = async e => {
     const b = e.currentTarget, o = b.textContent; b.disabled = true; b.textContent = 'Preparando…';
     try {
-      const X = FBX(), [users, subs, fb, logs, config] = await Promise.all([X.students(), X.allSubs(), X.allFb(), X.allLogs(), X.getConfig()]);
-      saveBlob(new Blob([JSON.stringify({ generado: new Date().toISOString(), proyecto: 'taller-economia-ib', users, subs, fb, logs, config }, null, 1)], { type: 'application/json' }), `Respaldo-Taller-${today()}.json`);
+      const X = FBX(), [users, subs, fb, logs, config, reportes] = await Promise.all([X.students(), X.allSubs(), X.allFb(), X.allLogs(), X.getConfig(), X.allReports().catch(() => [])]);
+      saveBlob(new Blob([JSON.stringify({ generado: new Date().toISOString(), proyecto: 'taller-economia-ib', users, subs, fb, logs, config, reportes }, null, 1)], { type: 'application/json' }), `Respaldo-Taller-${today()}.json`);
       b.textContent = 'Descargado ✓';
     } catch (x) { b.textContent = 'No se pudo (' + (x.code || x.message) + ')'; }
     setTimeout(() => { b.textContent = o; b.disabled = false; }, 2500);
@@ -9543,6 +9549,51 @@ function profTimeCsv() {
   saveBlob(new Blob(['﻿' + rows.map(r => r.map(q).join(';')).join('\r\n')], { type: 'text/csv;charset=utf-8' }), `Tiempo-Taller-${today()}.csv`);
 }
 
+
+/* ---------- Panel: comprensión de la teoría y reportes de errores ---------- */
+function teoStats(list) {
+  return TEO_IDS.map(id => {
+    const t = TOPICS.find(x => x.id === id), L = list.map(x => (pj(x, 'teo', {}) || {})[id]).filter(Boolean);
+    const opened = L.filter(r => r.v).length, done = L.filter(r => r.q && Object.keys(r.q).length >= 4).length;
+    const qs = [0, 1, 2, 3].map(i => { const a = L.filter(r => r.q && r.q[i] !== undefined); return a.length ? Math.round(a.reduce((s2, r) => s2 + r.q[i], 0) / a.length * 100) : null; });
+    const all = L.flatMap(r => Object.values(r.q || {})), pct = all.length ? Math.round(all.reduce((a, b) => a + b, 0) / all.length * 100) : null;
+    return { id, t, opened, done, qs, pct };
+  });
+}
+const pctCell = v => v === null ? '<td class="muted">—</td>' : `<td class="${v < 60 ? 'pflow' : v >= 80 ? 'pfhigh' : ''}">${v} %</td>`;
+function profTeoHtml(list) {
+  const S = teoStats(list).filter(r => r.opened || r.done);
+  return `<h2 style="margin-top:24px">Comprensión de la teoría</h2>
+    <p class="small muted" style="max-width:1000px;margin-top:-4px">Primer intento de cada alumno en las cuatro preguntas de «Comprueba lo que entendiste» de cada subtema (P1 a P4, en el orden en que aparecen). En rojo, menos del 60 % de aciertos: conviene reforzarlo en clase.</p>
+    ${S.length ? `<div class="tscroll"><table class="dtab plan pfteo"><thead><tr><th>Subtema</th><th>Abrieron la teoría</th><th>Completaron</th><th>Aciertos</th><th>P1</th><th>P2</th><th>P3</th><th>P4</th></tr></thead><tbody>${S.map(r => `<tr><th scope="row"><button class="linkb" type="button" data-go="${tid(r.id)}">${tcode(r.id)} ${esc(r.t ? r.t.name : '')}</button></th><td>${r.opened} de ${list.length}</td><td>${r.done}</td>${pctCell(r.pct)}${r.qs.map(pctCell).join('')}</tr>`).join('')}</tbody></table></div>
+      <div class="row" style="margin-top:8px"><button class="btn" type="button" id="pfTeoCsv">Descargar comprensión (Excel)</button></div>` : '<p class="small muted">Todavía ningún alumno abrió la teoría con su cuenta.</p>'}`;
+}
+function bindProfTeo(list) {
+  const b = $('#pfTeoCsv'); if (b) b.onclick = () => {
+    const q = v => { const s2 = String(v ?? ''); return /[;"\n]/.test(s2) ? '"' + s2.replace(/"/g, '""') + '"' : s2; };
+    const rows = [['Alumno', 'Correo', 'Curso', 'Subtema', 'Abrió la teoría', 'P1', 'P2', 'P3', 'P4', 'Aciertos', 'Respondidas']];
+    list.forEach(x => { const T = pj(x, 'teo', {}) || {}, pdv = String(pj(x, 'pd', '') || ''); TEO_IDS.forEach(id => { const r = T[id]; if (!r) return; const qq = r.q || {}, vals = Object.values(qq); rows.push([profName(x), x.email || '', pdv === '1' || pdv === '2' ? 'PD' + pdv : '', tcode(id), r.v ? fdate(r.v) : '', ...[0, 1, 2, 3].map(i => qq[i] === undefined ? '' : qq[i]), vals.reduce((a, c) => a + c, 0), vals.length]); }); });
+    saveBlob(new Blob(['﻿' + rows.map(r => r.map(q).join(';')).join('\r\n')], { type: 'text/csv;charset=utf-8' }), `Comprension-teoria-${today()}.csv`);
+  };
+  app.querySelectorAll('[data-rpa]').forEach(btn => btn.onclick = async () => {
+    const id = btn.dataset.id, a = btn.dataset.rpa;
+    if (a === 'del' && btn.dataset.sure !== '1') { btn.dataset.sure = '1'; btn.textContent = 'Confirmar borrado'; return; }
+    btn.disabled = true;
+    try { await (a === 'ok' ? FBX().resolveReport(id) : FBX().delReport(id)); PROF.st = 'idle'; await profLoad(); }
+    catch (x) { btn.textContent = 'No se pudo (' + (x.code || x.message) + ')'; }
+  });
+}
+function profRepHtml() {
+  const R = PROF.reps || [], nuevos = R.filter(r => r.estado !== 'resuelto'), viejos = R.filter(r => r.estado === 'resuelto');
+  const who = r => { const x = PROF.users.find(y => y.uid === r.uid); return x ? profName(x) : (r.email || '').split('@')[0]; };
+  const TIP = { error: 'Posible error', confuso: 'No se entiende', otro: 'Otro' };
+  const card = r => `<div class="pfrep${r.estado === 'resuelto' ? ' done' : ''}"><div class="small"><span class="tag ${r.tipo === 'error' ? 'late' : 'prog'}">${TIP[r.tipo] || 'Otro'}</span> <b>${tcode(r.tema)}</b> · ${esc(r.sec || '')} · ${esc(who(r))} · ${fdate(r.at)}</div><p>${esc(r.texto || '')}</p><div class="row"><button class="btn sm" type="button" data-go="${tid(r.tema)}">Ver la teoría</button>${r.estado !== 'resuelto' ? `<button class="btn sm primary" type="button" data-rpa="ok" data-id="${r.id}">Marcar resuelto</button>` : ''}<button class="btn sm" type="button" data-rpa="del" data-id="${r.id}">Borrar</button></div></div>`;
+  return `<h2 style="margin-top:24px">Reportes de la teoría${nuevos.length ? ` <span class="tag late" style="font-size:13px;vertical-align:middle">${nuevos.length} sin revisar</span>` : ''}</h2>
+    <p class="small muted" style="max-width:1000px;margin-top:-4px">Lo que los alumnos marcaron como error o como confuso en la teoría. Para corregir un texto, pásame el reporte.</p>
+    ${nuevos.length ? nuevos.map(card).join('') : '<p class="small muted">No hay reportes sin revisar.</p>'}
+    ${viejos.length ? `<details style="margin-top:8px"><summary class="small"><b>Resueltos (${viejos.length})</b></summary>${viejos.map(card).join('')}</details>` : ''}`;
+}
+
 /* Cuando cambia la sesión de la cuenta */
 function updateProfNav() { const n = document.getElementById('navProf'); if (n) n.hidden = !isTeacher(); }
 window.addEventListener('fbx', () => {
@@ -9603,14 +9654,14 @@ function teoHtml(d, t) {
   return `<article class="teo">
     <p class="teointro">${d.intro}</p>
     <div class="teobox"><b>Qué vas a aprender</b><ul>${d.objetivos.map(o => `<li>${o}</li>`).join('')}</ul></div>
-    ${d.secciones.map(s => `<section class="teosec"><h3>${s.h}</h3>${P(s.p)}${s.flujo ? `<ol class="teoflow">${s.flujo.map(x => `<li>${x}</li>`).join('')}</ol>` : ''}${P(s.p2)}${dias(s.dia)}${s.caja ? `<div class="teocaja"><b>${s.caja.t}</b><div>${s.caja.html}</div></div>` : ''}</section>`).join('')}
+    ${d.secciones.map(s => `<section class="teosec"><h3>${s.h}</h3>${P(s.p)}${s.flujo ? `<ol class="teoflow">${s.flujo.map(x => `<li>${x}</li>`).join('')}</ol>` : ''}${P(s.p2)}${dias(s.dia)}${s.caja ? `<div class="teocaja"><b>${s.caja.t}</b><div>${s.caja.html}</div></div>` : ''}${repBtn(d.id, s.h)}</section>`).join('')}
     <section class="teosec teoej"><h3>${d.ejemplo.t}</h3>${P(d.ejemplo.p)}${dias(d.ejemplo.dia)}
       ${d.ejemplo.link ? `<p><button class="btn sm noprint" type="button" data-go="${d.ejemplo.link[0]}">${d.ejemplo.link[1]} →</button></p>` : ''}
-      ${(d.ejemplo.fuentes || []).length ? `<p class="small muted">Fuentes: ${d.ejemplo.fuentes.map(([n, u]) => `<a href="${u}" target="_blank" rel="noopener">${n}</a>`).join(' · ')}</p>` : ''}</section>
+      ${(d.ejemplo.fuentes || []).length ? `<p class="small muted">Fuentes: ${d.ejemplo.fuentes.map(([n, u]) => `<a href="${u}" target="_blank" rel="noopener">${n}</a>`).join(' · ')}</p>` : ''}${repBtn(d.id, d.ejemplo.t)}</section>
     <section class="teosec"><h3>Noticias reales de este tema</h3><div class="teonews" data-tema="${d.id}" data-temas="${(d.temas || [d.id]).join(',')}"><p class="small muted">Cargando noticias de Economía en las Noticias…</p></div></section>
     <section class="teosec"><h3>Errores frecuentes</h3><ul class="teoerr">${d.errores.map(e => `<li>${e}</li>`).join('')}</ul></section>
     <div class="teobox teokc"><b>${d.kc.t}</b><p>${d.kc.p}</p></div>
-    <section class="teosec"><h3>Comprueba lo que entendiste</h3><div class="teochk">${d.check.map((c, i) => `<div class="teoq" data-q="${i}"><p><b>${i + 1}.</b> ${c.q}</p><div class="teoopts">${c.o.map((o, j) => `<button type="button" class="opt" data-o="${j}">${o}</button>`).join('')}</div><div class="teofb" aria-live="polite"></div></div>`).join('')}</div></section>
+    <section class="teosec"><h3>Comprueba lo que entendiste</h3><div class="teochk">${d.check.map((c, i) => `<div class="teoq" data-q="${i}"><p><b>${i + 1}.</b> ${c.q}</p><div class="teoopts">${c.o.map((o, j) => `<button type="button" class="opt" data-o="${j}">${o}</button>`).join('')}</div><div class="teofb" aria-live="polite"></div></div>`).join('')}</div><div class="teoscore" aria-live="polite"></div>${repBtn(d.id, 'Comprueba lo que entendiste')}</section>
     <section class="teosec noprint"><h3>Para seguir</h3><div class="rlinks">${(d.labs || []).filter(k => LABS[k]).map(k => `<button class="btn sm" type="button" data-go="lab-${k}">Laboratorio: ${LABS[k].name}</button>`).join('')}${(d.atlas || []).map(([id, n]) => `<a class="btn sm" href="${ATLAS}#${id}" target="_blank" rel="noopener">Atlas: ${n} ↗</a>`).join('')}</div></section>
     <p class="small muted teocred">Economía IB · Prof. Econ. Hugo Rivarola</p>
   </article>`;
@@ -9623,8 +9674,11 @@ function bindTeo(root) {
       q.querySelectorAll('[data-o]').forEach(x => { x.classList.remove('right', 'wrong'); if (+x.dataset.o === c.a && ok) x.classList.add('right'); });
       b.classList.add(ok ? 'right' : 'wrong');
       q.querySelector('.teofb').innerHTML = `<div class="fb ${ok ? 'ok' : 'no'}" style="margin:8px 0 0"><b class="h">${ok ? 'Correcto' : 'Todavía no'}</b>${c.e}</div>`;
+      teoRecord(id, +q.dataset.q, ok); teoScore(q.closest('.teo'), id);
     });
   });
+  root.querySelectorAll('.teo').forEach(a => { const id = a.querySelector('.teonews').dataset.tema; teoScore(a, id); });
+  root.querySelectorAll('[data-rep]').forEach(b => b.onclick = () => teoReportForm(b));
   root.querySelectorAll('.teonews').forEach(box => {
     const tema = box.dataset.tema, temas = (box.dataset.temas || tema).split(','), more = `<p><a class="btn sm" href="${NEWS_SITE}#tema-${tema.replace('.', '-')}" target="_blank" rel="noopener">Ver el tema en Economía en las Noticias ↗</a></p>`;
     newsLoad().then(L => {
@@ -9634,11 +9688,41 @@ function bindTeo(root) {
     });
   });
 }
+
+/* Autoevaluación de la teoría: se guarda el primer intento de cada pregunta */
+function teoRecord(id, i, ok) {
+  const R = store.get('teo', {}), x = R[id] = R[id] || {}; x.q = x.q || {};
+  if (x.q[i] === undefined) { x.q[i] = ok ? 1 : 0; x.at = today(); x.v = x.v || today(); store.set('teo', R); }
+}
+function teoScore(article, id) {
+  const box = article.querySelector('.teoscore'); if (!box || !TEO[id]) return;
+  const q = ((store.get('teo', {})[id] || {}).q) || {}, n = TEO[id].check.length, done = Object.keys(q).length, ok = Object.values(q).reduce((a, b) => a + b, 0);
+  box.innerHTML = done < n ? `<p class="small muted">Respondiste ${done} de ${n}. Cuenta tu primer intento de cada pregunta.</p>` : `<div class="fb ${ok === n ? 'ok' : 'info'}" style="margin:6px 0 0"><b class="h">Tu resultado: ${ok} de ${n} en el primer intento</b>${ok === n ? 'Muy bien: estás listo para la práctica.' : 'Repasa las secciones de las preguntas que fallaste y después pasa a la pestaña Práctica.'}${FBX() ? ' Tu profesor ve este resultado para saber qué reforzar en clase.' : ''}</div>`;
+}
+/* Reportar un error o algo confuso en la teoría */
+const repBtn = (id, sec) => `<p class="noprint teorepw"><button class="linkb small teorep" type="button" data-rep="${esc(id)}" data-sec="${esc(String(sec).replace(/<[^>]+>/g, ''))}">Reportar un error o algo confuso en esta parte</button></p>`;
+function teoReportForm(b) {
+  const w = b.parentNode;
+  if (!FBX()) { w.innerHTML = '<span class="small">Para reportar, toca <b>Entrar</b> (arriba) y usa tu correo del colegio.</span>'; return; }
+  w.innerHTML = `<div class="teorepf"><label class="small"><b>¿Qué pasa en «${esc(b.dataset.sec)}»?</b><select class="dsel" data-k="t"><option value="error">Creo que hay un error</option><option value="confuso">No se entiende</option><option value="otro">Otra cosa</option></select></label>
+    <textarea rows="3" maxlength="600" placeholder="Explica qué parte y por qué (máximo 600 caracteres)"></textarea>
+    <div class="row"><button class="btn sm primary" type="button" data-a="send">Enviar al profesor</button><button class="btn sm" type="button" data-a="cancel">Cancelar</button></div></div>`;
+  const back = () => { w.innerHTML = ''; w.insertAdjacentHTML('beforeend', repBtn(b.dataset.rep, b.dataset.sec).replace(/^<p[^>]*>|<\/p>$/g, '')); w.querySelector('[data-rep]').onclick = () => teoReportForm(w.querySelector('[data-rep]')); };
+  w.querySelector('[data-a="cancel"]').onclick = back;
+  w.querySelector('[data-a="send"]').onclick = async e => {
+    const txt = w.querySelector('textarea').value.trim(); if (txt.length < 5) { w.querySelector('textarea').focus(); return; }
+    e.currentTarget.disabled = true;
+    try { await FBX().report({ tema: b.dataset.rep, sec: b.dataset.sec, tipo: w.querySelector('select').value, texto: txt }); w.innerHTML = '<span class="small" style="color:var(--ok)"><b>¡Gracias! Tu profesor recibió el reporte.</b></span>'; }
+    catch (x) { w.insertAdjacentHTML('beforeend', `<p class="small" style="color:var(--bad)">No se pudo enviar (${esc(x.code || x.message)}).</p>`); e.currentTarget.disabled = false; }
+  };
+}
+
 function renderTopicTeo(t, B) {
   B.innerHTML = '<p class="muted">Cargando la teoría…</p>';
   teoLoad(t.id).then(d => {
     B.innerHTML = `<div class="row noprint" style="justify-content:flex-end;margin:-4px 0 6px"><button class="btn sm" type="button" id="teoPrint">Imprimir o guardar en PDF</button></div>${teoHtml(d, t)}`;
     $('#teoPrint').onclick = () => window.print();
+    const R = store.get('teo', {}); if (!(R[t.id] || {}).v) { R[t.id] = { ...(R[t.id] || {}), v: today() }; store.set('teo', R); }
     bindTeo(B);
   }).catch(() => { B.innerHTML = '<div class="fb no">No se pudo cargar la teoría. Revisa tu conexión y vuelve a intentarlo.</div>'; });
 }
@@ -11037,6 +11121,10 @@ window.FBX = {
   snap: (id, p) => F.setDoc(F.doc(db, 'logs', `${user.uid}_${id}`), { ...p, uid: user.uid, at: F.serverTimestamp() }),
   logsOf: async uid => (await F.getDocs(F.query(F.collection(db, 'logs'), F.where('uid', '==', uid)))).docs.map(conv),
   allLogs: () => all('logs'),
+  report: p => F.setDoc(F.doc(db, 'reportes', `${user.uid}_${Date.now()}`), { ...p, uid: user.uid, email: user.email, estado: 'nuevo', at: F.serverTimestamp() }),
+  allReports: () => all('reportes'),
+  resolveReport: id => F.setDoc(F.doc(db, 'reportes', id), { estado: 'resuelto' }, { merge: true }),
+  delReport: id => F.deleteDoc(F.doc(db, 'reportes', id)),
   reopen: id => Promise.all([F.deleteDoc(F.doc(db, 'subs', id)), id.endsWith('_f') ? null : F.deleteDoc(F.doc(db, 'fb', id))])
 };
 
