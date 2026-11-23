@@ -10005,7 +10005,7 @@ const ERR = {
   'auth/invalid-credential': 'Correo o contraseña incorrectos.', 'auth/wrong-password': 'Correo o contraseña incorrectos.', 'auth/user-not-found': 'No hay una cuenta con ese correo. Créala primero.',
   'auth/email-already-in-use': 'Ya existe una cuenta con ese correo. Entra o recupera tu contraseña.', 'auth/weak-password': 'La contraseña debe tener al menos 6 caracteres.',
   'auth/invalid-email': 'Ese correo no es válido.', 'auth/too-many-requests': 'Demasiados intentos. Espera unos minutos y vuelve a probar.',
-  'auth/network-request-failed': 'Sin conexión a internet. Vuelve a intentarlo.', 'permission-denied': 'La nube rechazó el guardado. Sal y vuelve a entrar.'
+  'auth/network-request-failed': 'Sin conexión a internet. Vuelve a intentarlo.', 'permission-denied': 'La nube rechazó el guardado. Verifica tu correo y vuelve a entrar.'
 };
 const errTxt = x => ERR[x && x.code] || 'Algo salió mal. Vuelve a intentarlo.';
 
@@ -10030,12 +10030,13 @@ async function load() {
 
 async function onUser() {
   if (!user) { st = 'off'; setBtn(); return; }
-    await syncDown();
+  if (!user.emailVerified) { st = 'unv'; setBtn(); return; }
+  await syncDown();
 }
 
 /* Trae lo de la nube y combina clave por clave: gana la versión más reciente */
 async function syncDown() {
-  if (!user) return;
+  if (!user || !user.emailVerified) return;
   st = 'sync'; setBtn();
   try {
     const ref = F.doc(db, 'users', user.uid), snap = await F.getDoc(ref);
@@ -10056,7 +10057,7 @@ async function syncDown() {
 }
 
 async function push() {
-  if (!user) return;
+  if (!user || !user.emailVerified) return;
   clearTimeout(timer); st = 'sync'; setBtn();
   const data = {}; myKeys().forEach(k => { data[k] = localStorage.getItem(P + k); });
   const size = Object.entries(data).reduce((s, [k, v]) => s + k.length + v.length, 0);
@@ -10067,9 +10068,9 @@ async function push() {
   } catch (x) { st = navigator.onLine ? 'err' : 'offline'; msg = errTxt(x); }
   setBtn(); if (dlg.open && dlg.dataset.mode === 'acct') view('acct');
 }
-const schedule = () => { if (!user) return; st = 'sync'; setBtn(); clearTimeout(timer); timer = setTimeout(push, 2500); };
+const schedule = () => { if (!user || !user.emailVerified) return; st = 'sync'; setBtn(); clearTimeout(timer); timer = setTimeout(push, 2500); };
 window.__onStoreSet = schedule;
-addEventListener('online', () => { if (user) push(); });
+addEventListener('online', () => { if (user && user.emailVerified) push(); });
 document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden' && timer) push(); });
 
 /* ---------- ventana de cuenta ---------- */
@@ -10081,7 +10082,7 @@ function view(mode, note = '', kind = 'info') {
   if (mode === 'login' || mode === 'signup') {
     const su = mode === 'signup';
     dlg.innerHTML = `${close}<form data-f="${mode}" novalidate><h2 id="acT">${su ? 'Crear cuenta' : 'Entrar'}</h2>
-      <p class="small">${su ? 'Usa tu correo del colegio y crea una contraseña solo para el Taller (no uses la de tu correo).' : 'Entra con tu correo del colegio y tu progreso se guarda en la nube: lo recuperas en cualquier dispositivo.'}</p>
+      <p class="small">${su ? 'Usa tu correo del colegio. Te enviaremos un enlace para verificarlo.' : 'Entra con tu correo del colegio y tu progreso se guarda en la nube: lo recuperas en cualquier dispositivo.'}</p>
       <label>Correo del colegio<input class="inp" name="em" type="email" autocomplete="email" placeholder="nombre${DOMAIN}" required></label>
       <label>Contraseña${su ? ' (mínimo 6 caracteres)' : ''}<input class="inp" name="pw" type="password" autocomplete="${su ? 'new-password' : 'current-password'}" minlength="6" required></label>
       ${su ? '<label>Repite la contraseña<input class="inp" name="pw2" type="password" autocomplete="new-password" minlength="6" required></label>' : ''}
@@ -10131,8 +10132,8 @@ dlg.addEventListener('click', async ev => {
     else if (a === 'syncnow') { await syncDown(); view('acct'); }
     else if (a === 'logout') {
       const wipe = dlg.querySelector('#acWipe').checked;
-      await push();
-      if (wipe && st !== 'ok') { view('acct', 'No se pudo subir tu progreso a la nube, así que no lo borramos. Inténtalo de nuevo con internet.', 'no'); return; }
+      if (user.emailVerified) await push();
+      if (wipe && st !== 'ok' && user.emailVerified) { view('acct', 'No se pudo subir tu progreso a la nube, así que no lo borramos. Inténtalo de nuevo con internet.', 'no'); return; }
       await A.signOut(auth);
       if (wipe) { Object.keys(localStorage).filter(k => k.startsWith(P)).forEach(k => localStorage.removeItem(k)); sessionStorage.removeItem('tallerEco.pulled'); location.reload(); return; }
       dlg.close();
@@ -10153,7 +10154,8 @@ dlg.addEventListener('submit', async ev => {
     if (kind === 'signup') {
       if (pw !== f.pw2.value) return view(kind, 'Las contraseñas no coinciden.', 'no');
       const c = await A.createUserWithEmailAndPassword(auth, em, pw); user = c.user;
-      await onUser(); view('acct', 'Cuenta creada. Desde ahora tu progreso se guarda en la nube.', 'ok');
+      await A.sendEmailVerification(user); st = 'unv'; setBtn();
+      view('acct', `Cuenta creada. Te enviamos un correo a <b>${e(em)}</b> para verificarla.`, 'ok');
     } else {
       const c = await A.signInWithEmailAndPassword(auth, em, pw); user = c.user;
       await onUser(); view('acct');
