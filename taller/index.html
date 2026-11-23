@@ -719,6 +719,23 @@ td.late{color:var(--bad);font-weight:700}td.soon{color:var(--warn-ink);font-weig
 .ann{display:inline-grid;place-items:center;min-width:22px;height:22px;border-radius:5px;font-family:var(--f-display);font-weight:700;font-size:14px;color:#fff;flex:none}
 .ann.aA{background:#1F4E9E}.ann.aB{background:#6B3FA0}.ann.aC{background:#1E8E3E}.ann.aD{background:#B8862B}.ann.aE{background:#C0392B}.ann.aF{background:#14213D}
 @media (max-width:860px){.vwrap,.mrow2{grid-template-columns:1fr}.vres{position:static}}
+.acct{order:1;display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.35);color:var(--navy-ink);border-radius:999px;padding:6px 13px;font-weight:700;font-size:14px;max-width:46vw;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.acct:hover{background:rgba(255,255,255,.2)}
+.acdot{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.5);flex:none}
+.acct[data-st="ok"] .acdot{background:#5FD38A}.acct[data-st="sync"] .acdot{background:#E0B25A}.acct[data-st="warn"] .acdot,.acct[data-st="err"] .acdot{background:#FF8A80}
+.nav{order:2}
+.acdlg{border:1px solid var(--rule);border-radius:12px;padding:0;width:min(440px,calc(100vw - 32px));background:var(--sheet);color:var(--ink);box-shadow:0 18px 50px rgba(0,0,0,.3)}
+.acdlg::backdrop{background:rgba(10,20,40,.55)}
+.acdlg form,.acdlg .acbody{padding:20px 22px;display:grid;gap:12px}
+.acdlg h2{margin:0;font-size:24px}.acdlg p{margin:0}
+.acdlg label{display:grid;gap:4px;font-weight:700;font-size:14px}
+.acdlg .acx{position:absolute;top:8px;right:10px;background:none;border:0;font-size:24px;line-height:1;color:var(--muted);padding:4px 8px}
+.acdlg .aclinks{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:14px}
+.acdlg .aclinks button{background:none;border:0;padding:0;color:var(--navy-2);text-decoration:underline;font-size:14px}
+:root[data-theme="dark"] .acdlg .aclinks button{color:var(--gold)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .acdlg .aclinks button{color:var(--gold)}}
+.acdlg .fb{margin:0}
+.acdlg .acrow{display:flex;gap:8px;flex-wrap:wrap}.acdlg .acrow .btn{flex:1 1 auto}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
@@ -726,6 +743,7 @@ td.late{color:var(--bad);font-weight:700}td.soon{color:var(--warn-ink);font-weig
 <body>
 <header class="top">
   <button class="brand" type="button" data-go="empezar"><b>Economía IB</b><span>Taller de práctica</span></button>
+  <button class="acct" type="button" id="acctBtn" aria-haspopup="dialog"><span class="acdot" aria-hidden="true"></span><span id="acctLbl">Entrar</span></button>
   <nav class="nav" aria-label="Secciones">
     <button type="button" data-go="empezar">Inicio</button>
     <button type="button" data-go="inicio">Temas</button>
@@ -760,7 +778,7 @@ function parseNum(s) {
 }
 const store = {
   get(k, d) { try { const v = localStorage.getItem('tallerEco.' + k); return v ? JSON.parse(v) : d; } catch (e) { return d; } },
-  set(k, v) { try { localStorage.setItem('tallerEco.' + k, JSON.stringify(v)); } catch (e) { } }
+  set(k, v) { try { localStorage.setItem('tallerEco.' + k, JSON.stringify(v)); const t = JSON.parse(localStorage.getItem('tallerEco.__ts') || '{}'); t[k] = Date.now(); localStorage.setItem('tallerEco.__ts', JSON.stringify(t)); } catch (e) { } if (window.__onStoreSet) window.__onStoreSet(k); }
 };
 const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
@@ -9969,6 +9987,186 @@ function eiImport() {
 }
 eiImport();
 render();
+</script>
+
+<dialog id="acctDlg" class="acdlg" aria-labelledby="acT"></dialog>
+<script type="module">
+/* ---------- Cuenta del colegio y guardado en la nube (Firebase) ---------- */
+const CFG = { apiKey: 'AIzaSyDVi2YIAEOy1lUJBVrXm3CnPBf0C69qPu8', authDomain: 'taller-economia-ib.firebaseapp.com', projectId: 'taller-economia-ib', storageBucket: 'taller-economia-ib.firebasestorage.app', messagingSenderId: '811856123040', appId: '1:811856123040:web:ab041926f03b805a07a5c5' };
+const V = '10.12.2', P = 'tallerEco.', TSK = P + '__ts', DOMAIN = '@faith.edu.py';
+const btn = document.getElementById('acctBtn'), lbl = document.getElementById('acctLbl'), dlg = document.getElementById('acctDlg');
+const e = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+let A = null, F = null, auth = null, db = null, user = null, timer = null, st = 'off', msg = '', last = 0, loadErr = false;
+
+const getTs = () => { try { return JSON.parse(localStorage.getItem(TSK)) || {}; } catch (x) { return {}; } };
+const myKeys = () => Object.keys(localStorage).filter(k => k.startsWith(P) && k !== TSK).map(k => k.slice(P.length));
+const okMail = m => m.trim().toLowerCase().endsWith(DOMAIN);
+const ERR = {
+  'auth/invalid-credential': 'Correo o contraseña incorrectos.', 'auth/wrong-password': 'Correo o contraseña incorrectos.', 'auth/user-not-found': 'No hay una cuenta con ese correo. Créala primero.',
+  'auth/email-already-in-use': 'Ya existe una cuenta con ese correo. Entra o recupera tu contraseña.', 'auth/weak-password': 'La contraseña debe tener al menos 6 caracteres.',
+  'auth/invalid-email': 'Ese correo no es válido.', 'auth/too-many-requests': 'Demasiados intentos. Espera unos minutos y vuelve a probar.',
+  'auth/network-request-failed': 'Sin conexión a internet. Vuelve a intentarlo.', 'permission-denied': 'La nube rechazó el guardado. Verifica tu correo y vuelve a entrar.'
+};
+const errTxt = x => ERR[x && x.code] || 'Algo salió mal. Vuelve a intentarlo.';
+
+function setBtn() {
+  const map = { off: ['Entrar', ''], load: ['Entrar', ''], unv: ['Verifica tu correo', 'warn'], sync: ['Guardando…', 'sync'], ok: ['Guardado', 'ok'], err: ['Sin guardar', 'err'], offline: ['Sin conexión', 'warn'] };
+  const [t, c] = map[st] || map.off;
+  lbl.textContent = user && st !== 'off' ? (st === 'ok' ? user.email.split('@')[0] : t) : 'Entrar';
+  btn.dataset.st = c; btn.title = user ? `${user.email} · ${t}` : 'Entra con tu correo del colegio para guardar tu progreso en la nube';
+}
+
+async function load() {
+  if (A) return true;
+  try {
+    const base = `https://www.gstatic.com/firebasejs/${V}/`;
+    const [ap, au, fs] = await Promise.all([import(base + 'firebase-app.js'), import(base + 'firebase-auth.js'), import(base + 'firebase-firestore.js')]);
+    const app = ap.initializeApp(CFG); A = au; F = fs;
+    auth = au.getAuth(app); auth.languageCode = 'es'; db = fs.getFirestore(app);
+    au.onAuthStateChanged(auth, u => { user = u; try { u ? localStorage.setItem('tallerEcoAuth', '1') : localStorage.removeItem('tallerEcoAuth'); } catch (x) { } onUser(); });
+    return true;
+  } catch (x) { loadErr = true; return false; }
+}
+
+async function onUser() {
+  if (!user) { st = 'off'; setBtn(); return; }
+  if (!user.emailVerified) { st = 'unv'; setBtn(); return; }
+  await syncDown();
+}
+
+/* Trae lo de la nube y combina clave por clave: gana la versión más reciente */
+async function syncDown() {
+  if (!user || !user.emailVerified) return;
+  st = 'sync'; setBtn();
+  try {
+    const ref = F.doc(db, 'users', user.uid), snap = await F.getDoc(ref);
+    const R = snap.exists() ? snap.data() : {}, rd = R.data || {}, rt = R.ts || {}, lt = getTs();
+    let changed = false;
+    for (const k of Object.keys(rd)) {
+      const lv = localStorage.getItem(P + k);
+      if (lv === null || (rt[k] || 0) > (lt[k] || 0)) {
+        if (lv !== rd[k]) { localStorage.setItem(P + k, rd[k]); changed = true; }
+        lt[k] = rt[k] || 0;
+      }
+    }
+    localStorage.setItem(TSK, JSON.stringify(lt));
+    await push();
+    const pv = +(sessionStorage.getItem('tallerEco.pulled') || 0);
+    if (changed && Date.now() - pv > 15000) { sessionStorage.setItem('tallerEco.pulled', String(Date.now())); location.reload(); }
+  } catch (x) { st = navigator.onLine ? 'err' : 'offline'; msg = errTxt(x); setBtn(); }
+}
+
+async function push() {
+  if (!user || !user.emailVerified) return;
+  clearTimeout(timer); st = 'sync'; setBtn();
+  const data = {}; myKeys().forEach(k => { data[k] = localStorage.getItem(P + k); });
+  const size = Object.entries(data).reduce((s, [k, v]) => s + k.length + v.length, 0);
+  if (size > 900000) { st = 'err'; msg = 'Tu progreso es demasiado grande para guardarlo en la nube. Avisa al profesor.'; setBtn(); return; }
+  try {
+    await F.setDoc(F.doc(db, 'users', user.uid), { email: user.email, data, ts: getTs(), updated: F.serverTimestamp() });
+    st = 'ok'; msg = ''; last = Date.now();
+  } catch (x) { st = navigator.onLine ? 'err' : 'offline'; msg = errTxt(x); }
+  setBtn(); if (dlg.open && dlg.dataset.mode === 'acct') view('acct');
+}
+const schedule = () => { if (!user || !user.emailVerified) return; st = 'sync'; setBtn(); clearTimeout(timer); timer = setTimeout(push, 2500); };
+window.__onStoreSet = schedule;
+addEventListener('online', () => { if (user && user.emailVerified) push(); });
+document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden' && timer) push(); });
+
+/* ---------- ventana de cuenta ---------- */
+const close = '<button type="button" class="acx" data-a="close" aria-label="Cerrar">×</button>';
+const privacy = '<p class="small muted">Tu progreso del Taller se guarda en Google Firebase, vinculado a tu correo del colegio. Solo tú y el profesor pueden verlo.</p>';
+function view(mode, note = '', kind = 'info') {
+  dlg.dataset.mode = mode;
+  const box = note ? `<div class="fb ${kind}" role="status">${note}</div>` : '';
+  if (mode === 'login' || mode === 'signup') {
+    const su = mode === 'signup';
+    dlg.innerHTML = `${close}<form data-f="${mode}" novalidate><h2 id="acT">${su ? 'Crear cuenta' : 'Entrar'}</h2>
+      <p class="small">${su ? 'Usa tu correo del colegio. Te enviaremos un enlace para verificarlo.' : 'Entra con tu correo del colegio y tu progreso se guarda en la nube: lo recuperas en cualquier dispositivo.'}</p>
+      <label>Correo del colegio<input class="inp" name="em" type="email" autocomplete="email" placeholder="nombre${DOMAIN}" required></label>
+      <label>Contraseña${su ? ' (mínimo 6 caracteres)' : ''}<input class="inp" name="pw" type="password" autocomplete="${su ? 'new-password' : 'current-password'}" minlength="6" required></label>
+      ${su ? '<label>Repite la contraseña<input class="inp" name="pw2" type="password" autocomplete="new-password" minlength="6" required></label>' : ''}
+      ${box}<button class="btn primary" type="submit">${su ? 'Crear cuenta' : 'Entrar'}</button>
+      <div class="aclinks">${su ? '<button type="button" data-a="login">Ya tengo cuenta</button>' : '<button type="button" data-a="signup">Crear cuenta</button><button type="button" data-a="reset">Olvidé mi contraseña</button>'}</div>${privacy}</form>`;
+  } else if (mode === 'reset') {
+    dlg.innerHTML = `${close}<form data-f="reset" novalidate><h2 id="acT">Recuperar contraseña</h2>
+      <p class="small">Escribe tu correo del colegio y te enviaremos un enlace para crear una contraseña nueva.</p>
+      <label>Correo del colegio<input class="inp" name="em" type="email" autocomplete="email" placeholder="nombre${DOMAIN}" required></label>
+      ${box}<button class="btn primary" type="submit">Enviar enlace</button><div class="aclinks"><button type="button" data-a="login">Volver a Entrar</button></div></form>`;
+  } else if (mode === 'acct') {
+    const stTxt = { unv: 'Tu correo todavía no está verificado: tu progreso solo se guarda en este dispositivo.', sync: 'Guardando en la nube…', ok: `Todo guardado en la nube${last ? ' (' + new Date(last).toLocaleTimeString('es-PY', { hour: '2-digit', minute: '2-digit' }) + ')' : ''}.`, err: msg || 'No se pudo guardar en la nube.', offline: 'Sin conexión: tu progreso queda en este dispositivo y se sube cuando vuelvas a tener internet.' }[st] || '';
+    dlg.innerHTML = `${close}<div class="acbody"><h2 id="acT">Tu cuenta</h2><p><b>${e(user.email)}</b></p>
+      <div class="fb ${st === 'ok' ? 'ok' : st === 'unv' || st === 'err' ? 'no' : 'info'}" role="status">${stTxt}</div>${box}
+      ${st === 'unv' ? `<p class="small">Abre el enlace que te enviamos a <b>${e(user.email)}</b> (revisa también la carpeta de spam) y después toca «Ya lo verifiqué».</p>
+        <div class="acrow"><button class="btn primary" type="button" data-a="verified">Ya lo verifiqué</button><button class="btn" type="button" data-a="resend">Reenviar el correo</button></div>`
+        : '<div class="acrow"><button class="btn" type="button" data-a="syncnow">Sincronizar ahora</button></div>'}
+      <label style="display:flex;gap:8px;align-items:flex-start;font-weight:400"><input type="checkbox" id="acWipe" checked style="margin-top:4px"> Al salir, borrar mi progreso de este dispositivo (recomendado en computadoras compartidas)</label>
+      <button class="btn" type="button" data-a="logout">Salir</button>${privacy}</div>`;
+  }
+  const f = dlg.querySelector('input'); if (f && mode !== 'acct') f.focus();
+}
+
+async function openDlg() {
+  if (!dlg.open) dlg.showModal();
+  dlg.innerHTML = `${close}<div class="acbody"><p>Conectando…</p></div>`;
+  if (!(await load())) { dlg.innerHTML = `${close}<div class="acbody"><h2 id="acT">Sin conexión</h2><div class="fb no">No se pudo conectar con el servicio de cuentas. Revisa tu internet. Mientras tanto, tu progreso se sigue guardando en este dispositivo.</div></div>`; return; }
+  await auth.authStateReady();
+  view(user ? 'acct' : 'login');
+}
+btn.addEventListener('click', openDlg);
+dlg.addEventListener('click', ev => { if (ev.target === dlg) dlg.close(); });
+
+dlg.addEventListener('click', async ev => {
+  const b = ev.target.closest('[data-a]'); if (!b) return;
+  const a = b.dataset.a;
+  if (a === 'close') return dlg.close();
+  if (a === 'login' || a === 'signup' || a === 'reset') return view(a);
+  b.disabled = true;
+  try {
+    if (a === 'resend') { await A.sendEmailVerification(user); view('acct', 'Te enviamos otro correo de verificación.', 'ok'); }
+    else if (a === 'verified') {
+      await user.reload(); user = auth.currentUser;
+      if (user.emailVerified) { await user.getIdToken(true); await syncDown(); view('acct', 'Correo verificado. Tu progreso ya se guarda en la nube.', 'ok'); }
+      else view('acct', 'Todavía no aparece verificado. Abre el enlace del correo y vuelve a tocar el botón.', 'no');
+    }
+    else if (a === 'syncnow') { await syncDown(); view('acct'); }
+    else if (a === 'logout') {
+      const wipe = dlg.querySelector('#acWipe').checked;
+      if (user.emailVerified) await push();
+      if (wipe && st !== 'ok' && user.emailVerified) { view('acct', 'No se pudo subir tu progreso a la nube, así que no lo borramos. Inténtalo de nuevo con internet.', 'no'); return; }
+      await A.signOut(auth);
+      if (wipe) { Object.keys(localStorage).filter(k => k.startsWith(P)).forEach(k => localStorage.removeItem(k)); sessionStorage.removeItem('tallerEco.pulled'); location.reload(); return; }
+      dlg.close();
+    }
+  } catch (x) { view(dlg.dataset.mode || 'acct', errTxt(x), 'no'); }
+  finally { b.disabled = false; }
+});
+
+dlg.addEventListener('submit', async ev => {
+  ev.preventDefault();
+  const f = ev.target, kind = f.dataset.f, em = (f.em.value || '').trim().toLowerCase(), sb = f.querySelector('[type=submit]');
+  if (!okMail(em)) return view(kind, `Usa tu correo del colegio (termina en <b>${DOMAIN}</b>).`, 'no');
+  sb.disabled = true;
+  try {
+    if (kind === 'reset') { await A.sendPasswordResetEmail(auth, em); view('login', 'Si existe una cuenta con ese correo, te llegará un enlace para crear una contraseña nueva. Revisa también la carpeta de spam.', 'ok'); return; }
+    const pw = f.pw.value;
+    if (pw.length < 6) return view(kind, 'La contraseña debe tener al menos 6 caracteres.', 'no');
+    if (kind === 'signup') {
+      if (pw !== f.pw2.value) return view(kind, 'Las contraseñas no coinciden.', 'no');
+      const c = await A.createUserWithEmailAndPassword(auth, em, pw); user = c.user;
+      await A.sendEmailVerification(user); st = 'unv'; setBtn();
+      view('acct', `Cuenta creada. Te enviamos un correo a <b>${e(em)}</b> para verificarla.`, 'ok');
+    } else {
+      const c = await A.signInWithEmailAndPassword(auth, em, pw); user = c.user;
+      await onUser(); view('acct');
+    }
+  } catch (x) { view(kind, errTxt(x), 'no'); }
+  finally { if (sb.isConnected) sb.disabled = false; }
+});
+
+/* Si el alumno ya entró antes, reconecta solo al abrir la página */
+let had = false; try { had = !!localStorage.getItem('tallerEcoAuth'); } catch (x) { }
+if (had) { st = 'load'; load(); } setBtn();
 </script>
 
 </body>
