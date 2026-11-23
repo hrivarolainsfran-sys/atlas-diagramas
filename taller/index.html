@@ -627,6 +627,12 @@ body.docked{padding-bottom:190px}
 .eicrit{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;max-width:1000px}
 .eicrit div{background:var(--sheet);border:1px solid var(--rule);border-radius:var(--r);padding:10px;display:grid;gap:2px}
 .eicrit b{font-family:var(--f-display);font-size:26px;line-height:1;color:var(--navy-2)}
+.eilv{display:grid;gap:8px;max-width:1000px}
+.eilvc{background:var(--sheet);border:1px solid var(--rule);border-radius:var(--r);padding:10px 14px}
+.eilvc summary{cursor:pointer;display:flex;gap:10px;align-items:center;font-size:16px}.eilvc summary i{font-style:normal;font-size:13px;color:var(--muted);margin-left:auto}
+.eilvl{list-style:none;margin:10px 0 0;padding:0;display:grid;gap:6px}.eilvl li{display:flex;gap:10px;align-items:flex-start;font-size:15px;line-height:1.45}
+.eilvn{flex:none;display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--paper);border:1px solid var(--rule);font-weight:700;font-size:13px}
+.eilvl li:last-child .eilvn{background:var(--navy-2);color:#fff;border-color:var(--navy-2)}
 .eicrit span{font-size:14px;font-weight:700}.eicrit i{font-style:normal;font-size:13px;color:var(--muted)}
 .eibud td:last-child{text-align:right;white-space:nowrap}.eibud td:nth-child(2){text-align:left}
 .eigrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px 14px}
@@ -709,7 +715,7 @@ td.late{color:var(--bad);font-weight:700}td.soon{color:var(--warn-ink);font-weig
 .mtag{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 .annn{font-size:13.5px;line-height:1.4;margin-bottom:8px;display:flex;gap:8px;align-items:flex-start}
 .ann{display:inline-grid;place-items:center;min-width:22px;height:22px;border-radius:5px;font-family:var(--f-display);font-weight:700;font-size:14px;color:#fff;flex:none}
-.ann.aA{background:#1F4E9E}.ann.aB{background:#6B3FA0}.ann.aC{background:#1E8E3E}.ann.aD{background:#B8862B}.ann.aE{background:#C0392B}
+.ann.aA{background:#1F4E9E}.ann.aB{background:#6B3FA0}.ann.aC{background:#1E8E3E}.ann.aD{background:#B8862B}.ann.aE{background:#C0392B}.ann.aF{background:#14213D}
 @media (max-width:860px){.vwrap,.mrow2{grid-template-columns:1fr}.vres{position:static}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
@@ -8334,6 +8340,15 @@ const EI_CRIT = [
   ['D', 'Concepto clave', 3, ['No alcanza el nivel 1, o el concepto ya se usó en otro comentario.', 'Identifica un concepto clave e intenta relacionarlo con el artículo.', 'Identifica un concepto clave y explica parcialmente su relación.', 'Identifica un concepto clave y explica plenamente su relación.']],
   ['E', 'Evaluación', 3, ['No alcanza el nivel 1.', 'Emite juicios con razonamiento limitado.', 'Emite juicios con razonamiento adecuado.', 'Emite juicios con razonamiento eficaz y equilibrado.']]
 ];
+const EI_F_LV = ['No cumple ningún requisito.', 'Cumple uno de los tres requisitos.', 'Cumple dos de los tres requisitos.', 'Cumple los tres: cada comentario es de una unidad distinta, cada artículo de una fuente distinta y publicado como máximo un año antes de escribir el comentario.'];
+const EI_TIPS = {
+  A: ['Al menos un diagrama propio por comentario, con título, ejes correctos y curvas y equilibrios rotulados (P₁, Q₁, E₁).', 'Usa en los rótulos las variables del artículo (por ejemplo, «Precio del kilo de pan»).', 'Explica el diagrama en el texto con sus mismos rótulos: O₁ → O₂, P₁ → P₂, E₁ → E₂.', 'El gráfico copiado del artículo no cuenta como diagrama tuyo.'],
+  B: ['Define los términos clave la primera vez que los usas, con tus palabras.', 'Usa el término exacto en todo el comentario («demanda inelástica», no «bien inelástico»; «desplazamiento», no «movimiento», cuando cambia un determinante).', 'Sin siglas ni rótulos en inglés: EPD, NGP, impuesto.'],
+  C: ['Conecta cada paso de la teoría con un dato, cifra o hecho del artículo.', 'Explica el mecanismo completo (causa → efecto en el mercado → consecuencia), no solo el resultado.', 'Usa cada dato con su significado exacto; si haces un cálculo propio, muestra la fórmula.', 'En Economía global, analiza con teoría de esa unidad (comercio, tipo de cambio, balanza de pagos).'],
+  D: ['Nombra el concepto clave en la portada y en la introducción, y defínelo desde el caso.', 'Explica por qué ese concepto ilumina el artículo, no solo que «aparece».', 'Vuelve a él en la evaluación y en la conclusión.', 'Cada comentario de la carpeta usa un concepto clave distinto.'],
+  E: ['Emite juicios justificados con teoría y datos, no opiniones.', 'Considera partes interesadas (quién gana y quién pierde), corto y largo plazo, y una alternativa.', 'Reconoce supuestos y límites de la evidencia del artículo.', 'Termina con una conclusión que responde tu pregunta guía, sin datos nuevos y con una condición («siempre que…»).'],
+  F: ['Un comentario de Microeconomía, uno de Macroeconomía y uno de Economía global.', 'Tres fuentes distintas (no dos artículos del mismo medio).', 'Revisa las fechas: publicación del artículo y redacción del comentario con menos de un año de diferencia.']
+};
 const EIS = store.get('ei', { s: {} });
 const saveEI = () => store.set('ei', EIS);
 const today = () => { const d = new Date(); return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); };
@@ -8367,6 +8382,11 @@ function renderEIHome() {
     <div class="row eiacts"><button class="btn primary" type="button" data-go="ei-articulo">¿Sirve mi artículo? Valídalo antes de escribir</button><button class="btn" type="button" data-go="ei-modelos">Ver comentarios modelo anotados</button><button class="btn" type="button" data-go="ei-alumnos">Ver carpetas reales de alumnos</button></div>
     <h2>Criterios de cada comentario · 14 puntos</h2>
     <div class="eicrit">${EI_CRIT.map(([k, n, m]) => `<div><b>${k}</b><span>${n}</span><i>${m} p</i></div>`).join('')}<div><b>F</b><span>Requisitos de la carpeta</span><i>3 p</i></div></div>
+    <h2 style="margin-top:22px">Qué se espera para cada punto</h2>
+    <p class="small muted" style="max-width:1000px;margin-top:-4px">Resumen de los descriptores del IB con nuestras palabras, y qué hacer para llegar al puntaje máximo. Toca cada criterio para ver el detalle.</p>
+    <div class="eilv">${[...EI_CRIT, ['F', 'Requisitos de la carpeta', 3, EI_F_LV]].map(([k, n, m, lv]) => `<details class="eilvc"${k === 'A' ? ' open' : ''}><summary><span class="ann a${k}">${k}</span><b>${n}</b><i>${m} puntos</i></summary>
+      <ol class="eilvl">${lv.map((t, i) => `<li><span class="eilvn">${i}</span><span>${t}</span></li>`).join('')}</ol>
+      <div class="fb ok" style="margin:6px 0 0"><b class="h">Cómo llegar a ${m}/${m}</b><ul style="margin:4px 0;padding-left:18px">${EI_TIPS[k].map(x => `<li>${x}</li>`).join('')}</ul></div></details>`).join('')}</div>
     <h2 style="margin-top:22px">Mi carpeta</h2>
     <div class="tiles games">${Object.entries(EI_UNITS).map(([u, n]) => { const w = EIS.s[u], st = eiStarted(u), wds = w ? eiWords(w) : 0; return `<button class="tile" type="button" data-go="ei-${u}"><span class="code">${u}</span><span class="nm">Comentario de ${n}</span><span class="ds">${st ? esc(w.title || 'Sin título') + (w.kc ? ' · ' + KC[w.kc] : '') : 'Sin empezar'}</span><span class="ft">${st ? `<span class="tag ${wds > 800 ? '' : 'prog'}">${wds}/800 palabras</span><span class="tag">${eiScore(u)}/14</span>` : '<span class="tag">Empezar</span>'}</span></button>`; }).join('')}</div>
     ${eiPlanner()}
