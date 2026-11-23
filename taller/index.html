@@ -708,6 +708,8 @@ td.late{color:var(--bad);font-weight:700}td.soon{color:var(--warn-ink);font-weig
 .autofb.yel li.no::before{content:'~ ';color:var(--warn-ink)}
 .vres .autofb{margin-top:8px}
 .eicover{max-width:900px}
+.eifrag{margin:10px 0 4px;padding:10px 14px;border-left:4px solid var(--gold);background:var(--paper);border-radius:4px;font-size:15px;line-height:1.55}.eifrag footer{font-size:12.5px;color:var(--muted);margin-top:6px}
+.ecrow{display:grid;gap:4px;margin:10px 0}.ecrow .seg button{min-width:40px}
 .eifig{margin:10px 0;background:#fff;border:1px solid var(--rule);border-radius:8px;padding:6px;max-width:520px}.eifig img{display:block;width:100%;height:auto}.eifig figcaption{font-size:13px;color:#3C4A66;text-align:center;padding:4px 2px 0}.eicover th{width:200px}.eicover td{text-align:left}
 .mrow2{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:16px;margin:12px 0;max-width:1100px;align-items:start}
 .mtext{background:var(--sheet);border:1px solid var(--rule);border-radius:var(--r);padding:12px 16px}
@@ -1688,6 +1690,7 @@ function render() {
   if (route === 'ei-articulo') { setNav('escribir'); return renderEIArticle(); }
   if (route === 'ei-modelos') { setNav('escribir'); return renderEIModels(); }
   if (route === 'ei-alumnos') { setNav('escribir'); return renderEIStudents(); }
+  if (route === 'ei-calibrar') { setNav('escribir'); return renderEICalib(); }
   if (/^ei-alumno-\d$/.test(route)) { setNav('escribir'); return renderEIStudent(+route.slice(10)); }
   if (/^ei-modelo-[234]$/.test(route)) { setNav('escribir'); return renderEIModel(+route.slice(10)); }
   if (route === 'escribir-analizar') { setNav('escribir'); return renderCmd('analizar'); }
@@ -4614,7 +4617,7 @@ const WBLOCKS = [
   ['Base', [['escribir-comandos', 'Comandos'], ['escribir-conceptos', 'Conceptos clave'], ['escribir-def', 'Definiciones'], ['escribir-ej', 'Ejemplos reales']]],
   ['Términos de instrucción', [['escribir-explicar', 'Explicar · 10'], ['escribir-analizar', 'Analizar · 10'], ['escribir-evaluar', 'Evaluar · 15'], ['escribir-discutir', 'Discutir · 15'], ['escribir-hqp', '¿Hasta qué punto? · 15'], ['escribir-errores', 'Encuentra el error']]],
   ['Simulacros', [['escribir-p1', 'Prueba 1'], ['escribir-calc', 'Cálculos P2'], ['escribir-p2', 'Prueba 2']]],
-  ['Evaluación Interna', [['escribir-ei', 'Comentarios de la EI'], ['ei-alumnos', 'Carpetas de alumnos']]]
+  ['Evaluación Interna', [['escribir-ei', 'Comentarios de la EI'], ['ei-alumnos', 'Carpetas de alumnos'], ['ei-calibrar', 'Corrige como examinador']]]
 ];
 const WTABS = WBLOCKS.flatMap(b => b[1]);
 function writeTabs(cur) {
@@ -8379,7 +8382,7 @@ function renderEIHome() {
     <div class="method"><div><b>La carpeta · 30 % de la nota (NM)</b><p>Tres comentarios de hasta <b>800 palabras</b> sobre artículos de prensa: uno de <b>Microeconomía</b>, uno de <b>Macroeconomía</b> y uno de <b>Economía global</b>. Total: 45 puntos.</p></div>
       <div><b>Requisitos</b><p>Artículo de <b>menos de un año</b> al momento de escribir; una <b>fuente distinta</b> por comentario; un <b>concepto clave distinto</b> en cada uno; periódico, revista o sitio de noticias (no televisión ni radio).</p></div>
       <div><b>No cuentan en las 800 palabras</b><p>Diagramas, sus rótulos (hasta 5 palabras) y títulos (hasta 10), tablas de datos, fórmulas y cálculos, citas y referencias.</p></div></div>
-    <div class="row eiacts"><button class="btn primary" type="button" data-go="ei-articulo">¿Sirve mi artículo? Valídalo antes de escribir</button><button class="btn" type="button" data-go="ei-modelos">Ver comentarios modelo anotados</button><button class="btn" type="button" data-go="ei-alumnos">Ver carpetas reales de alumnos</button></div>
+    <div class="row eiacts"><button class="btn primary" type="button" data-go="ei-articulo">¿Sirve mi artículo? Valídalo antes de escribir</button><button class="btn" type="button" data-go="ei-modelos">Ver comentarios modelo anotados</button><button class="btn" type="button" data-go="ei-alumnos">Ver carpetas reales de alumnos</button><button class="btn" type="button" data-go="ei-calibrar">Corrige como examinador</button><a class="btn" href="${EI_NEWS}" target="_blank" rel="noopener">Buscar artículos en Economía en las Noticias ↗</a></div>
     <h2>Criterios de cada comentario · 14 puntos</h2>
     <div class="eicrit">${EI_CRIT.map(([k, n, m]) => `<div><b>${k}</b><span>${n}</span><i>${m} p</i></div>`).join('')}<div><b>F</b><span>Requisitos de la carpeta</span><i>3 p</i></div></div>
     <h2 style="margin-top:22px">Qué se espera para cada punto</h2>
@@ -8390,12 +8393,13 @@ function renderEIHome() {
     <h2 style="margin-top:22px">Mi carpeta</h2>
     <div class="tiles games">${Object.entries(EI_UNITS).map(([u, n]) => { const w = EIS.s[u], st = eiStarted(u), wds = w ? eiWords(w) : 0; return `<button class="tile" type="button" data-go="ei-${u}"><span class="code">${u}</span><span class="nm">Comentario de ${n}</span><span class="ds">${st ? esc(w.title || 'Sin título') + (w.kc ? ' · ' + KC[w.kc] : '') : 'Sin empezar'}</span><span class="ft">${st ? `<span class="tag ${wds > 800 ? '' : 'prog'}">${wds}/800 palabras</span><span class="tag">${eiScore(u)}/14</span>` : '<span class="tag">Empezar</span>'}</span></button>`; }).join('')}</div>
     ${eiPlanner()}
+    ${eiCalendar()}
     <div class="fb info" style="margin-top:14px"><b class="h">Estimación de la carpeta: ${tot}/45</b>${F.msg}<br><span class="small">Autoevaluación orientativa: la nota la pone tu profesor y la modera el IB.</span></div>
     <h2 style="margin-top:22px">Cómo repartir las 800 palabras</h2>
     <table class="dtab eibud"><thead><tr><th>Bloque</th><th>Qué escribir</th><th>Palabras</th></tr></thead><tbody>${EI_BLOCKS.map(b => `<tr><th scope="row">${b.n}</th><td>${b.g}</td><td>${b.bud || 'No cuenta'}</td></tr>`).join('')}<tr><th scope="row">Margen</th><td>Colchón para revisar sin pasarte.</td><td>50</td></tr></tbody></table>
     <p class="small muted">Reparto tomado de la guía «El Arte de la Síntesis» de tu profesor.</p>
     ${backupBox('bkE')}`;
-  bindPlanner(); bindBackup('bkE');
+  bindPlanner(); bindCalendar(); bindBackup('bkE');
 }
 function eiHead(u) { return `<button class="crumb" type="button" data-go="escribir-ei">← Mi carpeta</button><div class="eyebrow" style="margin-top:12px">Evaluación Interna · Unidad ${u}</div><h1 style="margin-bottom:6px">Comentario de ${EI_UNITS[u]}</h1>`; }
 function renderEI(u) {
@@ -8414,7 +8418,7 @@ function renderEI(u) {
   const upW = () => { const x = eiWords(w), el2 = $('#eiW'); if (el2) { el2.textContent = x; el2.classList.toggle('over', x > 800); } };
   if (w.st === 0) {
     const ck = eiChecks(u);
-    B.innerHTML = `<p class="q">Datos de la portada. El IB pide registrarlos en cada comentario; no cuentan en las 800 palabras.</p>
+    B.innerHTML = `<p class="q">Datos de la portada. El IB pide registrarlos en cada comentario; no cuentan en las 800 palabras.</p><p class="small">¿Todavía no tienes artículo? Búscalo en <a href="${EI_NEWS}" target="_blank" rel="noopener">Economía en las Noticias ↗</a> y valídalo en <a href="#ei-articulo">¿Sirve mi artículo?</a></p>
       <div class="eigrid">
         <label class="dbf"><span>Título del artículo</span><input class="inp" data-f="title" value="${esc(w.title)}" maxlength="200"></label>
         <label class="dbf"><span>Fuente (periódico o sitio)</span><input class="inp" data-f="source" value="${esc(w.source)}" maxlength="80" placeholder="Ej.: La Nación, Reuters, BBC Mundo"></label>
@@ -8455,6 +8459,7 @@ function renderEI(u) {
     <div class="conn">${blk.c.map(c => `<button type="button" class="chip" data-c="${esc(c)}">${c}</button>`).join('')}${w.kc ? `<button type="button" class="chip" data-c="${KC[w.kc].toLowerCase()}">${KC[w.kc]}</button>` : ''}${blk.tpl ? '<button type="button" class="chip tplc" id="eiTpl">Insertar plantilla de 2 ejes</button>' : ''}</div>
     <textarea id="eit" rows="${blk.k === 'eva' ? 14 : 10}">${esc(w.txt[blk.k] || '')}</textarea>
     <div class="budbar"><div class="bar"><i id="eiBar" style="width:${Math.min(100, tw / blk.bud * 100)}%"></i></div><span id="eiBW">${tw}/${blk.bud}</span></div>
+    ${eiFragHtml(u, blk.k)}
     ${blk.k === 'exp' ? '<details class="model"><summary>Ver el ejemplo de la guía: narrativa larga y sintetizada</summary><p class="small"><b>Larga (≈ 110 palabras):</b> describe el desplazamiento con frases completas.</p><p class="small"><b>Sintetizada (≈ 58 palabras):</b> «La suba del gasoil eleva los costos de las panaderías (transporte y horneado), desplazando la oferta de S₁ a S₂. Al precio P₁ surge un exceso de demanda que empuja el precio hasta P₂ y reduce la cantidad de Q₁ a Q₂ (nuevo equilibrio E₂). El pan, bien de primera necesidad de demanda inelástica, absorbe casi toda la suba.»</p></details>' : ''}`;
   const ta = $('#eit');
   const upd = () => { const x = wc(ta.value); $('#eiBW').textContent = x + '/' + blk.bud; $('#eiBar').style.width = Math.min(100, x / blk.bud * 100) + '%'; $('#eiBar').parentNode.classList.toggle('over', x > blk.bud * 1.15); upW(); };
@@ -8475,6 +8480,13 @@ function eiReview(u, B) {
   fb.push(/corto plazo/.test(ev) && /largo plazo/.test(ev) ? ['ok', 'La evaluación distingue corto y largo plazo.'] : ['no', 'Agrega el eje del tiempo (corto y largo plazo) a la evaluación.']);
   fb.push(/por un lado|se beneficia|pierde|perjudica|consumidores|productores|gobierno|trabajadores|empresas|hogares/.test(ev) ? ['ok', 'La evaluación considera partes interesadas.'] : ['no', 'Indica quién gana y quién pierde (partes interesadas).']);
   fb.push(/en definitiva|por todo lo expuesto|se puede concluir|en ultima instancia|en conclusion/.test(ev) ? ['ok', 'Hay una conclusión.'] : ['no', 'Cierra la evaluación con una conclusión («En definitiva…»).']);
+  const intro = normTxt(w.txt.intro), allRaw = all + ' ' + (w.diaT || '');
+  fb.push(/[¿?]|hasta que punto|en que medida/.test(intro + ' ' + (w.txt.intro || '')) ? ['ok', 'La introducción plantea una pregunta guía.'] : ['no', 'Plantea una pregunta guía en la introducción («¿Hasta qué punto…?») y respóndela en la conclusión.']);
+  if (w.kc) { const root = normTxt(KC[w.kc]).split(' ')[0]; const tail = ev.slice(Math.floor(ev.length * 0.6)); fb.push(ev.includes(root) ? (tail.includes(root) ? ['ok', 'El concepto clave aparece en la evaluación y en la conclusión.'] : ['no', 'El concepto clave aparece en la evaluación, pero no en la conclusión: retómalo al cerrar.']) : ['no', 'El concepto clave no aparece en la evaluación: úsalo para juzgar, no solo para presentar el tema.']); }
+  const eng = allRaw.match(/\b(tax|PED|YED|PES|price|demand|supply|LRAS|SRAS|GDP|AD|AS|subsidy|tariff)\b/g);
+  fb.push(eng ? ['no', `Hay términos en inglés (${[...new Set(eng)].join(', ')}): escríbelos en español (impuesto, EPD, demanda, oferta, DA, OA, PIB, subsidio, arancel).`] : ['ok', 'Sin términos ni siglas en inglés.']);
+  if (/nivel de precios/.test(normTxt(allRaw)) && !/nivel general de precios/.test(normTxt(allRaw))) fb.push(['no', 'Escribe «nivel general de precios (NGP)», no «nivel de precios».']);
+  if (String(u) === '4') fb.push(/tipo de cambio|divisa|moneda|arancel|cuota|exportaci|importaci|balanza|cuenta corriente|comercio|aprecia|deprecia/.test(normTxt(allRaw)) ? ['ok', 'El análisis usa teoría de Economía global (comercio, tipo de cambio o balanza de pagos).'] : ['no', 'Es un comentario de Economía global: analiza con teoría de esa unidad (tipo de cambio, comercio o balanza de pagos), no solo con DA/OA.']);
   if (c.kcDup) fb.push(['no', 'El concepto clave se repite con otro comentario: el criterio D sería 0.']);
   if (w.pub && !c.dateOk) fb.push(['no', 'La fecha del artículo no cumple el límite de un año.']);
   fb.push((w.decl || {}).ok ? ['ok', 'Completaste la declaración de autoría' + ((w.decl || {}).ai === 'si' ? ' e informaste el uso de IA.' : '.')] : ['no', 'Falta la declaración de autoría y uso de IA (paso anterior).']);
@@ -8657,7 +8669,7 @@ function renderEIArticle() {
   }).join('');
   if (A.dia === 'ninguno') A.dia = 'Otro';
   const answered = VQ.filter(q => A[q.k]).length, V = vVerdict(A);
-  app.innerHTML = `<button class="crumb" type="button" data-go="escribir-ei">← Mi carpeta</button><div class="eyebrow" style="margin-top:12px">Evaluación Interna</div><h1>¿Sirve mi artículo?</h1>
+  app.innerHTML = `<button class="crumb" type="button" data-go="escribir-ei">← Mi carpeta</button><div class="eyebrow" style="margin-top:12px">Evaluación Interna</div><h1>¿Sirve mi artículo?</h1>${eiNewsBox()}
     <p class="lede">Responde estas preguntas antes de empezar a escribir. Un mal artículo no se salva con buena redacción.</p>
     <div class="vwrap"><div class="vqs">${qs}</div>
       <aside class="vres ${answered ? V.light : ''}"><div class="light"><i class="r"></i><i class="y"></i><i class="g"></i></div>
@@ -8773,6 +8785,69 @@ function renderEIStudent(id) {
   };
   bindSeg(app, 'eic', v => { draw(+v); window.scrollTo({ top: $('#eiw').offsetTop - 140, behavior: 'smooth' }); });
   draw(cur);
+}
+
+/* ---------- EI: banco de artículos, calibración, fragmentos modelo y calendario ---------- */
+const EI_NEWS = 'https://hrivarolainsfran-sys.github.io/economia-noticias/#ia';
+const eiNewsBox = () => `<div class="fb info" style="max-width:1000px"><b class="h">¿Buscas artículo?</b>En <a href="${EI_NEWS}" target="_blank" rel="noopener"><b>Economía en las Noticias</b></a> tienes noticias económicas actuales, con su fuente original. Elige una, ábrela en el medio original y después valídala aquí.</div>`;
+/* 1 · Corrige como examinador */
+const EI_CAL = store.get('eiCal', {});
+const eiCalItems = () => EI_STUD.flatMap(f => f.cs.map((c, i) => ({ f, c, i, key: f.id + '-' + i })));
+function renderEICalib() {
+  const items = eiCalItems(), S = SESS.ecal = SESS.ecal || { key: null, sc: {} };
+  const done = items.filter(x => EI_CAL[x.key]);
+  const avg = done.length ? done.reduce((s, x) => s + EI_CRIT.reduce((a, [k]) => a + Math.abs(EI_CAL[x.key][k] - x.c.sc[k]), 0), 0) / done.length : null;
+  app.innerHTML = `<div class="eyebrow">Escribir como en el examen</div><h1>Corrige como examinador</h1>${writeTabs('ei-calibrar')}
+    <p class="lede" style="max-width:1000px">Lee un comentario real, ponle puntaje en cada criterio <b>sin mirar la retroalimentación</b> y compara con el profesor. Cuando tus puntajes se parecen a los del profesor, sabes leer tu propio texto con ojos de examinador.</p>
+    <p class="small"><b>Corregidos: ${done.length} de ${items.length}</b>${avg !== null ? ` · Diferencia promedio con el profesor: <b>${fmt(avg, 1)} puntos</b> por comentario` : ''}</p>
+    <div class="ppfil"><label>Comentario<select id="ecs" class="dsel"><option value="">Elige un comentario…</option>${items.map(x => `<option value="${x.key}"${S.key === x.key ? ' selected' : ''}>Carpeta ${x.f.id} · ${EI_UNITS[x.c.u]} · ${KC[x.c.kc]}${EI_CAL[x.key] ? ' ✓' : ''}</option>`).join('')}</select></label></div>
+    <div id="ecw"></div>`;
+  $('#ecs').onchange = e => { S.key = e.target.value || null; S.sc = {}; renderEICalib(); };
+  if (!S.key) return;
+  const x = items.find(y => y.key === S.key), c = x.c;
+  const figAt = k => c.figs.filter(g => g[0] === k).map(g => `<figure class="eifig"><img src="${g[1]}" alt="${esc(g[2])}" loading="lazy"><figcaption>${esc(g[2])}</figcaption></figure>`).join('');
+  $('#ecw').innerHTML = `<p class="small">Artículo: <a href="${c.url}" target="_blank" rel="noopener">${esc(c.title)}</a> (${esc(c.source)}) · ${c.words}/800 palabras</p>
+    <div class="mrow2"><div class="mtext"><span class="mtag">Comentario del alumno</span>${c.paras.map((p, k) => `<p>${esc(p)}</p>${figAt(k)}`).join('')}</div>
+      <aside><div class="tdcard" style="margin:0" id="ecBox"><b style="font-size:17px">Tu corrección</b>
+        ${EI_CRIT.map(([k, n, m, lv]) => `<div class="ecrow"><div class="small"><span class="ann a${k}">${k}</span> <b>${n}</b></div><div class="seg" role="group">${Array.from({ length: m + 1 }, (_, v) => `<button type="button" data-k="${k}" data-v="${v}" aria-pressed="${S.sc[k] === v}" title="${esc(lv[v])}">${v}</button>`).join('')}</div></div>`).join('')}
+        <button class="btn primary" type="button" id="ecGo" style="margin-top:10px;width:100%">Comparar con el profesor</button><div id="ecRes"></div></div></aside></div>`;
+  app.querySelectorAll('#ecBox [data-k]').forEach(b => b.onclick = () => { S.sc[b.dataset.k] = +b.dataset.v; app.querySelectorAll(`#ecBox [data-k="${b.dataset.k}"]`).forEach(z => z.setAttribute('aria-pressed', z === b)); });
+  const show = sc => {
+    const mine = EI_CRIT.reduce((s, [k]) => s + sc[k], 0), prof = EI_CRIT.reduce((s, [k]) => s + c.sc[k], 0); const dif = EI_CRIT.reduce((s, [k]) => s + Math.abs(sc[k] - c.sc[k]), 0);
+    $('#ecRes').innerHTML = `<table class="dtab" style="margin-top:10px;font-size:14px"><thead><tr><th>Criterio</th><th>Tú</th><th>Profesor</th></tr></thead><tbody>${EI_CRIT.map(([k]) => { const d = sc[k] - c.sc[k]; return `<tr><th scope="row">${k}</th><td>${sc[k]}</td><td><b>${c.sc[k]}</b>${d ? ` <span class="small" style="color:var(--bad)">(${d > 0 ? '+' : ''}${d})</span>` : ' ✓'}</td></tr>`; }).join('')}<tr><th scope="row">Total</th><td>${mine}</td><td><b>${prof}</b></td></tr></tbody></table>
+      ${EI_CRIT.map(([k, n]) => `<div class="annn"><span class="ann a${k}">${k}</span><div>${c.notes[k]}</div></div>`).join('')}
+      <div class="fb ${dif <= 1 ? 'ok' : 'info'}" style="margin-top:8px">${dif <= 1 ? 'Muy cerca del profesor: lees los criterios como un examinador.' : mine === prof ? `El total coincide, pero difieres en ${dif} puntos repartidos entre criterios: revisa dónde no coincidiste.` : mine > prof ? 'Fuiste más generoso que el profesor: revisa qué pide el nivel máximo de los criterios donde te pasaste.' : 'Fuiste más exigente que el profesor: revisa qué alcanza para cada nivel.'}</div>`;
+  };
+  $('#ecGo').onclick = () => { if (EI_CRIT.some(([k]) => S.sc[k] === undefined)) { $('#ecRes').innerHTML = '<div class="fb info" style="margin-top:8px">Pon un puntaje en los cinco criterios.</div>'; return; } EI_CAL[S.key] = { ...S.sc }; store.set('eiCal', EI_CAL); show(S.sc); };
+  if (EI_CAL[S.key] && !Object.keys(S.sc).length) { S.sc = { ...EI_CAL[S.key] }; app.querySelectorAll('#ecBox [data-k]').forEach(b => b.setAttribute('aria-pressed', S.sc[b.dataset.k] === +b.dataset.v)); show(S.sc); }
+}
+/* 3 · Fragmentos de carpetas reales para cada bloque del editor */
+const EI_FRAG = {
+  2: { intro: [[3, 0, 0, 'Contexto con datos, definición del concepto clave con sus palabras y pregunta guía «¿Hasta qué punto…?».']],
+       exp: [[1, 0, 1, 'Lee el diagrama con sus rótulos (S₁ → S₂, E₁ → E₂, Q₁ − Qs) y lo engancha con las cifras del artículo.']],
+       eva: [[1, 0, 4, 'Compara alternativas (subvención e importaciones) con costos, plazos y una restricción del artículo.'], [2, 0, 7, 'Conclusión crítica: distingue el objetivo declarado del efecto real y la justifica con teoría.']] },
+  3: { intro: [[3, 1, 0, 'Datos precisos, tipo de desempleo, definición del concepto clave desde el caso y pregunta guía.']],
+       exp: [[3, 1, 4, 'Explica la política con el diagrama: componente de la DA, desplazamiento y nuevo equilibrio.']],
+       eva: [[2, 1, 5, 'Conclusión que compara políticas y reconoce plazo y costo.'], [1, 1, 8, 'Juicio condicionado a los datos del artículo (tasa del 6,50 %, expectativas) y costo de oportunidad.']] },
+  4: { intro: [[1, 2, 0, 'Contexto, definiciones de tipo de cambio, depreciación y apreciación, y el concepto clave como pregunta.']],
+       exp: [[2, 2, 3, 'Lee el mercado de divisas con sus dos desplazamientos y lo vincula con la cuenta financiera.']],
+       eva: [[1, 2, 7, 'Conclusión prudente: corto plazo frente a largo plazo y límites de la evidencia.'], [2, 2, 7, 'Conclusión con condiciones: gradualidad, políticas complementarias y comprobar si el déficit es persistente.']] }
+};
+const eiFragHtml = (u, k) => { const L = (EI_FRAG[u] || {})[k]; if (!L) return '';
+  return `<details class="model"><summary>Ver cómo lo hizo una carpeta real</summary>${L.map(([fid, ci, pi, note]) => { const c = EI_STUD.find(f => f.id === fid).cs[ci]; return `<blockquote class="eifrag">${esc(c.paras[pi])}<footer>Carpeta ${fid} · ${EI_UNITS[c.u]} · ${KC[c.kc]}</footer></blockquote><p class="small"><b>Por qué suma:</b> ${note}</p>`; }).join('')}<p class="small muted">Úsalo como modelo de estructura, no lo copies. <a href="#ei-alumnos">Ver las carpetas completas</a>.</p></details>`; };
+/* 5 · Calendario con un solo borrador */
+const EI_STAGES = ['Artículo validado', 'Borrador completo entregado', 'Devolución del profesor', 'Versión final entregada'];
+function eiCalendar() {
+  const C = store.get('eiCal2', {});
+  return `<h2 style="margin-top:22px">Calendario de la carpeta</h2>
+    <div class="fb info" style="max-width:1000px;margin-top:0"><b class="h">Un solo borrador con devolución</b>Según las normas del IB, el profesor puede dar retroalimentación escrita sobre <b>un solo borrador</b> de cada comentario. Entrégalo <b>completo</b> (con diagrama, evaluación y conclusión) para aprovechar esa única devolución.</div>
+    <div class="tscroll"><table class="dtab plan"><thead><tr><th>Comentario</th>${EI_STAGES.map(s => `<th>${s}</th>`).join('')}</tr></thead><tbody>${Object.entries(EI_UNITS).map(([u, n]) => `<tr><th scope="row">U${u} · ${n}</th>${EI_STAGES.map((s, i) => { const v = (C[u] || {})[i] || {}; return `<td><input type="date" class="inp eicd" data-u="${u}" data-i="${i}" value="${esc(v.d || '')}" aria-label="${n}: ${s}"><label class="ppdone" style="margin-top:4px"><input type="checkbox" class="eicx" data-u="${u}" data-i="${i}"${v.ok ? ' checked' : ''}> Hecho</label></td>`; }).join('')}</tr>`).join('')}</tbody></table></div>`;
+}
+function bindCalendar() {
+  const C = store.get('eiCal2', {});
+  const set = (u, i, k, v) => { C[u] = C[u] || {}; C[u][i] = C[u][i] || {}; C[u][i][k] = v; store.set('eiCal2', C); };
+  app.querySelectorAll('.eicd').forEach(x => x.onchange = () => set(x.dataset.u, x.dataset.i, 'd', x.value));
+  app.querySelectorAll('.eicx').forEach(x => x.onchange = () => set(x.dataset.u, x.dataset.i, 'ok', x.checked));
 }
 
 /* =============== 14 · Banco de cálculos de la Prueba 2 (solo cálculos del NM) =============== */
