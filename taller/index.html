@@ -745,6 +745,8 @@ td.late{color:var(--bad);font-weight:700}td.soon{color:var(--warn-ink);font-weig
 .pfcard{margin:14px 0}.pfcard h3{margin:14px 0 6px}.pfcard h4{margin:10px 0 4px}.pfcard details{margin-top:8px}.pfcard summary{cursor:pointer;font-weight:700}
 .eihist{margin-top:10px}.eihist summary{cursor:pointer;font-weight:700}.eihist ol{margin:6px 0 0;padding-left:20px;display:grid;gap:8px}
 .pfround{border-top:1px solid var(--rule);margin-top:12px;padding-top:4px}.pfsc{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center;margin-top:8px}.pfsc label{display:flex;gap:4px;align-items:center;font-weight:700}.pfsc select{padding:3px 6px}
+.pfsum td{min-width:150px}.pflog details summary{cursor:pointer;color:var(--navy-2)}
+
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
@@ -8411,7 +8413,7 @@ function renderEIHome() {
     <div class="method"><div><b>La carpeta · 30 % de la nota (NM)</b><p>Tres comentarios de hasta <b>800 palabras</b> sobre artículos de prensa: uno de <b>Microeconomía</b>, uno de <b>Macroeconomía</b> y uno de <b>Economía global</b>. Total: 45 puntos.</p></div>
       <div><b>Requisitos</b><p>Artículo de <b>menos de un año</b> al momento de escribir; una <b>fuente distinta</b> por comentario; un <b>concepto clave distinto</b> en cada uno; periódico, revista o sitio de noticias (no televisión ni radio).</p></div>
       <div><b>No cuentan en las 800 palabras</b><p>Diagramas, sus rótulos (hasta 5 palabras) y títulos (hasta 10), tablas de datos, fórmulas y cálculos, citas bibliográficas y referencias. <b>Sí cuentan</b> las definiciones y las citas textuales.</p></div></div>
-    ${eiFromMsg()}${eiDeadlines()}<div class="row eiacts"><button class="btn primary" type="button" data-go="ei-articulo">¿Sirve mi artículo? Valídalo antes de escribir</button><button class="btn" type="button" data-go="ei-modelos">Ver comentarios modelo anotados</button><button class="btn" type="button" data-go="ei-alumnos">Ver carpetas reales de alumnos</button><a class="btn" href="${EI_NEWS}" target="_blank" rel="noopener">Buscar artículos en Economía en las Noticias ↗</a></div>
+    ${eiFromMsg()}${eiNewFbBox()}${eiDeadlines()}<div class="row eiacts"><button class="btn primary" type="button" data-go="ei-articulo">¿Sirve mi artículo? Valídalo antes de escribir</button><button class="btn" type="button" data-go="ei-modelos">Ver comentarios modelo anotados</button><button class="btn" type="button" data-go="ei-alumnos">Ver carpetas reales de alumnos</button><a class="btn" href="${EI_NEWS}" target="_blank" rel="noopener">Buscar artículos en Economía en las Noticias ↗</a></div>
     <h2>Criterios de cada comentario · 14 puntos</h2>
     <div class="eicrit">${EI_CRIT.map(([k, n, m]) => `<div><b>${k}</b><span>${n}</span><i>${m} p</i></div>`).join('')}<div><b>F</b><span>Requisitos de la carpeta</span><i>3 p</i></div></div>
     <h2 style="margin-top:22px">Qué se espera para cada punto</h2>
@@ -8432,7 +8434,7 @@ function renderEIHome() {
 }
 function eiHead(u) { return `<button class="crumb" type="button" data-go="escribir-ei">← Mi carpeta</button><div class="eyebrow" style="margin-top:12px">Evaluación Interna · Unidad ${u}</div><h1 style="margin-bottom:6px">Comentario de ${EI_UNITS[u]}</h1>`; }
 function renderEI(u) {
-  renderEIInner(u); bindSubmitBox(u); eiRemoteLoad();
+  renderEIInner(u); bindSubmitBox(u); eiRemoteLoad(); if (EIR.st === 'ok') markFbSeen(u);
   if (eiStage(u).lock) lockEditor($('#eib'));
 }
 function renderEIInner(u) {
@@ -8892,6 +8894,8 @@ async function eiRemoteLoad(force) {
   const r = location.hash.slice(1);
   if (eirSig() !== before && /^(escribir-ei|ei-[234])$/.test(r)) { const y = window.scrollY; render(); window.scrollTo(0, y); }
   else if (/^ei-[234]$/.test(r)) { const el = $('.eisub'), u = r.slice(3); if (el) { el.outerHTML = eiSubmitBox(u) || '<div class="eisub" hidden></div>'; bindSubmitBox(u); } }
+  if (/^ei-[234]$/.test(r) && EIR.st === 'ok') markFbSeen(r.slice(3));
+  updateFbBadge();
 }
 function eiStage(u) { const R = eiRounds(EIR.subs, EIR.fb, u), k = stageOf(R); return { k, lock: k === 'final' || k === 'wait', R }; }
 function eiMissing(u) {
@@ -8950,6 +8954,7 @@ function eiLog(u, pasted) {
   const L = EIS.log = EIS.log || {}, x = L[u] = L[u] || { d: {}, p: [] };
   x.d[today()] = eiWords(eiSlot(u));
   if (pasted) { x.p.push([today(), pasted]); if (x.p.length > 60) x.p.shift(); }
+  eiSnap(u, pasted);
 }
 const eiAutoDone = (u, i) => { const R = eiRounds(EIR.subs, EIR.fb, u); return (i === 1 && R.rounds.length > 0) || (i === 2 && R.rounds.some(r => r.fb)) || (i === 3 && !!R.f); };
 /* Avisos de plazos del profesor */
@@ -8973,7 +8978,7 @@ async function profLoad() {
   try {
     const [u, s, f, c] = await Promise.all([X.students(), X.allSubs(), X.allFb(), X.getConfig()]);
     PROF.users = u.filter(x => (x.email || '').toLowerCase() !== TEACHER_MAIL).sort((a, b) => profName(a).localeCompare(profName(b), 'es'));
-    PROF.subs = s; PROF.fb = f; PROF.curso = c; PROF.st = 'ok';
+    PROF.subs = s; PROF.fb = f; PROF.curso = c; PROF.logs = {}; PROF.st = 'ok';
   } catch (e) { PROF.st = 'err'; PROF.err = e.code || e.message; }
   if (location.hash.startsWith('#profesor')) { const y = window.scrollY; render(); window.scrollTo(0, y); }
 }
@@ -9006,12 +9011,13 @@ function renderProf() {
     <div class="row" style="margin-bottom:10px"><button class="btn" type="button" id="pfR">Actualizar</button><button class="btn primary" type="button" id="pfCsv">Descargar seguimiento (Excel)</button><span class="small muted">${PROF.users.length} ${PROF.users.length === 1 ? 'alumno' : 'alumnos'}</span></div>
     ${pend.length ? `<div class="fb no"><b class="h">Borradores por devolver: ${pend.length}</b>${pend.map(([x, u, n]) => `<button class="linkb" type="button" data-go="profesor-${x.uid}">${esc(profName(x))} · ${EI_UNITS[u]} · borrador ${n}</button>`).join(' · ')}</div>` : '<div class="fb ok">No hay borradores pendientes de devolución.</div>'}
     <div class="tscroll"><table class="dtab plan pftab"><thead><tr><th>Alumno</th>${Object.values(EI_UNITS).map(n => `<th>${n}</th>`).join('')}<th>Última actividad</th></tr></thead><tbody>${rows || `<tr><td colspan="5">Todavía no hay alumnos con cuenta.</td></tr>`}</tbody></table></div>
+    ${profSummaryHtml()}
     <h2 style="margin-top:24px">Fechas del curso</h2>
     <p class="small muted" style="max-width:1000px;margin-top:-4px">Los plazos que pongas aquí aparecen en el calendario de todos los alumnos, con aviso cuando faltan 7 días o menos. La fecha de «Versión final» es también la fecha límite del planificador.</p>
     <div class="tscroll"><table class="dtab plan"><thead><tr><th>Comentario</th>${EI_STAGES.map(s => `<th>${s}</th>`).join('')}</tr></thead><tbody>${Object.entries(EI_UNITS).map(([u, n]) => `<tr><th scope="row">U${u} · ${n}</th>${EI_STAGES.map((s, i) => `<td><input type="date" class="inp pff" data-u="${u}" data-i="${i}" value="${esc((F[u] || [])[i] || '')}" aria-label="${n}: ${s}"></td>`).join('')}</tr>`).join('')}</tbody></table></div>
     <div class="row" style="margin-top:8px"><button class="btn primary" type="button" id="pfSave">Guardar fechas</button><span id="pfMsg" class="small"></span></div>`;
   $('#pfR').onclick = () => { PROF.st = 'idle'; render(); };
-  $('#pfCsv').onclick = profCsv;
+  $('#pfCsv').onclick = profCsv; bindSummary();
   $('#pfSave').onclick = async e => {
     const fechas = {}; app.querySelectorAll('.pff').forEach(i => { (fechas[i.dataset.u] = fechas[i.dataset.u] || ['', '', '', ''])[+i.dataset.i] = i.value; });
     e.currentTarget.disabled = true;
@@ -9069,8 +9075,13 @@ async function profDocx(x, btn) {
           String(r.fb.text || '').split(/\n+/).forEach(t => kids.push(P(t)));
         });
       }
+      const CL = Array.isArray((PROF.logs || {})[x.uid]) ? PROF.logs[x.uid].filter(y => y.u === String(u)) : [];
+      if (CL.length) {
+        kids.push(H('Registro de autoría (nube, hora del servidor)', HeadingLevel.HEADING_2));
+        let pv = 0; kids.push(T(['Fecha y hora', 'Palabras', 'Cambio', 'Pegado'], CL.map(y => { const dl = y.words - pv; pv = y.words; return [new Date(y.at).toLocaleString('es-PY', { dateStyle: 'short', timeStyle: 'short' }), y.words, wdiff(dl) + (dl >= 300 ? ' ⚠' : ''), y.paste ? y.paste + ' palabras' : '—']; })));
+      }
       if (L && Object.keys(L.d || {}).length) {
-        kids.push(H('Registro de autoría', HeadingLevel.HEADING_2));
+        kids.push(H('Registro del dispositivo (orientativo)', HeadingLevel.HEADING_2));
         let prev = 0; kids.push(T(['Día', 'Palabras al cierre', 'Cambio'], Object.keys(L.d).sort().map(d => { const v = L.d[d], dl = v - prev; prev = v; return [fdate(d), v, wdiff(dl) + (dl >= 300 ? ' ⚠' : '')]; })));
         const p = (L.p || []).filter(y => y[1] >= 25);
         kids.push(P(p.length ? 'Textos pegados de 25 palabras o más: ' + p.map(y => `${fdate(y[0])} (${y[1]} palabras)`).join(' · ') : 'No pegó textos largos.'));
@@ -9116,11 +9127,12 @@ function renderProfStudent(uid) {
         ${R.f ? `<div class="pfround"><h3>Versión final · ${fdate(R.f.at)} · ${R.f.words} palabras${R.last ? ` (${wdiff(R.f.words - R.last.d.words)} respecto del borrador ${R.last.n})` : ''}</h3>
           <details><summary>Leer la versión final</summary><div class="mtext">${profTxt(R.f.txt)}</div></details>
           <div class="row" style="margin-top:6px"><button class="btn" type="button" data-pfre="${uid}_${u}_f">Reabrir versión final</button></div></div>` : ''}
-        <h3 style="margin-top:16px">Registro de autoría</h3>${profLog((E.log || {})[u])}
+        <h3 style="margin-top:16px">Registro de autoría</h3>${profCloudLog(uid, u)}<details><summary>Registro del dispositivo (orientativo)</summary>${profLog((E.log || {})[u])}</details>
         ${w && padUsed(w.dia) ? `<details><summary>Diagrama actual${w.diaT ? ': ' + esc(w.diaT) : ''}</summary><div class="pfdia" data-u="${u}"></div></details>` : ''}
         ${w && wordsOf(w) ? `<details><summary>Texto actual (lo que tiene hoy en el Taller)</summary><div class="mtext">${profTxt(w.txt)}</div></details>` : ''}
       </div></section>`;
     }).join('')}`;
+  if (!(PROF.logs || {})[uid]) profLogsLoad(uid);
   $('#pfDoc').onclick = e => profDocx(x, e.currentTarget);
   app.querySelectorAll('.pfdia').forEach(d => { const w = E.s[d.dataset.u]; d.parentNode.addEventListener('toggle', () => { if (!d.dataset.done) { d.dataset.done = 1; sketchPad(d, w.dia, null, { readOnly: true, file: 'EI-' + fileSafe(profName(x)) + '-' + d.dataset.u }); } }); });
   app.querySelectorAll('[data-pfsend]').forEach(b => b.onclick = async () => {
@@ -9139,11 +9151,126 @@ function renderProfStudent(uid) {
     catch (x2) { b.textContent = 'No se pudo reabrir (' + (x2.code || x2.message) + ')'; }
   });
 }
+/* ---------- Registro de autoría en la nube: una foto por hora con hora del servidor (no se puede modificar ni borrar) ---------- */
+const SNAP = { t: {}, paste: {} };
+const snapKey = u => `${u}_${today()}_${String(new Date().getHours()).padStart(2, '0')}`;
+const snapDone = () => { try { return JSON.parse(localStorage.getItem('tallerEcoSnap') || '{}'); } catch (e) { return {}; } };
+function eiSnap(u, pasted) {
+  if (pasted) SNAP.paste[u] = (SNAP.paste[u] || 0) + pasted;
+  const X = FBX(); if (!X || X.isTeacher()) return;
+  clearTimeout(SNAP.t[u]);
+  SNAP.t[u] = setTimeout(async () => {
+    const k = snapKey(u), D = snapDone(), w = eiSlot(u), words = eiWords(w);
+    if (D[k] === words && !SNAP.paste[u]) return;
+    const id = D[k] !== undefined ? k + '_' + Date.now().toString(36) : k;
+    try {
+      await X.snap(id, { u: String(u), date: today(), words, paste: SNAP.paste[u] || 0, txt: { intro: w.txt.intro || '', exp: w.txt.exp || '', eva: w.txt.eva || '' } });
+      D[k] = words; SNAP.paste[u] = 0; try { localStorage.setItem('tallerEcoSnap', JSON.stringify(D)); } catch (e) { }
+    } catch (e) { }
+  }, 20000);
+}
+
+/* ---------- Aviso de devolución nueva ---------- */
+const fbSig = fb => fb.id + '@' + (fb.edited || fb.at);
+const fbUnseen = () => { const seen = store.get('eiSeenFb', []); return EIR.fb.filter(f => !seen.includes(fbSig(f))); };
+function markFbSeen(u) {
+  const mine = EIR.fb.filter(f => f.u === String(u)); if (!mine.length) return;
+  const seen = store.get('eiSeenFb', []), add = mine.map(fbSig).filter(s => !seen.includes(s));
+  if (add.length) { store.set('eiSeenFb', [...seen, ...add].slice(-200)); updateFbBadge(); }
+}
+function updateFbBadge() {
+  const nav = document.querySelector('.nav [data-go="escribir"]'); if (!nav) return;
+  let b = document.getElementById('fbBadge');
+  if (!b) { nav.insertAdjacentHTML('beforeend', '<span class="badge" id="fbBadge" hidden title="Devoluciones nuevas del profesor">0</span>'); b = document.getElementById('fbBadge'); }
+  const n = FBX() && !isTeacher() && EIR.st === 'ok' ? fbUnseen().length : 0;
+  b.textContent = n; b.hidden = n === 0;
+}
+function eiNewFbBox() {
+  if (!FBX() || EIR.st !== 'ok') return '';
+  const nf = fbUnseen(); if (!nf.length) return '';
+  return `<div class="fb ok" style="max-width:1000px"><b class="h">Tienes ${nf.length === 1 ? 'una devolución nueva' : nf.length + ' devoluciones nuevas'} del profesor</b>${nf.map(f => `<button class="linkb" type="button" data-go="ei-${f.u}">${EI_UNITS[f.u]} · borrador ${f.n}</button>`).join(' · ')}</div>`;
+}
+
+/* ---------- Panel: registro de autoría de la nube ---------- */
+async function profLogsLoad(uid) {
+  PROF.logs = PROF.logs || {};
+  try { PROF.logs[uid] = (await FBX().logsOf(uid)).sort((a, b) => a.at - b.at); }
+  catch (e) { PROF.logs[uid] = { err: e.code || e.message }; }
+  if (location.hash.slice(1) === 'profesor-' + uid) { const y = window.scrollY; render(); window.scrollTo(0, y); }
+}
+function profCloudLog(uid, u) {
+  const L = (PROF.logs || {})[uid];
+  if (!L) return '<p class="small muted">Cargando el registro de la nube…</p>';
+  if (L.err) return `<p class="small" style="color:var(--bad)">No se pudo leer el registro de la nube (${esc(L.err)}).</p>`;
+  const rows = L.filter(x => x.u === String(u));
+  if (!rows.length) return '';
+  let prev = 0;
+  return `<div class="tscroll"><table class="dtab pflog"><thead><tr><th>Fecha y hora (servidor)</th><th>Palabras</th><th>Cambio</th><th>Pegado</th><th>Texto</th></tr></thead><tbody>${rows.map(x => { const dl = x.words - prev; prev = x.words; return `<tr${dl >= 300 ? ' class="pfjump"' : ''}><td>${new Date(x.at).toLocaleString('es-PY', { dateStyle: 'short', timeStyle: 'short' })}</td><td>${x.words}</td><td>${wdiff(dl)}${dl >= 300 ? ' ⚠' : ''}</td><td>${x.paste ? x.paste + ' pal.' : '—'}</td><td><details><summary>ver</summary><div class="mtext">${profTxt(x.txt)}</div></details></td></tr>`; }).join('')}</tbody></table></div>
+    <p class="small muted">Fotos guardadas en la nube con la hora del servidor: el alumno no puede modificarlas ni borrarlas.</p>`;
+}
+
+/* ---------- Panel: resumen del curso ---------- */
+function profSummary() {
+  const avg = a => a.length ? a.reduce((s, v) => s + v, 0) / a.length : null, f1 = v => v === null ? '—' : fmt(v, 1);
+  return Object.entries(EI_UNITS).map(([u, un]) => {
+    const Rs = PROF.users.map(x => profR(x.uid, u)), n = PROF.users.length;
+    const withD = Rs.filter(R => R.rounds.length), fin = Rs.filter(R => R.f);
+    const first = [], last = [], perK = Object.fromEntries(EI_CRIT.map(([k]) => [k, [[], []]])), lag = [];
+    Rs.forEach(R => {
+      const sc = R.rounds.filter(r => fbScore(r.fb) !== null);
+      if (sc.length) { first.push(fbScore(sc[0].fb)); last.push(fbScore(sc[sc.length - 1].fb)); EI_CRIT.forEach(([k]) => { perK[k][0].push(+sc[0].fb.sc[k]); perK[k][1].push(+sc[sc.length - 1].fb.sc[k]); }); }
+      R.rounds.forEach(r => { if (r.fb && r.fb.at && r.d.at) lag.push((r.fb.at - r.d.at) / 864e5); });
+    });
+    const p1 = plazo(u, 1) || (((PROF.curso || {}).fechas || {})[u] || [])[1], p3 = (((PROF.curso || {}).fechas || {})[u] || [])[3];
+    const onTime = (list, d) => d ? `${list.filter(t => t && new Date(t) <= new Date(d + 'T23:59:59')).length} de ${list.length}` : 'sin plazo';
+    return { u, un, n, d: withD.length, f: fin.length, rounds: avg(withD.map(R => R.rounds.length)), first: avg(first), last: avg(last), perK: EI_CRIT.map(([k]) => [k, avg(perK[k][0]), avg(perK[k][1])]), lag: avg(lag), t1: onTime(withD.map(R => R.rounds[0].d.at), p1), t3: onTime(fin.map(R => R.f.at), p3), nsc: first.length, f1 };
+  });
+}
+function profSummaryHtml() {
+  const S = profSummary(), f1 = v => v === null ? '—' : fmt(v, 1);
+  return `<h2 style="margin-top:24px">Resumen del curso</h2>
+    <p class="small muted" style="max-width:1000px;margin-top:-4px">La mejora compara el puntaje de la primera devolución con puntaje y el de la última, solo de los alumnos a los que les pusiste puntaje.</p>
+    <div class="tscroll"><table class="dtab plan pfsum"><thead><tr><th>Indicador</th>${S.map(s => `<th>${s.un}</th>`).join('')}</tr></thead><tbody>
+      <tr><th scope="row">Entregaron al menos un borrador</th>${S.map(s => `<td>${s.d} de ${s.n}</td>`).join('')}</tr>
+      <tr><th scope="row">Versión final entregada</th>${S.map(s => `<td>${s.f} de ${s.n}</td>`).join('')}</tr>
+      <tr><th scope="row">Borradores por alumno (promedio)</th>${S.map(s => `<td>${f1(s.rounds)}</td>`).join('')}</tr>
+      <tr><th scope="row">Puntaje /14: primera → última devolución</th>${S.map(s => `<td>${s.first === null ? '—' : `${f1(s.first)} → <b>${f1(s.last)}</b> (${wdiffD(s.last - s.first)})`}<div class="small muted">${s.nsc} con puntaje</div></td>`).join('')}</tr>
+      ${EI_CRIT.map(([k, nm], i) => `<tr><th scope="row">${k} · ${nm}</th>${S.map(s => `<td>${s.perK[i][1] === null ? '—' : `${f1(s.perK[i][1])} → <b>${f1(s.perK[i][2])}</b>`}</td>`).join('')}</tr>`).join('')}
+      <tr><th scope="row">Días hasta la devolución (promedio)</th>${S.map(s => `<td>${f1(s.lag)}</td>`).join('')}</tr>
+      <tr><th scope="row">Borrador 1 a tiempo</th>${S.map(s => `<td>${s.t1}</td>`).join('')}</tr>
+      <tr><th scope="row">Versión final a tiempo</th>${S.map(s => `<td>${s.t3}</td>`).join('')}</tr>
+    </tbody></table></div>
+    <div class="row" style="margin-top:8px"><button class="btn" type="button" id="pfSumCsv">Descargar resumen (Excel)</button><button class="btn" type="button" id="pfBak">Descargar respaldo completo</button></div>
+    <p class="small muted">El plan gratuito de Firebase no hace copias de seguridad: descarga el respaldo completo una vez por mes y guárdalo en tu computadora o en Drive.</p>`;
+}
+const wdiffD = v => (v > 0 ? '+' : '') + fmt(v, 1);
+function bindSummary() {
+  $('#pfSumCsv').onclick = () => {
+    const S = profSummary(), f1 = v => v === null ? '' : fmt(v, 1), q = v => { const s = String(v ?? ''); return /[;"\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s; };
+    const rows = [['Indicador', ...S.map(s => s.un)],
+      ['Alumnos con cuenta', ...S.map(s => s.n)], ['Entregaron al menos un borrador', ...S.map(s => s.d)], ['Versión final entregada', ...S.map(s => s.f)],
+      ['Borradores por alumno (promedio)', ...S.map(s => f1(s.rounds))], ['Puntaje /14 primera devolución (promedio)', ...S.map(s => f1(s.first))], ['Puntaje /14 última devolución (promedio)', ...S.map(s => f1(s.last))],
+      ...EI_CRIT.flatMap(([k, nm], i) => [[`${k} ${nm} · primera`, ...S.map(s => f1(s.perK[i][1]))], [`${k} ${nm} · última`, ...S.map(s => f1(s.perK[i][2]))]]),
+      ['Días hasta la devolución (promedio)', ...S.map(s => f1(s.lag))], ['Borrador 1 a tiempo', ...S.map(s => s.t1)], ['Versión final a tiempo', ...S.map(s => s.t3)]];
+    saveBlob(new Blob(['﻿' + rows.map(r => r.map(q).join(';')).join('\r\n')], { type: 'text/csv;charset=utf-8' }), `Resumen-EI-${today()}.csv`);
+  };
+  $('#pfBak').onclick = async e => {
+    const b = e.currentTarget, o = b.textContent; b.disabled = true; b.textContent = 'Preparando…';
+    try {
+      const X = FBX(), [users, subs, fb, logs, config] = await Promise.all([X.students(), X.allSubs(), X.allFb(), X.allLogs(), X.getConfig()]);
+      saveBlob(new Blob([JSON.stringify({ generado: new Date().toISOString(), proyecto: 'taller-economia-ib', users, subs, fb, logs, config }, null, 1)], { type: 'application/json' }), `Respaldo-Taller-${today()}.json`);
+      b.textContent = 'Descargado ✓';
+    } catch (x) { b.textContent = 'No se pudo (' + (x.code || x.message) + ')'; }
+    setTimeout(() => { b.textContent = o; b.disabled = false; }, 2500);
+  };
+}
+
 /* Cuando cambia la sesión de la cuenta */
 function updateProfNav() { const n = document.getElementById('navProf'); if (n) n.hidden = !isTeacher(); }
 window.addEventListener('fbx', () => {
-  updateProfNav(); EIR.st = 'idle'; PROF.st = 'idle';
+  updateProfNav(); EIR.st = 'idle'; PROF.st = 'idle'; updateFbBadge();
   const r = location.hash.slice(1);
+  if (FBX() && !isTeacher() && !/^(escribir-ei|ei-[234])$/.test(r)) eiRemoteLoad();
   if (r.startsWith('profesor') || /^(escribir-ei|ei-[234])$/.test(r)) { const y = window.scrollY; render(); window.scrollTo(0, y); }
 });
 
@@ -10368,6 +10495,9 @@ window.FBX = {
   setConfig: o => F.setDoc(F.doc(db, 'config', 'curso'), o),
   students: async () => (await all('users')).map(o => ({ ...o, uid: o.id })), allSubs: () => all('subs'), allFb: () => all('fb'),
   setFb: (uid, u, n, text, sc, oldAt) => F.setDoc(F.doc(db, 'fb', `${uid}_${u}_${n}`), { uid, u: String(u), n: +n, text, sc: sc || {}, by: user.email, at: oldAt ? F.Timestamp.fromMillis(oldAt) : F.serverTimestamp(), edited: F.serverTimestamp() }),
+  snap: (id, p) => F.setDoc(F.doc(db, 'logs', `${user.uid}_${id}`), { ...p, uid: user.uid, at: F.serverTimestamp() }),
+  logsOf: async uid => (await F.getDocs(F.query(F.collection(db, 'logs'), F.where('uid', '==', uid)))).docs.map(conv),
+  allLogs: () => all('logs'),
   reopen: id => Promise.all([F.deleteDoc(F.doc(db, 'subs', id)), id.endsWith('_f') ? null : F.deleteDoc(F.doc(db, 'fb', id))])
 };
 
