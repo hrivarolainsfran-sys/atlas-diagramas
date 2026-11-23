@@ -1,0 +1,64 @@
+{
+ "id": "4.7",
+ "titulo": "Desarrollo sostenible",
+ "intro": "Crecer hoy sin dejar a las próximas generaciones sin bosques, agua ni tierra fértil: ese es el desafío del <b>desarrollo sostenible</b>. Para Paraguay, con su agricultura, su ganadería y sus represas, el tema es muy concreto.",
+ "objetivos": [
+  "Definir el desarrollo sostenible.",
+  "Explicar los Objetivos de Desarrollo Sostenible (ODS) de las Naciones Unidas.",
+  "Explicar la relación entre pobreza y sostenibilidad.",
+  "Evaluar políticas para un desarrollo más sostenible."
+ ],
+ "secciones": [
+  {
+   "h": "1. Qué es el desarrollo sostenible",
+   "p": [
+    "El <b>desarrollo sostenible</b> es el que <b>satisface las necesidades del presente sin comprometer la capacidad de las generaciones futuras</b> de satisfacer las suyas (Informe Brundtland, 1987).",
+    "Tiene tres dimensiones que deben avanzar juntas: <b>económica</b> (crecimiento y empleo), <b>social</b> (reducción de la pobreza y la desigualdad) y <b>ambiental</b> (cuidado de los recursos naturales y del clima)."
+   ]
+  },
+  {
+   "h": "2. Los Objetivos de Desarrollo Sostenible",
+   "p": [
+    "En 2015 los países de las Naciones Unidas aprobaron los <b>17 Objetivos de Desarrollo Sostenible (ODS)</b> para 2030. Entre ellos: poner fin a la pobreza (ODS 1), hambre cero (ODS 2), salud y bienestar (ODS 3), educación de calidad (ODS 4), agua limpia (ODS 6), energía asequible y no contaminante (ODS 7), trabajo decente y crecimiento (ODS 8), reducción de las desigualdades (ODS 10), acción por el clima (ODS 13) y vida de ecosistemas terrestres (ODS 15).",
+    "Los ODS muestran que el desarrollo no es solo crecer: hay que crecer de una forma que incluya a todos y cuide el ambiente."
+   ]
+  },
+  {
+   "h": "3. Pobreza y sostenibilidad",
+   "p": [
+    "La relación va en los dos sentidos. La <b>pobreza</b> empuja a sobreexplotar los recursos: usar leña de los bosques, cultivar suelos frágiles, pescar sin control, porque no hay alternativas para sobrevivir hoy.",
+    "A su vez, la <b>degradación ambiental</b> golpea primero a los más pobres: sequías, inundaciones y suelos agotados reducen sus ingresos y su salud. Así se refuerza la trampa de la pobreza."
+   ]
+  },
+  {
+   "h": "4. Políticas para la sostenibilidad",
+   "p": [
+    "<b>Impuestos y regulaciones</b> sobre la contaminación y la deforestación (2.8); <b>subsidios</b> a energías renovables y a prácticas agrícolas sostenibles; <b>permisos de emisión</b> negociables; <b>pagos por servicios ambientales</b> a quienes conservan bosques; <b>educación ambiental</b>; y <b>cooperación internacional</b> (acuerdos climáticos, financiamiento verde), porque el clima es un problema global.",
+    "Para evaluar: el costo para los productores y el empleo hoy, la capacidad del Estado para controlar el cumplimiento, y si los países ricos, que contaminaron más, deben pagar más."
+   ]
+  }
+ ],
+ "ejemplo": {
+  "t": "Ejemplo de Paraguay: energía limpia y deforestación",
+  "p": [
+   "Paraguay produce casi toda su electricidad con <b>energía hidroeléctrica</b>, una fuente renovable, gracias a Itaipú, Yacyretá y Acaray: es una fortaleza para el ODS 7. Sin embargo, buena parte de la energía que consumen los hogares todavía viene de la <b>leña y el carbón vegetal</b> y del combustible importado para el transporte.",
+   "Al mismo tiempo, la expansión de la ganadería y la agricultura llevó a una fuerte <b>deforestación</b>, sobre todo en el Chaco. Eso genera ingresos hoy, pero con costos ambientales que afectan el clima, el agua y la biodiversidad (ODS 13 y 15).",
+   "Para evaluar: ¿cómo combinar el crecimiento del agro, que da empleo y divisas, con la conservación del Chaco? ¿Qué papel podrían tener los pagos por servicios ambientales o el uso de la energía de las represas para transporte eléctrico?"
+  ]
+ },
+ "errores": [
+  "Reducir la sostenibilidad solo al ambiente: también tiene dimensión económica y social.",
+  "Presentar el crecimiento y la sostenibilidad como siempre opuestos.",
+  "Olvidar la relación entre pobreza y degradación ambiental."
+ ],
+ "check": [
+  {"q": "El desarrollo sostenible busca…", "o": ["Crecer lo más rápido posible", "Satisfacer las necesidades actuales sin comprometer las de las generaciones futuras", "Dejar de usar recursos naturales", "Solo proteger el ambiente"], "a": 1, "e": "Es la definición del Informe Brundtland."},
+  {"q": "¿Cuántos son los Objetivos de Desarrollo Sostenible?", "o": ["8", "10", "17", "25"], "a": 2, "e": "Son 17 objetivos con metas para 2030."},
+  {"q": "¿Por qué la pobreza puede dañar el ambiente?", "o": ["Porque los pobres contaminan más por gusto", "Porque, sin alternativas, se sobreexplotan los recursos para sobrevivir", "Porque no pagan impuestos", "No hay relación"], "a": 1, "e": "La necesidad inmediata lleva a usar leña, suelos frágiles o pesca sin control."},
+  {"q": "¿Cuál es una política de sostenibilidad basada en incentivos de mercado?", "o": ["Prohibir toda la actividad agrícola", "Permisos de emisión negociables", "Cerrar las fronteras", "Subir el salario mínimo"], "a": 1, "e": "Se fija un límite total y las empresas compran o venden permisos."}
+ ],
+ "kc": { "t": "Concepto clave: sostenibilidad", "p": "Cada decisión económica de hoy tiene consecuencias para quienes vivirán en Paraguay dentro de cincuenta años. Pregunta para pensar: ¿cuánto crecimiento estarías dispuesto a resignar hoy para conservar los bosques del Chaco?" },
+ "atlas": [["matriz-410", "ODS y diagramas"]],
+ "labs": ["strat"],
+ "dias": {}
+}

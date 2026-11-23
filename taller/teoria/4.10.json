@@ -1,0 +1,73 @@
+{
+ "id": "4.10",
+ "titulo": "Estrategias de crecimiento y desarrollo",
+ "intro": "Si las barreras al desarrollo son muchas, las soluciones también. Algunos países apostaron al mercado y al comercio; otros, a la intervención del Estado. La mayoría combina ambas cosas. Este subtema presenta las <b>principales estrategias</b> y cómo evaluarlas.",
+ "objetivos": [
+  "Explicar las estrategias orientadas al mercado y las intervencionistas.",
+  "Explicar el papel del comercio, la inversión extranjera directa, la ayuda externa y el microcrédito.",
+  "Explicar la importancia de las instituciones, la educación, la salud y la igualdad de género.",
+  "Evaluar las estrategias según el contexto de cada país."
+ ],
+ "secciones": [
+  {
+   "h": "1. Estrategias orientadas al comercio",
+   "p": [
+    "<b>Promoción de exportaciones:</b> crecer vendiendo al mundo, aprovechando la ventaja comparativa y avanzando hacia productos con más valor agregado (el caso de los países del este de Asia).",
+    "<b>Diversificación:</b> exportar más variedad de productos para depender menos de unos pocos productos primarios.",
+    "<b>Sustitución de importaciones:</b> proteger a la industria nacional para que produzca lo que antes se importaba (América Latina en el siglo XX). Puede crear industrias, pero suele generar ineficiencia si la protección se vuelve permanente.",
+    "<b>Integración económica</b> y acceso preferencial a mercados grandes (4.4)."
+   ]
+  },
+  {
+   "h": "2. Inversión y financiamiento externo",
+   "p": [
+    "<b>Inversión extranjera directa (IED):</b> trae capital, tecnología, empleo y acceso a mercados; pero puede enviar las utilidades al exterior, concentrarse en recursos naturales y presionar por ventajas fiscales.",
+    "<b>Ayuda externa:</b> ayuda humanitaria, préstamos en condiciones favorables y proyectos de desarrollo. Puede financiar salud, educación e infraestructura, pero genera riesgo de dependencia y de corrupción.",
+    "<b>Préstamos multilaterales</b> (Banco Mundial, BID, FMI): financian proyectos y apoyan en crisis, a veces con condiciones de política económica.",
+    "<b>Microcrédito:</b> pequeños préstamos a personas sin acceso a la banca, sobre todo mujeres emprendedoras. Ayuda a salir de la pobreza, pero con montos chicos y tasas a veces altas."
+   ]
+  },
+  {
+   "h": "3. Estrategias intervencionistas y sociales",
+   "p": [
+    "<b>Inversión en capital humano:</b> educación de calidad y salud. Es la base del crecimiento de largo plazo.",
+    "<b>Infraestructura:</b> rutas, energía, puertos, internet.",
+    "<b>Igualdad de género:</b> la educación y el empleo de las mujeres aumentan el ingreso familiar y la inversión en los hijos.",
+    "<b>Redes de protección social:</b> transferencias, pensiones, salud universal.",
+    "<b>Instituciones sólidas:</b> justicia independiente, lucha contra la corrupción, derechos de propiedad claros y un sistema tributario que recaude lo suficiente y de forma justa."
+   ]
+  },
+  {
+   "h": "4. Mercado y Estado: cómo evaluar",
+   "p": [
+    "Las estrategias <b>orientadas al mercado</b> (apertura, privatización, desregulación) pueden mejorar la eficiencia y atraer inversión, pero no garantizan que el crecimiento llegue a todos.",
+    "Las <b>intervencionistas</b> pueden corregir fallas de mercado y reducir la desigualdad, pero requieren un Estado capaz, recursos y control de la corrupción.",
+    "No hay una receta única: lo que funciona depende de las barreras de cada país (4.9). Por eso la evaluación siempre debe decir <b>para qué país</b>, <b>en qué plazo</b> y <b>a qué costo</b>."
+   ]
+  }
+ ],
+ "ejemplo": {
+  "t": "Ejemplo de Paraguay: ¿cómo aprovechar la energía de Itaipú?",
+  "p": [
+   "Paraguay tiene una gran ventaja: abundante <b>energía hidroeléctrica</b> limpia. Durante décadas exportó a Brasil la mayor parte de su parte de Itaipú. Una estrategia de desarrollo discutida es usar más esa energía en el país para atraer <b>industrias</b> (incluidas industrias electrointensivas y centros de datos) y para el transporte eléctrico.",
+   "Se combina con la <b>promoción de exportaciones</b> con más valor agregado (carne procesada, aceites, maquila) para <b>diversificar</b> la economía y depender menos de la soja en bruto.",
+   "Para evaluar: hace falta invertir en líneas de transmisión, en educación técnica para que los empleos sean de calidad y en instituciones que den seguridad a los inversores. ¿Qué es mejor para el desarrollo: vender la energía o usarla para producir?"
+  ],
+  "link": ["lab-strat", "Practicar con estrategias de desarrollo y ODS"]
+ },
+ "errores": [
+  "Proponer una estrategia sin conectarla con una barrera concreta.",
+  "Evaluar solo ventajas: toda estrategia tiene costos y riesgos.",
+  "Olvidar el contexto del país (tamaño, recursos, instituciones)."
+ ],
+ "check": [
+  {"q": "La sustitución de importaciones consiste en…", "o": ["Exportar más productos primarios", "Proteger a la industria nacional para producir lo que antes se importaba", "Eliminar todos los aranceles", "Recibir ayuda externa"], "a": 1, "e": "Fue la estrategia de muchos países latinoamericanos en el siglo XX."},
+  {"q": "¿Cuál es un riesgo de la inversión extranjera directa?", "o": ["Que traiga tecnología", "Que las utilidades se envíen al exterior y se concentre en recursos naturales", "Que cree empleo", "Que aumente las exportaciones"], "a": 1, "e": "Parte de los beneficios no se quedan en el país."},
+  {"q": "El microcrédito está dirigido principalmente a…", "o": ["Grandes empresas", "Personas sin acceso a la banca tradicional", "Gobiernos", "Bancos centrales"], "a": 1, "e": "Pequeños préstamos para emprendimientos de personas de bajos ingresos."},
+  {"q": "¿Por qué la diversificación favorece el desarrollo?", "o": ["Porque reduce la dependencia de pocos productos con precios volátiles", "Porque sube los aranceles", "Porque reduce las exportaciones", "Porque elimina el comercio"], "a": 0, "e": "Los ingresos del país se vuelven más estables."}
+ ],
+ "kc": { "t": "Concepto clave: intervención", "p": "El debate de fondo es cuánto mercado y cuánto Estado necesita un país para desarrollarse. Pregunta para pensar: para Paraguay, ¿qué combinación de mercado y Estado te parece más adecuada y por qué?" },
+ "atlas": [["matriz-410", "Matriz de reutilización de diagramas"]],
+ "labs": ["strat", "poverty"],
+ "dias": {}
+}

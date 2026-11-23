@@ -9553,7 +9553,7 @@ window.addEventListener('fbx', () => {
 });
 
 /* =============== Teoría por subtema (archivos en teoria/<id>.json, se cargan solo al abrirlos) =============== */
-const TEO_IDS = ['1.1', '1.2', '2.1', '2.2', '2.3', '2.5', '2.6', '2.7', '2.8', '2.9', '3.1', '3.2', '3.3', '3.4', '3.5', '3.6', '3.7'];
+const TEO_IDS = ['1.1', '1.2', '2.1', '2.2', '2.3', '2.5', '2.6', '2.7', '2.8', '2.9', '3.1', '3.2', '3.3', '3.4', '3.5', '3.6', '3.7', '4.1', '4.2', '4.4', '4.5', '4.6', '4.7', '4.8', '4.9', '4.10'];
 const TEO = {};
 const teoLoad = id => TEO[id] ? Promise.resolve(TEO[id]) : fetch(`teoria/${id}.json`, { cache: 'no-cache' }).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }).then(d => (TEO[id] = d));
 const NEWS_SITE = 'https://hrivarolainsfran-sys.github.io/economia-noticias/';

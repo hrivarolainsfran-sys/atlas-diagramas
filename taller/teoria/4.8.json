@@ -1,0 +1,70 @@
+{
+ "id": "4.8",
+ "titulo": "Medición del desarrollo",
+ "intro": "Crecer no es lo mismo que desarrollarse. Un país puede aumentar su PIB y que la mayoría de su gente siga sin acceso a salud o a buena educación. Este subtema explica <b>cómo se mide el desarrollo</b> y por qué ningún indicador alcanza solo.",
+ "objetivos": [
+  "Distinguir crecimiento económico y desarrollo económico.",
+  "Explicar indicadores económicos, sociales y compuestos del desarrollo.",
+  "Explicar el Índice de Desarrollo Humano (IDH) y otros índices compuestos.",
+  "Evaluar las ventajas y limitaciones de cada medida."
+ ],
+ "secciones": [
+  {
+   "h": "1. Crecimiento y desarrollo",
+   "p": [
+    "El <b>crecimiento económico</b> es el aumento del PIB real. El <b>desarrollo económico</b> es una mejora amplia del <b>bienestar</b> de la población: más ingreso, pero también mejor salud, educación, oportunidades, libertad y menor pobreza.",
+    "Puede haber crecimiento sin desarrollo (si los beneficios se concentran o se destruye el ambiente) y algo de desarrollo con poco crecimiento (si mejora el acceso a servicios básicos)."
+   ]
+  },
+  {
+   "h": "2. Indicadores individuales",
+   "p": [
+    "<b>Económicos:</b> PIB e INB per cápita (mejor en <b>paridad del poder adquisitivo</b>, que ajusta por el costo de vida), tasa de pobreza, coeficiente de Gini.",
+    "<b>Salud:</b> esperanza de vida al nacer, mortalidad infantil, mortalidad materna, acceso a agua potable.",
+    "<b>Educación:</b> años de escolaridad, tasa de alfabetización, matrícula escolar.",
+    "Cada uno mide una sola dimensión: por eso se combinan en índices compuestos."
+   ]
+  },
+  {
+   "h": "3. El Índice de Desarrollo Humano (IDH)",
+   "p": [
+    "El <b>IDH</b>, elaborado por el Programa de las Naciones Unidas para el Desarrollo (PNUD), combina tres dimensiones: <b>vida larga y saludable</b> (esperanza de vida al nacer), <b>conocimientos</b> (años promedio y años esperados de escolaridad) y <b>nivel de vida digno</b> (INB per cápita en PPA). Va de 0 a 1.",
+    "Su principal aporte es mostrar que el desarrollo es más que ingreso: países con PIB per cápita parecido pueden tener IDH muy distintos.",
+    "Limitaciones: no mide la desigualdad (para eso existe el <b>IDH ajustado por desigualdad</b>), ni la sostenibilidad ambiental, ni la calidad de la educación o la libertad política."
+   ]
+  },
+  {
+   "h": "4. Otros índices compuestos",
+   "p": [
+    "<b>Índice de Desarrollo de Género</b> e <b>Índice de Desigualdad de Género</b>: brechas entre mujeres y hombres.",
+    "<b>Índice de Pobreza Multidimensional (IPM)</b>: privaciones simultáneas en salud, educación y nivel de vida.",
+    "<b>IDH ajustado por presiones planetarias</b>: descuenta las emisiones de carbono y el uso de materiales.",
+    "<b>Índice de Felicidad</b> e <b>Índice de Progreso Social</b>: miden el bienestar subjetivo y la satisfacción de necesidades sociales sin usar el PIB."
+   ]
+  }
+ ],
+ "ejemplo": {
+  "t": "Ejemplo de Paraguay: más allá del PIB per cápita",
+  "p": [
+   "Paraguay creció de forma bastante sostenida en las últimas dos décadas y se ubica en el grupo de países de <b>desarrollo humano alto</b> según el PNUD. Sin embargo, el promedio esconde grandes diferencias.",
+   "Hay brechas importantes entre zonas urbanas y rurales, y entre departamentos, en acceso a agua potable, a salud y en calidad de la educación. Por eso, al ajustar el IDH por desigualdad, el resultado de Paraguay baja: no todos disfrutan por igual del progreso.",
+   "Para evaluar el desarrollo de Paraguay conviene combinar el PIB per cápita con el IDH ajustado por desigualdad, la pobreza multidimensional y los indicadores de calidad educativa."
+  ],
+  "link": ["lab-dev", "Practicar con los indicadores de desarrollo"]
+ },
+ "errores": [
+  "Usar el PIB per cápita como si fuera una medida completa del desarrollo.",
+  "Olvidar las tres dimensiones del IDH.",
+  "Comparar ingresos entre países sin usar la paridad del poder adquisitivo."
+ ],
+ "check": [
+  {"q": "¿Cuáles son las tres dimensiones del IDH?", "o": ["PIB, inflación y desempleo", "Salud, educación y nivel de vida", "Pobreza, Gini y ambiente", "Exportaciones, inversión y consumo"], "a": 1, "e": "Esperanza de vida, escolaridad e INB per cápita en PPA."},
+  {"q": "La paridad del poder adquisitivo (PPA) sirve para…", "o": ["Medir la inflación", "Comparar ingresos entre países ajustando por el costo de vida", "Medir el desempleo", "Calcular el tipo de cambio fijo"], "a": 1, "e": "Un dólar compra cosas distintas en cada país."},
+  {"q": "¿Qué limitación del IDH corrige el IDH ajustado por desigualdad?", "o": ["No mide la salud", "No muestra cómo se distribuye el desarrollo", "No usa el ingreso", "No es comparable"], "a": 1, "e": "Descuenta el valor del IDH según la desigualdad en cada dimensión."},
+  {"q": "Puede haber crecimiento sin desarrollo cuando…", "o": ["El PIB real cae", "Los beneficios del crecimiento se concentran en pocos", "Mejora la educación", "Baja la pobreza"], "a": 1, "e": "El PIB sube pero el bienestar de la mayoría no mejora."}
+ ],
+ "kc": { "t": "Concepto clave: bienestar económico", "p": "Medir es decidir qué importa: si solo miramos el PIB, las políticas se concentran en crecer; si miramos el IDH o la pobreza multidimensional, también en la salud y la educación. Pregunta para pensar: ¿qué indicador usarías para saber si tu comunidad está mejor que hace diez años?" },
+ "atlas": [],
+ "labs": ["dev"],
+ "dias": {}
+}

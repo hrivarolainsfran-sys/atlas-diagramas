@@ -1,0 +1,80 @@
+{
+ "id": "4.1",
+ "titulo": "Beneficios del comercio internacional",
+ "intro": "La soja paraguaya termina en mesas de Europa y Asia, y los celulares que usamos vienen de China. ¿Por qué los países comercian en lugar de producir todo ellos mismos? Este subtema explica <b>por qué el comercio puede beneficiar a todos</b> y quiénes ganan y pierden dentro de cada país.",
+ "objetivos": [
+  "Explicar los beneficios del comercio internacional.",
+  "Distinguir la ventaja absoluta y la ventaja comparativa.",
+  "Analizar con diagramas el libre comercio con importaciones y con exportaciones.",
+  "Explicar el papel de la Organización Mundial del Comercio (OMC)."
+ ],
+ "secciones": [
+  {
+   "h": "1. Beneficios del comercio",
+   "p": [
+    "<b>Precios más bajos y más variedad</b> para los consumidores; <b>acceso a recursos</b> que el país no tiene (petróleo para Paraguay); <b>mercados más grandes</b> que permiten <b>economías de escala</b>; <b>más competencia</b>, que obliga a las empresas a ser eficientes; <b>transferencia de tecnología</b> e ingreso de <b>divisas</b> por las exportaciones.",
+    "En conjunto, el comercio permite una <b>asignación más eficiente</b> de los recursos a nivel mundial: cada país se especializa en lo que hace relativamente mejor."
+   ]
+  },
+  {
+   "h": "2. Ventaja absoluta y comparativa",
+   "p": [
+    "Un país tiene <b>ventaja absoluta</b> si produce un bien con <b>menos recursos</b> que otro país.",
+    "Un país tiene <b>ventaja comparativa</b> si produce un bien con <b>menor costo de oportunidad</b> que otro. Es la idea de David Ricardo: aunque un país sea más eficiente en todo, conviene que ambos se especialicen en lo que tienen menor costo de oportunidad y comercien.",
+    "La ventaja comparativa surge de diferencias en la dotación de factores (tierra fértil, energía, mano de obra calificada), la tecnología y el clima. Paraguay tiene ventaja comparativa en soja, carne y energía hidroeléctrica."
+   ],
+   "caja": { "t": "Ejemplo numérico", "html": "Con los mismos recursos, Paraguay produce 10 t de soja o 2 máquinas; Alemania, 5 t de soja o 5 máquinas. Costo de oportunidad de 1 t de soja: Paraguay 0,2 máquinas; Alemania 1 máquina. Paraguay tiene ventaja comparativa en soja y Alemania en máquinas." }
+  },
+  {
+   "h": "3. Libre comercio con importaciones",
+   "p": [
+    "Si el <b>precio mundial (Pm)</b> es <b>menor</b> que el precio interno sin comercio, con libre comercio el precio interno baja a Pm. Paraguay es un país pequeño: el precio mundial es una línea horizontal que no puede modificar.",
+    "Los consumidores compran más (Qd), los productores nacionales producen menos (Qo) y la diferencia (Qd − Qo) se <b>importa</b>. Ganan los consumidores; pierden los productores nacionales que compiten con las importaciones."
+   ],
+   "dia": ["importaciones"]
+  },
+  {
+   "h": "4. Libre comercio con exportaciones",
+   "p": [
+    "Si el precio mundial es <b>mayor</b> que el precio interno, los productores venden al precio mundial: producen más (Qo), los consumidores nacionales compran menos (Qd) y la diferencia se <b>exporta</b>.",
+    "Ganan los productores y exportadores; pierden los consumidores nacionales, que pagan el precio mundial más alto."
+   ],
+   "dia": ["exportaciones"]
+  },
+  {
+   "h": "5. La OMC y los riesgos del comercio",
+   "p": [
+    "La <b>Organización Mundial del Comercio (OMC)</b> promueve la reducción de barreras comerciales, administra los acuerdos de comercio y <b>resuelve disputas</b> entre países.",
+    "El comercio también tiene riesgos: <b>dependencia</b> de pocos productos y de precios internacionales volátiles, cierre de industrias que no pueden competir y desempleo estructural en esos sectores."
+   ]
+  }
+ ],
+ "ejemplo": {
+  "t": "Ejemplo de Paraguay: la soja exportada y los electrónicos importados",
+  "p": [
+   "<b>Soja:</b> el precio mundial es mayor que el que tendría en un Paraguay cerrado. Los productores venden al precio mundial, producen mucho más de lo que el país consume y <b>exportan</b> el excedente. Entran divisas al país y crece el ingreso del sector agrícola.",
+   "<b>Electrónicos:</b> Paraguay no tiene ventaja comparativa en producirlos; los <b>importa</b> a precios mundiales más bajos de los que tendría produciéndolos. Los consumidores ganan variedad y precio.",
+   "Para evaluar: la especialización en productos primarios hace a Paraguay vulnerable a las sequías y a la caída de precios internacionales. ¿Debería diversificar su producción?"
+  ],
+  "dia": "exportaciones",
+  "link": ["lab-trade", "Practicar libre comercio con exportaciones e importaciones"]
+ },
+ "errores": [
+  "Confundir ventaja absoluta con ventaja comparativa.",
+  "Dibujar el precio mundial con pendiente: es una línea horizontal para un país pequeño.",
+  "Decir que con el libre comercio ganan todos: hay ganadores y perdedores dentro de cada país."
+ ],
+ "check": [
+  {"q": "La ventaja comparativa se basa en…", "o": ["Producir con menos recursos", "Producir con menor costo de oportunidad", "Exportar más que importar", "Tener más población"], "a": 1, "e": "Es la idea de Ricardo: importa el costo de oportunidad, no los recursos totales."},
+  {"q": "Si el precio mundial es menor que el interno, con libre comercio el país…", "o": ["Exporta", "Importa la diferencia entre Qd y Qo", "Deja de consumir", "Sube el precio interno"], "a": 1, "e": "El precio interno baja a Pm; se demanda más y se produce menos."},
+  {"q": "Con libre comercio de exportación, ¿quién pierde dentro del país?", "o": ["Los productores", "Los consumidores nacionales", "Los exportadores", "El gobierno"], "a": 1, "e": "Pagan el precio mundial, más alto que el interno."},
+  {"q": "¿Qué hace la OMC?", "o": ["Fija el tipo de cambio", "Promueve el comercio y resuelve disputas comerciales", "Presta dinero a países pobres", "Cobra aranceles"], "a": 1, "e": "Administra acuerdos y resuelve conflictos entre países."}
+ ],
+ "kc": { "t": "Concepto clave: interdependencia", "p": "El comercio une a los países: una sequía en Paraguay afecta el precio de la soja en el mundo y una crisis en China afecta los ingresos de los productores paraguayos. Pregunta para pensar: ¿es una ventaja o un riesgo depender tanto del comercio con Brasil?" },
+ "atlas": [["exportaciones", "Libre comercio con exportaciones"], ["importaciones", "Libre comercio con importaciones"]],
+ "labs": ["trade"],
+ "dias": {
+  "importaciones": { "t": "Libre comercio con importaciones", "x": "Cantidad", "y": "Precio", "l": [{ "a": [0, 10], "b": [9.5, 0.5], "c": "d", "t": "D" }, { "a": [0, 1], "b": [10, 9], "c": "s", "t": "O" }, { "a": [0, 3], "b": [9.4, 3], "c": "k", "dash": true, "t": "Pm", "lp": [9.5, 3.1] }], "pt": [{ "p": [2.5, 3], "lx": "Qo" }, { "p": [7, 3], "lx": "Qd" }, { "p": [5, 5], "ly": "Pe" }], "n": [{ "p": [3.4, 2.3], "t": "importaciones" }] },
+  "exportaciones": { "t": "Libre comercio con exportaciones", "x": "Cantidad", "y": "Precio", "l": [{ "a": [0, 10], "b": [9.5, 0.5], "c": "d", "t": "D" }, { "a": [0, 1], "b": [10, 9], "c": "s", "t": "O" }, { "a": [0, 7], "b": [9.4, 7], "c": "k", "dash": true, "t": "Pm", "lp": [9.5, 7.1] }], "pt": [{ "p": [3, 7], "lx": "Qd" }, { "p": [7.5, 7], "lx": "Qo" }, { "p": [5, 5], "ly": "Pe" }], "n": [{ "p": [4, 7.6], "t": "exportaciones" }] }
+ }
+}

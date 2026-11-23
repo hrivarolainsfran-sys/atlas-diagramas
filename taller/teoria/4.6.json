@@ -1,0 +1,74 @@
+{
+ "id": "4.6",
+ "titulo": "Balanza de pagos",
+ "intro": "Cada vez que Paraguay vende energía a Brasil, compra combustible, recibe una inversión extranjera o paga intereses de su deuda, el dinero entra o sale del país. La <b>balanza de pagos</b> es el registro ordenado de todas esas transacciones con el resto del mundo.",
+ "objetivos": [
+  "Explicar la estructura de la balanza de pagos: cuenta corriente, cuenta de capital y cuenta financiera.",
+  "Explicar la relación entre las cuentas.",
+  "Analizar las causas y consecuencias de un déficit o un superávit persistente en la cuenta corriente.",
+  "Explicar formas de corregir un déficit en la cuenta corriente."
+ ],
+ "secciones": [
+  {
+   "h": "1. Qué es la balanza de pagos",
+   "p": [
+    "La <b>balanza de pagos</b> registra todas las transacciones económicas entre los residentes de un país y el resto del mundo durante un período. Cada entrada de dinero se anota como <b>crédito (+)</b> y cada salida como <b>débito (−)</b>."
+   ]
+  },
+  {
+   "h": "2. La cuenta corriente",
+   "p": [
+    "<b>Balanza comercial de bienes:</b> exportaciones e importaciones de bienes (soja, carne, combustible, maquinaria).",
+    "<b>Balanza de servicios:</b> turismo, transporte, seguros, servicios financieros.",
+    "<b>Ingreso primario:</b> salarios, intereses y utilidades que se reciben o se pagan al exterior (por ejemplo, utilidades que las empresas extranjeras envían a sus países de origen).",
+    "<b>Ingreso secundario:</b> transferencias sin contrapartida, como las <b>remesas</b> que envían los paraguayos que trabajan en España o Argentina, y la ayuda externa."
+   ]
+  },
+  {
+   "h": "3. La cuenta de capital y la cuenta financiera",
+   "p": [
+    "La <b>cuenta de capital</b> registra transferencias de capital (condonación de deudas, compra y venta de activos no producidos como patentes). Suele ser pequeña.",
+    "La <b>cuenta financiera</b> registra la compra y venta de activos financieros: <b>inversión extranjera directa (IED)</b> (una empresa extranjera instala una fábrica), <b>inversión de cartera</b> (compra de acciones o bonos), otras inversiones (préstamos) y la variación de las <b>reservas</b> del banco central."
+   ]
+  },
+  {
+   "h": "4. La relación entre las cuentas",
+   "p": [
+    "La balanza de pagos siempre <b>suma cero</b> (sin contar errores y omisiones): un déficit en la cuenta corriente debe financiarse con un superávit en la cuenta financiera y de capital (entradas de inversión, préstamos o uso de reservas), y viceversa."
+   ],
+   "caja": { "t": "Identidad", "html": "Cuenta corriente + cuenta de capital + cuenta financiera + errores y omisiones = 0" }
+  },
+  {
+   "h": "5. Déficit y superávit persistentes",
+   "p": [
+    "Un <b>déficit persistente en la cuenta corriente</b> significa que el país gasta en el exterior más de lo que recibe. Hay que financiarlo con deuda, venta de activos o reservas; puede depreciar la moneda y hacer al país dependiente del capital extranjero. Puede no ser grave si financia inversión productiva.",
+    "Un <b>superávit persistente</b> puede reflejar un ahorro elevado o una moneda subvaluada, y genera tensiones con los socios comerciales.",
+    "Formas de corregir un déficit: <b>depreciación</b> de la moneda (abarata las exportaciones), <b>políticas que reduzcan el gasto</b> (fiscal o monetaria contractiva: bajan las importaciones), <b>proteccionismo</b> (con represalias) y <b>políticas de oferta</b> que mejoren la competitividad a largo plazo."
+   ]
+  }
+ ],
+ "ejemplo": {
+  "t": "Ejemplo de Paraguay: energía, soja y remesas",
+  "p": [
+   "En la cuenta corriente paraguaya pesan mucho las <b>exportaciones</b> de soja, carne y <b>energía eléctrica</b> de las binacionales Itaipú y Yacyretá, y las <b>importaciones</b> de combustible, maquinaria y bienes de consumo. El saldo cambia mucho según la cosecha y los precios internacionales: en años de sequía, la cuenta corriente empeora.",
+   "Las <b>remesas</b> de los paraguayos en el exterior aparecen en el ingreso secundario y ayudan a muchas familias, sobre todo rurales.",
+   "En la cuenta financiera se registran la <b>inversión extranjera directa</b> (por ejemplo, en maquila o en plantas de celulosa) y los préstamos y bonos del Estado. Para evaluar: ¿qué riesgo tiene financiar un déficit de cuenta corriente con deuda en lugar de con inversión extranjera directa?"
+  ],
+  "link": ["lab-bdp", "Practicar con la balanza de pagos"]
+ },
+ "errores": [
+  "Ubicar las remesas en la cuenta financiera: van en el <b>ingreso secundario</b> de la cuenta corriente.",
+  "Confundir la balanza comercial (solo bienes) con la cuenta corriente (bienes, servicios e ingresos).",
+  "Decir que un déficit en la cuenta corriente siempre es malo."
+ ],
+ "check": [
+  {"q": "La compra de una fábrica paraguaya por una empresa extranjera se registra en…", "o": ["La cuenta corriente", "La cuenta financiera (IED)", "El ingreso secundario", "La balanza de servicios"], "a": 1, "e": "Es inversión extranjera directa."},
+  {"q": "Las remesas de los paraguayos en España se registran en…", "o": ["La balanza comercial", "El ingreso secundario de la cuenta corriente", "La cuenta de capital", "Las reservas"], "a": 1, "e": "Son transferencias sin contrapartida."},
+  {"q": "Un déficit en la cuenta corriente debe financiarse con…", "o": ["Un superávit en la cuenta financiera y de capital", "Más importaciones", "Un déficit fiscal", "Más inflación"], "a": 0, "e": "La balanza de pagos suma cero."},
+  {"q": "¿Qué política ayuda a reducir un déficit en la cuenta corriente?", "o": ["Una apreciación de la moneda", "Una depreciación de la moneda", "Bajar la tasa de interés para aumentar el consumo", "Subir el gasto en importaciones"], "a": 1, "e": "Abarata las exportaciones y encarece las importaciones."}
+ ],
+ "kc": { "t": "Concepto clave: interdependencia", "p": "La balanza de pagos es el espejo de la relación de un país con el mundo: muestra cuánto depende de los precios de la soja, del clima, de las remesas y del capital extranjero. Pregunta para pensar: ¿qué cambiaría en la balanza de pagos de Paraguay si usara su energía para industrializarse en lugar de exportarla?" },
+ "atlas": [],
+ "labs": ["bdp"],
+ "dias": {}
+}

@@ -1,0 +1,69 @@
+{
+ "id": "4.2",
+ "temas": ["4.2", "4.3"],
+ "titulo": "Proteccionismo comercial",
+ "intro": "Aunque el libre comercio beneficia al conjunto, casi todos los países protegen algunos sectores: ponen impuestos a las importaciones, limitan cantidades o subsidian a sus productores. Este subtema analiza <b>las herramientas del proteccionismo</b>, sus argumentos y quién gana y quién pierde.",
+ "objetivos": [
+  "Explicar las herramientas del proteccionismo: aranceles, cuotas, subsidios y barreras administrativas.",
+  "Analizar con diagramas el efecto de un arancel y de una cuota.",
+  "Evaluar los argumentos a favor y en contra del proteccionismo.",
+  "Identificar las consecuencias para las distintas partes interesadas."
+ ],
+ "secciones": [
+  {
+   "h": "1. Las herramientas",
+   "p": [
+    "<b>Arancel:</b> impuesto a los bienes importados. <b>Cuota:</b> límite a la cantidad que se puede importar. <b>Subsidio</b> a los productores nacionales: les baja el costo para competir con las importaciones. <b>Barreras administrativas:</b> trámites lentos, normas técnicas o sanitarias exigentes que encarecen o demoran las importaciones."
+   ]
+  },
+  {
+   "h": "2. Efecto de un arancel",
+   "p": [
+    "Sin arancel, el país importa al precio mundial (Pm). Con un arancel, el precio interno sube a <b>Pm + arancel</b>.",
+    "Consecuencias: los consumidores pagan más y compran menos (Qd₁ → Qd₂); los productores nacionales producen más (Qo₁ → Qo₂); las <b>importaciones caen</b>; el gobierno <b>recauda</b> (rectángulo violeta = arancel × importaciones) y aparece una <b>pérdida de bienestar</b> (triángulos grises): ineficiencia en la producción nacional y menor consumo."
+   ],
+   "dia": ["arancel"]
+  },
+  {
+   "h": "3. Cuotas y subsidios",
+   "p": [
+    "Una <b>cuota</b> tiene efectos parecidos al arancel (sube el precio interno, sube la producción nacional, bajan las importaciones), pero el gobierno <b>no recauda</b>: el precio más alto beneficia a los importadores con licencia o a los productores extranjeros.",
+    "Un <b>subsidio</b> desplaza la oferta nacional hacia abajo: los productores nacionales producen más y se importa menos, pero el <b>precio para los consumidores no sube</b>. El costo lo paga el gobierno (los contribuyentes)."
+   ]
+  },
+  {
+   "h": "4. Argumentos a favor y en contra",
+   "p": [
+    "<b>A favor:</b> proteger la <b>industria naciente</b> hasta que pueda competir; proteger el <b>empleo</b>; <b>seguridad</b> nacional y alimentaria; evitar el <b>dumping</b> (vender por debajo del costo para eliminar competidores); <b>recaudar</b>; proteger la salud y el ambiente; corregir un déficit comercial.",
+    "<b>En contra:</b> precios más altos y menos variedad para los consumidores; <b>ineficiencia</b> y mala asignación de recursos; <b>represalias</b> de otros países; las industrias protegidas pueden no volverse nunca competitivas; costo para las industrias que usan insumos importados; riesgo de corrupción y presión de grupos de interés."
+   ]
+  }
+ ],
+ "ejemplo": {
+  "t": "Ejemplo de Paraguay: el arancel externo común del MERCOSUR",
+  "p": [
+   "Como miembro del MERCOSUR, Paraguay aplica el <b>arancel externo común</b> a muchos productos que vienen de fuera del bloque, aunque con listas de excepciones. Un auto o un electrodoméstico fabricado fuera del MERCOSUR paga arancel; uno fabricado en Brasil, en general, no.",
+   "Con la teoría: el arancel <b>sube el precio interno</b> de los productos de fuera del bloque, protege a los productores del MERCOSUR (sobre todo de Brasil y Argentina) y recauda para el Estado; los consumidores paraguayos pagan más.",
+   "Para evaluar: Paraguay tiene pocas industrias que proteger en muchos de esos productos. ¿Le conviene un arancel común pensado para economías más industrializadas? Por eso el país negoció excepciones y regímenes especiales."
+  ],
+  "dia": "arancel",
+  "link": ["lab-tariff", "Practicar con el laboratorio de aranceles"]
+ },
+ "errores": [
+  "Decir que con una cuota el gobierno recauda (solo si vende las licencias).",
+  "Olvidar que con un subsidio el precio para el consumidor no sube.",
+  "Mencionar argumentos a favor sin evaluarlos (¿la industria naciente realmente madura?)."
+ ],
+ "check": [
+  {"q": "Un arancel a las importaciones de ropa…", "o": ["Baja el precio interno", "Sube el precio interno y aumenta la producción nacional", "Aumenta las importaciones", "No afecta a los consumidores"], "a": 1, "e": "El precio interno sube a Pm + arancel."},
+  {"q": "¿Qué medida proteccionista NO genera recaudación?", "o": ["Arancel", "Cuota sin venta de licencias", "Impuesto a la importación", "Arancel externo común"], "a": 1, "e": "La cuota limita la cantidad; el precio más alto lo aprovechan los importadores."},
+  {"q": "El argumento de la «industria naciente» sostiene que…", "o": ["Hay que proteger siempre a todas las industrias", "Una industria nueva necesita protección temporal hasta poder competir", "Las industrias nuevas no pagan impuestos", "Hay que prohibir las importaciones"], "a": 1, "e": "La protección debería ser temporal."},
+  {"q": "Vender en otro país por debajo del costo de producción se llama…", "o": ["Arancel", "Dumping", "Cuota", "Subsidio"], "a": 1, "e": "Es una práctica desleal que puede justificar medidas antidumping."}
+ ],
+ "kc": { "t": "Concepto clave: intervención", "p": "El proteccionismo es una intervención que reparte costos y beneficios: concentra ganancias en unos pocos productores y reparte el costo entre muchos consumidores. Pregunta para pensar: ¿por qué es más fácil que un gobierno ponga un arancel que lo quite?" },
+ "atlas": [["arancel", "Efecto de un arancel"], ["cuota", "Efecto de una cuota"], ["subvencion-comercio", "Subvención a productores nacionales"]],
+ "labs": ["tariff", "quota"],
+ "dias": {
+  "arancel": { "t": "Efecto de un arancel", "x": "Cantidad", "y": "Precio", "area": [{ "p": [[2.5, 3], [3.75, 4], [3.75, 3]], "c": "dwl" }, { "p": [[6, 4], [7, 3], [6, 3]], "c": "dwl" }], "rect": [{ "x": [3.75, 6], "y": [3, 4], "c": "gov" }], "l": [{ "a": [0, 10], "b": [9.5, 0.5], "c": "d", "t": "D" }, { "a": [0, 1], "b": [10, 9], "c": "s", "t": "O" }, { "a": [0, 3], "b": [9.4, 3], "c": "k", "dash": true, "t": "Pm", "lp": [9.5, 2.8] }, { "a": [0, 4], "b": [9.4, 4], "c": "k", "dash": true, "t": "Pm + arancel", "lp": [9.5, 4.1] }], "pt": [{ "p": [2.5, 3], "lx": "Qo₁", "lxa": "end" }, { "p": [3.75, 4], "lx": "Qo₂", "lxa": "start" }, { "p": [6, 4], "lx": "Qd₂", "lxa": "end" }, { "p": [7, 3], "lx": "Qd₁", "lxa": "start" }] }
+ }
+}

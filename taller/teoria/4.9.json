@@ -1,0 +1,63 @@
+{
+ "id": "4.9",
+ "titulo": "Barreras al desarrollo",
+ "intro": "¿Por qué algunos países se desarrollan y otros quedan atrapados? No hay una sola respuesta: hay <b>barreras económicas, sociales, políticas e institucionales</b> que se refuerzan entre sí. Entenderlas es el primer paso para elegir las estrategias de 4.10.",
+ "objetivos": [
+  "Explicar la trampa (ciclo) de la pobreza.",
+  "Explicar las barreras económicas al desarrollo.",
+  "Explicar las barreras sociales, políticas e institucionales.",
+  "Aplicar estas barreras al caso de Paraguay."
+ ],
+ "secciones": [
+  {
+   "h": "1. La trampa de la pobreza",
+   "p": [
+    "Los países y las familias pobres pueden quedar atrapados en un círculo que se refuerza:"
+   ],
+   "flujo": ["Bajos ingresos", "Poco ahorro", "Poca inversión en capital físico y humano", "Baja productividad", "Bajos ingresos otra vez"],
+   "p2": [
+    "Para romperla hace falta una <b>inyección externa</b>: inversión pública, ayuda, inversión extranjera, microcrédito o un aumento sostenido de las exportaciones."
+   ]
+  },
+  {
+   "h": "2. Barreras económicas",
+   "p": [
+    "<b>Desigualdad</b> de ingresos y de oportunidades; <b>dependencia de productos primarios</b> con precios volátiles; <b>falta de acceso a crédito</b> y a servicios financieros; <b>infraestructura insuficiente</b> (caminos, puertos, energía, internet); <b>economía informal</b> grande, que no paga impuestos ni da protección a los trabajadores; <b>deuda externa</b> alta; <b>falta de capital humano</b> (educación y salud de baja calidad).",
+    "Para los países sin litoral, como Paraguay, el <b>costo del transporte</b> hasta los puertos de mar es una barrera adicional."
+   ]
+  },
+  {
+   "h": "3. Barreras sociales, políticas e institucionales",
+   "p": [
+    "<b>Instituciones débiles:</b> falta de seguridad jurídica, <b>corrupción</b> y burocracia, que desalientan la inversión y desvían recursos públicos.",
+    "<b>Derechos de propiedad poco claros</b> (títulos de tierra), que impiden usar la propiedad como garantía para un crédito.",
+    "<b>Desigualdad de género</b>: menos acceso de las mujeres a la educación, el crédito y el empleo formal.",
+    "<b>Inestabilidad política</b> y conflictos; <b>sistemas tributarios</b> que recaudan poco o de forma regresiva y no financian educación y salud de calidad."
+   ]
+  }
+ ],
+ "ejemplo": {
+  "t": "Ejemplo de Paraguay: informalidad, mediterraneidad e instituciones",
+  "p": [
+   "<b>Informalidad:</b> una gran parte de los trabajadores paraguayos no tiene seguro social ni contrato. Sus ingresos son inestables, el Estado recauda menos y es difícil acceder al crédito formal.",
+   "<b>Mediterraneidad:</b> Paraguay no tiene salida al mar. Depende de la <b>hidrovía Paraguay–Paraná</b> y de los puertos de Argentina, Uruguay o Brasil; en años de sequía, la baja del río encarece mucho el transporte de las exportaciones.",
+   "<b>Instituciones y tierra:</b> la concentración de la tierra, los conflictos por los títulos y la percepción de corrupción son señalados por organismos internacionales como obstáculos para la inversión y para que el crecimiento llegue a todos. Para evaluar: ¿cuál de estas barreras debería atacar primero Paraguay y por qué?"
+  ],
+  "link": ["lab-poverty", "Practicar con el ciclo de la pobreza"]
+ },
+ "errores": [
+  "Nombrar barreras sin explicar su mecanismo (cómo frenan el desarrollo).",
+  "Ignorar las barreras institucionales y quedarse solo con las económicas.",
+  "Proponer soluciones sin relacionarlas con una barrera concreta."
+ ],
+ "check": [
+  {"q": "En la trampa de la pobreza, los bajos ingresos llevan a…", "o": ["Mucho ahorro", "Poco ahorro e inversión, y baja productividad", "Alta inflación", "Superávit comercial"], "a": 1, "e": "Sin ahorro no hay inversión ni mejoras de productividad."},
+  {"q": "¿Por qué los títulos de propiedad claros favorecen el desarrollo?", "o": ["Suben los impuestos", "Permiten usar la propiedad como garantía para obtener crédito", "Bajan los salarios", "Reducen las exportaciones"], "a": 1, "e": "El acceso al crédito permite invertir."},
+  {"q": "La dependencia de productos primarios es una barrera porque…", "o": ["Sus precios son estables", "Sus precios son volátiles y los ingresos del país también", "No se pueden exportar", "No generan empleo"], "a": 1, "e": "Los ingresos suben y bajan con los precios internacionales y el clima."},
+  {"q": "¿Qué barrera específica enfrenta Paraguay por no tener salida al mar?", "o": ["Más turismo", "Mayores costos de transporte para exportar", "Más inversión", "Menos inflación"], "a": 1, "e": "Depende de la hidrovía y de los puertos de otros países."}
+ ],
+ "kc": { "t": "Concepto clave: equidad", "p": "Muchas barreras al desarrollo golpean más a quienes ya tienen menos: el campesino sin título, la mujer sin acceso al crédito, el joven en una escuela rural sin recursos. Pregunta para pensar: ¿es posible un desarrollo rápido sin reducir primero la desigualdad de oportunidades?" },
+ "atlas": [["ciclo-pobreza", "Ciclo de la pobreza"]],
+ "labs": ["poverty"],
+ "dias": {}
+}

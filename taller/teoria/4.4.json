@@ -1,0 +1,69 @@
+{
+ "id": "4.4",
+ "titulo": "Integración económica",
+ "intro": "Paraguay fundó el MERCOSUR en 1991 con el Tratado de Asunción, junto con Argentina, Brasil y Uruguay. ¿Qué significa pertenecer a un bloque comercial? Este subtema explica los <b>niveles de integración económica</b>, sus ventajas y sus costos.",
+ "objetivos": [
+  "Distinguir acuerdos bilaterales, regionales y multilaterales.",
+  "Explicar los niveles de integración: acuerdo preferencial, área de libre comercio, unión aduanera, mercado común y unión monetaria.",
+  "Explicar la creación y la desviación de comercio.",
+  "Evaluar las ventajas y desventajas de la integración y de una unión monetaria."
+ ],
+ "secciones": [
+  {
+   "h": "1. Tipos de acuerdos",
+   "p": [
+    "<b>Bilaterales</b> (entre dos países), <b>regionales</b> (entre países de una región, como el MERCOSUR) y <b>multilaterales</b> (entre muchos países, en el marco de la OMC).",
+    "Los acuerdos regionales avanzaron mucho porque es más fácil negociar entre pocos países que en la OMC."
+   ]
+  },
+  {
+   "h": "2. Los niveles de integración",
+   "p": [
+    "Cada nivel incluye al anterior y agrega algo:"
+   ],
+   "flujo": ["Acuerdo comercial preferencial: aranceles más bajos para algunos productos", "Área de libre comercio: sin aranceles entre los miembros; cada país mantiene sus aranceles frente al resto", "Unión aduanera: además, un arancel externo común frente a terceros", "Mercado común: además, libre circulación de trabajo y capital", "Unión económica y monetaria: además, una moneda común y una política monetaria única (como el euro)"],
+   "p2": [
+    "El MERCOSUR es una <b>unión aduanera imperfecta</b>: tiene un arancel externo común pero con muchas excepciones y aspira a ser un mercado común. La Unión Europea es un mercado común y, para los países del euro, una unión monetaria."
+   ]
+  },
+  {
+   "h": "3. Creación y desviación de comercio",
+   "p": [
+    "<b>Creación de comercio:</b> al eliminar aranceles dentro del bloque, un país pasa a comprar a un socio más eficiente lo que antes producía caro: mejora la eficiencia.",
+    "<b>Desviación de comercio:</b> por el arancel externo común, un país deja de comprar a un proveedor de fuera del bloque más eficiente (más barato) para comprar a un socio menos eficiente: empeora la asignación de recursos."
+   ]
+  },
+  {
+   "h": "4. Ventajas y desventajas",
+   "p": [
+    "<b>Ventajas:</b> mercados más grandes y economías de escala, más competencia y eficiencia, atracción de inversión extranjera, mayor poder de negociación del bloque frente a otros, cooperación política.",
+    "<b>Desventajas:</b> desviación de comercio; pérdida de soberanía sobre la política comercial (el país no puede firmar acuerdos por su cuenta fácilmente); dependencia de las crisis de los socios grandes; los costos y beneficios se reparten de forma desigual entre países grandes y pequeños.",
+    "Una <b>unión monetaria</b> elimina el costo de cambiar de moneda y el riesgo cambiario, pero el país pierde su propia política monetaria y su tipo de cambio para responder a crisis."
+   ]
+  }
+ ],
+ "ejemplo": {
+  "t": "Ejemplo de Paraguay: el MERCOSUR y el acuerdo con la Unión Europea",
+  "p": [
+   "Gracias al MERCOSUR, la mayoría de los productos paraguayos entran a Brasil y Argentina sin aranceles: es un mercado mucho más grande que el paraguayo, lo que favoreció a la maquila y a la industria que exporta a Brasil (<b>creación de comercio</b>).",
+   "Pero el arancel externo común encarece lo que Paraguay compra fuera del bloque, y a veces el país termina comprando productos brasileños más caros que los asiáticos (<b>desviación de comercio</b>). Además, Paraguay depende mucho de lo que pasa en las economías de Brasil y Argentina.",
+   "El <b>acuerdo MERCOSUR–Unión Europea</b> busca abrir el mercado europeo a la carne, la soja y otros productos del bloque. Para evaluar: ¿quién ganaría y quién perdería en Paraguay con más acceso al mercado europeo y más importaciones europeas?"
+  ],
+  "link": ["lab-integ", "Practicar los niveles de integración"]
+ },
+ "errores": [
+  "Confundir un área de libre comercio con una unión aduanera (la diferencia es el arancel externo común).",
+  "Decir que la integración solo trae beneficios: también hay desviación de comercio y pérdida de soberanía.",
+  "Afirmar que el MERCOSUR tiene moneda común."
+ ],
+ "check": [
+  {"q": "¿Qué agrega una unión aduanera a un área de libre comercio?", "o": ["Una moneda común", "Un arancel externo común", "Libre circulación de trabajadores", "Un banco central común"], "a": 1, "e": "Los miembros aplican el mismo arancel a los países de fuera del bloque."},
+  {"q": "La desviación de comercio ocurre cuando…", "o": ["Un país compra a un socio más eficiente", "Un país deja de comprar a un proveedor externo más eficiente para comprar a un socio menos eficiente", "Aumentan las exportaciones", "Se elimina el arancel externo"], "a": 1, "e": "Empeora la asignación de recursos."},
+  {"q": "¿Qué pierde un país al entrar en una unión monetaria?", "o": ["El comercio con sus socios", "Su propia política monetaria y su tipo de cambio", "Su PIB", "Sus exportaciones"], "a": 1, "e": "La política monetaria la decide el banco central común."},
+  {"q": "El MERCOSUR se fundó con el Tratado de…", "o": ["Montevideo", "Asunción", "Brasilia", "Buenos Aires"], "a": 1, "e": "El Tratado de Asunción se firmó en 1991."}
+ ],
+ "kc": { "t": "Concepto clave: interdependencia", "p": "Integrarse significa depender más de los socios: sus crisis también se sienten en Paraguay, pero también sus períodos de crecimiento. Pregunta para pensar: ¿le conviene a Paraguay negociar acuerdos como bloque MERCOSUR o tener más libertad para negociar por su cuenta?" },
+ "atlas": [],
+ "labs": ["integ"],
+ "dias": {}
+}

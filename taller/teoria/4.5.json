@@ -1,0 +1,80 @@
+{
+ "id": "4.5",
+ "titulo": "Tipos de cambio",
+ "intro": "¿Cuántos guaraníes cuesta un dólar? Ese número afecta el precio de la nafta, de los celulares, lo que ganan los exportadores de soja y las remesas que mandan los paraguayos desde el exterior. Este subtema explica cómo se determina el <b>tipo de cambio</b> y qué consecuencias tienen sus cambios.",
+ "objetivos": [
+  "Definir el tipo de cambio y distinguir los sistemas flotante, fijo y administrado.",
+  "Analizar con el diagrama del mercado de divisas qué determina el valor del guaraní.",
+  "Explicar la apreciación y la depreciación, y sus efectos.",
+  "Evaluar las consecuencias de un tipo de cambio alto o bajo para las partes interesadas."
+ ],
+ "secciones": [
+  {
+   "h": "1. Qué es el tipo de cambio",
+   "p": [
+    "El <b>tipo de cambio</b> es el precio de una moneda expresado en otra: por ejemplo, cuántos dólares vale un guaraní, o al revés, cuántos guaraníes cuesta un dólar.",
+    "Si un guaraní pasa a comprar <b>más</b> dólares, el guaraní se <b>apreció</b>. Si compra <b>menos</b>, se <b>depreció</b>. En un sistema fijo, se habla de <b>revaluación</b> y <b>devaluación</b> cuando el gobierno cambia el valor oficial."
+   ]
+  },
+  {
+   "h": "2. El mercado de divisas",
+   "p": [
+    "En un sistema <b>flotante</b>, el valor del guaraní se determina por la oferta y la demanda de guaraníes en el mercado de divisas.",
+    "<b>Demanda de guaraníes:</b> la generan los extranjeros que compran productos paraguayos (exportaciones), los turistas que vienen a Paraguay, los inversores extranjeros y las remesas que los paraguayos envían desde el exterior.",
+    "<b>Oferta de guaraníes:</b> la generan los paraguayos que compran productos extranjeros (importaciones), los que viajan al exterior y los que invierten fuera del país.",
+    "En el diagrama, el eje vertical es el valor del guaraní en dólares. Si aumenta la demanda de guaraníes (por ejemplo, porque suben las exportaciones de soja), la curva D se desplaza a la derecha y el guaraní se <b>aprecia</b>."
+   ],
+   "dia": ["divisas"]
+  },
+  {
+   "h": "3. Qué hace cambiar el tipo de cambio",
+   "p": [
+    "<b>Comercio:</b> más exportaciones → aprecia; más importaciones → deprecia.<br><b>Tasas de interés:</b> si el BCP sube la tasa, entran capitales buscando rendimiento → aprecia.<br><b>Inversión extranjera directa</b> → aprecia.<br><b>Inflación relativa:</b> si Paraguay tiene más inflación que sus socios, sus productos pierden competitividad → deprecia.<br><b>Expectativas y especulación.</b><br><b>Intervención del banco central:</b> el BCP puede comprar o vender dólares de sus reservas para suavizar movimientos bruscos."
+   ]
+  },
+  {
+   "h": "4. Sistemas de tipo de cambio",
+   "p": [
+    "<b>Flotante:</b> lo determina el mercado. Ventaja: el banco central no necesita reservas para sostenerlo y el tipo de cambio ajusta los desequilibrios. Desventaja: incertidumbre.",
+    "<b>Fijo:</b> el gobierno fija el valor frente a otra moneda y lo defiende comprando o vendiendo divisas y con la tasa de interés. Da certidumbre, pero requiere muchas reservas y quita autonomía a la política monetaria.",
+    "<b>Administrado (flotación sucia):</b> flota, pero el banco central interviene para evitar movimientos bruscos. Es, en la práctica, el caso de Paraguay."
+   ]
+  },
+  {
+   "h": "5. Consecuencias de una depreciación",
+   "p": [
+    "<b>Exportaciones más competitivas</b> (más baratas en dólares) e <b>importaciones más caras</b>: puede mejorar la balanza comercial.",
+    "Más <b>inflación</b> importada (combustible, maquinaria, electrónicos más caros).",
+    "Más <b>crecimiento y empleo</b> en los sectores exportadores, y más <b>costo de las deudas en dólares</b> para quienes cobran en guaraníes.",
+    "Una <b>apreciación</b> tiene los efectos contrarios: importaciones más baratas y menos inflación, pero exportadores menos competitivos."
+   ]
+  }
+ ],
+ "ejemplo": {
+  "t": "Ejemplo de Paraguay: el dólar y los precios",
+  "p": [
+   "Cuando el guaraní se <b>deprecia</b> frente al dólar, los productos importados que se pagan en dólares (combustible, celulares, autos, insumos agrícolas) se vuelven más caros en guaraníes: es una fuente de <b>inflación</b>.",
+   "Al mismo tiempo, los exportadores de soja, carne o energía, que cobran en dólares, reciben más guaraníes por cada dólar: ganan competitividad. También ganan las familias que reciben <b>remesas</b> en dólares o euros.",
+   "Las devaluaciones en Argentina o Brasil también importan: si el real o el peso se deprecian mucho frente al guaraní, sus productos se abaratan, crece el comercio de frontera hacia esos países y se perjudica el comercio local en ciudades como Ciudad del Este o Encarnación."
+  ],
+  "dia": "divisas",
+  "link": ["lab-fx", "Practicar con el mercado del guaraní"]
+ },
+ "errores": [
+  "Confundir apreciación y depreciación cuando el tipo de cambio se expresa al revés (guaraníes por dólar).",
+  "Olvidar que en el diagrama se analiza la demanda y la oferta de <b>la moneda</b>, no de los bienes.",
+  "Decir que una depreciación siempre es buena: también trae inflación y encarece las deudas en dólares."
+ ],
+ "check": [
+  {"q": "Si aumentan mucho las exportaciones de soja paraguaya, el guaraní tiende a…", "o": ["Depreciarse", "Apreciarse", "No cambiar", "Devaluarse por ley"], "a": 1, "e": "Los compradores extranjeros necesitan guaraníes: sube la demanda de guaraníes."},
+  {"q": "El dólar pasa de Gs. 7.000 a Gs. 7.500. El guaraní…", "o": ["Se apreció", "Se depreció", "Se revaluó", "No cambió"], "a": 1, "e": "Hacen falta más guaraníes para comprar un dólar: el guaraní vale menos."},
+  {"q": "¿Quién gana con una depreciación del guaraní?", "o": ["Los importadores", "Los exportadores", "Quien tiene deudas en dólares y cobra en guaraníes", "Los turistas paraguayos en el exterior"], "a": 1, "e": "Reciben más guaraníes por cada dólar exportado."},
+  {"q": "Si el BCP sube su tasa de interés, el guaraní tiende a…", "o": ["Apreciarse por la entrada de capitales", "Depreciarse", "Volverse fijo", "No cambiar"], "a": 0, "e": "Un mayor rendimiento atrae capitales que demandan guaraníes."}
+ ],
+ "kc": { "t": "Concepto clave: interdependencia", "p": "El valor del guaraní depende de lo que pasa en Brasil, Argentina, Estados Unidos y en los mercados de la soja. Pregunta para pensar: ¿debería el BCP intervenir para evitar que el guaraní se deprecie, aunque eso le cueste reservas?" },
+ "atlas": [["tc-flotante", "Tipo de cambio flotante"], ["tc-fijo", "Tipo de cambio fijo"], ["tc-sobre-sub", "Moneda sobrevaluada y subvaluada"]],
+ "labs": ["fx", "fixfx"],
+ "dias": {
+  "divisas": { "t": "Aumenta la demanda de guaraníes: apreciación", "x": "Cantidad de guaraníes", "y": "Valor del guaraní en US$", "l": [{ "a": [0.8, 9.2], "b": [9.2, 0.8], "c": "d", "t": "D₁ de Gs." }, { "a": [3, 9.2], "b": [9.6, 2.6], "c": "d", "t": "D₂ de Gs." }, { "a": [1, 1], "b": [9, 9], "c": "s", "t": "O de Gs." }], "pt": [{ "p": [5, 5], "lx": "Q₁", "ly": "TC₁" }, { "p": [6.1, 6.1], "lx": "Q₂", "ly": "TC₂" }], "ar": [[[4.2, 6.8], [5.6, 6.8]]] }
+ }
+}
