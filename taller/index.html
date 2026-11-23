@@ -718,11 +718,12 @@ td.late{color:var(--bad);font-weight:700}td.soon{color:var(--warn-ink);font-weig
 .ann{display:inline-grid;place-items:center;min-width:22px;height:22px;border-radius:5px;font-family:var(--f-display);font-weight:700;font-size:14px;color:#fff;flex:none}
 .ann.aA{background:#1F4E9E}.ann.aB{background:#6B3FA0}.ann.aC{background:#1E8E3E}.ann.aD{background:#B8862B}.ann.aE{background:#C0392B}.ann.aF{background:#14213D}
 @media (max-width:860px){.vwrap,.mrow2{grid-template-columns:1fr}.vres{position:static}}
-.acct{order:1;display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.35);color:var(--navy-ink);border-radius:999px;padding:6px 13px;font-weight:700;font-size:14px;max-width:46vw;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.acct{order:3;display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.35);color:var(--navy-ink);border-radius:999px;padding:6px 13px;font-weight:700;font-size:14px;max-width:46vw;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .acct:hover{background:rgba(255,255,255,.2)}
 .acdot{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.5);flex:none}
 .acct[data-st="ok"] .acdot{background:#5FD38A}.acct[data-st="sync"] .acdot{background:#E0B25A}.acct[data-st="warn"] .acdot,.acct[data-st="err"] .acdot{background:#FF8A80}
 .nav{order:2}
+@media (max-width:860px){.acct{order:1}.nav{order:2}}
 .acdlg{border:1px solid var(--rule);border-radius:12px;padding:0;width:min(440px,calc(100vw - 32px));background:var(--sheet);color:var(--ink);box-shadow:0 18px 50px rgba(0,0,0,.3)}
 .acdlg::backdrop{background:rgba(10,20,40,.55)}
 .acdlg form,.acdlg .acbody{padding:20px 22px;display:grid;gap:12px}
@@ -747,6 +748,50 @@ td.late{color:var(--bad);font-weight:700}td.soon{color:var(--warn-ink);font-weig
 .pfround{border-top:1px solid var(--rule);margin-top:12px;padding-top:4px}.pfsc{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center;margin-top:8px}.pfsc label{display:flex;gap:4px;align-items:center;font-weight:700}.pfsc select{padding:3px 6px}
 .pfsum td{min-width:150px}.pflog details summary{cursor:pointer;color:var(--navy-2)}
 
+/* v16: inicio rediseñado (propuesta A) */
+.ico{flex:none}
+.hhero{display:flex;flex-wrap:wrap;gap:18px;align-items:stretch;margin-bottom:14px}
+.hhero-t{flex:999 1 520px;min-width:0}
+.hhero-t h1{margin:4px 0 8px}
+.hcont{flex:1 1 300px;display:flex;flex-direction:column;gap:4px;text-align:left;background:var(--navy);color:#fff;border:0;border-radius:14px;padding:18px 22px}
+.hcont:hover{background:var(--navy-2)}
+.hcl{font-size:12.5px;letter-spacing:.12em;text-transform:uppercase;color:#E0B25A;font-weight:700}
+.hct{font-family:var(--f-display);font-weight:700;font-size:27px;line-height:1.1}
+.hcs{font-size:14.5px;opacity:.88}
+.hcg{margin-top:auto;padding-top:8px;font-weight:700}
+.hmore{display:flex;flex-wrap:wrap;gap:6px 16px;align-items:center;margin:0 0 14px}
+.halerts{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px;margin:0 0 16px}
+.halert{display:flex;gap:12px;align-items:center;text-align:left;border-radius:12px;padding:12px 16px;color:var(--ink);border:1px solid var(--rule);background:var(--sheet)}
+.halert>span{display:grid;gap:2px}.halert>span>span{font-size:14px;color:var(--ink-2)}
+.halert.ok{background:var(--ok-bg);border-color:var(--ok)}.halert.ok .ico{color:var(--ok)}
+.halert.warn{background:var(--warn-bg);border-color:var(--warn-bd)}.halert.warn .ico{color:var(--warn-ink)}
+.pcards{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:16px}
+.pcard{background:var(--sheet);border:1px solid var(--rule);border-radius:14px;padding:20px;display:flex;flex-direction:column;gap:12px}
+.pch{display:flex;gap:14px;align-items:center}
+.pch h2{margin:0;font-size:25px}
+.pch p{margin:2px 0 0;font-size:14px;color:var(--muted)}
+.pci{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;flex:none;background:var(--paper);color:var(--navy-2)}
+.pc-learn .pci{background:var(--paper);color:var(--navy-2)}.pc-p1 .pci{background:var(--gold-soft);color:#8A6420}.pc-p2 .pci{background:var(--ok-bg);color:var(--ok)}.pc-ei .pci{background:var(--bad-bg);color:var(--bad)}
+.pbar{height:8px;background:var(--paper);border:1px solid var(--rule);border-radius:99px;overflow:hidden}
+.pbar i{display:block;height:100%;background:var(--navy-2);border-radius:99px}
+.pc-p1 .pbar i{background:var(--gold)}.pc-p2 .pbar i{background:var(--ok)}
+.pmeta{margin:0;font-size:14px;color:var(--muted)}
+.pcf{margin-top:auto;display:grid;gap:10px}.pcf>.btn{justify-self:start}
+.psteps-d summary{cursor:pointer;font-weight:700;font-size:14px;color:var(--ink-2)}
+.psteps-d .psteps{margin-top:8px}
+.eichips{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.eichip{display:grid;gap:1px;text-align:center;border:1px solid var(--rule);border-radius:9px;padding:7px 6px;background:var(--sheet);color:var(--ink);font-size:12.5px}
+.eichip b{font-size:13px}.eichip span{color:var(--muted)}
+.eichip.ok{border-color:var(--ok)}.eichip.ok span{color:var(--ok)}
+.eichip.prog{border-color:var(--gold)}
+.stiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin-top:14px}
+.stile{display:flex;gap:14px;align-items:flex-start;text-align:left;background:var(--sheet);border:1px solid var(--rule);border-radius:14px;padding:20px;color:var(--ink);text-decoration:none}
+.stile:hover{border-color:var(--navy-2)}
+.stile .ico{width:28px;height:28px;color:var(--navy-2)}
+.stile>span{display:grid;gap:4px}.stile b{font-family:var(--f-display);font-size:23px}.stile>span>span{font-size:14.5px;color:var(--muted)}
+:root[data-theme="dark"] .pc-learn .pci,:root[data-theme="dark"] .pc-p1 .pci,:root[data-theme="dark"] .stile .ico{color:var(--gold)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .pc-learn .pci,:root:not([data-theme="light"]) .pc-p1 .pci,:root:not([data-theme="light"]) .stile .ico{color:var(--gold)}}
+@media (max-width:480px){.hct{font-size:23px}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
@@ -757,15 +802,12 @@ td.late{color:var(--bad);font-weight:700}td.soon{color:var(--warn-ink);font-weig
   <button class="acct" type="button" id="acctBtn" aria-haspopup="dialog"><span class="acdot" aria-hidden="true"></span><span id="acctLbl">Entrar</span></button>
   <nav class="nav" aria-label="Secciones">
     <button type="button" data-go="empezar">Inicio</button>
-    <button type="button" data-go="inicio">Temas</button>
-    <button type="button" data-go="labs">Laboratorios</button>
+    <button type="button" data-go="estudiar">Estudiar</button>
     <button type="button" data-go="escribir">Escribir</button>
-    <button type="button" data-go="formulas">Fórmulas</button>
-    <button type="button" data-go="juegos">Juegos</button>
     <button type="button" data-go="anteriores">Exámenes</button>
     <button type="button" data-go="repasar">Repasar<span class="badge" id="errBadge" hidden>0</span></button>
+    <button type="button" data-go="juegos">Juegos</button>
     <button type="button" data-go="profesor" id="navProf" hidden>Profesor</button>
-    <a href="https://hrivarolainsfran-sys.github.io/atlas-diagramas/">Atlas de diagramas</a>
   </nav>
 </header>
 <main id="app"></main>
@@ -1680,7 +1722,7 @@ let route = 'inicio';
 function go(r) { if (location.hash.slice(1) !== r) location.hash = r; else render(); }
 window.addEventListener('hashchange', render);
 document.addEventListener('click', e => { const b = e.target.closest('[data-go]'); if (b) { e.preventDefault(); go(b.dataset.go); return; } const sc = e.target.closest('[data-scroll]'); if (sc) { const t = document.getElementById(sc.dataset.scroll); if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' }); } });
-function setNav(sec) { document.querySelectorAll('.nav button').forEach(b => { const on = b.dataset.go === sec; b.setAttribute('aria-current', on ? 'page' : 'false'); if (on) { const n = b.parentNode; if (n.scrollWidth > n.clientWidth) n.scrollLeft = Math.max(0, b.offsetLeft - n.clientWidth / 2 + b.offsetWidth / 2); } }); }
+function setNav(sec) { if (['inicio', 'labs', 'formulas', 'estudiar'].includes(sec)) sec = 'estudiar'; document.querySelectorAll('.nav button').forEach(b => { const on = b.dataset.go === sec; b.setAttribute('aria-current', on ? 'page' : 'false'); if (on) { const n = b.parentNode; if (n.scrollWidth > n.clientWidth) n.scrollLeft = Math.max(0, b.offsetLeft - n.clientWidth / 2 + b.offsetWidth / 2); } }); }
 const tid = id => 't' + id.replace('.', '-');
 const tcode = id => { const t = TOPICS.find(x => x.id === id); return t && t.code ? t.code : id; };
 function render() {
@@ -1689,6 +1731,7 @@ function render() {
   stopGameTimers();
   updateBadge();
   if (route === 'empezar') { setNav('empezar'); return renderStart(); }
+  if (route === 'estudiar') { setNav('estudiar'); return renderStudy(); }
   if (route.startsWith('t') && TOPICS.some(t => tid(t.id) === route)) { setNav('inicio'); return renderTopic(TOPICS.find(t => tid(t.id) === route)); }
   if (route === 'lab-crear') { setNav('labs'); return labBuild(); }
   if (route.startsWith('lab-') && LABS[route.slice(4)]) { setNav('labs'); return renderLabPage(route.slice(4)); }
@@ -1796,51 +1839,100 @@ function renderP1Model() {
 }
 
 /* =============== inicio guiado: ¿qué quieres hacer hoy? =============== */
+const ICO = {
+  learn: '<path d="M2 4h7a3 3 0 0 1 3 3v13a2 2 0 0 0-2-2H2z"></path><path d="M22 4h-7a3 3 0 0 0-3 3v13a2 2 0 0 1 2-2h8z"></path>',
+  p1: '<path d="M12 20h9"></path><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"></path>',
+  p2: '<path d="M3 3v18h18"></path><path d="M7 15l4-4 3 3 5-6"></path>',
+  ei: '<path d="M4 4h16v16H4z"></path><path d="M8 8h8M8 12h8M8 16h5"></path>',
+  msg: '<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>',
+  cal: '<rect x="3" y="4" width="18" height="18" rx="2"></rect><path d="M16 2v4M8 2v4M3 10h18"></path>',
+  lab: '<path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-5-9V3"></path><path d="M7 15h10"></path>',
+  fx: '<path d="M4 7h4l3 10 3-14h6"></path><path d="M14 13l5 5M19 13l-5 5"></path>',
+  map: '<path d="M3 6l6-3 6 3 6-3v15l-6 3-6-3-6 3z"></path><path d="M9 3v15M15 6v15"></path>'
+};
+const ico = (k, cls = '') => `<svg class="ico ${cls}" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICO[k]}</svg>`;
 function renderStart() {
   const last = store.get('last', null), lastT = last && TOPICS.find(t => t.id === last);
   const p2c = P2.find(c => P2S[c.id] && Object.keys(P2S[c.id].ans || {}).length && !P2H.some(h => h.id === c.id));
   const weak = DEFS.filter(d => DEFST[defKey(d)] && DEFST[defKey(d)].best < 2).length, ec = errCount();
   const eiN = Object.keys(EI_UNITS).filter(eiStarted).length;
   const calcT = Object.values(CALC_ST).reduce((a, v) => [a[0] + v.ok, a[1] + v.n], [0, 0]);
+  const name = String(store.get('alumno', '') || '').trim().split(/\s+/)[0];
+  /* Continúa donde quedaste */
   const resume = [
-    lastT && [tid(lastT.id), `Seguir con ${tcode(lastT.id)} ${esc(lastT.name)}`],
-    P1S.cur && ['escribir-p1', 'Terminar el simulacro de Prueba 1'],
-    p2c && ['p2-' + p2c.id, `Seguir con el caso «${esc(p2c.title)}»`],
-    ec && ['repasar', `Repasar ${ec} ${ec === 1 ? 'error pendiente' : 'errores pendientes'}`],
-    weak && ['escribir-def', `Reforzar ${weak} ${weak === 1 ? 'definición floja' : 'definiciones flojas'}`]
-  ].filter(Boolean).slice(0, 4);
-  const step = (n, go, name, d, tag) => `<li><button type="button" class="pstep" data-go="${go}"><span class="psn">${n}</span><span class="pst"><b>${name}</b><span>${d}</span></span>${tag ? `<span class="tag">${tag}</span>` : ''}<span class="psa" aria-hidden="true">→</span></button></li>`;
-  const path = (k, icon, title, why, steps, cta) => `<article class="path path-${k}"><div class="pathh"><span class="pathi" aria-hidden="true">${icon}</span><div><h2>${title}</h2><p>${why}</p></div></div><ol class="psteps">${steps.join('')}</ol>${cta || ''}</article>`;
+    lastT && [tid(lastT.id), `${tcode(lastT.id)} ${esc(lastT.name)}`, `Tema · ${topicDone(lastT.id)} de ${lastT.items.length} ejercicios hechos`],
+    P1S.cur && ['escribir-p1', 'Simulacro de Prueba 1', 'Lo dejaste a medias'],
+    p2c && ['p2-' + p2c.id, `Caso «${esc(p2c.title)}»`, 'Prueba 2 · lo dejaste a medias'],
+    ec && ['repasar', `Repasar ${ec} ${ec === 1 ? 'error pendiente' : 'errores pendientes'}`, 'De tus últimas prácticas'],
+    weak && ['escribir-def', `Reforzar ${weak} ${weak === 1 ? 'definición floja' : 'definiciones flojas'}`, 'Prueba 2 · parte (a)']
+  ].filter(Boolean);
+  const main = resume[0] || ['inicio', 'Elige un tema para empezar', `${TOPICS.length} subtemas de las cuatro unidades`];
+  /* Avisos: devoluciones nuevas y plazos cercanos */
+  const alerts = [];
+  if (FBX() && !isTeacher() && EIR.st === 'ok') {
+    fbUnseen().forEach(f => alerts.push(['ok', 'msg', 'ei-' + f.u, 'Devolución nueva del profesor', `${EI_UNITS[f.u]} · borrador ${f.n}`]));
+    const C = store.get('eiCal2', {});
+    Object.entries(EI_UNITS).forEach(([u, n]) => EI_STAGES.forEach((st, i) => {
+      const d = plazo(u, i); if (!d || eiAutoDone(u, i) || ((C[u] || {})[i] || {}).ok) return;
+      const left = daysTo(d); if (left > 7) return;
+      alerts.push(['warn', 'cal', 'escribir-ei', left < 0 ? `Plazo vencido hace ${-left} ${-left === 1 ? 'día' : 'días'}` : left === 0 ? 'Plazo: vence hoy' : `Plazo en ${left} ${left === 1 ? 'día' : 'días'}`, `${n} · ${st.toLowerCase()} · ${fdate(d)}`]);
+    }));
+  }
+  /* Avance de cada camino */
+  const pct = (a, b) => b ? Math.round(a / b * 100) : 0;
+  const tStarted = TOPICS.filter(t => topicDone(t.id) > 0).length;
+  const p1Done = topicDone('cmd') + EXP.filter(x => expState(x).done).length + EVA.filter(c => evaState(c).done).length + Math.min(P1S.hist.length, P1.length);
+  const p1Tot = DRILLS.cmd.items.length + EXP.length + EVA.length + P1.length;
+  const p2Done = Object.keys(DEFST).length + new Set(P2H.map(h => h.id)).size, p2Tot = DEFS.length + P2.length;
+  const step = (n, go, nm, d, tag) => `<li><button type="button" class="pstep" data-go="${go}"><span class="psn">${n}</span><span class="pst"><b>${nm}</b><span>${d}</span></span>${tag ? `<span class="tag">${tag}</span>` : ''}<span class="psa" aria-hidden="true">→</span></button></li>`;
+  const card = (k, title, sub, prog, meta, cta, ctaGo, steps, extra = '') => `<article class="pcard pc-${k}">
+      <div class="pch"><span class="pci">${ico(k)}</span><div><h2>${title}</h2><p>${sub}</p></div></div>
+      ${prog !== null ? `<div class="pbar" role="img" aria-label="Avance ${prog} %"><i style="width:${prog}%"></i></div>` : ''}
+      <p class="pmeta">${meta}</p>${extra}
+      <div class="pcf"><button class="btn primary sm" type="button" data-go="${ctaGo}">${cta} →</button>${steps ? `<details class="psteps-d"><summary>Ver los pasos</summary><ol class="psteps">${steps.join('')}</ol></details>` : ''}</div></article>`;
+  const eiChip = u => {
+    const S = FBX() && EIR.st === 'ok' ? eiStage(u) : null;
+    let t, cl;
+    if (S && S.k === 'final') [t, cl] = ['versión final', 'ok'];
+    else if (S && S.k === 'wait') [t, cl] = [`borrador ${S.R.last.n} entregado`, 'prog'];
+    else if (S && S.k === 'fb') [t, cl] = [`borrador ${S.R.last.n} devuelto`, 'prog'];
+    else { const [st, c] = eiState(u); [t, cl] = [st.toLowerCase(), c]; }
+    return `<button class="eichip ${cl}" type="button" data-go="ei-${u}"><b>${({ 2: 'Micro', 3: 'Macro', 4: 'Global' })[u]}</b><span>${t}</span></button>`;
+  };
   app.innerHTML = `
-  <section class="start-hero">
-    <div class="eyebrow">Economía IB · Nivel Medio</div>
-    <h1>¿Qué quieres hacer hoy?</h1>
-    <p class="lede">Elige un objetivo y sigue los pasos en orden. No hace falta hacer todo el mismo día: tu avance queda guardado en este dispositivo.</p>
-    ${resume.length ? `<div class="resume"><span class="small muted">Retomar donde quedaste:</span>${resume.map(([g, l], i) => `<button class="btn ${i ? '' : 'primary'} sm" type="button" data-go="${g}">${l}</button>`).join('')}</div>` : ''}
+  <section class="hhero">
+    <div class="hhero-t">
+      <div class="eyebrow">Economía IB · Nivel Medio</div>
+      <h1>${name ? `Hola, ${esc(name)}. ¿Qué hacemos hoy?` : '¿Qué quieres hacer hoy?'}</h1>
+      <p class="lede">Elige un objetivo y sigue los pasos en orden. ${FBX() ? 'Tu avance se guarda en la nube con tu cuenta del colegio.' : 'Tu avance queda guardado en este dispositivo; <b>entra con tu correo del colegio</b> (arriba) para guardarlo en la nube.'}</p>
+    </div>
+    <button class="hcont" type="button" data-go="${main[0]}"><span class="hcl">${resume.length ? 'Continúa donde quedaste' : 'Para empezar'}</span><span class="hct">${main[1]}</span><span class="hcs">${main[2]}</span><span class="hcg">${resume.length ? 'Seguir' : 'Ver temas'} →</span></button>
   </section>
-  <section class="paths">
-    ${path('learn', '📘', 'Aprender un tema', 'Para la clase de esta semana o para ponerte al día.', [
-      step(1, lastT ? tid(lastT.id) : 'inicio', 'Elige el subtema', lastT ? `Seguiste por última vez con ${tcode(lastT.id)}. También puedes elegir otro.` : `${TOPICS.length} subtemas de las cuatro unidades.`),
+  ${resume.length > 1 ? `<div class="hmore"><span class="small muted">También pendiente:</span>${resume.slice(1, 4).map(([g, l]) => `<button class="linkb" type="button" data-go="${g}">${l}</button>`).join('')}</div>` : ''}
+  ${alerts.length ? `<section class="halerts" aria-label="Avisos">${alerts.slice(0, 4).map(([cl, ic, g, t, d]) => `<button class="halert ${cl}" type="button" data-go="${g}">${ico(ic)}<span><b>${t}</b><span>${d}</span></span></button>`).join('')}</section>` : ''}
+  <section class="pcards">
+    ${card('learn', 'Aprender un tema', `${TOPICS.length} subtemas de las cuatro unidades`, pct(tStarted, TOPICS.length), `${tStarted} de ${TOPICS.length} subtemas empezados`, 'Elegir subtema', 'inicio', [
+      step(1, lastT ? tid(lastT.id) : 'inicio', 'Elige el subtema', lastT ? `Seguiste por última vez con ${tcode(lastT.id)}.` : 'Para la clase de esta semana o para ponerte al día.'),
       step(2, lastT ? tid(lastT.id) : 'inicio', 'Lee «Lo esencial» y haz la práctica', 'Ejercicios con corrección inmediata y explicación de cada respuesta.'),
       step(3, lastT ? tid(lastT.id) : 'inicio', 'Abre «Recursos» del subtema', 'Definiciones, ejemplos reales, fórmulas y diagramas del Atlas.'),
-      step(4, 'labs', 'Practica el diagrama', `${Object.keys(LABS).length} laboratorios interactivos y un constructor de diagramas.`)
-    ], `<button class="btn sm pall" type="button" data-go="inicio">Ver todos los temas</button>`)}
-    ${path('p1', '✍️', 'Prepararme para la Prueba 1', 'Ensayo: (a) explicar con diagrama, 10 puntos · (b) evaluar con ejemplos reales, 15 puntos.', [
-      step(1, 'escribir-comandos', 'Entiende qué pide cada pregunta', 'Comandos evaluativos: explicar, analizar, evaluar, discutir…', `${topicDone('cmd')}/${DRILLS.cmd.items.length}`),
-      step(2, 'escribir-explicar', 'Escribe la parte (a)', 'Definiciones, diagrama y cadena causal en 4 pasos.', `${EXP.filter(p => expState(p).done).length}/${EXP.length}`),
-      step(3, 'escribir-evaluar', 'Escribe la parte (b)', 'Pros y contras, plazos, partes interesadas y juicio final.', `${EVA.filter(c => evaState(c).done).length}/${EVA.length}`),
-      step(4, 'escribir-p1', 'Haz un simulacro con reloj', '5 min de lectura y 1 h 15 min; te autocorriges con las bandas.', P1S.hist.length ? `último ${P1S.hist[P1S.hist.length - 1].total}/25` : `${P1.length} simulacros`)
-    ], `<button class="btn sm pall" type="button" data-go="p1-modelo">Ver respuestas modelo por nivel</button>`)}
-    ${path('p2', '📊', 'Prepararme para la Prueba 2', 'Respuesta a datos: definiciones, cálculos, diagramas y una evaluación de 15 puntos.', [
-      step(1, 'escribir-def', 'Aprende las definiciones', 'Parte (a): 2 puntos cada una.', `${Object.keys(DEFST).length}/${DEFS.length}`),
-      step(2, 'escribir-calc', 'Practica los cálculos', 'Los 20 tipos del Nivel Medio, con números nuevos cada vez.', calcT[1] ? `${calcT[0]}/${calcT[1]} bien` : ''),
-      step(3, 'escribir-ej', 'Prepara tus ejemplos reales', 'Para la (g): país, año, dato e impacto.', `${EJ.length} ejemplos`),
-      step(4, 'escribir-p2', 'Haz un caso completo', 'Texto y datos reales, partes (a) a (g), 40 puntos.', P2H.length ? `último ${P2H[P2H.length - 1].total}/40` : `${P2.length} casos`)
-    ], `<button class="btn sm pall" type="button" data-go="formulas">Ver la hoja de fórmulas</button>`)}
-    ${path('ei', '🗂️', 'Preparar la Evaluación Interna', 'Carpeta de tres comentarios sobre noticias reales (30 % de la nota final).', [
-      step(1, 'escribir-conceptos', 'Repasa los conceptos clave', 'Cada comentario se analiza con uno de los nueve conceptos.', `${topicDone('kc')}/${DRILLS.kc.items.length}`),
-      step(2, 'escribir-ei', 'Escribe tu comentario', 'Portada, diagrama, explicación y evaluación, con contador de palabras y criterios A–F.', `${eiN}/3 comentarios`)
-    ])}
+      step(4, 'labs', 'Practica el diagrama', `${Object.keys(LABS).length} laboratorios interactivos y un constructor de diagramas.`)])}
+    ${card('p1', 'Prueba 1 · Ensayo', 'Parte (a) 10 puntos · parte (b) 15 puntos', pct(p1Done, p1Tot), `Términos ${topicDone('cmd')}/${DRILLS.cmd.items.length} · Parte (a) ${EXP.filter(x => expState(x).done).length}/${EXP.length} · Parte (b) ${EVA.filter(c => evaState(c).done).length}/${EVA.length} · ${P1S.hist.length ? `último simulacro ${P1S.hist[P1S.hist.length - 1].total}/25` : `${P1.length} simulacros`}`, 'Practicar', 'escribir-comandos', [
+      step(1, 'escribir-comandos', 'Entiende qué pide cada pregunta', 'Términos de instrucción: explicar, analizar, evaluar, discutir…'),
+      step(2, 'escribir-explicar', 'Escribe la parte (a)', 'Definiciones, diagrama y cadena causal en 4 pasos.'),
+      step(3, 'escribir-evaluar', 'Escribe la parte (b)', 'Pros y contras, plazos, partes interesadas y juicio final.'),
+      step(4, 'escribir-p1', 'Haz un simulacro con reloj', '5 min de lectura y 1 h 15 min; te autocorriges con las bandas.'),
+      step(5, 'p1-modelo', 'Mira respuestas modelo por nivel', 'La misma pregunta respondida en tres niveles.')])}
+    ${card('p2', 'Prueba 2 · Datos', 'Definiciones, cálculos, diagramas y evaluación', pct(p2Done, p2Tot), `Definiciones ${Object.keys(DEFST).length}/${DEFS.length} · ${calcT[1] ? `Cálculos ${calcT[0]}/${calcT[1]} bien` : 'Cálculos sin empezar'} · Casos ${new Set(P2H.map(h => h.id)).size}/${P2.length}`, 'Practicar', 'escribir-def', [
+      step(1, 'escribir-def', 'Aprende las definiciones', 'Parte (a): 2 puntos cada una.'),
+      step(2, 'escribir-calc', 'Practica los cálculos', 'Los tipos del Nivel Medio, con números nuevos cada vez.'),
+      step(3, 'escribir-ej', 'Prepara tus ejemplos reales', `Para la (g): país, año, dato e impacto. ${EJ.length} ejemplos.`),
+      step(4, 'escribir-p2', 'Haz un caso completo', 'Texto y datos reales, partes (a) a (g), 40 puntos.'),
+      step(5, 'formulas', 'Repasa la hoja de fórmulas', 'Todas las fórmulas del Nivel Medio.')])}
+    ${card('ei', 'Evaluación Interna', 'Tres comentarios sobre noticias · 30 % de la nota', null, `${eiN} de 3 comentarios empezados`, 'Abrir mi carpeta', 'escribir-ei', [
+      step(1, 'escribir-conceptos', 'Repasa los conceptos clave', 'Cada comentario se analiza con uno de los nueve conceptos.'),
+      step(2, 'ei-articulo', 'Elige y valida tu artículo', 'Menos de un año, fuente distinta en cada comentario.'),
+      step(3, 'escribir-ei', 'Escribe y entrega tu comentario', 'Portada, diagrama, explicación y evaluación, con borradores y devoluciones.')],
+      `<div class="eichips">${Object.keys(EI_UNITS).map(eiChip).join('')}</div>`)}
   </section>
   <section class="quick" aria-label="Repaso rápido">
     <h2 class="wgroup">¿Tienes solo 10 minutos?<span>repaso rápido</span></h2>
@@ -1853,9 +1945,23 @@ function renderStart() {
   </section>
   ${mediaNote('Escúchalo de camino al colegio y después practica el subtema aquí.')}
   <details class="essentials" style="margin-top:18px"><summary><b>¿Es tu primera vez aquí?</b></summary><ul>
-    <li>Si estás empezando un tema, usa <b>Aprender un tema</b>. Si se acerca el examen, usa los caminos de la <b>Prueba 1</b> y la <b>Prueba 2</b>.</li>
-    <li>El menú de arriba lleva a todas las secciones: <b>Temas</b> (los ${TOPICS.length} subtemas), <b>Laboratorios</b> (diagramas), <b>Escribir</b> (respuestas de examen y EI), <b>Fórmulas</b>, <b>Juegos</b>, <b>Repasar</b> y el <b>Atlas de diagramas</b>.</li>
-    <li>Tu avance se guarda solo en este navegador. Si borras los datos o cambias de dispositivo, empiezas de cero.</li></ul></details>`;
+    <li>Si estás empezando un tema, usa <b>Aprender un tema</b>. Si se acerca el examen, usa las tarjetas de la <b>Prueba 1</b> y la <b>Prueba 2</b>: «Ver los pasos» te muestra el orden recomendado.</li>
+    <li>El menú de arriba lleva a todas las secciones: <b>Estudiar</b> (temas, laboratorios, fórmulas y el Atlas de diagramas), <b>Escribir</b> (respuestas de examen y Evaluación Interna), <b>Exámenes</b>, <b>Repasar</b> y <b>Juegos</b>.</li>
+    <li>Si entras con tu correo del colegio, tu avance se guarda en la nube y lo recuperas en cualquier dispositivo. Sin cuenta, se guarda solo en este navegador.</li></ul></details>`;
+  if (FBX() && !isTeacher()) eiRemoteLoad();
+}
+/* Estudiar: temas, laboratorios, fórmulas y Atlas */
+function renderStudy() {
+  const tStarted = TOPICS.filter(t => topicDone(t.id) > 0).length;
+  const tile = (k, go, t, d, ext) => `<${ext ? `a href="${go}" target="_blank" rel="noopener"` : `button type="button" data-go="${go}"`} class="stile">${ico(k)}<span><b>${t}${ext ? ' ↗' : ''}</b><span>${d}</span></span></${ext ? 'a' : 'button'}>`;
+  app.innerHTML = `<div class="eyebrow">Economía IB · Nivel Medio</div><h1>Estudiar</h1>
+    <p class="lede">Todo el contenido del curso: la teoría de cada subtema, los diagramas para practicar y las fórmulas.</p>
+    <div class="stiles">
+      ${tile('learn', 'inicio', 'Temas', `${TOPICS.length} subtemas de las cuatro unidades · ${tStarted} empezados`)}
+      ${tile('lab', 'labs', 'Laboratorios', `${Object.keys(LABS).length} diagramas interactivos y un constructor de diagramas`)}
+      ${tile('fx', 'formulas', 'Fórmulas', 'Hoja de fórmulas del Nivel Medio con ejemplos')}
+      ${tile('map', 'https://hrivarolainsfran-sys.github.io/atlas-diagramas/', 'Atlas de diagramas', 'Todos los diagramas del curso explicados', true)}
+    </div>`;
 }
 
 /* =============== inicio =============== */
@@ -8892,7 +8998,7 @@ async function eiRemoteLoad(force) {
     if (JSON.stringify(c) !== JSON.stringify(curso())) store.set('eiCurso', c);
   } catch (e) { EIR.st = 'err'; }
   const r = location.hash.slice(1);
-  if (eirSig() !== before && /^(escribir-ei|ei-[234])$/.test(r)) { const y = window.scrollY; render(); window.scrollTo(0, y); }
+  if (eirSig() !== before && /^(escribir-ei|ei-[234]|empezar)$/.test(r)) { const y = window.scrollY; render(); window.scrollTo(0, y); }
   else if (/^ei-[234]$/.test(r)) { const el = $('.eisub'), u = r.slice(3); if (el) { el.outerHTML = eiSubmitBox(u) || '<div class="eisub" hidden></div>'; bindSubmitBox(u); } }
   if (/^ei-[234]$/.test(r) && EIR.st === 'ok') markFbSeen(r.slice(3));
   updateFbBadge();
@@ -9270,8 +9376,8 @@ function updateProfNav() { const n = document.getElementById('navProf'); if (n) 
 window.addEventListener('fbx', () => {
   updateProfNav(); EIR.st = 'idle'; PROF.st = 'idle'; updateFbBadge();
   const r = location.hash.slice(1);
-  if (FBX() && !isTeacher() && !/^(escribir-ei|ei-[234])$/.test(r)) eiRemoteLoad();
-  if (r.startsWith('profesor') || /^(escribir-ei|ei-[234])$/.test(r)) { const y = window.scrollY; render(); window.scrollTo(0, y); }
+  if (FBX() && !isTeacher() && !/^(escribir-ei|ei-[234]|empezar)$/.test(r)) eiRemoteLoad();
+  if (r.startsWith('profesor') || /^(escribir-ei|ei-[234]|empezar)$/.test(r)) { const y = window.scrollY; render(); window.scrollTo(0, y); }
 });
 
 /* =============== 14 · Banco de cálculos de la Prueba 2 (solo cálculos del NM) =============== */
