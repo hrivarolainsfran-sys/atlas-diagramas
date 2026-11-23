@@ -802,6 +802,13 @@ td.late{color:var(--bad);font-weight:700}td.soon{color:var(--warn-ink);font-weig
 .pdpick.big{background:var(--gold-soft);border:1px solid var(--gold);border-radius:12px;padding:12px 14px}
 .pdpick.big .pdl{color:var(--ink);font-size:15px;letter-spacing:0;text-transform:none}
 .pdnote{width:100%}
+.tbars{display:grid;grid-template-columns:repeat(14,minmax(0,1fr));gap:4px;align-items:end;height:110px;margin:8px 0 12px;max-width:640px}
+.tbar{display:flex;flex-direction:column;justify-content:flex-end;align-items:center;height:100%;gap:3px}
+.tbar i{display:block;width:100%;min-height:2px;background:var(--navy-2);border-radius:3px 3px 0 0}
+.tbar span{font-size:11px;color:var(--muted)}
+.pflog td:first-child,.pflog th:first-child{text-align:left}
+:root[data-theme="dark"] .tbar i{background:var(--gold)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .tbar i{background:var(--gold)}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
@@ -1981,7 +1988,8 @@ function renderStart() {
   <details class="essentials" style="margin-top:18px"><summary><b>¿Es tu primera vez aquí?</b></summary><ul>
     <li>Si estás empezando un tema, usa <b>Aprender un tema</b>. Si se acerca el examen, usa las tarjetas de la <b>Prueba 1</b> y la <b>Prueba 2</b>: «Ver los pasos» te muestra el orden recomendado.</li>
     <li>El menú de arriba lleva a todas las secciones: <b>Estudiar</b> (temas, laboratorios, fórmulas y el Atlas de diagramas), <b>Escribir</b> (respuestas de examen y Evaluación Interna), <b>Exámenes</b>, <b>Repasar</b> y <b>Juegos</b>.</li>
-    <li>Si entras con tu correo del colegio, tu avance se guarda en la nube y lo recuperas en cualquier dispositivo. Sin cuenta, se guarda solo en este navegador.</li></ul></details>`;
+    <li>Si entras con tu correo del colegio, tu avance se guarda en la nube y lo recuperas en cualquier dispositivo. Sin cuenta, se guarda solo en este navegador.</li>
+    <li>El Taller registra el tiempo que lo usas activamente en cada sección; tu profesor lo ve para acompañar tu estudio.</li></ul></details>`;
   if (FBX() && !isTeacher()) eiRemoteLoad();
 }
 /* Estudiar: temas, laboratorios, fórmulas y Atlas */
@@ -9147,21 +9155,21 @@ function renderProf() {
       const sc = R.rounds.map(r => fbScore(r.fb)).filter(v => v !== null);
       return `<td>${w && (w.title || blocks) ? `<span class="small">${wordsOf(w)} pal. · ${blocks}/${EI_BLOCKS.length} bloques${w.kc ? ' · ' + KC[w.kc] : ''}</span><br>` : '<span class="small muted">Sin empezar</span><br>'}<span class="tag ${cl}">${t}</span>${sc.length ? `<div class="small">Puntajes: ${sc.join(' → ')}</div>` : ''}</td>`;
     }).join('');
-    return `<tr><th scope="row"><button class="linkb" type="button" data-go="profesor-${x.uid}">${esc(profName(x))}</button><div class="small muted">${esc(x.email || '')}${pdOf(x) ? ' · PD' + pdOf(x) : ''}${pj(x, 'curso', '') ? ' · ' + esc(pj(x, 'curso', '')) : ''}</div></th>${cells}<td class="small">${fdate(x.updated)}</td></tr>`;
+    return `<tr><th scope="row"><button class="linkb" type="button" data-go="profesor-${x.uid}">${esc(profName(x))}</button><div class="small muted">${esc(x.email || '')}${pdOf(x) ? ' · PD' + pdOf(x) : ''}${pj(x, 'curso', '') ? ' · ' + esc(pj(x, 'curso', '')) : ''}</div></th>${cells}<td class="small">${fmtMin(timeSum(pj(x, 'time', {}), 7).tot)}</td><td class="small">${fdate(x.updated)}</td></tr>`;
   }).join('');
   const F = (PROF.curso || {}).fechas || {};
   app.innerHTML = `<div class="eyebrow">Solo para el profesor</div><h1>Panel del profesor</h1>
     <p class="lede">Avance de la Evaluación Interna de cada alumno que entró con su cuenta. Toca un nombre para ver sus entregas, dar devoluciones y descargar su informe.</p>
-    <div class="row" style="margin-bottom:10px"><button class="btn" type="button" id="pfR">Actualizar</button><button class="btn primary" type="button" id="pfCsv">Descargar seguimiento (Excel)</button><div class="seg" role="group" aria-label="Curso">${[['all', 'Todos'], ['1', 'PD1'], ['2', 'PD2']].map(([v, l]) => `<button type="button" data-pfpd="${v}" aria-pressed="${PF === v}">${l}</button>`).join('')}</div><span class="small muted">${PROF.users.length} ${PROF.users.length === 1 ? 'alumno' : 'alumnos'}</span></div>
+    <div class="row" style="margin-bottom:10px"><button class="btn" type="button" id="pfR">Actualizar</button><button class="btn primary" type="button" id="pfCsv">Descargar seguimiento (Excel)</button><button class="btn" type="button" id="pfTime">Descargar tiempo (Excel)</button><div class="seg" role="group" aria-label="Curso">${[['all', 'Todos'], ['1', 'PD1'], ['2', 'PD2']].map(([v, l]) => `<button type="button" data-pfpd="${v}" aria-pressed="${PF === v}">${l}</button>`).join('')}</div><span class="small muted">${PROF.users.length} ${PROF.users.length === 1 ? 'alumno' : 'alumnos'}</span></div>
     ${pend.length ? `<div class="fb no"><b class="h">Borradores por devolver: ${pend.length}</b>${pend.map(([x, u, n]) => `<button class="linkb" type="button" data-go="profesor-${x.uid}">${esc(profName(x))} · ${EI_UNITS[u]} · borrador ${n}</button>`).join(' · ')}</div>` : '<div class="fb ok">No hay borradores pendientes de devolución.</div>'}
-    <div class="tscroll"><table class="dtab plan pftab"><thead><tr><th>Alumno</th>${Object.values(EI_UNITS).map(n => `<th>${n}</th>`).join('')}<th>Última actividad</th></tr></thead><tbody>${rows || `<tr><td colspan="5">Todavía no hay alumnos con cuenta.</td></tr>`}</tbody></table></div>
+    <div class="tscroll"><table class="dtab plan pftab"><thead><tr><th>Alumno</th>${Object.values(EI_UNITS).map(n => `<th>${n}</th>`).join('')}<th>Tiempo (7 días)</th><th>Última actividad</th></tr></thead><tbody>${rows || `<tr><td colspan="6">Todavía no hay alumnos con cuenta.</td></tr>`}</tbody></table></div>
     ${profSummaryHtml()}
     <h2 style="margin-top:24px">Fechas del curso</h2>
     <p class="small muted" style="max-width:1000px;margin-top:-4px">Los plazos que pongas aquí aparecen en el calendario de todos los alumnos, con aviso cuando faltan 7 días o menos. La fecha de «Versión final» es también la fecha límite del planificador.</p>
     <div class="tscroll"><table class="dtab plan"><thead><tr><th>Comentario</th>${EI_STAGES.map(s => `<th>${s}</th>`).join('')}</tr></thead><tbody>${Object.entries(EI_UNITS).map(([u, n]) => `<tr><th scope="row">U${u} · ${n}</th>${EI_STAGES.map((s, i) => `<td><input type="date" class="inp pff" data-u="${u}" data-i="${i}" value="${esc((F[u] || [])[i] || '')}" aria-label="${n}: ${s}"></td>`).join('')}</tr>`).join('')}</tbody></table></div>
     <div class="row" style="margin-top:8px"><button class="btn primary" type="button" id="pfSave">Guardar fechas</button><span id="pfMsg" class="small"></span></div>`;
   $('#pfR').onclick = () => { PROF.st = 'idle'; render(); };
-  $('#pfCsv').onclick = profCsv; bindSummary();
+  $('#pfCsv').onclick = profCsv; $('#pfTime').onclick = profTimeCsv; bindSummary();
   app.querySelectorAll('[data-pfpd]').forEach(b => b.onclick = () => { SESS.pfPD = b.dataset.pfpd; renderProf(); });
   $('#pfSave').onclick = async e => {
     const fechas = {}; app.querySelectorAll('.pff').forEach(i => { (fechas[i.dataset.u] = fechas[i.dataset.u] || ['', '', '', ''])[+i.dataset.i] = i.value; });
@@ -9204,6 +9212,12 @@ async function profDocx(x, btn) {
       new Paragraph({ heading: HeadingLevel.TITLE, children: [new TextRun({ text: 'Informe de seguimiento · Evaluación Interna' })] }),
       P(`Alumno: ${profName(x)} · ${x.email || ''}${pj(x, 'curso', '') ? ' · ' + pj(x, 'curso', '') : ''}`, { bold: true }),
       P(`Economía IB · Prof. Econ. Hugo Rivarola · Informe generado el ${fdate(today())}`, { color: '555555' })];
+    const TT = pj(x, 'time', {}), tw = timeSum(TT, 7), ta = timeSum(TT, 0);
+    if (ta.tot) {
+      kids.push(H('Tiempo activo en el Taller', HeadingLevel.HEADING_1));
+      kids.push(P(`Últimos 7 días: ${fmtMin(tw.tot)} en ${tw.days} días · Total registrado: ${fmtMin(ta.tot)} en ${ta.days} días`));
+      kids.push(T(['Sección', 'Últimos 7 días', 'Total'], TCATS.filter(([k]) => ta.cat[k]).map(([k, n]) => [n, fmtMin(tw.cat[k]), fmtMin(ta.cat[k])])));
+    }
     Object.entries(EI_UNITS).forEach(([u, un]) => {
       const w = (E.s || {})[u] || {}, R = profR(x.uid, u), L = (E.log || {})[u];
       kids.push(H(`Comentario de ${un}`, HeadingLevel.HEADING_1));
@@ -9264,6 +9278,7 @@ function renderProfStudent(uid) {
   app.innerHTML = `<button class="crumb" type="button" data-go="profesor">← Panel del profesor</button><div class="eyebrow" style="margin-top:12px">Solo para el profesor</div><h1>${esc(profName(x))}</h1>
     <p class="small muted">${esc(x.email || '')} · Última actividad: ${fdate(x.updated)}</p>
     <div class="row"><button class="btn primary" type="button" id="pfDoc">Descargar informe de seguimiento (Word)</button></div>
+    <section class="card pfcard"><div class="card-b"><h2 style="margin-bottom:4px">Tiempo en el Taller</h2>${profTimeHtml(x)}</div></section>
     ${Object.entries(EI_UNITS).map(([u, n]) => {
       const w = (E.s || {})[u], R = profR(uid, u), [t, cl] = stgTag(R);
       return `<section class="card pfcard" data-u="${u}"><div class="card-b"><h2 style="margin-bottom:4px">${n} <span class="tag ${cl}" style="font-size:13px;vertical-align:middle">${t}</span></h2>
@@ -9408,6 +9423,66 @@ function bindSummary() {
     } catch (x) { b.textContent = 'No se pudo (' + (x.code || x.message) + ')'; }
     setTimeout(() => { b.textContent = o; b.disabled = false; }, 2500);
   };
+}
+
+/* ---------- Tiempo activo en el Taller (solo con la pestaña visible y actividad en el último minuto) ---------- */
+const TCATS = [['temas', 'Temas'], ['labs', 'Laboratorios'], ['p1', 'Prueba 1'], ['p2', 'Prueba 2'], ['ei', 'Evaluación Interna'], ['rep', 'Repasar'], ['exam', 'Exámenes'], ['jue', 'Juegos'], ['otros', 'Otros']];
+const TCAT_N = Object.fromEntries(TCATS);
+function timeCat(r) {
+  r = r || location.hash.slice(1) || 'empezar';
+  if (/^(inicio|estudiar|formulas)$/.test(r) || /^t\d/.test(r)) return 'temas';
+  if (/^lab/.test(r)) return 'labs';
+  if (/^(ei-|escribir-ei|escribir-conceptos)/.test(r)) return 'ei';
+  if (/^(escribir-p2|p2-|escribir-def|escribir-calc|escribir-ej)/.test(r)) return 'p2';
+  if (/^(escribir|p1-)/.test(r)) return 'p1';
+  if (/^(repasar|examen|tarjetas|reporte)/.test(r)) return 'rep';
+  if (/^anteriores/.test(r)) return 'exam';
+  if (/^juego/.test(r)) return 'jue';
+  return 'otros';
+}
+const TM = { last: Date.now(), buf: {}, tick: 15 };
+['pointerdown', 'keydown', 'scroll', 'input', 'touchstart'].forEach(ev => addEventListener(ev, () => { TM.last = Date.now(); }, { passive: true, capture: true }));
+function timeFlush() {
+  const keys = Object.keys(TM.buf); if (!keys.length) return;
+  const T = store.get('time', {});
+  keys.forEach(k => { const [d, c] = k.split('|'); T[d] = T[d] || {}; T[d][c] = (T[d][c] || 0) + TM.buf[k]; });
+  const days = Object.keys(T).sort(); while (days.length > 150) delete T[days.shift()];
+  TM.buf = {}; store.set('time', T);
+}
+setInterval(() => {
+  if (document.visibilityState !== 'visible' || Date.now() - TM.last > 60000) return;
+  if (location.hash.slice(1).startsWith('profesor')) return;
+  const k = today() + '|' + timeCat(); TM.buf[k] = (TM.buf[k] || 0) + TM.tick;
+}, TM.tick * 1000);
+setInterval(timeFlush, 120000);
+document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') timeFlush(); });
+addEventListener('pagehide', timeFlush);
+const fmtMin = s => { const m = Math.round((s || 0) / 60); return m < 60 ? `${m} min` : `${Math.floor(m / 60)} h ${String(m % 60).padStart(2, '0')} min`; };
+const dayShift = n => { const d = new Date(); d.setDate(d.getDate() - n); return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); };
+/* Resumen de tiempo de un registro {día: {categoría: segundos}} */
+function timeSum(T, days) {
+  const from = days ? dayShift(days - 1) : '0000';
+  const out = { tot: 0, cat: {}, days: 0 };
+  Object.entries(T || {}).forEach(([d, c]) => { if (d < from) return; const s = Object.values(c).reduce((a, b) => a + b, 0); if (s >= 60) out.days++; out.tot += s; Object.entries(c).forEach(([k, v]) => { out.cat[k] = (out.cat[k] || 0) + v; }); });
+  return out;
+}
+function profTimeHtml(x) {
+  const T = pj(x, 'time', {}), w = timeSum(T, 7), all = timeSum(T, 0);
+  if (!all.tot) return '<p class="small muted">Todavía no hay tiempo registrado (empezó a medirse hoy y solo cuenta si el alumno entró con su cuenta).</p>';
+  const last14 = Array.from({ length: 14 }, (_, i) => dayShift(13 - i)), mx = Math.max(60, ...last14.map(d => Object.values(T[d] || {}).reduce((a, b) => a + b, 0)));
+  return `<p class="small"><b>Últimos 7 días:</b> ${fmtMin(w.tot)} en ${w.days} ${w.days === 1 ? 'día' : 'días'} · <b>Total registrado:</b> ${fmtMin(all.tot)}</p>
+    <div class="tbars" role="img" aria-label="Minutos por día en los últimos 14 días">${last14.map(d => { const s = Object.values(T[d] || {}).reduce((a, b) => a + b, 0); return `<div class="tbar" title="${fdate(d)}: ${fmtMin(s)}"><i style="height:${Math.round(s / mx * 100)}%"></i><span>${d.slice(8)}</span></div>`; }).join('')}</div>
+    <div class="tscroll"><table class="dtab pflog"><thead><tr><th>Sección</th><th>Últimos 7 días</th><th>Total</th></tr></thead><tbody>${TCATS.filter(([k]) => all.cat[k]).map(([k, n]) => `<tr><td>${n}</td><td>${fmtMin(w.cat[k])}</td><td>${fmtMin(all.cat[k])}</td></tr>`).join('')}</tbody></table></div>
+    <p class="small muted">Tiempo activo: solo cuenta con el Taller a la vista y con actividad en el último minuto. Lo registra el dispositivo del alumno, así que es orientativo.</p>`;
+}
+function profTimeCsv() {
+  const q = v => { const s = String(v ?? ''); return /[;"\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s; };
+  const rows = [['Alumno', 'Correo', 'Curso', 'Fecha', ...TCATS.map(([, n]) => n + ' (min)'), 'Total (min)']];
+  PROF.users.forEach(x => {
+    const T = pj(x, 'time', {}), pdv = String(pj(x, 'pd', '') || '');
+    Object.keys(T).sort().forEach(d => { const c = T[d], tot = Object.values(c).reduce((a, b) => a + b, 0); rows.push([profName(x), x.email || '', pdv === '1' || pdv === '2' ? 'PD' + pdv : '', fdate(d), ...TCATS.map(([k]) => c[k] ? Math.round(c[k] / 60) : 0), Math.round(tot / 60)]); });
+  });
+  saveBlob(new Blob(['﻿' + rows.map(r => r.map(q).join(';')).join('\r\n')], { type: 'text/csv;charset=utf-8' }), `Tiempo-Taller-${today()}.csv`);
 }
 
 /* Cuando cambia la sesión de la cuenta */
@@ -10648,7 +10723,7 @@ window.FBX = {
 
 /* ---------- ventana de cuenta ---------- */
 const close = '<button type="button" class="acx" data-a="close" aria-label="Cerrar">×</button>';
-const privacy = '<p class="small muted">Tu progreso del Taller se guarda en Google Firebase, vinculado a tu correo del colegio. Solo tú y el profesor pueden verlo.</p>';
+const privacy = '<p class="small muted">Tu progreso del Taller y el tiempo que lo usas se guardan en Google Firebase, vinculados a tu correo del colegio. Solo tú y el profesor pueden verlo.</p>';
 function view(mode, note = '', kind = 'info') {
   dlg.dataset.mode = mode;
   const box = note ? `<div class="fb ${kind}" role="status">${note}</div>` : '';
@@ -10709,7 +10784,7 @@ dlg.addEventListener('click', async ev => {
       if (user.emailVerified) await push();
       if (wipe && st !== 'ok' && user.emailVerified) { view('acct', 'No se pudo subir tu progreso a la nube, así que no lo borramos. Inténtalo de nuevo con internet.', 'no'); return; }
       await A.signOut(auth);
-      if (wipe) { Object.keys(localStorage).filter(k => k.startsWith(P)).forEach(k => localStorage.removeItem(k)); sessionStorage.removeItem('tallerEco.pulled'); location.reload(); return; }
+      if (wipe) { try { TM.buf = {}; } catch (x) { } Object.keys(localStorage).filter(k => k.startsWith(P)).forEach(k => localStorage.removeItem(k)); sessionStorage.removeItem('tallerEco.pulled'); location.reload(); return; }
       dlg.close();
     }
   } catch (x) { view(dlg.dataset.mode || 'acct', errTxt(x), 'no'); }
