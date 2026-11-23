@@ -709,6 +709,7 @@ td.late{color:var(--bad);font-weight:700}td.soon{color:var(--warn-ink);font-weig
 .vres .autofb{margin-top:8px}
 .eicover{max-width:900px}
 .eifrag{margin:10px 0 4px;padding:10px 14px;border-left:4px solid var(--gold);background:var(--paper);border-radius:4px;font-size:15px;line-height:1.55}.eifrag footer{font-size:12.5px;color:var(--muted);margin-top:6px}
+.ecrow{display:grid;gap:4px;margin:10px 0}.ecrow .seg button{min-width:40px}
 .eifig{margin:10px 0;background:#fff;border:1px solid var(--rule);border-radius:8px;padding:6px;max-width:520px}.eifig img{display:block;width:100%;height:auto}.eifig figcaption{font-size:13px;color:#3C4A66;text-align:center;padding:4px 2px 0}.eicover th{width:200px}.eicover td{text-align:left}
 .mrow2{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:16px;margin:12px 0;max-width:1100px;align-items:start}
 .mtext{background:var(--sheet);border:1px solid var(--rule);border-radius:var(--r);padding:12px 16px}
@@ -718,35 +719,6 @@ td.late{color:var(--bad);font-weight:700}td.soon{color:var(--warn-ink);font-weig
 .ann{display:inline-grid;place-items:center;min-width:22px;height:22px;border-radius:5px;font-family:var(--f-display);font-weight:700;font-size:14px;color:#fff;flex:none}
 .ann.aA{background:#1F4E9E}.ann.aB{background:#6B3FA0}.ann.aC{background:#1E8E3E}.ann.aD{background:#B8862B}.ann.aE{background:#C0392B}.ann.aF{background:#14213D}
 @media (max-width:860px){.vwrap,.mrow2{grid-template-columns:1fr}.vres{position:static}}
-.acct{order:1;display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.35);color:var(--navy-ink);border-radius:999px;padding:6px 13px;font-weight:700;font-size:14px;max-width:46vw;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.acct:hover{background:rgba(255,255,255,.2)}
-.acdot{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.5);flex:none}
-.acct[data-st="ok"] .acdot{background:#5FD38A}.acct[data-st="sync"] .acdot{background:#E0B25A}.acct[data-st="warn"] .acdot,.acct[data-st="err"] .acdot{background:#FF8A80}
-.nav{order:2}
-.acdlg{border:1px solid var(--rule);border-radius:12px;padding:0;width:min(440px,calc(100vw - 32px));background:var(--sheet);color:var(--ink);box-shadow:0 18px 50px rgba(0,0,0,.3)}
-.acdlg::backdrop{background:rgba(10,20,40,.55)}
-.acdlg form,.acdlg .acbody{padding:20px 22px;display:grid;gap:12px}
-.acdlg h2{margin:0;font-size:24px}.acdlg p{margin:0}
-.acdlg label{display:grid;gap:4px;font-weight:700;font-size:14px}
-.acdlg .acx{position:absolute;top:8px;right:10px;background:none;border:0;font-size:24px;line-height:1;color:var(--muted);padding:4px 8px}
-.acdlg .aclinks{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:14px}
-.acdlg .aclinks button{background:none;border:0;padding:0;color:var(--navy-2);text-decoration:underline;font-size:14px}
-:root[data-theme="dark"] .acdlg .aclinks button{color:var(--gold)}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .acdlg .aclinks button{color:var(--gold)}}
-.acdlg .fb{margin:0}
-.acdlg .acrow{display:flex;gap:8px;flex-wrap:wrap}.acdlg .acrow .btn{flex:1 1 auto}
-.eisub{max-width:1000px;margin:10px 0}.eifbtx{background:var(--sheet);border:1px solid var(--rule);border-radius:7px;padding:10px 12px;margin-top:8px}.eifbtx p{margin:6px 0 0}
-.eilockmsg{color:var(--bad);font-weight:700;margin:0 0 8px}.eilocked{pointer-events:none;opacity:.8}
-.linkb{background:none;border:0;padding:0;color:var(--navy-2);font-weight:700;text-decoration:underline;text-align:left}
-:root[data-theme="dark"] .linkb{color:var(--gold)}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .linkb{color:var(--gold)}}
-.tag.late{border-color:var(--bad);color:var(--bad)}
-.pftab td{vertical-align:top;min-width:170px}.pftab th[scope=row]{min-width:180px}.pfjump td{background:var(--warn-bg)}
-.pfcard{margin:14px 0}.pfcard h3{margin:14px 0 6px}.pfcard h4{margin:10px 0 4px}.pfcard details{margin-top:8px}.pfcard summary{cursor:pointer;font-weight:700}
-.eihist{margin-top:10px}.eihist summary{cursor:pointer;font-weight:700}.eihist ol{margin:6px 0 0;padding-left:20px;display:grid;gap:8px}
-.pfround{border-top:1px solid var(--rule);margin-top:12px;padding-top:4px}.pfsc{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center;margin-top:8px}.pfsc label{display:flex;gap:4px;align-items:center;font-weight:700}.pfsc select{padding:3px 6px}
-.pfsum td{min-width:150px}.pflog details summary{cursor:pointer;color:var(--navy-2)}
-
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
@@ -754,7 +726,6 @@ td.late{color:var(--bad);font-weight:700}td.soon{color:var(--warn-ink);font-weig
 <body>
 <header class="top">
   <button class="brand" type="button" data-go="empezar"><b>Economía IB</b><span>Taller de práctica</span></button>
-  <button class="acct" type="button" id="acctBtn" aria-haspopup="dialog"><span class="acdot" aria-hidden="true"></span><span id="acctLbl">Entrar</span></button>
   <nav class="nav" aria-label="Secciones">
     <button type="button" data-go="empezar">Inicio</button>
     <button type="button" data-go="inicio">Temas</button>
@@ -764,7 +735,6 @@ td.late{color:var(--bad);font-weight:700}td.soon{color:var(--warn-ink);font-weig
     <button type="button" data-go="juegos">Juegos</button>
     <button type="button" data-go="anteriores">Exámenes</button>
     <button type="button" data-go="repasar">Repasar<span class="badge" id="errBadge" hidden>0</span></button>
-    <button type="button" data-go="profesor" id="navProf" hidden>Profesor</button>
     <a href="https://hrivarolainsfran-sys.github.io/atlas-diagramas/">Atlas de diagramas</a>
   </nav>
 </header>
@@ -790,7 +760,7 @@ function parseNum(s) {
 }
 const store = {
   get(k, d) { try { const v = localStorage.getItem('tallerEco.' + k); return v ? JSON.parse(v) : d; } catch (e) { return d; } },
-  set(k, v) { try { localStorage.setItem('tallerEco.' + k, JSON.stringify(v)); const t = JSON.parse(localStorage.getItem('tallerEco.__ts') || '{}'); t[k] = Date.now(); localStorage.setItem('tallerEco.__ts', JSON.stringify(t)); } catch (e) { } if (window.__onStoreSet) window.__onStoreSet(k); }
+  set(k, v) { try { localStorage.setItem('tallerEco.' + k, JSON.stringify(v)); } catch (e) { } }
 };
 const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
@@ -1719,9 +1689,8 @@ function render() {
   if (/^ei-[234]$/.test(route)) { setNav('escribir'); return renderEI(+route.slice(3)); }
   if (route === 'ei-articulo') { setNav('escribir'); return renderEIArticle(); }
   if (route === 'ei-modelos') { setNav('escribir'); return renderEIModels(); }
-  if (route === 'profesor') { setNav('profesor'); return renderProf(); }
-  if (route.startsWith('profesor-')) { setNav('profesor'); return renderProfStudent(route.slice(9)); }
   if (route === 'ei-alumnos') { setNav('escribir'); return renderEIStudents(); }
+  if (route === 'ei-calibrar') { setNav('escribir'); return renderEICalib(); }
   if (/^ei-alumno-\d$/.test(route)) { setNav('escribir'); return renderEIStudent(+route.slice(10)); }
   if (/^ei-modelo-[234]$/.test(route)) { setNav('escribir'); return renderEIModel(+route.slice(10)); }
   if (route === 'escribir-analizar') { setNav('escribir'); return renderCmd('analizar'); }
@@ -4648,7 +4617,7 @@ const WBLOCKS = [
   ['Base', [['escribir-comandos', 'Comandos'], ['escribir-conceptos', 'Conceptos clave'], ['escribir-def', 'Definiciones'], ['escribir-ej', 'Ejemplos reales']]],
   ['Términos de instrucción', [['escribir-explicar', 'Explicar · 10'], ['escribir-analizar', 'Analizar · 10'], ['escribir-evaluar', 'Evaluar · 15'], ['escribir-discutir', 'Discutir · 15'], ['escribir-hqp', '¿Hasta qué punto? · 15'], ['escribir-errores', 'Encuentra el error']]],
   ['Simulacros', [['escribir-p1', 'Prueba 1'], ['escribir-calc', 'Cálculos P2'], ['escribir-p2', 'Prueba 2']]],
-  ['Evaluación Interna', [['escribir-ei', 'Comentarios de la EI'], ['ei-alumnos', 'Carpetas de alumnos']]]
+  ['Evaluación Interna', [['escribir-ei', 'Comentarios de la EI'], ['ei-alumnos', 'Carpetas de alumnos'], ['ei-calibrar', 'Corrige como examinador']]]
 ];
 const WTABS = WBLOCKS.flatMap(b => b[1]);
 function writeTabs(cur) {
@@ -8413,7 +8382,7 @@ function renderEIHome() {
     <div class="method"><div><b>La carpeta · 30 % de la nota (NM)</b><p>Tres comentarios de hasta <b>800 palabras</b> sobre artículos de prensa: uno de <b>Microeconomía</b>, uno de <b>Macroeconomía</b> y uno de <b>Economía global</b>. Total: 45 puntos.</p></div>
       <div><b>Requisitos</b><p>Artículo de <b>menos de un año</b> al momento de escribir; una <b>fuente distinta</b> por comentario; un <b>concepto clave distinto</b> en cada uno; periódico, revista o sitio de noticias (no televisión ni radio).</p></div>
       <div><b>No cuentan en las 800 palabras</b><p>Diagramas, sus rótulos (hasta 5 palabras) y títulos (hasta 10), tablas de datos, fórmulas y cálculos, citas bibliográficas y referencias. <b>Sí cuentan</b> las definiciones y las citas textuales.</p></div></div>
-    ${eiFromMsg()}${eiNewFbBox()}${eiDeadlines()}<div class="row eiacts"><button class="btn primary" type="button" data-go="ei-articulo">¿Sirve mi artículo? Valídalo antes de escribir</button><button class="btn" type="button" data-go="ei-modelos">Ver comentarios modelo anotados</button><button class="btn" type="button" data-go="ei-alumnos">Ver carpetas reales de alumnos</button><a class="btn" href="${EI_NEWS}" target="_blank" rel="noopener">Buscar artículos en Economía en las Noticias ↗</a></div>
+    ${eiFromMsg()}<div class="row eiacts"><button class="btn primary" type="button" data-go="ei-articulo">¿Sirve mi artículo? Valídalo antes de escribir</button><button class="btn" type="button" data-go="ei-modelos">Ver comentarios modelo anotados</button><button class="btn" type="button" data-go="ei-alumnos">Ver carpetas reales de alumnos</button><button class="btn" type="button" data-go="ei-calibrar">Corrige como examinador</button><a class="btn" href="${EI_NEWS}" target="_blank" rel="noopener">Buscar artículos en Economía en las Noticias ↗</a></div>
     <h2>Criterios de cada comentario · 14 puntos</h2>
     <div class="eicrit">${EI_CRIT.map(([k, n, m]) => `<div><b>${k}</b><span>${n}</span><i>${m} p</i></div>`).join('')}<div><b>F</b><span>Requisitos de la carpeta</span><i>3 p</i></div></div>
     <h2 style="margin-top:22px">Qué se espera para cada punto</h2>
@@ -8430,21 +8399,16 @@ function renderEIHome() {
     <table class="dtab eibud"><thead><tr><th>Bloque</th><th>Qué escribir</th><th>Palabras</th></tr></thead><tbody>${EI_BLOCKS.map(b => `<tr><th scope="row">${b.n}</th><td>${b.g}</td><td>${b.bud || 'No cuenta'}</td></tr>`).join('')}<tr><th scope="row">Margen</th><td>Colchón para revisar sin pasarte.</td><td>50</td></tr></tbody></table>
     <p class="small muted">Reparto tomado de la guía «El Arte de la Síntesis» de tu profesor.</p>
     ${backupBox('bkE')}`;
-  bindPlanner(); bindCalendar(); bindBackup('bkE'); eiRemoteLoad();
+  bindPlanner(); bindCalendar(); bindBackup('bkE');
 }
 function eiHead(u) { return `<button class="crumb" type="button" data-go="escribir-ei">← Mi carpeta</button><div class="eyebrow" style="margin-top:12px">Evaluación Interna · Unidad ${u}</div><h1 style="margin-bottom:6px">Comentario de ${EI_UNITS[u]}</h1>`; }
 function renderEI(u) {
-  renderEIInner(u); bindSubmitBox(u); eiRemoteLoad(); if (EIR.st === 'ok') markFbSeen(u);
-  if (eiStage(u).lock) lockEditor($('#eib'));
-}
-function renderEIInner(u) {
   const w = eiSlot(u), steps = ['Artículo y portada', ...EI_BLOCKS.map(b => b.n), 'Declaración', 'Revisar'], n = steps.length - 1;
   if (w.st > n) w.st = n;
   const words = eiWords(w);
   const doneF = [!!(w.title && w.source && w.pub && w.kc), ...EI_BLOCKS.map(b => b.k === 'dia' ? padUsed(w.dia) : !!(w.txt[b.k] || '').trim()), !!(w.decl || {}).ok, !!Object.keys(w.cr).length];
   app.innerHTML = eiHead(u) + `
     <div class="simbar"><span>Palabras: <b id="eiW" class="${words > 800 ? 'over' : ''}">${words}</b>/800</span>${w.kc ? `<span>Concepto: <b>${KC[w.kc]}</b></span>` : ''}<span>Estimado: <b>${eiScore(u)}</b>/14</span></div>
-    ${eiSubmitBox(u)}
     ${stepper(steps, w.st, doneF, true)}
     <div class="card cwcard"><div class="card-b" id="eib"></div><div class="card-f"><button class="btn" type="button" id="eiPrev" ${w.st === 0 ? 'disabled' : ''}>← Anterior</button><button class="btn primary" type="button" id="eiNext">${w.st < n - 1 ? 'Siguiente →' : w.st === n - 1 ? 'Revisar →' : 'Volver a la carpeta'}</button></div></div>`;
   app.querySelectorAll('[data-step]').forEach(b => b.onclick = () => { w.st = +b.dataset.step; saveEI(); renderEI(u); });
@@ -8499,8 +8463,7 @@ function renderEIInner(u) {
     ${blk.k === 'exp' ? '<details class="model"><summary>Ver el ejemplo de la guía: narrativa larga y sintetizada</summary><p class="small"><b>Larga (≈ 110 palabras):</b> describe el desplazamiento con frases completas.</p><p class="small"><b>Sintetizada (≈ 58 palabras):</b> «La suba del gasoil eleva los costos de las panaderías (transporte y horneado), desplazando la oferta de S₁ a S₂. Al precio P₁ surge un exceso de demanda que empuja el precio hasta P₂ y reduce la cantidad de Q₁ a Q₂ (nuevo equilibrio E₂). El pan, bien de primera necesidad de demanda inelástica, absorbe casi toda la suba.»</p></details>' : ''}`;
   const ta = $('#eit');
   const upd = () => { const x = wc(ta.value); $('#eiBW').textContent = x + '/' + blk.bud; $('#eiBar').style.width = Math.min(100, x / blk.bud * 100) + '%'; $('#eiBar').parentNode.classList.toggle('over', x > blk.bud * 1.15); upW(); };
-  ta.oninput = () => { w.txt[blk.k] = ta.value; eiLog(u); saveEI(); upd(); }; upd();
-  ta.onpaste = e => { const n = wc((e.clipboardData || window.clipboardData).getData('text')); if (n >= 25) setTimeout(() => { eiLog(u, n); saveEI(); }, 0); };
+  ta.oninput = () => { w.txt[blk.k] = ta.value; saveEI(); upd(); }; upd();
   B.querySelectorAll('[data-c]').forEach(b => b.onclick = () => insertAtCursor(ta, b.dataset.c));
   const tp = $('#eiTpl'); if (tp) tp.onclick = () => insertAtCursor(ta, blk.tpl);
 }
@@ -8630,7 +8593,7 @@ function eiState(u) { const w = EIS.s[u]; if (!eiStarted(u)) return ['Sin empeza
 function eiPlanner() {
   const PL = store.get('eiPlan', {});
   const rows = Object.entries(EI_UNITS).map(([u, n]) => {
-    const w = EIS.s[u] || {}, [st, cl] = eiState(u), fix = plazo(u, 3) || EI_FECHAS[u], dl = fix || PL[u] || '';
+    const w = EIS.s[u] || {}, [st, cl] = eiState(u), fix = EI_FECHAS[u], dl = fix || PL[u] || '';
     const left = dl ? Math.round((new Date(dl + 'T12:00:00') - new Date(today() + 'T12:00:00')) / 864e5) : null;
     const ck = eiStarted(u) ? eiChecks(u) : {};
     return `<tr><th scope="row">U${u} · ${n}</th><td><span class="tag ${cl}">${st}</span></td><td>${w.kc ? KC[w.kc] + (ck.kcDup ? ' <span class="warnc">repetido</span>' : '') : '—'}</td><td>${w.source ? esc(w.source) + (ck.srcDup ? ' <span class="warnc">repetida</span>' : '') : '—'}</td><td>${ck.days !== null && ck.days !== undefined ? ck.days + ' días' + (ck.dateOk ? '' : ' <span class="warnc">fuera de plazo</span>') : '—'}</td>
@@ -8826,9 +8789,40 @@ function renderEIStudent(id) {
 
 /* ---------- EI: banco de artículos, calibración, fragmentos modelo y calendario ---------- */
 const EI_NEWS = 'https://hrivarolainsfran-sys.github.io/economia-noticias/#ia';
-const eiFromBox = a => `<div class="fb info" style="max-width:1000px"><b class="h">Artículo traído de Economía en las Noticias</b><a href="${esc(a.url)}" target="_blank" rel="noopener"><b>${esc(a.title)}</b> ↗</a>${a.source ? ' · ' + esc(a.source) : ''}<br>Ya completamos la fecha, la fuente, el tipo de artículo, la unidad y el concepto clave sugerido. Abre el artículo original, comprueba su título y su fecha, y responde tú el resto: el cambio concreto, el diagrama, los datos, si permite evaluar y su extensión.</div>`;
-const eiFromMsg = () => { const n = SESS.eiFrom; delete SESS.eiFrom; return n ? `<div class="fb info" style="max-width:1000px;margin-bottom:12px"><b class="h">${n === 1 ? 'Se cargó 1 artículo' : `Se cargaron ${n} artículos`} desde Economía en las Noticias</b>Ya están la fuente, el enlace, la fecha de publicación y el concepto clave en la portada de cada comentario. Abre cada artículo en su medio original y corrige el título (Economía en las Noticias usa títulos propios) y la fecha si no coinciden. Revisa también la fecha de redacción.</div>` : ''; };
+const eiFromBox = a => `<div class="fb info" style="max-width:1000px"><b class="h">Artículo traído de Economía en las Noticias</b><a href="${esc(a.url)}" target="_blank" rel="noopener"><b>${esc(a.title)}</b> ↗</a>${a.source ? ' · ' + esc(a.source) : ''}<br>${a.orig ? 'El título y la fecha son los del diario. Ya completamos la fecha, la fuente, el tipo de artículo, la unidad y el concepto clave sugerido. Abre el artículo original, léelo completo' : 'Ya completamos la fecha, la fuente, el tipo de artículo, la unidad y el concepto clave sugerido. Abre el artículo original, comprueba su título y su fecha,'} y responde tú el resto: el cambio concreto, el diagrama, los datos, si permite evaluar y su extensión.</div>`;
+const eiFromMsg = () => { const f = SESS.eiFrom, n = f && (f.n || f), o = f && f.o; delete SESS.eiFrom; return n ? `<div class="fb info" style="max-width:1000px;margin-bottom:12px"><b class="h">${n === 1 ? 'Se cargó 1 artículo' : `Se cargaron ${n} artículos`} desde Economía en las Noticias</b>${o ? 'Ya están el título y la fecha tal como salieron en el diario, la fuente, el enlace y el concepto clave en la portada de cada comentario. Abre cada artículo en su medio original para leerlo completo y guarda una copia. Revisa también la fecha de redacción.' : 'Ya están la fuente, el enlace, la fecha de publicación y el concepto clave en la portada de cada comentario. Abre cada artículo en su medio original y corrige el título (Economía en las Noticias usa títulos propios) y la fecha si no coinciden. Revisa también la fecha de redacción.'}</div>` : ''; };
 const eiNewsBox = () => `<div class="fb info" style="max-width:1000px"><b class="h">¿Buscas artículo?</b>En <a href="${EI_NEWS}" target="_blank" rel="noopener"><b>Economía en las Noticias</b></a> tienes noticias económicas actuales, con su fuente original. Elige una, ábrela en el medio original y después valídala aquí.</div>`;
+/* 1 · Corrige como examinador */
+const EI_CAL = store.get('eiCal', {});
+const eiCalItems = () => EI_STUD.flatMap(f => f.cs.map((c, i) => ({ f, c, i, key: f.id + '-' + i })));
+function renderEICalib() {
+  const items = eiCalItems(), S = SESS.ecal = SESS.ecal || { key: null, sc: {} };
+  const done = items.filter(x => EI_CAL[x.key]);
+  const avg = done.length ? done.reduce((s, x) => s + EI_CRIT.reduce((a, [k]) => a + Math.abs(EI_CAL[x.key][k] - x.c.sc[k]), 0), 0) / done.length : null;
+  app.innerHTML = `<div class="eyebrow">Escribir como en el examen</div><h1>Corrige como examinador</h1>${writeTabs('ei-calibrar')}
+    <p class="lede" style="max-width:1000px">Lee un comentario real, ponle puntaje en cada criterio <b>sin mirar la retroalimentación</b> y compara con el profesor. Cuando tus puntajes se parecen a los del profesor, sabes leer tu propio texto con ojos de examinador.</p>
+    <p class="small"><b>Corregidos: ${done.length} de ${items.length}</b>${avg !== null ? ` · Diferencia promedio con el profesor: <b>${fmt(avg, 1)} puntos</b> por comentario` : ''}</p>
+    <div class="ppfil"><label>Comentario<select id="ecs" class="dsel"><option value="">Elige un comentario…</option>${items.map(x => `<option value="${x.key}"${S.key === x.key ? ' selected' : ''}>Carpeta ${x.f.id} · ${EI_UNITS[x.c.u]} · ${KC[x.c.kc]}${EI_CAL[x.key] ? ' ✓' : ''}</option>`).join('')}</select></label></div>
+    <div id="ecw"></div>`;
+  $('#ecs').onchange = e => { S.key = e.target.value || null; S.sc = {}; renderEICalib(); };
+  if (!S.key) return;
+  const x = items.find(y => y.key === S.key), c = x.c;
+  const figAt = k => c.figs.filter(g => g[0] === k).map(g => `<figure class="eifig"><img src="${g[1]}" alt="${esc(g[2])}" loading="lazy"><figcaption>${esc(g[2])}</figcaption></figure>`).join('');
+  $('#ecw').innerHTML = `<p class="small">Artículo: <a href="${c.url}" target="_blank" rel="noopener">${esc(c.title)}</a> (${esc(c.source)}) · ${c.words}/800 palabras</p>
+    <div class="mrow2"><div class="mtext"><span class="mtag">Comentario del alumno</span>${c.paras.map((p, k) => `<p>${esc(p)}</p>${figAt(k)}`).join('')}</div>
+      <aside><div class="tdcard" style="margin:0" id="ecBox"><b style="font-size:17px">Tu corrección</b>
+        ${EI_CRIT.map(([k, n, m, lv]) => `<div class="ecrow"><div class="small"><span class="ann a${k}">${k}</span> <b>${n}</b></div><div class="seg" role="group">${Array.from({ length: m + 1 }, (_, v) => `<button type="button" data-k="${k}" data-v="${v}" aria-pressed="${S.sc[k] === v}" title="${esc(lv[v])}">${v}</button>`).join('')}</div></div>`).join('')}
+        <button class="btn primary" type="button" id="ecGo" style="margin-top:10px;width:100%">Comparar con el profesor</button><div id="ecRes"></div></div></aside></div>`;
+  app.querySelectorAll('#ecBox [data-k]').forEach(b => b.onclick = () => { S.sc[b.dataset.k] = +b.dataset.v; app.querySelectorAll(`#ecBox [data-k="${b.dataset.k}"]`).forEach(z => z.setAttribute('aria-pressed', z === b)); });
+  const show = sc => {
+    const mine = EI_CRIT.reduce((s, [k]) => s + sc[k], 0), prof = EI_CRIT.reduce((s, [k]) => s + c.sc[k], 0); const dif = EI_CRIT.reduce((s, [k]) => s + Math.abs(sc[k] - c.sc[k]), 0);
+    $('#ecRes').innerHTML = `<table class="dtab" style="margin-top:10px;font-size:14px"><thead><tr><th>Criterio</th><th>Tú</th><th>Profesor</th></tr></thead><tbody>${EI_CRIT.map(([k]) => { const d = sc[k] - c.sc[k]; return `<tr><th scope="row">${k}</th><td>${sc[k]}</td><td><b>${c.sc[k]}</b>${d ? ` <span class="small" style="color:var(--bad)">(${d > 0 ? '+' : ''}${d})</span>` : ' ✓'}</td></tr>`; }).join('')}<tr><th scope="row">Total</th><td>${mine}</td><td><b>${prof}</b></td></tr></tbody></table>
+      ${EI_CRIT.map(([k, n]) => `<div class="annn"><span class="ann a${k}">${k}</span><div>${c.notes[k]}</div></div>`).join('')}
+      <div class="fb ${dif <= 1 ? 'ok' : 'info'}" style="margin-top:8px">${dif <= 1 ? 'Muy cerca del profesor: lees los criterios como un examinador.' : mine === prof ? `El total coincide, pero difieres en ${dif} puntos repartidos entre criterios: revisa dónde no coincidiste.` : mine > prof ? 'Fuiste más generoso que el profesor: revisa qué pide el nivel máximo de los criterios donde te pasaste.' : 'Fuiste más exigente que el profesor: revisa qué alcanza para cada nivel.'}</div>`;
+  };
+  $('#ecGo').onclick = () => { if (EI_CRIT.some(([k]) => S.sc[k] === undefined)) { $('#ecRes').innerHTML = '<div class="fb info" style="margin-top:8px">Pon un puntaje en los cinco criterios.</div>'; return; } EI_CAL[S.key] = { ...S.sc }; store.set('eiCal', EI_CAL); show(S.sc); };
+  if (EI_CAL[S.key] && !Object.keys(S.sc).length) { S.sc = { ...EI_CAL[S.key] }; app.querySelectorAll('#ecBox [data-k]').forEach(b => b.setAttribute('aria-pressed', S.sc[b.dataset.k] === +b.dataset.v)); show(S.sc); }
+}
 /* 3 · Fragmentos de carpetas reales para cada bloque del editor */
 const EI_FRAG = {
   2: { intro: [[3, 0, 0, 'Contexto con datos, definición del concepto clave con sus palabras y pregunta guía «¿Hasta qué punto…?».']],
@@ -8848,8 +8842,8 @@ const EI_STAGES = ['Artículo validado', 'Borrador completo entregado', 'Devoluc
 function eiCalendar() {
   const C = store.get('eiCal2', {});
   return `<h2 style="margin-top:22px">Calendario de la carpeta</h2>
-    <div class="fb info" style="max-width:1000px;margin-top:0"><b class="h">Borradores y devoluciones</b>Entrega cada borrador completo (con diagrama, evaluación y conclusión) desde el editor del comentario. Tu profesor te devuelve consejos generales, tú mejoras el texto y vuelves a entregarlo. Cada entrega y cada devolución quedan registradas con su fecha. Cuando el comentario esté listo, entrega la <b>versión final</b>.</div>
-    <div class="tscroll"><table class="dtab plan"><thead><tr><th>Comentario</th>${EI_STAGES.map(s => `<th>${s}</th>`).join('')}</tr></thead><tbody>${Object.entries(EI_UNITS).map(([u, n]) => `<tr><th scope="row">U${u} · ${n}</th>${EI_STAGES.map((s, i) => { const v = (C[u] || {})[i] || {}, pz = plazo(u, i), auto = eiAutoDone(u, i); return `<td>${pz ? `<div class="small"><b>Plazo: ${fdate(pz)}</b><span class="muted"> (profesor)</span></div>` : `<input type="date" class="inp eicd" data-u="${u}" data-i="${i}" value="${esc(v.d || '')}" aria-label="${n}: ${s}">`}<label class="ppdone" style="margin-top:4px"><input type="checkbox" class="eicx" data-u="${u}" data-i="${i}"${v.ok || auto ? ' checked' : ''}${auto ? ' disabled' : ''}> Hecho</label></td>`; }).join('')}</tr>`).join('')}</tbody></table></div>`;
+    <div class="fb info" style="max-width:1000px;margin-top:0"><b class="h">Un solo borrador con devolución</b>Según la guía del IB, el profesor lee <b>un borrador</b> de cada comentario y te aconseja, de forma oral o escrita, cómo mejorarlo, pero no escribe comentarios en el borrador ni lo modifica. <b>La siguiente versión que entregues es la definitiva.</b> Entrega el borrador completo (con diagrama, evaluación y conclusión) para aprovechar esa única devolución.</div>
+    <div class="tscroll"><table class="dtab plan"><thead><tr><th>Comentario</th>${EI_STAGES.map(s => `<th>${s}</th>`).join('')}</tr></thead><tbody>${Object.entries(EI_UNITS).map(([u, n]) => `<tr><th scope="row">U${u} · ${n}</th>${EI_STAGES.map((s, i) => { const v = (C[u] || {})[i] || {}; return `<td><input type="date" class="inp eicd" data-u="${u}" data-i="${i}" value="${esc(v.d || '')}" aria-label="${n}: ${s}"><label class="ppdone" style="margin-top:4px"><input type="checkbox" class="eicx" data-u="${u}" data-i="${i}"${v.ok ? ' checked' : ''}> Hecho</label></td>`; }).join('')}</tr>`).join('')}</tbody></table></div>`;
 }
 function bindCalendar() {
   const C = store.get('eiCal2', {});
@@ -8857,422 +8851,6 @@ function bindCalendar() {
   app.querySelectorAll('.eicd').forEach(x => x.onchange = () => set(x.dataset.u, x.dataset.i, 'd', x.value));
   app.querySelectorAll('.eicx').forEach(x => x.onchange = () => set(x.dataset.u, x.dataset.i, 'ok', x.checked));
 }
-
-/* =============== 13b · Nube: entregas por rondas, devoluciones, registro de autoría, fechas del curso y panel del profesor =============== */
-const TEACHER_MAIL = 'hrivarola@faith.edu.py';
-const FBX = () => (window.FBX && window.FBX.ok()) ? window.FBX : null;
-const isTeacher = () => !!(FBX() && FBX().isTeacher());
-const fdate = v => { if (!v) return '—'; if (typeof v === 'string') { const [y, m, d] = v.split('-'); return d ? `${d}/${m}/${y}` : v; } return new Date(v).toLocaleDateString('es-PY'); };
-const daysTo = d => Math.round((new Date(d + 'T12:00:00') - new Date(today() + 'T12:00:00')) / 864e5);
-const curso = () => store.get('eiCurso', {}) || {};
-const plazo = (u, i) => (((curso().fechas || {})[u]) || [])[i] || '';
-const wdiff = n => (n > 0 ? '+' : '') + n;
-const fbScore = fb => fb && fb.sc && EI_CRIT.every(([k]) => fb.sc[k] !== undefined && fb.sc[k] !== '') ? EI_CRIT.reduce((s, [k]) => s + +fb.sc[k], 0) : null;
-
-/* Rondas de un comentario: borradores 1, 2, 3… con su devolución, y la versión final */
-function eiRounds(subs, fbs, u) {
-  u = String(u);
-  const ds = subs.filter(s => s.u === u && s.stage === 'b').sort((a, b) => (a.n || 1) - (b.n || 1));
-  const f = subs.find(s => s.u === u && s.stage === 'f');
-  const rounds = ds.map((d, i) => ({ n: d.n || 1, d, prev: i ? ds[i - 1] : null, fb: fbs.find(x => x.u === u && +x.n === +(d.n || 1)) }));
-  return { rounds, f, last: rounds[rounds.length - 1] };
-}
-const stageOf = R => R.f ? 'final' : R.last && !R.last.fb ? 'wait' : R.last ? 'fb' : 'none';
-
-/* ---------- Lado del alumno ---------- */
-const EIR = { st: 'idle', subs: [], fb: [] };
-const eirSig = () => JSON.stringify([EIR.subs.map(s => s.id), EIR.fb.map(x => [x.id, x.edited || x.at]), curso()]);
-async function eiRemoteLoad(force) {
-  const X = FBX(); if (!X || X.isTeacher()) return;
-  if (EIR.st === 'loading' || (EIR.st === 'ok' && !force)) return;
-  const before = eirSig(); EIR.st = 'loading';
-  try {
-    const [m, c] = await Promise.all([X.mine(), X.getConfig()]);
-    EIR.subs = m.subs; EIR.fb = m.fb; EIR.st = 'ok';
-    if (JSON.stringify(c) !== JSON.stringify(curso())) store.set('eiCurso', c);
-  } catch (e) { EIR.st = 'err'; }
-  const r = location.hash.slice(1);
-  if (eirSig() !== before && /^(escribir-ei|ei-[234])$/.test(r)) { const y = window.scrollY; render(); window.scrollTo(0, y); }
-  else if (/^ei-[234]$/.test(r)) { const el = $('.eisub'), u = r.slice(3); if (el) { el.outerHTML = eiSubmitBox(u) || '<div class="eisub" hidden></div>'; bindSubmitBox(u); } }
-  if (/^ei-[234]$/.test(r) && EIR.st === 'ok') markFbSeen(r.slice(3));
-  updateFbBadge();
-}
-function eiStage(u) { const R = eiRounds(EIR.subs, EIR.fb, u), k = stageOf(R); return { k, lock: k === 'final' || k === 'wait', R }; }
-function eiMissing(u) {
-  const w = eiSlot(u), m = [];
-  if (!(w.title && w.source && w.pub)) m.push('los datos de la portada');
-  if (!w.kc) m.push('el concepto clave');
-  EI_BLOCKS.forEach(b => { if (b.k === 'dia' ? !padUsed(w.dia) : !(w.txt[b.k] || '').trim()) m.push(b.k === 'dia' ? 'el diagrama' : `«${b.n}»`); });
-  if (!(w.decl || {}).ok) m.push('la declaración de autoría');
-  return m;
-}
-const fbBlock = (fb, title) => `<div class="eifbtx"><b>${title}</b> <span class="small muted">(${fdate(fb.at)}${fb.edited && fb.edited !== fb.at ? ', actualizada ' + fdate(fb.edited) : ''})</span>${fbScore(fb) !== null ? ` <span class="tag prog">${fbScore(fb)}/14</span>` : ''}<p>${esc(fb.text).replace(/\n/g, '<br>')}</p></div>`;
-function eiHistory(R) {
-  if (!R.rounds.length) return '';
-  return `<details class="eihist"${R.f ? '' : ' open'}><summary>Historial de entregas (${R.rounds.length + (R.f ? 1 : 0)})</summary><ol>${R.rounds.map(r => `<li><b>Borrador ${r.n}</b> · ${fdate(r.d.at)} · ${r.d.words} palabras${r.prev ? ` (${wdiff(r.d.words - r.prev.words)})` : ''}${r.fb ? fbBlock(r.fb, 'Devolución del profesor') : '<div class="small muted">Esperando devolución.</div>'}</li>`).join('')}${R.f ? `<li><b>Versión final</b> · ${fdate(R.f.at)} · ${R.f.words} palabras</li>` : ''}</ol></details>`;
-}
-function eiSubmitBox(u) {
-  const X = FBX();
-  if (X && X.isTeacher()) return '';
-  if (!X) return `<div class="fb info eisub"><b class="h">Entregas al profesor</b>Para entregar tus borradores y recibir las devoluciones, toca <b>Entrar</b> (arriba) y usa tu correo del colegio.</div>`;
-  if (EIR.st !== 'ok') return `<div class="fb info eisub">${EIR.st === 'err' ? 'No se pudo consultar tus entregas. Revisa tu conexión y recarga la página.' : 'Consultando tus entregas…'}</div>`;
-  const S = eiStage(u), R = S.R, w = eiSlot(u), words = eiWords(w);
-  const log = '<p class="small muted" style="margin:8px 0 0">El Taller registra la fecha de cada entrega, cuántas palabras escribes cada día y los textos grandes que pegas. Tu profesor lo usa para seguir tu progreso y confirmar que el trabajo es tuyo.</p>';
-  if (S.k === 'final') return `<div class="fb ok eisub"><b class="h">Versión final entregada · ${fdate(R.f.at)}</b>Entregaste ${R.f.words} palabras. El comentario queda cerrado.${eiHistory(R)}</div>`;
-  if (S.k === 'wait') return `<div class="fb info eisub"><b class="h">Borrador ${R.last.n} entregado · ${fdate(R.last.d.at)}</b>Tu profesor lo está leyendo. Mientras tanto, el comentario queda bloqueado. Cuando llegue la devolución, la verás aquí.${eiHistory(R)}</div>`;
-  const n = R.rounds.length + 1, miss = eiMissing(u), pl = plazo(u, R.rounds.length ? 3 : 1);
-  return `<div class="fb ${R.last ? 'ok' : 'info'} eisub"><b class="h">${R.last ? 'Mejora tu comentario con la devolución' : 'Entrega del borrador'}${pl ? ` · plazo ${fdate(pl)}` : ''}</b>
-    ${R.last ? fbBlock(R.last.fb, `Última devolución (borrador ${R.last.n})`) : 'Entrega el borrador completo. Mientras el profesor lo lee, el comentario queda bloqueado; cuando llegue la devolución, podrás mejorarlo y volver a entregarlo.'}
-    ${miss.length ? `<p class="small" style="margin:8px 0 0;color:var(--bad)">Antes de entregar falta: ${miss.join(', ')}.</p>` : ''}
-    ${words > 800 ? `<p class="small" style="margin:8px 0 0;color:var(--bad)">Tienes ${words} palabras: el moderador deja de leer en la 800.</p>` : ''}
-    <div class="row" style="margin-top:8px" id="eiSubW"><button class="btn primary" type="button" data-sub="${n}" ${miss.length ? 'disabled' : ''}>Entregar borrador ${n}</button>${R.last ? `<button class="btn" type="button" data-sub="f" ${miss.length ? 'disabled' : ''}>Entregar versión final</button>` : ''}</div>
-    ${eiHistory(R)}${log}</div>`;
-}
-function bindSubmitBox(u) {
-  app.querySelectorAll('[data-sub]').forEach(b => b.onclick = () => {
-    const k = b.dataset.sub, final = k === 'f';
-    $('#eiSubW').innerHTML = `<p class="small" style="margin:0 0 6px"><b>¿Seguro?</b> ${final ? 'Después de entregar la versión final ya no podrás cambiar el comentario.' : `Entregas el borrador ${k}. El comentario quedará bloqueado hasta que llegue la devolución.`}</p><button class="btn primary" type="button" id="eiSubOk">Sí, entregar</button> <button class="btn" type="button" id="eiSubNo">Cancelar</button>`;
-    $('#eiSubNo').onclick = () => renderEI(u);
-    $('#eiSubOk').onclick = async e => {
-      const w = eiSlot(u), X = FBX(); e.currentTarget.disabled = true; e.currentTarget.textContent = 'Entregando…';
-      try {
-        await X.submit(u, k, { title: w.title, source: w.source, url: w.url, pub: w.pub, red: w.red, kc: w.kc, words: eiWords(w), txt: { intro: w.txt.intro || '', exp: w.txt.exp || '', eva: w.txt.eva || '' }, diaT: w.diaT || '', dia: JSON.stringify(w.dia || []), decl: JSON.stringify(w.decl || {}) });
-        const C = store.get('eiCal2', {}), i = final ? 3 : 1; C[u] = C[u] || {}; C[u][i] = { ...(C[u][i] || {}), ok: true, d: today() }; store.set('eiCal2', C);
-        EIR.st = 'idle'; await eiRemoteLoad(true); renderEI(u);
-      } catch (x) { $('#eiSubW').innerHTML = `<div class="fb no" style="margin:0">No se pudo entregar (${esc(x.code || x.message)}). ${x.code === 'permission-denied' ? 'Puede que ya esté entregado: recarga la página.' : 'Revisa tu conexión y vuelve a intentarlo.'}</div>`; }
-    };
-  });
-}
-function lockEditor(B) {
-  B.insertAdjacentHTML('afterbegin', '<p class="small eilockmsg">🔒 Comentario bloqueado: está entregado.</p>');
-  B.querySelectorAll('input,textarea,select').forEach(i => { i.readOnly = true; if (i.type === 'checkbox' || i.type === 'radio' || i.tagName === 'SELECT') i.disabled = true; });
-  B.querySelectorAll('.chip,.kcb,[data-cr] .bnum').forEach(b => b.disabled = true);
-  const p = $('#eiPad'); if (p) p.classList.add('eilocked');
-}
-/* Registro de autoría: palabras por día y textos pegados */
-function eiLog(u, pasted) {
-  const L = EIS.log = EIS.log || {}, x = L[u] = L[u] || { d: {}, p: [] };
-  x.d[today()] = eiWords(eiSlot(u));
-  if (pasted) { x.p.push([today(), pasted]); if (x.p.length > 60) x.p.shift(); }
-  eiSnap(u, pasted);
-}
-const eiAutoDone = (u, i) => { const R = eiRounds(EIR.subs, EIR.fb, u); return (i === 1 && R.rounds.length > 0) || (i === 2 && R.rounds.some(r => r.fb)) || (i === 3 && !!R.f); };
-/* Avisos de plazos del profesor */
-function eiDeadlines() {
-  const C = store.get('eiCal2', {}), out = [];
-  Object.entries(EI_UNITS).forEach(([u, n]) => EI_STAGES.forEach((s, i) => {
-    const d = plazo(u, i); if (!d || eiAutoDone(u, i) || ((C[u] || {})[i] || {}).ok) return;
-    const left = daysTo(d); if (left > 7) return;
-    out.push([left, `<b>${n}</b> · ${s}: ${left < 0 ? `<span style="color:var(--bad)">venció hace ${-left} ${-left === 1 ? 'día' : 'días'}</span>` : left === 0 ? '<b>vence hoy</b>' : `faltan ${left} ${left === 1 ? 'día' : 'días'}`} (${fdate(d)})`]);
-  }));
-  if (!out.length) return '';
-  return `<div class="fb no" style="max-width:1000px"><b class="h">Plazos de tu profesor</b><ul style="margin:4px 0;padding-left:18px">${out.sort((a, b) => a[0] - b[0]).map(x => `<li>${x[1]}</li>`).join('')}</ul></div>`;
-}
-
-/* ---------- Panel del profesor ---------- */
-const PROF = { st: 'idle', users: [], subs: [], fb: [], err: '' };
-const pj = (x, k, d) => { try { const v = JSON.parse(((x || {}).data || {})[k]); return v == null ? d : v; } catch (e) { return d; } };
-const profName = x => pj(x, 'alumno', '') || (x.email || '').split('@')[0];
-async function profLoad() {
-  const X = FBX(); if (!X) return; PROF.st = 'loading';
-  try {
-    const [u, s, f, c] = await Promise.all([X.students(), X.allSubs(), X.allFb(), X.getConfig()]);
-    PROF.users = u.filter(x => (x.email || '').toLowerCase() !== TEACHER_MAIL).sort((a, b) => profName(a).localeCompare(profName(b), 'es'));
-    PROF.subs = s; PROF.fb = f; PROF.curso = c; PROF.logs = {}; PROF.st = 'ok';
-  } catch (e) { PROF.st = 'err'; PROF.err = e.code || e.message; }
-  if (location.hash.startsWith('#profesor')) { const y = window.scrollY; render(); window.scrollTo(0, y); }
-}
-const profR = (uid, u) => eiRounds(PROF.subs.filter(s => s.uid === uid), PROF.fb.filter(x => x.uid === uid), u);
-const stgTag = R => { const k = stageOf(R); return k === 'final' ? ['Versión final', 'ok'] : k === 'wait' ? [`Borrador ${R.last.n} por devolver`, 'late'] : k === 'fb' ? [`${R.rounds.length} ${R.rounds.length === 1 ? 'ronda' : 'rondas'} devueltas`, 'prog'] : ['Sin entregar', '']; };
-const wordsOf = w => w ? EI_BLOCKS.reduce((s, b) => s + (b.bud ? wc((w.txt || {})[b.k]) : 0), 0) : 0;
-function profGate() {
-  if (!window.FBX || !FBX()) { app.innerHTML = '<h1>Panel del profesor</h1><p class="lede">Entra con la cuenta del profesor (botón «Entrar», arriba) para ver esta página.</p>'; return false; }
-  if (!isTeacher()) { app.innerHTML = '<h1>Panel del profesor</h1><p class="lede">Esta página es solo para el profesor.</p>'; return false; }
-  if (PROF.st === 'idle') profLoad();
-  if (PROF.st !== 'ok') { app.innerHTML = `<div class="eyebrow">Solo para el profesor</div><h1>Panel del profesor</h1><div class="fb ${PROF.st === 'err' ? 'no' : 'info'}">${PROF.st === 'err' ? `No se pudieron leer los datos (${esc(PROF.err)}). <button class="btn" type="button" id="pfR">Reintentar</button>` : 'Cargando el trabajo de los alumnos…'}</div>`; const r = $('#pfR'); if (r) r.onclick = () => { PROF.st = 'idle'; render(); }; return false; }
-  return true;
-}
-function renderProf() {
-  if (!profGate()) return;
-  const pend = [];
-  const rows = PROF.users.map(x => {
-    const E = pj(x, 'ei', { s: {} }), cells = Object.keys(EI_UNITS).map(u => {
-      const w = (E.s || {})[u], R = profR(x.uid, u), [t, cl] = stgTag(R);
-      if (stageOf(R) === 'wait') pend.push([x, u, R.last.n]);
-      const blocks = w ? EI_BLOCKS.filter(b => b.k === 'dia' ? padUsed(w.dia) : (w.txt || {})[b.k]).length : 0;
-      const sc = R.rounds.map(r => fbScore(r.fb)).filter(v => v !== null);
-      return `<td>${w && (w.title || blocks) ? `<span class="small">${wordsOf(w)} pal. · ${blocks}/${EI_BLOCKS.length} bloques${w.kc ? ' · ' + KC[w.kc] : ''}</span><br>` : '<span class="small muted">Sin empezar</span><br>'}<span class="tag ${cl}">${t}</span>${sc.length ? `<div class="small">Puntajes: ${sc.join(' → ')}</div>` : ''}</td>`;
-    }).join('');
-    return `<tr><th scope="row"><button class="linkb" type="button" data-go="profesor-${x.uid}">${esc(profName(x))}</button><div class="small muted">${esc(x.email || '')}${pj(x, 'curso', '') ? ' · ' + esc(pj(x, 'curso', '')) : ''}</div></th>${cells}<td class="small">${fdate(x.updated)}</td></tr>`;
-  }).join('');
-  const F = (PROF.curso || {}).fechas || {};
-  app.innerHTML = `<div class="eyebrow">Solo para el profesor</div><h1>Panel del profesor</h1>
-    <p class="lede">Avance de la Evaluación Interna de cada alumno que entró con su cuenta. Toca un nombre para ver sus entregas, dar devoluciones y descargar su informe.</p>
-    <div class="row" style="margin-bottom:10px"><button class="btn" type="button" id="pfR">Actualizar</button><button class="btn primary" type="button" id="pfCsv">Descargar seguimiento (Excel)</button><span class="small muted">${PROF.users.length} ${PROF.users.length === 1 ? 'alumno' : 'alumnos'}</span></div>
-    ${pend.length ? `<div class="fb no"><b class="h">Borradores por devolver: ${pend.length}</b>${pend.map(([x, u, n]) => `<button class="linkb" type="button" data-go="profesor-${x.uid}">${esc(profName(x))} · ${EI_UNITS[u]} · borrador ${n}</button>`).join(' · ')}</div>` : '<div class="fb ok">No hay borradores pendientes de devolución.</div>'}
-    <div class="tscroll"><table class="dtab plan pftab"><thead><tr><th>Alumno</th>${Object.values(EI_UNITS).map(n => `<th>${n}</th>`).join('')}<th>Última actividad</th></tr></thead><tbody>${rows || `<tr><td colspan="5">Todavía no hay alumnos con cuenta.</td></tr>`}</tbody></table></div>
-    ${profSummaryHtml()}
-    <h2 style="margin-top:24px">Fechas del curso</h2>
-    <p class="small muted" style="max-width:1000px;margin-top:-4px">Los plazos que pongas aquí aparecen en el calendario de todos los alumnos, con aviso cuando faltan 7 días o menos. La fecha de «Versión final» es también la fecha límite del planificador.</p>
-    <div class="tscroll"><table class="dtab plan"><thead><tr><th>Comentario</th>${EI_STAGES.map(s => `<th>${s}</th>`).join('')}</tr></thead><tbody>${Object.entries(EI_UNITS).map(([u, n]) => `<tr><th scope="row">U${u} · ${n}</th>${EI_STAGES.map((s, i) => `<td><input type="date" class="inp pff" data-u="${u}" data-i="${i}" value="${esc((F[u] || [])[i] || '')}" aria-label="${n}: ${s}"></td>`).join('')}</tr>`).join('')}</tbody></table></div>
-    <div class="row" style="margin-top:8px"><button class="btn primary" type="button" id="pfSave">Guardar fechas</button><span id="pfMsg" class="small"></span></div>`;
-  $('#pfR').onclick = () => { PROF.st = 'idle'; render(); };
-  $('#pfCsv').onclick = profCsv; bindSummary();
-  $('#pfSave').onclick = async e => {
-    const fechas = {}; app.querySelectorAll('.pff').forEach(i => { (fechas[i.dataset.u] = fechas[i.dataset.u] || ['', '', '', ''])[+i.dataset.i] = i.value; });
-    e.currentTarget.disabled = true;
-    try { await FBX().setConfig({ ...(PROF.curso || {}), fechas }); PROF.curso = { ...(PROF.curso || {}), fechas }; $('#pfMsg').textContent = 'Fechas guardadas: los alumnos las verán al abrir la Evaluación Interna.'; }
-    catch (x) { $('#pfMsg').textContent = 'No se pudieron guardar (' + (x.code || x.message) + ').'; }
-    e.currentTarget.disabled = false;
-  };
-}
-/* Filas de seguimiento: una por entrega (o una por comentario sin entregas) */
-function profRows(only) {
-  const out = [], dd = (a, b) => a && b ? Math.round((b - a) / 864e5) : '';
-  PROF.users.filter(x => !only || x.uid === only).forEach(x => {
-    const E = pj(x, 'ei', { s: {} }), base = [profName(x), x.email || '', pj(x, 'curso', '')];
-    Object.entries(EI_UNITS).forEach(([u, un]) => {
-      const w = (E.s || {})[u] || {}, R = profR(x.uid, u), head = [...base, un, w.kc ? KC[w.kc] : '', w.title || '', w.source || ''];
-      if (!R.rounds.length && !R.f) { out.push([...head, 'Sin entregas', '', wordsOf(w) || '', '', '', '', ...EI_CRIT.map(() => ''), '', '']); return; }
-      R.rounds.forEach(r => { const fb = r.fb || {}; out.push([...head, 'Borrador ' + r.n, fdate(r.d.at), r.d.words, r.prev ? r.d.words - r.prev.words : '', fb.at ? fdate(fb.at) : 'Pendiente', dd(r.d.at, fb.at), ...EI_CRIT.map(([k]) => fb.sc && fb.sc[k] !== undefined ? fb.sc[k] : ''), fbScore(r.fb) ?? '', fb.text || '']); });
-      if (R.f) out.push([...head, 'Versión final', fdate(R.f.at), R.f.words, R.last ? R.f.words - R.last.d.words : '', '', '', ...EI_CRIT.map(() => ''), '', '']);
-    });
-  });
-  return out;
-}
-const PROF_HEAD = ['Alumno', 'Correo', 'Curso', 'Comentario', 'Concepto clave', 'Artículo', 'Fuente', 'Entrega', 'Fecha de entrega', 'Palabras', 'Cambio de palabras', 'Fecha de devolución', 'Días hasta la devolución', ...EI_CRIT.map(([k, n]) => `${k} ${n}`), 'Total /14', 'Devolución'];
-function profCsv() {
-  const q = v => { const s = String(v ?? ''); return /[;"\n\r]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s; };
-  const csv = '﻿' + [PROF_HEAD, ...profRows()].map(r => r.map(q).join(';')).join('\r\n');
-  saveBlob(new Blob([csv], { type: 'text/csv;charset=utf-8' }), `Seguimiento-EI-${today()}.csv`);
-}
-async function profDocx(x, btn) {
-  const o = btn.textContent; btn.disabled = true; btn.textContent = 'Generando…';
-  try {
-    const D = await loadDocx();
-    const { Document, Packer, Paragraph, TextRun, Table, TableRow, TableCell, WidthType, HeadingLevel, ShadingType } = D;
-    const P = (t, o2 = {}) => new Paragraph({ spacing: { after: 80 }, children: [new TextRun({ text: String(t ?? ''), size: 21, ...o2 })] });
-    const H = (t, l) => new Paragraph({ heading: l, spacing: { before: 200, after: 100 }, children: [new TextRun({ text: t })] });
-    const cell = (t, head) => new TableCell({ shading: head ? { type: ShadingType.CLEAR, fill: 'E8EDF5', color: 'auto' } : undefined, children: [new Paragraph({ children: [new TextRun({ text: String(t ?? ''), bold: !!head, size: 18 })] })] });
-    const T = (head, rows) => new Table({ width: { size: 100, type: WidthType.PERCENTAGE }, rows: [new TableRow({ tableHeader: true, children: head.map(h => cell(h, true)) }), ...rows.map(r => new TableRow({ children: r.map(v => cell(v)) }))] });
-    const E = pj(x, 'ei', { s: {}, log: {} }), kids = [
-      new Paragraph({ heading: HeadingLevel.TITLE, children: [new TextRun({ text: 'Informe de seguimiento · Evaluación Interna' })] }),
-      P(`Alumno: ${profName(x)} · ${x.email || ''}${pj(x, 'curso', '') ? ' · ' + pj(x, 'curso', '') : ''}`, { bold: true }),
-      P(`Economía IB · Prof. Econ. Hugo Rivarola · Informe generado el ${fdate(today())}`, { color: '555555' })];
-    Object.entries(EI_UNITS).forEach(([u, un]) => {
-      const w = (E.s || {})[u] || {}, R = profR(x.uid, u), L = (E.log || {})[u];
-      kids.push(H(`Comentario de ${un}`, HeadingLevel.HEADING_1));
-      if (!w.title && !R.rounds.length) { kids.push(P('Sin empezar.', { italics: true })); return; }
-      kids.push(P(`Artículo: ${w.title || '—'} · ${w.source || '—'} · publicado ${fdate(w.pub)} · Concepto clave: ${w.kc ? KC[w.kc] : '—'}`));
-      kids.push(P(`Estado: ${stgTag(R)[0]} · Palabras actuales: ${wordsOf(w)}`));
-      if (R.rounds.length || R.f) {
-        kids.push(H('Entregas y devoluciones', HeadingLevel.HEADING_2));
-        kids.push(T(['Entrega', 'Fecha', 'Palabras', 'Cambio', 'Devolución', 'Puntaje /14'], [
-          ...R.rounds.map(r => ['Borrador ' + r.n, fdate(r.d.at), r.d.words, r.prev ? wdiff(r.d.words - r.prev.words) : '—', r.fb ? fdate(r.fb.at) : 'Pendiente', fbScore(r.fb) ?? '—']),
-          ...(R.f ? [['Versión final', fdate(R.f.at), R.f.words, R.last ? wdiff(R.f.words - R.last.d.words) : '—', '—', '—']] : [])]));
-        R.rounds.filter(r => r.fb).forEach(r => {
-          kids.push(P(`Devolución del borrador ${r.n} (${fdate(r.fb.at)})${fbScore(r.fb) !== null ? ` · ${EI_CRIT.map(([k]) => k + ' ' + r.fb.sc[k]).join(', ')} · Total ${fbScore(r.fb)}/14` : ''}`, { bold: true }));
-          String(r.fb.text || '').split(/\n+/).forEach(t => kids.push(P(t)));
-        });
-      }
-      const CL = Array.isArray((PROF.logs || {})[x.uid]) ? PROF.logs[x.uid].filter(y => y.u === String(u)) : [];
-      if (CL.length) {
-        kids.push(H('Registro de autoría (nube, hora del servidor)', HeadingLevel.HEADING_2));
-        let pv = 0; kids.push(T(['Fecha y hora', 'Palabras', 'Cambio', 'Pegado'], CL.map(y => { const dl = y.words - pv; pv = y.words; return [new Date(y.at).toLocaleString('es-PY', { dateStyle: 'short', timeStyle: 'short' }), y.words, wdiff(dl) + (dl >= 300 ? ' ⚠' : ''), y.paste ? y.paste + ' palabras' : '—']; })));
-      }
-      if (L && Object.keys(L.d || {}).length) {
-        kids.push(H('Registro del dispositivo (orientativo)', HeadingLevel.HEADING_2));
-        let prev = 0; kids.push(T(['Día', 'Palabras al cierre', 'Cambio'], Object.keys(L.d).sort().map(d => { const v = L.d[d], dl = v - prev; prev = v; return [fdate(d), v, wdiff(dl) + (dl >= 300 ? ' ⚠' : '')]; })));
-        const p = (L.p || []).filter(y => y[1] >= 25);
-        kids.push(P(p.length ? 'Textos pegados de 25 palabras o más: ' + p.map(y => `${fdate(y[0])} (${y[1]} palabras)`).join(' · ') : 'No pegó textos largos.'));
-      }
-    });
-    kids.push(P('El registro de autoría es orientativo: se basa en los datos que guarda el Taller en el dispositivo del alumno.', { italics: true, color: '666666', size: 18 }));
-    const doc = new Document({ creator: 'Prof. Econ. Hugo Rivarola', title: 'Informe de seguimiento', styles: { default: { document: { run: { font: 'Calibri' } } } }, sections: [{ children: kids }] });
-    saveBlob(await Packer.toBlob(doc), `Seguimiento-EI-${fileSafe(profName(x))}.docx`);
-    btn.textContent = 'Descargado ✓';
-  } catch (e) { btn.textContent = 'No se pudo generar'; }
-  setTimeout(() => { btn.textContent = o; btn.disabled = false; }, 2500);
-}
-function profTxt(t) { return EI_BLOCKS.filter(b => b.bud).map(b => `<h4>${b.n} <span class="small muted">(${wc((t || {})[b.k])} palabras)</span></h4>${String((t || {})[b.k] || '').trim() ? String(t[b.k]).split(/\n+/).map(p => `<p>${esc(p)}</p>`).join('') : '<p class="small muted">Vacío.</p>'}`).join(''); }
-function profLog(L) {
-  if (!L || !Object.keys(L.d || {}).length) return '<p class="small muted">Sin registro todavía (empezó a registrarse con la cuenta en la nube).</p>';
-  let prev = 0;
-  const days = Object.keys(L.d).sort().map(d => { const v = L.d[d], dl = v - prev; prev = v; return `<tr${dl >= 300 ? ' class="pfjump"' : ''}><td>${fdate(d)}</td><td>${v}</td><td>${wdiff(dl)}${dl >= 300 ? ' ⚠' : ''}</td></tr>`; }).join('');
-  const p = (L.p || []).filter(x => x[1] >= 25);
-  return `<div class="tscroll"><table class="dtab pflog"><thead><tr><th>Día</th><th>Palabras al cierre</th><th>Cambio</th></tr></thead><tbody>${days}</tbody></table></div>
-    <p class="small">${p.length ? `<b>Textos pegados de 25 palabras o más:</b> ${p.map(x => `${fdate(x[0])} (${x[1]} pal.)`).join(' · ')}` : 'No pegó textos largos.'}</p>
-    <p class="small muted">⚠ marca días con 300 palabras o más de golpe: conviene preguntar cómo trabajó. El registro es orientativo: un alumno con conocimientos técnicos podría alterarlo.</p>`;
-}
-function profRoundHtml(uid, u, r, isLast) {
-  const fb = r.fb || {}, sc = fb.sc || {};
-  return `<div class="pfround"><h3>Borrador ${r.n} · ${fdate(r.d.at)} · ${r.d.words} palabras${r.prev ? ` (${wdiff(r.d.words - r.prev.words)} respecto del borrador ${r.prev.n})` : ''}</h3>
-    <details${isLast && !r.fb ? ' open' : ''}><summary>Leer el borrador ${r.n}</summary><div class="mtext">${profTxt(r.d.txt)}</div></details>
-    <div class="pfsc" data-n="${r.n}"><span class="small"><b>Puntaje estimado (opcional):</b></span>${EI_CRIT.map(([k, n, m]) => `<label class="small">${k}<select class="dsel" data-k="${k}" title="${n}"><option value="">–</option>${Array.from({ length: m + 1 }, (_, v) => `<option${sc[k] !== undefined && +sc[k] === v ? ' selected' : ''}>${v}</option>`).join('')}</select></label>`).join('')}</div>
-    <label class="dbf" style="margin-top:8px"><span>Devolución del borrador ${r.n}</span><textarea rows="6" class="pffb" data-n="${r.n}">${esc(fb.text || '')}</textarea></label>
-    <div class="row" style="margin-top:6px"><button class="btn primary" type="button" data-pfsend="${u}" data-n="${r.n}">${r.fb ? 'Actualizar devolución' : 'Enviar devolución'}</button>${isLast ? `<button class="btn" type="button" data-pfre="${uid}_${u}_${r.n}">Reabrir borrador ${r.n}</button>` : ''}<span class="small pfm" data-n="${r.n}">${r.fb ? `Enviada el ${fdate(fb.at)}${fb.edited && fb.edited !== fb.at ? ` (actualizada ${fdate(fb.edited)})` : ''} · ${Math.round((fb.at - r.d.at) / 864e5)} días después de la entrega. El alumno ya la ve.` : ''}</span></div></div>`;
-}
-function renderProfStudent(uid) {
-  if (!profGate()) return;
-  const x = PROF.users.find(y => y.uid === uid); if (!x) return renderProf();
-  const E = pj(x, 'ei', { s: {}, log: {} });
-  app.innerHTML = `<button class="crumb" type="button" data-go="profesor">← Panel del profesor</button><div class="eyebrow" style="margin-top:12px">Solo para el profesor</div><h1>${esc(profName(x))}</h1>
-    <p class="small muted">${esc(x.email || '')} · Última actividad: ${fdate(x.updated)}</p>
-    <div class="row"><button class="btn primary" type="button" id="pfDoc">Descargar informe de seguimiento (Word)</button></div>
-    ${Object.entries(EI_UNITS).map(([u, n]) => {
-      const w = (E.s || {})[u], R = profR(uid, u), [t, cl] = stgTag(R);
-      return `<section class="card pfcard" data-u="${u}"><div class="card-b"><h2 style="margin-bottom:4px">${n} <span class="tag ${cl}" style="font-size:13px;vertical-align:middle">${t}</span></h2>
-        ${w && (w.title || wordsOf(w)) ? `<p class="small"><b>Artículo:</b> ${w.url ? `<a href="${esc(w.url)}" target="_blank" rel="noopener">${esc(w.title || 'sin título')}</a>` : esc(w.title || 'sin título')} · ${esc(w.source || '—')} · publicado ${fdate(w.pub)}<br><b>Concepto clave:</b> ${w.kc ? KC[w.kc] : '—'} · <b>Ahora:</b> ${wordsOf(w)} palabras</p>` : '<p class="small muted">Sin empezar.</p>'}
-        ${R.rounds.map((r, i) => profRoundHtml(uid, u, r, i === R.rounds.length - 1 && !R.f)).join('')}
-        ${R.f ? `<div class="pfround"><h3>Versión final · ${fdate(R.f.at)} · ${R.f.words} palabras${R.last ? ` (${wdiff(R.f.words - R.last.d.words)} respecto del borrador ${R.last.n})` : ''}</h3>
-          <details><summary>Leer la versión final</summary><div class="mtext">${profTxt(R.f.txt)}</div></details>
-          <div class="row" style="margin-top:6px"><button class="btn" type="button" data-pfre="${uid}_${u}_f">Reabrir versión final</button></div></div>` : ''}
-        <h3 style="margin-top:16px">Registro de autoría</h3>${profCloudLog(uid, u)}<details><summary>Registro del dispositivo (orientativo)</summary>${profLog((E.log || {})[u])}</details>
-        ${w && padUsed(w.dia) ? `<details><summary>Diagrama actual${w.diaT ? ': ' + esc(w.diaT) : ''}</summary><div class="pfdia" data-u="${u}"></div></details>` : ''}
-        ${w && wordsOf(w) ? `<details><summary>Texto actual (lo que tiene hoy en el Taller)</summary><div class="mtext">${profTxt(w.txt)}</div></details>` : ''}
-      </div></section>`;
-    }).join('')}`;
-  if (!(PROF.logs || {})[uid]) profLogsLoad(uid);
-  $('#pfDoc').onclick = e => profDocx(x, e.currentTarget);
-  app.querySelectorAll('.pfdia').forEach(d => { const w = E.s[d.dataset.u]; d.parentNode.addEventListener('toggle', () => { if (!d.dataset.done) { d.dataset.done = 1; sketchPad(d, w.dia, null, { readOnly: true, file: 'EI-' + fileSafe(profName(x)) + '-' + d.dataset.u }); } }); });
-  app.querySelectorAll('[data-pfsend]').forEach(b => b.onclick = async () => {
-    const u = b.dataset.pfsend, n = b.dataset.n, sec = b.closest('.pfcard'), t = sec.querySelector(`.pffb[data-n="${n}"]`).value.trim(), m = sec.querySelector(`.pfm[data-n="${n}"]`);
-    if (!t) { m.textContent = 'Escribe la devolución antes de enviarla.'; return; }
-    const sc = {}; sec.querySelectorAll(`.pfsc[data-n="${n}"] select`).forEach(s => { if (s.value !== '') sc[s.dataset.k] = +s.value; });
-    const old = profR(uid, u).rounds.find(r => String(r.n) === String(n));
-    b.disabled = true; m.textContent = 'Enviando…';
-    try { await FBX().setFb(uid, u, n, t, sc, old && old.fb ? old.fb.at : null); PROF.st = 'idle'; await profLoad(); }
-    catch (x2) { m.textContent = 'No se pudo enviar (' + (x2.code || x2.message) + ').'; b.disabled = false; }
-  });
-  app.querySelectorAll('[data-pfre]').forEach(b => b.onclick = async () => {
-    if (b.dataset.sure !== '1') { b.dataset.sure = '1'; b.textContent = 'Confirmar: se borra esta entrega y el alumno puede volver a entregarla'; return; }
-    b.disabled = true;
-    try { await FBX().reopen(b.dataset.pfre); PROF.st = 'idle'; await profLoad(); }
-    catch (x2) { b.textContent = 'No se pudo reabrir (' + (x2.code || x2.message) + ')'; }
-  });
-}
-/* ---------- Registro de autoría en la nube: una foto por hora con hora del servidor (no se puede modificar ni borrar) ---------- */
-const SNAP = { t: {}, paste: {} };
-const snapKey = u => `${u}_${today()}_${String(new Date().getHours()).padStart(2, '0')}`;
-const snapDone = () => { try { return JSON.parse(localStorage.getItem('tallerEcoSnap') || '{}'); } catch (e) { return {}; } };
-function eiSnap(u, pasted) {
-  if (pasted) SNAP.paste[u] = (SNAP.paste[u] || 0) + pasted;
-  const X = FBX(); if (!X || X.isTeacher()) return;
-  clearTimeout(SNAP.t[u]);
-  SNAP.t[u] = setTimeout(async () => {
-    const k = snapKey(u), D = snapDone(), w = eiSlot(u), words = eiWords(w);
-    if (D[k] === words && !SNAP.paste[u]) return;
-    const id = D[k] !== undefined ? k + '_' + Date.now().toString(36) : k;
-    try {
-      await X.snap(id, { u: String(u), date: today(), words, paste: SNAP.paste[u] || 0, txt: { intro: w.txt.intro || '', exp: w.txt.exp || '', eva: w.txt.eva || '' } });
-      D[k] = words; SNAP.paste[u] = 0; try { localStorage.setItem('tallerEcoSnap', JSON.stringify(D)); } catch (e) { }
-    } catch (e) { }
-  }, 20000);
-}
-
-/* ---------- Aviso de devolución nueva ---------- */
-const fbSig = fb => fb.id + '@' + (fb.edited || fb.at);
-const fbUnseen = () => { const seen = store.get('eiSeenFb', []); return EIR.fb.filter(f => !seen.includes(fbSig(f))); };
-function markFbSeen(u) {
-  const mine = EIR.fb.filter(f => f.u === String(u)); if (!mine.length) return;
-  const seen = store.get('eiSeenFb', []), add = mine.map(fbSig).filter(s => !seen.includes(s));
-  if (add.length) { store.set('eiSeenFb', [...seen, ...add].slice(-200)); updateFbBadge(); }
-}
-function updateFbBadge() {
-  const nav = document.querySelector('.nav [data-go="escribir"]'); if (!nav) return;
-  let b = document.getElementById('fbBadge');
-  if (!b) { nav.insertAdjacentHTML('beforeend', '<span class="badge" id="fbBadge" hidden title="Devoluciones nuevas del profesor">0</span>'); b = document.getElementById('fbBadge'); }
-  const n = FBX() && !isTeacher() && EIR.st === 'ok' ? fbUnseen().length : 0;
-  b.textContent = n; b.hidden = n === 0;
-}
-function eiNewFbBox() {
-  if (!FBX() || EIR.st !== 'ok') return '';
-  const nf = fbUnseen(); if (!nf.length) return '';
-  return `<div class="fb ok" style="max-width:1000px"><b class="h">Tienes ${nf.length === 1 ? 'una devolución nueva' : nf.length + ' devoluciones nuevas'} del profesor</b>${nf.map(f => `<button class="linkb" type="button" data-go="ei-${f.u}">${EI_UNITS[f.u]} · borrador ${f.n}</button>`).join(' · ')}</div>`;
-}
-
-/* ---------- Panel: registro de autoría de la nube ---------- */
-async function profLogsLoad(uid) {
-  PROF.logs = PROF.logs || {};
-  try { PROF.logs[uid] = (await FBX().logsOf(uid)).sort((a, b) => a.at - b.at); }
-  catch (e) { PROF.logs[uid] = { err: e.code || e.message }; }
-  if (location.hash.slice(1) === 'profesor-' + uid) { const y = window.scrollY; render(); window.scrollTo(0, y); }
-}
-function profCloudLog(uid, u) {
-  const L = (PROF.logs || {})[uid];
-  if (!L) return '<p class="small muted">Cargando el registro de la nube…</p>';
-  if (L.err) return `<p class="small" style="color:var(--bad)">No se pudo leer el registro de la nube (${esc(L.err)}).</p>`;
-  const rows = L.filter(x => x.u === String(u));
-  if (!rows.length) return '';
-  let prev = 0;
-  return `<div class="tscroll"><table class="dtab pflog"><thead><tr><th>Fecha y hora (servidor)</th><th>Palabras</th><th>Cambio</th><th>Pegado</th><th>Texto</th></tr></thead><tbody>${rows.map(x => { const dl = x.words - prev; prev = x.words; return `<tr${dl >= 300 ? ' class="pfjump"' : ''}><td>${new Date(x.at).toLocaleString('es-PY', { dateStyle: 'short', timeStyle: 'short' })}</td><td>${x.words}</td><td>${wdiff(dl)}${dl >= 300 ? ' ⚠' : ''}</td><td>${x.paste ? x.paste + ' pal.' : '—'}</td><td><details><summary>ver</summary><div class="mtext">${profTxt(x.txt)}</div></details></td></tr>`; }).join('')}</tbody></table></div>
-    <p class="small muted">Fotos guardadas en la nube con la hora del servidor: el alumno no puede modificarlas ni borrarlas.</p>`;
-}
-
-/* ---------- Panel: resumen del curso ---------- */
-function profSummary() {
-  const avg = a => a.length ? a.reduce((s, v) => s + v, 0) / a.length : null, f1 = v => v === null ? '—' : fmt(v, 1);
-  return Object.entries(EI_UNITS).map(([u, un]) => {
-    const Rs = PROF.users.map(x => profR(x.uid, u)), n = PROF.users.length;
-    const withD = Rs.filter(R => R.rounds.length), fin = Rs.filter(R => R.f);
-    const first = [], last = [], perK = Object.fromEntries(EI_CRIT.map(([k]) => [k, [[], []]])), lag = [];
-    Rs.forEach(R => {
-      const sc = R.rounds.filter(r => fbScore(r.fb) !== null);
-      if (sc.length) { first.push(fbScore(sc[0].fb)); last.push(fbScore(sc[sc.length - 1].fb)); EI_CRIT.forEach(([k]) => { perK[k][0].push(+sc[0].fb.sc[k]); perK[k][1].push(+sc[sc.length - 1].fb.sc[k]); }); }
-      R.rounds.forEach(r => { if (r.fb && r.fb.at && r.d.at) lag.push((r.fb.at - r.d.at) / 864e5); });
-    });
-    const p1 = plazo(u, 1) || (((PROF.curso || {}).fechas || {})[u] || [])[1], p3 = (((PROF.curso || {}).fechas || {})[u] || [])[3];
-    const onTime = (list, d) => d ? `${list.filter(t => t && new Date(t) <= new Date(d + 'T23:59:59')).length} de ${list.length}` : 'sin plazo';
-    return { u, un, n, d: withD.length, f: fin.length, rounds: avg(withD.map(R => R.rounds.length)), first: avg(first), last: avg(last), perK: EI_CRIT.map(([k]) => [k, avg(perK[k][0]), avg(perK[k][1])]), lag: avg(lag), t1: onTime(withD.map(R => R.rounds[0].d.at), p1), t3: onTime(fin.map(R => R.f.at), p3), nsc: first.length, f1 };
-  });
-}
-function profSummaryHtml() {
-  const S = profSummary(), f1 = v => v === null ? '—' : fmt(v, 1);
-  return `<h2 style="margin-top:24px">Resumen del curso</h2>
-    <p class="small muted" style="max-width:1000px;margin-top:-4px">La mejora compara el puntaje de la primera devolución con puntaje y el de la última, solo de los alumnos a los que les pusiste puntaje.</p>
-    <div class="tscroll"><table class="dtab plan pfsum"><thead><tr><th>Indicador</th>${S.map(s => `<th>${s.un}</th>`).join('')}</tr></thead><tbody>
-      <tr><th scope="row">Entregaron al menos un borrador</th>${S.map(s => `<td>${s.d} de ${s.n}</td>`).join('')}</tr>
-      <tr><th scope="row">Versión final entregada</th>${S.map(s => `<td>${s.f} de ${s.n}</td>`).join('')}</tr>
-      <tr><th scope="row">Borradores por alumno (promedio)</th>${S.map(s => `<td>${f1(s.rounds)}</td>`).join('')}</tr>
-      <tr><th scope="row">Puntaje /14: primera → última devolución</th>${S.map(s => `<td>${s.first === null ? '—' : `${f1(s.first)} → <b>${f1(s.last)}</b> (${wdiffD(s.last - s.first)})`}<div class="small muted">${s.nsc} con puntaje</div></td>`).join('')}</tr>
-      ${EI_CRIT.map(([k, nm], i) => `<tr><th scope="row">${k} · ${nm}</th>${S.map(s => `<td>${s.perK[i][1] === null ? '—' : `${f1(s.perK[i][1])} → <b>${f1(s.perK[i][2])}</b>`}</td>`).join('')}</tr>`).join('')}
-      <tr><th scope="row">Días hasta la devolución (promedio)</th>${S.map(s => `<td>${f1(s.lag)}</td>`).join('')}</tr>
-      <tr><th scope="row">Borrador 1 a tiempo</th>${S.map(s => `<td>${s.t1}</td>`).join('')}</tr>
-      <tr><th scope="row">Versión final a tiempo</th>${S.map(s => `<td>${s.t3}</td>`).join('')}</tr>
-    </tbody></table></div>
-    <div class="row" style="margin-top:8px"><button class="btn" type="button" id="pfSumCsv">Descargar resumen (Excel)</button><button class="btn" type="button" id="pfBak">Descargar respaldo completo</button></div>
-    <p class="small muted">El plan gratuito de Firebase no hace copias de seguridad: descarga el respaldo completo una vez por mes y guárdalo en tu computadora o en Drive.</p>`;
-}
-const wdiffD = v => (v > 0 ? '+' : '') + fmt(v, 1);
-function bindSummary() {
-  $('#pfSumCsv').onclick = () => {
-    const S = profSummary(), f1 = v => v === null ? '' : fmt(v, 1), q = v => { const s = String(v ?? ''); return /[;"\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s; };
-    const rows = [['Indicador', ...S.map(s => s.un)],
-      ['Alumnos con cuenta', ...S.map(s => s.n)], ['Entregaron al menos un borrador', ...S.map(s => s.d)], ['Versión final entregada', ...S.map(s => s.f)],
-      ['Borradores por alumno (promedio)', ...S.map(s => f1(s.rounds))], ['Puntaje /14 primera devolución (promedio)', ...S.map(s => f1(s.first))], ['Puntaje /14 última devolución (promedio)', ...S.map(s => f1(s.last))],
-      ...EI_CRIT.flatMap(([k, nm], i) => [[`${k} ${nm} · primera`, ...S.map(s => f1(s.perK[i][1]))], [`${k} ${nm} · última`, ...S.map(s => f1(s.perK[i][2]))]]),
-      ['Días hasta la devolución (promedio)', ...S.map(s => f1(s.lag))], ['Borrador 1 a tiempo', ...S.map(s => s.t1)], ['Versión final a tiempo', ...S.map(s => s.t3)]];
-    saveBlob(new Blob(['﻿' + rows.map(r => r.map(q).join(';')).join('\r\n')], { type: 'text/csv;charset=utf-8' }), `Resumen-EI-${today()}.csv`);
-  };
-  $('#pfBak').onclick = async e => {
-    const b = e.currentTarget, o = b.textContent; b.disabled = true; b.textContent = 'Preparando…';
-    try {
-      const X = FBX(), [users, subs, fb, logs, config] = await Promise.all([X.students(), X.allSubs(), X.allFb(), X.allLogs(), X.getConfig()]);
-      saveBlob(new Blob([JSON.stringify({ generado: new Date().toISOString(), proyecto: 'taller-economia-ib', users, subs, fb, logs, config }, null, 1)], { type: 'application/json' }), `Respaldo-Taller-${today()}.json`);
-      b.textContent = 'Descargado ✓';
-    } catch (x) { b.textContent = 'No se pudo (' + (x.code || x.message) + ')'; }
-    setTimeout(() => { b.textContent = o; b.disabled = false; }, 2500);
-  };
-}
-
-/* Cuando cambia la sesión de la cuenta */
-function updateProfNav() { const n = document.getElementById('navProf'); if (n) n.hidden = !isTeacher(); }
-window.addEventListener('fbx', () => {
-  updateProfNav(); EIR.st = 'idle'; PROF.st = 'idle'; updateFbBadge();
-  const r = location.hash.slice(1);
-  if (FBX() && !isTeacher() && !/^(escribir-ei|ei-[234])$/.test(r)) eiRemoteLoad();
-  if (r.startsWith('profesor') || /^(escribir-ei|ei-[234])$/.test(r)) { const y = window.scrollY; render(); window.scrollTo(0, y); }
-});
 
 /* =============== 14 · Banco de cálculos de la Prueba 2 (solo cálculos del NM) =============== */
 const CALC_ST = store.get('calc', {}), CALC_SER = store.get('calcSer', []);
@@ -10377,7 +9955,7 @@ function eiImport() {
   const L = (Array.isArray(P && P.a) ? P.a : []).filter(a => a && EI_UNITS[a.n] && a.t).slice(0, 3);
   if (!L.length) return;
   const goTo = r => history.replaceState(null, '', location.pathname + '#' + r);
-  if (P.x === 'val') { const a = L[0]; SESS.vArt = { date: a.p || '', src: 'news', type: 'econ', unit: String(a.n), kc: KC[a.k] ? a.k : '', art: { title: String(a.t), source: String(a.m || ''), url: String(a.u || '') } }; return goTo('ei-articulo'); }
+  if (P.x === 'val') { const a = L[0]; SESS.vArt = { date: a.p || '', src: 'news', type: 'econ', unit: String(a.n), kc: KC[a.k] ? a.k : '', art: { title: String(a.t), source: String(a.m || ''), url: String(a.u || ''), orig: !!a.o } }; return goTo('ei-articulo'); }
   const repl = L.filter(a => eiStarted(a.n) && EIS.s[a.n].title !== a.t);
   if (repl.length && !confirm(`Ya tienes empezado el comentario de la Unidad ${repl.map(a => a.n).join(' y ')}. ¿Cambiar su artículo por el nuevo? Lo que ya escribiste se conserva.`)) return goTo('escribir-ei');
   L.forEach(a => {
@@ -10386,216 +9964,11 @@ function eiImport() {
     const used = Object.keys(EI_UNITS).some(x => x !== String(a.n) && !L.some(b => String(b.n) === x) && (EIS.s[x] || {}).kc === a.k);
     if (KC[a.k] && !used) w.kc = a.k;
   });
-  saveEI(); SESS.eiFrom = L.length;
+  saveEI(); SESS.eiFrom = { n: L.length, o: L.every(a => a.o) };
   goTo(L.length === 1 ? 'ei-' + L[0].n : 'escribir-ei');
 }
 eiImport();
 render();
-</script>
-
-<dialog id="acctDlg" class="acdlg" aria-labelledby="acT"></dialog>
-<script type="module">
-/* ---------- Cuenta del colegio y guardado en la nube (Firebase) ---------- */
-const CFG = { apiKey: 'AIzaSyDVi2YIAEOy1lUJBVrXm3CnPBf0C69qPu8', authDomain: 'taller-economia-ib.firebaseapp.com', projectId: 'taller-economia-ib', storageBucket: 'taller-economia-ib.firebasestorage.app', messagingSenderId: '811856123040', appId: '1:811856123040:web:ab041926f03b805a07a5c5' };
-const V = '10.12.2', P = 'tallerEco.', TSK = P + '__ts', DOMAIN = '@faith.edu.py';
-const btn = document.getElementById('acctBtn'), lbl = document.getElementById('acctLbl'), dlg = document.getElementById('acctDlg');
-const e = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-let A = null, F = null, auth = null, db = null, user = null, timer = null, st = 'off', msg = '', last = 0, loadErr = false;
-
-const getTs = () => { try { return JSON.parse(localStorage.getItem(TSK)) || {}; } catch (x) { return {}; } };
-const myKeys = () => Object.keys(localStorage).filter(k => k.startsWith(P) && k !== TSK).map(k => k.slice(P.length));
-const okMail = m => m.trim().toLowerCase().endsWith(DOMAIN);
-const ERR = {
-  'auth/invalid-credential': 'Correo o contraseña incorrectos.', 'auth/wrong-password': 'Correo o contraseña incorrectos.', 'auth/user-not-found': 'No hay una cuenta con ese correo. Créala primero.',
-  'auth/email-already-in-use': 'Ya existe una cuenta con ese correo. Entra o recupera tu contraseña.', 'auth/weak-password': 'La contraseña debe tener al menos 6 caracteres.',
-  'auth/invalid-email': 'Ese correo no es válido.', 'auth/too-many-requests': 'Demasiados intentos. Espera unos minutos y vuelve a probar.',
-  'auth/network-request-failed': 'Sin conexión a internet. Vuelve a intentarlo.', 'permission-denied': 'La nube rechazó el guardado. Verifica tu correo y vuelve a entrar.'
-};
-const errTxt = x => ERR[x && x.code] || 'Algo salió mal. Vuelve a intentarlo.';
-
-function setBtn() {
-  const map = { off: ['Entrar', ''], load: ['Entrar', ''], unv: ['Verifica tu correo', 'warn'], sync: ['Guardando…', 'sync'], ok: ['Guardado', 'ok'], err: ['Sin guardar', 'err'], offline: ['Sin conexión', 'warn'] };
-  const [t, c] = map[st] || map.off;
-  lbl.textContent = user && st !== 'off' ? (st === 'ok' ? user.email.split('@')[0] : t) : 'Entrar';
-  btn.dataset.st = c; btn.title = user ? `${user.email} · ${t}` : 'Entra con tu correo del colegio para guardar tu progreso en la nube';
-}
-
-async function load() {
-  if (A) return true;
-  try {
-    const base = `https://www.gstatic.com/firebasejs/${V}/`;
-    const [ap, au, fs] = await Promise.all([import(base + 'firebase-app.js'), import(base + 'firebase-auth.js'), import(base + 'firebase-firestore.js')]);
-    const app = ap.initializeApp(CFG); A = au; F = fs;
-    auth = au.getAuth(app); auth.languageCode = 'es'; db = fs.getFirestore(app);
-    au.onAuthStateChanged(auth, u => { user = u; try { u ? localStorage.setItem('tallerEcoAuth', '1') : localStorage.removeItem('tallerEcoAuth'); } catch (x) { } onUser(); });
-    return true;
-  } catch (x) { loadErr = true; return false; }
-}
-
-const tell = () => window.dispatchEvent(new Event('fbx'));
-async function onUser() {
-  if (!user) { st = 'off'; setBtn(); tell(); return; }
-  if (!user.emailVerified) { st = 'unv'; setBtn(); tell(); return; }
-  await syncDown(); tell();
-}
-
-/* Trae lo de la nube y combina clave por clave: gana la versión más reciente */
-async function syncDown() {
-  if (!user || !user.emailVerified) return;
-  st = 'sync'; setBtn();
-  try {
-    const ref = F.doc(db, 'users', user.uid), snap = await F.getDoc(ref);
-    const R = snap.exists() ? snap.data() : {}, rd = R.data || {}, rt = R.ts || {}, lt = getTs();
-    let changed = false;
-    for (const k of Object.keys(rd)) {
-      const lv = localStorage.getItem(P + k);
-      if (lv === null || (rt[k] || 0) > (lt[k] || 0)) {
-        if (lv !== rd[k]) { localStorage.setItem(P + k, rd[k]); changed = true; }
-        lt[k] = rt[k] || 0;
-      }
-    }
-    localStorage.setItem(TSK, JSON.stringify(lt));
-    await push();
-    const pv = +(sessionStorage.getItem('tallerEco.pulled') || 0);
-    if (changed && Date.now() - pv > 15000) { sessionStorage.setItem('tallerEco.pulled', String(Date.now())); location.reload(); }
-  } catch (x) { st = navigator.onLine ? 'err' : 'offline'; msg = errTxt(x); setBtn(); }
-}
-
-async function push() {
-  if (!user || !user.emailVerified) return;
-  clearTimeout(timer); timer = null; st = 'sync'; setBtn();
-  const data = {}; myKeys().forEach(k => { data[k] = localStorage.getItem(P + k); });
-  const size = Object.entries(data).reduce((s, [k, v]) => s + k.length + v.length, 0);
-  if (size > 900000) { st = 'err'; msg = 'Tu progreso es demasiado grande para guardarlo en la nube. Avisa al profesor.'; setBtn(); return; }
-  try {
-    await F.setDoc(F.doc(db, 'users', user.uid), { email: user.email, data, ts: getTs(), updated: F.serverTimestamp() });
-    st = 'ok'; msg = ''; last = Date.now();
-  } catch (x) { st = navigator.onLine ? 'err' : 'offline'; msg = errTxt(x); }
-  setBtn(); if (dlg.open && dlg.dataset.mode === 'acct') view('acct');
-}
-const schedule = () => { if (!user || !user.emailVerified) return; st = 'sync'; setBtn(); clearTimeout(timer); timer = setTimeout(push, 2500); };
-window.__onStoreSet = schedule;
-addEventListener('online', () => { if (user && user.emailVerified) push(); });
-document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden' && timer) push(); });
-
-
-/* ---------- API para entregas, devoluciones, fechas del curso y panel del profesor ---------- */
-const TEACHER = 'hrivarola@faith.edu.py';
-const ok = () => !!(user && user.emailVerified);
-const conv = d => { const o = { id: d.id, ...d.data() }; ['at', 'updated', 'edited'].forEach(k => { if (o[k] && o[k].toMillis) o[k] = o[k].toMillis(); }); return o; };
-const all = async c => (await F.getDocs(F.collection(db, c))).docs.map(conv);
-window.FBX = {
-  ok, isTeacher: () => ok() && user.email.toLowerCase() === TEACHER,
-  async mine() {
-    const q = c => F.getDocs(F.query(F.collection(db, c), F.where('uid', '==', user.uid))).then(r => r.docs.map(conv));
-    const [subs, fb] = await Promise.all([q('subs'), q('fb')]); return { subs, fb };
-  },
-  submit: (u, k, p) => F.setDoc(F.doc(db, 'subs', `${user.uid}_${u}_${k}`), { ...p, uid: user.uid, email: user.email, u: String(u), stage: k === 'f' ? 'f' : 'b', n: k === 'f' ? null : +k, at: F.serverTimestamp() }),
-  async getConfig() { const d = await F.getDoc(F.doc(db, 'config', 'curso')); return d.exists() ? d.data() : {}; },
-  setConfig: o => F.setDoc(F.doc(db, 'config', 'curso'), o),
-  students: async () => (await all('users')).map(o => ({ ...o, uid: o.id })), allSubs: () => all('subs'), allFb: () => all('fb'),
-  setFb: (uid, u, n, text, sc, oldAt) => F.setDoc(F.doc(db, 'fb', `${uid}_${u}_${n}`), { uid, u: String(u), n: +n, text, sc: sc || {}, by: user.email, at: oldAt ? F.Timestamp.fromMillis(oldAt) : F.serverTimestamp(), edited: F.serverTimestamp() }),
-  snap: (id, p) => F.setDoc(F.doc(db, 'logs', `${user.uid}_${id}`), { ...p, uid: user.uid, at: F.serverTimestamp() }),
-  logsOf: async uid => (await F.getDocs(F.query(F.collection(db, 'logs'), F.where('uid', '==', uid)))).docs.map(conv),
-  allLogs: () => all('logs'),
-  reopen: id => Promise.all([F.deleteDoc(F.doc(db, 'subs', id)), id.endsWith('_f') ? null : F.deleteDoc(F.doc(db, 'fb', id))])
-};
-
-/* ---------- ventana de cuenta ---------- */
-const close = '<button type="button" class="acx" data-a="close" aria-label="Cerrar">×</button>';
-const privacy = '<p class="small muted">Tu progreso del Taller se guarda en Google Firebase, vinculado a tu correo del colegio. Solo tú y el profesor pueden verlo.</p>';
-function view(mode, note = '', kind = 'info') {
-  dlg.dataset.mode = mode;
-  const box = note ? `<div class="fb ${kind}" role="status">${note}</div>` : '';
-  if (mode === 'login' || mode === 'signup') {
-    const su = mode === 'signup';
-    dlg.innerHTML = `${close}<form data-f="${mode}" novalidate><h2 id="acT">${su ? 'Crear cuenta' : 'Entrar'}</h2>
-      <p class="small">${su ? 'Usa tu correo del colegio y crea una contraseña solo para el Taller (no uses la de tu correo). Te enviaremos un enlace para verificarlo; en Outlook suele llegar a «Correo no deseado».' : 'Entra con tu correo del colegio y tu progreso se guarda en la nube: lo recuperas en cualquier dispositivo.'}</p>
-      <label>Correo del colegio<input class="inp" name="em" type="email" autocomplete="email" placeholder="nombre${DOMAIN}" required></label>
-      <label>Contraseña${su ? ' (mínimo 6 caracteres)' : ''}<input class="inp" name="pw" type="password" autocomplete="${su ? 'new-password' : 'current-password'}" minlength="6" required></label>
-      ${su ? '<label>Repite la contraseña<input class="inp" name="pw2" type="password" autocomplete="new-password" minlength="6" required></label>' : ''}
-      ${box}<button class="btn primary" type="submit">${su ? 'Crear cuenta' : 'Entrar'}</button>
-      <div class="aclinks">${su ? '<button type="button" data-a="login">Ya tengo cuenta</button>' : '<button type="button" data-a="signup">Crear cuenta</button><button type="button" data-a="reset">Olvidé mi contraseña</button>'}</div>${privacy}</form>`;
-  } else if (mode === 'reset') {
-    dlg.innerHTML = `${close}<form data-f="reset" novalidate><h2 id="acT">Recuperar contraseña</h2>
-      <p class="small">Escribe tu correo del colegio y te enviaremos un enlace para crear una contraseña nueva.</p>
-      <label>Correo del colegio<input class="inp" name="em" type="email" autocomplete="email" placeholder="nombre${DOMAIN}" required></label>
-      ${box}<button class="btn primary" type="submit">Enviar enlace</button><div class="aclinks"><button type="button" data-a="login">Volver a Entrar</button></div></form>`;
-  } else if (mode === 'acct') {
-    const stTxt = { unv: 'Tu correo todavía no está verificado: tu progreso solo se guarda en este dispositivo.', sync: 'Guardando en la nube…', ok: `Todo guardado en la nube${last ? ' (' + new Date(last).toLocaleTimeString('es-PY', { hour: '2-digit', minute: '2-digit' }) + ')' : ''}.`, err: msg || 'No se pudo guardar en la nube.', offline: 'Sin conexión: tu progreso queda en este dispositivo y se sube cuando vuelvas a tener internet.' }[st] || '';
-    dlg.innerHTML = `${close}<div class="acbody"><h2 id="acT">Tu cuenta</h2><p><b>${e(user.email)}</b></p>
-      <div class="fb ${st === 'ok' ? 'ok' : st === 'unv' || st === 'err' ? 'no' : 'info'}" role="status">${stTxt}</div>${box}
-      ${st === 'unv' ? `<p class="small">Abre el enlace que te enviamos a <b>${e(user.email)}</b> y después toca «Ya lo verifiqué».</p>
-        <div class="fb info"><b>¿No lo ves?</b> En Outlook suele llegar a <b>«Correo no deseado»</b>. Ábrelo desde ahí y márcalo como <b>«No es correo no deseado»</b> para que los próximos correos del Taller lleguen a tu bandeja de entrada.</div>
-        <div class="acrow"><button class="btn primary" type="button" data-a="verified">Ya lo verifiqué</button><button class="btn" type="button" data-a="resend">Reenviar el correo</button></div>`
-        : '<div class="acrow"><button class="btn" type="button" data-a="syncnow">Sincronizar ahora</button></div>'}
-      <label style="display:flex;gap:8px;align-items:flex-start;font-weight:400"><input type="checkbox" id="acWipe" checked style="margin-top:4px"> Al salir, borrar mi progreso de este dispositivo (recomendado en computadoras compartidas)</label>
-      <button class="btn" type="button" data-a="logout">Salir</button>${privacy}</div>`;
-  }
-  const f = dlg.querySelector('input'); if (f && mode !== 'acct') f.focus();
-}
-
-async function openDlg() {
-  if (!dlg.open) dlg.showModal();
-  dlg.innerHTML = `${close}<div class="acbody"><p>Conectando…</p></div>`;
-  if (!(await load())) { dlg.innerHTML = `${close}<div class="acbody"><h2 id="acT">Sin conexión</h2><div class="fb no">No se pudo conectar con el servicio de cuentas. Revisa tu internet. Mientras tanto, tu progreso se sigue guardando en este dispositivo.</div></div>`; return; }
-  await auth.authStateReady();
-  view(user ? 'acct' : 'login');
-}
-btn.addEventListener('click', openDlg);
-dlg.addEventListener('click', ev => { if (ev.target === dlg) dlg.close(); });
-
-dlg.addEventListener('click', async ev => {
-  const b = ev.target.closest('[data-a]'); if (!b) return;
-  const a = b.dataset.a;
-  if (a === 'close') return dlg.close();
-  if (a === 'login' || a === 'signup' || a === 'reset') return view(a);
-  b.disabled = true;
-  try {
-    if (a === 'resend') { await A.sendEmailVerification(user); view('acct', 'Te enviamos otro correo de verificación.', 'ok'); }
-    else if (a === 'verified') {
-      await user.reload(); user = auth.currentUser;
-      if (user.emailVerified) { await user.getIdToken(true); await syncDown(); tell(); view('acct', 'Correo verificado. Tu progreso ya se guarda en la nube.', 'ok'); }
-      else view('acct', 'Todavía no aparece verificado. Abre el enlace del correo y vuelve a tocar el botón.', 'no');
-    }
-    else if (a === 'syncnow') { await syncDown(); view('acct'); }
-    else if (a === 'logout') {
-      const wipe = dlg.querySelector('#acWipe').checked;
-      if (user.emailVerified) await push();
-      if (wipe && st !== 'ok' && user.emailVerified) { view('acct', 'No se pudo subir tu progreso a la nube, así que no lo borramos. Inténtalo de nuevo con internet.', 'no'); return; }
-      await A.signOut(auth);
-      if (wipe) { Object.keys(localStorage).filter(k => k.startsWith(P)).forEach(k => localStorage.removeItem(k)); sessionStorage.removeItem('tallerEco.pulled'); location.reload(); return; }
-      dlg.close();
-    }
-  } catch (x) { view(dlg.dataset.mode || 'acct', errTxt(x), 'no'); }
-  finally { b.disabled = false; }
-});
-
-dlg.addEventListener('submit', async ev => {
-  ev.preventDefault();
-  const f = ev.target, kind = f.dataset.f, em = (f.em.value || '').trim().toLowerCase(), sb = f.querySelector('[type=submit]');
-  if (!okMail(em)) return view(kind, `Usa tu correo del colegio (termina en <b>${DOMAIN}</b>).`, 'no');
-  sb.disabled = true;
-  try {
-    if (kind === 'reset') { await A.sendPasswordResetEmail(auth, em); view('login', 'Si existe una cuenta con ese correo, te llegará un enlace para crear una contraseña nueva. Si no lo ves, búscalo en «Correo no deseado» de Outlook.', 'ok'); return; }
-    const pw = f.pw.value;
-    if (pw.length < 6) return view(kind, 'La contraseña debe tener al menos 6 caracteres.', 'no');
-    if (kind === 'signup') {
-      if (pw !== f.pw2.value) return view(kind, 'Las contraseñas no coinciden.', 'no');
-      const c = await A.createUserWithEmailAndPassword(auth, em, pw); user = c.user;
-      await A.sendEmailVerification(user); st = 'unv'; setBtn();
-      view('acct', `Cuenta creada. Te enviamos un correo a <b>${e(em)}</b> para verificarla: búscalo también en «Correo no deseado».`, 'ok');
-    } else {
-      const c = await A.signInWithEmailAndPassword(auth, em, pw); user = c.user;
-      await onUser(); view('acct');
-    }
-  } catch (x) { view(kind, errTxt(x), 'no'); }
-  finally { if (sb.isConnected) sb.disabled = false; }
-});
-
-/* Si el alumno ya entró antes, reconecta solo al abrir la página */
-let had = false; try { had = !!localStorage.getItem('tallerEcoAuth'); } catch (x) { }
-if (had) { st = 'load'; load(); } setBtn();
 </script>
 
 </body>
