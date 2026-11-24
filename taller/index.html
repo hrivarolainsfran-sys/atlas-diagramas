@@ -878,7 +878,7 @@ details.sres summary{cursor:pointer}details.sres p{margin:6px 0 0;font-size:15px
 .cbank{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:8px}.cbc{border:1px solid var(--rule);background:var(--paper);color:var(--ink);border-radius:999px;padding:4px 11px;font-size:13px;text-align:left}.cbc:hover{border-color:var(--navy-2)}.cbedit{flex-basis:100%;display:grid;gap:6px}.cbedit textarea{width:100%;font:inherit;border:1.5px solid var(--ink-2);border-radius:8px;padding:8px;background:var(--sheet);color:var(--ink)}
 .esround{background:var(--sheet);border:1px solid var(--rule);border-radius:14px;padding:14px 18px;margin:12px 0;box-shadow:var(--sh);max-width:900px}.esround h3{margin:0 0 4px}.esround .answer{background:var(--paper);border:1px solid var(--rule);border-radius:8px;padding:10px 12px;font-size:15px;line-height:1.55}.esfb{margin-top:10px;border-top:1px solid var(--rule);padding-top:10px}.esfb textarea{width:100%;font:inherit;border:1.5px solid var(--ink-2);border-radius:8px;padding:8px;background:var(--sheet);color:var(--ink)}.esdia{margin-top:8px}
 .linkrow{width:100%;text-align:left;cursor:pointer;font:inherit;color:inherit}
-.inst .instact{display:flex;flex-direction:column;gap:6px;align-items:flex-start;max-width:280px}
+.inst.flash{box-shadow:0 0 0 3px var(--yellow),var(--sh)}.inst .instact{display:flex;flex-direction:column;gap:6px;align-items:flex-start;max-width:280px}
 .reppage{background:#fff;color:#14213D;border:1px solid var(--rule);border-radius:12px;padding:28px 32px;margin:18px 0;max-width:860px;box-shadow:var(--sh)}
 .reppage .dtab th,.reppage .dtab td{color:#14213D;background:#fff;border-color:#D5DDE8}
 .rephead{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;border-bottom:3px solid #1B2F5B;padding-bottom:8px;margin-bottom:14px}.rephead h2{margin:2px 0 0;color:#14213D}.repbrand{font-family:var(--f-display);font-weight:800;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:#B8862B}
@@ -1049,7 +1049,7 @@ h3{font-weight:700;font-size:17px;letter-spacing:0}
   </nav>
 </header>
 <main id="app"></main>
-<footer class="site-foot"><p>© 2026 <b>Prof. Econ. Hugo Rivarola</b> · Economía IB · Taller de práctica. Todos los derechos reservados.</p><p>Material educativo elaborado por el autor para sus estudiantes. No se permite reproducirlo, distribuirlo ni modificarlo, total o parcialmente, sin autorización escrita del autor.</p></footer>
+<footer class="site-foot"><p class="noprint"><button class="linkb small" type="button" id="footInst">Instalar la app en tu celular</button></p><p>© 2026 <b>Prof. Econ. Hugo Rivarola</b> · Economía IB · Taller de práctica. Todos los derechos reservados.</p><p>Material educativo elaborado por el autor para sus estudiantes. No se permite reproducirlo, distribuirlo ni modificarlo, total o parcialmente, sin autorización escrita del autor.</p></footer>
 
 <script>
 'use strict';
@@ -9987,6 +9987,13 @@ function instBind() {
   const g = $('#instGo'); if (g) g.onclick = async () => { INST.prompt(); try { await INST.userChoice; } catch (e) { } INST = null; const b = $('#instBox'); if (b) b.outerHTML = instHtml(); instBind(); };
   const n = $('#instNo'); if (n) n.onclick = () => { store.set('instHide', true); const b = $('#instBox'); if (b) b.outerHTML = instHtml(); };
 }
+document.addEventListener('click', e => {
+  if (!e.target.closest('#footInst')) return;
+  store.set('instHide', false);
+  const go = () => { const b = $('#instBox'); if (b) { b.scrollIntoView({ behavior: 'smooth', block: 'center' }); b.classList.add('flash'); setTimeout(() => b.classList.remove('flash'), 1600); } };
+  if (location.hash === '#empezar' || location.hash === '') { render(); setTimeout(go, 50); } else { location.hash = '#empezar'; setTimeout(go, 350); }
+});
+{ const f = document.getElementById('footInst'); if (f && isStandalone()) f.parentNode.hidden = true; }
 if ('serviceWorker' in navigator && location.protocol === 'https:') window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => { }));
 
 /* Cuando cambia la sesión de la cuenta */
