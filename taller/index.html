@@ -9375,9 +9375,9 @@ const profName = x => pj(x, 'alumno', '') || (x.email || '').split('@')[0];
 async function profLoad() {
   const X = FBX(); if (!X) return; PROF.st = 'loading';
   try {
-    const [u, s, f, c, rp, es, esfb, cb] = await Promise.all([X.students(), X.allSubs(), X.allFb(), X.getConfig(), X.allReports().catch(() => []), X.allEssays().catch(() => []), X.allEssayFb().catch(() => []), X.cfgGet('comentarios').catch(() => ({}))]);
+    const [u, s, f, c, rp, es, esfb, cb, el] = await Promise.all([X.students(), X.allSubs(), X.allFb(), X.getConfig(), X.allReports().catch(() => []), X.allEssays().catch(() => []), X.allEssayFb().catch(() => []), X.cfgGet('comentarios').catch(() => ({})), X.allElecciones().catch(() => [])]);
     PROF.users = u.filter(x => (x.email || '').toLowerCase() !== TEACHER_MAIL).sort((a, b) => profName(a).localeCompare(profName(b), 'es'));
-    PROF.subs = s; PROF.fb = f; PROF.curso = c; PROF.reps = rp.sort((a, b) => (b.at || 0) - (a.at || 0)); PROF.es = es; PROF.esfb = esfb; PROF.cb = cb; PROF.logs = {}; PROF.st = 'ok';
+    PROF.subs = s; PROF.fb = f; PROF.curso = c; PROF.reps = rp.sort((a, b) => (b.at || 0) - (a.at || 0)); PROF.es = es; PROF.esfb = esfb; PROF.cb = cb; PROF.el = el; PROF.logs = {}; PROF.st = 'ok';
   } catch (e) { PROF.st = 'err'; PROF.err = e.code || e.message; }
   if (location.hash.startsWith('#profesor')) { const y = window.scrollY; render(); window.scrollTo(0, y); }
 }
@@ -9414,6 +9414,7 @@ function renderProf() {
     <div class="tscroll"><table class="dtab plan pftab"><thead><tr><th>Alumno</th>${Object.values(EI_UNITS).map(n => `<th>${n}</th>`).join('')}<th>Tiempo (7 días)</th><th>Última actividad</th></tr></thead><tbody>${rows || `<tr><td colspan="6">Todavía no hay alumnos con cuenta.</td></tr>`}</tbody></table></div>
     ${profSummaryHtml()}
     ${profEssaysHtml(PROF.users.filter(x => PF === 'all' || pdOf(x) === PF))}
+    ${profElecHtml(PROF.users.filter(x => PF === 'all' || pdOf(x) === PF))}
     ${profTeoHtml(PROF.users.filter(x => PF === 'all' || pdOf(x) === PF))}
     ${profRepHtml()}
     <h2 style="margin-top:24px">Fechas del curso</h2>
@@ -9421,7 +9422,7 @@ function renderProf() {
     <div class="tscroll"><table class="dtab plan"><thead><tr><th>Comentario</th>${EI_STAGES.map(s => `<th>${s}</th>`).join('')}</tr></thead><tbody>${Object.entries(EI_UNITS).map(([u, n]) => `<tr><th scope="row">U${u} · ${n}</th>${EI_STAGES.map((s, i) => `<td><input type="date" class="inp pff" data-u="${u}" data-i="${i}" value="${esc((F[u] || [])[i] || '')}" aria-label="${n}: ${s}"></td>`).join('')}</tr>`).join('')}</tbody></table></div>
     <div class="row" style="margin-top:8px"><button class="btn primary" type="button" id="pfSave">Guardar fechas</button><span id="pfMsg" class="small"></span></div>`;
   $('#pfR').onclick = () => { PROF.st = 'idle'; render(); };
-  $('#pfCsv').onclick = profCsv; $('#pfTime').onclick = profTimeCsv; bindSummary(); bindProfTeo(PROF.users.filter(x => PF === 'all' || pdOf(x) === PF));
+  bindProfElec(); $('#pfCsv').onclick = profCsv; $('#pfTime').onclick = profTimeCsv; bindSummary(); bindProfTeo(PROF.users.filter(x => PF === 'all' || pdOf(x) === PF));
   app.querySelectorAll('[data-pfpd]').forEach(b => b.onclick = () => { SESS.pfPD = b.dataset.pfpd; renderProf(); });
   $('#pfSave').onclick = async e => {
     const fechas = {}; app.querySelectorAll('.pff').forEach(i => { (fechas[i.dataset.u] = fechas[i.dataset.u] || ['', '', '', ''])[+i.dataset.i] = i.value; });
@@ -9931,6 +9932,27 @@ function profEssaysHtml(list) {
       : '<p class="small muted">Todavía ningún alumno entregó un ensayo. Lo hacen al terminar un simulacro de Prueba 1.</p>'}`;
 }
 
+/* =============== Artículos elegidos por los alumnos (reservas) =============== */
+function profElecHtml(list) {
+  const uids = new Set(list.map(x => x.uid)), E = (PROF.el || []).filter(e => uids.has(e.uid)).sort((a, b) => (a.u - b.u) || String(a.nombre).localeCompare(String(b.nombre), 'es'));
+  const UN = { 2: 'Microeconomía', 3: 'Macroeconomía', 4: 'Economía global' };
+  return `<h2 style="margin-top:24px">Artículos elegidos para la EI <span class="small muted" style="font-weight:600">${E.length}</span></h2>
+    <p class="small muted" style="max-width:1000px;margin-top:-4px">Lo que cada alumno eligió en «Artículos». Ningún compañero puede elegir un artículo ya tomado. «Liberar» lo deja libre otra vez (también en la hoja de reservas).</p>
+    ${E.length ? `<div class="tscroll"><table class="dtab plan"><thead><tr><th>Alumno</th><th>Unidad</th><th>Artículo</th><th>Medio</th><th>Elegido el</th><th></th></tr></thead><tbody>${E.map(e => { const x = PROF.users.find(y => y.uid === e.uid); return `<tr><td>${esc(x ? profName(x) : e.nombre || '')}</td><td>${UN[e.u] || e.u}</td><td>${e.url ? `<a href="${esc(e.url)}" target="_blank" rel="noopener">${esc(e.titulo || '')}</a>` : esc(e.titulo || '')}</td><td>${esc(e.medio || '')}</td><td>${fdate(e.at)}</td><td><button class="btn sm" type="button" data-pel="${e.id}">Liberar</button></td></tr>`; }).join('')}</tbody></table></div>` : '<p class="small muted">Todavía ningún alumno eligió un artículo desde el Taller.</p>'}`;
+}
+function bindProfElec() {
+  app.querySelectorAll('[data-pel]').forEach(b => b.onclick = async () => {
+    const e = (PROF.el || []).find(z => z.id === b.dataset.pel); if (!e) return;
+    if (b.dataset.sure !== '1') { b.dataset.sure = '1'; b.textContent = 'Confirmar'; return; }
+    b.disabled = true; b.textContent = 'Liberando…';
+    try {
+      await newsLoad(); const url = lresURL();
+      if (url) { const r = await fetch(url, { method: 'POST', body: JSON.stringify({ a: 'lib', id: e.art, k: e.uid }) }); if (!r.ok) throw new Error('HTTP ' + r.status); }
+      await FBX().soltar(e.u, e.uid); PROF.st = 'idle'; await profLoad();
+    } catch (x) { b.textContent = 'No se pudo (' + (x.code || x.message) + ')'; }
+  });
+}
+
 /* =============== Informe mensual por alumno (para imprimir o guardar en PDF) =============== */
 const MES = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
 const ymOf = v => { if (!v) return ''; if (typeof v === 'number') { const d = new Date(v); return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0'); } const s = String(v); let m = /^(\d{4})-(\d{2})/.exec(s); if (m) return m[1] + '-' + m[2]; m = /^(\d{1,2})\/(\d{1,2})\/(\d{4})/.exec(s); return m ? m[3] + '-' + m[2].padStart(2, '0') : ''; };
@@ -10052,7 +10074,7 @@ function lresReq(body) {
 async function lresRefresh(force) {
   if (!lresURL() || (!force && Date.now() - LRES.at < 55000)) return;
   LRES.at = Date.now();
-  try { await lresReq(); LRES.st = 'ok'; } catch (e) { LRES.st = 'err'; }
+  try { await lresReq(); LRES.st = 'ok'; const M = lresMine(), M2 = Object.fromEntries(Object.entries(M).filter(([, id]) => LRES.tom.has(id))); if (Object.keys(M2).length !== Object.keys(M).length) store.set('lectRes', M2); } catch (e) { LRES.st = 'err'; }
   if (location.hash === '#ei-lectura') { const y = window.scrollY; renderLect(); window.scrollTo(0, y); }
 }
 setInterval(() => { if (location.hash === '#ei-lectura' && !document.hidden) lresRefresh(); }, 60000);
@@ -10076,7 +10098,8 @@ async function lresAct(x, a) {
     const j = await lresReq(a === 'res' ? { a: 'res', id: x.id, u: LU[x.u], n: lresName(), t: x.titulo, m: x.medio } : { a: 'lib', id: x.id });
     const M = lresMine();
     if (j.ok === false) LRES.msg = E[j.e] || 'No se pudo completar. Probá de nuevo.';
-    else { if (a === 'res') M[x.u] = x.id; else delete M[x.u]; store.set('lectRes', M); LRES.msg = a === 'res' ? '' : 'Lo liberaste: ahora otro compañero puede elegirlo.'; }
+    else { if (a === 'res') M[x.u] = x.id; else delete M[x.u]; store.set('lectRes', M);
+      try { await (a === 'res' ? FBX().elegir(LU[x.u], { art: x.id, titulo: x.titulo, medio: x.medio, url: x.url || '', fecha: x.fecha || '', nombre: lresName() }) : FBX().soltar(LU[x.u])); } catch (e2) { } LRES.msg = a === 'res' ? '' : 'Lo liberaste: ahora otro compañero puede elegirlo.'; }
     LRES.st = 'ok'; LRES.at = Date.now();
   } catch (e) { LRES.msg = 'No hay conexión con las reservas. Revisá tu internet e intentá otra vez.'; }
   LRES.busy = false; const y = window.scrollY; renderLect(); window.scrollTo(0, y);
@@ -11702,6 +11725,9 @@ window.FBX = {
   logsOf: async uid => (await F.getDocs(F.query(F.collection(db, 'logs'), F.where('uid', '==', uid)))).docs.map(conv),
   allLogs: () => all('logs'),
   uid: () => user && user.uid, email: () => user && user.email,
+  elegir: (u, o) => F.setDoc(F.doc(db, 'elecciones', `${user.uid}_${u}`), { ...o, u: +u, uid: user.uid, email: user.email, at: F.serverTimestamp() }),
+  soltar: (u, uid) => F.deleteDoc(F.doc(db, 'elecciones', `${uid || user.uid}_${u}`)),
+  allElecciones: () => all('elecciones'),
   cfgGet: async id => { const d = await F.getDoc(F.doc(db, 'config', id)); return d.exists() ? d.data() : {}; },
   cfgSet: (id, o) => F.setDoc(F.doc(db, 'config', id), o),
   essaySubmit: (key, n, p) => F.setDoc(F.doc(db, 'ensayos', `${user.uid}_${key}_${n}`), { ...p, uid: user.uid, email: user.email, key, n, at: F.serverTimestamp() }),
