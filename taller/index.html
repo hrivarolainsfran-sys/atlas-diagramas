@@ -2034,7 +2034,7 @@ function render() {
   if (route === 'escribir-ei') { setNav('escribir'); return renderEIHome(); }
   if (/^ei-[234]$/.test(route)) { setNav('escribir'); return renderEI(+route.slice(3)); }
   if (route === 'ei-articulo') { setNav('escribir'); return renderEIArticle(); }
-  if (route === 'ei-lectura') { setNav('escribir'); return renderLect(); }
+  if (route === 'ei-lectura' || route === 'ei-lectura-art') { setNav('escribir'); return renderLect(); }
   if (route === 'ei-modelos') { setNav('escribir'); return renderEIModels(); }
   if (route === 'profesor') { setNav('profesor'); return renderProf(); }
   if (route === 'profesor-informe' || route.startsWith('profesor-informe-')) { setNav('profesor'); return renderProfReport(route.slice(17)); }
@@ -10100,9 +10100,9 @@ async function lresRefresh(force) {
   if (!lresURL() || (!force && Date.now() - LRES.at < 55000)) return;
   LRES.at = Date.now();
   try { await lresReq(); LRES.st = 'ok'; const M = lresMine(), M2 = Object.fromEntries(Object.entries(M).filter(([, id]) => LRES.tom.has(id))); if (Object.keys(M2).length !== Object.keys(M).length) store.set('lectRes', M2); } catch (e) { LRES.st = 'err'; }
-  if (location.hash === '#ei-lectura') { const y = window.scrollY; renderLect(); window.scrollTo(0, y); }
+  if (location.hash.startsWith('#ei-lectura')) { const y = window.scrollY; renderLect(); window.scrollTo(0, y); }
 }
-setInterval(() => { if (location.hash === '#ei-lectura' && !document.hidden) lresRefresh(); }, 60000);
+setInterval(() => { if (location.hash.startsWith('#ei-lectura') && !document.hidden) lresRefresh(); }, 60000);
 const lresIsMine = x => lresMine()[x.u] === x.id;
 const lresTaken = x => !!(LRES.tom && LRES.tom.has(x.id) && !lresIsMine(x));
 function lresBox(x) {
@@ -10133,7 +10133,7 @@ async function lectLoad() {
   if (LECT.st === 'loading' || LECT.st === 'ok') return;
   LECT.st = 'loading';
   const L = await newsLoad();
-  if (!L) { LECT.st = 'err'; if (location.hash === '#ei-lectura') renderLect(); return; }
+  if (!L) { LECT.st = 'err'; if (location.hash.startsWith('#ei-lectura')) renderLect(); return; }
   const recs = Object.fromEntries(((NEWS_IA && NEWS_IA.recomendados) || []).map(r => [r.id, r]));
   const lim = (() => { const d = new Date(); d.setFullYear(d.getFullYear() - 1); return d.toISOString().slice(0, 10); })();
   const real = L.filter(n => (n.unidad === 'micro' || n.unidad === 'macro') && n.url && !n.opinion && String(n.fecha) >= lim && (recs[n.id] || LFOCUS.includes(lgrp(n.unidad, n.tema))))
@@ -10142,7 +10142,7 @@ async function lectLoad() {
   const ord = g => { const k = LGRP.findIndex(x => x[0] === g); return k < 0 ? 99 : k; };
   const out = all.sort((a, b) => (a.u === b.u ? 0 : a.u === 'micro' ? -1 : 1) || ord(lgrp(a.u, a.t)) - ord(lgrp(b.u, b.t)) || String(b.fecha).localeCompare(String(a.fecha)));
   LECT.list = out; LECT.st = 'ok';
-  if (location.hash === '#ei-lectura') renderLect();
+  if (location.hash.startsWith('#ei-lectura')) renderLect();
 }
 /* Envíos de la clasificación: el alumno no ve si acertó hasta que el profesor devuelve */
 const LSUB = { st: 'idle', subs: [], fb: [] };
@@ -10151,7 +10151,7 @@ async function lsubLoad(force) {
   if (LSUB.st === 'loading' || (LSUB.st === 'ok' && !force)) return;
   LSUB.st = 'loading';
   try { const m = await X.myClasif(); LSUB.subs = m.subs.sort((a, b) => a.n - b.n); LSUB.fb = m.fb; LSUB.st = 'ok'; } catch (e) { LSUB.st = 'err'; }
-  if (location.hash === '#ei-lectura') { const y = window.scrollY; renderLect(); window.scrollTo(0, y); }
+  if (location.hash.startsWith('#ei-lectura')) { const y = window.scrollY; renderLect(); window.scrollTo(0, y); }
 }
 const lsubLast = () => LSUB.subs[LSUB.subs.length - 1] || null;
 const lsubFb = s => s ? LSUB.fb.find(f => f.id === s.id) || null : null;
@@ -10181,6 +10181,7 @@ function renderLect() {
   }
   lresRefresh(); if (FBX() && !isTeacher() && LSUB.st === 'idle') lsubLoad();
   const S = SESS.lect = SESS.lect || { i: null, step: 'read', view: 'list', tmp: {} };
+  S.view = location.hash === '#ei-lectura-art' ? 'art' : 'list'; if (S.view === 'list') S.step = 'read';
   const R = lectAns(), ph = FBX() ? lectPhase() : 'open', sub = lsubLast(), fb = lsubFb(sub), locked = ph !== 'open';
   const L = LECT.list.slice().sort((a, b) => String(b.fecha).localeCompare(String(a.fecha)) || String(a.id).localeCompare(String(b.id)));
   const slot = u => L.find(y => lectDone(R[y.id]) && R[y.id].uans === u);
@@ -10207,7 +10208,7 @@ function renderLect() {
     lectBind(L); return;
   }
   const a = R[x.id], nav = `<span class="small muted">Texto ${S.i + 1} de ${L.length}</span>`;
-  const back = '<button class="crumb" type="button" data-lback style="margin-bottom:10px">← Todos los textos</button>';
+  const back = '<button class="btn sm" type="button" data-lback style="margin-bottom:12px">← Volver a todos los textos</button>';
   let body;
   if (S.step === 'read') {
     body = back + `<article class="lectart"><div class="row" style="justify-content:flex-end">${nav}</div>
@@ -10217,7 +10218,7 @@ function renderLect() {
         <p class="small muted">Esto es un resumen. Para tu comentario tenés que leer el artículo completo en el medio original.</p>
         <p><a class="btn" href="${esc(x.url)}" target="_blank" rel="noopener" data-lopen="${x.id}">Leer el artículo completo en ${esc(x.medio || 'el medio')} ↗</a></p>`}
       ${ph === 'back' ? lectResultHtml(x, a) : ''}${locked ? lresBox(x) : ''}
-      <div class="row" style="margin-top:16px"><button class="btn" type="button" data-lmv="-1" ${S.i ? '' : 'disabled'}>← Anterior</button>
+      <div class="row" style="margin-top:16px"><button class="btn" type="button" data-lback>☰ Volver a todos los textos</button><button class="btn" type="button" data-lmv="-1" ${S.i ? '' : 'disabled'}>← Anterior</button>
         ${locked ? `<button class="btn primary" type="button" data-lmv="1">Siguiente texto ${ico('arrow')}</button>` : `<button class="btn primary" type="button" id="lNext">Elegir y clasificar este texto ${ico('arrow')}</button><button class="btn" type="button" data-lmv="1">Pasar al siguiente</button>`}</div></article>`;
   } else {
     const T = S.tmp, other = T.uans && L.find(y => y.id !== x.id && lectDone(R[y.id]) && R[y.id].uans === T.uans);
@@ -10236,9 +10237,9 @@ function renderLect() {
 }
 function lectBind(L) {
   const S = SESS.lect, x = L[S.i], locked = FBX() && lectPhase() !== 'open';
-  app.querySelectorAll('[data-li]').forEach(b => b.onclick = () => { LRES.msg = ''; S.i = +b.dataset.li; S.view = 'art'; S.step = 'read'; renderLect(); window.scrollTo(0, 0); });
-  app.querySelectorAll('[data-lback]').forEach(b => b.onclick = () => { S.view = 'list'; S.step = 'read'; renderLect(); window.scrollTo(0, 0); });
-  const nw = $('#lNew'); if (nw) nw.onclick = () => { store.set('lect', { __r: (lsubLast() || { n: 0 }).n + 1 }); S.i = 0; S.view = 'list'; renderLect(); };
+  app.querySelectorAll('[data-li]').forEach(b => b.onclick = () => { LRES.msg = ''; S.i = +b.dataset.li; S.step = 'read'; location.hash = '#ei-lectura-art'; });
+  app.querySelectorAll('[data-lback]').forEach(b => b.onclick = () => { S.step = 'read'; if (location.hash === '#ei-lectura') renderLect(); else location.hash = '#ei-lectura'; });
+  const nw = $('#lNew'); if (nw) nw.onclick = () => { store.set('lect', { __r: (lsubLast() || { n: 0 }).n + 1 }); S.i = 0; location.hash === '#ei-lectura' ? renderLect() : (location.hash = '#ei-lectura'); };
   const sd = $('#lSend'); if (sd) sd.onclick = async () => {
     const R = lectAns(), m = $('#lSendM'); sd.disabled = true; m.textContent = 'Enviando…';
     const items = LECT.list.filter(y => lectDone(R[y.id])).map(y => ({ id: y.id, t: y.titulo, medio: y.medio, u: y.u, com: !!y.com, ans: R[y.id].ans, uans: R[y.id].uans, marks: R[y.id].marks || {} }));
@@ -10262,9 +10263,9 @@ function lectBind(L) {
     if (locked) return; const R = lectSt(), T = S.tmp;
     Object.keys(R).forEach(k => { if (k !== '__r' && k !== x.id && R[k] && R[k].uans === T.uans) delete R[k]; });
     R[x.id] = { ans: T.ans, uans: T.uans, marks: { ...(T.marks || {}) }, at: today() }; store.set('lect', R);
-    S.view = 'list'; S.step = 'read'; renderLect(); window.scrollTo(0, 0);
+    S.step = 'read'; location.hash = '#ei-lectura';
   };
-  const dl = $('#lDel'); if (dl) dl.onclick = () => { if (locked) return; const R = lectSt(); delete R[x.id]; store.set('lect', R); S.view = 'list'; S.step = 'read'; renderLect(); };
+  const dl = $('#lDel'); if (dl) dl.onclick = () => { if (locked) return; const R = lectSt(); delete R[x.id]; store.set('lect', R); S.step = 'read'; location.hash = '#ei-lectura'; };
   app.querySelectorAll('[data-lres]').forEach(b => b.onclick = () => lresAct(x, b.dataset.lres));
   app.querySelectorAll('[data-lopen]').forEach(a => a.addEventListener('click', () => { const R = lectSt(); R[a.dataset.lopen] = { ...(R[a.dataset.lopen] || {}), open: today() }; store.set('lect', R); }));
 }
@@ -10454,7 +10455,7 @@ function renderTeoUnit(u) {
 function navOf(r) {
   if (r === 'empezar') return 'empezar';
   if (/^(inicio|labs|lab-|formulas|estudiar)$|^lab-|^t\d|^teoria-u/.test(r)) return 'estudiar';
-  if (r === 'ei-lectura') return 'ei-lectura';
+  if (r === 'ei-lectura' || r === 'ei-lectura-art') return 'ei-lectura';
   if (/^(escribir-ei|escribir-conceptos)$|^ei-/.test(r)) return 'escribir-ei';
   if (r === 'anteriores') return ['p2', 'def', 'calc'].includes(SESS.ppw) ? 'prueba2' : 'prueba1';
   if (/^(prueba2|escribir-p2|escribir-def|escribir-calc|escribir-ej|anteriores-p2)$|^p2-|^calc-/.test(r)) return 'prueba2';
