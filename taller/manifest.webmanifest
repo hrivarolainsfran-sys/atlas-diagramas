@@ -1,0 +1,16 @@
+{
+  "name": "Economía IB · Taller de práctica",
+  "short_name": "Taller IB",
+  "description": "Taller de práctica de Economía IB (Nivel Medio): teoría, ejercicios, Pruebas 1 y 2 y Evaluación Interna.",
+  "lang": "es",
+  "start_url": "./#empezar",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#F4F6FA",
+  "theme_color": "#1B2F5B",
+  "icons": [
+    { "src": "icono-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icono-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "icono-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

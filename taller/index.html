@@ -7,6 +7,12 @@
 <meta name="author" content="Prof. Econ. Hugo Rivarola">
 <meta name="copyright" content="© 2026 Prof. Econ. Hugo Rivarola. Todos los derechos reservados.">
 <title>Taller de Economía IB</title>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#1B2F5B">
+<link rel="icon" href="icono-192.png" type="image/png">
+<link rel="apple-touch-icon" href="icono-180.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Taller IB">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=STIX+Two+Text:ital,wght@0,500;1,500&display=swap">
@@ -869,6 +875,18 @@ details.sres summary{cursor:pointer}details.sres p{margin:6px 0 0;font-size:15px
 .teorepf{display:grid;gap:8px;background:var(--sheet);border:1px solid var(--rule);border-radius:10px;padding:10px 12px;max-width:620px}.teorepf label{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.teorepf textarea{width:100%;font:inherit;border:1.5px solid var(--ink-2);border-radius:8px;padding:8px;background:var(--sheet);color:var(--ink)}
 .pfteo td{text-align:center}.pflow{background:var(--bad-bg);color:var(--bad);font-weight:700}.pfhigh{color:var(--ok);font-weight:700}
 .pfrep{background:var(--sheet);border:1px solid var(--rule);border-left:4px solid var(--bad);border-radius:10px;padding:10px 14px;margin:8px 0;max-width:1000px}.pfrep.done{border-left-color:var(--ok);opacity:.85}.pfrep p{margin:6px 0 8px}
+.cbank{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:8px}.cbc{border:1px solid var(--rule);background:var(--paper);color:var(--ink);border-radius:999px;padding:4px 11px;font-size:13px;text-align:left}.cbc:hover{border-color:var(--navy-2)}.cbedit{flex-basis:100%;display:grid;gap:6px}.cbedit textarea{width:100%;font:inherit;border:1.5px solid var(--ink-2);border-radius:8px;padding:8px;background:var(--sheet);color:var(--ink)}
+.esround{background:var(--sheet);border:1px solid var(--rule);border-radius:14px;padding:14px 18px;margin:12px 0;box-shadow:var(--sh);max-width:900px}.esround h3{margin:0 0 4px}.esround .answer{background:var(--paper);border:1px solid var(--rule);border-radius:8px;padding:10px 12px;font-size:15px;line-height:1.55}.esfb{margin-top:10px;border-top:1px solid var(--rule);padding-top:10px}.esfb textarea{width:100%;font:inherit;border:1.5px solid var(--ink-2);border-radius:8px;padding:8px;background:var(--sheet);color:var(--ink)}.esdia{margin-top:8px}
+.linkrow{width:100%;text-align:left;cursor:pointer;font:inherit;color:inherit}
+.inst .instact{display:flex;flex-direction:column;gap:6px;align-items:flex-start;max-width:280px}
+.reppage{background:#fff;color:#14213D;border:1px solid var(--rule);border-radius:12px;padding:28px 32px;margin:18px 0;max-width:860px;box-shadow:var(--sh)}
+.reppage .dtab th,.reppage .dtab td{color:#14213D;background:#fff;border-color:#D5DDE8}
+.rephead{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;border-bottom:3px solid #1B2F5B;padding-bottom:8px;margin-bottom:14px}.rephead h2{margin:2px 0 0;color:#14213D}.repbrand{font-family:var(--f-display);font-weight:800;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:#B8862B}
+.reppage h3{margin:18px 0 6px;color:#1B2F5B;font-size:16px}.reptab{width:100%;font-size:13.5px}.reptab th,.reptab td{text-align:left}.esfb .row label{display:inline-flex;align-items:center;gap:6px}.esfb .dsel{width:auto}.esfb textarea,.pfround textarea{font-weight:400}.replist{margin:0;padding-left:20px;font-size:14px;line-height:1.6}
+.repkpi{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:6px 0 10px}.repkpi div{border:1px solid #D5DDE8;border-radius:10px;padding:10px 12px;display:grid}.repkpi b{font-family:var(--f-display);font-size:22px;font-weight:800}.repkpi span{font-size:12.5px;color:#66748E}
+.replines{height:124px;background:repeating-linear-gradient(#fff 0 30px,#C9D2DF 30px 31px);-webkit-print-color-adjust:exact;print-color-adjust:exact}.reppage{-webkit-print-color-adjust:exact;print-color-adjust:exact}.reppage footer{margin-top:14px}
+@media print{body{background:#fff!important}.top,.site-foot,.noprint,.cbank{display:none!important}main{padding:0;max-width:none}.reppage{border:0;box-shadow:none;margin:0;padding:0;max-width:none;break-after:page}.reppage:last-child{break-after:auto}@page{size:A4;margin:16mm}}
+@media (max-width:640px){.reppage{padding:18px}.repkpi{grid-template-columns:1fr}.inst .instact{grid-column:1/-1;max-width:none}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 
 /* ===== Diseño 2026-11: tipografía Plus Jakarta Sans, tarjetas con sombra suave, acento amarillo ===== */
@@ -2010,7 +2028,10 @@ function render() {
   if (route === 'ei-articulo') { setNav('escribir'); return renderEIArticle(); }
   if (route === 'ei-modelos') { setNav('escribir'); return renderEIModels(); }
   if (route === 'profesor') { setNav('profesor'); return renderProf(); }
+  if (route === 'profesor-informe' || route.startsWith('profesor-informe-')) { setNav('profesor'); return renderProfReport(route.slice(17)); }
+  if (route.startsWith('profesor-ensayo-')) { setNav('profesor'); return renderProfEssay(route.slice(16)); }
   if (route.startsWith('profesor-')) { setNav('profesor'); return renderProfStudent(route.slice(9)); }
+  if (route.startsWith('p1-ensayo-')) { setNav('escribir'); return renderEssay(route.slice(10)); }
   if (route === 'ei-alumnos') { setNav('escribir'); return renderEIStudents(); }
   if (/^ei-alumno-\d$/.test(route)) { setNav('escribir'); return renderEIStudent(+route.slice(10)); }
   if (/^ei-modelo-[234]$/.test(route)) { setNav('escribir'); return renderEIModel(+route.slice(10)); }
@@ -2102,7 +2123,8 @@ const ICO = {
   cards: '<rect x="3" y="7" width="13" height="14" rx="2"></rect><path d="M8 7V5a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-3"></path>',
   game: '<path d="M6 8h12a4 4 0 0 1 4 4v1a4 4 0 0 1-7 2.6L14 15h-4l-1 .6A4 4 0 0 1 2 13v-1a4 4 0 0 1 4-4z"></path><path d="M7 10.5v4M5 12.5h4"></path><circle cx="16" cy="11.5" r=".6"></circle><circle cx="18" cy="13.5" r=".6"></circle>',
   head: '<path d="M3 17v-4a9 9 0 0 1 18 0v4"></path><path d="M21 18a2 2 0 0 1-2 2h-1v-6h3zM3 18a2 2 0 0 0 2 2h1v-6H3z"></path>',
-  arrow: '<path d="M5 12h14M13 6l6 6-6 6"></path>'
+  arrow: '<path d="M5 12h14M13 6l6 6-6 6"></path>',
+  phone: '<rect x="6" y="2" width="12" height="20" rx="2.5"></rect><path d="M11 18h2"></path>'
 };
 const ico = (k, cls = '') => `<svg class="ico ${cls}" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICO[k]}</svg>`;
 function renderStart() {
@@ -2123,6 +2145,7 @@ function renderStart() {
   const main = resume[0] || ['inicio', 'Elegí un tema para empezar', pdCur() ? `Subtemas de las Unidades ${pdUnits().join(' y ')}` : `${TOPICS.length} subtemas de las cuatro unidades`];
   /* Avisos: devoluciones nuevas y plazos cercanos */
   const alerts = [];
+  if (FBX() && !isTeacher() && ESR.st === 'ok') esUnseen().forEach(f => alerts.push(['ok', 'msg', 'p1-ensayo-' + f.key, 'Devolución de tu ensayo', `${esLabel(f.key)} · ronda ${f.n}`]));
   if (FBX() && !isTeacher() && EIR.st === 'ok') {
     fbUnseen().forEach(f => alerts.push(['ok', 'msg', 'ei-' + f.u, 'Devolución nueva del profesor', `${EI_UNITS[f.u]} · borrador ${f.n}`]));
     const C = store.get('eiCal2', {});
@@ -2200,12 +2223,14 @@ function renderStart() {
     </div>
   </section>
   ${mediaNote('Escuchalo de camino al colegio y después practicá el subtema aquí.')}
+  ${instHtml()}
   <details class="essentials" style="margin-top:18px"><summary><b>¿Es tu primera vez aquí?</b></summary><ul>
     <li>Si estás empezando un tema, usá <b>Aprender un tema</b>. Si se acerca el examen, usá las tarjetas de la <b>Prueba 1</b> y la <b>Prueba 2</b>: «Ver los pasos» te muestra el orden recomendado.</li>
     <li>El menú sigue la evaluación del IB: <b>Estudiar</b> (temas, laboratorios, fórmulas y el Atlas), <b>Prueba 1</b>, <b>Prueba 2</b> y <b>Evaluación Interna</b>. En <b>Repasar</b> están tus errores, los juegos y <b>Mi progreso</b>. La lupa busca en todo el Taller.</li>
     <li>Si entrás con tu correo del colegio, tu avance se guarda en la nube y lo recuperás en cualquier dispositivo. Sin cuenta, se guarda solo en este navegador.</li>
     <li>El Taller registra el tiempo que lo usás activamente en cada sección; tu profesor lo ve para acompañar tu estudio.</li></ul></details>`;
-  if (FBX() && !isTeacher()) eiRemoteLoad();
+  if (FBX() && !isTeacher()) { eiRemoteLoad(); esRemoteLoad(); }
+  instBind();
 }
 /* Estudiar: temas, laboratorios, fórmulas y Atlas */
 function renderStudy() {
@@ -5948,6 +5973,7 @@ function p1Setup() {
       <p class="small muted">Cada parte tiene un espacio para dibujar el diagrama, con lápiz, líneas, flechas, rótulos y ejes listos. Tu texto y tus diagramas se guardan en este dispositivo mientras trabajás.</p>
       <div class="row"><button class="btn primary" type="button" id="p1Go">Empezar el simulacro</button></div>
     </div>
+    ${esListHtml()}
     ${P1S.hist.length ? `<h2 style="margin-top:24px">Tus simulacros</h2><div class="mlist">${P1S.hist.slice().reverse().map(h => `<div class="mrow"><span class="code">${h.total}</span><span class="nm">Simulacro ${h.set} · ${h.u}<span class="ds">${h.d} · (a) ${h.a}/10 · (b) ${h.b}/15 · ${h.w} palabras${h.timed ? '' : ' · sin reloj'}</span></span><span class="act"><span class="tag">/25</span></span></div>`).join('')}</div>` : ''}`);
   app.querySelectorAll('#p1Set [data-s]').forEach(b => b.onclick = () => { S.set = +b.dataset.s; p1Setup(); });
   app.querySelectorAll('#p1Mode [data-t]').forEach(b => b.onclick = () => { S.timed = b.dataset.t === '1'; p1Setup(); });
@@ -6034,11 +6060,11 @@ function p1Mark() {
 function p1Done() {
   const C = P1S.cur, q = P1.find(s => s.id === C.set).qs[C.q], tot = C.scA + C.scB;
   const txt = `Simulacro de Prueba 1 · Simulacro ${C.set}, pregunta ${C.q + 1}\n\n(a) ${plain(q.a)}\n\n${C.a}\n\n(b) ${plain(q.b)}\n\n${C.b}\n\nAutoevaluación: (a) ${C.scA}/10 · (b) ${C.scB}/15 · Total ${tot}/25`;
-  app.innerHTML = p1Head(`<div class="fb ok"><b class="h">Resultado autoevaluado: ${tot}/25</b>(a) ${C.scA}/10 · (b) ${C.scB}/15. Quedó guardado en tu reporte.</div>
+  app.innerHTML = p1Head(`<div class="fb ok"><b class="h">Resultado autoevaluado: ${tot}/25</b>(a) ${C.scA}/10 · (b) ${C.scB}/15. Quedó guardado en tu reporte.</div>${C.thread ? `<p class="small" style="margin-top:8px">Versión mejorada de <b>${esLabel(C.thread)}</b>.</p>` : ''}${esSubmitBox(C, q)}
     <div class="row" style="margin-top:12px"><button class="btn primary" type="button" id="p1Cp">Copiar mis respuestas para entregar</button><button class="btn" type="button" id="p1New">Nuevo simulacro</button></div>
     ${padUsed(C.dA) || padUsed(C.dB) ? `<h3 style="margin-top:18px">Tus diagramas</h3><p class="small muted">Descargalos como imagen para entregarlos junto con el texto.</p><div class="p1mark">${padUsed(C.dA) ? '<section><b>Parte (a)</b><div id="fdA"></div></section>' : ''}${padUsed(C.dB) ? '<section><b>Parte (b)</b><div id="fdB"></div></section>' : ''}</div>` : ''}
     <h3 style="margin-top:20px">Para mejorar</h3><div class="row"><button class="btn sm" type="button" data-go="escribir-explicar">Practicar Explicar (parte a)</button><button class="btn sm" type="button" data-go="escribir-evaluar">Practicar Evaluar (parte b)</button></div>`);
-  $('#p1Cp').onclick = e => copyText(txt, e.currentTarget);
+  $('#p1Cp').onclick = e => copyText(txt, e.currentTarget); esBindSubmit(C, q);
   if ($('#fdA')) sketchPad($('#fdA'), C.dA, null, { readOnly: true, file: 'prueba1-parte-a' });
   if ($('#fdB')) sketchPad($('#fdB'), C.dB, null, { readOnly: true, file: 'prueba1-parte-b' });
   $('#p1New').onclick = () => { P1S.cur = null; saveP1(); SESS.p1set = null; renderP1(); };
@@ -9340,9 +9366,9 @@ const profName = x => pj(x, 'alumno', '') || (x.email || '').split('@')[0];
 async function profLoad() {
   const X = FBX(); if (!X) return; PROF.st = 'loading';
   try {
-    const [u, s, f, c, rp] = await Promise.all([X.students(), X.allSubs(), X.allFb(), X.getConfig(), X.allReports().catch(() => [])]);
+    const [u, s, f, c, rp, es, esfb, cb] = await Promise.all([X.students(), X.allSubs(), X.allFb(), X.getConfig(), X.allReports().catch(() => []), X.allEssays().catch(() => []), X.allEssayFb().catch(() => []), X.cfgGet('comentarios').catch(() => ({}))]);
     PROF.users = u.filter(x => (x.email || '').toLowerCase() !== TEACHER_MAIL).sort((a, b) => profName(a).localeCompare(profName(b), 'es'));
-    PROF.subs = s; PROF.fb = f; PROF.curso = c; PROF.reps = rp.sort((a, b) => (b.at || 0) - (a.at || 0)); PROF.logs = {}; PROF.st = 'ok';
+    PROF.subs = s; PROF.fb = f; PROF.curso = c; PROF.reps = rp.sort((a, b) => (b.at || 0) - (a.at || 0)); PROF.es = es; PROF.esfb = esfb; PROF.cb = cb; PROF.logs = {}; PROF.st = 'ok';
   } catch (e) { PROF.st = 'err'; PROF.err = e.code || e.message; }
   if (location.hash.startsWith('#profesor')) { const y = window.scrollY; render(); window.scrollTo(0, y); }
 }
@@ -9350,7 +9376,7 @@ const profR = (uid, u) => eiRounds(PROF.subs.filter(s => s.uid === uid), PROF.fb
 const stgTag = R => { const k = stageOf(R); return k === 'final' ? ['Versión final', 'ok'] : k === 'wait' ? [`Borrador ${R.last.n} por devolver`, 'late'] : k === 'fb' ? [`${R.rounds.length} ${R.rounds.length === 1 ? 'ronda' : 'rondas'} devueltas`, 'prog'] : ['Sin entregar', '']; };
 const wordsOf = w => w ? EI_BLOCKS.reduce((s, b) => s + (b.bud ? wc((w.txt || {})[b.k]) : 0), 0) : 0;
 function profGate() {
-  if (!window.FBX || !FBX()) { app.innerHTML = '<h1>Panel del profesor</h1><p class="lede">Entra con la cuenta del profesor (botón «Entrar», arriba) para ver esta página.</p>'; return false; }
+  if (!window.FBX || !FBX()) { app.innerHTML = '<h1>Panel del profesor</h1><p class="lede">Entrá con la cuenta del profesor (botón «Entrar», arriba) para ver esta página.</p>'; return false; }
   if (!isTeacher()) { app.innerHTML = '<h1>Panel del profesor</h1><p class="lede">Esta página es solo para el profesor.</p>'; return false; }
   if (PROF.st === 'idle') profLoad();
   if (PROF.st !== 'ok') { app.innerHTML = `<div class="eyebrow">Solo para el profesor</div><h1>Panel del profesor</h1><div class="fb ${PROF.st === 'err' ? 'no' : 'info'}">${PROF.st === 'err' ? `No se pudieron leer los datos (${esc(PROF.err)}). <button class="btn" type="button" id="pfR">Reintentar</button>` : 'Cargando el trabajo de los alumnos…'}</div>`; const r = $('#pfR'); if (r) r.onclick = () => { PROF.st = 'idle'; render(); }; return false; }
@@ -9372,12 +9398,13 @@ function renderProf() {
   const F = (PROF.curso || {}).fechas || {};
   app.innerHTML = `<div class="eyebrow">Solo para el profesor</div><h1>Panel del profesor</h1>
     <p class="lede">Avance de la Evaluación Interna de cada alumno que entró con su cuenta. Tocá un nombre para ver sus entregas, dar devoluciones y descargar su informe.</p>
-    <div class="row" style="margin-bottom:10px"><button class="btn" type="button" id="pfR">Actualizar</button><button class="btn primary" type="button" id="pfCsv">Descargar seguimiento (Excel)</button><button class="btn" type="button" id="pfTime">Descargar tiempo (Excel)</button><div class="seg" role="group" aria-label="Curso">${[['all', 'Todos'], ['1', 'PD1'], ['2', 'PD2']].map(([v, l]) => `<button type="button" data-pfpd="${v}" aria-pressed="${PF === v}">${l}</button>`).join('')}</div><span class="small muted">${PROF.users.length} ${PROF.users.length === 1 ? 'alumno' : 'alumnos'}</span></div>
+    <div class="row" style="margin-bottom:10px"><button class="btn" type="button" id="pfR">Actualizar</button><button class="btn primary" type="button" id="pfCsv">Descargar seguimiento (Excel)</button><button class="btn" type="button" id="pfTime">Descargar tiempo (Excel)</button><button class="btn" type="button" data-go="profesor-informe">Informe mensual (PDF)</button><div class="seg" role="group" aria-label="Curso">${[['all', 'Todos'], ['1', 'PD1'], ['2', 'PD2']].map(([v, l]) => `<button type="button" data-pfpd="${v}" aria-pressed="${PF === v}">${l}</button>`).join('')}</div><span class="small muted">${PROF.users.length} ${PROF.users.length === 1 ? 'alumno' : 'alumnos'}</span></div>
     ${(() => { const inact = PROF.users.filter(x => PF === 'all' || pdOf(x) === PF).map(x => { const T = pj(x, 'time', {}), lt = Object.keys(T).sort().pop(), last = Math.max(x.updated || 0, lt ? new Date(lt + 'T12:00:00').getTime() : 0); return [x, last ? Math.floor((Date.now() - last) / 864e5) : null]; }).filter(([, d]) => d === null || d >= 7).sort((a, b) => (b[1] ?? 999) - (a[1] ?? 999));
       return inact.length ? `<div class="fb no"><b class="h">Sin entrar hace 7 días o más: ${inact.length}</b>${inact.map(([x, d]) => `<button class="linkb" type="button" data-go="profesor-${x.uid}">${esc(profName(x))}</button> <span class="small">(${d === null ? 'sin registro' : d + ' días'})</span>`).join(' · ')}</div>` : '<div class="fb ok">Todos los alumnos entraron en los últimos 7 días.</div>'; })()}
     ${pend.length ? `<div class="fb no"><b class="h">Borradores por devolver: ${pend.length}</b>${pend.map(([x, u, n]) => `<button class="linkb" type="button" data-go="profesor-${x.uid}">${esc(profName(x))} · ${EI_UNITS[u]} · borrador ${n}</button>`).join(' · ')}</div>` : '<div class="fb ok">No hay borradores pendientes de devolución.</div>'}
     <div class="tscroll"><table class="dtab plan pftab"><thead><tr><th>Alumno</th>${Object.values(EI_UNITS).map(n => `<th>${n}</th>`).join('')}<th>Tiempo (7 días)</th><th>Última actividad</th></tr></thead><tbody>${rows || `<tr><td colspan="6">Todavía no hay alumnos con cuenta.</td></tr>`}</tbody></table></div>
     ${profSummaryHtml()}
+    ${profEssaysHtml(PROF.users.filter(x => PF === 'all' || pdOf(x) === PF))}
     ${profTeoHtml(PROF.users.filter(x => PF === 'all' || pdOf(x) === PF))}
     ${profRepHtml()}
     <h2 style="margin-top:24px">Fechas del curso</h2>
@@ -9484,7 +9511,7 @@ function profRoundHtml(uid, u, r, isLast) {
   return `<div class="pfround"><h3>Borrador ${r.n} · ${fdate(r.d.at)} · ${r.d.words} palabras${r.prev ? ` (${wdiff(r.d.words - r.prev.words)} respecto del borrador ${r.prev.n})` : ''}</h3>
     <details${isLast && !r.fb ? ' open' : ''}><summary>Leer el borrador ${r.n}</summary><div class="mtext">${profTxt(r.d.txt)}</div></details>
     <div class="pfsc" data-n="${r.n}"><span class="small"><b>Puntaje estimado (opcional):</b></span>${EI_CRIT.map(([k, n, m]) => `<label class="small">${k}<select class="dsel" data-k="${k}" title="${n}"><option value="">–</option>${Array.from({ length: m + 1 }, (_, v) => `<option${sc[k] !== undefined && +sc[k] === v ? ' selected' : ''}>${v}</option>`).join('')}</select></label>`).join('')}</div>
-    <label class="dbf" style="margin-top:8px"><span>Devolución del borrador ${r.n}</span><textarea rows="6" class="pffb" data-n="${r.n}">${esc(fb.text || '')}</textarea></label>
+    <label class="dbf" style="margin-top:8px"><span>Devolución del borrador ${r.n}</span><textarea rows="6" class="pffb" data-n="${r.n}">${esc(fb.text || '')}</textarea></label>${cbankHtml()}
     <div class="row" style="margin-top:6px"><button class="btn primary" type="button" data-pfsend="${u}" data-n="${r.n}">${r.fb ? 'Actualizar devolución' : 'Enviar devolución'}</button>${isLast ? `<button class="btn" type="button" data-pfre="${uid}_${u}_${r.n}">Reabrir borrador ${r.n}</button>` : ''}<span class="small pfm" data-n="${r.n}">${r.fb ? `Enviada el ${fdate(fb.at)}${fb.edited && fb.edited !== fb.at ? ` (actualizada ${fdate(fb.edited)})` : ''} · ${Math.round((fb.at - r.d.at) / 864e5)} días después de la entrega. El alumno ya la ve.` : ''}</span></div></div>`;
 }
 function renderProfStudent(uid) {
@@ -9493,8 +9520,9 @@ function renderProfStudent(uid) {
   const E = pj(x, 'ei', { s: {}, log: {} });
   app.innerHTML = `<button class="crumb" type="button" data-go="profesor">← Panel del profesor</button><div class="eyebrow" style="margin-top:12px">Solo para el profesor</div><h1>${esc(profName(x))}</h1>
     <p class="small muted">${esc(x.email || '')} · Última actividad: ${fdate(x.updated)}</p>
-    <div class="row"><button class="btn primary" type="button" id="pfDoc">Descargar informe de seguimiento (Word)</button></div>
+    <div class="row"><button class="btn primary" type="button" id="pfDoc">Descargar informe de seguimiento (Word)</button><button class="btn" type="button" data-go="profesor-informe-${x.uid}">Informe mensual (PDF)</button></div>
     <section class="card pfcard"><div class="card-b"><h2 style="margin-bottom:4px">Tiempo en el Taller</h2>${profTimeHtml(x)}</div></section>
+    ${(() => { const T = esThreads(PROF.es || [], PROF.esfb || [], uid); return T.length ? `<section class="card pfcard"><div class="card-b"><h2 style="margin-bottom:4px">Ensayos de Prueba 1</h2><div class="mlist">${T.map(t => `<button class="mrow linkrow" type="button" data-go="profesor-ensayo-${t.id}"><span class="code">R${t.last.n}</span><span class="nm">${esLabel(t.key)}<span class="small muted"> · ${t.rounds.length} ${t.rounds.length === 1 ? 'ronda' : 'rondas'} · ${fdate(t.last.d.at)}</span></span>${t.last.fb ? '<span class="tag ok">devuelto</span>' : '<span class="tag late">por devolver</span>'}</button>`).join('')}</div></div></section>` : ''; })()}
     ${Object.entries(EI_UNITS).map(([u, n]) => {
       const w = (E.s || {})[u], R = profR(uid, u), [t, cl] = stgTag(R);
       return `<section class="card pfcard" data-u="${u}"><div class="card-b"><h2 style="margin-bottom:4px">${n} <span class="tag ${cl}" style="font-size:13px;vertical-align:middle">${t}</span></h2>
@@ -9509,7 +9537,7 @@ function renderProfStudent(uid) {
       </div></section>`;
     }).join('')}`;
   if (!(PROF.logs || {})[uid]) profLogsLoad(uid);
-  $('#pfDoc').onclick = e => profDocx(x, e.currentTarget);
+  $('#pfDoc').onclick = e => profDocx(x, e.currentTarget); cbankBind(app);
   app.querySelectorAll('.pfdia').forEach(d => { const w = E.s[d.dataset.u]; d.parentNode.addEventListener('toggle', () => { if (!d.dataset.done) { d.dataset.done = 1; sketchPad(d, w.dia, null, { readOnly: true, file: 'EI-' + fileSafe(profName(x)) + '-' + d.dataset.u }); } }); });
   app.querySelectorAll('[data-pfsend]').forEach(b => b.onclick = async () => {
     const u = b.dataset.pfsend, n = b.dataset.n, sec = b.closest('.pfcard'), t = sec.querySelector(`.pffb[data-n="${n}"]`).value.trim(), m = sec.querySelector(`.pfm[data-n="${n}"]`);
@@ -9746,10 +9774,225 @@ function profRepHtml() {
     ${viejos.length ? `<details style="margin-top:8px"><summary class="small"><b>Resueltos (${viejos.length})</b></summary>${viejos.map(card).join('')}</details>` : ''}`;
 }
 
+
+/* =============== Banco de comentarios del profesor =============== */
+const CB_DEF = ['Rotulá los dos ejes y todas las curvas del diagrama.', 'Mostrá el desplazamiento con una flecha y el nuevo equilibrio (P₂, Q₂).',
+  'Explicá el diagrama en el texto con los mismos rótulos.', 'Definí los términos clave la primera vez que los usás.',
+  'Usá un dato concreto del artículo para apoyar el análisis.', 'Falta la cadena causal completa: causa → mecanismo → efecto.',
+  'Agregá corto y largo plazo en la evaluación.', 'Considerá a las partes interesadas: ¿quién gana y quién pierde?',
+  'La conclusión necesita un juicio claro y justificado.', 'Buen trabajo: el análisis está bien conectado con la teoría.',
+  'Revisá la cantidad de palabras: te pasaste del límite.', 'Citá la fuente y la fecha del artículo en la portada.'];
+const CB = () => (PROF.cb && Array.isArray(PROF.cb.l) && PROF.cb.l.length ? PROF.cb.l : CB_DEF);
+function cbankHtml() {
+  return `<div class="cbank noprint"><span class="small muted">Comentarios frecuentes (tocá para insertar):</span>${CB().map((t, i) => `<button type="button" class="cbc" data-cb="${i}" title="${esc(t)}">${esc(t.length > 48 ? t.slice(0, 46) + '…' : t)}</button>`).join('')}<button type="button" class="linkb small" data-cbedit>Editar la lista</button></div>`;
+}
+function cbankBind(root) {
+  root.querySelectorAll('[data-cb]').forEach(b => b.onclick = () => {
+    const box = b.closest('.pfround, .esround, .card-b') || root, ta = box.querySelector('textarea.pffb, textarea.esfbt'); if (!ta) return;
+    const t = CB()[+b.dataset.cb], s = ta.selectionStart ?? ta.value.length, e = ta.selectionEnd ?? s, pre = ta.value.slice(0, s), sep = pre && !/\s$/.test(pre) ? ' ' : '';
+    ta.value = pre + sep + t + ' ' + ta.value.slice(e); const p = (pre + sep + t + ' ').length; ta.focus(); ta.setSelectionRange(p, p);
+  });
+  root.querySelectorAll('[data-cbedit]').forEach(b => b.onclick = () => {
+    const host = b.closest('.cbank'); if (host.querySelector('.cbedit')) return;
+    host.insertAdjacentHTML('beforeend', `<div class="cbedit"><label class="small"><b>Un comentario por línea</b><textarea rows="8">${esc(CB().join('\n'))}</textarea></label><div class="row"><button class="btn sm primary" type="button" data-cbsave>Guardar lista</button><span class="small cbm"></span></div></div>`);
+    host.querySelector('[data-cbsave]').onclick = async e => {
+      const l = host.querySelector('.cbedit textarea').value.split('\n').map(x => x.trim()).filter(Boolean).slice(0, 60), m = host.querySelector('.cbm');
+      e.currentTarget.disabled = true; m.textContent = 'Guardando…';
+      try { await FBX().cfgSet('comentarios', { l }); PROF.cb = { l }; const y = window.scrollY; render(); window.scrollTo(0, y); }
+      catch (x) { m.textContent = 'No se pudo guardar (' + (x.code || x.message) + ').'; e.currentTarget.disabled = false; }
+    };
+  });
+}
+
+/* =============== Ensayos de Prueba 1: entregas por rondas con devolución del profesor =============== */
+const ESR = { st: 'idle', subs: [], fb: [] };
+const esKey = C => C.thread || `s${C.set}q${C.q + 1}`;
+const esLabel = k => { const m = /^s(\d+)q(\d+)$/.exec(k); return m ? `Simulacro ${m[1]} · Pregunta ${m[2]}` : k; };
+function esThreads(subs, fb, uid) {
+  const T = {};
+  subs.filter(s => !uid || s.uid === uid).forEach(s => { const k = s.key; (T[s.uid + '_' + k] = T[s.uid + '_' + k] || { id: s.uid + '_' + k, uid: s.uid, key: k, rounds: [] }).rounds.push({ n: s.n, d: s, fb: fb.find(f => f.id === s.id) || null }); });
+  return Object.values(T).map(t => { t.rounds.sort((a, b) => a.n - b.n); t.last = t.rounds[t.rounds.length - 1]; return t; }).sort((a, b) => (b.last.d.at || 0) - (a.last.d.at || 0));
+}
+async function esRemoteLoad(force) {
+  const X = FBX(); if (!X || X.isTeacher()) return;
+  if (ESR.st === 'loading' || (ESR.st === 'ok' && !force)) return;
+  const sig = () => JSON.stringify([ESR.subs.map(s => s.id), ESR.fb.map(f => [f.id, f.edited || f.at])]), before = sig();
+  ESR.st = 'loading';
+  try { const m = await X.myEssays(); ESR.subs = m.subs; ESR.fb = m.fb; ESR.st = 'ok'; } catch (e) { ESR.st = 'err'; }
+  const r = location.hash.slice(1);
+  if (sig() !== before && (/^(escribir-p1|empezar)$/.test(r) || r.startsWith('p1-ensayo-'))) { const y = window.scrollY; render(); window.scrollTo(0, y); }
+}
+const esUnseen = () => { const seen = store.get('esSeen', []); return ESR.fb.filter(f => !seen.includes(f.id + '@' + (f.edited || f.at))); };
+function esMarkSeen(key) { const seen = new Set(store.get('esSeen', [])); ESR.fb.filter(f => f.key === key).forEach(f => seen.add(f.id + '@' + (f.edited || f.at))); store.set('esSeen', [...seen]); }
+const esOps = ops => { try { const s = JSON.stringify(ops || []); return s.length < 300000 ? s : '[]'; } catch (e) { return '[]'; } };
+const esParse = s => { try { return JSON.parse(s || '[]'); } catch (e) { return []; } };
+function esSubmitBox(C, q) {
+  if (!FBX()) return `<div class="fb info" style="margin-top:14px"><b class="h">Entregá este ensayo a tu profesor</b>Para entregarlo y recibir su devolución, tocá <b>Entrar</b> (arriba) y usá tu correo del colegio.</div>`;
+  if (isTeacher()) return '';
+  if (ESR.st !== 'ok') { esRemoteLoad(); return '<div class="fb info" style="margin-top:14px">Consultando tus entregas…</div>'; }
+  const key = esKey(C), T = esThreads(ESR.subs, ESR.fb).find(t => t.key === key);
+  if (C.sent) return `<div class="fb ok" style="margin-top:14px"><b class="h">Entregaste la ronda ${C.sent}</b>Tu profesor la va a corregir. Vas a ver su devolución en <button class="linkb" type="button" data-go="p1-ensayo-${key}">Mis ensayos entregados</button>.</div>`;
+  if (T && !T.last.fb) return `<div class="fb info" style="margin-top:14px"><b class="h">Ronda ${T.last.n} en revisión</b>Ya entregaste este ensayo y tu profesor todavía no lo devolvió. Cuando tengas la devolución, vas a poder entregar una versión mejorada.</div>`;
+  const n = T ? T.last.n + 1 : 1;
+  return `<div class="essentials" style="margin-top:14px"><b>Entregar al profesor ${n > 1 ? `· ronda ${n} (versión mejorada)` : ''}</b>
+    <p class="small" style="margin:4px 0 8px">Se envían tus respuestas (a) y (b), tus diagramas y tu autoevaluación. Tu profesor te devuelve comentarios y un puntaje; después podés mejorarlo y volver a entregarlo.</p>
+    <div class="row"><button class="btn primary" type="button" id="esSend" data-n="${n}">Entregar ronda ${n}</button><span class="small" id="esMsg"></span></div></div>`;
+}
+function esBindSubmit(C, q) {
+  const b = $('#esSend'); if (!b) return;
+  b.onclick = async () => {
+    const n = +b.dataset.n, m = $('#esMsg'); b.disabled = true; m.textContent = 'Enviando…';
+    try {
+      await FBX().essaySubmit(esKey(C), n, { set: C.set, q: C.q + 1, u: q.u, qa: plain(q.a), qb: plain(q.b), a: C.a || '', b: C.b || '', dA: esOps(C.dA), dB: esOps(C.dB), scA: C.scA, scB: C.scB, w: wc(C.a) + wc(C.b), timed: !!C.timed });
+      C.sent = n; saveP1(); ESR.st = 'idle'; await esRemoteLoad(true); const y = window.scrollY; render(); window.scrollTo(0, y);
+    } catch (x) { m.textContent = 'No se pudo entregar (' + (x.code || x.message) + '). Revisá tu conexión e intentá otra vez.'; b.disabled = false; }
+  };
+}
+function esListHtml() {
+  if (!FBX() || isTeacher()) return '';
+  if (ESR.st !== 'ok') { esRemoteLoad(); return ''; }
+  const T = esThreads(ESR.subs, ESR.fb); if (!T.length) return '';
+  const un = new Set(esUnseen().map(f => f.key));
+  return `<h2 style="margin-top:24px">Mis ensayos entregados</h2><div class="mlist">${T.map(t => { const f = t.last.fb, sc = f && f.sa != null && f.sb != null ? `${f.sa + f.sb}/25` : ''; return `<button class="mrow linkrow" type="button" data-go="p1-ensayo-${t.key}"><span class="code">${sc || '…'}</span><span class="nm">${esLabel(t.key)}<span class="small muted"> · ${t.rounds.length} ${t.rounds.length === 1 ? 'ronda' : 'rondas'} · ${f ? 'devuelto' : 'esperando devolución'}</span></span>${un.has(t.key) ? '<span class="tag ok">Nueva devolución</span>' : ''}</button>`; }).join('')}</div>`;
+}
+function esRoundHtml(r, i, teacher) {
+  const d = r.d, f = r.fb;
+  return `<div class="esround"><h3>Ronda ${r.n} · ${fdate(d.at)} · ${d.w || 0} palabras${d.timed ? ' · con reloj' : ''}</h3>
+    <p class="small muted">Autoevaluación del alumno: (a) ${d.scA ?? '–'}/10 · (b) ${d.scB ?? '–'}/15</p>
+    <details${teacher && !f ? ' open' : ''}><summary>Leer la ronda ${r.n}</summary>
+      <p class="small"><b>(a)</b> ${esc(d.qa || '')}</p><div class="answer">${esc(d.a || '(vacía)').replace(/\n/g, '<br>')}</div><div class="esdia" data-k="dA"></div>
+      <p class="small" style="margin-top:10px"><b>(b)</b> ${esc(d.qb || '')}</p><div class="answer">${esc(d.b || '(vacía)').replace(/\n/g, '<br>')}</div><div class="esdia" data-k="dB"></div></details>
+    ${teacher ? `<div class="esfb"><div class="row small"><label>Parte (a) <select class="dsel" data-s="sa"><option value="">–</option>${Array.from({ length: 11 }, (_, v) => `<option${f && f.sa === v ? ' selected' : ''}>${v}</option>`).join('')}</select> /10</label><label>Parte (b) <select class="dsel" data-s="sb"><option value="">–</option>${Array.from({ length: 16 }, (_, v) => `<option${f && f.sb === v ? ' selected' : ''}>${v}</option>`).join('')}</select> /15</label></div>
+        <label class="dbf" style="margin-top:8px"><span>Devolución de la ronda ${r.n}</span><textarea rows="6" class="esfbt">${esc(f ? f.text : '')}</textarea></label>${cbankHtml()}
+        <div class="row" style="margin-top:6px"><button class="btn primary" type="button" data-essend="${d.id}">${f ? 'Actualizar devolución' : 'Enviar devolución'}</button><span class="small esm"></span></div></div>`
+      : f ? `<div class="fb ok"><b class="h">Devolución del profesor · ${fdate(f.at)}${f.sa != null && f.sb != null ? ` · (a) ${f.sa}/10 · (b) ${f.sb}/15 · total ${f.sa + f.sb}/25` : ''}</b>${esc(f.text || '').replace(/\n/g, '<br>')}</div>` : '<p class="small muted">Esperando la devolución del profesor.</p>'}
+  </div>`;
+}
+function esBindDias(T) {
+  app.querySelectorAll('.esround').forEach((box, i) => {
+    const d = T.rounds[i].d, det = box.querySelector('details');
+    const draw = () => box.querySelectorAll('.esdia').forEach(h => { if (h.dataset.done) return; h.dataset.done = 1; const ops = esParse(d[h.dataset.k]); if (padUsed(ops)) sketchPad(h, ops, null, { readOnly: true, file: 'prueba1-' + h.dataset.k }); });
+    if (det.open) draw(); det.addEventListener('toggle', () => { if (det.open) draw(); });
+  });
+}
+const esTrend = T => { const s = T.rounds.filter(r => r.fb && r.fb.sa != null && r.fb.sb != null).map(r => `R${r.n}: ${r.fb.sa + r.fb.sb}/25`); return s.length ? `<p class="small"><b>Puntaje del profesor por ronda:</b> ${s.join(' → ')}</p>` : ''; };
+function renderEssay(key) {
+  if (!FBX()) { location.hash = '#escribir-p1'; return; }
+  if (ESR.st !== 'ok') { app.innerHTML = '<p class="lede">Cargando tus ensayos…</p>'; esRemoteLoad(); return; }
+  const T = esThreads(ESR.subs, ESR.fb).find(t => t.key === key); if (!T) { location.hash = '#escribir-p1'; return; }
+  esMarkSeen(key);
+  const canImprove = !!T.last.fb;
+  app.innerHTML = `<button class="crumb" type="button" data-go="escribir-p1">← Simulacro de Prueba 1</button><div class="eyebrow" style="margin-top:12px">Ensayo entregado</div><h1>${esLabel(key)}</h1>
+    ${esTrend(T)}
+    ${T.rounds.map((r, i) => esRoundHtml(r, i, false)).join('')}
+    <div class="row" style="margin-top:14px">${canImprove ? '<button class="btn primary" type="button" id="esImp">Escribir la versión mejorada</button>' : '<span class="small muted">Cuando tu profesor devuelva la última ronda, vas a poder escribir una versión mejorada.</span>'}</div>`;
+  esBindDias(T);
+  const b = $('#esImp'); if (b) b.onclick = () => {
+    const d = T.last.d; if (P1S.cur && P1S.cur.phase !== 'done' && !confirm('Tenés un simulacro sin terminar. ¿Querés reemplazarlo por la versión mejorada de este ensayo?')) return;
+    P1S.cur = { set: d.set, q: d.q - 1, timed: false, phase: 'write', thread: key, readEnd: null, end: null, a: d.a || '', b: d.b || '', dA: esParse(d.dA), dB: esParse(d.dB), ckA: {}, ckB: {}, scA: null, scB: null };
+    saveP1(); location.hash = '#escribir-p1';
+  };
+  updateFbBadge && updateFbBadge();
+}
+function renderProfEssay(id) {
+  if (!profGate()) return;
+  const T = esThreads(PROF.es || [], PROF.esfb || []).find(t => t.id === id); if (!T) return renderProf();
+  const x = PROF.users.find(y => y.uid === T.uid) || { email: T.last.d.email };
+  app.innerHTML = `<button class="crumb" type="button" data-go="profesor">← Panel del profesor</button><div class="eyebrow" style="margin-top:12px">Ensayo de Prueba 1 · ${esc(esLabel(T.key))}</div><h1>${esc(profName(x))}</h1>
+    <p class="small muted">${esc(x.email || '')} · ${T.last.d.u || ''}</p>${esTrend(T)}
+    ${T.rounds.map((r, i) => esRoundHtml(r, i, true)).join('')}`;
+  esBindDias(T); cbankBind(app);
+  app.querySelectorAll('[data-essend]').forEach(b => b.onclick = async () => {
+    const box = b.closest('.esround'), t = box.querySelector('.esfbt').value.trim(), m = box.querySelector('.esm');
+    const sa = box.querySelector('[data-s="sa"]').value, sb = box.querySelector('[data-s="sb"]').value;
+    if (!t) { m.textContent = 'Escribí la devolución antes de enviarla.'; return; }
+    const r = T.rounds.find(rr => rr.d.id === b.dataset.essend);
+    b.disabled = true; m.textContent = 'Enviando…';
+    try { await FBX().setEssayFb(r.d.id, { uid: T.uid, key: T.key, n: r.n, text: t, sa: sa === '' ? null : +sa, sb: sb === '' ? null : +sb }, r.fb ? r.fb.at : null); PROF.st = 'idle'; await profLoad(); }
+    catch (e) { m.textContent = 'No se pudo enviar (' + (e.code || e.message) + ').'; b.disabled = false; }
+  });
+}
+function profEssaysHtml(list) {
+  const uids = new Set(list.map(x => x.uid)), T = esThreads(PROF.es || [], PROF.esfb || []).filter(t => uids.has(t.uid));
+  const name = uid => { const x = PROF.users.find(y => y.uid === uid); return x ? profName(x) : 'Alumno'; };
+  const pend = T.filter(t => !t.last.fb), done = T.filter(t => t.last.fb);
+  const row = t => `<button class="mrow linkrow" type="button" data-go="profesor-ensayo-${t.id}"><span class="code">R${t.last.n}</span><span class="nm">${esc(name(t.uid))}<span class="small muted"> · ${esLabel(t.key)} · ${fdate(t.last.d.at)}</span></span>${t.last.fb ? (t.last.fb.sa != null && t.last.fb.sb != null ? `<span class="tag ok">${t.last.fb.sa + t.last.fb.sb}/25</span>` : '<span class="tag ok">devuelto</span>') : '<span class="tag late">por devolver</span>'}</button>`;
+  return `<h2 style="margin-top:24px">Ensayos de Prueba 1${pend.length ? ` <span class="tag late" style="font-size:13px;vertical-align:middle">${pend.length} por devolver</span>` : ''}</h2>
+    ${T.length ? `${pend.length ? `<div class="mlist">${pend.map(row).join('')}</div>` : '<p class="small muted">No hay ensayos por devolver.</p>'}${done.length ? `<details style="margin-top:8px"><summary class="small"><b>Devueltos (${done.length})</b></summary><div class="mlist">${done.map(row).join('')}</div></details>` : ''}`
+      : '<p class="small muted">Todavía ningún alumno entregó un ensayo. Lo hacen al terminar un simulacro de Prueba 1.</p>'}`;
+}
+
+/* =============== Informe mensual por alumno (para imprimir o guardar en PDF) =============== */
+const MES = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+const ymOf = v => { if (!v) return ''; if (typeof v === 'number') { const d = new Date(v); return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0'); } const s = String(v); let m = /^(\d{4})-(\d{2})/.exec(s); if (m) return m[1] + '-' + m[2]; m = /^(\d{1,2})\/(\d{1,2})\/(\d{4})/.exec(s); return m ? m[3] + '-' + m[2].padStart(2, '0') : ''; };
+const ymPrev = ym => { let [y, m] = ym.split('-').map(Number); m--; if (!m) { m = 12; y--; } return y + '-' + String(m).padStart(2, '0'); };
+const ymName = ym => { const [y, m] = ym.split('-'); return MES[+m - 1] + ' de ' + y; };
+function repMonthSum(T, ym) { const o = { tot: 0, days: 0, cat: {} }; Object.entries(T || {}).forEach(([d, c]) => { if (!d.startsWith(ym)) return; const s = Object.values(c).reduce((a, b) => a + b, 0); if (s >= 60) o.days++; o.tot += s; Object.entries(c).forEach(([k, v]) => { o.cat[k] = (o.cat[k] || 0) + v; }); }); return o; }
+function repStudent(x, ym) {
+  const T = pj(x, 'time', {}), M = repMonthSum(T, ym), Pm = repMonthSum(T, ymPrev(ym));
+  const teo = pj(x, 'teo', {}), teoM = Object.entries(teo).filter(([, r]) => ymOf(r.v) === ym || ymOf(r.at) === ym);
+  const qv = teoM.flatMap(([, r]) => Object.values(r.q || {})), teoPct = qv.length ? Math.round(qv.reduce((a, b) => a + b, 0) / qv.length * 100) : null;
+  const prog = pj(x, 'prog', { t: {} }), ex = Object.values(prog.t || {}).reduce((a, t) => a + Object.keys(t || {}).length, 0);
+  const errs = Object.keys(pj(x, 'errs', {})).length, defs = Object.keys(pj(x, 'defs', {})).length;
+  const p1 = (pj(x, 'p1', { hist: [] }).hist || []).filter(h => ymOf(h.d) === ym), p2 = (pj(x, 'p2h', []) || []).filter(h => ymOf(h.d) === ym);
+  const es = esThreads(PROF.es || [], PROF.esfb || [], x.uid).flatMap(t => t.rounds.map(r => ({ t, r }))).filter(o => ymOf(o.r.d.at) === ym);
+  const eiRows = Object.entries(EI_UNITS).map(([u, n]) => { const R = profR(x.uid, u), [st] = stgTag(R); const sub = R.rounds.filter(r => ymOf(r.d.at) === ym).length, fbk = R.rounds.filter(r => r.fb && ymOf(r.fb.at) === ym).length; return `<tr><td>${n}</td><td>${st}</td><td>${sub}</td><td>${fbk}</td></tr>`; }).join('');
+  const cats = TCATS.filter(([k]) => M.cat[k]).map(([k, n]) => `<tr><td>${n}</td><td>${fmtMin(M.cat[k])}</td></tr>`).join('');
+  const pdv = String(pj(x, 'pd', '') || ''), diff = M.tot - Pm.tot;
+  return `<article class="reppage"><div class="rephead"><div><div class="repbrand">Economía IB · Taller de práctica</div><h2>Informe mensual · ${ymName(ym)}</h2></div><div class="small">Prof. Econ. Hugo Rivarola</div></div>
+    <table class="dtab reptab"><tbody><tr><th>Alumno</th><td>${esc(profName(x))}</td><th>Curso</th><td>${pdv === '1' || pdv === '2' ? 'PD' + pdv : '—'}</td></tr><tr><th>Correo</th><td colspan="3">${esc(x.email || '')}</td></tr></tbody></table>
+    <h3>1. Uso del Taller</h3>
+    <div class="repkpi"><div><b>${fmtMin(M.tot)}</b><span>tiempo activo</span></div><div><b>${M.days}</b><span>${M.days === 1 ? 'día con actividad' : 'días con actividad'}</span></div><div><b>${diff === 0 ? '=' : (diff > 0 ? '+' : '−') + fmtMin(Math.abs(diff))}</b><span>frente a ${MES[+ymPrev(ym).slice(5) - 1]}</span></div></div>
+    ${cats ? `<table class="dtab reptab"><thead><tr><th>Sección</th><th>Tiempo en el mes</th></tr></thead><tbody>${cats}</tbody></table>` : '<p class="small muted">Sin tiempo registrado en este mes.</p>'}
+    <h3>2. Teoría y práctica</h3>
+    <ul class="replist"><li>Subtemas de teoría trabajados en el mes: <b>${teoM.length}</b>${teoM.length ? ` (${teoM.map(([id]) => tcode(id)).join(', ')})` : ''}${teoPct !== null ? ` · aciertos en el primer intento: <b>${teoPct} %</b>` : ''}</li>
+      <li>Ejercicios de práctica resueltos (acumulado): <b>${ex}</b> · errores pendientes de repasar: <b>${errs}</b></li><li>Definiciones de la Prueba 2 practicadas (acumulado): <b>${defs}</b> de ${DEFS.length}</li></ul>
+    <h3>3. Prueba 1 y Prueba 2</h3>
+    <ul class="replist"><li>Simulacros de Prueba 1 en el mes: <b>${p1.length}</b>${p1.length ? ` · autoevaluación: ${p1.map(h => h.total + '/25').join(', ')}` : ''}</li>
+      <li>Ensayos entregados al profesor: <b>${es.length}</b>${es.length ? ` · ${es.map(o => `${esLabel(o.t.key)} R${o.r.n}${o.r.fb && o.r.fb.sa != null && o.r.fb.sb != null ? ' (' + (o.r.fb.sa + o.r.fb.sb) + '/25)' : ''}`).join('; ')}` : ''}</li>
+      <li>Casos de Prueba 2 terminados en el mes: <b>${p2.length}</b>${p2.length ? ` · ${p2.map(h => h.total + '/40').join(', ')}` : ''}</li></ul>
+    <h3>4. Evaluación Interna</h3>
+    <table class="dtab reptab"><thead><tr><th>Comentario</th><th>Estado</th><th>Borradores entregados en el mes</th><th>Devoluciones en el mes</th></tr></thead><tbody>${eiRows}</tbody></table>
+    <h3>5. Observaciones del profesor</h3><div class="replines"></div>
+    <footer class="small muted">Generado el ${fdate(today())} con los datos del Taller. El tiempo de uso lo registra el dispositivo del alumno y es orientativo.</footer></article>`;
+}
+function renderProfReport(uid) {
+  if (!profGate()) return;
+  const S = SESS.rep = SESS.rep || { ym: today().slice(0, 7) };
+  const opts = Array.from({ length: 12 }, (_, i) => { let ym = today().slice(0, 7); for (let k = 0; k < i; k++) ym = ymPrev(ym); return ym; });
+  const PF = SESS.pfPD || 'all', pdOf = x => { const v = String(pj(x, 'pd', '') || ''); return v === '1' || v === '2' ? v : ''; };
+  const list = uid ? PROF.users.filter(x => x.uid === uid) : PROF.users.filter(x => PF === 'all' || pdOf(x) === PF);
+  app.innerHTML = `<div class="noprint"><button class="crumb" type="button" data-go="${uid ? 'profesor-' + uid : 'profesor'}">← ${uid ? 'Volver al alumno' : 'Panel del profesor'}</button><div class="eyebrow" style="margin-top:12px">Solo para el profesor</div><h1>Informe mensual</h1>
+    <p class="lede">Una hoja por alumno. Para guardarla en PDF, tocá «Imprimir o guardar en PDF» y elegí «Guardar como PDF» como impresora.</p>
+    <div class="row"><label class="small"><b>Mes</b> <select class="dsel" id="repM">${opts.map(o => `<option value="${o}"${o === S.ym ? ' selected' : ''}>${ymName(o)}</option>`).join('')}</select></label>
+    <button class="btn primary" type="button" id="repP">Imprimir o guardar en PDF</button><span class="small muted">${list.length} ${list.length === 1 ? 'alumno' : 'alumnos'}</span></div></div>
+    <div id="repwrap">${list.map(x => repStudent(x, S.ym)).join('') || '<p class="small muted">No hay alumnos para este filtro.</p>'}</div>`;
+  $('#repM').onchange = e => { S.ym = e.target.value; renderProfReport(uid); };
+  $('#repP').onclick = () => window.print();
+}
+
+/* =============== Aplicación instalable =============== */
+let INST = null;
+window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); INST = e; const b = $('#instBox'); if (b) b.outerHTML = instHtml(); instBind(); });
+const isStandalone = () => (window.matchMedia && matchMedia('(display-mode: standalone)').matches) || navigator.standalone === true;
+const isIOS = () => /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+function instHtml() {
+  if (isStandalone() || store.get('instHide', false)) return '<div id="instBox" hidden></div>';
+  const how = INST ? '<button class="btn accent sm" type="button" id="instGo">Instalar la app</button>'
+    : isIOS() ? '<span class="small">En el iPhone: tocá <b>Compartir</b> y después <b>«Agregar a inicio»</b>.</span>'
+    : '<span class="small">En el celular: abrí el menú del navegador (⋮) y tocá <b>«Instalar aplicación»</b> o <b>«Agregar a la pantalla principal»</b>.</span>';
+  return `<aside class="mnote inst" id="instBox"><span class="mni" aria-hidden="true">${ico('phone')}</span><div><b>Tené el Taller en tu celular</b><p>Instalalo como una app: abre directo desde la pantalla de inicio y carga más rápido.</p></div><div class="instact">${how}<button class="linkb small" type="button" id="instNo">No mostrar más</button></div></aside>`;
+}
+function instBind() {
+  const g = $('#instGo'); if (g) g.onclick = async () => { INST.prompt(); try { await INST.userChoice; } catch (e) { } INST = null; const b = $('#instBox'); if (b) b.outerHTML = instHtml(); instBind(); };
+  const n = $('#instNo'); if (n) n.onclick = () => { store.set('instHide', true); const b = $('#instBox'); if (b) b.outerHTML = instHtml(); };
+}
+if ('serviceWorker' in navigator && location.protocol === 'https:') window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => { }));
+
 /* Cuando cambia la sesión de la cuenta */
 function updateProfNav() { const n = document.getElementById('navProf'); if (n) n.hidden = !isTeacher(); }
 window.addEventListener('fbx', () => {
-  updateProfNav(); EIR.st = 'idle'; PROF.st = 'idle'; updateFbBadge();
+  updateProfNav(); EIR.st = 'idle'; ESR.st = 'idle'; PROF.st = 'idle'; updateFbBadge();
   const r = location.hash.slice(1);
   if (FBX() && !isTeacher() && !/^(escribir-ei|ei-[234]|empezar)$/.test(r)) eiRemoteLoad();
   if (r.startsWith('profesor') || /^(escribir-ei|ei-[234]|empezar)$/.test(r)) { const y = window.scrollY; render(); window.scrollTo(0, y); }
@@ -10045,7 +10288,7 @@ function renderProgress() {
       <div class="prow"><div><b>Casos completos</b><div class="small muted">${P2H.length ? `${P2H.length} terminados · últimos puntajes: ${p2Last.join(' → ')} /40` : 'Todavía no terminaste un caso'}</div></div><button class="btn sm" type="button" data-go="escribir-p2">Hacer uno</button></div></div>
     <h2 style="margin-top:22px">Evaluación Interna</h2>
     <div class="tscroll"><table class="dtab pflog"><thead><tr><th>Comentario</th><th>Estado</th><th>Palabras</th><th>Puntajes del profesor</th></tr></thead><tbody>${eiRows}</tbody></table></div>
-    ${FBX() ? '' : '<p class="small muted" style="margin-top:14px">Entra con tu correo del colegio para ver también tus entregas y devoluciones, y para guardar este progreso en la nube.</p>'}`;
+    ${FBX() ? '' : '<p class="small muted" style="margin-top:14px">Entrá con tu correo del colegio para ver también tus entregas y devoluciones, y para guardar este progreso en la nube.</p>'}`;
   if (FBX() && !isTeacher()) eiRemoteLoad();
 }
 
@@ -11192,7 +11435,7 @@ function setBtn() {
   const map = { off: ['Entrar', ''], load: ['Entrar', ''], unv: ['Verificá tu correo', 'warn'], sync: ['Guardando…', 'sync'], ok: ['Guardado', 'ok'], err: ['Sin guardar', 'err'], offline: ['Sin conexión', 'warn'] };
   const [t, c] = map[st] || map.off;
   lbl.textContent = user && st !== 'off' ? (st === 'ok' ? user.email.split('@')[0] : t) : 'Entrar';
-  btn.dataset.st = c; btn.title = user ? `${user.email} · ${t}` : 'Entra con tu correo del colegio para guardar tu progreso en la nube';
+  btn.dataset.st = c; btn.title = user ? `${user.email} · ${t}` : 'Entrá con tu correo del colegio para guardar tu progreso en la nube';
 }
 
 async function load() {
@@ -11273,6 +11516,12 @@ window.FBX = {
   snap: (id, p) => F.setDoc(F.doc(db, 'logs', `${user.uid}_${id}`), { ...p, uid: user.uid, at: F.serverTimestamp() }),
   logsOf: async uid => (await F.getDocs(F.query(F.collection(db, 'logs'), F.where('uid', '==', uid)))).docs.map(conv),
   allLogs: () => all('logs'),
+  cfgGet: async id => { const d = await F.getDoc(F.doc(db, 'config', id)); return d.exists() ? d.data() : {}; },
+  cfgSet: (id, o) => F.setDoc(F.doc(db, 'config', id), o),
+  essaySubmit: (key, n, p) => F.setDoc(F.doc(db, 'ensayos', `${user.uid}_${key}_${n}`), { ...p, uid: user.uid, email: user.email, key, n, at: F.serverTimestamp() }),
+  async myEssays() { const q = c => F.getDocs(F.query(F.collection(db, c), F.where('uid', '==', user.uid))).then(r => r.docs.map(conv)); const [subs, fb] = await Promise.all([q('ensayos'), q('ensayosfb')]); return { subs, fb }; },
+  allEssays: () => all('ensayos'), allEssayFb: () => all('ensayosfb'),
+  setEssayFb: (id, o, oldAt) => F.setDoc(F.doc(db, 'ensayosfb', id), { ...o, by: user.email, at: oldAt ? F.Timestamp.fromMillis(oldAt) : F.serverTimestamp(), edited: F.serverTimestamp() }),
   report: p => F.setDoc(F.doc(db, 'reportes', `${user.uid}_${Date.now()}`), { ...p, uid: user.uid, email: user.email, estado: 'nuevo', at: F.serverTimestamp() }),
   allReports: () => all('reportes'),
   resolveReport: id => F.setDoc(F.doc(db, 'reportes', id), { estado: 'resuelto' }, { merge: true }),
@@ -11282,14 +11531,14 @@ window.FBX = {
 
 /* ---------- ventana de cuenta ---------- */
 const close = '<button type="button" class="acx" data-a="close" aria-label="Cerrar">×</button>';
-const privacy = '<p class="small muted">Tu progreso del Taller y el tiempo que lo usás se guardan en Google Firebase, vinculados a tu correo del colegio. Solo tú y el profesor pueden verlo.</p>';
+const privacy = '<p class="small muted">Tu progreso del Taller y el tiempo que lo usás se guardan en Google Firebase, vinculados a tu correo del colegio. Solo vos y el profesor pueden verlo.</p>';
 function view(mode, note = '', kind = 'info') {
   dlg.dataset.mode = mode;
   const box = note ? `<div class="fb ${kind}" role="status">${note}</div>` : '';
   if (mode === 'login' || mode === 'signup') {
     const su = mode === 'signup';
     dlg.innerHTML = `${close}<form data-f="${mode}" novalidate><h2 id="acT">${su ? 'Crear cuenta' : 'Entrar'}</h2>
-      <p class="small">${su ? 'Usá tu correo del colegio y crea una contraseña solo para el Taller (no uses la de tu correo). Te enviaremos un enlace para verificarlo; en Outlook suele llegar a «Correo no deseado».' : 'Entra con tu correo del colegio y tu progreso se guarda en la nube: lo recuperás en cualquier dispositivo.'}</p>
+      <p class="small">${su ? 'Usá tu correo del colegio y creá una contraseña solo para el Taller (no uses la de tu correo). Te enviaremos un enlace para verificarlo; en Outlook suele llegar a «Correo no deseado».' : 'Entrá con tu correo del colegio y tu progreso se guarda en la nube: lo recuperás en cualquier dispositivo.'}</p>
       <label>Correo del colegio<input class="inp" name="em" type="email" autocomplete="email" placeholder="nombre${DOMAIN}" required></label>
       <label>Contraseña${su ? ' (mínimo 6 caracteres)' : ''}<input class="inp" name="pw" type="password" autocomplete="${su ? 'new-password' : 'current-password'}" minlength="6" required></label>
       ${su ? '<label>Repite la contraseña<input class="inp" name="pw2" type="password" autocomplete="new-password" minlength="6" required></label>' : ''}
