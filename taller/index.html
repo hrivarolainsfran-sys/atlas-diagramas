@@ -10194,7 +10194,7 @@ function renderLect() {
   const sendBox = ph !== 'open' ? '' : `<div class="essentials lsend" style="max-width:820px"><b>Tu tarea: elegí dos artículos, uno que sea de Microeconomía y otro de Macroeconomía, y clasificalos</b>
     <ul class="small" style="margin:6px 0 8px;padding-left:18px">${slotLine('micro', sMi)}${slotLine('macro', sMa)}</ul>
     ${!FBX() ? '<p class="small" style="margin:0">Para enviarlos al profesor, tocá <b>Entrar</b> (arriba) con tu correo del colegio.</p>'
-      : `<p class="small" style="margin:0 0 8px">Vas a saber si acertaste recién cuando tu profesor te devuelva. Hasta enviar, podés cambiar tus respuestas.</p><div class="row"><button class="btn primary" type="button" id="lSend" ${sMi && sMa ? '' : 'disabled'}>Enviar mis dos artículos al profesor</button><span class="small" id="lSendM"></span></div>`}</div>`;
+      : `<p class="small" style="margin:0 0 8px">Vas a saber si acertaste recién cuando tu profesor te devuelva. Hasta enviar, podés cambiar tus respuestas.</p>${String(store.get('alumno', '') || '').trim().length < 3 ? '<label class="small" style="display:grid;gap:4px;max-width:360px;margin-bottom:8px"><b>Tu nombre y apellido</b><input id="lName" class="inp" autocomplete="name" placeholder="Ej.: Ana Gómez"></label>' : ''}<div class="row"><button class="btn primary" type="button" id="lSend" ${sMi && sMa && String(store.get('alumno', '') || '').trim().length >= 3 ? '' : 'disabled'}>Enviar mis dos artículos al profesor</button><span class="small" id="lSendM"></span></div>`}</div>`;
   const head = `<div class="eyebrow">Evaluación Interna</div><h1>Artículos</h1>${writeTabs('ei-lectura')}
     <p class="lede">Leé los textos y elegí <b>dos</b>: uno que sea de <b>Microeconomía</b> y otro de <b>Macroeconomía</b>. En cada uno decidí, con la lista de cotejo, si es un <b>artículo económico</b> (sirve para tu comentario) o un <b>contenido comercial</b> (no sirve). Ojo: entre los artículos hay textos comerciales escondidos.</p>
     ${status}`;
@@ -10240,6 +10240,7 @@ function lectBind(L) {
   app.querySelectorAll('[data-li]').forEach(b => b.onclick = () => { LRES.msg = ''; S.i = +b.dataset.li; S.step = 'read'; location.hash = '#ei-lectura-art'; });
   app.querySelectorAll('[data-lback]').forEach(b => b.onclick = () => { S.step = 'read'; if (location.hash === '#ei-lectura') renderLect(); else location.hash = '#ei-lectura'; });
   const nw = $('#lNew'); if (nw) nw.onclick = () => { store.set('lect', { __r: (lsubLast() || { n: 0 }).n + 1 }); S.i = 0; location.hash === '#ei-lectura' ? renderLect() : (location.hash = '#ei-lectura'); };
+  const ln = $('#lName'); if (ln) ln.oninput = () => { store.set('alumno', ln.value); const b = $('#lSend'); const R = lectAns(); const has = u => LECT.list.some(y => lectDone(R[y.id]) && R[y.id].uans === u); if (b) b.disabled = !(ln.value.trim().length >= 3 && has('micro') && has('macro')); };
   const sd = $('#lSend'); if (sd) sd.onclick = async () => {
     const R = lectAns(), m = $('#lSendM'); sd.disabled = true; m.textContent = 'Enviando…';
     const items = LECT.list.filter(y => lectDone(R[y.id])).map(y => ({ id: y.id, t: y.titulo, medio: y.medio, u: y.u, com: !!y.com, ans: R[y.id].ans, uans: R[y.id].uans, marks: R[y.id].marks || {} }));
