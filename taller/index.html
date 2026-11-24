@@ -887,6 +887,13 @@ details.sres summary{cursor:pointer}details.sres p{margin:6px 0 0;font-size:15px
 .replines{height:124px;background:repeating-linear-gradient(#fff 0 30px,#C9D2DF 30px 31px);-webkit-print-color-adjust:exact;print-color-adjust:exact}.reppage{-webkit-print-color-adjust:exact;print-color-adjust:exact}.reppage footer{margin-top:14px}
 @media print{body{background:#fff!important}.top,.site-foot,.noprint,.cbank{display:none!important}main{padding:0;max-width:none}.reppage{border:0;box-shadow:none;margin:0;padding:0;max-width:none;break-after:page}.reppage:last-child{break-after:auto}@page{size:A4;margin:16mm}}
 @media (max-width:640px){.reppage{padding:18px}.repkpi{grid-template-columns:1fr}.inst .instact{grid-column:1/-1;max-width:none}}
+.lectbar{justify-content:space-between;max-width:820px}
+.lectart{background:var(--sheet);border:1px solid var(--rule);border-radius:16px;padding:22px 26px;max-width:820px;box-shadow:var(--sh)}
+.lectart h2{font-size:24px;margin:6px 0 12px}.lectart h3{margin:16px 0 6px}.lectart p{font-size:17px;line-height:1.65;max-width:68ch}.lectart .small{font-size:14px}
+.lectsrc{margin-top:12px;font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--gold)}
+.lcks{display:grid;gap:6px}.lck{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--rule);border-radius:10px;padding:9px 12px;background:var(--paper);cursor:pointer}.lck input{margin-top:4px;width:18px;height:18px;flex:none}
+.lck.okk{border-color:var(--ok);background:var(--ok-bg)}.lck.bad{border-color:var(--bad);background:var(--bad-bg)}
+@media (max-width:640px){.lectart{padding:16px}.lectart p{font-size:16px}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 
 /* ===== Diseño 2026-11: tipografía Plus Jakarta Sans, tarjetas con sombra suave, acento amarillo ===== */
@@ -2026,6 +2033,7 @@ function render() {
   if (route === 'escribir-ei') { setNav('escribir'); return renderEIHome(); }
   if (/^ei-[234]$/.test(route)) { setNav('escribir'); return renderEI(+route.slice(3)); }
   if (route === 'ei-articulo') { setNav('escribir'); return renderEIArticle(); }
+  if (route === 'ei-lectura') { setNav('escribir'); return renderLect(); }
   if (route === 'ei-modelos') { setNav('escribir'); return renderEIModels(); }
   if (route === 'profesor') { setNav('profesor'); return renderProf(); }
   if (route === 'profesor-informe' || route.startsWith('profesor-informe-')) { setNav('profesor'); return renderProfReport(route.slice(17)); }
@@ -5036,7 +5044,7 @@ function renderReport() {
 const WBLOCKS = [
   ['Prueba 1', [['escribir-comandos', 'Términos'], ['escribir-explicar', 'Explicar · 10'], ['escribir-analizar', 'Analizar · 10'], ['escribir-evaluar', 'Evaluar · 15'], ['escribir-discutir', 'Discutir · 15'], ['escribir-hqp', '¿Hasta qué punto? · 15'], ['escribir-errores', 'Encuentra el error'], ['escribir-p1', 'Simulacro'], ['p1-modelo', 'Respuestas modelo'], ['anteriores-p1', 'Exámenes anteriores']]],
   ['Prueba 2', [['escribir-def', 'Definiciones'], ['escribir-calc', 'Cálculos'], ['escribir-ej', 'Ejemplos reales'], ['escribir-p2', 'Casos'], ['anteriores-p2', 'Exámenes anteriores']]],
-  ['Evaluación Interna', [['escribir-ei', 'Mi carpeta'], ['escribir-conceptos', 'Conceptos clave'], ['ei-articulo', '¿Sirve mi artículo?'], ['ei-modelos', 'Comentarios modelo'], ['ei-alumnos', 'Carpetas de alumnos']]]
+  ['Evaluación Interna', [['escribir-ei', 'Mi carpeta'], ['escribir-conceptos', 'Conceptos clave'], ['ei-lectura', 'Leer artículos'], ['ei-articulo', '¿Sirve mi artículo?'], ['ei-modelos', 'Comentarios modelo'], ['ei-alumnos', 'Carpetas de alumnos']]]
 ];
 const WTABS = WBLOCKS.flatMap(b => b[1]);
 function writeTabs(cur) {
@@ -8803,7 +8811,7 @@ function renderEIHome() {
     <div class="method"><div><b>La carpeta · 30 % de la nota (NM)</b><p>Tres comentarios de hasta <b>800 palabras</b> sobre artículos de prensa: uno de <b>Microeconomía</b>, uno de <b>Macroeconomía</b> y uno de <b>Economía global</b>. Total: 45 puntos.</p></div>
       <div><b>Requisitos</b><p>Artículo de <b>menos de un año</b> al momento de escribir; una <b>fuente distinta</b> por comentario; un <b>concepto clave distinto</b> en cada uno; periódico, revista o sitio de noticias (no televisión ni radio).</p></div>
       <div><b>No cuentan en las 800 palabras</b><p>Diagramas, sus rótulos (hasta 5 palabras) y títulos (hasta 10), tablas de datos, fórmulas y cálculos, citas bibliográficas y referencias. <b>Sí cuentan</b> las definiciones y las citas textuales.</p></div></div>
-    ${eiFromMsg()}${eiNewFbBox()}${eiDeadlines()}<div class="row eiacts"><button class="btn primary" type="button" data-go="ei-articulo">¿Sirve mi artículo? Validalo antes de escribir</button><button class="btn" type="button" data-go="ei-modelos">Ver comentarios modelo anotados</button><button class="btn" type="button" data-go="ei-alumnos">Ver carpetas reales de alumnos</button><a class="btn" href="${EI_NEWS}" target="_blank" rel="noopener">Buscar artículos en Economía en las Noticias ↗</a></div>
+    ${eiFromMsg()}${eiNewFbBox()}${eiDeadlines()}<div class="row eiacts"><button class="btn primary" type="button" data-go="ei-lectura">Leer artículos recomendados</button><button class="btn" type="button" data-go="ei-articulo">¿Sirve mi artículo? Validalo antes de escribir</button><button class="btn" type="button" data-go="ei-modelos">Ver comentarios modelo anotados</button><button class="btn" type="button" data-go="ei-alumnos">Ver carpetas reales de alumnos</button><a class="btn" href="${EI_NEWS}" target="_blank" rel="noopener">Buscar artículos en Economía en las Noticias ↗</a></div>
     <h2>Criterios de cada comentario · 14 puntos</h2>
     <div class="eicrit">${EI_CRIT.map(([k, n, m]) => `<div><b>${k}</b><span>${n}</span><i>${m} p</i></div>`).join('')}<div><b>F</b><span>Requisitos de la carpeta</span><i>3 p</i></div></div>
     <h2 style="margin-top:22px">Qué se espera para cada punto</h2>
@@ -9996,6 +10004,115 @@ document.addEventListener('click', e => {
 { const f = document.getElementById('footInst'); if (f && isStandalone()) f.parentNode.hidden = true; }
 if ('serviceWorker' in navigator && location.protocol === 'https:') window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => { }));
 
+
+/* =============== Leer artículos: micro y macro recomendados para la EI + checklist «¿económico o comercial?» =============== */
+const LECT_CK = [
+  ['med', 'Lo publica un medio periodístico o un organismo independiente, no la empresa que vende.', true],
+  ['hecho', 'Informa sobre un hecho, una decisión o un problema que afecta a muchas personas, empresas o al gobierno.', true],
+  ['datos', 'Tiene datos que se pueden verificar: cifras, fechas, fuentes o declaraciones de distintas partes.', true],
+  ['teo', 'Se puede analizar con un concepto o un diagrama de economía (oferta y demanda, inflación, política fiscal…).', true],
+  ['vende', 'Busca que compres un producto o contrates un servicio.', false],
+  ['marca', 'Solo habla bien de una empresa o una marca, sin otras voces ni críticas.', false],
+  ['promo', 'Tiene descuentos, promociones o frases como «aprovechá», «solicitalo hoy» o «cupos limitados».', false]
+];
+/* Ejemplos comerciales inventados para practicar (empresas ficticias; se aclara después de responder) */
+const LECT_COM = [
+  { id: 'c-aurora', u: 'micro', medio: 'Nota de prensa de la empresa', fecha: '2026-10-28', titulo: 'Banco Aurora Digital lanza la tarjeta Aurora Joven con 0 % de interés por tres meses',
+    p: ['Banco Aurora Digital presentó su nueva tarjeta de crédito para jóvenes de 18 a 25 años, con cero interés durante los tres primeros meses y sin costo de emisión.', '«Queremos acompañar a los jóvenes en sus primeros pasos financieros», afirmó la gerente comercial del banco. Los primeros 500 clientes recibirán además un 20 % de reintegro en compras de supermercado.', 'La tarjeta se puede solicitar en minutos desde la app. ¡Solicitala hoy, los cupos son limitados!'],
+    flags: ['Lo escribe la propia empresa: es una nota de prensa, no periodismo.', 'Solo hay una voz (el banco) y solo habla bien del producto.', 'Termina con un llamado a comprar: «Solicitala hoy, los cupos son limitados».'] },
+  { id: 'c-electro', u: 'micro', medio: 'Publicidad en un portal de noticias (contenido patrocinado)', fecha: '2026-11-05', titulo: 'Semana del ahorro en ElectroCasa Mbaretê: hasta 40 % de descuento en aires acondicionados',
+    p: ['Con la llegada del calor, ElectroCasa Mbaretê lanza su Semana del Ahorro con descuentos de hasta 40 % en aires acondicionados y ventiladores, y hasta 18 cuotas sin intereses.', 'Los equipos inverter permiten ahorrar hasta 60 % en la factura de la ANDE, según la empresa. Además, la instalación es gratis en Asunción y Gran Asunción.', 'Aprovechá antes del domingo en cualquiera de nuestros 12 locales o en la tienda online.'],
+    flags: ['Está marcado como contenido patrocinado: la empresa pagó para publicarlo.', 'El dato de ahorro lo da la misma empresa, sin otra fuente que lo verifique.', 'Su objetivo es vender: descuentos, cuotas y «Aprovechá antes del domingo».'] },
+  { id: 'c-palmeras', u: 'macro', medio: 'Publirreportaje de una inmobiliaria', fecha: '2026-09-30', titulo: 'Por qué 2026 es el mejor año para invertir en departamentos en Luque',
+    p: ['Con una economía que crece y tasas de interés estables, Desarrollos Mburucuyá asegura que este es el momento ideal para invertir en ladrillos.', 'Su nuevo edificio Torre Mburucuyá ofrece departamentos de uno y dos dormitorios desde US$ 69.900, con una rentabilidad estimada de 9 % anual por alquiler, según cálculos de la desarrolladora.', 'Reservá tu unidad con solo US$ 2.000 y elegí el piso que más te guste. Agendá tu visita al showroom.'],
+    flags: ['Usa datos de la economía (crecimiento, tasas) como argumento de venta, no para analizarlos.', 'La «rentabilidad estimada» la calcula la misma empresa que vende.', 'Pide una acción de compra: «Reservá tu unidad», «Agendá tu visita».'] },
+  { id: 'c-yerba', u: 'micro', medio: 'Sitio web de la marca', fecha: '2026-10-12', titulo: 'Yerba Ka\'aty presenta su nueva línea compuesta: el sabor de siempre, ahora con menta y cedrón',
+    p: ['Yerba Ka\'aty, la marca elegida por miles de familias paraguayas, amplía su línea con una yerba compuesta de menta y cedrón, en paquetes de medio y un kilo.', 'El lanzamiento viene con una promoción: por cada paquete de un kilo, un termo de regalo hasta agotar stock.', 'Encontrala en los principales supermercados del país y compartí tu tereré con #KaatyConVos.'],
+    flags: ['Es la página de la propia marca: no hay periodista ni otras fuentes.', 'No informa sobre un problema económico; presenta un producto.', 'Promoción y llamado a comprar: termo de regalo, «encontrala en los supermercados».'] },
+  { id: 'c-billetera', u: 'macro', medio: 'Correo publicitario de una fintech', fecha: '2026-11-10', titulo: 'Protegé tus ahorros de la inflación con BilleteraRápida: 11 % anual en guaraníes',
+    p: ['La inflación se come tus ahorros. Por eso BilleteraRápida te ofrece una cuenta de ahorro que paga 11 % anual, la más alta del mercado según nuestro último estudio.', 'Abrís tu cuenta en cinco minutos desde el celular, sin ir a una sucursal y sin monto mínimo.', 'Descargá la app hoy y recibí G. 50.000 de bienvenida.'],
+    flags: ['Menciona la inflación para vender un producto, no para explicarla con datos verificables.', '«La más alta del mercado según nuestro último estudio»: la fuente es la misma empresa.', 'Llamado a la acción y regalo: «Descargá la app hoy y recibí G. 50.000».'] }
+];
+let NEWS_IA = null;
+const LECT = { st: 'idle', list: [] };
+const lectSt = () => store.get('lect', {});
+async function lectLoad() {
+  if (LECT.st === 'loading' || LECT.st === 'ok') return;
+  LECT.st = 'loading';
+  const L = await newsLoad();
+  if (!L) { LECT.st = 'err'; if (location.hash === '#ei-lectura') renderLect(); return; }
+  const recs = (NEWS_IA && NEWS_IA.recomendados) || [], byId = Object.fromEntries(L.map(n => [n.id, n]));
+  const real = recs.map(r => ({ r, n: byId[r.id] })).filter(x => x.n && (x.n.unidad === 'micro' || x.n.unidad === 'macro'))
+    .sort((a, b) => String(b.n.fecha).localeCompare(String(a.n.fecha)))
+    .map(({ r, n }) => ({ id: n.id, com: false, u: n.unidad, medio: n.medio || '', fecha: n.fecha, titulo: n.titulo || r.to || '', resumen: n.resumen || '', contexto: n.contexto || '', url: n.url || '', por: r.por || '', niv: r.niv || '' }));
+  /* intercala un ejemplo comercial cada 6 artículos reales */
+  const out = []; let c = 0;
+  real.forEach((x, i) => { out.push(x); if ((i + 1) % 6 === 3 && c < LECT_COM.length) out.push({ ...LECT_COM[c++], com: true }); });
+  while (c < LECT_COM.length && out.length) out.push({ ...LECT_COM[c++], com: true });
+  LECT.list = out; LECT.st = 'ok';
+  if (location.hash === '#ei-lectura') renderLect();
+}
+function renderLect() {
+  if (LECT.st !== 'ok') {
+    app.innerHTML = `<div class="eyebrow">Evaluación Interna</div><h1>Leer artículos</h1>${writeTabs('ei-lectura')}<p class="lede">${LECT.st === 'err' ? 'No se pudieron cargar los artículos. Revisá tu conexión y volvé a intentarlo.' : 'Cargando los artículos recomendados…'}</p>`;
+    lectLoad(); return;
+  }
+  const S = SESS.lect = SESS.lect || { f: 'todos', i: null, step: 'read', marks: {}, ans: null }, R = lectSt();
+  const L = LECT.list.filter(x => S.f === 'todos' || x.u === S.f), done = L.filter(x => R[x.id] && R[x.id].ans).length, ok = L.filter(x => R[x.id] && R[x.id].ok).length;
+  if (S.i === null || S.i >= L.length) { const first = L.findIndex(x => !(R[x.id] && R[x.id].ans)); S.i = first < 0 ? 0 : first; }
+  const x = L[S.i];
+  const head = `<div class="eyebrow">Evaluación Interna</div><h1>Leer artículos</h1>${writeTabs('ei-lectura')}
+    <p class="lede">Leé cada artículo de Microeconomía y Macroeconomía. Al terminar, tocá <b>Siguiente</b> y decidí con la lista de cotejo si es un <b>artículo económico</b> (sirve para tu comentario) o un <b>contenido comercial</b> (no sirve). Entre los artículos hay algunos textos comerciales escondidos.</p>
+    <div class="row lectbar"><div class="seg" role="group" aria-label="Unidad">${[['todos', 'Micro y macro'], ['micro', 'Microeconomía'], ['macro', 'Macroeconomía']].map(([k, n]) => `<button type="button" data-lf="${k}" aria-pressed="${S.f === k}">${n}</button>`).join('')}</div>
+    <span class="small muted">${done} de ${L.length} clasificados${done ? ` · ${ok} bien` : ''}</span></div>
+    <div class="pbar" style="max-width:820px;margin:8px 0 16px"><i style="width:${L.length ? Math.round(done / L.length * 100) : 0}%"></i></div>`;
+  if (!x) { app.innerHTML = head + '<p class="small muted">No hay artículos para este filtro.</p>'; lectBind(L); return; }
+  const tag = `<span class="tag">${x.u === 'micro' ? 'Microeconomía' : 'Macroeconomía'}</span>`, nav = `<span class="small muted">Artículo ${S.i + 1} de ${L.length}</span>`;
+  let body;
+  if (S.step === 'read') {
+    body = `<article class="lectart"><div class="row" style="justify-content:space-between">${tag}${nav}</div>
+      <div class="lectsrc">${esc(x.medio)} · ${fdate(x.fecha)}</div><h2>${esc(x.titulo)}</h2>
+      ${x.com ? x.p.map(t => `<p>${esc(t)}</p>`).join('') : `<p>${x.resumen}</p>${x.contexto ? `<h3>Contexto económico</h3><p>${x.contexto}</p>` : ''}
+        <p class="small muted">Esto es un resumen. Para tu comentario tenés que leer el artículo completo en el medio original.</p>
+        <p><a class="btn" href="${esc(x.url)}" target="_blank" rel="noopener" data-lopen="${x.id}">Leer el artículo completo en ${esc(x.medio || 'el medio')} ↗</a></p>`}
+      <div class="row" style="margin-top:16px"><button class="btn" type="button" data-lmv="-1" ${S.i ? '' : 'disabled'}>← Anterior</button><button class="btn primary" type="button" id="lNext">Siguiente ${ico('arrow')}</button></div></article>`;
+  } else {
+    const prev = R[x.id] || {}, answered = S.ans !== null;
+    const ckRow = ([k, t]) => { const v = !!S.marks[k], exp = LECT_CK.find(c => c[0] === k)[2] !== x.com; const st = answered ? (v === exp ? ' okk' : ' bad') : ''; return `<label class="lck${st}"><input type="checkbox" data-lk="${k}" ${v ? 'checked' : ''} ${answered ? 'disabled' : ''}><span>${t}</span></label>`; };
+    body = `<article class="lectart"><div class="row" style="justify-content:space-between">${tag}${nav}</div><h2 style="margin-top:6px">${esc(x.titulo)}</h2><p class="small muted">${esc(x.medio)} · ${fdate(x.fecha)}</p>
+      <h3>Lista de cotejo: marcá lo que tiene este texto</h3><div class="lcks">${LECT_CK.map(ckRow).join('')}</div>
+      <h3>¿Qué es?</h3><div class="row">${[['eco', 'Artículo económico'], ['com', 'Contenido comercial']].map(([k, n]) => `<button class="btn${S.ans === k ? ' primary' : ''}" type="button" data-lans="${k}" ${answered && S.ans !== k ? 'disabled' : ''}>${n}</button>`).join('')}</div>
+      ${answered ? (() => {
+        const good = (S.ans === 'com') === x.com, miss = LECT_CK.filter(([k, , e]) => !!S.marks[k] !== (e !== x.com)).length;
+        return `<div class="fb ${good ? 'ok' : 'no'}" style="margin-top:12px"><b class="h">${good ? 'Correcto' : 'Todavía no'}: ${x.com ? 'es contenido comercial' : 'es un artículo económico'}</b>
+          ${x.com ? `<ul style="margin:4px 0 0;padding-left:18px">${x.flags.map(f => `<li>${f}</li>`).join('')}</ul><p class="small" style="margin:6px 0 0">Este texto y la empresa son inventados para practicar. No sirve para la Evaluación Interna: el IB pide artículos de prensa sobre un hecho económico real.</p>`
+            : `${x.por ? `<p style="margin:4px 0 0"><b>Por qué sirve para tu comentario:</b> ${x.por}</p>` : ''}<p class="small" style="margin:6px 0 0">Recordá: para usarlo en tu carpeta tiene que tener menos de un año y ser de una fuente distinta a la de tus otros comentarios.</p>`}
+          ${miss ? `<p class="small" style="margin:6px 0 0">En la lista de cotejo, ${miss === 1 ? '1 criterio no coincide' : miss + ' criterios no coinciden'} (marcados en rojo).</p>` : ''}</div>
+          <div class="row" style="margin-top:12px"><button class="btn primary" type="button" id="lGo">${S.i + 1 < L.length ? 'Siguiente artículo' : 'Volver al primero'} ${ico('arrow')}</button></div>`;
+      })() : `<div class="row" style="margin-top:12px"><button class="btn" type="button" id="lBack">← Volver a leer</button>${prev.ans ? `<span class="small muted">Ya lo clasificaste antes: ${prev.ok ? 'bien' : 'mal'}.</span>` : ''}</div>`}
+    </article>`;
+  }
+  app.innerHTML = head + body;
+  lectBind(L);
+}
+function lectBind(L) {
+  const S = SESS.lect, x = L[S.i];
+  app.querySelectorAll('[data-lf]').forEach(b => b.onclick = () => { S.f = b.dataset.lf; S.i = null; S.step = 'read'; S.marks = {}; S.ans = null; renderLect(); });
+  if (!x) return;
+  const go = i => { S.i = (i + L.length) % L.length; S.step = 'read'; S.marks = {}; S.ans = null; renderLect(); window.scrollTo(0, 0); };
+  app.querySelectorAll('[data-lmv]').forEach(b => b.onclick = () => go(S.i + +b.dataset.lmv));
+  const n = $('#lNext'); if (n) n.onclick = () => { S.step = 'check'; renderLect(); window.scrollTo(0, 0); };
+  const bk = $('#lBack'); if (bk) bk.onclick = () => { S.step = 'read'; renderLect(); };
+  app.querySelectorAll('[data-lk]').forEach(c => c.onchange = () => { S.marks[c.dataset.lk] = c.checked; });
+  app.querySelectorAll('[data-lans]').forEach(b => b.onclick = () => {
+    if (S.ans !== null) return;
+    S.ans = b.dataset.lans; const R = lectSt(); R[x.id] = { ans: S.ans, ok: (S.ans === 'com') === x.com, at: today() }; store.set('lect', R);
+    const y = window.scrollY; renderLect(); window.scrollTo(0, y);
+  });
+  const g = $('#lGo'); if (g) g.onclick = () => go(S.i + 1);
+  app.querySelectorAll('[data-lopen]').forEach(a => a.addEventListener('click', () => { const R = lectSt(); R[a.dataset.lopen] = { ...(R[a.dataset.lopen] || {}), open: today() }; store.set('lect', R); }));
+}
+
 /* Cuando cambia la sesión de la cuenta */
 function updateProfNav() { const n = document.getElementById('navProf'); if (n) n.hidden = !isTeacher(); }
 window.addEventListener('fbx', () => {
@@ -10016,6 +10133,7 @@ const newsLoad = () => NEWS_P || (NEWS_P = Promise.all([
   fetch(NEWS_SITE + 'archivo.json', { cache: 'no-cache' }).then(r => r.ok ? r.json() : []).catch(() => [])
 ]).then(([d, a]) => {
   if (!d) { NEWS_P = null; return null; }
+  NEWS_IA = d.ia || null;
   const seen = new Set(), L = [];
   (d.noticias || []).forEach(n => { if (!seen.has(n.id)) { seen.add(n.id); L.push({ ...n, href: NEWS_SITE + '#n-' + n.id, own: true }); } });
   (Array.isArray(a) ? a : []).forEach(n => { if (n && n.id && !seen.has(n.id)) { seen.add(n.id); L.push({ ...n, href: n.url, own: false }); } });
