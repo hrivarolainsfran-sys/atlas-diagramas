@@ -892,7 +892,7 @@ details.sres summary{cursor:pointer}details.sres p{margin:6px 0 0;font-size:15px
 .lectart h2{font-size:24px;margin:6px 0 12px}.lectart h3{margin:16px 0 6px}.lectart p{font-size:17px;line-height:1.65;max-width:68ch}.lectart .small{font-size:14px}
 .lectsrc{margin-top:12px;font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--gold)}
 .lcks{display:grid;gap:6px}.lck{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--rule);border-radius:10px;padding:9px 12px;background:var(--paper);cursor:pointer}.lck input{margin-top:4px;width:18px;height:18px;flex:none}
-.lck.okk{border-color:var(--ok);background:var(--ok-bg)}.lck.bad{border-color:var(--bad);background:var(--bad-bg)}
+.cltab tr.clok td{background:var(--ok-bg)}.cltab tr.clbad td{background:var(--bad-bg)}.lsend{margin-bottom:12px}
 @media (max-width:640px){.lectart{padding:16px}.lectart p{font-size:16px}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 
@@ -2038,6 +2038,7 @@ function render() {
   if (route === 'ei-modelos') { setNav('escribir'); return renderEIModels(); }
   if (route === 'profesor') { setNav('profesor'); return renderProf(); }
   if (route === 'profesor-informe' || route.startsWith('profesor-informe-')) { setNav('profesor'); return renderProfReport(route.slice(17)); }
+  if (route.startsWith('profesor-clasif-')) { setNav('profesor'); return renderProfClasif(route.slice(16)); }
   if (route.startsWith('profesor-ensayo-')) { setNav('profesor'); return renderProfEssay(route.slice(16)); }
   if (route.startsWith('profesor-')) { setNav('profesor'); return renderProfStudent(route.slice(9)); }
   if (route.startsWith('p1-ensayo-')) { setNav('escribir'); return renderEssay(route.slice(10)); }
@@ -9375,9 +9376,9 @@ const profName = x => pj(x, 'alumno', '') || (x.email || '').split('@')[0];
 async function profLoad() {
   const X = FBX(); if (!X) return; PROF.st = 'loading';
   try {
-    const [u, s, f, c, rp, es, esfb, cb, el] = await Promise.all([X.students(), X.allSubs(), X.allFb(), X.getConfig(), X.allReports().catch(() => []), X.allEssays().catch(() => []), X.allEssayFb().catch(() => []), X.cfgGet('comentarios').catch(() => ({})), X.allElecciones().catch(() => [])]);
+    const [u, s, f, c, rp, es, esfb, cb, el, cl, clfb] = await Promise.all([X.students(), X.allSubs(), X.allFb(), X.getConfig(), X.allReports().catch(() => []), X.allEssays().catch(() => []), X.allEssayFb().catch(() => []), X.cfgGet('comentarios').catch(() => ({})), X.allElecciones().catch(() => []), X.allClasif().catch(() => []), X.allClasifFb().catch(() => [])]);
     PROF.users = u.filter(x => (x.email || '').toLowerCase() !== TEACHER_MAIL).sort((a, b) => profName(a).localeCompare(profName(b), 'es'));
-    PROF.subs = s; PROF.fb = f; PROF.curso = c; PROF.reps = rp.sort((a, b) => (b.at || 0) - (a.at || 0)); PROF.es = es; PROF.esfb = esfb; PROF.cb = cb; PROF.el = el; PROF.logs = {}; PROF.st = 'ok';
+    PROF.subs = s; PROF.fb = f; PROF.curso = c; PROF.reps = rp.sort((a, b) => (b.at || 0) - (a.at || 0)); PROF.es = es; PROF.esfb = esfb; PROF.cb = cb; PROF.el = el; PROF.cl = cl; PROF.clfb = clfb; PROF.logs = {}; PROF.st = 'ok';
   } catch (e) { PROF.st = 'err'; PROF.err = e.code || e.message; }
   if (location.hash.startsWith('#profesor')) { const y = window.scrollY; render(); window.scrollTo(0, y); }
 }
@@ -9414,6 +9415,7 @@ function renderProf() {
     <div class="tscroll"><table class="dtab plan pftab"><thead><tr><th>Alumno</th>${Object.values(EI_UNITS).map(n => `<th>${n}</th>`).join('')}<th>Tiempo (7 días)</th><th>Última actividad</th></tr></thead><tbody>${rows || `<tr><td colspan="6">Todavía no hay alumnos con cuenta.</td></tr>`}</tbody></table></div>
     ${profSummaryHtml()}
     ${profEssaysHtml(PROF.users.filter(x => PF === 'all' || pdOf(x) === PF))}
+    ${profClasifHtml(PROF.users.filter(x => PF === 'all' || pdOf(x) === PF))}
     ${profElecHtml(PROF.users.filter(x => PF === 'all' || pdOf(x) === PF))}
     ${profTeoHtml(PROF.users.filter(x => PF === 'all' || pdOf(x) === PF))}
     ${profRepHtml()}
@@ -10120,85 +10122,155 @@ async function lectLoad() {
   LECT.list = out; LECT.st = 'ok';
   if (location.hash === '#ei-lectura') renderLect();
 }
+/* Envíos de la clasificación: el alumno no ve si acertó hasta que el profesor devuelve */
+const LSUB = { st: 'idle', subs: [], fb: [] };
+async function lsubLoad(force) {
+  const X = FBX(); if (!X || X.isTeacher()) return;
+  if (LSUB.st === 'loading' || (LSUB.st === 'ok' && !force)) return;
+  LSUB.st = 'loading';
+  try { const m = await X.myClasif(); LSUB.subs = m.subs.sort((a, b) => a.n - b.n); LSUB.fb = m.fb; LSUB.st = 'ok'; } catch (e) { LSUB.st = 'err'; }
+  if (location.hash === '#ei-lectura') { const y = window.scrollY; renderLect(); window.scrollTo(0, y); }
+}
+const lsubLast = () => LSUB.subs[LSUB.subs.length - 1] || null;
+const lsubFb = s => s ? LSUB.fb.find(f => f.id === s.id) || null : null;
+/* Estado de la ronda actual: 'open' (respondiendo), 'sent' (enviada, esperando), 'back' (devuelta) */
+function lectPhase() {
+  const R = lectSt(), s = lsubLast();
+  if (!s || (R.__r || 0) > s.n) return 'open';
+  return lsubFb(s) ? 'back' : 'sent';
+}
+const lectAns = () => { const R = lectSt(); const { __r, ...A } = R; return A; };
+function lectResultHtml(x, a) {
+  const good = a && !a.skip && (a.ans === 'com') === x.com, miss = a && !a.skip ? LECT_CK.filter(([k, , e]) => !!(a.marks || {})[k] !== (e !== x.com)) : [];
+  return `<div class="fb ${!a || a.skip ? 'info' : good ? 'ok' : 'no'}" style="margin-top:12px"><b class="h">${!a || a.skip ? 'Lo saltaste' : good ? 'Acertaste' : 'Te equivocaste'}: ${x.com ? 'es contenido comercial' : 'es un artículo económico'}</b>
+    ${x.com ? `<ul style="margin:4px 0 0;padding-left:18px">${x.flags.map(f => `<li>${f}</li>`).join('')}</ul><p class="small" style="margin:6px 0 0">Este texto y la empresa son inventados para practicar. No sirve para la Evaluación Interna.</p>`
+      : x.por ? `<p style="margin:4px 0 0"><b>Por qué es económico y sirve para tu comentario:</b> ${x.por}</p>` : ''}
+    ${miss.length ? `<p class="small" style="margin:6px 0 0"><b>Criterios que marcaste mal:</b></p><ul class="small" style="margin:2px 0 0;padding-left:18px">${miss.map(([, t, e]) => `<li>${t} <i>(${(e !== x.com) ? 'sí lo tiene' : 'no lo tiene'})</i></li>`).join('')}</ul>` : ''}</div>`;
+}
 function renderLect() {
   if (LECT.st !== 'ok') {
-    app.innerHTML = `<div class="eyebrow">Evaluación Interna</div><h1>Leer artículos</h1>${writeTabs('ei-lectura')}<p class="lede">${LECT.st === 'err' ? 'No se pudieron cargar los artículos. Revisá tu conexión y volvé a intentarlo.' : 'Cargando los artículos recomendados…'}</p>`;
+    app.innerHTML = `<div class="eyebrow">Evaluación Interna</div><h1>Artículos</h1>${writeTabs('ei-lectura')}<p class="lede">${LECT.st === 'err' ? 'No se pudieron cargar los artículos. Revisá tu conexión y volvé a intentarlo.' : 'Cargando los artículos recomendados…'}</p>`;
     lectLoad(); return;
   }
-  lresRefresh();
-  const S = SESS.lect = SESS.lect || { f: 'todos', i: null, step: 'read', marks: {}, ans: null, view: 'list' }, R = lectSt();
-  const L = LECT.list.filter(x => S.f === 'todos' || x.u === S.f), done = L.filter(x => R[x.id] && R[x.id].ans).length, ok = L.filter(x => R[x.id] && R[x.id].ok).length;
-  if (S.i === null || S.i >= L.length) { const first = L.findIndex(x => !(R[x.id] && R[x.id].ans)); S.i = first < 0 ? 0 : first; }
+  lresRefresh(); if (FBX() && !isTeacher() && LSUB.st === 'idle') lsubLoad();
+  const S = SESS.lect = SESS.lect || { f: 'todos', i: null, step: 'read', marks: {}, view: 'list' };
+  const R = lectAns(), ph = FBX() ? lectPhase() : 'open', sub = lsubLast(), fb = lsubFb(sub), locked = ph !== 'open';
+  const AL = LECT.list, L = AL.filter(x => S.f === 'todos' || x.u === S.f);
+  const nAns = AL.filter(x => R[x.id] && R[x.id].ans).length, nSkip = AL.filter(x => R[x.id] && R[x.id].skip).length, left = AL.length - nAns - nSkip;
+  if (S.i === null || S.i >= L.length) S.i = 0;
   const x = L[S.i];
-  const head = `<div class="eyebrow">Evaluación Interna</div><h1>Leer artículos</h1>${writeTabs('ei-lectura')}
-    <p class="lede">Elegí un artículo de Microeconomía o de Macroeconomía y leelo. Al terminar, tocá <b>Siguiente</b> y decidí con la lista de cotejo si es un <b>artículo económico</b> (sirve para tu comentario) o un <b>contenido comercial</b> (no sirve). Entre los artículos hay algunos textos comerciales escondidos.</p>
+  const status = ph === 'sent' ? `<div class="fb info" style="max-width:820px"><b class="h">Enviaste tus respuestas el ${fdate(sub.at)}</b>Tu profesor las está corrigiendo. Cuando te devuelva, vas a ver en qué acertaste y en qué te equivocaste.</div>`
+    : ph === 'back' ? `<div class="fb ok" style="max-width:820px"><b class="h">Devolución del profesor · ${fdate(fb.at)} · ${sub.ok}/${sub.tot} bien clasificados</b>${esc(fb.text || '').replace(/\n/g, '<br>')}<p class="small" style="margin:8px 0 0">Abrí cada artículo para ver si acertaste y por qué. Cuando quieras, podés practicar otra vez.</p><div class="row" style="margin-top:8px"><button class="btn sm" type="button" id="lNew">Practicar otra vez (ronda ${sub.n + 1})</button></div></div>` : '';
+  const sendBox = ph !== 'open' ? '' : !FBX() ? `<div class="fb info" style="max-width:820px"><b class="h">Para enviar tus respuestas al profesor</b>tocá <b>Entrar</b> (arriba) con tu correo del colegio.</div>`
+    : `<div class="essentials lsend" style="max-width:820px"><b>${left ? `Te faltan ${left} ${left === 1 ? 'artículo' : 'artículos'} por clasificar o saltar` : 'Terminaste: ya podés enviar tus respuestas'}</b><p class="small" style="margin:4px 0 8px">Vas a ver si acertaste recién cuando tu profesor te devuelva. Hasta enviar, podés cambiar tus respuestas.</p><div class="row"><button class="btn primary" type="button" id="lSend" ${left ? 'disabled' : ''}>Enviar mis respuestas al profesor</button><span class="small" id="lSendM"></span></div></div>`;
+  const head = `<div class="eyebrow">Evaluación Interna</div><h1>Artículos</h1>${writeTabs('ei-lectura')}
+    <p class="lede">Elegí un artículo de Microeconomía o de Macroeconomía y leelo. Después tocá <b>Siguiente</b> y decidí con la lista de cotejo si es un <b>artículo económico</b> (sirve para tu comentario) o un <b>contenido comercial</b> (no sirve). Entre los artículos hay textos comerciales escondidos. Si un artículo no te interesa, podés saltarlo.</p>
+    ${status}
     <div class="row lectbar"><div class="seg" role="group" aria-label="Unidad">${[['todos', 'Micro y macro'], ['micro', 'Microeconomía'], ['macro', 'Macroeconomía']].map(([k, n]) => `<button type="button" data-lf="${k}" aria-pressed="${S.f === k}">${n}</button>`).join('')}</div>
-    <span class="small muted">${done} de ${L.length} clasificados${done ? ` · ${ok} bien` : ''}</span></div>
-    <div class="pbar" style="max-width:820px;margin:8px 0 16px"><i style="width:${L.length ? Math.round(done / L.length * 100) : 0}%"></i></div>`;
+    <span class="small muted">${nAns} clasificados · ${nSkip} saltados · ${left} sin hacer</span></div>
+    <div class="pbar" style="max-width:820px;margin:8px 0 16px"><i style="width:${AL.length ? Math.round((nAns + nSkip) / AL.length * 100) : 0}%"></i></div>`;
   if (!x) { app.innerHTML = head + '<p class="small muted">No hay artículos para este filtro.</p>'; lectBind(L); return; }
   if (S.view === 'list') {
-    const card = (y, i) => { const st = R[y.id] || {}; return `<button class="lcard" type="button" data-li="${i}"><span class="lsrc">${esc(y.medio)} · ${fdate(y.fecha)}</span><b>${esc(y.titulo)}</b><span class="lctags">${lresIsMine(y) ? '<span class="tag ok">★ Tu artículo</span>' : lresTaken(y) ? '<span class="tag late">Elegido por otro alumno</span>' : ''}<span class="tag ${st.ans ? (st.ok ? 'ok' : 'late') : ''}">${st.ans ? (st.ok ? '✓ Clasificado bien' : 'Volver a revisar') : 'Sin leer'}</span></span></button>`; };
+    const tagOf = y => { const a = R[y.id]; if (ph === 'back' && a && !a.skip) return (a.ans === 'com') === y.com ? '<span class="tag ok">✓ Acertaste</span>' : '<span class="tag late">✗ Revisar</span>'; return a ? (a.skip ? '<span class="tag">Saltado</span>' : '<span class="tag prog">Clasificado</span>') : '<span class="tag">Sin hacer</span>'; };
+    const card = (y, i) => `<button class="lcard" type="button" data-li="${i}"><span class="lsrc">${esc(y.medio)} · ${fdate(y.fecha)}</span><b>${esc(y.titulo)}</b><span class="lctags">${locked && lresIsMine(y) ? '<span class="tag ok">★ Tu artículo</span>' : locked && lresTaken(y) ? '<span class="tag late">Elegido por otro alumno</span>' : ''}${tagOf(y)}</span></button>`;
     const grp = (u, n) => { const ix = L.map((y, i) => [y, i]).filter(([y]) => y.u === u); return ix.length ? `<h2 class="hsec" style="font-size:22px;margin:18px 0 10px">${n} <span class="small muted" style="font-weight:600">${ix.length} artículos</span></h2><div class="lgrid">${ix.map(([y, i]) => card(y, i)).join('')}</div>` : ''; };
-    const mine = Object.entries(lresMine()).map(([u, id]) => [u, LECT.list.find(y => y.id === id)]).filter(([, y]) => y);
-    app.innerHTML = head + (mine.length ? `<div class="fb ok" style="max-width:820px"><b class="h">Tus artículos elegidos</b>${mine.map(([u, y]) => `${LUN[u]}: <b>${esc(y.titulo)}</b>`).join('<br>')}</div>` : '') + (S.f !== 'macro' ? grp('micro', 'Microeconomía') : '') + (S.f !== 'micro' ? grp('macro', 'Macroeconomía') : '');
+    const mine = locked ? Object.entries(lresMine()).map(([u, id]) => [u, AL.find(y => y.id === id)]).filter(([, y]) => y) : [];
+    app.innerHTML = head + sendBox + (mine.length ? `<div class="fb ok" style="max-width:820px"><b class="h">Tus artículos elegidos para el comentario</b>${mine.map(([u, y]) => `${LUN[u]}: <b>${esc(y.titulo)}</b>`).join('<br>')}</div>` : '') + (S.f !== 'macro' ? grp('micro', 'Microeconomía') : '') + (S.f !== 'micro' ? grp('macro', 'Macroeconomía') : '');
     lectBind(L); return;
   }
-  const tag = `<span class="tag">${x.u === 'micro' ? 'Microeconomía' : 'Macroeconomía'}</span>`, nav = `<span class="small muted">Artículo ${S.i + 1} de ${L.length}</span>`;
-  let body;
+  const a = R[x.id], tag = `<span class="tag">${x.u === 'micro' ? 'Microeconomía' : 'Macroeconomía'}</span>`, nav = `<span class="small muted">Artículo ${S.i + 1} de ${L.length}</span>`;
   const back = '<button class="crumb" type="button" data-lback style="margin-bottom:10px">← Todos los artículos</button>';
+  let body;
   if (S.step === 'read') {
     body = back + `<article class="lectart"><div class="row" style="justify-content:space-between">${tag}${nav}</div>
-      ${!x.com && lresTaken(x) ? '<div class="fb no" style="margin-top:10px"><b class="h">Elegido por otro alumno</b>Podés leerlo y practicar con la lista de cotejo, pero no usarlo para tu comentario.</div>' : ''}${!x.com && lresIsMine(x) ? '<div class="fb ok" style="margin-top:10px"><b class="h">★ Es tu artículo</b>Lo elegiste para tu comentario de ' + LUN[x.u] + '.</div>' : ''}
+      ${locked && !x.com && lresTaken(x) ? '<div class="fb no" style="margin-top:10px"><b class="h">Elegido por otro alumno</b>Podés leerlo, pero no usarlo para tu comentario.</div>' : ''}
       <div class="lectsrc">${esc(x.medio)} · ${fdate(x.fecha)}</div><h2>${esc(x.titulo)}</h2>
-      ${x.com ? x.p.map(t => `<p>${esc(t)}</p>`).join('') : `<p>${x.resumen}</p>${x.contexto ? `<h3>Contexto económico</h3><p>${x.contexto}</p>` : ''}
+      ${x.com ? x.p.map(t => `<p>${esc(t)}</p>`).join('') : `<p>${x.resumen}</p>${x.contexto ? `<h3>Contexto</h3><p>${x.contexto}</p>` : ''}
         <p class="small muted">Esto es un resumen. Para tu comentario tenés que leer el artículo completo en el medio original.</p>
         <p><a class="btn" href="${esc(x.url)}" target="_blank" rel="noopener" data-lopen="${x.id}">Leer el artículo completo en ${esc(x.medio || 'el medio')} ↗</a></p>`}
-      <div class="row" style="margin-top:16px"><button class="btn" type="button" data-lmv="-1" ${S.i ? '' : 'disabled'}>← Anterior</button><button class="btn primary" type="button" id="lNext">Siguiente ${ico('arrow')}</button></div></article>`;
+      ${ph === 'back' ? lectResultHtml(x, a) : ''}${locked ? lresBox(x) : ''}
+      <div class="row" style="margin-top:16px"><button class="btn" type="button" data-lmv="-1" ${S.i ? '' : 'disabled'}>← Anterior</button>
+        ${locked ? `<button class="btn primary" type="button" data-lmv="1">Siguiente artículo ${ico('arrow')}</button>` : `<button class="btn primary" type="button" id="lNext">Siguiente: clasificar ${ico('arrow')}</button><button class="btn" type="button" id="lSkip">${a && a.skip ? 'Saltado ✓' : 'Saltar este artículo'}</button>`}</div></article>`;
   } else {
-    const prev = R[x.id] || {}, answered = S.ans !== null;
-    const ckRow = ([k, t]) => { const v = !!S.marks[k], exp = LECT_CK.find(c => c[0] === k)[2] !== x.com; const st = answered ? (v === exp ? ' okk' : ' bad') : ''; return `<label class="lck${st}"><input type="checkbox" data-lk="${k}" ${v ? 'checked' : ''} ${answered ? 'disabled' : ''}><span>${t}</span></label>`; };
+    const M = S.marks;
     body = back + `<article class="lectart"><div class="row" style="justify-content:space-between">${tag}${nav}</div><h2 style="margin-top:6px">${esc(x.titulo)}</h2><p class="small muted">${esc(x.medio)} · ${fdate(x.fecha)}</p>
-      <h3>Lista de cotejo: marcá lo que tiene este texto</h3><div class="lcks">${LECT_CK.map(ckRow).join('')}</div>
-      <h3>¿Qué es?</h3><div class="row">${[['eco', 'Artículo económico'], ['com', 'Contenido comercial']].map(([k, n]) => `<button class="btn${S.ans === k ? ' primary' : ''}" type="button" data-lans="${k}" ${answered && S.ans !== k ? 'disabled' : ''}>${n}</button>`).join('')}</div>
-      ${answered ? (() => {
-        const good = (S.ans === 'com') === x.com, miss = LECT_CK.filter(([k, , e]) => !!S.marks[k] !== (e !== x.com)).length;
-        return `<div class="fb ${good ? 'ok' : 'no'}" style="margin-top:12px"><b class="h">${good ? 'Correcto' : 'Todavía no'}: ${x.com ? 'es contenido comercial' : 'es un artículo económico'}</b>
-          ${x.com ? `<ul style="margin:4px 0 0;padding-left:18px">${x.flags.map(f => `<li>${f}</li>`).join('')}</ul><p class="small" style="margin:6px 0 0">Este texto y la empresa son inventados para practicar. No sirve para la Evaluación Interna: el IB pide artículos de prensa sobre un hecho económico real.</p>`
-            : `${x.por ? `<p style="margin:4px 0 0"><b>Por qué sirve para tu comentario:</b> ${x.por}</p>` : ''}<p class="small" style="margin:6px 0 0">Recordá: para usarlo en tu carpeta tiene que tener menos de un año y ser de una fuente distinta a la de tus otros comentarios.</p>`}
-          ${miss ? `<p class="small" style="margin:6px 0 0">En la lista de cotejo, ${miss === 1 ? '1 criterio no coincide' : miss + ' criterios no coinciden'} (marcados en rojo).</p>` : ''}</div>${lresBox(x)}
-          <div class="row" style="margin-top:12px"><button class="btn primary" type="button" id="lGo">${S.i + 1 < L.length ? 'Siguiente artículo' : 'Volver al primero'} ${ico('arrow')}</button><button class="btn" type="button" data-lback>Volver a la lista</button></div>`;
-      })() : `<div class="row" style="margin-top:12px"><button class="btn" type="button" id="lBack">← Volver a leer</button>${prev.ans ? `<span class="small muted">Ya lo clasificaste antes: ${prev.ok ? 'bien' : 'mal'}.</span>` : ''}</div>`}
+      <h3>Lista de cotejo: marcá lo que tiene este texto</h3><div class="lcks">${LECT_CK.map(([k, t]) => `<label class="lck"><input type="checkbox" data-lk="${k}" ${M[k] ? 'checked' : ''}><span>${t}</span></label>`).join('')}</div>
+      <h3>¿Qué es?</h3><div class="row">${[['eco', 'Artículo económico'], ['com', 'Contenido comercial']].map(([k, n]) => `<button class="btn${a && a.ans === k ? ' primary' : ''}" type="button" data-lans="${k}">${n}</button>`).join('')}</div>
+      ${a && a.ans ? `<div class="fb info" style="margin-top:12px"><b class="h">Respuesta guardada: ${a.ans === 'com' ? 'contenido comercial' : 'artículo económico'}</b>Vas a saber si acertaste cuando tu profesor te devuelva. Hasta enviar, podés cambiarla.</div>
+        <div class="row" style="margin-top:12px"><button class="btn primary" type="button" data-lmv="1">Siguiente artículo ${ico('arrow')}</button><button class="btn" type="button" data-lback>Volver a la lista</button></div>`
+        : `<div class="row" style="margin-top:12px"><button class="btn" type="button" id="lBack">← Volver a leer</button></div>`}
     </article>`;
   }
   app.innerHTML = head + body;
   lectBind(L);
 }
-
 function lectBind(L) {
-  const S = SESS.lect, x = L[S.i];
-  app.querySelectorAll('[data-lf]').forEach(b => b.onclick = () => { S.f = b.dataset.lf; S.i = null; S.step = 'read'; S.marks = {}; S.ans = null; S.view = 'list'; renderLect(); });
-  app.querySelectorAll('[data-li]').forEach(b => b.onclick = () => { S.i = +b.dataset.li; S.view = 'art'; S.step = 'read'; S.marks = {}; S.ans = null; renderLect(); window.scrollTo(0, 0); });
-  app.querySelectorAll('[data-lback]').forEach(b => b.onclick = () => { S.view = 'list'; S.step = 'read'; S.marks = {}; S.ans = null; renderLect(); window.scrollTo(0, 0); });
+  const S = SESS.lect, x = L[S.i], locked = FBX() && lectPhase() !== 'open';
+  const save = (id, v) => { const R = lectSt(); if (v) R[id] = v; else delete R[id]; store.set('lect', R); };
+  app.querySelectorAll('[data-lf]').forEach(b => b.onclick = () => { S.f = b.dataset.lf; S.i = null; S.step = 'read'; S.view = 'list'; renderLect(); });
+  app.querySelectorAll('[data-li]').forEach(b => b.onclick = () => { LRES.msg = ''; S.i = +b.dataset.li; S.view = 'art'; S.step = 'read'; renderLect(); window.scrollTo(0, 0); });
+  app.querySelectorAll('[data-lback]').forEach(b => b.onclick = () => { S.view = 'list'; S.step = 'read'; renderLect(); window.scrollTo(0, 0); });
+  const nw = $('#lNew'); if (nw) nw.onclick = () => { const R = { __r: (lsubLast() || { n: 0 }).n + 1 }; store.set('lect', R); S.i = 0; S.view = 'list'; renderLect(); };
+  const sd = $('#lSend'); if (sd) sd.onclick = async () => {
+    const R = lectAns(), m = $('#lSendM'); sd.disabled = true; m.textContent = 'Enviando…';
+    const items = LECT.list.map(y => ({ id: y.id, t: y.titulo, u: y.u, com: !!y.com, ans: (R[y.id] || {}).ans || null, skip: !!(R[y.id] || {}).skip, marks: (R[y.id] || {}).marks || {} }));
+    const done = items.filter(i => i.ans), ok = done.filter(i => (i.ans === 'com') === i.com).length;
+    const n = (lsubLast() || { n: 0 }).n + 1;
+    try {
+      await FBX().clasifSubmit(n, { items, ok, tot: done.length, skip: items.filter(i => i.skip).length, nombre: lresName() });
+      const RR = lectSt(); RR.__r = n; store.set('lect', RR);
+      try { const u = lresURL(); if (u) fetch(u, { method: 'POST', body: JSON.stringify({ a: 'aviso', k: lresKey(), n: lresName(), x: `envió su clasificación de artículos (ronda ${n}: ${done.length} clasificados, ${items.length - done.length} saltados)` }) }).catch(() => { }); } catch (e) { }
+      LSUB.st = 'idle'; await lsubLoad(true);
+    } catch (e) { m.textContent = 'No se pudo enviar (' + (e.code || e.message) + '). Revisá tu conexión.'; sd.disabled = false; }
+  };
   if (!x) return;
-  const go = i => { LRES.msg = ''; S.i = (i + L.length) % L.length; S.step = 'read'; S.marks = {}; S.ans = null; renderLect(); window.scrollTo(0, 0); };
+  const go = i => { LRES.msg = ''; S.i = (i + L.length) % L.length; S.step = 'read'; renderLect(); window.scrollTo(0, 0); };
   app.querySelectorAll('[data-lmv]').forEach(b => b.onclick = () => go(S.i + +b.dataset.lmv));
-  const n = $('#lNext'); if (n) n.onclick = () => { S.step = 'check'; renderLect(); window.scrollTo(0, 0); };
+  const n = $('#lNext'); if (n) n.onclick = () => { S.step = 'check'; S.marks = { ...((lectSt()[x.id] || {}).marks || {}) }; renderLect(); window.scrollTo(0, 0); };
+  const sk = $('#lSkip'); if (sk) sk.onclick = () => { if (locked) return; save(x.id, { skip: 1, at: today() }); go(S.i + 1); };
   const bk = $('#lBack'); if (bk) bk.onclick = () => { S.step = 'read'; renderLect(); };
-  app.querySelectorAll('[data-lk]').forEach(c => c.onchange = () => { S.marks[c.dataset.lk] = c.checked; });
-  app.querySelectorAll('[data-lans]').forEach(b => b.onclick = () => {
-    if (S.ans !== null) return;
-    S.ans = b.dataset.lans; const R = lectSt(); R[x.id] = { ans: S.ans, ok: (S.ans === 'com') === x.com, at: today() }; store.set('lect', R);
-    const y = window.scrollY; renderLect(); window.scrollTo(0, y);
-  });
-  const g = $('#lGo'); if (g) g.onclick = () => go(S.i + 1);
+  app.querySelectorAll('[data-lk]').forEach(c => c.onchange = () => { S.marks[c.dataset.lk] = c.checked; const a = lectSt()[x.id]; if (a && a.ans && !locked) save(x.id, { ...a, marks: { ...S.marks } }); });
+  app.querySelectorAll('[data-lans]').forEach(b => b.onclick = () => { if (locked) return; save(x.id, { ans: b.dataset.lans, marks: { ...S.marks }, at: today() }); const y = window.scrollY; renderLect(); window.scrollTo(0, y); });
   app.querySelectorAll('[data-lres]').forEach(b => b.onclick = () => lresAct(x, b.dataset.lres));
   app.querySelectorAll('[data-lopen]').forEach(a => a.addEventListener('click', () => { const R = lectSt(); R[a.dataset.lopen] = { ...(R[a.dataset.lopen] || {}), open: today() }; store.set('lect', R); }));
+}
+/* ---------- Panel: clasificaciones de artículos ---------- */
+function profClasifHtml(list) {
+  const uids = new Set(list.map(x => x.uid)), S = (PROF.cl || []).filter(s => uids.has(s.uid));
+  const last = {}; S.forEach(s => { if (!last[s.uid] || s.n > last[s.uid].n) last[s.uid] = s; });
+  const L = Object.values(last).sort((a, b) => (b.at || 0) - (a.at || 0)), fbOf = s => (PROF.clfb || []).find(f => f.id === s.id);
+  const pend = L.filter(s => !fbOf(s)).length, name = uid => { const x = PROF.users.find(y => y.uid === uid); return x ? profName(x) : 'Alumno'; };
+  return `<h2 style="margin-top:24px">Clasificación de artículos${pend ? ` <span class="tag late" style="font-size:13px;vertical-align:middle">${pend} por devolver</span>` : ''}</h2>
+    <p class="small muted" style="max-width:1000px;margin-top:-4px">Lo que cada alumno respondió en «Artículos»: si identificó bien los artículos económicos y los contenidos comerciales. El alumno ve si acertó recién cuando le devolvés.</p>
+    ${L.length ? `<div class="mlist">${L.map(s => `<button class="mrow linkrow" type="button" data-go="profesor-clasif-${s.id}"><span class="code">${s.ok}/${s.tot}</span><span class="nm">${esc(name(s.uid))}<span class="small muted"> · ronda ${s.n} · ${fdate(s.at)} · ${s.skip} saltados</span></span>${fbOf(s) ? '<span class="tag ok">devuelto</span>' : '<span class="tag late">por devolver</span>'}</button>`).join('')}</div>` : '<p class="small muted">Todavía ningún alumno envió su clasificación.</p>'}`;
+}
+function renderProfClasif(id) {
+  if (!profGate()) return;
+  const s = (PROF.cl || []).find(z => z.id === id); if (!s) return renderProf();
+  const x = PROF.users.find(y => y.uid === s.uid) || { email: '' }, fb = (PROF.clfb || []).find(f => f.id === id);
+  const done = s.items.filter(i => i.ans), com = s.items.filter(i => i.com), comOk = com.filter(i => i.ans === 'com').length, ecoOk = done.filter(i => !i.com && i.ans === 'eco').length;
+  const row = i => { const good = i.ans && (i.ans === 'com') === i.com, miss = i.ans ? LECT_CK.filter(([k, , e]) => !!(i.marks || {})[k] !== (e !== i.com)).length : 0;
+    return `<tr class="${!i.ans ? '' : good ? 'clok' : 'clbad'}"><td>${esc(i.t)}</td><td>${i.u === 'micro' ? 'Micro' : 'Macro'}</td><td>${i.com ? '<b>Comercial</b>' : 'Económico'}</td><td>${i.skip ? '<span class="muted">Saltado</span>' : i.ans ? (i.ans === 'com' ? 'Comercial' : 'Económico') : '—'}</td><td>${!i.ans ? '' : good ? '✓' : '✗'}</td><td>${i.ans ? (miss ? miss + ' de 7' : 'todos bien') : ''}</td></tr>`; };
+  app.innerHTML = `<button class="crumb" type="button" data-go="profesor">← Panel del profesor</button><div class="eyebrow" style="margin-top:12px">Clasificación de artículos · ronda ${s.n}</div><h1>${esc(profName(x))}</h1>
+    <p class="small muted">${esc(x.email || '')} · enviado el ${fdate(s.at)}</p>
+    <div class="repkpi" style="max-width:820px"><div><b>${s.ok}/${s.tot}</b><span>bien clasificados</span></div><div><b>${comOk}/${com.length}</b><span>comerciales detectados</span></div><div><b>${s.skip}</b><span>saltados</span></div></div>
+    <div class="tscroll"><table class="dtab plan cltab"><thead><tr><th>Artículo</th><th>Unidad</th><th>Es</th><th>El alumno dijo</th><th></th><th>Criterios mal marcados</th></tr></thead><tbody>${s.items.map(row).join('')}</tbody></table></div>
+    <section class="esround"><label class="dbf"><span>Devolución para el alumno</span><textarea rows="6" class="esfbt" id="clT">${esc(fb ? fb.text : '')}</textarea></label>${cbankHtml()}
+      <div class="row" style="margin-top:6px"><button class="btn primary" type="button" id="clSend">${fb ? 'Actualizar devolución' : 'Enviar devolución'}</button><span class="small" id="clM"></span></div>
+      <p class="small muted" style="margin-top:6px">Al devolver, el alumno ve qué artículos clasificó bien y mal, los criterios que marcó mal y por qué cada texto es económico o comercial.</p></section>`;
+  cbankBind(app);
+  $('#clSend').onclick = async e => {
+    const t = $('#clT').value.trim(), m = $('#clM'); if (!t) { m.textContent = 'Escribí la devolución antes de enviarla.'; return; }
+    e.currentTarget.disabled = true; m.textContent = 'Enviando…';
+    try { await FBX().setClasifFb(id, { uid: s.uid, n: s.n, text: t }, fb ? fb.at : null); PROF.st = 'idle'; await profLoad(); }
+    catch (x2) { m.textContent = 'No se pudo enviar (' + (x2.code || x2.message) + ').'; e.currentTarget.disabled = false; }
+  };
 }
 
 /* Cuando cambia la sesión de la cuenta */
 function updateProfNav() { const n = document.getElementById('navProf'); if (n) n.hidden = !isTeacher(); }
 window.addEventListener('fbx', () => {
-  updateProfNav(); EIR.st = 'idle'; ESR.st = 'idle'; PROF.st = 'idle'; updateFbBadge();
+  updateProfNav(); EIR.st = 'idle'; ESR.st = 'idle'; LSUB.st = 'idle'; PROF.st = 'idle'; updateFbBadge();
   const r = location.hash.slice(1);
   if (FBX() && !isTeacher() && !/^(escribir-ei|ei-[234]|empezar)$/.test(r)) eiRemoteLoad();
   if (r.startsWith('profesor') || /^(escribir-ei|ei-[234]|empezar)$/.test(r)) { const y = window.scrollY; render(); window.scrollTo(0, y); }
@@ -11728,6 +11800,10 @@ window.FBX = {
   elegir: (u, o) => F.setDoc(F.doc(db, 'elecciones', `${user.uid}_${u}`), { ...o, u: +u, uid: user.uid, email: user.email, at: F.serverTimestamp() }),
   soltar: (u, uid) => F.deleteDoc(F.doc(db, 'elecciones', `${uid || user.uid}_${u}`)),
   allElecciones: () => all('elecciones'),
+  clasifSubmit: (n, p) => F.setDoc(F.doc(db, 'clasif', `${user.uid}_${n}`), { ...p, n, uid: user.uid, email: user.email, at: F.serverTimestamp() }),
+  async myClasif() { const q = c => F.getDocs(F.query(F.collection(db, c), F.where('uid', '==', user.uid))).then(r => r.docs.map(conv)); const [subs, fb] = await Promise.all([q('clasif'), q('clasiffb')]); return { subs, fb }; },
+  allClasif: () => all('clasif'), allClasifFb: () => all('clasiffb'),
+  setClasifFb: (id, o, oldAt) => F.setDoc(F.doc(db, 'clasiffb', id), { ...o, by: user.email, at: oldAt ? F.Timestamp.fromMillis(oldAt) : F.serverTimestamp(), edited: F.serverTimestamp() }),
   cfgGet: async id => { const d = await F.getDoc(F.doc(db, 'config', id)); return d.exists() ? d.data() : {}; },
   cfgSet: (id, o) => F.setDoc(F.doc(db, 'config', id), o),
   essaySubmit: (key, n, p) => F.setDoc(F.doc(db, 'ensayos', `${user.uid}_${key}_${n}`), { ...p, uid: user.uid, email: user.email, key, n, at: F.serverTimestamp() }),
